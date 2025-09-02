@@ -1,0 +1,14 @@
+LLMs(Large Language Model):
+
+1. Multiple models belong to llama 2 series (created by Meta) [7B, 13B, 34B, 70B] models.
+
+2. Many people like this model specifically because probably today it is the most powerful 
+   open weights model. So, basically, weights, architecture and paper allreleased by Meta. In case of 
+   ChatGPT, model architecture is not released. It is owned by OpenAI. 
+
+3. parameters are basically the weights or parameters of the neural network.  For example,
+   in llama-2-70B, total parameters are 70 billions and each parameter is stored in 2 Bytes 
+   (due to float16 number as he data type). And so, parameter file is of 140GB.
+
+4. Model inference is just like running model on your system and moel training is a computationally
+   involved process.  

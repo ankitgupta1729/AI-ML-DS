@@ -1,0 +1,64 @@
+1. Creating minimal Docker images for Python apps enhances security by reducing the attack surface, 
+facilitates faster image builds, and improves overall application maintainability.
+
+2. Built Flask application uses Flask to create a web server that listens for HTTP requests on port 5000. When a request is received:
+
+3. 
+
+For a POST request to /inventory, it adds a new item to the inventory.
+For a GET request to /inventory/<item_id>, it retrieves the item with the specified ID from the inventory.
+For a PUT request to /inventory/<item_id>, it updates the item with the specified ID in the inventory.
+For a DELETE request to /inventory/<item_id>, it deletes the item with the specified ID from the inventory.
+
+4. 
+
+Building an image:
+
+build the image (we use the tag full to identify that this uses the default Python image):
+
+$ docker build -t inventory-app:full .
+
+5.
+
+Once the build is complete you can run the docker images command:
+
+$ docker images
+REPOSITORY      TAG                 IMAGE ID       CREATED             SIZE
+inventory-app   full                4e623743f556   2 hours ago         1.02GB
+
+6. 
+
+You’ll see that this super simple app is about 1.12 GB in size. 
+Well, this is because the base image we used the default Python 3.11 image has a 
+large number of Debian packages and is about 1.01 GB in size. So we need to find a smaller base image.
+
+Well, here are the options:
+
+A. python:version-alpine images are based on Alpine Linux and will give you the smallest final image. 
+But you need to be able to install packages as well, yes? But that’s a challenge with alpine images.
+B. python:version-slim comes with the minimal number of Debian packages needed to run Python. 
+And you’ll (almost always) be able to install most required Python packages with pip.
+
+7. 
+
+So your base image should be small. But not too small that you face compatibility issues and 
+wrap your head around installing dependencies (quite common for Python applications). 
+That’s why we’ll use the python:3.11-slim base image in the next step and build our image.
+
+8. 
+
+Let’s build the image (tagged slim):
+
+$ docker build -t inventory-app:slim .
+ 
+
+The python:3.11-slim base image is of size 131 MB. And the inventory-app:slim image is around 146 MB which is much smaller than the 1.02GB image we had earlier:
+
+$ docker images
+REPOSITORY      TAG                 IMAGE ID       CREATED             SIZE
+inventory-app   slim                32784c60a992   About an hour ago   146MB
+inventory-app   full                4e623743f556   2 hours ago         1.02GB
+ 
+
+9. You can also use multi-stage builds to make the final image smaller. 
+
