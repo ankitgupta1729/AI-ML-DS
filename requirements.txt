@@ -10,3 +10,5 @@ openpyxl==3.1.2
 numpy==1.24.3 
 tables==3.8.0
 sqlalchemy
+ipython-sql
+pymysql
