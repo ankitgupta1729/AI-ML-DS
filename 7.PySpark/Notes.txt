@@ -1,0 +1,51 @@
+1. Spark Stack contains:
+
+A. Spark Core -- The underlying engine
+B. Spark SQL -- For SQL and unstructured data processing
+C. Spark Streaming -- Stream processing of the live data streams
+D. MLlib -- Machine Learning algorithms
+E. GraphX -- Graph processing
+
+2. The spark core forms the vital component of spark and it is the base of Spark engine. 
+
+It contains the basic functionalities of Spark, including task scheduling (like FCFS,round robin), memory management, fault recovery etc.
+
+The main programming abstraction for Spark core is RDD which is its basic data abstraction.
+
+Spark Core provides many APIs for processing structured and unstructured data.
+
+3. Spark SQL provides integrated APIs to work with structured data.
+
+It has a great set of APIs that allows querying data via SQL commands.
+
+It supports various data sources like CSV, JSON, Parquet, Hive, Cassandra etc. 
+
+4. Spark Streaming enables the processing of live streams of data.
+
+It divides the live input data streams into batches.
+
+For instance, logs being generated from an application server or live tweets from Twitter can be processed in near real time using Spark Streaming APIs.
+
+5. Spark MLLib provides in-built libraries to implement ML algorithms like classification, regression, clustering, collaborative filtering.
+
+Spark MLLib also provides various techniques for data preprocessing.
+
+6. GraphX is a library for manipulating graphs. It provides analysis and graph computation for big data.
+
+GraphX comes with a variety of graph algorithms and graph computations.
+
+GraphX can be used for the disaster detection system, page ranking, financial fraud detection etc.
+
+7. Programming Languages for spark: Python, Scala, R, Java
+
+Libraries: Spark SQL, MLLib, GraphX, Streaming
+
+Engine: Spark Core
+
+Cluster Management Tools: Hadoop Yarn, Apache Mesos, Spark Scheduler
+
+Storage tools: HDFS (Hadoop File System), Standalone Node, Cloud, RDBMS/NoSQL
+
+8. Spark Architecture:
+
+
