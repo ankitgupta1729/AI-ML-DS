@@ -48,4 +48,57 @@ Storage tools: HDFS (Hadoop File System), Standalone Node, Cloud, RDBMS/NoSQL
 
 8. Spark Architecture:
 
+We need spark to understand data. So, our driver program (or drivers) consists of "SparkContext" which is used to create RDDs. For every single instance of 
+spark running or spark core running, we need one SparkContext. So, one SparkContext is for every single program.
+
+This driver program is connected with "Cluster Management" tools which is required to pull data from 
+various nodes.
+
+Now, this Cluster Manager is connected with "Worker Node" which are the endpoint of our spark
+architecture where data transformed into information where we get the task done. It is having
+"Executor" for cache and task in various working nodes.
+
+Apache Spark provides a well-defined layered architecture. All Spark components and layers are loosly coupled.
+
+A driver program runs on the master node of the Spark cluster. It schedules the job execution and negotiates with cluster manager.
+It also translates RDDs into the execution graphs (consider RDDs as arrays). 
+The driver program can split graphs into multiple stages.
+
+9. The executor is a distributed agent responsible for the execution of tasks.
+
+Every Spark application has its own executor process. An executor performs all data processing.
+It reads data and writes data to external sources. It interacts with storage systems.
+
+10. Cluster Manager is an external service responsible for acquiring resources on the Spark Cluster and allocating them to spark job.
+
+Choosing a cluster manager for any Spark application depends on the goals of the application.
+
+The standalone cluster manager is the easiest one to use when developing a new Spark application.
+
+11. Cluster is used to deploy spark application and we don't need any 3rd party cluster manager.
+
+Spark Deployment Modes: Spark Standalone, Spark on Apache Mesos, Spark on Hadoop YARN, Amazon EC2, Kubernetes.
+
+12. Running Spark Application on YARN:
+
+Spark preconfigured for YARN and it does not require any additional configuration to run.
+
+YARN controls the resource management, scheduling, and security when we run Spark Applications on it.
+
+It is possible to run an application in any mode, whether it is cluster mode (many nodes) or client mode (one single entity).
+
+13. Cluster Deployment Mode:
+
+The spark driver runs inside an ApplicationMaster(AM) process which is managed by YARN.
+Thus, the client can go away after initializing the application.
+
+A single process in a YARN container is responsible for driving the application and requesting resources from YARN.
+
+14. Spark Shell:
+
+
+
+
+
+
 
