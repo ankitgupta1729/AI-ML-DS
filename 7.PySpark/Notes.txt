@@ -96,6 +96,107 @@ A single process in a YARN container is responsible for driving the application 
 
 14. Spark Shell:
 
+Spark shell provides a simpler way to learn the API, as well as a powerful tool to analyze data interactively.
+
+Spark comes with 3 types of interactive shells:
+
+A. PySpark with Python Support
+B. Spark shell with Scala Support
+C. Spark R with R supports
+
+15. Spark Web UI:
+
+Every SparkContext launches a web UI. A web UI includes jobs, stages, storage, environment, executors.
+
+16.
+
+The "Jobs" tab in a web UI shows the status of all spark application (i.e. a SparkContext)
+
+The Jobs tab consists of 2 pages: All Jobs, Details for Job
+
+The tab displays stages per state, such as active, pending, completed, skipped or failed
+
+17.
+
+The "Stages" tab is created exclusively when a SparkUI is initialized.
+
+It shows the current state of all stages.
+
+The Stages tab includes: AllStagesPage, StagePage, PoolPage
+
+18.
+
+The "Storage" tab displays the information about RDDs.
+The summary page in the Storage tab shows the storage levels and partition of all RDDs.
+It also shows the sizes and the executors used for all partitions in an RDD.
+The Storage tab includes the following pages: StoragePage, RDDPage
+
+19.
+
+The "Environment" tab displays the values of different environment and configuration variables.
+It shows Java, Spark, and system properties. 
+The Environment tab has: Parent SparkUI, AppStatusStore
+
+20.
+
+The "Executors" tab displays the summary information about the executors that were created for the application.
+It displays memory and disk usage and task and shuffle information.
+
+The Storage memory column in the Executors tab shows the amount of memory used and reserved for caching data
+for access or near real time application.
+
+21. PySpark Shell:
+
+PySpark shell exposes the Spark programming model to python.
+PySpark shell links the Python API to the Spark Core and initializes the SparkContext.
+PySpark requires Python to be available on the system PATH and uses it to run programs.
+
+22. Submitting a PySpark Job:
+
+Many times our code depends on other projects or source codes, so we need to package them alongside our
+application to distribute the code to a spark cluster.
+
+For this, we create an assembly jar containing our code and its dependencies.
+Both SBT and Maven have assembly plugins. When creating assembly jars, list Spark and Hadoop as provided dependencies.
+Once we have an assembled jar, we can call the bin/spark-submit script while passing our jar. The spark-submit script
+is used to launch application on the cluster.
+
+23.
+
+The following steps will help us to build our first application in spark
+using python:
+
+A. Create a document named PySparkJob.py on the local drive.
+B. Open PySparkJob.py in notepad and write: print("Hello! this is pyspark") [source code]
+C. We can upload the PySparkJob.py file on our CloudLab's local storage 
+   if we are not using a VM and perform the following steps:
+
+   i.   Check current directory where we have the above file, using ls.
+   ii.  Run: spark-submit --master yarn --deploy-mode client PySparkJob.py
+   iii. It will show the output.
+
+24. PySpark Job using Jupyter Notebook
+
+Write the following code in Jupyter Notebook:
+
+from pyspark import SparkConf
+from pyspark import SparkContext
+
+conf=SparkConf()
+conf.setMaster('local')
+conf.setAppName('spark-basic')
+sc=SparkContext(conf=conf)
+
+def mod(x):
+  import numpy as numpy
+  return (x, np.mod(x,2))
+
+rdd = sc.parallelize(range(1000).map(mod).take(10))
+print(rdd)
+
+25.
+
+
 
 
 
