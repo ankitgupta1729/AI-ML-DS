@@ -385,4 +385,61 @@ textFile.cache()
 
 38. Operations on RDDs:
 
+There are two types of data operations we can perform on an RDD, transformations and actions:
+
+-- A transformation will return a new RDD as RDDs are generally immutable
+-- An action will return a value
+
+39.
+
+Transformations are lazy operations on an RDD that create one or more new RDDs.
+
+RDD transformations return a pointer to the new RDD and allow us to create dependencies between RDDs.
+Each RDD in a dependency chain (a string of dependencies) has a function for calculating data and
+a pointer (dependency) to its parent RDD.
+
+Spark is lazy, so nothing will be executed unless we call some transformation or action that will trigger
+the job creation and execution.
+
+Therefore, RDD transformation is not a set of data but a step in a program (might be the only step) telling Spark
+how to get data and what to do with it.
+
+40.
+
+Given below is a list of RDD Transformations:
+
+-- map
+-- flatMap
+-- filter
+-- mapPartitions
+-- mapPartitionsWithIndex
+-- sample
+-- union
+-- intersection
+-- distinct
+-- groupBy
+-- keyBy
+-- Zip
+-- zipwithIndex
+-- Coalesce
+-- Repartition
+-- sortBy
+
+41. Map:
+
+It passes each element through a function.
+
+x = sc.parallelize(["spark","rdd","example","sample","example"])
+y = x.map(lambda x: (x,1))
+y.collect()
+
+42. FlatMap:
+
+It is like Map, but here each input can be mapped to 0 or more output items
+(so, a function should return a sequence rather than a single item)
+
+rdd = sc.parallelize([2,3,4])
+sorted(rdd.flatMap(lambda x: range(1,x)).collect())
+
+43.
 
