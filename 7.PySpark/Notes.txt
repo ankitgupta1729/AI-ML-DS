@@ -331,6 +331,58 @@ rdd.take(5)
 
 34.
 
+# Uploading a file to Google Colab
 
+from google.colab import files
+
+uploaded = files.upload()
+
+# initializing an RDD using a text file
+
+rdd = sc.textFile("Spark.txt")
+
+# printing the text from RDD
+
+rdd.collect()
+
+35. RDD Persistence and Caching:
+
+
+-- Spark RDDs are lazily evaluated; thus when we wish to use the same 
+RDD multiple times, it results in recomputing the RDD
+
+-- To avoid computing an RDD multiple times, we can ask Spark to persist the
+data
+
+-- In this case, the node that computes the RDD, stores its partitions
+
+-- If a node has data persisting on it, fails, Spark will recompute the lost 
+partitions of the data when required 
+
+-- RDDs comes with a method called unpersist() that lets us manually remove them
+from the cache 
+
+aba = sc.parallelize(range(1,10000,2))
+aba.persist()
+
+36. Persistence Level:
+
+   Level               --> Space Used --> CPU Time --> In Memory --> On Disk --> Comments
+
+1. MEMORY_ONLY         --> High       --> Low      -->  Yes      --> No      --> Stores an RDD as a deserialized Java object in JVM. If it does not fit in memory, some partitions will not be cached and will be recomputed when needed
+2. MEMORY_ONLY_SER     --> Low        --> High     -->  Yes      --> No      --> Stores an RDD as a serialized Java object. It stores one byte per partition
+3. MEMORY_AND_DISK     --> High       --> Medium   -->  Some     --> Some    --> Stores an RDD as a deserialized Java object in JVM. If the full RDD does not fit in memory, the remaining partitions is stored on the disk, instead of recomputing it
+4. MEMORY_AND_DISK_SER --> Low        --> High     -->  Some     --> Some    --> Spills to the disk if there is too much data to fit in memory and stores serialized representation in memory
+5. DISK_ONLY           --> Low        --> High     -->  No       --> Yes     --> Stores the RDD only on disk
+
+37. Caching:
+
+It is very useful when data is accessed repeatedly, such as, querying a small 'hot' dataset or running an iterative algorithm.
+Cache is fault-tolerant.
+
+textFile = sc.textFile("Spark.txt")
+textFile.cache()
+
+38. Operations on RDDs:
 
 
