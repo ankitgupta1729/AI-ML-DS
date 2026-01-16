@@ -441,5 +441,27 @@ It is like Map, but here each input can be mapped to 0 or more output items
 rdd = sc.parallelize([2,3,4])
 sorted(rdd.flatMap(lambda x: range(1,x)).collect())
 
-43.
+43. filter:
 
+Returns a collection of elements on the basis of the condition provided in the function.
+
+rdd = sc.parallelize([1,2,3,4,5])
+rdd.filter(lambda x: x%2 == 0).collect()
+
+44. Sample:
+
+-- It samples a fraction of the data with or without replacement, using a given random number generator seed.
+
+-- We can add the following parameters to sample method:
+
+A. withReplacement: Elements can be sampled multiple times (replaced when sampled out)
+B. fraction: Makes the size of the sample as a fraction of the RDD's size without replacement
+C. seed: A number as a seed for the random number generator
+
+parallel = sc.parallelize(range(9))
+parallel.sample(withReplacement=True, fraction=0.2, seed=1).count()
+
+
+parallel.sample(False,1).collect()
+
+45.

@@ -1,0 +1,162 @@
+
+A. https://www.youtube.com/watch?v=twsYxYaQikI [Git with VSCode]
+
+
+1. Our projects are the collection of files and folders. VS Code can open it and we can work
+   inside those folders and git initializes a repository inside of that folder and keeps track of those changes inside a special folder called .git. 
+
+2. Commands to initialise a repo:
+
+ mkdir docker-vscode-demo
+ cd ./docker-vscode-demo/
+ code .
+ git init
+ git config --global init.defaultBranch main
+ git init
+ git branch -m main
+ git status
+
+3. We can also initialise the repo in vscode as:
+
+- Go to Source Control in VSCode
+- Initialise the Repository
+- Write some code (create an html file index.html) [see the code in https://github.com/ankitgupta1729/VSCODE-GIT ]
+- Publish on github
+
+4. "U" symbol with file name indicates that there is a new file inside of git but not included as part of the repository. It is not tracked so I can't see any versions of this file previously. When it will be tracked then it will be the part of repo and will be able to see changes. Untracked file is a brand new file which is never committed to the repository.
+
+For staging changes, we have to click "+" symbol near to file name in source control in vscode. It is equivalent to "git add <file name>". For adding all our changes, we have to use "git add ." Or "git add -a". In VSCode, we click on "+" symbol near the "Changes" for all the changes. 
+
+5. For commit, we use git commit -m "initial commit". We can do the same in source control in vscode also, we put the message and click on the commit.
+
+Commit and Sync means, when the code its added to GitHub then for syncing, we use this option.
+
+6. Git Stash:
+
+-- First do some change in index.html like add "!!" and make it as "This is a simple HTML file served from VS Code and managed with GIT!!" in the index.html.
+
+-- Now, say, I need to work on something else and I am not ready to commit this change.
+
+-- I can basically store this file in a temporary location and retrieve it back when I am ready
+   To do so. This concept is known as stash inside of git and we usually run the git stash command.
+
+-- So, after putting "!!" In index.html, run the command "git stash" in vscode terminal.
+
+-- After running the command, explanation symbol "!!" Which we added in the index.html will be gone and no changes will be shown in git source control in vscode.
+
+-- To get those changes in git source control, run "git stash pop". It memorised it. It uses stack. We can do the same in vscode also in git source control.
+
+7. Now, come to branches.
+
+-- Click on main/master branch below in the vscode.
+
+-- click on create new branch - named it as "test-branch" and you will be on the "test-branch"
+-- go to main again in below side bar vscode and if we want to create a branch using terminal, then we have to write "git checkout -b test-branch1"
+-- Now, if we make any changes in index.html for the branch test-branch1 then these changes will be limited to this branch only and changes will not be limited to other branches say main. Suppose, I have done other changes in main branch also then we have to merge branches.
+-- If current branch is main and you have to merge changes from test-branch1 into main then go to main branch and run the command as "git merge test-branch1"
+-- After merge, delete both branches test-branch and test-branch1 using "git branch -d test-branch" and "git branch -d test-branch1".
+
+To delete remote branches, run the command as "git branch --remote -d origin/test-branch1".
+
+To verify, run "git branch"
+
+8. If we delete a file then in source control, it will be shown with "D" symbol and we can restore it only if it is not committed by clicking on Discard Changes.
+
+9. Now, in index.html, if we add a new line, it will be shown by green symbol and if we modify a line then it will be indicated by green symbol and if we delete a line then it will be indicated by red symbol.
+
+10. To see the remote version of the repository like GitHub, bitbucket etc, we run the command as "git remote -v".
+
+command: git remote -v
+
+Output:
+
+origin  https://github.com/ankitgupta1729/VSCODE-GIT.git (fetch)
+origin  https://github.com/ankitgupta1729/VSCODE-GIT.git (push)
+
+When we run git remote -v, Git shows two URLs for the same remote (origin), one for fetch and one for push.
+
+Fetch = Download
+
+Used when you run:
+
+git fetch
+git pull
+
+
+• It downloads changes from GitHub to your local repo
+• It does NOT change your local files automatically
+• Safe operation (read-only)
+
+Example:
+
+Someone else pushed code to GitHub → you git fetch → you can see their changes locally
+
+Push = Upload
+
+Used when you run:
+
+git push
+
+It uploads your local commits to GitHub
+• Changes become visible to others
+
+Example:
+
+You commit code locally → git push → code goes to GitHub
+
+Git allows:
+• One URL for fetching
+• A different URL for pushing (rare cases like read-only mirrors)
+
+But usually both are the same.
+
+Default remote is typically origin however it could be pretty much anything.
+
+11. "Sync Changes" after the commit in vscode shows that it will pull down any commits and also at the same time push up the changes in GitHub account repo and can be seen at bottom in vscode with arrow up(push) and down(pull) near branch name in vscode.
+
+12. Clone repo using SSH key:
+
+-- delete the existing repo using "rm -rf VSCODE-GIT/"
+-- go to repo in the GitHub account after sign-in and go to SSH option and copy the URL
+-- In vscode, go to source control and click on clone repository and then paste the repo url with ssh which you just coppied 
+-- click on clone from url and follow the steps.
+
+Setup SSH key in GitHub: https://chatgpt.com/share/6960e17b-3630-8002-a291-1fae58b4c4e0
+
+13. VSCode is written in electron js. Github is part of Microsoft and development of vscode is done on GitHub. Microsoft launched Visual Studio Online which is an online code editor. Visual Studio and Visual Studio Code both are different IDEs. Visual Studio Code is a light weight source code editor.
+
+14. Installing Python extension in vscode gives extra features and functionality to vscode related to python. To run a python file, we need to right click on the file and click on run python file but if we install "code runner" extension in vscode, then we can run by clicking on play button in vscode. Features like listing, debugging come with python extension. 
+
+15. In Settings in vscode, there are 2 types of settings: user settings and workspace settings. If we change user settings or workspace settings, it will be saved in settings.json file. settings.json is also 2 types: user settings.json and workspace settings.json. If you want to change settings then it is recommended to do settings at workspace level and don't change settings at user level.
+
+16. Enable some settings for code runner:
+
+Go to settings, search code runner then Click on checkbox: “Run in terminal” and "Clear Previous Output".
+
+Create a python file with code as "print("hello world!")" and save as test.py and run it using play button in vscode and it will appear in terminal tab not in output tab.
+
+17. In vscode, in help menu, click on "welcome", it will open a welcome page of vscode. And if you click on "editor playground" then you can find various tips for code writing.
+
+18. Open and close terminal using control+backtick. Open command palette using control+shift+p and close it using escape key.
+
+19. You can use multiple cursors in vscode editor by pressing option key and then click on the end of any line and then click. It will create to generate a list by collection of words by putting comma at the end of each word.
+
+20. In python code, if we write movieList=["a","b","c] and then for movie in ml: ... here if we type "ml" then it will give suggestion for movieList.
+
+21. T preview a file in vscode, use single click on a file and to write a file, use double click on a file.
+
+22. In vscode, in 1.txt file, we write "ankit is a good boy." And in 2.txt file, we write "Anki is a bad boy.". Now, suppose, we have to compare both files then in vscode, we write in vscode terminal, "code -h" and then "code -d --diff 1.txt 2.txt" and it will show the difference between both files.
+
+23. Learn Typescript,javascript,angular and rust, go, kotlin  languages in 2026.
+
+24. Difference between git merge and git rebase: https://www.youtube.com/watch?v=xgkXgBKIPpA
+
+-- the problem with Git Merge leading to a "dirty" commit history with unnecessary merge commits, especially when frequently syncing a feature branch with a master branch. Git Rebase offers a cleaner history by reapplying commits from the feature branch on top of the master branch, making the history linear and easy to read. While Rebase keeps the master branch commits untouched, it changes the commit hashes of the feature branch.
+
+-- Do not rebase shared branches. Rebase alters history, which can cause conflicts for collaborators when they try to merge changes. It's recommended to only rebase local, unshared feature branches.
+
+25. Merge Conflicts: In a repo, for example, when there is a change in same line number multiple times in different branches then we get merge conflicts. 
+
+26. To switch branch in vscode terminal, we use "git switch branch_name".
+
+27. Git pull --rebase command: https://www.youtube.com/watch?v=xN1-2p06Urc
