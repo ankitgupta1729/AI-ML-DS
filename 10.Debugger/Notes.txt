@@ -85,5 +85,5 @@ running_average and see the call stack in the CALL STACK section on the left sid
 till the line "current_avg = average(total, i + 1)" and then step into the average function and see the call stack in the
 CALL STACK section on the left sidebar.
 
-16. 
+
 
