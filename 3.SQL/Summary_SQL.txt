@@ -1,0 +1,2511 @@
+(1) SQL is a standard language for storing, manipulating and retrieving data in databases.
+
+SQL can execute queries against a database
+SQL can retrieve data from a database
+SQL can insert records in a database
+SQL can update records in a database
+SQL can delete records from a database
+SQL can create new databases
+SQL can create new tables in a database
+SQL can create stored procedures in a database
+SQL can create views in a database
+SQL can set permissions on tables, procedures, and views
+
+(2)
+
+The data in RDBMS is stored in database objects called tables.
+A table is a collection of related data entries and it consists of columns and rows.
+
+(3) SQL Statements:
+
+The following SQL statement returns all records from a table named "Customers":
+
+SELECT * FROM Customers;
+SELECT CustomerName, City FROM Customers;
+
+
+--Syntax:
+
+SELECT column1, column2, ...
+FROM table_name;
+
+[SQL keywords are NOT case sensitive: select is the same as SELECT]
+
+(4) The SELECT DISTINCT statement is used to return only distinct (different) values.
+
+Select all the different countries from the "Customers" table:
+
+SELECT DISTINCT Country FROM Customers;
+
+Syntax:
+
+SELECT DISTINCT column1, column2, ...
+FROM table_name;
+
+(5) The WHERE clause is used to filter records.
+
+SELECT * FROM Customers
+WHERE Country='Mexico';
+
+--Syntax:
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+(6) The ORDER BY keyword is used to sort the result-set in ascending or descending order.
+
+SELECT * FROM Products
+ORDER BY Price;
+
+-- Syntax:
+
+SELECT column1, column2, ...
+FROM table_name
+ORDER BY column1, column2, ... ASC|DESC;
+
+--ORDER BY Several Columns:
+
+The following SQL statement selects all customers from the "Customers" table, sorted by the "Country" and the "CustomerName" column.
+This means that it orders by Country, but if some rows have the same Country, it orders them by CustomerName:
+
+SELECT * FROM Customers
+ORDER BY Country, CustomerName;
+
+Using Both ASC and DESC
+The following SQL statement selects all customers from the "Customers" table,
+sorted ascending by the "Country" and descending by the "CustomerName" column:
+
+SELECT * FROM Customers
+ORDER BY Country ASC, CustomerName DESC;
+
+(7)
+
+The WHERE clause can contain one or many AND operators.
+
+The AND operator is used to filter records based on more than one condition.
+
+SELECT *
+FROM Customers
+WHERE Country = 'Spain' AND CustomerName LIKE 'G%';
+
+--Syntax:
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 AND condition2 AND condition3 ...; 
+
+The AND operator displays a record if all the conditions are TRUE.
+
+The OR operator displays a record if any of the conditions are TRUE.
+
+(8) SQL OR:
+
+-- Syntax:
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 OR condition2 OR condition3 ...;
+
+(9)
+
+The NOT operator is used in combination with other operators to give the opposite result, also called the negative result.
+
+-- Syntax:
+
+SELECT column1, column2, ...
+FROM table_name
+WHERE NOT condition;
+
+Example:
+
+SELECT * FROM Customers
+WHERE NOT Country = 'Spain'; 
+
+SELECT * FROM Customers
+WHERE CustomerName NOT LIKE 'A%';
+
+SELECT * FROM Customers
+WHERE CustomerID NOT BETWEEN 10 AND 60;
+
+SELECT * FROM Customers
+WHERE City NOT IN ('Paris', 'London');
+
+(10) The INSERT INTO statement is used to insert new records in a table.
+
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
+
+INSERT INTO table_name
+VALUES (value1, value2, value3, ...);
+
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES
+('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway'),
+('Greasy Burger', 'Per Olsen', 'Gateveien 15', 'Sandnes', '4306', 'Norway'),
+('Tasty Tee', 'Finn Egan', 'Streetroad 19B', 'Liverpool', 'L1 0AA', 'UK');
+
+(11)
+
+A field with a NULL value is a field with no value.
+
+If a field in a table is optional, it is possible to insert a new record or update a record without adding a value to this field.
+Then, the field will be saved with a NULL value.
+
+
+-- IS NULL Syntax:
+
+SELECT column_names
+FROM table_name
+WHERE column_name IS NULL;
+
+-- IS NOT NULL Syntax:
+
+SELECT column_names
+FROM table_name
+WHERE column_name IS NOT NULL;
+
+(12)
+
+The UPDATE statement is used to modify the existing records in a table.
+
+-- UPDATE Syntax:
+
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+UPDATE Customers
+SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+WHERE CustomerID = 1;
+
+(13)
+
+The DELETE statement is used to delete existing records in a table.
+
+-- DELETE Syntax:
+
+DELETE FROM table_name WHERE condition;
+
+DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+
+DELETE FROM table_name;
+
+(14)
+
+To delete the table completely, use the DROP TABLE statement:
+
+DROP TABLE Customers;
+
+(15)
+
+The SELECT TOP clause is used to specify the number of records to return.
+
+The SELECT TOP clause is useful on large tables with thousands of records. Returning a large number of records can impact performance.
+
+-- Select only the first 3 records of the Customers table:
+
+SELECT TOP 3 * FROM Customers;
+
+(16)
+
+Not all database systems support the SELECT TOP clause.
+
+MySQL supports the LIMIT clause to select a limited number of records, while Oracle uses FETCH FIRST n ROWS ONLY and ROWNUM.
+
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+LIMIT number;
+
+SELECT * FROM Customers
+LIMIT 3;
+
+SELECT * FROM Customers
+FETCH FIRST 3 ROWS ONLY;
+
+SELECT TOP 50 PERCENT * FROM Customers;
+
+(17) 
+
+An aggregate function is a function that performs a calculation on a set of values, and returns a single value.
+
+Aggregate functions are often used with the GROUP BY clause of the SELECT statement.
+The GROUP BY clause splits the result-set into groups of values and the aggregate function can be used to return a single value for each group.
+
+The most commonly used SQL aggregate functions are:
+
+MIN() - returns the smallest value within the selected column
+MAX() - returns the largest value within the selected column
+COUNT() - returns the number of rows in a set
+SUM() - returns the total sum of a numerical column
+AVG() - returns the average value of a numerical column
+
+Aggregate functions ignore null values (except for COUNT()).
+
+SELECT MIN(Price)
+FROM Products;
+
+SELECT MAX(Price)
+FROM Products;
+
+SELECT MIN(Price) AS SmallestPrice
+FROM Products;
+
+SELECT MIN(Price) AS SmallestPrice, CategoryID
+FROM Products
+GROUP BY CategoryID;
+
+SELECT COUNT(*)
+FROM Products;
+
+SELECT COUNT(ProductID)
+FROM Products
+WHERE Price > 20;
+
+SELECT COUNT(DISTINCT Price)
+FROM Products;
+
+SELECT COUNT(*) AS [Number of records]
+FROM Products;
+
+
+SELECT COUNT(*) AS [Number of records], CategoryID
+FROM Products
+GROUP BY CategoryID;
+
+SELECT SUM(Quantity)
+FROM OrderDetails;
+
+
+
+(18)
+
+The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+
+There are two wildcards often used in conjunction with the LIKE operator:
+
+ A. The percent sign % represents zero, one, or multiple characters
+ B. The underscore sign _ represents one, single character
+
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';
+
+SELECT * FROM Customers
+WHERE city LIKE 'L_nd__';
+
+SELECT * FROM Customers
+WHERE city LIKE '%L%';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%a';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'b%s';
+
+--Return all customers that have "r" in the second position:
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '_r%';
+
+(19)
+
+Wildcard Characters
+
+Symbol	Description
+%	Represents zero or more characters
+_	Represents a single character
+[]	Represents any single character within the brackets *
+^	Represents any character not in the brackets *
+-	Represents any single character within the specified range *
+{}	Represents any escaped character **
+
+--Return all customers starting with either "b", "s", or "p":
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '[bsp]%';
+
+--Return all customers starting with "a", "b", "c", "d", "e" or "f":
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '[a-f]%';
+
+(20)
+
+The IN operator allows you to specify multiple values in a WHERE clause.
+
+SELECT * FROM Customers
+WHERE Country IN ('Germany', 'France', 'UK');
+
+SELECT * FROM Customers
+WHERE CustomerID NOT IN (SELECT CustomerID FROM Orders);
+
+(21)
+
+The SQL BETWEEN Operator
+The BETWEEN operator selects values within a given range. The values can be numbers, text, or dates.
+
+The BETWEEN operator is inclusive: begin and end values are included.
+
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;
+
+SELECT * FROM Orders
+WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
+
+(22)
+
+SQL aliases are used to give a table, or a column in a table, a temporary name.
+
+Aliases are often used to make column names more readable.
+
+An alias only exists for the duration of that query.
+
+An alias is created with the AS keyword.
+
+SELECT CustomerID AS ID
+FROM Customers;
+
+SELECT CustomerID ID
+FROM Customers;
+
+SELECT ProductName AS [My Great Products]
+FROM Products;
+
+SELECT ProductName AS "My Great Products"
+FROM Products;
+
+SELECT CustomerName, Address + ', ' + PostalCode + ' ' + City + ', ' + Country AS Address
+FROM Customers;
+
+SELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS Address
+FROM Customers;
+
+(23)
+
+A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+
+(24)
+
+Different Types of SQL JOINs:
+
+Here are the different types of the JOINs in SQL:
+
+A. (INNER) JOIN: Returns records that have matching values in both tables
+B. LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+C. RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+D. FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+
+(25) 
+
+JOIN and INNER JOIN will return the same result.
+
+INNER is the default join type for JOIN, so when you write JOIN the parser actually writes INNER JOIN.
+
+SELECT Products.ProductID, Products.ProductName, Categories.CategoryName
+FROM Products
+JOIN Categories ON Products.CategoryID = Categories.CategoryID
+
+(26)
+
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+Note: The LEFT JOIN keyword returns all records from the left table (Customers), even if there are no matches in the right table (Orders).
+
+(27)
+
+The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1).
+The result is 0 records from the left side, if there is no match.
+
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+Note: The RIGHT JOIN keyword returns all records from the right table (Employees), even if there are no matches in the left table (Orders).
+
+(28)
+
+The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
+
+Tip: FULL OUTER JOIN and FULL JOIN are the same.
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+(29)
+
+A self join is a regular join, but the table is joined with itself.
+
+SELECT column_name(s)
+FROM table1 T1, table1 T2
+WHERE condition;
+
+T1 and T2 are different table aliases for the same table.
+
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;
+
+(30)
+
+The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+Every SELECT statement within UNION must have the same number of columns
+The columns must also have similar data types
+The columns in every SELECT statement must also be in the same order
+
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+
+(31)
+
+The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL:
+
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;
+
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;
+
+SELECT City, Country FROM Customers
+WHERE Country='Germany'
+UNION
+SELECT City, Country FROM Suppliers
+WHERE Country='Germany'
+ORDER BY City;
+
+SELECT 'Customer' AS Type, ContactName, City, Country
+FROM Customers
+UNION
+SELECT 'Supplier', ContactName, City, Country
+FROM Suppliers;
+
+(32)
+
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+ORDER BY column_name(s);
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomerID) DESC;
+
+(33)
+
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+GROUP BY column_name(s)
+HAVING condition
+ORDER BY column_name(s);
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
+
+SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+WHERE LastName = 'Davolio' OR LastName = 'Fuller'
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 25;
+
+(34)
+
+The EXISTS operator is used to test for the existence of any record in a subquery.
+
+The EXISTS operator returns TRUE if the subquery returns one or more records.
+
+The following SQL statement returns TRUE and lists the suppliers with a product price less than 20:
+
+SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);
+
+(35) The ANY and ALL operators allow you to perform a comparison between a single column value and a range of other values.
+
+SELECT ProductName
+FROM Products
+WHERE ProductID = ANY
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity = 10);
+
+SELECT ProductName
+FROM Products
+WHERE ProductID = ALL
+  (SELECT ProductID
+  FROM OrderDetails
+  WHERE Quantity = 10);
+
+(36)
+
+The SELECT INTO statement copies data from one table into a new table.
+
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+
+The new table will be created with the column-names and types as defined in the old table. You can create new column names using the AS clause.
+
+SELECT * INTO CustomersBackup2017
+FROM Customers;
+
+-- The following SQL statement uses the IN clause to copy the table into a new table in another database:
+
+SELECT * INTO CustomersBackup2017 IN 'Backup.mdb'
+FROM Customers;
+
+-- The following SQL statement copies only a few columns into a new table:
+
+SELECT CustomerName, ContactName INTO CustomersBackup2017
+FROM Customers;
+
+Tip: SELECT INTO can also be used to create a new, empty table using the schema of another. Just add a WHERE clause that causes the query to return no data:
+
+SELECT * INTO newtable
+
+(37)
+
+The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+
+The INSERT INTO SELECT statement requires that the data types in source and target tables match.
+
+Note: The existing records in the target table are unaffected.
+
+-- Copy all columns from one table to another table:
+
+INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;
+
+-- Copy only some columns from one table into another table:
+
+INSERT INTO table2 (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM table1
+WHERE condition;
+
+INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers;
+
+(38)
+
+The CASE expression goes through conditions and returns a value when the first condition is met (like an if-then-else statement).
+
+So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+
+If there is no ELSE part and no conditions are true, it returns NULL.
+
+-- CASE Syntax:
+
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+
+SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;
+
+(39)
+
+The following SQL will order the customers by City. However, if City is NULL, then order by Country:
+
+SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
+
+(40)
+
+The MySQL ISNULL() function lets you return an alternative value if an expression is NULL:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + ISNULL(UnitsOnOrder, 0))
+FROM Products;
+
+or we can use the COALESCE() function, like this:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))
+FROM Products;
+
+(41)
+
+A stored procedure is a prepared SQL code that you can save, so the code can be reused over and over again.
+
+So if you have an SQL query that you write over and over again, save it as a stored procedure, and then just call it to execute it.
+
+You can also pass parameters to a stored procedure, so that the stored procedure can act based on the parameter value(s) that is passed.
+
+Stored Procedure Syntax:
+
+CREATE PROCEDURE procedure_name
+AS
+sql_statement;
+
+EXEC procedure_name;
+
+(42) 
+
+CREATE PROCEDURE SelectAllCustomers
+AS
+SELECT * FROM Customers;
+
+EXEC SelectAllCustomers;
+
+(43) Stored Procedure With One Parameter:
+
+The following SQL statement creates a stored procedure that selects Customers from a particular City from the "Customers" table:
+
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30)
+AS
+SELECT * FROM Customers WHERE City = @City
+
+EXEC SelectAllCustomers @City = 'London';
+
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
+AS
+SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
+
+EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP';
+
+(44)
+  
+Single line Comment: --
+Multiline: /* */
+
+(45)
+
+CREATE DATABASE databasename;
+
+DROP DATABASE databasename;
+
+Once a database is dropped, you can check it in the list of databases with the following SQL command: SHOW DATABASES;
+
+(46)
+
+The BACKUP DATABASE statement is used in SQL Server to create a full back up of an existing SQL database.
+
+BACKUP DATABASE databasename
+TO DISK = 'filepath';
+
+A differential back up only backs up the parts of the database that have changed since the last full database backup.
+
+BACKUP DATABASE databasename
+TO DISK = 'filepath'
+WITH DIFFERENTIAL;
+
+Example:
+
+BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak';
+
+(47)
+
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);
+
+CREATE TABLE Persons (
+    PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+
+A copy of an existing table can also be created using CREATE TABLE.
+
+The new table gets the same column definitions. All columns or specific columns can be selected.
+
+If you create a new table using an existing table, the new table will be filled with the existing values from the old table.
+
+CREATE TABLE new_table_name AS
+    SELECT column1, column2,...
+    FROM existing_table_name
+    WHERE ....;
+
+-- The following SQL creates a new table called "TestTables" (which is a copy of the "Customers" table): 
+
+CREATE TABLE TestTable AS
+SELECT customername, contactname
+FROM customers;
+
+(48)
+
+The DROP TABLE statement is used to drop an existing table in a database.
+
+DROP TABLE table_name;
+
+The TRUNCATE TABLE statement is used to delete the data inside a table, but not the table itself.
+
+TRUNCATE TABLE table_name;
+
+The ALTER TABLE statement is used to add, delete, or modify columns in an existing table.
+
+The ALTER TABLE statement is also used to add and drop various constraints on an existing table.
+
+ALTER TABLE table_name
+ADD column_name datatype;
+
+ALTER TABLE Customers
+ADD Email varchar(255);
+
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+ALTER TABLE Customers
+DROP COLUMN Email;
+
+ALTER TABLE table_name
+RENAME COLUMN old_name to new_name;
+
+ALTER TABLE table_name
+ALTER COLUMN column_name datatype;
+
+ALTER TABLE Persons
+ADD DateOfBirth date;
+
+ALTER TABLE Persons
+ALTER COLUMN DateOfBirth year;
+
+ALTER TABLE Persons
+DROP COLUMN DateOfBirth;
+
+
+(49)
+
+To rename a column in a table in SQL Server, use the following syntax:
+
+EXEC sp_rename 'table_name.old_name',  'new_name', 'COLUMN';
+
+(50)
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int
+);
+
+The UNIQUE constraint ensures that all values in a column are different.
+
+Both the UNIQUE and PRIMARY KEY constraints provide a guarantee for uniqueness for a column or set of columns.
+
+A PRIMARY KEY constraint automatically has a UNIQUE constraint.
+
+However, you can have many UNIQUE constraints per table, but only one PRIMARY KEY constraint per table.
+
+CREATE TABLE Persons (
+    ID int NOT NULL UNIQUE,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+To name a UNIQUE constraint, and to define a UNIQUE constraint on multiple columns, use the following SQL syntax:
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT UC_Person UNIQUE (ID,LastName)
+);
+
+(51)
+
+ALTER TABLE Persons
+ADD UNIQUE (ID);
+
+ALTER TABLE Persons
+ADD CONSTRAINT UC_Person UNIQUE (ID,LastName);
+
+To drop a UNIQUE constraint, use the following SQL:
+
+ALTER TABLE Persons
+DROP INDEX UC_Person;
+
+(52)
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+);
+
+ALTER TABLE Persons
+ADD PRIMARY KEY (ID);
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);
+
+ALTER TABLE Persons
+DROP PRIMARY KEY;
+
+ALTER TABLE Persons
+DROP CONSTRAINT PK_Person;
+
+(53)
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
+To allow naming of a FOREIGN KEY constraint, and for defining a FOREIGN KEY constraint on multiple columns, use the following SQL syntax:
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+    REFERENCES Persons(PersonID)
+);
+
+
+(54)
+
+ALTER TABLE Orders
+ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_PersonOrder
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+ALTER TABLE Orders
+DROP FOREIGN KEY FK_PersonOrder;
+
+(55)
+
+The CHECK constraint is used to limit the value range that can be placed in a column.
+
+If you define a CHECK constraint on a column it will allow only certain values for this column.
+
+If you define a CHECK constraint on a table it can limit the values in certain columns based on values in other columns in the row.
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CHECK (Age>=18)
+);
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+
+ALTER TABLE Persons
+ADD CHECK (Age>=18);
+
+ALTER TABLE Persons
+ADD CONSTRAINT CHK_PersonAge CHECK (Age>=18 AND City='Sandnes');
+
+ALTER TABLE Persons
+DROP CONSTRAINT CHK_PersonAge;
+
+ALTER TABLE Persons
+DROP CHECK CHK_PersonAge;
+
+(56)
+
+The DEFAULT constraint is used to set a default value for a column.
+
+The default value will be added to all new records, if no other value is specified.
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+
+The DEFAULT constraint can also be used to insert system values, by using functions like GETDATE():
+
+CREATE TABLE Orders (
+    ID int NOT NULL,
+    OrderNumber int NOT NULL,
+    OrderDate date DEFAULT GETDATE()
+);
+
+ALTER TABLE Persons
+ALTER City SET DEFAULT 'Sandnes';
+
+ALTER TABLE Persons
+ALTER City DROP DEFAULT;
+
+(57)
+
+The CREATE INDEX statement is used to create indexes in tables.
+
+Indexes are used to retrieve data from the database more quickly than otherwise. The users cannot see the indexes, they are just used to speed up searches/queries
+
+Note: Updating a table with indexes takes more time than updating a table without (because the indexes also need an update). 
+So, only create indexes on columns that will be frequently searched against.
+
+
+Creates an index on a table. Duplicate values are allowed:
+
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+
+Creates a unique index on a table. Duplicate values are not allowed:
+
+CREATE UNIQUE INDEX index_name
+ON table_name (column1, column2, ...);
+
+The SQL statement below creates an index named "idx_lastname" on the "LastName" column in the "Persons" table:
+
+CREATE INDEX idx_lastname
+ON Persons (LastName);
+
+If you want to create an index on a combination of columns, you can list the column names within the parentheses, separated by commas:
+
+CREATE INDEX idx_pname
+ON Persons (LastName, FirstName);
+
+(58)
+
+DROP INDEX index_name ON table_name;
+
+ALTER TABLE table_name
+DROP INDEX index_name;
+
+(59)
+
+Auto-increment allows a unique number to be generated automatically when a new record is inserted into a table.
+
+Often this is the primary key field that we would like to be created automatically every time a new record is inserted.
+
+CREATE TABLE Persons (
+    Personid int NOT NULL AUTO_INCREMENT,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (Personid)
+);
+
+MySQL uses the AUTO_INCREMENT keyword to perform an auto-increment feature.
+
+By default, the starting value for AUTO_INCREMENT is 1, and it will increment by 1 for each new record.
+
+To let the AUTO_INCREMENT sequence start with another value, use the following SQL statement:
+
+ALTER TABLE Persons AUTO_INCREMENT=100;
+
+--To insert a new record into the "Persons" table, we will NOT have to specify a value for the "Personid" column (a unique value will be added automatically):
+
+INSERT INTO Persons (FirstName,LastName)
+VALUES ('Lars','Monsen');
+
+(60)
+
+-- The following SQL statement defines the "Personid" column to be an auto-increment primary key field in the "Persons" table:
+
+CREATE TABLE Persons (
+    Personid int IDENTITY(1,1) PRIMARY KEY,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+The MS SQL Server uses the IDENTITY keyword to perform an auto-increment feature.
+
+In the example above, the starting value for IDENTITY is 1, and it will increment by 1 for each new record.
+
+Tip: To specify that the "Personid" column should start at value 10 and increment by 5, change it to IDENTITY(10,5).
+
+(61) In SQL, a view is a virtual table based on the result-set of an SQL statement.
+
+A view contains rows and columns, just like a real table. The fields in a view are fields from one or more real tables in the database.
+
+You can add SQL statements and functions to a view and present the data as if the data were coming from one single table.
+
+A view is created with the CREATE VIEW statement. 
+
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+Example:
+
+CREATE VIEW [Brazil Customers] AS
+SELECT CustomerName, ContactName
+FROM Customers
+WHERE Country = 'Brazil';
+
+SELECT * FROM [Brazil Customers];
+
+-- A view can be updated with the CREATE OR REPLACE VIEW statement.
+
+CREATE OR REPLACE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+-- A view is deleted with the DROP VIEW statement.
+
+DROP VIEW view_name;
+
+DROP VIEW [Brazil Customers];
+
+(62)SQL injection is a code injection technique that might destroy your database.
+
+SQL injection is one of the most common web hacking techniques.
+
+SQL injection is the placement of malicious code in SQL statements, via web page input.
+
+SQL injection usually occurs when you ask a user for input, like their username/userid, and instead of a name/id, the user gives you an SQL statement that you will unknowingly run on your database.
+
+Look at the following example which creates a SELECT statement by adding a variable (txtUserId) to a select string.
+
+ The variable is fetched from user input (getRequestString):
+
+
+txtUserId = getRequestString("UserId");
+txtSQL = "SELECT * FROM Users WHERE UserId = " + txtUserId;
+
+(63)
+
+he original purpose of the code was to create an SQL statement to select a user, with a given user id.
+
+If there is nothing to prevent a user from entering "wrong" input, the user can enter some "smart" input like this:
+
+HTML Inputbox : UserId: 105 OR 1=1
+
+Then, the SQL statement will look like this:
+
+SELECT * FROM Users WHERE UserId = 105 OR 1=1;
+
+The SQL above is valid and will return ALL rows from the "Users" table, since OR 1=1 is always TRUE.
+
+Does the example above look dangerous? What if the "Users" table contains names and passwords?
+
+The SQL statement above is much the same as this:
+
+SELECT UserId, Name, Password FROM Users WHERE UserId = 105 or 1=1;
+
+(64)
+
+Use SQL Parameters for Protection:
+
+To protect a web site from SQL injection, you can use SQL parameters.
+
+SQL parameters are values that are added to an SQL query at execution time, in a controlled manner.
+
+ASP.NET Razor Example
+txtUserId = getRequestString("UserId");
+txtSQL = "SELECT * FROM Users WHERE UserId = @0";
+db.Execute(txtSQL,txtUserId);
+
+######################################################################################################################################################
+
+Advanced SQL
+
+In SQL, a window function or analytic function is a function which uses values from one or multiple rows to return a value for each row.
+(This contrasts with an aggregate function, which returns a single value for multiple rows.)
+
+Window functions have an OVER clause; any function without an OVER clause is not a window function, but rather an aggregate or single-row (scalar) function.
+
+(65) Rank | Dense Rank | Row Number
+
+Example 1:
+
+Marks; Rank; Dense Rank; Row Number
+
+78;     1;    1;            1
+68;     2;    2;            2
+68;     2;    2;            3
+65;     4;    3;            4
+
+SQL Query:
+
+select *,
+rank() over(order by Marks desc) rnk,
+dense_rank() over(order by Marks desc) dense_rnk,
+row_number() over(order by Marks desc) row_number,
+
+from tablename;  
+
+Example2:
+ 
+ID | Department | Salary
+5  | Sales      | 1000 
+2  | IT         | 1500
+3  | Sales      | 2000
+4  | Sales      | 1700
+5  | IT         | 1800
+6  | Accounts   | 1200
+7  | Accounts   | 1100
+
+SQL Query:
+
+select *,
+rank() over(partition by department order by salary desc) emp_rnk,
+from tablename;  
+
+
+(66) Rows Between clause in SQL:
+
+ID  |  Date       |   Sales
+
+1   |  22-06-2022 |   603
+2   |  21-06-2022 |   478
+3   |  20-06-2022 |   679
+4   |  19-06-2022 |   443
+5   |  18-06-2022 |   540
+6   |  17-06-2022 |   740
+7   |  16-06-2022 |   850
+8   |  15-06-2022 |   604
+9   |  14-06-2022 |   339
+10  |  13-06-2022 |   905
+
+
+Data we want: current sales + prev. day sales+ next day sales for each row except first and last row
+
+
+So, in general, we want current row value+ m rows values preceding + n rows values following.
+
+SQL Query:
+
+select *, sum(Sales) over (order by Date rows between 1 preceding and 1 following) total_sales_today_yesterday_nextday  from tablename
+
+
+SQL Query for sum of all rows before a particular row and the all rows after a particular row:
+
+select *, sum(Sales) over (order by Date rows between unbounded preceding and unbounded following) total_sales_today_yesterday_nextday  from tablename
+
+
+(67) Cummulative Sum (Running Sum) in SQL:
+
+--For previous example of dates and sales-
+
+select *, sum(sales) over (order by date rows between unbounded preceding and currentv row) running_sum from tablename
+
+-- 
+
+ID   |   State   |   Date    | Sales
+
+1    | Jharkhand | 22-06-2022 | 603
+2    | Jharkhand | 12-06-2022 | 683
+3    | Jharkhand | 21-06-2022 | 693
+4    | Bihar     | 22-06-2022 | 603
+5    | Bihar     | 22-06-2022 | 603
+6    | Bihar     | 22-06-2022 | 603
+7    | Maharastra | 22-06-2022 | 603
+8    | Maharastra | 22-06-2022 | 603
+9    | Maharastra | 22-06-2022 | 603
+
+select *, sum(sales) over (partition by State order by Date rows between unbounded preceding and current row) running_total from tablename
+
+(68) First Value, Last Value and Nth Value in SQL:
+
+
+ID   |   State   |   Date    | Sales
+
+1    | Jharkhand | 22-06-2022 | 603
+2    | Jharkhand | 12-06-2022 | 683
+3    | Jharkhand | 21-06-2022 | 693
+4    | Bihar     | 22-06-2022 | 603
+5    | Bihar     | 22-06-2022 | 603
+6    | Bihar     | 22-06-2022 | 603
+7    | Maharastra | 22-06-2022 | 603
+8    | Maharastra | 22-06-2022 | 603
+9    | Maharastra | 22-06-2022 | 603
+
+SQL Query:
+
+select *, first_value(Sales) over (partition by State order by Date) first_day_sales,last_value(Sales) over (partition by State order by Date rows between unbounded preceding and unbounded following) last_day_sales from tablename
+
+-- (check this) select *,nth_value(Sales) over (partition by State order by Date) nth_day_sales from tablename
+
+(69) Partition By in SQL:
+
+Similar to Group By.
+
+Dataset:
+
+PlayerName  |  StadiumName   |   Year    |    Runs    |  Country
+
+P1          |  Eden Garden   |  2018     | 421        | India
+P2          |  Wankhede      |  2018     | 450        | Eng 
+...
+
+SQL Query:
+
+A. Filter Indian Players:
+
+select * from tablename where country='India'
+
+B. Partition by StadiumName:
+
+
+
+C. Partition by StadiumName,Year:
+
+
+D. order by
+ 
+
+E. apply rank partition by StadiumName,Year:
+
+-- select *, rank() over (partition by stadiumname order by runs desc) rnk from tablename
+
+-- select * from (select *, rank() over (partition by stadiumname order by runs desc) rnk from tablename) a where a.rnk=1
+
+-- select *, rank() over (partition by stadiumname, year order by runs desc) rnk from tablename
+
+-- select * from (select *, rank() over (partition by stadiumname, year order by runs desc) rnk from tablename) where a.rnk=1
+
+
+F. using first value top run scorer in ground/year
+
+-- select *, first_value(playername) over(partition by statiumname order by runs desc) highest_run_scored from tablename
+
+-- select *, last_value(playername) over(partition by statiumname order by runs desc rows between unbounded preceding and unbounded following) highest_run_scored from tablename
+
+
+G. Get difference between top scorer and player
+
+-- select *, first_value(runs) over(partition by stadiumname order by runs desc) - runs diff_runs  from table_name
+
+-- select *, first_value(runs) over(partition by stadiumname,year order by runs desc) - runs diff_runs  from table_name
+
+H. last run scorer partition by ground,year 
+
+
+
+(70) Moving Average/Rolling Average/Rolling Mean in SQL:
+
+it is a smoothing technique for time series data. it removed the spikes/noise
+
+Date    |   UnitSales    | 3daysMovingAverage      | 5daysMovingAverage
+
+28-5-22 |   45           | 45                      | 45
+29-5-22 |   36           | 40.5 (average(45,36))   | 40.5
+30-5-22 |   39           | 40   (average(39,36,45))| 40
+31-5-22 |   45           | 40                      | 41.25
+01-6-22 |   44           | 42.6                    | 41.8
+02-6-22 |   35           | 41.3                    | 39.8
+03-6-22 |   48           | 42.3                    | 42.2
+04-6-22 |   45           | 42.6                    | 43.4
+05-6-22 |   30           | 41                      | 40.4    
+
+
+Example:
+
+Date      |   Close    | 3daysMovingAverage
+
+28-5-2021 | 1103.5     | 1103.5
+31-5-2021 | 1125.65    | 1114.5
+01-6-2021 | 1100.9     | 1110.01
+02-6-2021 | 1124.05    | 1116.8
+03-6-2021 | 1120.7  
+04-6-2021 | 1128.7
+07-6-2021 | 1111.1
+08-6-2021 | 1114.45
+09-6-2021 | 1158.35
+
+SQL Query:
+
+select Date,Close,avg(Close) over (order by Date rows between 2 preceeding and current row) as three_days_moving_average from tablename
+
+(71) Lead and Lag in SQL:
+
+Example:
+
+Train Number     |   Station    |    Time       | Time to next station
+
+22863            |   Howrah     |    10:50:00   | 01:40:00
+22863            |   Kharagpur  |    12:30:00   | 01:22:00
+22863            |   Balasore   |    13:52:00
+22863            |   Cuttack    |    15:47:00
+22863            |   Bhubaneswar|    16:25:00
+12262            |   Howrah     |    05:45:00
+12262            |   Tatanagar  |    09:00:00
+12262            |   Bilaspur   |    15:05:00
+12262            |   Raipur     |    16:37:00
+12262            |   Nagpur     |    20:55:00
+
+
+select *, lead(Time) over(partition by trainNumber order by time)-time time_to_next_station  from tablename
+
+Example:
+
+Player   |    Year    | Runs
+
+Virat    |    2008    | 159
+Virat    |    2009    | 325
+Rohit   |    2010    | 225
+
+
+A. total runs scored by virat and rohit:
+
+select player,sum(runs) total_runs from tablename group by player
+
+B. Which year scored what percent of runs
+
+select player,year,runs,(runs/sum(runs) over (partition by player order by year rows between unbounded preceding and unbounded following))*100 total_runs_percentage 
+from tablename
+
+C. Count of years in mow many years they scored runs less than previous year
+
+select player, sum(more_runs_less_runs) from 
+(select *, case when prev_year_runs> 0 then 1 else 0 end as more_runs_less_runs from (select player, year, runs,lag(runs) over (partition by player order by year) 
+- runs prev_year_runs from tablename) a) b group by player
+
+D. Count number of years in which rohit has scored more than virat
+
+select player, sum(diff_runs) from (select *, case when diff<0 then 1 else 0 end as diff_runs from (select *,runs_scored_by_virat - 
+runs diff from (select player,year,runs,lead(runs) over(partition by year order by player) runs_scored_by_virat from tablename) a 
+where runs_scored_by_virat is not null) b) c group by player
+
+E. Players scored runs in prev year and next year, count number of times in which score is increasing for continuously 3 years.
+
+select player,sum(incr_runs) from
+(select *, case when prev_tear_runs < runs and runs< next_year_runs then 1 else 0 end as incr_runs from (select player, year,runs, lag(runs) over (partition by player order by year) prev_year_runs,
+lead(runs) over(partition by player order by year) next_year_runs
+from tablename) a) b group by player
+
+(72) Nth value and ntile in sql:
+
+
+ID   |   State    | Date    |  Sales
+
+1    |  Jharkhand | 22-5-22 |  603
+2    |  Jharkhand | 23-5-22 |  613
+3    |  Jharkhand | 24-5-22 |  623
+4    |  Bihar     | 25-5-22 |  643
+5    |  Bihar     | 26-5-22 |  663
+6    |  Bihar     | 27-5-22 |  683
+7    |  Maharastra| 28-5-22 |  633
+8    |  Maharastra| 29-5-22 |  603
+9    |  Maharastra| 21-5-22 |  683
+
+select *,nth_value(sales,4) over (partition by state order by Date rows between unbounded preceding and unbounding following) from tablename
+
+-- ntile is used for grouping based on number of rows in a particular group. 
+
+for example, if we have 12 rows in a dataset and we want a group of 3 rows, so we will have 4 groups.
+
+-- example: 3 groups:
+
+select id,date,state,sales, case when a.n=1 then 'High Sales' when a.n=2 then 'Medium Sales' else 'Low Sales' end as Sales value from 
+(select *, ntile(3) over(partition by State order by Sales desc) n from tablename) a
+
+(73) order of execution: where --> group by --> having --> order by --> limit
+
+(74) cross join works even there is no common column by using cartestian product.
+
+select a.*,b.* from table a, table2 b
+
+(75) Non-Equi Join is used when we have to apply join condition other than "=" like <,>,!=
+
+(76) ISNULL and NULLIF in SQL:
+
+id  | maths | english | physics | chemistry | computer 
+
+1   | 34    | 31      |         |  12       | 36
+2   |       |         |  45     |           | 35
+
+we need to find sum of all subjects for each id
+
+replace null with zero
+
+select *, isnull(maths,0)+isnull(english,0)+isnull(physics,0)+isnull(chemistry,0)+isnull(computer,0) from tablename         
+  
+
+(or if we don't lnow which subject has null)
+
+select *, case when maths is null then 0 else maths end as maths_new from tablename
+
+--opposite of isnull is nullif() ___> replace non null to null 
+
+select id, nullif(marks,267) from (select id, isnull(maths,0)+isnull(english,0)+isnull(physics,0)+isnull(chemistry,0)+isnull(computer,0) from tablename         
+ ) a
+
+(77) 
+
+Inner Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4
+3
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+
+(total 6 rows)
+
+Left Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4
+3
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+4    NULL
+(total 7 rows)
+
+Right Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4
+3
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+(total 6 rows) -- all values from right table even if no matching value does not found in left table
+
+Outer Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4              6
+3
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+4    NULL
+NULL 6
+
+(total 8 rows)
+
+Full Outer Join = Union of right and left join 
+
+(78) 
+
+Inner Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4              NULL
+3
+NULL 
+NULL
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+
+(total 6 rows)
+
+Left Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4              NULL
+3
+NULL 
+NULL
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+4    NULL
+NULL NULL
+NULL NULL
+
+(total 9 rows)
+
+Right Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4              NULL
+3
+NULL 
+NULL
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+NULL NULL
+
+(total 7 rows)
+
+Outer Join:
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4              NULL
+3
+NULL 
+NULL
+
+Result:
+
+id   id
+
+1    1
+1    1
+2    2
+3    3
+3    3
+2    2
+4    NULL
+NULL NULL
+NULL NULL
+NULL NULL
+
+(total 10 rows)
+
+
+(79) 
+
+id             id
+
+1              1
+1              2
+2              3 
+3              2
+4              NULL
+3
+NULL 
+NULL
+
+
+--select * from table1 inner join table2 on table1.id=1
+
+output:
+
+id   id
+
+1    1
+1    2
+1    3
+1    2
+1    NULL
+1    1
+1    2
+1    3
+1    2
+1    NULL
+
+
+(80) Difference between 2 timestamps in SQL:
+
+Timing1   |   Timing2    |  diff
+10:50:00  |   12:30:00   |  1 hour 40 min 0 sec
+12:30:00  |   13:52:00   |  1 hour 22 min 0 sec
+05:45:00  |   09:00:00   |  3 hours 15 min 0 sec
+
+-- difference in terms of seconds
+
+select *, datediff(second,timing1,timing2) time_diff_sec from tablename
+
+-- difference in terms of hours part
+
+select *, datediff(second,timing1,timing2) time_diff_sec,datediff(second,timing1,timing2)/3600 hr from tablename
+
+-- difference in terms of minutes and seconds part
+
+select *, datediff(second,timing1,timing2) time_diff_sec,datediff(second,timing1,timing2)/3600 hr,datediff(second,timing1,timing2)%3600 remaining_sec_for_min,
+(datediff(second,timing1,timing2)%3600)/60 mn,
+(datediff(second,timing1,timing2)%3600)%60 remaining_sec_for_sec
+ from tablename
+
+-- final answer
+
+select *, concat(datediff(second,timing1,timing2)/3600,'hour',
+(datediff(second,timing1,timing2)%3600)/60, 'min',
+(datediff(second,timing1,timing2)%3600)%60,'sec')
+ from tablename
+
+
+(81) List Aggregate and String Aggregate in SQL:
+
+custid   |  orderid    |  item      |  quantity
+
+c1       |  1          | 'mouse'    |  2
+c1       |  1          | 'keyboard' |  3
+c1       |  1          | 'headphone'|  5
+c1       |  1          | 'laptop'   |  1
+c1       |  1          | 'pendrive' |  3
+
+Result we want:
+
+custid   |  summary
+
+c1       |  mouse-2,keyboard-3,headphones-5,laptop-1,pendrive-6
+
+SQL Query:
+
+--select string_agg(item,',') summary from tablename
+
+--select string_agg(detail,',') summary from (select concat(item,'-',quantity) detail from tablename) a
+
+--select custid, string_agg(detail,',') summary from (select custid concat(item,'-',quantity) detail from tablename) a group by custid
+
+--select string_agg(item,',') within group (order by item) summary from tablename 
+
+(82) Interview Questions:
+
+
+customers table:
+
+customerid   |   customername    | age   | state
+
+1            |   Ram             | 21    | Jharkhand
+2            |   Shyam           | 26    | Bihar
+3            |   Raj             | 38    | Jharkhand
+4            |   Rahul           | 29    | Jharkhand
+5            |   Suresh          | 40    | Jharkhand
+6            |   Ramesh          | 33    | West Bengal
+
+order table:
+
+customerid   |   orderid     | orderdate  | amount
+
+1            |   1           | 19-04-2021 | 560
+1            |   2           | 24-04-2021 | 3824
+2            |   3           | 01-05-2021 | 613
+3            |   4           | 03-05-2021 | 1399
+3            |   5           | 28-05-2021 | 4391
+3            |   6           | 04-06-2021 | 2877
+5            |   7           | 08-04-2021 | 4748
+6            |   8           | 16-03-2021 | 3352
+6            |   9           | 04-05-2021 | 2072
+
+-- write a query to get customer name, count of orders purchased in april 2021 and may2021
+
+select d.name,c.mnth,c.cnt from
+(select customerid, case when mnth=4 then 'April' else 'May' end as mnth, cnt from
+(select customerid, mnth, count(distinct orderid) cnt from
+(select *, month(orderdate) mnth from orders where month(orderdate) in (4,5)) a;
+group by customerid,mnth) b) c inner join customers d on d.customerid=c.customerid;
+
+-- write a query to get customer names who bought in May 2021 and are from Jharkhand
+
+
+select a.*,b.state,b.name from
+(select *, month(orderdate) mnth from orders where month(orderdate) in (5)) a 
+inner join customers b on b.id = a.customer.id where b.state in ('Jharkhand')
+
+-- write a query to get customer name and their latest ordr information
+
+select name,orderid,orderdate,rnk from
+(select a.*,b.*, dense_rank() over(partition by b.id order by a.orderdate desc) rnk from orders a inner join customers b on a.customerid=b.id) c where rnk=1
+
+-- write a query to get top 2 customer id and name based on total transaction value for each month
+
+select * from
+(select *,dense_rank() over (partition by mnth order by total_amount desc) rnk from
+(select b.id,b.name,month(a.orderdate) mnth,sum(a.amount) total_amount from orders a inner join customers b on a.customeris=b.id group by b.id,b.name,month(a.orderdate)) a) where rnk <3
+
+(83) CTEs (Common Table Expression) in SQL:
+
+orders table:
+
+order_id    |    date     |   cid
+
+1           |  05-08-2020 |   1
+2           |  04-08-2020 |   2
+3           |  03-08-2020 |   3
+4           |  04-08-2020 |   1
+5           |  05-08-2020 |   2
+6           |  05-08-2021 |   3
+7           |  04-08-2021 |   1
+
+order_summary table:
+
+order_id    |  amount    |   quantity
+
+1           |   4922     |   8
+2           |   7516     |   8
+3           |   1206     |   4
+4           |   2841     |   7
+5           |   2522     |   2
+6           |   5084     |   3
+7           |   6640     |   4
+
+customers table:
+
+cust_id     |  cust_first_name   |  cust_last_name
+
+1           |  Henry             |  Brown
+2           |  James             |  Williams
+3           |  Jack              | Taylor
+
+Result:
+
+Sales Summary for 2021 Output
+
+custid      |  full name     | sales   
+
+
+CTEs (temporary table) is a small subset of the dataset for usability.
+
+SQL Query:
+
+with cte_2021_sales (cust_id,yr,full_name,total_sales) as (
+
+select c.cust_id,c.yr,c.full_name,sum(d.amount*d.quantity) total_sales from
+(select a.order_id,year(a.date) yr,a.cust_id, concate(b.cust_first_name,' ', b.cust_last_name) full_name from orders a inner join customers b on a.cust_id = b.cust_id) c inner join order_summary d on c.order_id=d.orderid;
+group by cust_id,yr,full_name
+
+) 
+
+select * from cte_2021_sales where yr=2021
+
+(84) SQL Interview Questions:
+
+users table:
+
+voter_id   |   signup_date
+
+1          |   22-09-2009
+2          |   10-09-2011
+3          |   21-09-2015
+
+Transactions table:
+
+Transaction_id    |   voter_id    |     created_at     |  updated_at   | status   | amount
+
+1                 |   1           |     19-04-2017     |  21-04-2017   | fail     | 105
+2                 |   3           |     18-12-2019     |  19-12-2019   | success  | 215
+3                 |   2           |     20-02-2020     |  23-07-2020   | fail     | 436
+
+
+-- write a query to find all the transactions done by the most recently signed user
+
+select * from transactions where userid in (
+select userid from customer where date in (select max(date) from customer))
+
+(or)
+select a.userid,b.amount,b.created_at,b.transaction_id,b.status from
+(select userid from customer where date in (select max(date) from customer))) a inner join transactions b on a.userid=b.userid
+
+
+-- write a query to find transaction_ids of second highest amount transaction done by all users
+
+select * from
+(select *,dense_rank() over (partition by userid order by amount desc) rnk from transactions) a
+where rnk=2
+
+-- write a query to add a column(cumulative_amount) to transactionn done by a user at every transaction_id (without any window function)
+
+A. using window function:
+
+select *, sum(amount) over(partition by userid order by transaction_id rows between
+unbounded preceding and current row) cumulative_amount from transactions;
+
+B. without using window function (with non-equi joins):
+
+select a.transaction_id,a.userid, a.updated_at,a.amount,sum(a.amt) cumulative_amount from
+(select a.*,b.amount amt from transactions a join transactions b on a.transaction_id >= b.transaction_id
+and a.userid =b.usrid) a
+group by a.transaction_id,a.userid,a.updated_at,a.amount
+
+(85) Pivot in SQL:
+
+comes from pivottable in excel
+
+Customer Table:
+
+cust_id     |    cust_first_name    |   cust_last_name
+
+1           |    Henry              |   Brown
+2           |    James              |   Williams
+3           |    Jack               |   Taylor
+
+
+order table:
+
+order_id    |    date         | cid      |  amount
+
+1           |    5-8-2020     | 1        |  4922
+2           |    4-8-2020     | 2        |  7116
+3           |    3-8-2020     | 3        |  1206
+
+
+-- Total orders by each customer
+
+select * from 
+(select order_id, cust_id from orders) a
+
+pivot(count(order_id) for cust_id in ([1],[2],[3])) pivot_data
+
+-- Total order by each customer by year    
+
+select * from 
+(select order_id, cust_id,year(date) yr from orders) a
+
+pivot(
+
+count(order_id) for cust_id in ([1],[2],[3])
+
+) pivot_data
+
+
+-- joining both tables:
+
+select * from 
+(select a.order_id, concat(b.cust_first_name, ' ' ,b.cust_last_name) full_name,year(a.date) yr from
+orders a inner join  customer b on a.cust_id = b.cust_id) b
+pivot(count(order_id) for full_name in ([Henry Brown], [James Williams], [Jack Taylor])) pivot_data
+ 
+(86) Recursive CTEs in SQL:
+
+-- select datename(DW,0)
+Monday (0 is used for monday, 1 is used for tuesday...)
+
+-- 
+
+with cte_numbers(n, weekday)
+as (
+
+select 0,datename(dw,0)
+
+union all
+
+select n+1, datename(dw,n+1) from cte_numbers where n<6
+)
+select weekday from cte_numbers;
+
+(Here select 0,datename(dw,0) is base condition and where n<6 is a terminating condition)
+
+(87) Interview Question:
+
+orders table:
+
+order_id    |    product_id     |    quantity
+
+ORD1        |    PRD1           |     5
+ORD2        |    PRD2           |     1
+ORD3        |    PRD3           |     3
+
+-- Write a SQL query which will explode data into single unit level records
+
+Output we want:
+
+ORD1        |    PRD1           |     1
+ORD1        |    PRD1           |     1
+ORD1        |    PRD1           |     1
+ORD1        |    PRD1           |     1
+ORD1        |    PRD1           |     1
+ORD2        |    PRD2           |     1
+ORD3        |    PRD3           |     1
+ORD3        |    PRD3           |     1
+ORD3        |    PRD3           |     1
+
+(opposite of group by)
+
+SQL query:
+
+with cte as (
+
+select order_id, product_id,quantity from orders
+union all
+select order_id,product_id,quantity-1 from cte where quantity >=2
+
+)
+
+select order_id,product_id,quantity from cte 
+
+(87) SQL Interview Questions:
+
+activity table:
+
+player_id   |   device_id    |   event_date    |  games_played
+
+1           |    2           |   2016-03-01    |   5
+1           |    2           |   2016-05-02    |   6
+2           |    3           |   2017-06-25    |   1
+3           |    1           |   2016-03-02    |   0
+3           |    4           |   2018-07-03    |   5
+
+-- Write  a SQL query that reports the device that is first logged in for each player
+
+select player_id,device_id from
+(select *, rank() over(partition by player_id order by event_date) rnk from activity) a where rnk=1
+
+(or)
+
+select a.player_id,a.device_id from activity a inner join
+(select player_id,min(event_date) mn from activity group by player_id) b on a.player_id=b.player_id
+and a.event_date=b.mn
+
+
+-- Write an SQL query that reports for each player and date, how many games played so far
+by the player. That is, the total number of games played by the player until that date.
+
+
+select *, sum(games_played) over (partition by player_id order by event_date) number_of_games-played from activity
+
+-- Write an SQL query that reports the fraction of players that logged in again on the day
+after  the day they first logged in,
+rounded to 2 decimal places. In other words, you need to count the number of players that logged in for at least
+two consecutive days starting from their first login date, then divide that number by the total number of players.
+
+select count(distinct player_id) cnt1 /(select count(distinct player_id) from activity) cnt2 from 
+(select *,datediff(day,event_date,next_day) diff from
+(select *, lead(event_date) over(partition by player_id order by event_date) next_day from activity) a ) b where diff=1
+
+(88) SQL Interview Questions:
+
+employees table:
+
+employee_name    |   employee_salary
+
+A                |   24000
+C                |   30000
+D                |   12000
+E                |   21000
+F                |   13000
+
+
+-- Write the SQL query to get the third maximum salary of an employee 
+
+select top 1 * from 
+(select top 3 * from employees order by salary desc) order by salary asc
+
+-- find nth salary
+
+select * from
+(select *, rank() over(order by salary desc) rnk from employee) e where rnk=3
+
+(89) SQL Interview Questions: 
+
+table:
+
+ID     |     Name     |   Age
+
+1      |    A         |   21
+2      |    B         |   23
+2      |    B         |   23
+
+Removing Duplicates in SQL
+
+-- select distinct id,name,age from tablename
+
+-- select id,name,age, count(id) from table group by id,name,age having count(id)=1 
+
+(90) SQL Interview Questions
+
+table:
+ 
+ename        |    email
+
+A            |    fdc@email.com
+C            |    fdoos@email.com
+
+
+Get the name before the @ sign in email id:
+
+-- select left(email,charindex('@',email)-1) from tablename
+
+Get the domain name after the @ sign in email id:
+
+-- select right(email,len(email)-charindex('@',email)) from tablename
+
+(91) SQL Interview Questions
+
+table:
+
+id     |   name     |   salary   | managerid
+
+1      |   Joe      |   70000    |  3
+2      |   Henry    |   80000    |  4
+3      |   Sam      |   60000    |  null
+
+Find employees who earn more than managers
+
+-- select A.ID, A.NAME,A.SALARY,A.MANAGERID,B.NAME Mnanger_Nmae,B.Salary Manager_Salary from table2  A join table TABLE2 B ON A.manager_id = B.ID wher A.salary > B.salary
+
+(92) SQL Interview Questions
+
+Customers:
+
+id    |   customers
+
+1     |   n1
+2     |   n2
+3     |   n3
+4     |   n4
+
+orders:
+
+id    |   orderid
+
+1     |   2
+2     |   1
+
+-- Write an SQL query to report all customers who never order anything
+
+select id,name from
+(select a.id,a.name,b.orderid from table1a a left join table1b b on a.id=b.id) a where
+orderid is null
+
+(93) SQL Interview Questions
+
+table:
+
+id    |   student
+
+1     |   n1
+2     |   n2
+3     |   n3
+4     |   n4
+5     |   n5 
+
+swap the seats of the students randomly and if number of students are odd then put last
+student as it is.  
+
+output:
+
+id    |   student
+
+1     |   n2
+2     |   n1
+3     |   n4
+4     |   n3
+5     |   n5
+
+SQL Query:
+
+select a.id,b.name from table2 a left join table2 b on
+(case when (a.id % 2)!=0 then a.id+1 else a.id-1 end) = b.id 
+
+
+(94) SQL Interview Questions
+
+table:
+
+id  |  name   |   salary   |   departmentid
+
+1   |  n1     |   85000    |    1
+2   |  n2     |   80000    |    1
+3   |  n3     |   60000    |    1
+4   |  n4     |   81000    |    1
+5   |  n5     |   90000    |    1
+6   |  n6     |   69000    |    1
+7   |  n7     |   70000    |    1
+
+-- query for who earns the most money in each department. A high earner in a department is someone who earns
+one of the department's top three highest salary.
+
+select * from
+(select a.id,a.name,a.salary,a.deptid,b.dname, dense_rank() over (partition by deptid order by salary desc) rnk
+ from table3 A left join table3b B on A.deptid=B.id) C
+where rnk in (1,2,3) 
+
+(95) SQL Interview Questions
+
+table:
+
+name   |   salary
+
+n1     |   2831
+n2     |   1988
+n3     |   914
+
+Write a query to find out the deviation from average salary for the employesss who are getting more than average salary
+
+select *, salary-avg_salary deviation from
+(select name,salary, avg(salary) over () avg_salary
+from tablename) c
+where salary > avg_salary
+
+(96) CASE WHEN END Statements in SQL
+
+TABLE:
+
+name    |    state
+
+n1      |    AS
+n2      |    BR
+n3      |    GA
+n4      |    GJ
+n5      |    HR
+
+make a column for full name of state:
+
+select *,
+case when name='AS' then 'ASSAM'
+when name='BR' then 'BIHAR'
+when name='GA' then 'GOA'
+when name='GJ' then 'GUJARAT' 
+when name='HR' then 'HARYANA'
+end as FULL_NAME_STATE from tablename
+
+
+-- update tablename set name= 
+
+case when name='AS' then 'ASSAM'
+when name='BR' then 'BIHAR'
+when name='GA' then 'GOA'
+when name='GJ' then 'GUJARAT' 
+when name='HR' then 'HARYANA'
+end;
+
+(when more than one condition are satisfied for an input then first condition will be executed, so sequence matters here)
+
+(97) SQL Interview Questions
+
+table:
+
+id    |   name    |   gender    |   salary
+
+1     |   A       |   m         |   2500
+2     |   B       |   f         |   1500
+3     |   C       |   m         |   5500
+4     |   D       |   f         |   500
+
+Write an SQL query to swap all 'f' and 'm' values with a single update statement.
+
+update table2 
+set gender = (
+case when gender='m' then 'f' else 'm' end
+);
+
+(98) SQL Interview Questions
+
+table:
+
+material   |   type    |  weight
+
+H3         |  Heavy    |  52
+H2         |  Heavy    |  53
+H1         |  Heavy    |  54
+L4         |  Light    |  15
+L2         |  Light    |  19
+
+
+select a.material hm, b.material lm from
+(select *, row_number() over(order by weight desc) rnk from table3 where type='Heavy') a
+full outer join
+(select *, row_number() over(order by weight) rnk from table3 where type='Light') b
+on a,rnk=b.rnk
+
+(99) SQL Interview Questions
+
+table:
+
+order id   |  user id    |  order date    |  sale 
+
+1          |  1          |  1/3/2023      |  8363
+2          |  2          |  1/15/2023     |  9196
+3          |  3          |  1/10/2023     |  9663
+4          |  1          |  2/3/2023      |  2639
+
+Write a query to identify returning active users. A returning active user is a user
+who has made a second purchase within 7 days of any other of their purchases 
+
+select distinct a.userid from table4 a inner join table4 b on a.userid=b.userid and datediff(day,a.orderdate,b.orderdate)<8
+
+(100) SQL Interview Questions
+
+table:
+
+id    |    revenue    |   mnth
+
+1     |    8000       |   Jan
+2     |    9000       |   Jan
+3     |    10000      |   Feb
+1     |    7000       |   Feb
+1     |    6000       |   Mar
+
+select id, 
+
+max(case when mth='Jan' then revenue end) as jan_r, 
+max(case when mth='Feb' then revenue end) as feb_r,
+max(case when mth='Mar' then revenue end) as mar_r
+ from table5 group by id
+
+(101) SQL Interview Questions
+
+table:
+
+user_id   |   start_date   |  end_date
+
+1         |  1/1/2019      |  1/31/2019
+2         |  1/15/2019     |  1/17/2019
+3         |  1/29/2019     |  2/4/2019
+4         |  2/5/2019      |  2/10/2019
+
+Given a table of product subscriptions with a subscription start date and end date for each user,
+write a query that returns true or false whether or not each user has a subscription date range
+that overlaps with any other user.
+
+
+select aid, min(case when bid is null then 0 else 1 end) as overlap from
+(select a.user_id aid,b.user_id bid from table10 a
+left join table10 b on
+b.end_date >= a.start_date and
+a.end_date >= b.start_date and
+a.user_id != b.user_id ) c
+group by aid;
+
+(102) SQL Interview Questions
+
+DailySales table:
+
+date_id    |    make_name    |   lead_id     |   partner_id
+
+2020-12-8  |    toyota       |   0           |   1
+2020-12-8  |    toyota       |   1           |   0
+2020-12-8  |    toyota       |   1           |   2
+2020-12-7  |    toyota       |   0           |   2
+2020-12-7  |    honda        |   0           |   1
+2020-12-8  |    honda        |   0           |   1
+
+Write an SQL query that will, for each date_id and make_name,
+return the number of distinct lead_id's and distinct partner_id's
+
+select date_id,make_name,count(distinct lead_id),count (distinct partner_id) from table9
+group by date_id,make_name;
+
+(103) SQL Interview Questions
+
+table:
+
+id    |    student    |   score
+
+1     |    jack       |   1700
+2     |    alice      |   2010
+3     |    mike       |   2200
+4     |    scott      |   2100
+
+write a query to return the two students with the closest test scores with the score diffference
+
+(select *, row_number() over(order by diff) rnk from
+(select id,lead(id) over(order by id) next_id,
+score,
+lead(score) over(order by score) next_score,
+lead(score) over(order by score)-score diff,
+from table11) a  where diff is not null) b where rnk=1 ;
+
+(104) CASE WHEN END statements with Aggregates group by in SQL:
+
+table:
+
+sid    |    marks
+
+1      |    72
+2      |    16
+3      |    69
+4      |    43
+5      |    23
+
+output:
+
+63-100 -- Excellent
+33-62  -- pass
+0-32   -- Fail
+
+select *, case when score>62 then 'Excellent'
+when score>32 then 'pass'
+else 'fail' end as grade
+from table1;
+
+Dataset:
+
+orderid    |   stateid    |   status   | amount
+
+1          |    s1        |   shipped  | 67050
+2          |    s2        |   delivered| 67050
+3          |    s3        |   packed   | 60050
+4          |    s2        |   shipped  | 67050
+5          |    s1        |   shipped  | 67650   
+
+we need to find no of orders shipped,delivered and packed
+
+select stateid,
+count(case when status='shipped' then orderid end) as shipped_orders,
+count(case when status='delivered' then orderid end) as delivered_orders,
+count(case when status='packed' then orderid end) as packed_orders
+ from table2 group by stateid
+
+(105) CASE WHEN END statements in joins in SQL:
+
+table:
+
+seatid    |    name
+1         |    N1
+2         |    N2
+3         |    N3
+4         |    N4
+5         |    N5
+
+output:
+
+seatid    |    name
+1         |    N2
+2         |    N1
+3         |    N4
+4         |    N3
+5         |    N5
+
+The table contains a list of students. Every tuple in the table consists of a seat id along with
+the name of the student. You can assume that the given table id sorted according to the seat id
+and that the seat ids are in continuous increments. Now, the class teacher wants to swap the seat id
+for alternate studens in order to give them a last-minute surprise before the exam. You need to write
+a query that swaps alternate students' seat id and returns the result.
+If the number of students is odd, you can leave the seat id for the last student as it is.
+
+(Already solved this problem)
+
+

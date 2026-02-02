@@ -1,0 +1,77 @@
+-- Nagarro (23/1/2026)
+
+1. If there is a categorical variable with a large number of levels then how to do encoding for that variable?
+   - For categorical variables with a large number of levels, techniques such as target encoding, frequency encoding, or using embeddings can be employed. These methods help to reduce dimensionality while retaining important information.
+
+2. Prepare projects very well with all the used models and how they work.
+   - Ensure that each project includes a clear explanation of the problem statement, data preprocessing steps, feature engineering techniques, model selection rationale, hyperparameter tuning processes, and evaluation metrics. Documenting the workflow and results will help in understanding the effectiveness of each model used.
+
+3. Python code to find top 3 salaries for each category in a dataframe.
+   ```python
+   import pandas as pd
+
+   # Sample DataFrame
+   data = {
+       'Category': ['A', 'A', 'A', 'B', 'B', 'C', 'C', 'C'],
+       'Salary': [50000, 60000, 55000, 70000, 80000, 90000, 85000, 95000]
+   }
+   df = pd.DataFrame(data)
+
+   # Finding top 3 salaries for each category
+   top_salaries = df.groupby('Category')['Salary'].nlargest(3).reset_index()
+   top_salaries = top_salaries.drop('level_1', axis=1)
+
+   print(top_salaries)
+   ```
+
+4. difference between adboost, xgboost and gradient boost.
+   - Both AdaBoost and Gradient Boosting are ensemble learning techniques that combine multiple weak learners to create a strong learner. The key difference lies in how they build the model:
+     - AdaBoost focuses on adjusting the weights of incorrectly classified instances, giving more importance to those instances in subsequent models.
+     - Gradient Boosting, on the other hand, builds models sequentially by optimizing a loss function, where each new model attempts to correct the errors made by the previous models.
+   - XGBoost (Extreme Gradient Boosting) is an optimized implementation of Gradient Boosting that includes additional features such as regularization, parallel processing, and handling missing values, making it faster and often more accurate than standard Gradient Boosting.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1. Learn how to handle data drift in machine learning models.
+   - Data drift refers to changes in the data distribution over time, which can affect model performance. To handle data drift, implement monitoring systems to track model performance metrics, retrain models periodically with new data, and use techniques like online learning or adaptive algorithms that can adjust to changes in the data.
+
+2. Learn Monte Carlo simulations.
+   - Monte Carlo simulations are a statistical technique used to model the probability of different outcomes in a process that cannot easily be predicted due to the intervention of random variables. They involve running a large number of simulations to generate a distribution of possible outcomes, which can be useful for risk assessment and decision-making in various fields such as finance, engineering, and project management.
+
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ 1. How to reduce halucinations in LLMs.
+    - To reduce hallucinations in Large Language Models (LLMs), techniques such as fine-tuning the model on domain-specific data, implementing retrieval-augmented generation (RAG) where the model can access external knowledge bases, and using reinforcement learning from human feedback (RLHF) can be effective. Additionally, incorporating constraints during generation and improving prompt engineering can help guide the model towards more accurate responses.
+
+2. How to check 2 images are same or not ?
+
+3. How to check predictive image is correct output or not in the production ?
+
+3. Python code to check if a number is prime or not.
+   ```python
+   def is_prime(n):
+       if n <= 1:
+           return False
+       for i in range(2, int(n**0.5) + 1):
+           if n % i == 0:
+               return False
+       return True
+
+   # Example usage
+   number = 29
+   if is_prime(number):
+       print(f"{number} is a prime number.")
+   else:
+       print(f"{number} is not a prime number.")
+   ```
+
+4. How to check whether the given response from the chatbot is correct or not or how to measure the performance of LLMs
+
+5. difference between binary loss and focal loss ?
+
+6. explain different prompt engineering techniques.
+
+7. Explain Unet Architecture and how it works 
+
+---------------------------------------------------------------------------------------------------------------------------

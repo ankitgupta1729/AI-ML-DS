@@ -1,0 +1,89 @@
+1. First install a Python debugger extension in vscode, if it is not installed. You will see a 
+debug icon (a play button) on the left sidebar. 
+
+2. Create a main.py and calculator.py file in the same folder and write the code as mentioned. When we run pythin main.py, 
+sometimes, it will give an error because we are trying to divide by zero and sometimes it will not give an error.
+
+3. Now, click on debug icon on the left sidebar. Then click on "Run and Debug" button. Then click on
+Python debugger and then select "Python File" option.
+
+4. It will run but will not catch the error. To catch the error, we need to add breakpoints.
+
+A breakpoint is a marker that you can set on a specific line of code in your program. When the debugger
+reaches a line with a breakpoint, it will pause the execution of the program, allowing you to inspect the 
+current state of the program, including variable values, memory usage, and the call stack. 
+
+This allows you to analyze the program's behavior at that specific point and helps in identifying and 
+fixing bugs or issues in the code.
+
+5. To set a breakpoint, click on the line number in the editor and a blue dot will appear on the left side of the line. 
+Now, click on the breakpoint icon to set the breakpoint.    
+
+6. Now, when we run the program, it will pause at the breakpoint and we can inspect the current state of the program, 
+including variable values, memory usage, and the call stack.
+
+7. When we add a red dot on the line number, it means that we have set a breakpoint then application will be stopped 
+at that point.
+
+8. For our example, put a red breakpoint on the line "if value_param == 'sum':" in main.py file and then run the debugger 
+after coming to the main.py file. See the values of a and b in the VARIABLES section on the left side.
+
+If a=10 and b=0, then the program will not catch error because value_param is 'divide' and it will go to else part.
+
+A. If we click on the continue button (play button with a line) on the top bar, it will go to the next breakpoint or end of 
+the program and catch the error.
+
+B. Suppose, after running the debugger, if we want to change the value of a or b, 
+then we can do that by double clicking on the value of a or b in the VARIABLES section on the left side or 
+in the debug console at the bottom. After changing the value, click on step over button (curved arrow) 
+on the top bar to go to the next line. If we have to go into a function, then click on step into button (downward arrow)
+on the top bar and if we have to go out of a function, then click on step out button (upward arrow) on the top bar.
+
+To run the code line by line in a function, click on step over button (curved arrow) on the top bar and 
+to go out of the function, click on step out button (upward arrow) on the top bar.
+
+To stop the debugger, click on the red square button on the top bar.
+
+9. to remove all breakpoints, click on the breakpoint icon with a cross on the left sidebar.
+
+10. To add conditional breakpoints, right click on the red dot on the line number and select "Edit Breakpoint".
+Then add the condition. For example, we can add condition b==0 on the breakpoint on the line "if value_param == 'sum':" 
+in main.py file.Now, when we run the debugger, it will only stop at the breakpoint if the condition is met (
+i.e., if b is equal to 0).
+
+10. If the value of a variable is changing frequently, then we can add a watch on that variable.
+To add a watch, go to the WATCH section on the left sidebar and click on the + icon. 
+Then enter the variable name that you want to watch. Now, when we run the debugger, 
+the value of the variable will be displayed in the WATCH section.
+
+Also, we can right click on a variable in the VARIABLES section and 
+select "Add to Watch" to add that variable to the WATCH section. Also, right click on a variable
+and select "add to Watch" to add that variable to the WATCH section and to remove it from the WATCH section,
+we can right click on the variable in the WATCH section and select "Remove Watch".
+
+example: you can use while loop to change the value of a variable frequently and 
+add a watch on that variable to see the changes.
+
+11. To disable a breakpoint, click on the red dot on the line number and it will turn into a gray dot.
+
+Also, we can go to bottom of the left sidebar and click on the BREAKPOINTS section to see all the breakpoints.
+Then we can enable or disable a breakpoint by clicking on the checkbox next to the breakpoint.
+
+12. A Debugger is a tool to look what is happening in your code at runtime. It helps to find and fix bugs in your code.
+
+13. Add a breakpoint on line "nums = generate_numbers(100)" in example.py file and run the debugger.
+Then, click on step into button (downward arrow) on the top bar to go into the function generate_numbers.
+Then, click on step over button (curved arrow) on the top bar to run the code line by line in the function.
+Then, click on step out button (upward arrow) on the top bar to go out of the function.
+
+14. After step over to line "print("Numbers:", nums)" if we add a watch on nums variable, 
+then we can see the value of nums variable in the WATCH section on the left sidebar. For example, click on 
++ icon in the WATCH section and add nums[:5] variable to see its values.
+
+15. Now, step over to "print("Running average:", running_average(nums))" line and then step into the function 
+running_average and see the call stack in the CALL STACK section on the left sidebar then step over in this function
+till the line "current_avg = average(total, i + 1)" and then step into the average function and see the call stack in the
+CALL STACK section on the left sidebar.
+
+
+

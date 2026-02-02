@@ -1,0 +1,7 @@
+1. https://leetcode.com/problems/invert-binary-tree
+2. https://leetcode.com/problems/running-sum-of-1d-array [using numpy (as in the comments) takes more time]
+3. Difference between array capacity and length of array: https://leetcode.com/explore/learn/card/fun-with-arrays/521/introduction/3295/
+    - Capacity: The total amount of space that has been initially allocated for the array. 
+    This is the maximum number of elements that the array can hold without needing to allocate more memory.
+    - Length: The actual number of elements that are currently stored in the array.
+

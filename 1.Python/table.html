@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table for Pandas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f1f8ff;
+        }
+        .code-sample {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sample Data Table for Pandas read_html()</h1>
+    
+    <div class="container">
+        <h2>Employee Performance Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Salary</th>
+                    <th>Performance Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>E10234</td>
+                    <td>John Smith</td>
+                    <td>Marketing</td>
+                    <td>$72,500</td>
+                    <td>88</td>
+                </tr>
+                <tr>
+                    <td>E10235</td>
+                    <td>Jane Doe</td>
+                    <td>Engineering</td>
+                    <td>$95,000</td>
+                    <td>92</td>
+                </tr>
+                <tr>
+                    <td>E10236</td>
+                    <td>Robert Johnson</td>
+                    <td>Sales</td>
+                    <td>$65,000</td>
+                    <td>79</td>
+                </tr>
+                <tr>
+                    <td>E10237</td>
+                    <td>Emily Williams</td>
+                    <td>Engineering</td>
+                    <td>$98,000</td>
+                    <td>95</td>
+                </tr>
+                <tr>
+                    <td>E10238</td>
+                    <td>Michael Brown</td>
+                    <td>HR</td>
+                    <td>$68,000</td>
+                    <td>85</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="code-sample">
+            # Python code to read this table:<br>
+            import pandas as pd<br>
+            tables = pd.read_html('table.html')<br>
+            df = tables[0]<br>
+            print(df.head())
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>This HTML file contains a table that can be parsed by pandas.read_html()</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+1. Installation on macos 15.7.3 in terminal: 
+
+brew install uv
+
+2. Check version:
+
+uv --version
+
+3. go to uv demo folder after deactivating all virtual environments using "deactivate":
+
+cd 14.uv_demo
+
+4. Initialize project:
+
+uv init
+
+5. Create & activate virtual environment:
+
+uv venv my_venv
+source my_venv/bin/activate
+
+6. Select Python Interpreter in VS Code:
+
+	1.	Press Cmd + Shift + P
+	2.	Type Python: Select Interpreter
+	3.	Choose: .venv/bin/python
+
+This step is critical.
+
+7. Install dependencies using uv:
+
+uv add numpy pandas fastapi
+
+Dev dependencies:
+
+uv add --dev pytest black ruff
+
+What happens automatically
+	•	pyproject.toml updated
+	•	uv.lock updated
+	•	Installed into .venv
+
+8. Sync dependencies (very important concept):
+
+If you clone a project or edit pyproject.toml:
+
+uv sync
+
+This:
+	•	Installs exact versions from uv.lock
+	•	Ensures reproducibility
+
+9. Using uv with VS Code Terminal (best setup)
+
+Set VS Code to auto-activate venv
+
+Open settings.json:
+
+{
+  "python.terminal.activateEnvironment": true
+}
+
+Now every new terminal auto-activates .venv.
+
+10. Linting, Formatting & Testing (recommended):
+
+Add tools:
+
+uv add --dev ruff black pytest mypy
+
+VS Code settings:
+
+{
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.ruffEnabled": true
+}
+
+11. Typical uv commands (cheat sheet):
+
+Task Command
+Create venv -->  uv venv
+Add dependency -->uv add pkg
+Remove dependency --> uv remove pkg
+Sync deps --> uv sync
+Upgrade deps --> uv lock --upgrade
+List packages --> uv pip list
+Run script --> uv run python main.py
+
+12. Additional uv commands:
+
+    •	uv init --template <template_name> : Initialize project with a specific template.
+    •	uv lock --check : Check if the lock file is up to date.
+    •	uv run <command> : Run any command within the virtual environment.
+
+
+

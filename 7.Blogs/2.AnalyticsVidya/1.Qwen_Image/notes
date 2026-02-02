@@ -1,0 +1,75 @@
+1. Is there something Qwen models can’t do? So far, their text and coding models are topping most of the charts and arenas. That is why Alibaba’s Qwen team got onto the “creative” side. They have just released “Qwen-Image” – a native text rendering image generation model designed to challenge the supremacy of GPT-4.1, DALL-E 2, or Midjourney. The best part? It’s Free, and what’s even better is that it is accessible for everyone!
+
+2. What is Qwen-Image?
+
+Qwen Image is the latest Image generation model by Alibaba’s Qwen team. It’s a 20 B MMDiT image foundation model, meaning that the model consists of 20 billion parameters and is a multimodal diffusion transformer model. Qwen-Image is an open-weight text-to-image generation model.
+
+3.
+
+How does the Qwen-Image model work?
+
+The Qwen-Image model follows an approach that was last seen in OpenAI’s GPT-4o. It utilizes an autoregressive transformer architecture for image generation and editing. To do this, the  model takes a dual encoding approach: 
+
+-- The Qwen2.5-VL encodes the semantic meaning of the prompt
+-- Image generation happens in a latent space using MMDiT, a diffusion model
+-- The final image is produced from this latent space using a VAE encoder. 
+
+4.
+
+How to access Qwen-Image?
+
+To access the Qwen-Image model through Chat, 
+
+A. Head to https://chat.qwen.ai/
+
+B. Select any of the non-coding models like Qwen-235B-A3B-2507 
+
+C. Below the text box, in the middle of the screen, select “Image Generation”. Enter your prompt in the text box and get started! You can access the models in other ways, like:
+
+Github [https://github.com/QwenLM/Qwen-Image]
+Hugging Face [https://huggingface.co/Qwen/Qwen-Image]
+Modelscope [https://modelscope.cn/models/Qwen/Qwen-Image]
+
+5.
+
+Let’s Try Using Qwen Image:
+
+Now that we have covered a lot of details about Qwen-Image, let’s test it for 3 main tasks:
+
+A. Generating a text-heavy Image
+B. Generating an Infographic
+C. Editing an Image
+
+6.
+
+A. Generating a text-heavy Image:
+
+Task: 1: Design a Web Page:
+
+Prompt: “Create a visually engaging landing page for a shampoo product. Highlight the shampoo’s unique features (e.g., hydration, repair, or natural ingredients) with a clean and modern design. Include a hero section with the shampoo bottle image, a catchy headline like ‘Transform Your Hair Today,’ and a call-to-action button (‘Shop Now’ or ‘Learn More’). Add sections for benefits, key ingredients, customer testimonials, and a subscription option. Use soft, fresh colors, high-quality visuals, and ensure the layout is mobile-friendly and conversion-focused.”
+
+Task 2: Create a Flowchart
+
+Prompt: “ Design a clear, modern infographic that explains the image generation process of a 20B MMDiT foundation model in 3 steps:
+
+Prompt Encoding: Show Qwen2.5-VL encoding the semantic meaning of the user’s prompt.
+Latent Space Generation: Visualize MMDiT diffusion creating an abstract image in latent space.
+Final Image Creation: Illustrate a VAE decoder transforming the latent representation into the final high-quality image.
+
+Use icons, arrows, and short labels for each step. The flow should be visually logical and easy to follow, with a tech-inspired color palette.”
+
+Task 3: Image Editing
+
+give some input image and give the prompt like:
+
+Prompt: “Change the night into a sunny morning, replace the man’s clothes with an orange shirt and white shorts, and replace the cat with a small puppy.”
+
+o/p:
+
+7.
+
+Overall, I really liked the editing capabilities of the model, but the image generation, especially incorporating a large amount of text or designing infographics, is where Qwen-Image would need a lot of improvement.
+
+8.
+
+
