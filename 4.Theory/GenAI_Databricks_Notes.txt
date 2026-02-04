@@ -1,0 +1,331 @@
+1. GenAI is subset of Deep Learning(DL), DL is subset of Machine Learning(ML), ML is subset of Artificial Intelligence(AI).
+
+Artificial Intelligence is a multidisciplinary field of computer science that aims to create systems capable of
+emulating and surpassing human-level intelligence.
+
+Machine learning means learn form existing data and make prediction(s) without being explicitly programmed.
+
+Deep learning uses "artificial neural networks" to learn from data.
+
+Generative Artificial Intelligence (GenAI) is a sub-field of AI that focuses on generating new content such as:
+
+- Images
+- Text
+- Videos
+- Audio/Music
+- Code
+- 3D objects
+- Synthetic data and much more.
+
+2. Generative Models:
+
+GenAI is built on a specific type of AI models called Generative Models. These models mathematically approximates
+the underlying data. So, Generative Models is a branch of ML modeling which mathematically approximates the world.
+
+These models take the large datasets such as images,text and sound etc. as inputs and then Deep Learning models
+are utilized to learn the patterns and structures within the data and then they employ various tasks such as: 
+from image dataset, they can be used for synthetic image generation, style transfer(change one image to other)/edit etc.
+from text dataset, they can be used for translation, question answering, semantic search etc.
+from Audio dataset, they can be used for speech-to-text, music transcription, voice synthesis etc.
+
+3. Factors making Generative AI possible now:
+
+(i) Large datasets
+
+- Availability of large and diverse datasets
+- AI models learn patterns, correlations, and characteristics of large datasets
+- Pre-trained state-of-the-art models like GPT-3, DALL-E, and Stable Diffusion
+
+(ii) Computational Power
+
+- Advancements in hardware (GPUs, TPUs)
+- Access to cloud computing platforms
+- Open-source softwares, Hugging Face, TensorFlow, PyTorch etc.
+
+(iii) Innovative DL Models
+
+- Generative Adversarial Networks (GANs)
+- Transformers Architecture
+- Reinforcement Learning with Human Feedback (RLHF)
+
+
+4. Why should I care now ?
+
+ML/AI has been around for a while, why it matters now?
+
+Generative AI models' accuracy and effectiveness have hit a tipping point due to:
+
+- Powerful enough to enable use cases not feasible even a year ago
+- Economical enough for use even by non-technical business users
+
+Generative AI models and tooling are readily available because of:
+
+- Many models are open-source and customizable
+- Required powerful GPUs, but are available in the cloud
+
+5. Generative AI Use Cases:
+
+Intelligent conversations, creative text creation, code generation etc.
+
+- Content generation
+- Question/answers
+- Virtual assistants/chatbots
+- Content personalization
+- Language style transfer
+- Story telling, poetry, creative writing
+- translation
+- Code generation/ auto-completion
+- Image generation (Generate realistic/artistic high-quality images, Virtual agent generation etc.)
+- Video Synthesis (Animation, Scene generation, Deepfakes etc.)
+- 3D Generation (Object, character generation, Animations etc.)
+- Audio Generation (Narration, Music composition, Sound effects etc.)
+- Synthetic Data Generation
+  -- Synthetic Dataset Generation
+     -- Increase size, diversity of dataset
+     -- Privacy protection
+     -- Simulate scenarios
+     -- Fraud detection, network attack detection etc.
+  -- Synthetic data for computer vision (e.g. autonomous cars)
+     -- Object detection
+     -- Adversarial scenarios(weather, road conditions etc.)
+  -- Synthetic text for natural language processing
+
+- Drug discovery
+- Product and material design
+- Chip design
+- Architectural design and urban planning
+
+6.  LLMs and Generative AI:
+
+Generative AI and LLMs are a once-in-a-generation shift in technology.
+
+Generative AI is a branch of AI that focuses on creating content. 
+
+Within Generative AI, we have Large Language Models (LLMs) and Foundation Models(GPT-4, BART, MPT-7B etc.).
+
+Both of these models are trained on massive datasets and based on deep learning neural networks such as 
+transformer architecture. 
+
+LLMs: These models are trained on massive datasets to achieve advanced language processing capabilities.
+
+In a nutshell, LLMs are advanced models that leverages the power of Generative AI and massive datasets to
+excel in language processing tasks.
+
+Foundation Models: These large ML models pre-trained on vast amount of data and then fine-tuned for more specific 
+language understanding and generation tasks.
+
+LLMs are generally has 3 components: Encoder, Decoder and Transformer model
+
+Encoder takes a large amount of text and convert it into tokens. These tokens are then transformed into numerical 
+values. Additionally, tokens are converted into tokens embeddings that help similar tokens to group together.
+
+So, first Input is tokenized(encode text into numerical representation) and then create the token embeddings
+(put words with similar meaning close in vector space) using embedding functions (pre-trained model) and it creates
+a vector of numbers. When it is done well, then similar words will be closer in these embedding/vector spaces.
+Depending on a particular architecture of the LLM, there may be a step of human feedback to drive the model to Generate
+a specific output for the task.
+
+The decoder component then converts generated output tokens into meaningful words to understand well.
+
+7. Common LLM tasks:
+
+- Content Creation and Augmentation: Generating coherent and contextually relevant text. LLMs excel at tasks like
+completion, creating writing, story generation, and dialogue generation.
+
+- Summarization: Summarizing long documents or articles into concise summaries. LLMs provide an efficient way to
+  extract key information from large volumes of text.
+
+- Question Answering: comprehend questions and provide relevant answers by extracting information from their 
+  pre-trained knowledge. 
+
+- Machine Translation: Automatically converting a text from one language to another. LLMs are also capable to explain
+  language structure such as grammatical rules.
+
+- Classification: Categorizing text into predefined classes or topics. 
+  LLMs are useful for tasks like topic classification, spam detection, or sentiment analysis.
+
+- Named Entity Recognition: Identifying and extracting entities such as names of persons, organizations, locations,
+  dates and more from text
+
+- Tone/Level of content: Adjusting the text's tone (professional, humorous, etc.) or complexity level
+  (e.g. fourth-grade level).
+
+- Code generation: Generating code in a specified programming language or converting code from one language to another.
+
+8. LLMs Business Use Cases:
+
+-- Customer Engagement
+
+(i)   Personalization and customer segmentation: Provide personalized product/content recommendation based on 
+      customer behavior and preferences.
+    Example:  Provide personalized product recommendations based on customer behavior and purchase history.
+
+(ii)  Feedback analysis (e.g. if user asks the top 5 customer complaints based on the provided data)
+(iii) Virtual assistants (e.g. customer support without human involvement)
+
+-- Content Creation
+
+(i)   Creative writing: Short stories, creative narratives, scripts etc.
+(ii)  Technical writing: Documentation, user manuals, simplifying content etc.
+(iii) Translation and localization
+(iv)  Article writing for blogs/social media etc.
+
+-- Process automation and efficiency
+
+(i)   Customer support augmentation and automated question answering (e.g. if the angry customer )
+(ii)  Automated customer response
+      -- Email 
+      -- Social media, product reviews etc.
+(iii) Sentiment analysis, prioritization
+
+-- Code generation and developer productivity
+
+(i)   Code completion, boilerplate code generation
+(ii)  Error detection and debugging
+(iii) Convert code between languages
+(iv)  Write code documentation
+(v)   Automated testing
+(vi)  Natural language to code generation
+(vii) Virtual code assistant for learning to code   
+
+9. LLM Flavors:
+
+(A) Open-Source Models:
+
+-- Use as off-the-shelf or fine-tune
+-- Provides flexibility for customizations
+-- Can be smaller in size to save cost
+-- Commercial/Non-Commercial use
+
+Examples: DBRX Databricks, Mistral, Meta Llama 
+
+(B) Proprietary Models:
+
+-- Usually offered as LLMs-as-a-service (LLMaaS)
+-- Some can be fine-tuned
+-- Restrictive licenses for usage and modification
+
+Examples: OpenAI, Amazon Titan, GCP Gemini, GCP PaLM, Cohere, Anthropic Claude
+
+There is no "perfect" model, trade-offs are required. LLM model decision criteria contains Privacy, Quality,
+Cost and Latency etc.
+
+10. Using Proprietary Models (LLMs-as-a-service):
+
+Pros:
+
+A. Speed of development
+   - Quick to get started and working
+   - As this is another API call, it will fit very easily into existing pipelines.
+
+B. Quality
+   - Can offer state-of-the-art results
+
+Cons:
+
+A. Cost
+   - Pay for each token sent/received
+
+B. Data Privacy/Security
+   - You may not know how your data is being used
+
+C. Vendor lock-in
+   - Susceptible to vendor outages, deprecated features, etc.
+
+11. Using Open-Source Models:
+
+Pros:
+
+A. Task-tailoring
+   - Select and/or fine-tune a task-specific model for your use case.
+
+B. Inference Cost
+   - More tailored models often smaller, making them faster at inference time.
+
+C. Control
+   - All of the data and model information stays entirely within your locus of control.
+
+Cons:
+
+A. Upfront time investments
+   - Needs time to select, evaluate, and possibly tune
+
+B. Data Requirements
+   - Fine-tuning or larger models require larger datasets
+
+C. Skill Sets
+   - Require in-house expertise
+
+12. Pre-trained Models:
+
+What is pre-training and how it works
+
+Pre-training: The process of initially training a model on a large corpus of training data. Pre-training a model 
+is like teaching a model basic general rule about a language. 
+
+We can create a domain specific model from scratch on your own data or data which you query. It probably be a 
+smaller model but it may not hit a open source model and its quality. we can surpass the quality by reducing hallucinations.
+Hallucination is a phenomenon where model generate output which is plausible sounding but inaccurate or insensible 
+due to limitation of understanding. If you pre-train a base model then you can fine-tune it.
+
+Fine-tuning: The process of further training a pre-trained model on a specific task or dataset to adapt
+it for a particular application or domain.
+
+Typically, a foundation model is initially trained on a large dataset and then you take a foundation model and train it
+on a smaller dataset, enabling it to improve its predicting capabilities based on your specific use case. 
+
+For example, we take a foundation model and re-train it on question,answers pairs using supervised training on smaller
+labelled datasets to make task-specific fine-tuned models. Similarly we can also do for sentiment analysis ofr text
+documents with +/- as labels and Named entity recognition for text with person/location/organization as labels. 
+
+Instead of task-specific fine-tuned models, we can also make Domain-specific fine-tuned models for domain adaptation.
+For example, for science domain, we use scientific papers, for finance domain, we use financial docs, for legal
+domain, we use legal docs etc with supervised learning on smaller labelled datasets.
+
+13. Dolly started the trend to open models with a commercially friendly license before that Facebook LLama and
+Stanford Alpaca was used for non-commercial purpose. For commercial use, Databrics Dolly, Mosaic MPT,
+TII Falcon, Meta Llama 2, Mistral AI, xAI Grok-1, Databricks DBRX etc are used.
+
+14. Mixing LLM Flavors in a Workflow:
+
+Typical applications are more than just a prompt-response system.
+
+Tasks: Single interaction with an LLM
+
+Workflow: Applications with more than a single interaction. 
+
+Workflow Initiated ---> Task-1 (Summarization) ---> Task-2 (Sentiment Analysis) ---> Task-3 (Content Generation) ---> Workflow Completed
+
+Here we can use multiple LLMs bu to facilitate the workflow, industry introduced the concept as "chains",
+A chaining tool such as langchain, enables the seamless integration of these model calls, additionally we can use the
+vector database to store the state of the chains. A vector database offers the efficient storage and retrieval of 
+intermediate representations generated during the training process. 
+
+-- If there are multiple articles which are very long and we have to do sentiment analysis then better solution is to
+first summarize the articles using LLM and then find sentiments using LLMs instead of finding sentiments on large articles
+because it can quickly overwhelm the model input length.
+
+15. Retrieval Augmented Generation (RAG):
+
+-- Enhancing LLM output with external data source.
+
+-- RAG is a popular LLM application that allows you to create a system where your model can access external
+data sources to complete its task.
+
+Say, you have solution 1 as:
+
+{Data source 1, Data source 2, Data source 3,...} ---> Trained LLM ---> New data sources ---> Fine-tune model ---> Model output
+
+In this solution, retrain/fine-tune model when new data becomes available.
+
+Issue: Time consuming/difficult to maintain current
+
+Now, you have better solution using RAG as:
+
+{Question you want answered} ---> Search system search for relevant sources from vector database and then 
+get the relevant documents from vector database ---> Question+Relevant document goes to trained LLM ---> Model output
+
+It is better solution because it keeps the models up to date with the latest data. Also, here we take less time in re-training the model
+and relevance helps to reduce hallucinations.
+
+16. 
