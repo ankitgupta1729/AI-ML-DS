@@ -386,3 +386,97 @@ Alice won first prize fencing for the first time last week and she was ecstatic.
 
 20. Foundation of Retrieval Agents:
 
+No matter how cleverly we rewrite instructions, we cannot force a model to know facts it was never trained on 
+or prevent it from hallucinating when it lacks critical data. This marks a fundamental transition—from Prompt 
+Engineering, which focuses on crafting the query, to Context Engineering, which focuses on architecting the 
+entire environment supplied to the model. 
+
+A. Foundations of Prompt Engineering:
+
+Before we can build complex AI architectures, we must first master the fundamental unit of interaction: the prompt.
+
+Prompt Engineering is the practice of refining the input text (the prompt) to optimize the output generated 
+by a Large Language Model (LLM). It's a tactical discipline focused on the instruction layer. 
+We use techniques such as Few-Shot Prompting (providing examples) and Persona Adoption (assigning a role) 
+to guide the model's behavior and formatting. Ideally, prompt engineering treats the model as a reasoning engine, 
+guiding it to leverage its pre-trained weights to solve problems effectively.
+
+B. Reasoning vs. Non-Reasoning Models:
+
+Effective prompting requires understanding the capabilities of the underlying model. 
+Let's examine the two primary categories:
+
+-- Non-Reasoning Models (e.g., Llama 3, GPT-4o): 
+
+These models predict the next token based on statistical likelihood. They require explicit guidance, 
+such as Chain of Thought (CoT) prompting ("Think step-by-step"), to break down complex logic and 
+avoid rushing to incorrect conclusions.
+
+-- Reasoning Models (e.g., OpenAI o1): 
+
+These models are trained to generate their own internal chain of thought before producing a final answer. 
+For these models, manual CoT prompting is often redundant or counterproductive. 
+Context engineering for reasoning models focuses on defining the goal and constraints rather than the 
+thinking process.
+
+C. The Boundaries of Prompting:
+
+Prompt engineering has hard boundaries. No amount of instruction refinement can overcome the following 
+limitations inherent to the model's training data:
+
+-- The Knowledge Cutoff: The model cannot answer questions about events that occurred after the cutoff date 
+of its training data.
+
+Example Prompt: Who won the 2025 Nobel Prize in Physics?
+
+-- Hallucination: When asked for specific facts without external references, models often prioritize plausibility 
+over truth, fabricating citations or data points.
+
+Example Prompt: Find a scientific reference proving that avocado reduces blood sugar levels
+
+-- Ambiguity: Without private context, models default to generic interpretations.
+
+Example Prompt: Explain how to secure a lakehouse. 
+(This triggers advice on physical home security rather than Databricks Data Lakehouse governance.)
+ 
+
+21. Retrieval Augmented Generation (RAG):
+
+While prompt engineering optimizes how a model responds, it cannot address the fundamental issue of what a model 
+knows. To overcome the limitations of frozen training data and hallucination, 
+we must shift our architectural approach from relying on internal memory to leveraging external context. 
+In this section, we'll introduce Retrieval Augmented Generation (RAG), the critical framework that bridges 
+the gap between a model's pretrained knowledge and your proprietary data.
+
+-- RAG vs. Retrieval Agent: RAG refers to the architectural pattern of coupling retrieval with generation, 
+independent of any specific tooling or agent logic. Retrieval agents, by contrast, are concrete implementations 
+that operationalize this pattern—handling query routing, retrieval orchestration, and context assembly 
+within real systems.
+
+22. Defining RAG:
+
+To solve the knowledge boundaries we defined earlier, we shift from a memory-based approach to a 
+context-based architecture known as Retrieval Augmented Generation (RAG). 
+RAG injects proprietary or real-time data into the prompt, enabling the model to respond based on provided 
+facts rather than its internal memory.
+
+The RAG process consists of three key stages:
+
+-- Retrieval: The system searches a knowledge base (indexed via Mosaic AI Vector Search) for relevant data chunks
+-- Augmentation: The system injects these chunks into the context window
+-- Generation: The model synthesizes an answer using only the injected data
+
+23. The Context Challenge:
+
+While RAG solves the knowledge gap, it introduces a new challenge: Context Rot. 
+Early RAG implementations often failed because developers would simply retrieve large volumes of documents and 
+paste them into the prompt. This approach overwhelms the model, leading to:
+
+-- Context Poisoning: The inclusion of irrelevant or conflicting information that confuses the model
+
+-- Lost in the Middle: The tendency of models to ignore information buried in the middle of a long context window, 
+   prioritizing data at the very beginning or very end
+
+These challenges highlight the need for strategic context management, which we'll explore in the next section.
+
+24. 
