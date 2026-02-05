@@ -1,0 +1,161 @@
+[Source: https://www.coursera.org/learn/generative-ai-with-llms/lecture/IrsEw/generative-ai-llms]
+
+1. LLMs and GenAI are general purpose technologies similar to other general purpose technologies 
+   like deep learning and electricity.
+
+2. In-Context Learning: How to guide the model to output at inference time with prompt engineering 
+   and how to tune most important generation parameters of LLMs for tuning your model output.
+
+3. In 2017, the paper "The attention all you need" came.
+
+4. GenAI applications includes chatbots, generating images from text, generate code. So it is 
+   capable of creating content that mimics or approximates human ability.
+
+5. Generative AI is a subset of traditional machine learning. LLMs have been trained on trillions of 
+   words over many weeks and months and with large amounts of computer power. 
+   These foundation models include GPT, BERT, LLaMa,BLOOM, FLAN-T5, PaLM etc and 
+   these foundation models with billions of parameters exhibit emergent properties beyond language alone.
+
+6. Think of Model's parameters as model's memory.
+
+7. While GenAI models are being created for multiple modalities including images, video, audio and speech. 
+   Here we consider text and natural language generation.
+
+8. LLMs are able to take natural language or human written instructions and perform tasks as much as human would.
+
+9. The text that you pass to an LLM is known as a prompt. The space or memory that is available to the prompt 
+   is called the context window and this is typically large enough for a few thousand words but differs 
+   from model to model.
+
+10. The prompt is passed to the model and model predicts the next words and if prompt contains a question then 
+    model generates an answer. The output of the model is called a completion. The act of using the model to 
+    generate the text is known as inference. The completion is comprised of the text contained in the original 
+    prompt, followed by the generated text. 
+
+11. LLM use cases and tasks: Essay Writer, text summarization with a given text file, text translation or 
+    translate text to machine code (code generation), Named-entity recognition, flight information with 
+    external sources etc.
+
+12. Smaller models with less number of parameters can be fine tuned and then can perform well on specific 
+    focused task.
+
+13. In many languages, one word can have multiple meanings. These are homonyms. 
+    Words can have the syntactic ambiguity.
+
+14. The transformer architecture is split into 2 distinct parts: Encoder and decoder. 
+    Both components share many similarity.
+
+15. First words are converted into numbers using tokenizer which may tell about relative position of words 
+    in dictionary. This tokenizer also used when we generate text. The input which is represented as numbers 
+    is passed to embedding layer.
+
+16. Embedding layer is a trainable vector embedding space (a high dimensional space where each token is 
+    represented as a vector and occupies a unique location within that space). These vectors learn to 
+    encode the meaning and context of individual tokens in the input sequence.
+
+17. In the original transformer paper, the vector size was actually 512. Using positional encoding, 
+    we preserve the information, about the word order and don't lose the position of the word in the sentence. 
+    Positional encoded vectors are passed to self attention layer and here model analyzes the 
+    relationship/contextual dependency between tokens in our input sequence.
+
+18. The self-attention weights are learned during training and stored in these layers that reflect the 
+    importance of each word in the input sequence to all other words in the sequence.
+
+19. The transformer architecture has multi-headed self-attention, it means multiple sets of self-attention 
+    weights or heads are learned in parallel independently of each other. The number of attention heads are 
+    varies from model to model. But numbers in the range 12-100 are common. 
+    
+    The intuition here is that each self-attention head will learn a different aspect of language. 
+    
+    For example, one head may see the people entities in our sentence, another head may focus on the
+    activity of the sentence. It's important to note that you don't have to dictate ahead of time what 
+    aspects of language the attention heads will learn. The weights of each head are randomly initialized and 
+    given sufficient training data and time. Each will learn different aspects of the language. While some 
+    attention maps are easy to interpret, others may not be. Now that all of the attention weights have been 
+    applied to your input data, the output is processed through a fully-connected feed-forward network. 
+    The output of this layer is a vector of logits proportional to the probability 
+    score for each and every tokens in the tokenizer dictionary. You can then pass these logits to a 
+    final softmax layer, where they are normalized into a probability score for each word. 
+    The output includes a probability for every single word in the vocabulary.
+
+20. Example: 
+
+    Machine translation (Sequence to Sequence learning): French to English language - First convert french 
+    sentence to english tokens, passed to embedding layer and then to multi-head attention layer and then to 
+    feed forward layer and output of this passed to decoder and decoder predicts next token based on the 
+    contextual understanding provided by the encoder. For prediction of sequence of tokens, 
+    make a loop for decoder for the continuation of decoder process.
+
+21. Transformer Encoder: 
+
+    encodes inputs ("prompts") with contextual understanding and produces one vector per input token.
+
+    Decoder: accepts input tokens and generates new tokens and it does in a loop until some stop condition 
+    is reached.
+
+22. Encoder only models performs sequence-to-sequence modelling with same length of input and output and 
+    it is useful for classification task like sentiment analysis. BERT is an example of encoder only model
+ 
+23. Encoder-Decoder models performs sequence-to-sequence tasks such as translation where the input and output 
+    sequences can be of different lengths. We can scale and train these type of models to perform 
+    general text generation tasks. Example: BART as opposed to BERT, T5 etc.
+
+24. Decoder only models: These are most commonly models used today. These models can generalize to most tasks. 
+    It includes GPT family of models, BLOOM, Jurassic , LLama etc.
+
+25. Prompting and prompt engineering:
+
+    The text which we feed into the model is called prompt. The act of generating text is called inference.
+    The output text is known as completion. The full amount of text or the memory that is available to use 
+    for the prompt is called the context window. Sometimes we don't get the desired output. So we may have 
+    to revise the language in our prompt or the way it is written several times to get the desired output. 
+    This work to develop and improve the prompt is known as prompt engineering. One example to get better 
+    outcome is to include examples of the task that we want the model to carry out inside the prompt. 
+    Providing examples inside the context window is called in-context learning.
+
+    Example:
+
+    Prompt: Classify this review: I loved this movie!. Sentiment:
+
+    Here, Classify this review is an instruction. the context is here a review text: I loved this movie.
+    And an instruction to produce sentiment at the end is: Sentiment:
+
+    This method, including your input data within the prompt is called zero-shot inference.
+
+    The largest of the LLMs are surprisingly good at this. Here output of the model is:  
+    Classify this review: I loved this movie!. Sentiment:Positive
+
+    Smaller model on the other hand can struggle with this. Here is an example of a completion generated 
+    by GPT-2: Classify this review: I loved this movie!. Sentiment: eived a very nice book review.
+
+    Now, to improve performance, we can make longer prompt as:
+    Classify this review: I loved this movie!. Sentiment:Positive.  Classify this review: 
+    I don't like this chair. Sentiment:
+   
+    Now it has a better chance of understanding task and format of the response we want. 
+    So completion output is:
+    Classify this review: I loved this movie!. Sentiment:Positive.  
+    Classify this review: I don't like this chair. Sentiment: Negative
+
+    Using single example is known as one-shot inference in contrast to the earlier zero shot inference.
+
+    Sometimes single example is not well enough for the model to learn what we want. 
+    So, we can include multiple examples. This is known as few-shot inference.
+    
+    Example:
+
+    Classify this review: I loved this movie!. Sentiment: Positive.  
+    Classify this review: I don't like this chair. Sentiment: Negative. 
+    Classify this review: This is not great. Sentiment:
+    
+    Completion output:
+    
+    Classify this review: I loved this movie!. Sentiment: Positive.  
+    Classify this review: I don't like this chair. Sentiment: Negative. 
+    Classify this review: This is not great. Sentiment: Negative
+
+    In zero shot prompt, context window has few thousands words. In one-shot, few-shot prompts, 
+    we fine-tune the model. Fine tuning performs additional training on the model using new data to make it more 
+    capable of the task which we want to perform. 
+
+26.     
