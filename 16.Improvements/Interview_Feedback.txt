@@ -75,3 +75,14 @@
 7. Explain Unet Architecture and how it works 
 
 ---------------------------------------------------------------------------------------------------------------------------
+
+SHAIP Interview:
+
+-- How to use Dynamic programming in recurrence in python coding
+
+-- Learn System design 
+
+-- If model is deployed then how you will monitor its accuracy and how to improve it
+
+----------------------------------------------------------------------------------------------------------------------------
+
