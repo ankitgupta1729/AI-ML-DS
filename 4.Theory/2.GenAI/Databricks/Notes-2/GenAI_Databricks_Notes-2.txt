@@ -1,0 +1,167 @@
+## Building Single-Agent Applications on Databricks
+
+1. Foundations of AI Agents and Tools on Databricks:
+
+Modern AI applications require agents that can interact with data, perform analytical tasks, and make 
+informed decisions based on available information. By understanding these foundational concepts, you'll be 
+prepared to build robust, scalable AI solutions that combine governance, security, and analytical power.
+
+AI agents represent a revolutionary shift from traditional AI systems that simply provide information based on 
+user prompts. Instead, agents use available tools to help them make more accurate and informed decisions, 
+acting autonomously within their environment to achieve user-defined goals.
+
+A. Understanding AI Agents
+
+A1. What Are AI Agents?
+
+An AI agent is an intelligent software system that can perceive its environment, make decisions, and 
+take actions to achieve specific goals. Unlike traditional AI systems that require continuous inputs from users, 
+AI agents are autonomous systems that can:
+
+- Reason about complex problems and situations
+- Plan sequences of actions to achieve objectives
+- Adapt their behavior based on new information
+- Interact with external systems and data sources
+- Learn from experience to improve future performance
+
+What makes AI agents exciting is their adaptability. They use tools that dynamically pull up-to-date datasets to 
+inform decisions and processes, making them ideal for complex and unpredictable tasks. While humans set the goals, 
+AI agents determine the best way to achieve those goals.
+
+In the context of data analytics and business intelligence, AI agents serve as intelligent intermediaries between 
+users and data systems, capable of understanding natural language queries and executing complex analytical tasks.
+
+A2. Evolution of AI Agents:
+
+AI agents have evolved significantly since their inception:
+
+i. 1960s - Rule-Based Systems:
+
+- Basic chatbots with predetermined logic trees
+- Rigid, rule-based programming
+- Limited to simple, scripted responses
+
+ii. 1990s - Statistical Learning
+
+- More autonomous systems processing information
+- Simple decision-making capabilities
+- Foundation for consumer-grade AI devices
+
+iii. 2000s - Machine Learning Integration
+
+- Consumer devices like robot vacuums and digital assistants (Siri, Alexa)
+- Statistical machine learning models and neural networks
+- Enhanced decision-making and analysis capabilities
+
+iv. 2020s - Large Language Models
+
+- Breakthrough with deep reinforcement learning and transformer-based large language models (LLMs)
+- Multimodal interfaces and advanced reasoning
+- Dynamic interaction with complex environments
+- Tool-calling capabilities for enhanced functionality
+
+A3. Key Principles of AI Agents:
+
+AI agents operate on three fundamental principles that distinguish them from traditional software:
+
+i. Perception:
+
+The first step for agents to understand the context in which they're operating. For language models, 
+this includes:
+
+- User inputs and queries via text, photos, or audio
+- Environmental data from sensors or APIs
+- Historical context and conversation memory
+
+ii. Decision-Making:
+
+The agent processes collected information through algorithms and determines proper actions according to user goals:
+
+- Analyzing requirements and constraints
+- Determining necessary steps and tool usage
+- Planning optimal execution sequences
+
+ii. Action:
+
+Finally, an agent takes concrete steps to achieve objectives:
+
+- Executing database queries and API calls
+- Processing and transforming data
+- Generating reports and recommendations
+- Making decisions that affect real-world outcomes
+
+A4. Core Components of AI Agents:
+
+Modern AI agents typically consist of several key components working together:
+
+- Large Language Model (LLM) Brain The central reasoning engine that processes natural language, 
+  understands context, and makes decisions about what actions to take.
+
+- Memory System Stores conversation history, context, and learned information to maintain coherent interactions 
+  over time.
+
+- Planning Module Breaks down complex requests into smaller, manageable tasks and determines the optimal sequence 
+  of actions.
+
+- Tool Interface Connects the agent to external systems, databases, APIs, and functions that extend its 
+  capabilities beyond text generation.
+
+- Execution Engine Manages the actual execution of planned actions and handles responses from external tools and 
+  systems.
+
+Example agent pattern: The LLM acts as the brain to plan and execute tasks within its environment based on the 
+user's request. Tools can be stored securely within Unity Catalog while agent memory can be used with Delta Lake 
+and Lakebase.
+
+A5. Types of AI Agents by Complexity:
+
+AI agents differ based on their complexity and application. Understanding these types helps in selecting the 
+right approach for specific use cases:
+
+i. Simple Reflex Agents
+
+- Make decisions based on current conditions only
+- Example: Robot vacuum that cleans only when it senses dirt
+- No consideration of history or future implications
+
+ii. Model-Based Reflex Agents
+
+- Account for current state and use world models to guide actions
+- Example: Smart thermostat adjusting based on time, weather, and preferences
+- More sophisticated than simple reflex agents
+
+iii. Goal-Based Agents
+
+- Plan specific strategies to achieve desired goals
+- Develop action sequences and evaluate progress
+- Example: Navigation systems like Google Maps considering traffic and routes
+
+iv. Utility-Based Agents
+
+- Evaluate multiple ways to achieve goals for optimal efficiency
+- Consider risk-reward models and optimization criteria
+- Example: AI trading bots adjusting investment strategies
+
+v.Learning Agents
+
+- Learn from past actions and adapt to future situations
+- Analyze performance and seek efficiency improvements
+- Example: Recommendation systems that improve based on user behavior
+
+A6. Can All LLMs Use Tools?
+
+No, not all LLMs have the tool-calling capability. On Databricks, tool usage by LLMs is enabled through specific 
+frameworks and integrations, such as Databricks Assistant or custom agent frameworks that allow LLMs to interact 
+with external systems, databases, or APIs. This capability is not inherent to all LLMs; it requires additional 
+engineering, orchestration, and security controls to ensure safe and effective tool usage. 
+
+For example, Databricks Assistant is designed to use tools to answer questions and perform actions within the 
+Databricks environment, but this is a feature of the platform, not a universal capability of all LLMs.
+
+For a complete list of Foundation Model APIs that can perform tool-calling, please read more here [https://docs.databricks.com/aws/en/machine-learning/model-serving/function-calling#supported-models].
+
+B. Understanding Agent Tools:
+
+
+B1. What Are Agent Tools?
+
