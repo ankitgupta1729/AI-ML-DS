@@ -86,3 +86,14 @@ SHAIP Interview:
 
 ----------------------------------------------------------------------------------------------------------------------------
 
+Gigafactory interview:
+
+-- why gpt-4o is better than gemini for your collibra smart assistant project or why not
+
+-- for which use case or task llama 3.2 7b parameters is better than 14b parameters
+
+-- learn drift/system evaluation for monitoring model performance in production if ground truth is not available
+
+-- learn system design concepts
+
+------------------
