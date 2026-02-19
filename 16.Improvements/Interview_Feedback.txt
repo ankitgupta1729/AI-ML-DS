@@ -97,3 +97,10 @@ Gigafactory interview:
 -- learn system design concepts
 
 ------------------
+
+Accenture:
+
+-- How to explain precision and recall without formulas and which is important metric out of these 2 for fraud detection system
+-- Learn multi-agent system
+
+-------------------

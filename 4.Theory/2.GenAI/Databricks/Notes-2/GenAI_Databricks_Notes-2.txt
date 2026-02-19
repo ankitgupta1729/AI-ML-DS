@@ -952,3 +952,397 @@ best practices when building an agent's lifecycle, and production considerations
 
 Building Agents on Databricks with MLflow
 
+MLflow enhances GenAI applications with end-to-end tracking, observability and evaluations, all within one 
+integrated platform. Therefore, it supports the whole lifecycle of AI agents: from development, evaluation, 
+deployment and all the way up to production monitoring. This lecture explores how MLflow's comprehensive 
+capabilities make it an essential component in the agent development lifecycle, from initial prototyping through 
+production deployment and ongoing observability.
+
+A. The Agent Development Challenge:
+
+Building production-ready AI agents presents unique challenges that traditional machine learning workflows don't 
+fully address. Understanding these challenges helps us appreciate why MLflow on Databricks has made Databricks a 
+comprehensive platform for the whole agent lifecycle.
+
+A1. Complexity of Agent Systems:
+
+AI agents are fundamentally different from traditional ML models in several key ways:
+
+- Multi-step reasoning: Agents perform complex, multi-turn interactions that involve planning, tool usage, and 
+  decision-making across multiple steps
+
+- Dynamic behavior: Unlike static models, agents can exhibit different behaviors based on context, available tools,
+  and conversation history
+
+- Tool integration: Agents must seamlessly integrate with external systems, APIs, and data sources to accomplish 
+  tasks
+
+- Conversational context: Maintaining state and context across multi-turn conversations adds complexity to 
+  deployment and monitoring
+
+These characteristics create unique requirements for development, testing, and production monitoring that 
+traditional ML platforms weren't originally designed to handle.
+
+A2. Observability Requirements:
+
+Agent observability goes far beyond traditional model monitoring:
+
+- Execution tracing: Understanding the step-by-step reasoning process, including which tools were called and why
+
+- Performance analysis: Tracking latency, token usage, and costs across complex multi-step workflows
+
+- Quality assessment: Evaluating not just final outputs but intermediate reasoning steps and tool usage patterns
+
+- Error diagnosis: Identifying where failures occur in multi-step processes and understanding their root causes
+
+Without proper observability, debugging agent behavior becomes nearly impossible, especially in production 
+environments.
+
+A3. Governance and Reproducibility Challenges:
+
+Enterprise deployment of agents requires robust governance capabilities:
+
+- Version management: Tracking changes to agent logic, prompts, tools, and configurations
+
+- Reproducibility: Ensuring consistent behavior across development, staging, and production environments
+
+- Access control: Managing who can deploy, modify, or access different agent versions
+
+- Audit trails: Maintaining complete records of agent behavior for compliance and debugging
+
+- AI Guardrails: Allows users to configure and enforce data compliance at the model-serving-endpoint level 
+  (read more here(https://docs.databricks.com/aws/en/ai-gateway/#ai-guardrails).)
+
+These requirements necessitate a platform that can handle the full agent lifecycle with enterprise-grade 
+governance features.
+
+B. MLflow on Databricks:
+
+Here we will break down MLflow a little more to help understand how it addresses the issues raised in the 
+previous section.
+
+B1. Why is Tracing Needed?:
+
+To understand why we need tracing (and what it actually is), we need to understand traditional machine learning 
+inference.
+
+Traditional ML inference (request/response):
+
+A typical inference flow for machine learning is given by the following high-level steps:
+
+(i)   The client sends an input request to a request handler on the serving endpoint.
+(ii)  The handler forwards the request to the model for inference.
+(iii) The model's output is returned through the handler to the client.
+
+In this basic scenario, the transparent components are often just the input and output.
+
+For robust operations in the era of agents, we may also want insight into processes like server-side transparency, 
+latency/cost metrics, and API logging (even though these may not be needed for ML workloads). 
+
+These capabilities are standard with Databricks Model Serving and AI Gateway for production telemetry and 
+governance. Databricks hosts managed MLflow, where setting your tracking URI to databricks logs traces to 
+your workspace with built-in security, reliability, search, and UI. 
+
+Additionally, deploying with Mosaic AI Agent Framework automatically integrates real-time tracing and 
+can enable the Review App and monitoring for production traffic.
+
+Agents need more insight:
+
+- Agents perform multiple intermediate steps (for example: retrieval, tool use, LLM calls), and you need to see 
+  each step, its inputs/outputs, and per-step latency/token usage to debug and improve quality.
+
+- MLflow Tracing captures these as traces and spans automatically for supported libraries 
+  (OpenAI SDK, LangChain/LangGraph, DSPy, etc.) and provides a UI and APIs to analyze them across development 
+  and production.
+
+- A single operation in a tracing system is called a span. It records when the operation started and ended, 
+  along with the metadata, inputs, and outputs per unit of work.
+
+MLflow spans follow the OpenTelemetry standard, which requires any extra information (like token counts) to be 
+stored in key-value attributes on the span, not as custom fields.
+
+B2. Tracing for Agents:
+
+Now that we understand the struggle with developing agentic systems and why agents need more insights per unit 
+of work, we're ready to define what a trace is. 
+
+A Trace in the context of GenAI applications is a collection of spans arranged in a DAG-like structure, where 
+each span represents a single operation. These single operations can be something like a function call or a 
+database query.
+
+As an example, suppose you are working on developing an agent that is exposed to 3 UC tools. Suppose also that 
+you are noticing slow execution times, but you're not sure what the issue is. 
+The MLflow interface in Databricks can help you troubleshoot this scenario. 
+
+For example, you can:
+
+- View the specific Foundation Model API that was used for each reasoning step.
+- View the system prompts (if any) used for the agent.
+- Identify if tools have been called, the order they were called in, and their inputs/outputs.
+- The agent's reasoning at each step.
+- The latency to identify which tool took the longest to run. This can be useful to, for example, help build 
+  optimized SQL queries.
+- Token usage is exposed per span and trace (aggregated).
+
+B3. Hierarchical Span Structure:
+
+MLflow organizes trace data using a hierarchical span structure that mirrors agent execution, starting with a 
+single root span that represents the overall request or workflow, with nested child spans for each sub-step.
+
+- Parent spans: High-level operations like "process user request"
+- Child spans: Detailed steps like "call retrieval tool" or "generate response"
+- Span relationships: Clear parent-child relationships that show execution flow, which should mimic your 
+  application's execution plan.
+- Span types: Categorization of spans (TOOL, CHAT_MODEL, RETRIEVER) for better organization
+
+B4. Custom Tracing and Tagging:
+
+MLflow provides flexible APIs for custom tracing needs as well (which we will see in our demonstration).
+
+- Custom Tracing: The @mlflow.trace decorator lets you turn any function into a traced span with almost no added 
+  work. When applied, it provides a lightweight but powerful way to instrument your code:
+- MLflow automatically infers parent-child relationships between traced functions, ensuring full compatibility 
+  with auto-tracing integrations.
+- Any exceptions raised within the function are captured and logged as span events.
+- The function's name, inputs, outputs, and execution duration are recorded without additional configuration.
+- It works seamlessly alongside auto-tracing features like mlflow.openai.autolog.
+- Accepts the following arguments:
+  - name: parameter to override the span name from the default (the name of decorated function).
+  - span_type: parameter to set the type of span. Set either one of built-in Span Types or a string.
+  - attributes parameter to add custom attributes to the span.
+
+Function Type Considerations-
+
+To view a complete list of function types and supported dependencies when using the @mlflow.trace decorator, 
+please see this documentation(https://docs.databricks.com/aws/en/mlflow3/genai/tracing/app-instrumentation/manual-tracing/fluent-apis#decorator).
+
+- Tagging: Tags are flexible key-value pairs that you can update throughout the trace's lifecycle, while 
+  metadata is immutable and set once at trace creation.
+
+Note: his course will only be concerned with a subset of the Span object schema. You can read more about the 
+Span object schema here(https://mlflow.org/docs/latest/genai/concepts/span/#span-object-schema).
+
+C. Models in Unity Catalog for Agent Governance:
+
+MLflow's integration with Unity Catalog enables enterprise-grade governance for agent deployments by registering 
+agents as Unity Catalog models, so they can be managed with the same rigor as other business-critical assets.
+
+Once you have your data source and tools registered to Unity Catalog (or external tools), you can register your 
+agent code to UC by first packaging the agent with MLflow and using the model's URI.
+
+Centralized governance via the Model Registry in UC:
+
+Registering agents as UC models provides a centralized, cross-workspace catalog of agent assets:
+
+- Version management: MLflow logs a point-in-time snapshot of agent code, configuration, and declared resources; 
+  each UC model version is an immutable snapshot you can reference and deploy.
+
+- Lineage tracking: When you log inputs (for example with mlflow.log_input), UC shows lineage between models and 
+  upstream datasets; lineage is also captured for feature store training flows.
+
+- Access control: Fine-grained UC privileges govern who can create, read, or modify models and who can execute 
+  functions, query tables, use connections, and access other resources your agent depends on.
+
+- Cross-workspace sharing: Models in UC are discoverable and governable across workspaces attached to the same 
+  metastore.
+
+- Governed tags: Tags can be applied to registered models and model versions; governed tags (public preview) 
+  enforce standardized keys/values and assignment permissions for consistent classification and control. 
+  See the docs here(https://docs.databricks.com/aws/en/database-objects/tags#supported-securable-objects).
+
+Reproducible deployments:
+
+Using UC + MLflow ensures that agent deployments are reproducible and observable:
+
+- Immutable versions: Registered model versions are immutable snapshots; update metadata if needed, but changing 
+  code/dependencies requires a new version.
+
+- Dependency capture: MLflow captures environment dependencies (for example via pip/conda) to enable consistent 
+  loading and serving.
+
+- Managed serving: Deploy UC-registered agents to Model Serving endpoints with built-in scaling, tracing, and 
+  review apps for feedback and monitoring.
+
+Conclusion:
+
+MLflow has evolved into a comprehensive platform that addresses all aspects of AI agent development, from 
+initial experimentation through production deployment and monitoring. Its combination of experiment tracking, 
+tracing, model registry, and evaluation capabilities makes it uniquely suited to handle the complexity of 
+modern AI agents.
+
+The platform's integration with Unity Catalog and the broader Databricks ecosystem provides the governance, 
+security, and scalability needed for enterprise agent deployments. As AI agents become increasingly important in 
+business applications, MLflow's role as the foundational platform for agent development will continue to grow.
+
+--------------------------------------------------------------------------------------------------------------------
+
+Single Agents with Agent Bricks:
+
+Agent Bricks provides a high-level abstraction designed to help technical users quickly build and optimize 
+production-ready, domain-specific AI agents, focusing on automatic evaluation and optimization, including 
+Agent Learning on Human Feedback (ALHF), to maximize quality while balancing cost considerations.
+
+Unlike traditional agent development approaches that require extensive manual configuration and optimization, 
+Agent Bricks streamlines the implementation process so users can focus on the problem, data, and metrics instead 
+of low-level technical details. The platform supports four distinct agent types, each optimized for specific use 
+cases and deployment patterns.
+
+A. Introduction to Agent Bricks:
+
+Agent Bricks provides a simple, powerful approach to building domain-specific agent systems. The platform 
+abstracts away much of the complexity traditionally associated with agent development while maintaining the 
+flexibility needed for enterprise applications.
+
+The core philosophy of Agent Bricks is to enable users to focus on defining their business problems and providing 
+relevant data, while the platform handles the technical complexities of agent optimization, evaluation, and 
+deployment. This approach significantly reduces the time-to-value for AI agent implementations in enterprise 
+environments.
+
+A1. Supported Agent Types and Use Cases:
+
+Agent Bricks supports four primary agent types, each designed for specific enterprise use cases and operational 
+patterns. Understanding these distinctions is crucial for selecting the appropriate agent type for your 
+specific requirements.
+
+The Four Agent Types:
+
+- Information Extraction (IE): Automated extraction of structured data from unstructured sources such as 
+  documents, PDFs, emails, and images
+
+- Custom LLM (CLLM): Domain-specific language models fine-tuned and optimized for particular tasks and datasets
+
+- Knowledge Assistant (KA): Interactive agents that provide question-answering capabilities over knowledge bases 
+  using retrieval-augmented generation. That is, KA is a single agent where tool-calling capabilities are 
+  restricted to RAG applications.
+
+- Multi-Agent Supervisor (MAS): Coordination systems that manage and orchestrate multiple specialized agents to 
+  complete complex, multi-step tasks. For example, we can equip an MAS with a set of tools and no additional 
+  agents and have it act as a single agent with a toolkit.
+
+Genie Agent:
+
+Users can create and use a Genie Agent to use natural language to query databases or other structured data, 
+making data analysis more accessible. Genie agents can be orchestrated with an MAS or can be standalone single 
+agents.
+
+A2. Operational Categories:
+
+Agents are organized into two operational models based on their intended use patterns:
+
+- Automated Bricks (Information Extraction and Custom LLM): Optimized for high-scale, batch processing scenarios 
+  with minimal human intervention. These agents prioritize cost-performance optimization and throughput.
+
+- Interactive Bricks (Knowledge Assistant, Multi-Agent Supervisor, and Genie): Designed for human-in-the-loop 
+  experiences and real-time interaction scenarios. These agents focus on conversational interfaces and dynamic 
+  response generation.
+
+B. Agent Bricks Development Lifecycle:
+
+The Agent Bricks development process follows a structured, iterative approach designed to optimize agent 
+performance through continuous improvement and feedback incorporation. This lifecycle ensures that agents not 
+only meet initial requirements but continue to improve through real-world usage and feedback.
+
+B1. Core Three-Step Development Cycle:
+
+The Agent Bricks development lifecycle consists of three primary phases that form the foundation of agent 
+development, followed by continuous iteration for ongoing improvement.
+
+Step 1: Specify Your Problem:
+
+At a high level, the user begins by building an agent that is specific to their use case. For example, with the 
+MAS, you might want a managed agent that allows for only tool calling with a Genie Agent. After setting up proper 
+permissions, MLflow is leveraged for tracking metrics and logging.
+
+In this initial phase, you define the scope and requirements of your AI agent:
+
+- Clearly define the required task and expected outcomes with your team
+- Select the appropriate agent type from the four available options: Information Extraction, Custom LLM, 
+  Knowledge Assistant, or Multi-Agent Supervisor
+- Depending on your use case, you next need to provide your UC-managed datasets (Delta tables, UC Volumes), 
+  equip tools, and attach other agents
+- Establish success criteria and quality metrics for evaluation
+
+Step 2: Optimize on Your Enterprise Data
+
+Agent Bricks automatically builds and optimizes the best agent system based on quality versus cost tradeoffs:
+
+- The system automatically creates evaluation benchmarks related to your specific task (such as Accuracy, 
+  Product Relevance, Customer Churn prediction, etc.)
+- Optimization involves intelligent selection and composition of multiple techniques:
+  - Advanced prompt optimization using proven methodologies
+  - Selective fine-tuning based on task requirements and data availability
+  - Optimal tool selection and configuration
+  - Implementation of Custom LLM Judges for quality assessment
+  - Reward Model filtering for response quality improvement
+  - Reinforcement Learning from Human Feedback (RLHF) when beneficial
+
+Step 3: Continuous Improvement
+
+The final step establishes a feedback loop for ongoing optimization:
+
+- Deploy the optimized agent to production environment
+- Continuously measure agent quality through automated and human evaluation
+- Systematically identify issues and improvement opportunities through monitoring
+- Apply natural language feedback to improve system performance
+- Leverage Agent Learning on Human Feedback (ALHF) for iterative enhancement
+
+B2. Evaluation and Monitoring Framework:
+
+Agent Bricks provides comprehensive evaluation and monitoring capabilities built directly into the platform, 
+ensuring continuous visibility into agent performance and quality metrics.
+
+Automatic MLflow Integration:
+
+Every agent deployed through Agent Bricks automatically includes comprehensive tracking capabilities:
+
+- Request Tracking: Complete logging of all incoming requests with timestamps and user context
+- Response Monitoring: Detailed capture of outgoing responses including confidence scores and reasoning paths
+- Inter-Agent Communication: Full tracing of communication between agents in multi-agent systems
+- Performance Metrics: Automatic collection of latency, throughput, and resource utilization data
+
+Quality Assessment Mechanisms:
+
+The platform implements multiple layers of quality evaluation:
+
+- Automatic Benchmark Creation: Task-specific metrics tailored to your use case requirements
+- LLM Judge Evaluation: Automated quality scoring using specialized language models trained for evaluation tasks
+- Human Feedback Integration: Structured collection and integration of expert feedback through review applications
+- Production Performance Monitoring: Real-time tracking of agent performance in live environments
+- Comparative Analysis: Benchmarking against baseline models and previous agent versions
+
+C. Integration with Other Services:
+
+Agent Bricks is tightly integrated with Mosaic AI Model Serving, Vector Search, Unity Catalog, Genie, MLflow 3, 
+and Databricks Apps, creating a unified platform for building, governing, evaluating, and deploying AI agents 
+end-to-end. 
+
+This integration means users can rapidly prototype, iterate, and deploy agent systems using their own enterprise 
+data, while maintaining best-in-class governance, security, and scalability.
+
+How Agent Bricks Works Alongside the Databricks Stack:
+
+- Mosaic AI Model Serving: Agents can be deployed as scalable REST APIs with automatic load balancing and 
+  monitoring. This serving platform also provides secure authentication and natively integrates with MLflow 3, 
+  enabling real-time tracing and quality evaluation.
+
+- Vector Search: Agents tap into Databricks Vector Search to efficiently retrieve relevant unstructured 
+  information, supporting both retrieval-augmented generation (RAG) and advanced use cases like semantic search 
+  across documents and tables.
+
+- Unity Catalog: Ensures unified governance across all data, models, agents, and tools. Agent logic, 
+  data lineage, and tool access are controlled to meet regulatory and compliance needs, while supporting 
+  integration with enterprise security requirements.
+
+- Genie & Genie Spaces: Enable agents to interact directly with structured data (e.g., text-to-SQL queries) and 
+  orchestrate multiple tools, expanding agent capabilities (e.g. multi-agent or tool-calling architectures).
+
+- MLflow 3: Provides robust experiment tracking, versioning, tracing, and evaluation for agents. Real-time traces 
+  and automated quality measurement (with research-backed LLM judges) allow rapid debugging and improvement 
+  cycles.
+
+- Databricks Apps: Offer user interfaces such as built-in chat apps, feedback collection portals, and production 
+  dashboards. These UIs allow stakeholders to interact with agents, submit feedback, and ensure agents meet 
+  business needs.
+
+-----------------------------------------------------------------------------------------------------------------
+
