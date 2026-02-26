@@ -464,4 +464,4 @@ parallel.sample(withReplacement=True, fraction=0.2, seed=1).count()
 
 parallel.sample(False,1).collect()
 
-45.
+45. 

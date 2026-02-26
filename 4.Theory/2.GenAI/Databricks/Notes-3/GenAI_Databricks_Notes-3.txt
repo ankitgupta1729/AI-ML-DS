@@ -546,3 +546,1059 @@ This layered approach provides crucial, real-time security across the conversati
 
 19. 
 
+Evaluating LLMs:
+
+We evaluate LLMs differently than classical ML and entire AI systems.
+
+Recall that we want to evaluate the system and its components.
+
+- We learned the basics on prompt safety and guardrails.
+- Now, we want to discuss how we evaluate LLMs.
+
+-- Let’s dive into evaluation techniques. To really understand how to evaluate large language models (LLMs), 
+it’s useful to first look at how traditional systems are evaluated. Evaluating LLMs is a bit different from 
+classical models, and when we talk about evaluating entire AI systems, we want to assess not just the whole but 
+also its individual components.
+
+Previously, we discussed prompt safety and implementing guardrails. Now, we’ll turn our attention specifically to 
+evaluating the LLM itself. Securing the overall system and evaluating the quality of the whole solution are 
+separate topics that will come later.
+
+When evaluating an AI system, we look at factors like cost, user feedback, and security. For LLMs, we focus on 
+the model component of the system, often using performance benchmarks, general metrics, and task-specific metrics 
+to assess how well the LLM performs. In other words, we shift from evaluating the broader system to looking more 
+closely at the LLM as a specialized component.
+
+20.
+
+Evaluation: LLMs vs. Classical ML
+
+LLMs present new challenges
+
+⸻
+
+Classical ML vs LLMs
+
+Data/Resource Requirements
+	•	Classical ML:
+Less expensive storage and compute hardware
+	•	LLMs:
+Requires massive amounts of data and substantial computational resources (GPUs, TPUs)
+
+⸻
+
+Evaluation Metrics
+	•	Classical ML:
+Evaluated by clear metrics (F1, accuracy, etc.) focused on specific tasks like classification and regression
+	•	LLMs:
+Evaluated using language-specific metrics (BLEU, ROUGE, perplexity), human judges, or LLM-as-a-judge
+Human feedback or LLM-as-a-judge metrics are used to measure the quality of generated content.
+
+⸻
+
+Interpretability
+	•	Classical ML:
+Often provide interpretable coefficients and feature importance scores
+	•	LLMs:
+Especially large models seen as “black boxes” with limited interpretability
+
+-- LLMs are deep learning models that need massive data and computing resources—far more than classical machine 
+learning models. While classical models use clear metrics like accuracy or F1 score, evaluating LLMs is tougher 
+because their output is language. Metrics like BLEU and ROUGE exist, but for many tasks, human or LLM-based 
+judgment is also needed.
+
+Classical models are easier to interpret, whereas LLMs are black boxes with limited interpretability, though 
+research is helping to improve this.
+
+21.
+
+Base Foundation Model Metrics: Loss
+
+How well do models predict the next token?
+	•	Foundation models predict next token
+	•	Loss measures the difference between predictions and the truth – train/validate the model
+	•	We can measure loss when training LLMs by how well they predict the next token
+
+A few challenges:
+	•	Model will make prediction even they are not very confident (e.g. hallucinations)
+	•	Since pre-training step is separate from alignment (optimizing for tasks), we can’t directly compute conversation accuracy
+
+-- When evaluating LLMs, the first metric used is loss. During training, the model tries to guess missing words in 
+sentences, and as it improves, the loss value decreases. This means the model becomes better at predicting the 
+next word and understanding grammar.
+
+However, just like with phone autocomplete, the model may generate grammatically correct words that don’t always 
+make sense. Loss measures word prediction accuracy but doesn’t guarantee truly coherent or meaningful sentences, 
+so more advanced evaluation methods are needed to overcome these limitations.
+
+22.
+
+# Base Foundation Model Metrics: Perplexity
+
+Is the model surprised that it was correct?
+
+- **Language Model probability distribution**
+  - Correct token
+  - Vocabulary vector space
+
+- **Perplexity**: A Metric measuring how well a model predicts a sample
+
+- Related to the model's **confidence** in its predictions
+  - Low perplexity = high confidence and accuracy
+  - High perplexity = low confidence and accuracy
+
+- A sharp peak in the language model's probability distribution reflects a **low perplexity**
+
+- Still doesn't consider downstream tasks
+
+-- To improve evaluation beyond just loss, another metric used is perplexity.
+Perplexity measures how confident a model is in picking a particular word from
+all possible choices — lower perplexity means the model is more certain. This
+helps produce more fluent sentences because the model is better at choosing
+words that fit together, so the text flows more naturally. However, even with
+low perplexity, the model might still generate sentences that sound good but
+aren't actually relevant to the task or question. So, while perplexity is a
+step up from just measuring loss, it still doesn't guarantee meaningful or
+accurate answers for specific tasks.
+
+23.
+
+# Base Foundation Model Metrics: Toxicity
+
+How harmful is the output of the model?
+
+| Sentence | Toxicity Score |
+|---|---|
+| They are so nice. | 0.1 |
+| He is a worthless piece of tr**h. | 0.9 |
+| ... | ... |
+
+- As discussed, LLMs can generate harmful output
+- We can compute toxicity to measure the harmfulness:
+  - Used to identify and flag harmful, offensive, or inappropriate language
+  - Low toxicity = low harm
+  - Uses a pre-trained hate speech classification model
+
+-- Toxicity is another important metric, especially for production applications.
+It measures how harmful or mean a model's output might be, which matters when
+the AI is interacting with customers or other systems. A polite or kind message
+gets a low toxicity score, while a mean or harmful message gets a high toxicity
+score. This metric is useful for filtering out hate speech or offensive content
+from models, making it a powerful tool for maintaining safe and friendly
+interactions.
+
+24. 
+
+# Task-specific Evaluation Metrics
+
+Base-model metrics are applicable, but they aren't specific enough
+
+- When we build AI systems, we're often concerned with completing specific tasks:
+  - Translating text
+  - Summarizing text
+  - Answering questions
+- Do any of our metrics evaluate how well an LLM completes these tasks?
+
+---
+
+## Task-specific Evaluation
+
+Metrics designed for evaluating specific tasks
+
+Built-in support in [MLflow](https://mlflow.org)
+
+[mlflow.evaluate(..., evaluators)](https://mlflow.org/docs/latest/quick-start/evaluators.html)
+
+**evaluators:**
+- regression
+- classification
+- question-answering
+- text-summarization
+
+-- These metrics, while broadly useful, aren't task specific — they don't show how
+well a model does at things like question answering, summarization, or product
+recommendations. Metrics like loss, perplexity, and toxicity focus mainly on
+grammar and fluency, not on whether the sentences are actually useful for a
+particular task. This is a core challenge in AI system evaluation, since
+real-world tasks — like translation, code writing, or passing exams — require
+different benchmarks. That's why tools such as MLflow now support more
+specialized evaluation for tasks like question answering and text
+summarization, giving us better metrics tailored to those specific challenges.
+
+25.
+
+# LLM Evaluation Metrics: Task-specific
+
+Using task-specific techniques to evaluate downstream performance
+
+- To better understand how LLMs perform at a task, we need to evaluate them
+  performing that specific task
+- This provides more contextually aware evaluations of LLMs as AI system components
+
+---
+
+### Translation: BLEU
+
+
+---
+
+### Summarization: ROUGE
+
+-- For tasks like question answering and text summarization, common NLP metrics
+include BLEU (which is used for translation tasks) and ROUGE (used for
+summarization). These metrics help measure how well a model performs on these
+specific tasks by turning the quality of the output into numerical scores,
+making it easier to compare and evaluate results objectively.
+
+26.
+
+# Deep Dive: BLEU
+
+BiLingual Evaluation Understudy
+
+- **LLM Output**
+  - What happens when you're busy is life happens.
+
+- **BLEU Reference**
+  - Life is what happens when you're busy making other plans.
+
+---
+
+BLEU compares translated output to a reference, comparing n-gram similarities
+between the output and reference.
+
+-- Here's how BLEU works. BLEU stands for Bilingual Evaluation Understudy, and
+it's used to compare the model's generated output to a reference output — so
+it's a supervised evaluation. You take a dataset with correct or good examples,
+then compare what the model produced to those references.
+
+Specifically, BLEU looks at how many matching words (unigrams), two-word
+combinations (bigrams), and three-word combinations (trigrams) there are
+between the generated and reference answers. The more overlaps, the higher the
+BLEU score, which means the generated text is closer to the reference. Higher
+scores indicate better matches, and this makes it a popular way to compare
+generated text across different models or datasets.
+
+27.
+
+# Deep Dive: ROUGE
+
+**Recall-Oriented Understudy for Gisting Evaluation (for N-grams)**
+
+ROUGE-N = (∑_{S ∈ {Reference summaries}} ∑_{gram_n ∈ S} Count_match(gram_n)) / (∑_{S ∈ {Reference summaries}} ∑_{gram_n ∈ S} Count(gram_n))
+
+- **Total matching N-grams** / **Total N-grams** = **N-gram recall**
+
+| ROUGE-1    | Words (tokens) |
+| ROUGE-2    | Bigrams         |
+| ROUGE-L    | Longest common subsequence |
+| ROUGE-Lsum | Summary-level ROUGE-L |
+
+ROUGE compares summarized output to a reference, comparing n-gram similarities
+between the output and reference.
+
+-- Another widely used metric is ROUGE, which stands for Recall-Oriented
+Understudy for Gisting Evaluation. ROUGE works by counting how many words
+overlap between the generated output and the reference, then dividing by the
+total possible matches to get a probability score. This makes it easy to
+compare different models' performance using a standardized number.
+
+There are various ROUGE versions: some check single words, bigrams, or even the
+longest common sequence of words. One variant, ROUGE-Lsum, ignores punctuation,
+which is helpful when comparing summary outputs to reference paragraphs. This
+flexibility allows ROUGE to handle different aspects of text comparison,
+especially useful for summarization tasks.
+
+28.
+
+# Task-specific Evaluation Metric Similarities
+
+What do BLEU and ROUGE have in common?
+
+1. They are task-specific metrics
+2. They are applied to LLM output
+3. They consider N-gram output rather than just unigram
+4. They compare to reference datasets
+
+---
+
+Where does the reference data come from?
+
+-- BLEU and ROUGE are both task-specific metrics used to evaluate the output of
+LLMs. They require benchmark datasets to compare the generated outputs against
+reference texts. Both metrics analyze n-grams (short sequences of words) rather
+than just individual words, and their scores depend on how well the model's
+output matches the reference data. This comparison highlights the importance of
+having high-quality datasets for meaningful evaluation.
+
+29.
+
+# Benchmarking: Types of Data
+
+Evaluate with large generic data and your application's data
+
+- **Benchmarking** → comparing models against standard evaluation datasets
+- You can use large generic datasets or curate your own:
+  - General LLMs are evaluated on **large reference datasets** (e.g. Stanford Q&A is a generic dataset for general Q&A evaluation)
+  - But you should evaluate the LLM task on **your own data**, too
+
+-- This brings us to the topic of benchmarks. Most LLMs today are evaluated using
+metrics like BLEU and ROUGE against specially designed datasets that reflect
+different tasks. Early benchmarks, like Stanford QA, focused on tasks such as
+reading comprehension and answering questions from a given text. Now there are
+many different benchmarks covering a range of tasks, but these are usually
+quite general. In real-world applications, many organizations end up creating
+their own benchmarks to better reflect their specific needs and use cases.
+
+30. 
+
+# Benchmarking: Types of Data
+
+Evaluate with large generic data and your application's data
+
+- **Benchmarking** → comparing models against standard evaluation datasets
+- You can use large generic datasets or curate your own:
+  - General LLMs are evaluated on **large reference datasets** (e.g. Stanford Q&A is a generic dataset for general 
+    Q&A evaluation)
+  - But you should evaluate the LLM task on **your own data**, too
+
+---
+
+## Domain-specific Reference Dataset for Databricks Documentation Translation
+
+- Databricks documentation provides how-to guidance and reference information for data analysts, data scientists, 
+  and data engineers solving problems in analytics and AI. ---> Documentação da Databricks fornece orientação prática e informações de referência para analista de dados, cientista de dados e engenheiro de dados resolvendo problemas em análise e IA 
+
+-- Domain-specific reference datasets are important for tasks like Databricks
+documentation translation. For example, the internal localization process might
+use English paired with Spanish or Portuguese reference versions to benchmark
+translation accuracy. Many organizations develop their own datasets tailored to
+their needs, since public benchmarks are useful as proxies but rarely match
+perfectly with each company's actual requirements. Custom datasets ensure
+evaluations are more relevant and accurate for specific real-world
+applications.
+
+31.
+
+# Mosaic AI Gauntlet
+
+Well-curated set of benchmarks
+
+- Encompasses 35 different benchmark sources
+- Organized into 6 broad categories - Programming, World Knowledge, Language Understanding,
+  Reading Comprehension, common sense reasoning, symbolic problem solving
+---
+
+-- As we move from individual metrics to broader model comparisons,
+benchmarking — comparing models against standard datasets — is key. The Mosaic
+AI Gauntlet is Databricks' well-curated set of benchmarks. The Gauntlet
+encompasses 35 different benchmark sources. These 35 benchmarks are organized
+into six broad categories to comprehensively assess a model's capabilities.
+These categories include reading comprehension, commonsense reasoning, problem
+solving, world knowledge, symbolic problem solving, and language understanding.
+By providing this broad, categorized evaluation, the Gauntlet gives us a
+detailed, holistic view of a model's strengths and weaknesses across various
+critical AI tasks.
+
+32.
+
+# Addressing Evaluation Challenges
+
+The previous approaches are valuable, but leave us with gaps
+
+What if ...
+
+- we don't have a reference dataset?
+- our task doesn't have existing APIs or metrics?
+- we need to evaluate outlying cases?
+
+-- When there are no reference datasets or clear metrics, it becomes difficult to
+evaluate generative AI systems. Many applications lack ground truth or
+benchmarks to define good results, so without something measurable, developers
+face a "chicken and egg" problem in building and validating these models.
+
+33.
+
+# Addressing Evaluation Challenges
+
+The previous approaches are valuable, but leave us with gaps.
+
+## What if ...
+
+- we don't have a reference dataset?
+- our task doesn't have existing APIs or metrics?
+- we need to evaluate outlying cases?
+
+### How can we evaluate these more complex cases? Do we have any tools at our disposal?
+
+---
+
+**LLM-as-a-Judge**
+
+**Description**
+
+- Ask an LLM to do the evaluation for you!
+
+**General Workflow**
+
+- Given a set of rules to LLM, then apply them to automatically evaluate new responses.
+
+-- To handle complex cases without benchmarks, a common approach is to use an LLM
+as a judge. Since LLMs can reason and assess outputs, they can be asked to
+evaluate the responses of other models. Alternatively, human evaluators can
+review results, but using an LLM for evaluation has become a popular and
+efficient choice for these situations.
+
+34.
+
+# LLM-as-a-Judge Basics
+
+**Prompt Template:**
+"You will be given a user_question and system_answer couple. Your task is to provide a 'total rating' scoring how well the system_answer answers the user concerns expressed in the user_question.
+
+Give your answer as a float on a scale of 0 to 10, where 0 means that the system_answer is not helpful at all, and 10 means that the answer completely and helpfully addresses the question.
+
+Provide your feedback as follows:
+
+*Feedback*
+Total rating: (your rating, as a float between 0 and 10)
+
+Now here are the question and answer to evaluate.
+
+Question: {question}
+Answer: {answer}
+
+*Feedback*
+Total rating:"
+
+---
+
+## General tips ...
+
+- Use few-shot examples with human-provided scores for more guidance
+- Provide more specific instructions of what good looks like
+- Provide a component-based rubric or more specific evaluation scale
+
+-- For an LLM to act as a judge, it needs a few things: clear examples of good and
+bad outputs, human-provided instructions outlining what counts as "good," and a
+grading rubric to use for evaluation. These elements help guide the LLM's
+assessment process and ensure its judgments align with intended quality
+standards.
+
+35. 
+
+# LLM-as-a-Judge Basics
+
+**Limitations and how to address them**
+
+- Do we trust the metrics generated by LLMs?
+- **Possible limitations:**
+  - Lack of understanding and contextual awareness
+  - Risk of metrics based on inaccurate or hallucinatory outputs
+  - Bias and ethical concerns
+
+- **Possible Solution: Human-in-the-loop.**
+  - Review the metrics generated by the LLM
+  - Improve accuracy and handle ambiguities
+
+-- While LLM-as-a-Judge techniques offer immense scalability and cost savings,
+they are not without limitations. We must ask: Do we trust the metrics
+generated by other LLMs?
+
+Possible limitations include the LLM-as-a-Judge's lack of understanding and
+contextual awareness. There is also a risk that the metrics generated might be
+based on inaccurate or hallucinatory outputs from the system being judged.
+Furthermore, issues of bias and ethical concerns can be introduced or
+reinforced if the judging model itself has inherent biases.
+
+The most effective solution to combat these limitations is implementing a
+Human-in-the-loop strategy. This involves having human experts review the
+metrics generated by the LLM judges. Human review helps to improve accuracy,
+handle ambiguities, and ensures we maintain qualitative oversight over the
+automated process.
+
+36.
+
+MLflow (LLM) Evaluation:
+
+Efficiently evaluate retrievers and LLMs
+
+- Batch comparisons:
+  - Compare Foundational Models with fine-tuned models on many questions
+- Rapid and scalable experimentation:
+  - MLflow can evaluate unstructured outputs automatically, rapidly, and at low-cost
+- Cost-Effective:
+  - Automating evaluations with LLMs can save time on human evaluation
+
+MLFlow contains a cycle of steps as Evaluation, Model Registry, Serving, Generative AI, Visualization and 
+Experiment tracking.
+
+To efficiently implement these LLM-as-a-Judge techniques, we turn to MLflow
+Evaluation. MLflow is a key tool for efficiently evaluating both retrievers and
+LLMs. MLflow offers several advantages for Gen AI evaluation:
+
+First, it enables batch comparisons, allowing you to compare foundational
+models with fine-tuned models across many test questions simultaneously.
+
+Second, it supports rapid and scalable experimentation. MLflow can
+automatically, rapidly, and at a low cost, evaluate the unstructured
+outputs — like text generated by LLMs.
+
+Finally, this automated evaluation is cost-effective. By automating evaluations
+using LLMs, you can significantly save time and resources compared to relying
+solely on expensive and time-consuming human evaluation efforts.
+
+37.
+
+# MLflow (LLM) Evaluation
+
+Efficiently evaluate retrievers and LLMs
+
+## Batch evaluation in code
+- **LLM-as-a-judge**: Evaluate using foundation models, to scale beyond human evaluation
+- Ground truth: Efficiently evaluate using large curated datasets
+
+## Interactive evaluation in UI
+- Compare multiple models and prompts visually
+- Iteratively test new queries during development
+
+-- MLflow provides capabilities for both batch evaluation in code and interactive
+evaluation in the UI.
+
+For batch evaluation (using code): You can utilize LLM-as-a-Judge methodology,
+employing foundation models to judge performance and scale beyond what is
+feasible with human evaluation alone. You can also validate your system against
+ground truth by efficiently evaluating output using large, curated datasets.
+
+For interactive evaluation (using the UI): Developers can visually compare
+multiple models and prompts. This is crucial during development, allowing teams
+to iteratively test new queries and visually see how changes affect
+performance.
+
+38. 
+
+# MLflow's LLM-as-a-Judge Capabilities
+
+An enhanced workflow for LLM-as-a-Judge evaluation
+
+Templates are a good conceptual framework, but there's a lot of engineering around these ideas.
+
+MLflow and its **evaluate module** make this process much easier, especially for custom metrics:
+
+1. Create example evaluation records
+2. Create a metric object, including the examples, a description of the scoring criteria, the model used, and 
+the aggregations used to evaluate the model across all provided records
+3. Evaluate the model against a reference dataset with the newly created metric
+
+-- While the prompt templates we discussed earlier offer a good conceptual
+framework, there is significant engineering work required to deploy them
+effectively. MLflow and its specialized evaluate module make the LLM-as-a-Judge
+process much easier, especially when you need custom metrics. The enhanced
+workflow for using MLflow's LLM-as-a-Judge is streamlined into three main
+steps:
+
+1. First, you create example evaluation records.
+2. Second, you create a metric object. This object includes those examples, a
+   description of the desired scoring criteria, specifies the judge model to be
+   used, and defines the aggregations needed to evaluate the model across all
+   provided records.
+3. Finally, you evaluate the model against a reference dataset using the newly
+   created custom metric.
+
+---------------------------------------------------------------------------------------------------------------
+
+39.
+
+## AI System Architecture:
+
+Let's dive into end-to-end application evaluation. Remember, AI systems are
+made up of smaller parts, and we've already discussed how to evaluate those
+individual components. But it's also important to consider how to evaluate the
+entire system as a whole, not just its separate pieces.
+
+# Evaluating the Whole System
+
+What do we evaluate when it comes to the entire system?
+
+---
+
+### Cost metrics
+- Resources
+- Time
+
+### Performance
+- Direct value
+- Indirect value
+
+### Custom metrics for your own use case
+
+-- When evaluating an entire AI system, there are usually two main concerns: cost
+metrics and performance metrics. Cost metrics cover things like how much
+infrastructure is needed and how much time processing takes, while performance
+metrics measure the actual value delivered to customers, such as how useful or
+frequently used the product is. Often, teams create custom metrics tailored to
+their specific use cases to get a clearer sense of the system's total impact.
+
+40. 
+
+## Performance Metrics
+
+# Evaluating RAG Pipeline
+
+Let's start by performance metrics
+
+- When evaluating RAG solutions, we need to **evaluate each component separately and together.**
+
+- Components to evaluate
+  - Chunking: method, size
+  - Embedding model
+  - Vector store
+    - Retrieval and re-ranker
+  - Generator
+
+  -- Now that we've covered LLM-specific evaluation techniques like LLM-as-a-Judge
+and MLflow, we turn our attention to evaluating the entire RAG pipeline. To
+understand RAG performance, we need to evaluate each component separately and
+together. The RAG architecture, as a compound AI system, has several key
+components we need to evaluate:
+
+- Chunking: The method and size used to split source documents.
+- Embedding model: The model used to convert text into vectors.
+- Vector store: This includes the performance of the retrieval mechanism and
+  any re-ranker components used to refine results.
+- Generator: The final LLM used to synthesize the response based on the
+  retrieved context.
+
+Each component contributes to the end-to-end performance, requiring specific
+metrics.
+
+41. 
+
+# Evaluation Metrics
+
+Retrieval and generation related metrics
+
+---
+
+In RAG evaluation, we focus on retrieval and generation-related metrics, all
+tied back to the Ground Truth — the ideal answer.
+
+We visualize the four relationships that we must measure:
+1. Query to Context: Is the context related to the query?
+2. Context to Response: Is the response supported by the provided context?
+3. Query to Response: Is the answer relevant and accurate to the original
+   query?
+4. And, implicitly, Response to Ground Truth and Context to Ground Truth, which
+   measure accuracy and completeness against known facts.
+
+The next few slides detail the specific metrics used to measure these
+relationships.
+
+42.
+
+# Context Precision
+
+**Retrieval related metrics**
+
+## Context Precision:
+
+- Signal-to-noise ratio for the retrieved context.
+- Based on **Query** and **Context(s)**.
+- It assesses whether the chunks/nodes in the retrieval context ranked higher than irrelevant ones.
+
+---
+
+### Example:
+
+- **Query**: What was Einstein's role in the development of quantum mechanics?
+- **Ground Truth**: Einstein contributed to the development of quantum theory, including his early skepticism 
+  and later contributions to quantum mechanics.
+- **High Context Precision**: [The contexts specifically mention Einstein's contributions to quantum theory]
+- **Low Context Precision**: [The contexts broadly discuss Einstein's life and achievements without specifically 
+  addressing his contributions to quantum mechanics.]
+
+-- Our first metric, Context Precision, is retrieval-related and measures the
+signal-to-noise ratio of the retrieved context.
+
+It is based on the relationship between the Query and the retrieved Context(s).
+Context Precision assesses whether the highly ranked chunks or nodes in the
+retrieval context are more relevant than irrelevant ones.
+
+For example, if your query is about Einstein's role in quantum mechanics, a
+high precision context would specifically mention his contributions to quantum
+theory, while a low precision context might broadly discuss his life and
+achievements without focusing on the query's specific technical area.
+
+
+43.
+
+# Context Relevancy
+
+**Retrieval related metrics**
+
+- **Context Relevancy:**
+  - Measure the relevancy of the retrieved context.
+  - Based on both the Query and Context(s).
+
+- It does not necessarily consider the factual accuracy but focuses on how well the answer addresses the 
+  posed question.
+
+---
+
+## Example:
+- **Query:** What was Einstein's role in the development of quantum mechanics?
+- **High context relevancy:** Einstein initially challenged the quantum theory but later contributed 
+  foundational ideas to quantum mechanics.
+- **Low context relevancy:** Einstein was known for his pacifist views during the early 20th century and 
+  became a U.S. citizen in 1940.
+
+-- Context Relevancy is another retrieval-related metric that measures the
+relevancy of the retrieved context.
+
+Like precision, it is based on the Query and the Context(s).
+
+However, relevancy does not necessarily consider factual accuracy. Instead, it
+focuses on how well the retrieved context addresses the posed question.
+
+For example, if the query is about Einstein and quantum mechanics, context that
+details his initial challenges to quantum theory or his foundational ideas
+would be highly relevant, even if it doesn't represent the 'ground truth' of
+his final accepted contributions. Conversely, context about his pacifist views
+or citizenship status would be low relevancy.
+
+44.
+
+# Context Recall
+
+**Retrieval related metrics**
+
+## Context Recall:
+- Measures the extent to which all relevant entities and information are retrieved and mentioned in the context provided.
+- Based on **Ground Truth** and retrieved **Context(s)**.
+
+---
+
+### Example:
+- **Query**: What significant scientific theories did Einstein contribute to?
+- **Ground truth**: Einstein contributed to the theories of relativity and had insights into quantum mechanics.
+- **High-recall context**: Einstein contributed to relativity and quantum mechanics.
+- **Low-recall context**: Einstein contributed to relativity.
+
+-- Our third retrieval metric is Context Recall.
+
+Recall measures the extent to which all relevant entities and information are
+retrieved and mentioned in the context provided.
+This metric is based on comparing the Ground Truth against the retrieved
+Context(s).
+
+If the ground truth about Einstein mentions both his contributions to
+relativity and insights into quantum mechanics, a high-recall context will
+retrieve and mention both of those key facts. A low-recall context might only
+retrieve information about relativity, missing the quantum mechanics aspect
+entirely.
+
+45.
+
+# Faithfulness
+
+## Generation related metrics
+
+### Faithfulness:
+
+- Measures the factual accuracy of the generated answer in relation to the provided context.
+- Based on the **Response and retrieved Context(s)**.
+
+---
+
+**Example:**
+
+- **Query:** Where and when was Einstein born?
+- **Context:** Albert Einstein (born 14 March 1879) was a German-born theoretical physicist, widely held to be one of the greatest and most influential scientists of all time.
+- **High faithfulness answer:** Einstein was born in Germany on 14th March 1879.
+- **Low faithfulness answer:** Einstein was born in Germany on 20th March 1879.
+
+-- Shifting now to generation-related metrics, we look at Faithfulness. This
+metric assesses the quality of the final generated response.
+
+Faithfulness measures the factual accuracy of the generated answer in relation
+to the provided context.
+
+It is specifically based on the relationship between the Response and the
+retrieved Context(s).
+
+A high faithfulness answer is supported by the context; for instance, if the
+context says Einstein was born on March 14th, a faithful answer will state
+March 14th. If the response provides an answer that contradicts the
+context — say, stating March 20th, it shows low faithfulness, regardless of
+whether March 20th might be factually correct outside of that specific context.
+
+46.
+
+# Answer Relevancy
+
+**Generation related metrics**
+
+## Answer Relevancy:
+- Assesses how pertinent and applicable the generated response is to the user's initial query.
+- Based on the alignment of the Response with the user's intent or Query specifics.
+
+---
+
+### Example:
+- **Query**: What is Einstein known for?
+- **High relevancy answer**: Einstein is known for developing the theory of relativity.
+- **Low relevancy answer**: Einstein was a scientist.
+
+-- The next generation metric is Answer Relevancy.
+
+Answer Relevancy assesses how pertinent and applicable the generated response
+is to the user's initial query.
+
+It is based on the alignment of the Response with the user's intent or the
+specific details of the Query.
+
+For example, if the query asks what Einstein is known for, a high relevancy
+answer will specifically mention his major theoretical achievements, such as
+developing the theory of relativity. A low relevancy answer might simply state
+he was a scientist, which is true but doesn't fully address the intent of the
+question.
+
+47. 
+
+# Answer Correctness
+
+**Generation related metrics**
+
+- **Answer Correctness:**
+  - Measures the accuracy of the generated answer when compared to the ground truth.
+  - Based on the **Ground Truth and the Response**.
+  - Encompasses both semantic and factual similarity with the ground truth.
+
+---
+
+### Example:
+- **Ground truth:** Albert Einstein was awarded the Nobel Prize in Physics in 1921 for his explanation of the 
+  photoelectric effect.
+- **High answer correctness:** Einstein received the Nobel Prize in Physics in 1921 for his work on the 
+  photoelectric effect.
+- **Low answer correctness:** Einstein won the Nobel Prize in Physics in the 1930s for his theory of relativity.
+
+-- Finally, we have Answer Correctness.
+This metric measures the accuracy of the generated answer when compared
+directly to the ground truth.
+It is based on the Ground Truth and the Response.
+Answer Correctness encompasses both semantic and factual similarity with the
+ground truth. If the ground truth states Einstein won the Nobel Prize in
+Physics in 1921 for his work on the photoelectric effect, a high correctness
+answer will match those facts. A low correctness answer might misstate the year
+or mention a different theory, like relativity in the 1930s.
+
+48.
+
+# Custom Metrics for System Evaluation
+
+Frequently related to business goals and constraints for the AI system
+
+- What is important to your use case?
+  - Do you care about *serving latency*?
+  - Are you concerned with *total cost*?
+  - Are you expecting your system to *increase product demand*?
+  - What about *customer satisfaction*?
+
+- **Note**: custom metrics can be useful for individual components, too.
+
+**Quick Activity**: Define your own system-wide custom metric to ensure your AI system is providing the value 
+that you expect.
+
+-- Custom metrics are important for system evaluation because standard metrics
+often don't match a business's specific needs or customer values. Only the
+business truly understands what matters to its users and tasks, so metrics
+should reflect what is valuable for them — like latency for chatbots, total
+cost (including infrastructure and engineering), speed to market, scalability,
+or customer satisfaction. Sometimes, companies need to release products early
+(like in beta) just to gather real-world feedback and data for evaluation.
+Ultimately, creating a system-wide custom metric ensures the AI delivers the
+value that's expected for the business's unique context.
+
+49.
+
+# Custom Metrics in MLflow
+
+Built-in capabilities for integrating custom metrics into component monitoring
+
+- Beyond the predefined metrics, MLflow allows users to create custom LLM evaluation metrics.
+- Frequently uses LLM-as-a-Judge methodology to evaluate a defined custom metric.
+
+---
+
+professionalism = mlflow.metrics.genai.make_genai_metric(
+    name="professionalism",
+    definition={
+    "..."
+    },
+    grading_prompt={
+    "Professionalism: If the answer is written using a professional tone, below are details for different scores:"
+    "- Score 0: Language is extremely casual, informal, and may include slang or colloquialisms. Not suitable for "
+    "professional contexts."
+    "- Score 1: Language is casual but generally respectful and avoids strong informality or slang. Acceptable in "
+    "some informal professional settings."
+    "- Score 2: Language is overall formal but still have casual words/phrases. Borderline for professional contexts."
+    "- Score 3: Language is balanced and avoids extreme informality or formality. Suitable for most professional contexts."
+    },
+    examples=[professionalism_example_score_2, professionalism_example_score_4],
+    model="openai:/gpt-3.5-turbo-16k",
+    parameters={"temperature": 0.0},
+    aggregations=["mean", "variance"],
+    greater_is_better=True
+)
+
+---
+
+-- To measure LLM performance in ways that matter specifically to you, it's useful
+to develop your own system or evaluation rubric — such as scoring the
+professionalism or tone of the output if that's important. Tools like MLflow
+make it possible to create these custom metrics and use an LLM as a judge,
+which can scale efficiently and isn't overly expensive. While human evaluation
+data is often more accurate, using LLMs for judging works well for most
+organizations' needs.
+
+50.
+
+# Human Feedback and Monitoring
+
+## Offline vs. Online Evaluation
+
+Evaluating LLMs prior to prod and within prod
+
+- We've been talking about how we evaluate systems and components in static environments.
+- Sometimes we might want to evaluate online performance – performance after the systems have been deployed
+- This will provide real-time feedback on user experience with the LLM
+- Metrics to consider: A/B testing results, direct feedback, indirect feedback
+
+## Offline Evaluation
+
+1. Curate a benchmark dataset
+2. Use task-specific evaluation metrics
+3. Evaluate results using reference data or LLM-as-judge
+
+## Online Evaluation
+
+1. Deploy the application
+2. Collect real user behavior data
+3. Evaluate results using how well the users respond to the LLM system
+
+-- It's important to understand the difference between online and offline
+evaluation. Everything discussed so far — like benchmark testing or using LLMs
+as judges — falls under offline evaluation, which happens before releasing a
+product to users, to ensure the system works as expected. But the most
+important feedback comes from online evaluation, which means observing real
+users in production and tracking how they interact with the system's outputs.
+This live data shows whether people actually use and like the results, and it
+guides improvements for future offline evaluations and model development,
+creating a valuable feedback loop.
+
+51. 
+
+# Human Feedback
+
+**Collect data from users and experts**
+
+- Often developers are not the experts of the domain
+- Models' output need to be **evaluated by human experts**
+- Models' outputs and associated feedback need to be collected and stored in a structured manner
+
+- Feedback can be **explicit or implicit:**
+
+  - **Explicit feedback**: Direct and intentional input from users. Such as ratings, comments and reviews.
+  - **Implicit feedback**: Gathered indirectly by observing user behavior and interactions. Such as engagement 
+    metrics and behavioral data.
+
+-- Regardless of how sophisticated our automated LLM evaluation is, Human Feedback
+remains indispensable for collecting real-time data from users and domain
+experts. Often, the developers are not the domain experts, meaning the model's
+output must be evaluated by human experts to ensure accuracy and quality. These
+outputs and their associated feedback must be collected and stored in a
+structured manner to inform future model improvements.
+
+Human feedback can be categorized as:
+
+- Explicit feedback: This is direct and intentional input from users, such as
+  ratings, comments, and reviews.
+
+- Implicit feedback: This is gathered indirectly by observing user behavior and
+  interactions, such as engagement metrics or other behavioral data.
+
+52.
+
+# Ongoing Evaluation of Components
+
+AI systems are made up of smaller parts
+
+- Systems need to be monitored on an ongoing basis
+- This will help detect drift in components and the system as a whole
+- Databricks provides the Lakehouse Monitoring solution
+- There will be more detail in the next course
+
+-- Online evaluation requires continuous monitoring of systems to detect data
+drift and changes in components or overall performance. Databricks supports
+this with tools like Lakehouse Monitoring, which integrates with services such
+as model serving to track API calls, user requests, and interactions. These
+monitoring tools help collect valuable feedback and support an ongoing
+improvement loop, especially within operations and system monitoring processes.
+
+53.
+
+# Mosaic AI Agent Framework
+
+A framework for creating, deploying and evaluating agents
+
+Mosaic AI Agent Framework:
+
+- A **suite of tooling** designed to help developers build and deploy high-quality Generative AI applications.
+- Makes it easy for developers to **evaluate the quality of their RAG application**, iterate quickly with the 
+  ability to test their hypothesis, redeploy their application easily, and have the appropriate governance and 
+  guardrails to ensure quality continuously.
+
+-- The Mosaic AI Agent Framework is a comprehensive suite of tooling designed to
+help developers successfully build and deploy high-quality Generative AI
+applications. It simplifies the process by making it easy for developers to
+achieve three main goals:
+
+1. Evaluate the quality of their RAG application effectively.
+2. Iterate quickly, enabling them to test hypotheses and redeploy their
+   application with ease.
+3. Implement the necessary governance and guardrails to continuously ensure
+   quality in production.
+
+54.
+
+# Mosaic AI Agent Framework
+
+## Agent Evaluation features
+
+- **Trace agent behavior** in each step
+- Quickly evaluate chain quality with RAG specific metrics, unified between offline dev loop & online monitoring
+- Collect human feedback with easy-to-use Review App
+- Databricks LLM Judges: Proprietary models to assess RAG quality and identify root cause of low quality
+
+-- The Agent Evaluation features within the framework provide crucial visibility
+and control:
+
+First, they allow you to trace agent behavior in each step, which is vital for
+debugging complex workflows.
+
+Second, they let you quickly evaluate chain quality using RAG-specific metrics,
+unifying the offline development loop with online monitoring.
+
+Third, the framework includes an easy-to-use Review App to efficiently collect
+human feedback.
+
+And finally, it leverages Databricks LLM Judges, which are proprietary models
+used to assess RAG quality and help identify the root cause of any low-quality
+performance.
+
+-----------------------------------------------------------------------------------------------------------------
+
+55. 
+
+Model Deployment Fundamentals:
