@@ -1,4 +1,4 @@
-## Building Single-Agent Applications on Databricks
+# Building Single-Agent Applications on Databricks
 
 ### 1. Foundations of AI Agents and Tools on Databricks
 
@@ -16,15 +16,15 @@ acting autonomously within their environment to achieve user-defined goals.
 
 #### A1. What Are AI Agents?
 
-An **AI agent** is an intelligent software system that can perceive its environment, make decisions, and 
+An AI agent is an intelligent software system that can perceive its environment, make decisions, and 
 take actions to achieve specific goals. Unlike traditional AI systems that require continuous inputs from users, 
 AI agents are autonomous systems that can:
 
-- **Reason** about complex problems and situations
-- **Plan** sequences of actions to achieve objectives
-- **Adapt** their behavior based on new information
-- **Interact** with external systems and data sources
-- **Learn** from experience to improve future performance
+- Reason about complex problems and situations
+- Plan sequences of actions to achieve objectives
+- Adapt their behavior based on new information
+- Interact with external systems and data sources
+- Learn from experience to improve future performance
 
 What makes AI agents exciting is their adaptability. They use tools that dynamically pull up-to-date datasets to 
 inform decisions and processes, making them ideal for complex and unpredictable tasks. While humans set the goals, 
@@ -37,22 +37,22 @@ users and data systems, capable of understanding natural language queries and ex
 
 AI agents have evolved significantly since their inception:
 
-**i. 1960s - Rule-Based Systems:**
+i. 1960s - Rule-Based Systems:
 - Basic chatbots with predetermined logic trees
 - Rigid, rule-based programming
 - Limited to simple, scripted responses
 
-**ii. 1990s - Statistical Learning:**
+ii. 1990s - Statistical Learning:
 - More autonomous systems processing information
 - Simple decision-making capabilities
 - Foundation for consumer-grade AI devices
 
-**iii. 2000s - Machine Learning Integration:**
+iii. 2000s - Machine Learning Integration:
 - Consumer devices like robot vacuums and digital assistants (Siri, Alexa)
 - Statistical machine learning models and neural networks
 - Enhanced decision-making and analysis capabilities
 
-**iv. 2020s - Large Language Models:**
+iv. 2020s - Large Language Models:
 - Breakthrough with deep reinforcement learning and transformer-based large language models (LLMs)
 - Multimodal interfaces and advanced reasoning
 - Dynamic interaction with complex environments
@@ -62,20 +62,20 @@ AI agents have evolved significantly since their inception:
 
 AI agents operate on three fundamental principles that distinguish them from traditional software:
 
-**i. Perception:**
+i. Perception:
 The first step for agents to understand the context in which they're operating. For language models, 
 this includes:
 - User inputs and queries via text, photos, or audio
 - Environmental data from sensors or APIs
 - Historical context and conversation memory
 
-**ii. Decision-Making:**
+ii. Decision-Making:
 The agent processes collected information through algorithms and determines proper actions according to user goals:
 - Analyzing requirements and constraints
 - Determining necessary steps and tool usage
 - Planning optimal execution sequences
 
-**iii. Action:**
+iii. Action:
 Finally, an agent takes concrete steps to achieve objectives:
 - Executing database queries and API calls
 - Processing and transforming data
@@ -86,22 +86,22 @@ Finally, an agent takes concrete steps to achieve objectives:
 
 Modern AI agents typically consist of several key components working together:
 
-- **Large Language Model (LLM) Brain:** The central reasoning engine that processes natural language, 
+- Large Language Model (LLM) Brain: The central reasoning engine that processes natural language, 
   understands context, and makes decisions about what actions to take.
 
-- **Memory System:** Stores conversation history, context, and learned information to maintain coherent interactions 
+- Memory System: Stores conversation history, context, and learned information to maintain coherent interactions 
   over time.
 
-- **Planning Module:** Breaks down complex requests into smaller, manageable tasks and determines the optimal sequence 
+- Planning Module: Breaks down complex requests into smaller, manageable tasks and determines the optimal sequence 
   of actions.
 
-- **Tool Interface:** Connects the agent to external systems, databases, APIs, and functions that extend its 
+- Tool Interface: Connects the agent to external systems, databases, APIs, and functions that extend its 
   capabilities beyond text generation.
 
-- **Execution Engine:** Manages the actual execution of planned actions and handles responses from external tools and 
+- Execution Engine: Manages the actual execution of planned actions and handles responses from external tools and 
   systems.
 
-> **Example agent pattern:** The LLM acts as the brain to plan and execute tasks within its environment based on the 
+> Example agent pattern: The LLM acts as the brain to plan and execute tasks within its environment based on the 
 user's request. Tools can be stored securely within Unity Catalog while agent memory can be used with Delta Lake 
 and Lakebase.
 
@@ -112,15 +112,15 @@ right approach for specific use cases:
 
 | Agent Type | Description | Example |
 | :--- | :--- | :--- |
-| **i. Simple Reflex Agents** | Make decisions based on current conditions only | Robot vacuum that cleans only when it senses dirt |
-| **ii. Model-Based Reflex Agents** | Account for current state and use world models to guide actions | Smart thermostat adjusting based on time, weather, and preferences |
-| **iii. Goal-Based Agents** | Plan specific strategies to achieve desired goals | Navigation systems like Google Maps considering traffic and routes |
-| **iv. Utility-Based Agents** | Evaluate multiple ways to achieve goals for optimal efficiency | AI trading bots adjusting investment strategies |
-| **v. Learning Agents** | Learn from past actions and adapt to future situations | Recommendation systems that improve based on user behavior |
+| i. Simple Reflex Agents | Make decisions based on current conditions only | Robot vacuum that cleans only when it senses dirt |
+| ii. Model-Based Reflex Agents | Account for current state and use world models to guide actions | Smart thermostat adjusting based on time, weather, and preferences |
+| iii. Goal-Based Agents | Plan specific strategies to achieve desired goals | Navigation systems like Google Maps considering traffic and routes |
+| iv. Utility-Based Agents | Evaluate multiple ways to achieve goals for optimal efficiency | AI trading bots adjusting investment strategies |
+| v. Learning Agents | Learn from past actions and adapt to future situations | Recommendation systems that improve based on user behavior |
 
 #### A6. Can All LLMs Use Tools?
 
-No, **not all LLMs have the tool-calling capability.** On Databricks, tool usage by LLMs is enabled through specific 
+No, not all LLMs have the tool-calling capability. On Databricks, tool usage by LLMs is enabled through specific 
 frameworks and integrations, such as Databricks Assistant or custom agent frameworks that allow LLMs to interact 
 with external systems, databases, or APIs. This capability is not inherent to all LLMs; it requires additional 
 engineering, orchestration, and security controls to ensure safe and effective tool usage.
@@ -136,9 +136,9 @@ Databricks environment, but this is a feature of the platform, not a universal c
 
 #### B1. What Are Agent Tools?
 
-**Agent tools** are specialized functions or capabilities that extend an AI agent's ability to interact with external 
-systems and perform specific tasks. Think of tools as the **"hands"** of an AI agent, while the LLM provides the 
-**"brain"** for reasoning and decision-making—tools enable the agent to actually manipulate data, call APIs, perform 
+Agent tools are specialized functions or capabilities that extend an AI agent's ability to interact with external 
+systems and perform specific tasks. Think of tools as the "hands" of an AI agent, while the LLM provides the 
+"brain" for reasoning and decision-making—tools enable the agent to actually manipulate data, call APIs, perform 
 calculations, and interact with the real world.
 
 Tools transform agents from purely conversational systems into actionable, productive assistants. 
@@ -156,35 +156,35 @@ Some examples include:
 It's important to understand how agent tools relate to other AI technologies. Here are examples to help 
 distinguish between tools and machine learning models, chatbots, and traditional APIs:
 
-**i. Tools vs. Machine Learning Models:**
-- **ML Models:** Provide intelligence (prediction, generation, reasoning) used by agents
-- **Agent Tools:** Executable capabilities an agent can call to take action or retrieve information — some tools may 
+i. Tools vs. Machine Learning Models:
+- ML Models: Provide intelligence (prediction, generation, reasoning) used by agents
+- Agent Tools: Executable capabilities an agent can call to take action or retrieve information — some tools may 
 call ML models, others may call APIs, databases, or run business logic
-- **Example:** A sentiment model scores a customer message; the agent uses a tool (e.g., `escalate_ticket`) to act 
+- Example: A sentiment model scores a customer message; the agent uses a tool (e.g., `escalate_ticket`) to act 
 based on that score
 
-**ii. Tools vs. Chatbots:**
-- **Chatbots:** Provide conversational responses within a bounded scope (scripts, retrieval, predefined flows)
-- **Agent Tools:** Allow an agent to go beyond responding — the agent can decide to execute actions 
+ii. Tools vs. Chatbots:
+- Chatbots: Provide conversational responses within a bounded scope (scripts, retrieval, predefined flows)
+- Agent Tools: Allow an agent to go beyond responding — the agent can decide to execute actions 
 (e.g., search a database, send an email, write to a record)
-- **Key Point:** Chatbots converse; agents use tools to do things in the real world
+- Key Point: Chatbots converse; agents use tools to do things in the real world
 
-**iii. Tools vs. Traditional APIs:**
-- **Traditional APIs:** Require manual programming to choose and call functions
-- **Agent Tools:** Can be dynamically selected and orchestrated by AI reasoning based on context and goals
-- **Intelligence:** Tools expose metadata and descriptions so the agent understands when and how to use them
+iii. Tools vs. Traditional APIs:
+- Traditional APIs: Require manual programming to choose and call functions
+- Agent Tools: Can be dynamically selected and orchestrated by AI reasoning based on context and goals
+- Intelligence: Tools expose metadata and descriptions so the agent understands when and how to use them
 
 #### B3. Tool Selection and Orchestration
 
 One of the key capabilities of modern AI agents is intelligent tool selection. When presented with a user request,
 the agent must:
 
-1. **Analyze the Request:** Understand what the user is trying to accomplish
-2. **Identify Required Tools:** Determine which tools are needed to fulfill the request
-3. **Plan Execution Order:** Decide the sequence in which tools should be called
-4. **Execute and Coordinate:** Call tools with appropriate parameters and handle responses
-5. **Synthesize Results:** Combine outputs from multiple tools into a coherent response
-6. **Learn and Adapt:** Improve tool selection based on success patterns
+1. Analyze the Request: Understand what the user is trying to accomplish
+2. Identify Required Tools: Determine which tools are needed to fulfill the request
+3. Plan Execution Order: Decide the sequence in which tools should be called
+4. Execute and Coordinate: Call tools with appropriate parameters and handle responses
+5. Synthesize Results: Combine outputs from multiple tools into a coherent response
+6. Learn and Adapt: Improve tool selection based on success patterns
 
 This orchestration capability allows agents to handle complex, multi-step workflows automatically, making them 
 ideal for scenarios requiring dynamic problem-solving approaches.
@@ -194,24 +194,24 @@ ideal for scenarios requiring dynamic problem-solving approaches.
 ### C. Unity Catalog and Agent Tool Governance
 
 It's important to understand the tooling ecosystem on Databricks, so you can decide which tool use case is best 
-for you. Currently, there are **three options** for creating agent tools:
+for you. Currently, there are three options for creating agent tools:
 
-1. **Unity Catalog function tools:** This is the primary focus of this course. Your tools are defined as UC UDFs and 
+1. Unity Catalog function tools: This is the primary focus of this course. Your tools are defined as UC UDFs and 
 are managed in UC as a central registry for your agent's tools. This allows for built-in security and compliance 
 features while granting easier discoverability and reuse.
 
-2. **Agent-code tools:** These are tools defined directly in an agent's code. This is best for calling REST APIs, 
+2. Agent-code tools: These are tools defined directly in an agent's code. This is best for calling REST APIs, 
 running arbitrary code, or running low-latency tools. However, this approach lacks built-in governance and 
 discoverability that UC brings to the table.
 
-3. **Model Context Protocol (MCP) tools:** These are tools that follow the MCP standard for tool interoperability. 
+3. Model Context Protocol (MCP) tools: These are tools that follow the MCP standard for tool interoperability. 
 Databricks-managed MCP servers are currently available and you can check the release status [here](https://docs.databricks.com/aws/en/generative-ai/mcp/managed-mcp).
 
 #### C1. Why Unity Catalog for Agent Tools?
 
 Now that we have an understanding of what the basics of what makes an agent an agent, let's turn our attention 
 to understanding how Databricks enables tool calling by first looking at where tools are stored and how they're 
-governed on the platform via **Unity Catalog**.
+governed on the platform via Unity Catalog.
 
 Traditional tool calling lacks comprehensive governance. With Unity Catalog, users can build tools for retrieving 
 structured and unstructured data and test those tools in the AI Playground. When connecting external tools 
@@ -219,16 +219,16 @@ structured and unstructured data and test those tools in the AI Playground. When
 credentials and authentication is governed by Unity Catalog policies. This means you can ensure secure, 
 auditable access and apply organization-wide governance for integrations with external services.
 
-**Unity Catalog provides the foundation for agent tool management with enterprise-grade capabilities:**
+Unity Catalog provides the foundation for agent tool management with enterprise-grade capabilities:
 
-**i. Centralized Governance:**
+i. Centralized Governance:
 - Unified object model and three-level namespace for data and AI assets, including functions, across all 
 UC-enabled workspaces.
 - Built-in auditing and lineage, with system tables to simplify access and analysis.
 - Consistent metadata and discoverability via Catalog Explorer and search.
 - Governed tools: functions registered in UC can be used as agent tools, enabling reuse and control.
 
-**ii. Security and Access Control:**
+ii. Security and Access Control:
 - Fine-grained permissions (ANSI GRANTs), including EXECUTE on functions/tools.
 - Centralized identity integration (SCIM, account-level identities) for consistent access across workspaces.
 - Secure, isolated execution for Python UDFs; governed access to external connections and locations.
@@ -236,18 +236,18 @@ UC-enabled workspaces.
 - Role-based hierarchical privileges aligned to catalogs → schemas → objects (tables, views, volumes, models, 
 functions).
 
-**iii. Discoverability and Documentation:**
+iii. Discoverability and Documentation:
 - Searchable catalog with rich metadata (function and parameter comments), lineage, and browse capabilities.
 - Recommended docstrings for functions (purpose, parameters, return value, examples, change log) to aid tool 
 calling.
 - Platform support for AI-powered documentation to accelerate discovery for governed assets.
 
-**iv. Scalability and Performance:**
+iv. Scalability and Performance:
 - UC‑governed tools run via Databricks compute; agent tool execution uses serverless generic compute 
 (Spark Connect serverless). Some integrations can execute UC functions via SQL Warehouses (`uc_function`).
 - Scaling and concurrency controls on SQL Warehouses; autoscaling on clusters to match workload demand.
 
-**v. External Tool Support:**
+v. External Tool Support:
 - When connecting external tools (such as Slack, Google Calendar, or any API service) via Unity Catalog 
 connections, the management of credentials and authentication is governed by Unity Catalog policies. 
 This means you can ensure secure, auditable access and apply organization-wide governance for integrations 
@@ -261,21 +261,21 @@ and tracing and ResponseAgent interface. This course will concentrate on the fun
 by keeping the tool logic simple and direct (e.g. we will not go into an agent's ability to perform vector 
 search) so you can focus on how to use the Databricks platform for developing agents.
 
-**i. SQL-Based Registration:**
+i. SQL-Based Registration:
 Using `CREATE OR REPLACE FUNCTION` statements with comprehensive metadata that can be used with LLMs:
 - Clear parameter definitions with types and descriptions
 - Function-level documentation and usage guidance
 - Deterministic behavior specifications
 - Built-in validation and error handling
 
-**ii. Programmatic Registration:**
+ii. Programmatic Registration:
 Using the `DatabricksFunctionClient()` for automated tool management:
 - Programmatic creation and updates
 - Integration with CI/CD pipelines
 - Batch operations and bulk management
 - Automated testing and validation workflows
 
-**iii. Documentation Best Practices:**
+iii. Documentation Best Practices:
 SQL functions should include rich metadata to help AI agents understand their purpose:
 - Comprehensive function comments explaining business logic
 - Parameter descriptions with expected data types and ranges
@@ -286,7 +286,7 @@ SQL functions should include rich metadata to help AI agents understand their pu
 Both approaches ensure that SQL functions are properly documented, versioned, and accessible to AI agents while 
 maintaining governance and security standards.
 
-> **Note:** MLflow is foundational for building, monitoring, and deploying agent-based applications on Databricks, providing 
+> Note: MLflow is foundational for building, monitoring, and deploying agent-based applications on Databricks, providing 
 robust tracing, versioning, evaluation, and production deployment, especially when working with agent tooling.
 
 #### C3. Other Tools and Common Patterns
@@ -294,30 +294,30 @@ robust tracing, versioning, evaluation, and production deployment, especially wh
 While we will focus on agent tools in UC, it's important to point out that there are other tools that exist 
 outside those discussed in this course.
 
-**i. Model Context Protocol (MCP):**
-The main benefit of MCP is **standardization**. You can create a tool once and use it with any agent—whether it's 
+i. Model Context Protocol (MCP):
+The main benefit of MCP is standardization. You can create a tool once and use it with any agent—whether it's 
 one you've built or a third-party agent. Similarly, you can use tools developed by others, either from your team 
 or from outside your organization.
 
 You can read more about MCP on Databricks [here](https://docs.databricks.com/aws/en/generative-ai/mcp/). 
 You can also read the official MCP documentation [here](https://modelcontextprotocol.io/docs/getting-started/intro).
 
-**ii. Mosaic AI Vector Search:**
+ii. Mosaic AI Vector Search:
 Mosaic AI Vector Search is a vector search solution that is built into the Databricks Data Intelligence 
 Platform and integrated with its governance and productivity tools. Vector search is a type of search 
 optimized for retrieving embeddings.
 
 You can read more about vector search [here](https://docs.databricks.com/aws/en/vector-search/vector-search).
 
-**iii. Common Tool Patterns:**
+iii. Common Tool Patterns:
 
 | Tool Pattern | Description |
 | :--- | :--- |
-| **Structured data retrieval tools** | Query SQL tables, databases, and structured data sources. |
-| **Unstructured data retrieval tools** | Search document collections and perform retrieval-augmented generation. |
-| **Code interpreter tools** | Allow agents to run Python code for calculations, data analysis, and dynamic processing. |
-| **External connection tools** | Connect to external services and APIs such as Slack. |
-| **AI Playground prototyping** | Use the AI Playground to quickly add Unity Catalog tools to agents and prototype behavior. |
+| Structured data retrieval tools | Query SQL tables, databases, and structured data sources. |
+| Unstructured data retrieval tools | Search document collections and perform retrieval-augmented generation. |
+| Code interpreter tools | Allow agents to run Python code for calculations, data analysis, and dynamic processing. |
+| External connection tools | Connect to external services and APIs such as Slack. |
+| AI Playground prototyping | Use the AI Playground to quickly add Unity Catalog tools to agents and prototype behavior. |
 
 ---
 
@@ -327,13 +327,13 @@ You now have a comprehensive foundation in the concepts and principles underlyin
 tools on Databricks. This lecture has covered the evolution of AI agents from simple rule-based systems to 
 today's sophisticated, tool-enabled systems that are transforming industries worldwide.
 
-**Key takeaways from this lecture include:**
+Key takeaways from this lecture include:
 
-- **AI agents** are autonomous systems that combine perception, decision-making, and action capabilities to solve 
+- AI agents are autonomous systems that combine perception, decision-making, and action capabilities to solve 
 complex problems.
-- **Agent tools** extend AI capabilities by providing interfaces to external systems, data sources, and 
+- Agent tools extend AI capabilities by providing interfaces to external systems, data sources, and 
 specialized functions.
-- **Unity Catalog** provides the governance, security, and management framework needed for enterprise-grade agent 
+- Unity Catalog provides the governance, security, and management framework needed for enterprise-grade agent 
 tool deployment.
 
 Now that you have an understanding of what an agent is and how tools are a core component of agentic behavior, 
@@ -345,7 +345,7 @@ let's dive a little deeper into UC tools on Databricks.
 
 Imagine an AI agent that can instantly answer questions like "What's the average home price in the Mission district?" or "Calculate the customer lifetime value for our top clients" by automatically discovering and executing the right data operations and business logic.
 
-This is the power of **Unity Catalog Functions as Agent Tools**.
+This is the power of Unity Catalog Functions as Agent Tools.
 
 Building on the foundational concepts of AI agents and tools, this session focuses on one of the most practical implementations: using both Unity Catalog SQL and Python Functions as intelligent, discoverable tools that AI agents can automatically select and execute based on natural language queries.
 
@@ -357,43 +357,43 @@ This lecture establishes the technical foundation and best practices needed for 
 
 #### A1. What Are Unity Catalog Functions as Agent Tools?:
 
-Before getting started, it's important to keep in mind what UC functions are. **Unity Catalog tools are really just Unity Catalog user-defined functions (UDFs) under the hood.**
+Before getting started, it's important to keep in mind what UC functions are. Unity Catalog tools are really just Unity Catalog user-defined functions (UDFs) under the hood.
 
 When you define a Unity Catalog tool, you're registering a function in Unity Catalog. To learn more about Unity Catalog UDFs, see [this documentation](https://docs.databricks.com/en/udf/index.html).
 
-**What's a UDF?** User-defined functions (UDFs) in Unity Catalog extend SQL and Python capabilities within Databricks. They allow custom functions to be defined, used, and securely shared and governed across computing environments.
+What's a UDF? User-defined functions (UDFs) in Unity Catalog extend SQL and Python capabilities within Databricks. They allow custom functions to be defined, used, and securely shared and governed across computing environments.
 
-**Unity Catalog Functions as Agent Tools** are Unity Catalog functions written in either SQL or Python that can be dynamically discovered, selected, and executed by AI agents to perform data operations and business logic. Unlike traditional functions that require manual programming to call, Unity Catalog Functions as Agent Tools are designed to be:
+Unity Catalog Functions as Agent Tools are Unity Catalog functions written in either SQL or Python that can be dynamically discovered, selected, and executed by AI agents to perform data operations and business logic. Unlike traditional functions that require manual programming to call, Unity Catalog Functions as Agent Tools are designed to be:
 
-- **Self-describing** through comprehensive metadata and documentation
-- **Contextually appropriate** for specific business or analytical tasks
-- **Governable** through Unity Catalog's security and access control mechanisms
+- Self-describing through comprehensive metadata and documentation
+- Contextually appropriate for specific business or analytical tasks
+- Governable through Unity Catalog's security and access control mechanisms
 
 #### A2. SQL vs Python Agent Tools: Key Differences and Use Cases:
 
-| Aspect | **(i) SQL Agent Tools** | **(ii) Python Agent Tools** |
+| Aspect | (i) SQL Agent Tools | (ii) Python Agent Tools |
 | :--- | :--- | :--- |
-| **Optimized for** | Data querying and analytical operations | Custom logic and complex computations |
-| **Execution** | `CREATE OR REPLACE FUNCTION` statements | `CREATE OR REPLACE FUNCTION` or `DatabricksFunctionClient()` |
-| **Capabilities** | SQL syntax and built-in functions | External APIs, libraries, complex algorithms |
-| **Execution Mode** | Serverless only | Serverless and local |
-| **Requirements** | None beyond SQL | Explicit type hints, Google-style docstrings |
-| **Ideal for** | Data retrieval, aggregations, filtering, analytical calculations | Business logic, external integrations, complex algorithms, data transformations |
+| Optimized for | Data querying and analytical operations | Custom logic and complex computations |
+| Execution | `CREATE OR REPLACE FUNCTION` statements | `CREATE OR REPLACE FUNCTION` or `DatabricksFunctionClient()` |
+| Capabilities | SQL syntax and built-in functions | External APIs, libraries, complex algorithms |
+| Execution Mode | Serverless only | Serverless and local |
+| Requirements | None beyond SQL | Explicit type hints, Google-style docstrings |
+| Ideal for | Data retrieval, aggregations, filtering, analytical calculations | Business logic, external integrations, complex algorithms, data transformations |
 
-**(iii) Combining Tools:**
+(iii) Combining Tools:
 The most powerful agent architectures use both SQL and Python tools together, where SQL handles data access and analysis while Python functions manage business logic and external integrations.
 
 #### A3. Agent Tools vs Traditional Functions:
 
 Understanding the distinction between agent tools and traditional functions is crucial for effective implementation:
 
-| Feature | **(i) Traditional Functions** | **(ii) Unity Catalog Functions as Agent Tools** |
+| Feature | (i) Traditional Functions | (ii) Unity Catalog Functions as Agent Tools |
 | :--- | :--- | :--- |
-| **Design Purpose** | Direct programmatic use by developers | Dynamic discovery and use by AI agents |
-| **Documentation** | Limited or minimal | Rich metadata and comprehensive documentation required |
-| **Parameter Usage** | Called explicitly with known parameters | Parameters and usage inferred from natural language queries |
-| **Primary Focus** | Computational efficiency and performance | Clarity, interpretability, and agent usability |
-| **Context** | Technical implementation details | Business context and usage examples included |
+| Design Purpose | Direct programmatic use by developers | Dynamic discovery and use by AI agents |
+| Documentation | Limited or minimal | Rich metadata and comprehensive documentation required |
+| Parameter Usage | Called explicitly with known parameters | Parameters and usage inferred from natural language queries |
+| Primary Focus | Computational efficiency and performance | Clarity, interpretability, and agent usability |
+| Context | Technical implementation details | Business context and usage examples included |
 
 ---
 
@@ -403,25 +403,25 @@ Understanding the distinction between agent tools and traditional functions is c
 
 Unity Catalog provides different approaches for registering SQL and Python functions as agent tools. Since UC-registered functions are governed by UC permissions, this differentiates registration when compared to session-scoped/notebook UDFs.
 
-**SQL Function Registration:**
+SQL Function Registration:
 
-**(i) Using `CREATE OR REPLACE FUNCTION` statements:**
+(i) Using `CREATE OR REPLACE FUNCTION` statements:
 - Immediate registration and availability
 - Full control over function definition and metadata
 - Integration with existing SQL development workflows
 - Support for complex SQL logic and business rules
 - No support for custom environment or dependencies
 
-**Python Function Registration:**
+Python Function Registration:
 
-**(i) Using the `DatabricksFunctionClient()`:**
+(i) Using the `DatabricksFunctionClient()`:
 - `create_python_function()` API accepts Python callables directly
 - Automatic extraction of type hints and docstring metadata
 - Integration with Unity Catalog's three-level namespace
 - Support for function versioning and replacement
 - Supports serverless (production) and local (dev) modes, though local mode does not support SQL-based functions
 
-**(ii) Using `CREATE OR REPLACE FUNCTION` statements:**
+(ii) Using `CREATE OR REPLACE FUNCTION` statements:
 - Similar to SQL tool creation, you can also create a Python function using python logic but SQL syntax for registration (see an example [here](https://docs.databricks.com/aws/en/generative-ai/agent-framework/create-custom-tool#create-a-python-tool-using-sql-syntax)).
 - Can define custom dependencies using the `ENVIRONMENT` clause (read more [here](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-sql-function#parameters)).
 
@@ -443,7 +443,7 @@ Once your functions have been registered to Unity Catalog, you can validate the 
 
 #### D1. AI Playground Integration:
 
-**AI Playground** provides a no-code interface for testing and prototyping both SQL and Python Unity Catalog Functions as Agent Tools. In the AI Playground, you have automatic UC-permission-level access to tools as well as state-of-the-art LLMs like Claude and GPT models. The AI Playground should be used for prototyping queries, LLMs, and tool usage before building agent code. Below is an example of how the AI Playground looks when sending a prompt that invokes tool usage from the LLM.
+AI Playground provides a no-code interface for testing and prototyping both SQL and Python Unity Catalog Functions as Agent Tools. In the AI Playground, you have automatic UC-permission-level access to tools as well as state-of-the-art LLMs like Claude and GPT models. The AI Playground should be used for prototyping queries, LLMs, and tool usage before building agent code. Below is an example of how the AI Playground looks when sending a prompt that invokes tool usage from the LLM.
 
 *(Note: The original text mentioned "an example" but did not provide the actual image. The AI Playground interface allows you to select which tools are available to the model and see the model's decision-making process, including which tools it calls and the results.)*
 
@@ -540,7 +540,6 @@ Core Requirements:
 Installation Command:
 
 `%pip install -U -qqqq databricks-agents mlflow`
-
 
 AI Bridge Integration Packages: The Databricks AI Bridge library provides a shared layer of APIs to interact with Databricks AI features, such as Databricks AI/BI Genie and Vector Search. You can see the latest release notes and versions on PyPi.
 
@@ -762,7 +761,6 @@ Mosaic AI propagates streaming errors through the last token under `databricks_o
 }
 ```
 
-
 Note: Client applications must handle and surface these errors appropriately.
 
 ---
@@ -810,7 +808,6 @@ other_columns=["title"], # Additional metadata
 )
 ```
 
-
 This goes beyond the scope of this course. You can read more about retriever tools here: https://docs.databricks.com/aws/en/generative-ai/agent-framework/unstructured-retrieval-tools.
 
 #### E3. Multi-Agent Systems
@@ -849,10 +846,10 @@ Building production-ready AI agents presents unique challenges that traditional 
 
 AI agents are fundamentally different from traditional ML models in several key ways:
 
-- **Multi-step reasoning:** Agents perform complex, multi-turn interactions that involve planning, tool usage, and decision-making across multiple steps
-- **Dynamic behavior:** Unlike static models, agents can exhibit different behaviors based on context, available tools, and conversation history
-- **Tool integration:** Agents must seamlessly integrate with external systems, APIs, and data sources to accomplish tasks
-- **Conversational context:** Maintaining state and context across multi-turn conversations adds complexity to deployment and monitoring
+- Multi-step reasoning: Agents perform complex, multi-turn interactions that involve planning, tool usage, and decision-making across multiple steps
+- Dynamic behavior: Unlike static models, agents can exhibit different behaviors based on context, available tools, and conversation history
+- Tool integration: Agents must seamlessly integrate with external systems, APIs, and data sources to accomplish tasks
+- Conversational context: Maintaining state and context across multi-turn conversations adds complexity to deployment and monitoring
 
 These characteristics create unique requirements for development, testing, and production monitoring that traditional ML platforms weren't originally designed to handle.
 
@@ -860,10 +857,10 @@ These characteristics create unique requirements for development, testing, and p
 
 Agent observability goes far beyond traditional model monitoring:
 
-- **Execution tracing:** Understanding the step-by-step reasoning process, including which tools were called and why
-- **Performance analysis:** Tracking latency, token usage, and costs across complex multi-step workflows
-- **Quality assessment:** Evaluating not just final outputs but intermediate reasoning steps and tool usage patterns
-- **Error diagnosis:** Identifying where failures occur in multi-step processes and understanding their root causes
+- Execution tracing: Understanding the step-by-step reasoning process, including which tools were called and why
+- Performance analysis: Tracking latency, token usage, and costs across complex multi-step workflows
+- Quality assessment: Evaluating not just final outputs but intermediate reasoning steps and tool usage patterns
+- Error diagnosis: Identifying where failures occur in multi-step processes and understanding their root causes
 
 Without proper observability, debugging agent behavior becomes nearly impossible, especially in production environments.
 
@@ -871,11 +868,11 @@ Without proper observability, debugging agent behavior becomes nearly impossible
 
 Enterprise deployment of agents requires robust governance capabilities:
 
-- **Version management:** Tracking changes to agent logic, prompts, tools, and configurations
-- **Reproducibility:** Ensuring consistent behavior across development, staging, and production environments
-- **Access control:** Managing who can deploy, modify, or access different agent versions
-- **Audit trails:** Maintaining complete records of agent behavior for compliance and debugging
-- **AI Guardrails:** Allows users to configure and enforce data compliance at the model-serving-endpoint level (read more [here](https://docs.databricks.com/aws/en/ai-gateway/#ai-guardrails))
+- Version management: Tracking changes to agent logic, prompts, tools, and configurations
+- Reproducibility: Ensuring consistent behavior across development, staging, and production environments
+- Access control: Managing who can deploy, modify, or access different agent versions
+- Audit trails: Maintaining complete records of agent behavior for compliance and debugging
+- AI Guardrails: Allows users to configure and enforce data compliance at the model-serving-endpoint level (read more [here](https://docs.databricks.com/aws/en/ai-gateway/#ai-guardrails))
 
 These requirements necessitate a platform that can handle the full agent lifecycle with enterprise-grade governance features.
 
@@ -889,7 +886,7 @@ Here we will break down MLflow a little more to help understand how it addresses
 
 To understand why we need tracing (and what it actually is), we need to understand traditional machine learning inference.
 
-**Traditional ML inference (request/response):**
+Traditional ML inference (request/response):
 
 A typical inference flow for machine learning is given by the following high-level steps:
 
@@ -905,11 +902,11 @@ These capabilities are standard with Databricks Model Serving and AI Gateway for
 
 Additionally, deploying with Mosaic AI Agent Framework automatically integrates real-time tracing and can enable the Review App and monitoring for production traffic.
 
-**Agents need more insight:**
+Agents need more insight:
 
 - Agents perform multiple intermediate steps (for example: retrieval, tool use, LLM calls), and you need to see each step, its inputs/outputs, and per-step latency/token usage to debug and improve quality.
 - MLflow Tracing captures these as traces and spans automatically for supported libraries (OpenAI SDK, LangChain/LangGraph, DSPy, etc.) and provides a UI and APIs to analyze them across development and production.
-- A single operation in a tracing system is called a **span**. It records when the operation started and ended, along with the metadata, inputs, and outputs per unit of work.
+- A single operation in a tracing system is called a span. It records when the operation started and ended, along with the metadata, inputs, and outputs per unit of work.
 
 MLflow spans follow the OpenTelemetry standard, which requires any extra information (like token counts) to be stored in key-value attributes on the span, not as custom fields.
 
@@ -917,7 +914,7 @@ MLflow spans follow the OpenTelemetry standard, which requires any extra informa
 
 Now that we understand the struggle with developing agentic systems and why agents need more insights per unit of work, we're ready to define what a trace is.
 
-A **Trace** in the context of GenAI applications is a collection of spans arranged in a DAG-like structure, where each span represents a single operation. These single operations can be something like a function call or a database query.
+A Trace in the context of GenAI applications is a collection of spans arranged in a DAG-like structure, where each span represents a single operation. These single operations can be something like a function call or a database query.
 
 As an example, suppose you are working on developing an agent that is exposed to 3 UC tools. Suppose also that you are noticing slow execution times, but you're not sure what the issue is. The MLflow interface in Databricks can help you troubleshoot this scenario.
 
@@ -934,16 +931,16 @@ For example, you can:
 
 MLflow organizes trace data using a hierarchical span structure that mirrors agent execution, starting with a single root span that represents the overall request or workflow, with nested child spans for each sub-step.
 
-- **Parent spans:** High-level operations like "process user request"
-- **Child spans:** Detailed steps like "call retrieval tool" or "generate response"
-- **Span relationships:** Clear parent-child relationships that show execution flow, which should mimic your application's execution plan.
-- **Span types:** Categorization of spans (TOOL, CHAT_MODEL, RETRIEVER) for better organization
+- Parent spans: High-level operations like "process user request"
+- Child spans: Detailed steps like "call retrieval tool" or "generate response"
+- Span relationships: Clear parent-child relationships that show execution flow, which should mimic your application's execution plan.
+- Span types: Categorization of spans (TOOL, CHAT_MODEL, RETRIEVER) for better organization
 
 #### B4. Custom Tracing and Tagging:
 
 MLflow provides flexible APIs for custom tracing needs as well (which we will see in our demonstration).
 
-- **Custom Tracing:** The `@mlflow.trace` decorator lets you turn any function into a traced span with almost no added work. When applied, it provides a lightweight but powerful way to instrument your code:
+- Custom Tracing: The `@mlflow.trace` decorator lets you turn any function into a traced span with almost no added work. When applied, it provides a lightweight but powerful way to instrument your code:
   - MLflow automatically infers parent-child relationships between traced functions, ensuring full compatibility with auto-tracing integrations.
   - Any exceptions raised within the function are captured and logged as span events.
   - The function's name, inputs, outputs, and execution duration are recorded without additional configuration.
@@ -953,13 +950,13 @@ MLflow provides flexible APIs for custom tracing needs as well (which we will se
     - `span_type`: parameter to set the type of span. Set either one of built-in Span Types or a string.
     - `attributes`: parameter to add custom attributes to the span.
 
-**Function Type Considerations:**
+Function Type Considerations:
 
 To view a complete list of function types and supported dependencies when using the `@mlflow.trace` decorator, please see [this documentation](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/app-instrumentation/manual-tracing/fluent-apis#decorator).
 
-- **Tagging:** Tags are flexible key-value pairs that you can update throughout the trace's lifecycle, while metadata is immutable and set once at trace creation.
+- Tagging: Tags are flexible key-value pairs that you can update throughout the trace's lifecycle, while metadata is immutable and set once at trace creation.
 
-> **Note:** This course will only be concerned with a subset of the Span object schema. You can read more about the Span object schema [here](https://mlflow.org/docs/latest/genai/concepts/span/#span-object-schema).
+> Note: This course will only be concerned with a subset of the Span object schema. You can read more about the Span object schema [here](https://mlflow.org/docs/latest/genai/concepts/span/#span-object-schema).
 
 ---
 
@@ -969,23 +966,23 @@ MLflow's integration with Unity Catalog enables enterprise-grade governance for 
 
 Once you have your data source and tools registered to Unity Catalog (or external tools), you can register your agent code to UC by first packaging the agent with MLflow and using the model's URI.
 
-**Centralized governance via the Model Registry in UC:**
+Centralized governance via the Model Registry in UC:
 
 Registering agents as UC models provides a centralized, cross-workspace catalog of agent assets:
 
-- **Version management:** MLflow logs a point-in-time snapshot of agent code, configuration, and declared resources; each UC model version is an immutable snapshot you can reference and deploy.
-- **Lineage tracking:** When you log inputs (for example with `mlflow.log_input`), UC shows lineage between models and upstream datasets; lineage is also captured for feature store training flows.
-- **Access control:** Fine-grained UC privileges govern who can create, read, or modify models and who can execute functions, query tables, use connections, and access other resources your agent depends on.
-- **Cross-workspace sharing:** Models in UC are discoverable and governable across workspaces attached to the same metastore.
-- **Governed tags:** Tags can be applied to registered models and model versions; governed tags (public preview) enforce standardized keys/values and assignment permissions for consistent classification and control. See the docs [here](https://docs.databricks.com/aws/en/database-objects/tags#supported-securable-objects).
+- Version management: MLflow logs a point-in-time snapshot of agent code, configuration, and declared resources; each UC model version is an immutable snapshot you can reference and deploy.
+- Lineage tracking: When you log inputs (for example with `mlflow.log_input`), UC shows lineage between models and upstream datasets; lineage is also captured for feature store training flows.
+- Access control: Fine-grained UC privileges govern who can create, read, or modify models and who can execute functions, query tables, use connections, and access other resources your agent depends on.
+- Cross-workspace sharing: Models in UC are discoverable and governable across workspaces attached to the same metastore.
+- Governed tags: Tags can be applied to registered models and model versions; governed tags (public preview) enforce standardized keys/values and assignment permissions for consistent classification and control. See the docs [here](https://docs.databricks.com/aws/en/database-objects/tags#supported-securable-objects).
 
-**Reproducible deployments:**
+Reproducible deployments:
 
 Using UC + MLflow ensures that agent deployments are reproducible and observable:
 
-- **Immutable versions:** Registered model versions are immutable snapshots; update metadata if needed, but changing code/dependencies requires a new version.
-- **Dependency capture:** MLflow captures environment dependencies (for example via pip/conda) to enable consistent loading and serving.
-- **Managed serving:** Deploy UC-registered agents to Model Serving endpoints with built-in scaling, tracing, and review apps for feedback and monitoring.
+- Immutable versions: Registered model versions are immutable snapshots; update metadata if needed, but changing code/dependencies requires a new version.
+- Dependency capture: MLflow captures environment dependencies (for example via pip/conda) to enable consistent loading and serving.
+- Managed serving: Deploy UC-registered agents to Model Serving endpoints with built-in scaling, tracing, and review apps for feedback and monitoring.
 
 ---
 
@@ -1015,17 +1012,17 @@ The core philosophy of Agent Bricks is to enable users to focus on defining thei
 
 Agent Bricks supports four primary agent types, each designed for specific enterprise use cases and operational patterns. Understanding these distinctions is crucial for selecting the appropriate agent type for your specific requirements.
 
-**The Four Agent Types:**
+The Four Agent Types:
 
-- **Information Extraction (IE):** Automated extraction of structured data from unstructured sources such as documents, PDFs, emails, and images
+- Information Extraction (IE): Automated extraction of structured data from unstructured sources such as documents, PDFs, emails, and images
 
-- **Custom LLM (CLLM):** Domain-specific language models fine-tuned and optimized for particular tasks and datasets
+- Custom LLM (CLLM): Domain-specific language models fine-tuned and optimized for particular tasks and datasets
 
-- **Knowledge Assistant (KA):** Interactive agents that provide question-answering capabilities over knowledge bases using retrieval-augmented generation. That is, KA is a single agent where tool-calling capabilities are restricted to RAG applications.
+- Knowledge Assistant (KA): Interactive agents that provide question-answering capabilities over knowledge bases using retrieval-augmented generation. That is, KA is a single agent where tool-calling capabilities are restricted to RAG applications.
 
-- **Multi-Agent Supervisor (MAS):** Coordination systems that manage and orchestrate multiple specialized agents to complete complex, multi-step tasks. For example, we can equip an MAS with a set of tools and no additional agents and have it act as a single agent with a toolkit.
+- Multi-Agent Supervisor (MAS): Coordination systems that manage and orchestrate multiple specialized agents to complete complex, multi-step tasks. For example, we can equip an MAS with a set of tools and no additional agents and have it act as a single agent with a toolkit.
 
-**Genie Agent:**
+Genie Agent:
 
 Users can create and use a Genie Agent to use natural language to query databases or other structured data, making data analysis more accessible. Genie agents can be orchestrated with an MAS or can be standalone single agents.
 
@@ -1033,9 +1030,9 @@ Users can create and use a Genie Agent to use natural language to query database
 
 Agents are organized into two operational models based on their intended use patterns:
 
-- **Automated Bricks (Information Extraction and Custom LLM):** Optimized for high-scale, batch processing scenarios with minimal human intervention. These agents prioritize cost-performance optimization and throughput.
+- Automated Bricks (Information Extraction and Custom LLM): Optimized for high-scale, batch processing scenarios with minimal human intervention. These agents prioritize cost-performance optimization and throughput.
 
-- **Interactive Bricks (Knowledge Assistant, Multi-Agent Supervisor, and Genie):** Designed for human-in-the-loop experiences and real-time interaction scenarios. These agents focus on conversational interfaces and dynamic response generation.
+- Interactive Bricks (Knowledge Assistant, Multi-Agent Supervisor, and Genie): Designed for human-in-the-loop experiences and real-time interaction scenarios. These agents focus on conversational interfaces and dynamic response generation.
 
 ---
 
@@ -1047,7 +1044,7 @@ The Agent Bricks development process follows a structured, iterative approach de
 
 The Agent Bricks development lifecycle consists of three primary phases that form the foundation of agent development, followed by continuous iteration for ongoing improvement.
 
-**Step 1: Specify Your Problem:**
+Step 1: Specify Your Problem:
 
 At a high level, the user begins by building an agent that is specific to their use case. For example, with the MAS, you might want a managed agent that allows for only tool calling with a Genie Agent. After setting up proper permissions, MLflow is leveraged for tracking metrics and logging.
 
@@ -1058,7 +1055,7 @@ In this initial phase, you define the scope and requirements of your AI agent:
 - Depending on your use case, you next need to provide your UC-managed datasets (Delta tables, UC Volumes), equip tools, and attach other agents
 - Establish success criteria and quality metrics for evaluation
 
-**Step 2: Optimize on Your Enterprise Data:**
+Step 2: Optimize on Your Enterprise Data:
 
 Agent Bricks automatically builds and optimizes the best agent system based on quality versus cost tradeoffs:
 
@@ -1071,7 +1068,7 @@ Agent Bricks automatically builds and optimizes the best agent system based on q
   - Reward Model filtering for response quality improvement
   - Reinforcement Learning from Human Feedback (RLHF) when beneficial
 
-**Step 3: Continuous Improvement:**
+Step 3: Continuous Improvement:
 
 The final step establishes a feedback loop for ongoing optimization:
 
@@ -1085,7 +1082,7 @@ The final step establishes a feedback loop for ongoing optimization:
 
 Agent Bricks provides comprehensive evaluation and monitoring capabilities built directly into the platform, ensuring continuous visibility into agent performance and quality metrics.
 
-**Automatic MLflow Integration:**
+Automatic MLflow Integration:
 
 Every agent deployed through Agent Bricks automatically includes comprehensive tracking capabilities:
 
@@ -1094,7 +1091,7 @@ Every agent deployed through Agent Bricks automatically includes comprehensive t
 - Inter-Agent Communication: Full tracing of communication between agents in multi-agent systems
 - Performance Metrics: Automatic collection of latency, throughput, and resource utilization data
 
-**Quality Assessment Mechanisms:**
+Quality Assessment Mechanisms:
 
 The platform implements multiple layers of quality evaluation:
 
@@ -1112,18 +1109,18 @@ Agent Bricks is tightly integrated with Mosaic AI Model Serving, Vector Search, 
 
 This integration means users can rapidly prototype, iterate, and deploy agent systems using their own enterprise data, while maintaining best-in-class governance, security, and scalability.
 
-**How Agent Bricks Works Alongside the Databricks Stack:**
+How Agent Bricks Works Alongside the Databricks Stack:
 
-- **Mosaic AI Model Serving:** Agents can be deployed as scalable REST APIs with automatic load balancing and monitoring. This serving platform also provides secure authentication and natively integrates with MLflow 3, enabling real-time tracing and quality evaluation.
+- Mosaic AI Model Serving: Agents can be deployed as scalable REST APIs with automatic load balancing and monitoring. This serving platform also provides secure authentication and natively integrates with MLflow 3, enabling real-time tracing and quality evaluation.
 
-- **Vector Search:** Agents tap into Databricks Vector Search to efficiently retrieve relevant unstructured information, supporting both retrieval-augmented generation (RAG) and advanced use cases like semantic search across documents and tables.
+- Vector Search: Agents tap into Databricks Vector Search to efficiently retrieve relevant unstructured information, supporting both retrieval-augmented generation (RAG) and advanced use cases like semantic search across documents and tables.
 
-- **Unity Catalog:** Ensures unified governance across all data, models, agents, and tools. Agent logic, data lineage, and tool access are controlled to meet regulatory and compliance needs, while supporting integration with enterprise security requirements.
+- Unity Catalog: Ensures unified governance across all data, models, agents, and tools. Agent logic, data lineage, and tool access are controlled to meet regulatory and compliance needs, while supporting integration with enterprise security requirements.
 
-- **Genie & Genie Spaces:** Enable agents to interact directly with structured data (e.g., text-to-SQL queries) and orchestrate multiple tools, expanding agent capabilities (e.g. multi-agent or tool-calling architectures).
+- Genie & Genie Spaces: Enable agents to interact directly with structured data (e.g., text-to-SQL queries) and orchestrate multiple tools, expanding agent capabilities (e.g. multi-agent or tool-calling architectures).
 
-- **MLflow 3:** Provides robust experiment tracking, versioning, tracing, and evaluation for agents. Real-time traces and automated quality measurement (with research-backed LLM judges) allow rapid debugging and improvement cycles.
+- MLflow 3: Provides robust experiment tracking, versioning, tracing, and evaluation for agents. Real-time traces and automated quality measurement (with research-backed LLM judges) allow rapid debugging and improvement cycles.
 
-- **Databricks Apps:** Offer user interfaces such as built-in chat apps, feedback collection portals, and production dashboards. These UIs allow stakeholders to interact with agents, submit feedback, and ensure agents meet business needs.
+- Databricks Apps: Offer user interfaces such as built-in chat apps, feedback collection portals, and production dashboards. These UIs allow stakeholders to interact with agents, submit feedback, and ensure agents meet business needs.
 
 ---

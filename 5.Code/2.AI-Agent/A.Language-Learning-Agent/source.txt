@@ -1,0 +1,5 @@
+https://www.youtube.com/watch?v=j4sNAwrx3kc
+https://github.com/t-redactyl/language-learning-agent
+
+Command: cp -r ../../../all-words-in-all-languages/{Catalan,Croatian,Danish,Dutch,English,Finnish,French,German,Greek,Italian,Polish,Portuguese,Romanian,Russian,Slovenian,Spanish,Swedish,Ukranian} raw-word-lists 
+
