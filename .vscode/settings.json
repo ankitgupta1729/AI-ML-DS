@@ -1,3 +1,9 @@
 {
-    "python-envs.pythonProjects": []
+    "python.defaultInterpreterPath": "/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/.venv/bin/python3",
+    "python-envs.defaultInterpreterPath": "/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/.venv/bin/python3",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.terminal.focusAfterLaunch": true,
+    "python.terminal.executeInFileDir": true,
+    "python.condaPath": "/opt/anaconda3/bin/conda"
 }
