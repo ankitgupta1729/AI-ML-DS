@@ -258,6 +258,25 @@ pipenv shell
 - Now, install packages using `pipenv install llama-index python-dotenv` and `pipenv install llama-index-readers-web html2text`
 - Now, create 2 files using `touch main.py .env`    
 - run the code using `pipenv run python main.py `
-- 
+ 
 
-12.  
+12.  Retrieval Augmentation Generation (RAG):
+
+- We are taking our original prompt and augmenting it with a relevant context. So, Prompt (Query + Context) goes to LLM.
+
+- If we have a large text like a book and we want to answer a question from this book and since this text or book is too big then it will hit token limits. But answer will be in some specific part or section of that book, so we have to chunk that book and then we will get answer from that specific chunk. 
+
+- So, for a question, we will get answer from a one specific chunk or 2-3 chunks etc and we only send these specific chunks as context to LLM then LLM will answer it. In this way, we save redundant API calls costs. So, we need relevant chunks only.
+
+- Embeddings: Text embeddings is a popular technique in NLP(Natural Language Processing) world. The idea is to create a vector space from text such a way that distance between the vectors in this vector space has certain meaning. Embedding models is a black box that take objects in the form of audio,video,image,text etc. and convert each object into a vector(a sequence of numbers).  
+
+- Good embedding models will take sentences with similar semantic meaning and represent vectors close together in the vector space(embedding space). Note that semantic meaning should be the same, sentence may be in the different languages.   
+  
+Please find the following image:
+
+![Embeddings](./images/pic1.png)
+
+![Prompt Augmentation](./images/pic2.png)
+
+13.
+
