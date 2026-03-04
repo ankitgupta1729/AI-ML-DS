@@ -4,12 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-llama-index = "*"
-python-dotenv = "*"
-llama-index-readers-web = "*"
-html2text = "*"
+pandas = "*"
+numpy = "*"
 
 [dev-packages]
+nose = "*"
 
 [requires]
 python_version = "3.14"

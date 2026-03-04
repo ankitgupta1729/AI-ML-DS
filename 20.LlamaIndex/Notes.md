@@ -253,5 +253,9 @@ pipenv shell
 
 ]
 
-- Now, install packages using `pipenv install llama-index python-dotenv`
+- Now, install packages using `pipenv install llama-index python-dotenv` and `pipenv install llama-index-readers-web html2text`
 - Now, create 2 files using `touch main.py .env`    
+- run the code using `pipenv run python main.py `
+- 
+
+1.  
