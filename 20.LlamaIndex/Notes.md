@@ -219,6 +219,8 @@ There's more to the LlamaIndex universe! Check out some of our other projects:
 
 10. documentation: https://github.com/run-llama/llama_index
 
+python-dotenv: https://github.com/theskumar/python-dotenv and https://www.youtube.com/watch?v=8dlQ_nDE7dQ&t=210s
+
 11. Project:
 
 Use Python 3.11, since it's the most stable for LlamaIndex.
@@ -258,4 +260,4 @@ pipenv shell
 - run the code using `pipenv run python main.py `
 - 
 
-1.  
+12.  

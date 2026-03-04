@@ -2,7 +2,7 @@ import os
 import re
 from html import unescape
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv, dotenv_values
 
 try:
     from llama_index.core import Settings, VectorStoreIndex
@@ -161,11 +161,15 @@ if __name__ == "__main__":
     env_path = Path(__file__).with_name(".env")
     load_dotenv(dotenv_path=env_path, override=False)
     api_key = os.getenv("OPENAI_API_KEY")
-
+    COMBINED = os.getenv("COMBINED", "undefined")
+    config = dotenv_values(env_path)
     print("Hello, LlamaIndex!")
     print("Loaded .env from:", env_path)
     masked_key = f"{api_key[:6]}...{api_key[-4:]}" if api_key and len(api_key) > 10 else "(missing)"
     print("Your OpenAI API Key is:", masked_key)
+    print("COMBINED:", COMBINED)
+    print("All config values:", config)
+    print("OPENAI_API_KEY from config:", config.get('OPENAI_API_KEY', '(missing)'))
     print("******")
     main(
         url="https://raw.githubusercontent.com/run-llama/llama_index/main/README.md"
