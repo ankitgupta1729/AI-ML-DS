@@ -37,4 +37,6 @@ you can run example.py using `python example.py`
 
 17. exit the virtual environment using `exit` and then type `pipenv run python example.py` to use python version of virtual environment and you can verify by running `pipenv run python` first and then in python interpreter type `import sys` and then `sys.executable` and type `quit()` to exit from python interpreter.
 
+18. You can see the location of virtual environment using `pipenv --venv` and now delete all the virtual environments using `rm -rf /Users/ankit/.local/share/virtualenvs/*` if the location is `/Users/ankit/.local/share/virtualenvs/`
 
+19. To run tests, run the command: `pipenv run pytest .`
