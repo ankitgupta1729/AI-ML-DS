@@ -3,3 +3,7 @@
 20.LlamaIndex/llamaindex-helloworld/.env
 __pycache__/
 *.pyc
+.env
+.cache/
+storage/
+__pycache__/
