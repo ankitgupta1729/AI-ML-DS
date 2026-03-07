@@ -1,42 +1,295 @@
-Source: [https://www.youtube.com/watch?v=6Qmnh5C4Pmo]
+Source: https://www.youtube.com/watch?v=6Qmnh5C4Pmo
 
-1. `python --version` gives the python version in terminal. If you are using python 3 then you have to use `python3 --version`
+---
 
-2. Install pipenv using `pip3 install pipenv` in vscode terminal
+**1. Python version**
 
-3. `pip3 freeze` shows everything which we have in my current virtual environment which is the global environment.
+To check python version in terminal:
 
-4. Now, `pipenv shell` creates a Pipfile and the virtual environment. This Pipfile is similar to package.json in node js.
+```
+python --version
+```
 
-5. Now, `python --version` will give the python version of its virtual environment.
+If you are using Python 3 specifically:
 
-6. `exit` will exit the virtual environment.
+```
+python3 --version
+```
 
-7. So, again write `pipenv shell` to activate the virtual environment.
+---
 
-8. Install the camelcase package as `pipenv install camelcase` as an example. Now, check the pipfile and "camelcase = "*" shows the latest version of package camelcase.
+**2. Install pipenv**
 
-you can run example.py using `python example.py`
+Install pipenv using VSCode terminal:
 
-9. To list all the packages, you can use `pipenv graph`
+```
+pip3 install pipenv
+```
 
-10. To uninstall a package, you can use `pipenv uninstall camelcase`
+---
 
-11. To install dev packages for development not production, use command `pipenv install nose --dev`. Now, check the pipfile.
+**3. Check installed packages**
 
-12. To install packages from requirements.txt file of the same directory, use `pipenv install -r ./requirements.txt` and now check the pipfile again.
- 
-13. For security and vulnerabilities of packages, use `pipenv check` or `pipenv audit`
+To see everything installed in the current global environment:
 
-14. If you have changed any version of packages in pipfile then use `pipenv install` to update the packages.
+```
+pip3 freeze
+```
 
+This shows all packages in the **current virtual/global environment**.
 
-15. To show dependency of packages, use `pipenv graph`
+---
 
-16. To deploy on server use pipfile.lock and ignore pipfile, for this first prepare pipfile.lock using `pipenv lock` and then use `pipenv install --ignore-pipfile`
+**4. Create virtual environment**
 
-17. exit the virtual environment using `exit` and then type `pipenv run python example.py` to use python version of virtual environment and you can verify by running `pipenv run python` first and then in python interpreter type `import sys` and then `sys.executable` and type `quit()` to exit from python interpreter.
+Run:
 
-18. You can see the location of virtual environment using `pipenv --venv` and now delete all the virtual environments using `rm -rf /Users/ankit/.local/share/virtualenvs/*` if the location is `/Users/ankit/.local/share/virtualenvs/`
+```
+pipenv shell
+```
 
-19. To run tests, run the command: `pipenv run pytest .`
+This creates:
+
+- a **Pipfile**
+- a **virtual environment**
+
+The **Pipfile** is similar to:
+
+```
+package.json
+```
+
+in Node.js.
+
+---
+
+**5. Python version inside virtual environment**
+
+After activating the virtual environment, run:
+
+```
+python --version
+```
+
+This will show the **Python version of the virtual environment**.
+
+---
+
+**6. Exit virtual environment**
+
+To exit the virtual environment:
+
+```
+exit
+```
+
+---
+
+**7. Activate virtual environment again**
+
+Run again:
+
+```
+pipenv shell
+```
+
+This activates the virtual environment.
+
+---
+
+**8. Install example package**
+
+Install the `camelcase` package:
+
+```
+pipenv install camelcase
+```
+
+Now check the **Pipfile**.
+
+You will see:
+
+```
+camelcase = "*"
+```
+
+which means the **latest version** of camelcase will be installed.
+
+Example program can be executed using:
+
+```
+python example.py
+```
+
+---
+
+**9. List all installed packages**
+
+To list all packages and their dependencies:
+
+```
+pipenv graph
+```
+
+---
+
+**10. Uninstall a package**
+
+To uninstall a package:
+
+```
+pipenv uninstall camelcase
+```
+
+---
+
+**11. Install development packages**
+
+To install development-only packages (not for production):
+
+```
+pipenv install nose --dev
+```
+
+Now check the **Pipfile** again.
+
+---
+
+**12. Install packages from requirements.txt**
+
+If a `requirements.txt` file exists in the directory:
+
+```
+pipenv install -r ./requirements.txt
+```
+
+Then check the **Pipfile** again.
+
+---
+
+**13. Security and vulnerability check**
+
+To check for security vulnerabilities:
+
+```
+pipenv check
+```
+
+or
+
+```
+pipenv audit
+```
+
+---
+
+**14. Update packages after changing Pipfile**
+
+If you manually change versions in the Pipfile, run:
+
+```
+pipenv install
+```
+
+This updates the installed packages accordingly.
+
+---
+
+**15. Show dependency graph**
+
+To display dependencies between packages:
+
+```
+pipenv graph
+```
+
+---
+
+**16. Deployment on server**
+
+For deployment:
+
+Use **Pipfile.lock** instead of Pipfile.
+
+Steps:
+
+First generate lock file:
+
+```
+pipenv lock
+```
+
+Then install using:
+
+```
+pipenv install --ignore-pipfile
+```
+
+This ensures exact dependency versions from **Pipfile.lock**.
+
+---
+
+**17. Run python using pipenv**
+
+Exit the virtual environment first:
+
+```
+exit
+```
+
+Then run the program using:
+
+```
+pipenv run python example.py
+```
+
+To verify Python interpreter being used:
+
+```
+pipenv run python
+```
+
+Inside Python interpreter run:
+
+```
+import sys
+sys.executable
+```
+
+Then exit interpreter:
+
+```
+quit()
+```
+
+---
+
+**18. Find virtual environment location**
+
+To see the location of the virtual environment:
+
+```
+pipenv --venv
+```
+
+If the location is:
+
+```
+/Users/ankit/.local/share/virtualenvs/
+```
+
+You can delete all virtual environments using:
+
+```
+rm -rf /Users/ankit/.local/share/virtualenvs/*
+```
+
+---
+
+**19. Run tests**
+
+To run tests using pipenv:
+
+```
+pipenv run pytest .
+```

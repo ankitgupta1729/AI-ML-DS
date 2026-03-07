@@ -1,166 +1,334 @@
-[LlamaIndex Udemy Course by Eden Marco]
+### LlamaIndex Udemy Course by Eden Marco
 
-1. Large Language Models are powerful however they have some limitations.
+---
 
-For example, if I ask questions like "How much did I pay in Serpapi in June ?" to ChatGPT with GPT-3.5, it will
-not answer because it was not trained on this data but if I use GPT-4 and ask the question by attaching the invoice file, I will get the answer. 
+**1. Large Language Models are powerful however they have some limitations.**
 
+For example, if I ask questions like **"How much did I pay in Serpapi in June ?"** to ChatGPT with GPT-3.5, it will not answer because it was not trained on this data but if I use GPT-4 and ask the question by attaching the invoice file, I will get the answer.
 
-2. LlamaIndex is a powerful framework for developing LLM based applications. It is open source and very intuitive to use. On github, it has more popularity (based number of stars) than langchain(a framework to develop LLM based applications)
+---
 
-LlamaIndex is used to connect with our private data in pdf,ppt,doc,image,audio,video etc as well as various data 
-connectors API like notion, salesforce data, discord etc as well as various databases like snowflake,mongodb, postgresql etc.
+**2. LlamaIndex**
 
-LlamaIndex can also interact with vectorstores like milvus etc.
+LlamaIndex is a powerful framework for developing LLM based applications. It is open source and very intuitive to use. On github, it has more popularity (based number of stars) than langchain (a framework to develop LLM based applications)
 
-If we have a very large document then we have to do chunking and make various chunks because LLMs have token limits, also for a question, we also might not need all the documents, so we may get answer from a one specific
-chunk or 2-3 chunks etc and we only send these specific chunks as context to LLM then LLM will answer it.
+LlamaIndex is used to connect with our private data in:
 
-We store these chunks into a vector store/vector db and we can retrieve relevant chunks based on the query/question.
+- pdf  
+- ppt  
+- doc  
+- image  
+- audio  
+- video  
 
-3. We have different data connectors (LlamaHub). A data connector(i.e. reader) ingest data from different data sources and data formats into a simple `Document` representation (text and simple data).
+as well as various data connectors API like:
 
-Once you have ingested your data, you can build an `index` on top, ask question using a `Query Engine` and 
-have a conversation using `Chat Engine`.
+- notion  
+- salesforce data  
+- discord  
 
-4. Our data connectors are offered through `LlamaHub`. LlamaHub is an open source repository containing data loaders that you can easily plug and play into any LlamaIndex application.
+as well as various databases like:
 
-5. Documents/Nodes:
-   
+- snowflake  
+- mongodb  
+- postgresql  
+
+LlamaIndex can also interact with vectorstores like **milvus** etc.
+
+If we have a very large document then we have to do **chunking** and make various chunks because LLMs have token limits.
+
+For a question, we might not need all the documents. We may get answer from:
+
+- one specific chunk  
+- or 2-3 chunks  
+
+We only send these specific chunks as **context to LLM** then LLM will answer it.
+
+We store these chunks into a **vector store/vector db** and retrieve relevant chunks based on the query/question.
+
+---
+
+**3. Data Connectors (LlamaHub)**
+
+We have different data connectors (LlamaHub).
+
+A **data connector (reader)** ingests data from different data sources and formats into a simple `Document` representation (text and simple data).
+
+Once you have ingested your data, you can:
+
+- build an `index`
+- ask question using a `Query Engine`
+- have a conversation using `Chat Engine`
+
+---
+
+**4. LlamaHub**
+
+Our data connectors are offered through **LlamaHub**.
+
+LlamaHub is an open source repository containing data loaders that you can easily plug and play into any LlamaIndex application.
+
+---
+
+**5. Documents / Nodes**
+
 Document and Node objects are core abstractions within LlamaIndex.
 
-A `Document` is a generic container around any data source - for instance a PDF, an API output or retrieved data from a database. They can be constructed manually or created automatically via data loaders. By default, a Document stores text along with some other attributes like metadata (a dictionary of annotations that can be appended to the text) or relationships(a dictionary containing relationships to other Documents/Nodes).
+**Document**
 
-A `Node` represents a "chunk" of a source document whether it is a text chunk or an image or other. Similar to Documents they contain metadata and relationship information to other nodes.
+A `Document` is a generic container around any data source such as:
 
-Node and chunk are same.
+- PDF  
+- API output  
+- database data  
 
-Nodes are a first-class citizen in LlamaIndex. You can choose to define Nodes and its attributes directly. You may
-also choose to "parse" source documents into Nodes through our `NodeParser` classes. By default, every Node 
-derived from a Document will inherit the same metadata from that Document (e.g. a "file_name" filed in the Document is propagated to every Node.)
+They can be constructed manually or created automatically via data loaders.
 
-6. Node Parser:
+A Document stores:
 
-Node parsers are a simple abstraction that take a list of documents and chunk them into a Node objects, such that each node is a specific size. 
+- text  
+- metadata (dictionary of annotations)  
+- relationships (dictionary linking other Documents/Nodes)
 
-A node parser can configure the chunk size (in tokens) as well as any overlap between chunked nodes. The chunking is done by `TokenTextSplitter` which default to a chunk size of 1024 and a default chunk overlap of 20 tokens.
+---
 
+**Node**
 
-7. Indexes:
+A `Node` represents a **chunk of a source document** whether it is:
 
-An `Index` is a data structure that allows us to quickly retrieve relevant context for a user query.
+- text chunk  
+- image  
+- other data
 
-For LlamaIndex, it's the core foundation for RAG use-cases.
+Similar to Documents they contain metadata and relationship information to other nodes.
 
-At a high level, `indices` are built from `Documents`. They are used to build `Query Engines` and `Chat Engines`.
-which enables question and answer and chat over your data.
+**Node and chunk are same.**
 
-Under the hood, `Indices` store data in `Node` objects and expose a `Retrieval` interface that supports additional 
-automation and configuration.
+Nodes are a **first-class citizen in LlamaIndex**.
 
-8. Query Engine:
+You can either:
 
-Query engine is a generic interface that allows you to ask questions over your data.
+- define Nodes directly  
+- parse documents into Nodes using `NodeParser`
 
-A query engine takes a natural language query and returns a rich response. It is most often built on one or many indices via Retrievals. You can compose multiple query engines to achieve more advanced capability.
+By default every Node derived from a Document **inherits metadata** from that Document.
 
-9. LlamaIndex is the leading framework for building LLM-powered agents over your data with [LLMs](https://en.wikipedia.org/wiki/Large_language_model) and [workflows](/python/llamaagents/workflows).
+Example:
 
-<div class="grid cards" markdown>
+```
+file_name
+```
 
-- <span style="font-size: 200%">[Introduction](#introduction)</span>
+If it exists in Document metadata it will propagate to every Node.
 
-  What is context augmentation? What are agents and workflows? How does LlamaIndex help build them?
+---
 
-- <span style="font-size: 200%">[Use cases](#use-cases)</span>
+**6. Node Parser**
 
-  What kind of apps can you build with LlamaIndex? Who should use it?
+Node parsers take a list of documents and **chunk them into Node objects**.
 
-- <span style="font-size: 200%">[Getting started](#getting-started)</span>
+Each node has a **specific size**.
 
-  Get started in Python or TypeScript in just 5 lines of code!
+A node parser can configure:
 
-- <span style="font-size: 200%">[LlamaCloud](https://docs.cloud.llamaindex.ai/)</span>
+- chunk size (tokens)
+- overlap between chunked nodes
 
-  Managed services for LlamaIndex including [LlamaParse](https://developers.llamaindex.ai/python/cloud/llamaparse/), the world's best document parser.
+Chunking is done using:
 
-- <span style="font-size: 200%">[Community](#community)</span>
+```
+TokenTextSplitter
+```
 
-  Get help and meet collaborators on Discord, Twitter, LinkedIn, and learn how to contribute to the project.
+Default values:
 
-- <span style="font-size: 200%">[Related projects](#related-projects)</span>
+- chunk size = 1024
+- chunk overlap = 20 tokens
 
-  Check out our library of connectors, readers, and other integrations at [LlamaHub](https://llamahub.ai) as well as demos and starter apps like [create-llama](https://www.npmjs.com/package/create-llama).
+---
 
-</div>
+**7. Indexes**
 
-## Introduction
+An `Index` is a data structure that allows us to quickly retrieve **relevant context** for a user query.
 
-### What are agents?
+For LlamaIndex, it's the **core foundation for RAG use-cases.**
 
-[Agents](/python/framework/understanding/agent) are LLM-powered knowledge assistants that use tools to perform tasks like research, data extraction, and more. Agents range from simple question-answering to being able to sense, decide and take actions in order to complete tasks.
+High-level structure:
 
-LlamaIndex provides a framework for building agents including the ability to use RAG pipelines as one of many tools to complete a task.
+```
+Documents → Index → Query Engine / Chat Engine
+```
 
-### What are workflows?
+Indices are built from `Documents`.
 
-[Workflows](/python/llamaagents/workflows) are multi-step processes that combine one or more agents, data connectors, and other tools to complete a task. They are event-driven software that allows you to combine RAG data sources and multiple agents to create a complex application that can perform a wide variety of tasks with reflection, error-correction, and other hallmarks of advanced LLM applications. You can then [deploy these agentic workflows](/python/workflows/deployment/) as production microservices.
+They are used to build:
 
-### What is context augmentation?
+- Query Engines
+- Chat Engines
 
-LLMs offer a natural language interface between humans and data. LLMs come pre-trained on huge amounts of publicly available data, but they are not trained on **your** data. Your data may be private or specific to the problem you're trying to solve. It's behind APIs, in SQL databases, or trapped in PDFs and slide decks.
+which enables question answering and chat over your data.
 
-Context augmentation makes your data available to the LLM to solve the problem at hand. LlamaIndex provides the tools to build any of context-augmentation use case, from prototype to production. Our tools allow you to ingest, parse, index and process your data and quickly implement complex query workflows combining data access with LLM prompting.
+Under the hood:
 
-The most popular example of context-augmentation is [Retrieval-Augmented Generation or RAG](/python/framework/getting_started/concepts), which combines context with LLMs at inference time.
+Indices store data in `Node` objects and expose a **Retrieval interface** supporting automation and configuration.
 
-### LlamaIndex is the framework for Context-Augmented LLM Applications
+---
 
-LlamaIndex imposes no restriction on how you use LLMs. You can use LLMs as auto-complete, chatbots, agents, and more. It just makes using them easier. We provide tools like:
+**8. Query Engine**
 
-- **Data connectors** ingest your existing data from their native source and format. These could be APIs, PDFs, SQL, and (much) more.
-- **Data indexes** structure your data in intermediate representations that are easy and performant for LLMs to consume.
-- **Engines** provide natural language access to your data. For example:
-  - Query engines are powerful interfaces for question-answering (e.g. a RAG flow).
-  - Chat engines are conversational interfaces for multi-message, "back and forth" interactions with your data.
-- **Agents** are LLM-powered knowledge workers augmented by tools, from simple helper functions to API integrations and more.
-- **Observability/Evaluation** integrations that enable you to rigorously experiment, evaluate, and monitor your app in a virtuous cycle.
-- **Workflows** allow you to combine all of the above into an event-driven system far more flexible than other, graph-based approaches.
+Query engine is a generic interface that allows you to **ask questions over your data**.
 
-## Use cases
+A query engine:
 
-Some popular use cases for LlamaIndex and context augmentation in general include:
+- takes a natural language query
+- returns a rich response
 
-- [Question-Answering](/python/framework/use_cases/q_and_a) (Retrieval-Augmented Generation aka RAG)
-- [Chatbots](/python/framework/use_cases/chatbots)
-- [Document Understanding and Data Extraction](/python/framework/use_cases/extraction)
-- [Autonomous Agents](/python/framework/use_cases/agents) that can perform research and take actions
-- [Multi-modal applications](/python/framework/use_cases/multimodal) that combine text, images, and other data types
-- [Fine-tuning](/python/framework/use_cases/fine_tuning) models on data to improve performance
+It is often built on one or many indices via Retrievals.
 
-Check out our [use cases](/python/framework/use_cases) documentation for more examples and links to tutorials.
+Multiple query engines can be composed for advanced capabilities.
 
-### 👨‍👩‍👧‍👦 Who is LlamaIndex for?
+---
 
-LlamaIndex provides tools for beginners, advanced users, and everyone in between.
+**9. LlamaIndex Overview**
 
-Our high-level API allows beginner users to use LlamaIndex to ingest and query their data in 5 lines of code.
+LlamaIndex is the leading framework for building LLM-powered agents over your data with LLMs and workflows.
 
-For more complex applications, our lower-level APIs allow advanced users to customize and extend any module -- data connectors, indices, retrievers, query engines, and reranking modules -- to fit their needs.
+Sections include:
 
-## Getting Started
+- Introduction  
+- Use cases  
+- Getting started  
+- LlamaCloud  
+- Community  
+- Related projects  
 
-LlamaIndex is available in Python (these docs) and [Typescript](https://ts.llamaindex.ai/). If you're not sure where to start, we recommend reading [how to read these docs](/python/framework/getting_started/reading) which will point you to the right place based on your experience level.
+---
 
-### 30 second quickstart
+### Introduction
 
-Set an environment variable called `OPENAI_API_KEY` with an [OpenAI API key](https://platform.openai.com/api-keys). Install the Python library:
+**What are agents?**
+
+Agents are LLM-powered knowledge assistants that use tools to perform tasks like:
+
+- research
+- data extraction
+- task execution
+
+Agents range from simple question answering to systems that **sense, decide and take actions**.
+
+LlamaIndex provides a framework for building agents including the ability to use **RAG pipelines as tools**.
+
+---
+
+**What are workflows?**
+
+Workflows are multi-step processes that combine:
+
+- agents
+- data connectors
+- tools
+
+They are **event-driven systems** allowing complex applications with:
+
+- reflection
+- error correction
+- reasoning
+
+These workflows can be deployed as **production microservices**.
+
+---
+
+**What is context augmentation?**
+
+LLMs are trained on large public datasets but not on **your private data**.
+
+Your data may exist in:
+
+- APIs
+- SQL databases
+- PDFs
+- slide decks
+
+Context augmentation makes your data available to the LLM.
+
+The most popular example is:
+
+**Retrieval Augmented Generation (RAG)**
+
+which combines **context + LLM at inference time**.
+
+---
+
+**LlamaIndex provides tools such as**
+
+Data connectors  
+Data indexes  
+Query engines  
+Chat engines  
+Agents  
+Observability tools  
+Workflows
+
+---
+
+### Use Cases
+
+Popular use cases include:
+
+- Question answering (RAG)
+- Chatbots
+- Document understanding
+- Data extraction
+- Autonomous agents
+- Multimodal applications
+- Model fine tuning
+
+---
+
+### Who is LlamaIndex for?
+
+LlamaIndex provides tools for:
+
+**Beginners**
+
+Use high level APIs to ingest and query data in **5 lines of code**
+
+**Advanced users**
+
+Customize modules like:
+
+- data connectors
+- indices
+- retrievers
+- query engines
+- reranking modules
+
+---
+
+### Getting Started
+
+LlamaIndex is available in:
+
+- Python
+- TypeScript
+
+---
+
+**30 second quickstart**
+
+Set environment variable:
+
+```
+OPENAI_API_KEY
+```
+
+Install library:
 
 ```bash
 pip install llama-index
 ```
 
-Put some documents in a folder called `data`, then ask questions about them with our famous 5-line starter:
+Example code:
 
 ```python
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
@@ -168,115 +336,324 @@ from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 documents = SimpleDirectoryReader("data").load_data()
 index = VectorStoreIndex.from_documents(documents)
 query_engine = index.as_query_engine()
+
 response = query_engine.query("Some question about the data should go here")
+
 print(response)
 ```
 
-If any part of this trips you up, don't worry! Check out our more comprehensive starter tutorials using [remote APIs like OpenAI](/python/framework/getting_started/starter_example) or [any model that runs on your laptop](/python/framework/getting_started/starter_example_local).
+---
 
-## LlamaCloud
+### LlamaCloud
 
-If you're an enterprise developer, check out [**LlamaCloud**](https://llamaindex.ai/enterprise). It is an end-to-end managed service for document parsing, extraction, indexing, and retrieval - allowing you to get production-quality data for your AI agent. You can [sign up](https://cloud.llamaindex.ai/) and get 10,000 free credits per month, sign up for one of our [plans](https://www.llamaindex.ai/pricing), or [come talk to us](https://www.llamaindex.ai/contact) if you're interested in an enterprise solution. We offer both SaaS and self-hosted plans.
+LlamaCloud is a managed service for:
 
-You can also check out the [LlamaCloud documentation](https://docs.cloud.llamaindex.ai/) for more details.
+- document parsing
+- data extraction
+- indexing
+- retrieval
 
-- **Document Parsing (LlamaParse)**: LlamaParse is the best-in-class document parsing solution. It's powered by VLMs and perfect for even the most complex documents (nested tables, embedded charts/images, and more). [Learn more](https://www.llamaindex.ai/llamaparse) or check out the [docs](https://docs.cloud.llamaindex.ai/llamaparse).
-- **Document Extraction (LlamaExtract)**: Given a human-defined or inferred schema, extract structured data from any document. [Learn more](https://www.llamaindex.ai/llamaextract) or check out the [docs](https://docs.cloud.llamaindex.ai/llamaextract/getting_started).
-- **Indexing/Retrieval**: Set up an e2e pipeline to index a collection of documents for retrieval. Connect your data source (e.g. Sharepoint, Google Drive, S3), your vector DB data sink, and we automatically handle the document processing and syncing. [Learn more](https://www.llamaindex.ai/enterprise) or check out the [docs](https://docs.cloud.llamaindex.ai/llamacloud/getting_started).
+Website:
 
-## Community
+https://llamaindex.ai/enterprise
 
-Need help? Have a feature suggestion? Join the LlamaIndex community:
+You can get **10,000 free credits per month**.
 
-- [Twitter](https://twitter.com/llama_index)
-- [Discord](https://discord.gg/dGcwcsnxhU)
-- [LinkedIn](https://www.linkedin.com/company/llamaindex/)
+Services include:
 
-### Getting the library
+Document Parsing (LlamaParse)  
+Document Extraction (LlamaExtract)  
+Indexing / Retrieval pipelines
 
-- LlamaIndex Python
-  - [LlamaIndex Python Github](https://github.com/run-llama/llama_index)
-  - [Python Docs](https://docs.llamaindex.ai/) (what you're reading now)
-  - [LlamaIndex on PyPi](https://pypi.org/project/llama-index/)
-- LlamaIndex.TS (Typescript/Javascript package):
-  - [LlamaIndex.TS Github](https://github.com/run-llama/LlamaIndexTS)
-  - [TypeScript Docs](https://ts.llamaindex.ai/)
-  - [LlamaIndex.TS on npm](https://www.npmjs.com/package/llamaindex)
+---
 
-### Contributing
+### Community
 
-We are open-source and always welcome contributions to the project! Check out our [contributing guide](https://github.com/run-llama/llama_index/blob/main/CONTRIBUTING.md) for full details on how to extend the core library or add an integration to a third party like an LLM, a vector store, an agent tool and more.
+Twitter  
+Discord  
+LinkedIn
 
-## LlamaIndex Ecosystem
+---
 
-There's more to the LlamaIndex universe! Check out some of our other projects:
+**Library Links**
 
-- [llama_deploy](https://github.com/run-llama/llama_deploy) | Deploy your agentic workflows as production microservices
-- [LlamaHub](https://llamahub.ai) | A large (and growing!) collection of custom data connectors
-- [SEC Insights](https://secinsights.ai) | A LlamaIndex-powered application for financial research
-- [create-llama](https://www.npmjs.com/package/create-llama) | A CLI tool to quickly scaffold LlamaIndex projects
+Python:
 
+- https://github.com/run-llama/llama_index
+- https://docs.llamaindex.ai/
+- https://pypi.org/project/llama-index/
 
-10. documentation: https://github.com/run-llama/llama_index
+TypeScript:
 
-python-dotenv: https://github.com/theskumar/python-dotenv and https://www.youtube.com/watch?v=8dlQ_nDE7dQ&t=210s
+- https://github.com/run-llama/LlamaIndexTS
+- https://ts.llamaindex.ai/
+- https://www.npmjs.com/package/llamaindex
 
-11. Project:
+---
 
-Use Python 3.11, since it's the most stable for LlamaIndex.
+**10. Documentation**
 
+https://github.com/run-llama/llama_index
 
+python-dotenv:
 
-Go to VSCode Terminal and follow:
+https://github.com/theskumar/python-dotenv
 
-- create a project directory using `mkdir llamaindex-helloworld` and then go in it using `cd llamaindex-helloworld `
-- Install pipenv using `pip3 install pipenv` [pipenv is a package manager that handle all the dependencies], check version using `pipenv --version`
-- Type `ls` to see virtual environment 
-- Now, you have to create vurtual environment using `pipenv shell` (type `exit` to go outside)
+https://www.youtube.com/watch?v=8dlQ_nDE7dQ&t=210s
 
-[If you don't have requirements.txt file and wants to create virtual environment using pipenv and python 3.11 then follow the following steps:
+---
 
+**11. Project Setup**
+
+Use **Python 3.11** since it's the most stable for LlamaIndex.
+
+Create project directory:
+
+```bash
+mkdir llamaindex-helloworld
+cd llamaindex-helloworld
+```
+
+Install pipenv:
+
+```bash
+pip3 install pipenv
+pipenv --version
+```
+
+Create virtual environment:
+
+```bash
+pipenv shell
+```
+
+Exit environment:
+
+```
+exit
+```
+
+---
+
+If creating a fresh environment:
+
+```bash
 rm -f Pipfile Pipfile.lock
 
-# Clear pipenv cache and tell it NOT to look for requirements.txt
 export PIPENV_NO_INHERIT=true
 export PIPENV_IGNORE_REQUIREMENTS=true
 
-# Create a new pipenv environment with Python 3.11
 pipenv --python 3.11
 
-# Now install your packages
 pipenv install llama-index python-dotenv
 
-# Activate the environment
 pipenv shell
+```
 
+Install packages:
 
+```bash
+pipenv install llama-index python-dotenv
+pipenv install llama-index-readers-web html2text
+```
 
-]
+Create files:
 
-- Now, install packages using `pipenv install llama-index python-dotenv` and `pipenv install llama-index-readers-web html2text`
-- Now, create 2 files using `touch main.py .env`    
-- run the code using `pipenv run python main.py `
- 
+```bash
+touch main.py .env
+```
 
-12.  Retrieval Augmentation Generation (RAG):
+Run program:
 
-- We are taking our original prompt and augmenting it with a relevant context. So, Prompt (Query + Context) goes to LLM.
+```bash
+pipenv run python main.py
+```
 
-- If we have a large text like a book and we want to answer a question from this book and since this text or book is too big then it will hit token limits. But answer will be in some specific part or section of that book, so we have to chunk that book and then we will get answer from that specific chunk. 
+---
 
-- So, for a question, we will get answer from a one specific chunk or 2-3 chunks etc and we only send these specific chunks as context to LLM then LLM will answer it. In this way, we save redundant API calls costs. So, we need relevant chunks only.
+**12. Retrieval Augmented Generation (RAG)**
 
-- Embeddings: Text embeddings is a popular technique in NLP(Natural Language Processing) world. The idea is to create a vector space from text such a way that distance between the vectors in this vector space has certain meaning. Embedding models is a black box that take objects in the form of audio,video,image,text etc. and convert each object into a vector(a sequence of numbers).  
+Prompt = **Query + Context**
 
-- Good embedding models will take sentences with similar semantic meaning and represent vectors close together in the vector space(embedding space). Note that semantic meaning should be the same, sentence may be in the different languages.   
-  
-Please find the following image:
+Large text (like books) must be **chunked** to avoid token limits.
 
+Only relevant chunks are sent to the LLM.
+
+This reduces unnecessary API costs.
+
+---
+
+**Embeddings**
+
+Embeddings convert objects into **vectors**.
+
+Objects may include:
+
+- text
+- audio
+- image
+- video
+
+Similar semantic meanings produce **vectors close together in embedding space**.
+
+Images:
+
+```
 ![Embeddings](./images/pic1.png)
-
 ![Prompt Augmentation](./images/pic2.png)
+```
 
-13.
+---
 
+**13. Language Modelling**
+
+A language model is a probability distribution over sequences of words.
+
+Formal definition:
+
+Given sequence
+
+```
+x1, x2, x3 ... xt
+```
+
+Predict:
+
+```
+P(x(t+1) | x1,x2,...,xt)
+```
+
+Examples:
+
+- search engines
+- text suggestions
+
+---
+
+**14. Large Language Model (LLM)**
+
+An LLM is simply a **language model trained on huge amounts of data**.
+
+These models are very good at calculating probabilities.
+
+---
+
+**15. Composition of a Prompt**
+
+A prompt is the **input given to a language model**.
+
+Prompt components:
+
+A. Instructions  
+B. Context  
+C. Input Data  
+D. Output Indicator
+
+Example diagram:
+
+```
+![Prompt](./images/pic3.png)
+```
+
+---
+
+**16. Prompting Techniques**
+
+Zero Shot Prompting
+
+Model generates output without examples.
+
+Example:
+
+Write an image description with adjectives and nouns of a Yorkshire dog running in a winter landscape in Brazil.
+
+---
+
+One Shot Prompting
+
+Model receives **one example**.
+
+---
+
+Few Shot Prompting
+
+Model receives **multiple examples**, improving accuracy.
+
+Image:
+
+```
+![Few Shot Prompt](./images/pic4.png)
+```
+
+One shot prompting is a subset of few shot prompting.
+
+---
+
+**17. Chain of Thought Prompting**
+
+Large LLMs still struggle with **multi-step reasoning problems**.
+
+In 2022 Google researchers introduced **Chain of Thought (CoT)**.
+
+It improves reasoning by breaking problems into **intermediate steps**.
+
+---
+
+Zero Shot CoT:
+
+Prefix prompt with:
+
+```
+Let's think step by step.
+```
+
+Example:
+
+```
+I bought 10 apples.
+Gave 2 to neighbor.
+Gave 2 to repairman.
+Bought 5 more.
+Ate 1.
+
+How many apples remain?
+
+Let's think step by step.
+```
+
+---
+
+Few Shot CoT
+
+Provide examples of **step-by-step reasoning**.
+
+Images:
+
+```
+![Before CoT](./images/pic5.png)
+![After CoT](./images/pic6.png)
+```
+
+---
+
+**18. ReAct Prompt Engineering**
+
+ReAct stands for:
+
+```
+Reason + Act
+```
+
+ReAct combines:
+
+```
+CoT + Actions
+```
+
+It integrates reasoning with actions and enables interaction with external environments.
+
+It comes from a **2023 research paper** and forms the basis of **LangChain agents**.
+
+---
+
+**19.**
