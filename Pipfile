@@ -20,6 +20,8 @@ ipython-sql = "*"
 pymysql = "*"
 pyspark = "*"
 openai = "*"
+langchain = "*"
+llama-cpp-python = "*"
 
 [dev-packages]
 

@@ -19,8 +19,14 @@ sqlalchemy = "*"
 ipython-sql = "*"
 pymysql = "*"
 pyspark = "*"
-langchain = "*"
+langchain-community = "*"
+chromadb = "*"
+sentence-transformers = "*"
+langchain-text-splitters = "*"
 llama-cpp-python = "*"
+langchain-huggingface = "*"
+langchain-core = "*"
+langchain = "*"
 
 [dev-packages]
 

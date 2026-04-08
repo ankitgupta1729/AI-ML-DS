@@ -1,0 +1,9 @@
+langchain==0.3.0
+langchain-community==0.3.0
+langchain-core==0.3.29
+langchain-openai==0.3.0
+openai>=1.58.1,<2.0
+python-dotenv==1.0.0
+colorama==0.4.6 # allows to add colors in your program
+httpx<0.28
+faiss-cpu
