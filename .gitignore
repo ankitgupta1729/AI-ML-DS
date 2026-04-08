@@ -10,4 +10,3 @@ __pycache__/
 .env
 4.Theory/Notes/*.pdf
 24.LangChain2/Project/env/
-# Ignore the 24.LangChain2 virtual environment directory (Project/env and any others).
