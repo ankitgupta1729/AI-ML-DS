@@ -146,7 +146,20 @@ Embedding models create a vector representation of a piece of text. Embeddings i
 
 `RunnablePassThrough` class allows to pass data through.
 
+Here, we augment the query prompt with specific and relevant documents which provides context to the language model. It is a very important step to build a good AI application.
 
+Now, when you run `python 5.py` then you will get the output as:
+
+```
+
+harrison worked at kensho
+harrison worked at kensho
+
+Kensho.
+
+```
+
+8. 
 
 
 

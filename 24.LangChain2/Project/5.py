@@ -1,9 +1,9 @@
 from langchain_community.vectorstores import FAISS
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassThrough
+from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import OpenAIEmbeddings, OpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from dotenv import dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -14,7 +14,7 @@ template = """ Answer the question based only on the following context:
 
 Question: {question}
 """
-
+prompt = ChatPromptTemplate.from_template(template)
 
 # create a vectorstore and embeddings
 
@@ -41,7 +41,7 @@ print(docs[0].page_content)
 retrieval_chain = (
     {
         "context": retriever,
-        "question": RunnablePassThrough()
+        "question": RunnablePassthrough()
     }
     | prompt
     | model
