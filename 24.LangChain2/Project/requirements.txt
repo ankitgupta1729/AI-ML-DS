@@ -7,3 +7,6 @@ python-dotenv==1.0.0
 colorama==0.4.6 # allows to add colors in your program
 httpx<0.28
 faiss-cpu
+tiktoken
+langchain-text-splitters
+chromadb
