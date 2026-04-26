@@ -56,7 +56,7 @@ It means we collect all the context for the model. We tell the model how to do s
 
 7. Now, you need to type `/` in primary terminal and you will get various options. Type `/model` to switch various models like `opus`, `sonnet` and `haiku` or any open source model. 
 
-When you ae working on some plan or task then go with `opus` and for some coding use `sonnet`. It has something like 5 hours window for tokens as per different subscription plans.
+When you are working on some plan or task then go with `opus` and for some coding use `sonnet`. It has something like 5 hours window for tokens as per different subscription plans.
 
 You can select `High Effort` and `Max Effort` for complex maths problem or complexr coding problem. 
 
