@@ -34,5 +34,47 @@ You can also use Dispatch feature of cowork to connect with claude in mobile pho
 
 10. Skills:
 
+It is a custom instructions that I am giving to a claude to execute a set of workflows and give me the output.
 
+To create a new skill, just write in chat that `make a new skill`.
+
+11. In claude code chat, you can write something `generate a snake game so that I can play in browser`.
  
+12. You can type `claude code` in vscode terminal and then to see usage, you can use `/usage` command.
+
+13. You can use claude in excel, powerpoint, word etc. 
+
+14. You can use claude in finance also. You can give the prompt as:
+
+```
+You are a senior equity analyst at Goldman Sachs with 20 years of experience screening stocks for high-net-worth clients.
+
+I need a complete stock screening framework for my investment goals.
+
+Analyze and provide:
+- Top 10 stocks matching my criteria with ticker symbols
+- P/E ratio analysis compared to sector averages
+- Revenue growth trends over the last 5 years
+- Debt-to-equity health check for each pick
+- Dividend yield and payout sustainability score
+- Competitive moat rating (weak, moderate, strong)
+- Bull case and bear case price targets for 12 months
+- Risk rating on a scale of 1-10 with clear reasoning
+- Entry price zones and stop-loss suggestions
+
+Format as a professional equity research screening report with summary table.
+
+My investment profile: [DESCRIBE YOUR RISK TOLERANCE, INVESTMENT AMOUNT, TIME HORIZON and PREFERRED SECTORS]
+
+Age: 33 years
+Risk Tolerance: Medium
+Investment Amount: 50 Lacs INR
+Time Horizon: 5 years
+Preferred Sectors: Energy, Pharma, IT, Banking
+``` 
+
+You can schedule in cowork with monday everyday with this prompt.
+
+15. You can also learn using claude by giving prompt like `teach me photosynthesis visually`. 
+
+16. You can import data from chatgpt to claude using `https://claude.com/import-memory`.
