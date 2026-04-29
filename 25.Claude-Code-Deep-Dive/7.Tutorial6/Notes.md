@@ -55,3 +55,20 @@ For example:
 
 then ask, `In transactions array, amount should be a number.`
 
+11. we can select few lines of the code in any file and ask like `explain the selected code`.
+
+For example:
+
+In `App.jsx` file, select the line `date: new Date().toISOString().split('T')[0]` and then ask `explain the selected code`.
+
+12. Using the Plan Mode:
+
+It is useful to build new features. 
+
+For example:
+
+Enable the plan mode and ask `add the ability to delete transactions`. 
+
+Now, when plan is made then it will ask few options like auto-accept edits, manually approve edits etc, So, select `Tell Claude what to change` and then put `add the confirmation dialogue box` in the plan mode itself for this option. Now, select auto-accept edits option.
+
+13. 
