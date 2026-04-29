@@ -42,4 +42,6 @@ C. Then answer few questions and it will generate dashboard related files and `s
 
 You can use this md file later like you can add it as prompt file and chat with claude to do more things in the dashboard.
 
-7. You can install various plugins in the claude code desktop app like google chrome, pdf tools extension etc and go to configure and allow all permissions. After that ask like `Can you find me the best videos on the internet about how our brain works, use the chrome web connector`. 
+7. You can install various plugins in the claude code desktop app like google chrome, pdf tools extension etc and go to configure and allow all permissions. After that ask like `Can you find me the best videos on the internet about how our brain works, use the chrome web connector`.
+
+8. In claude desktop, go to settings--> developers. You will see various MCP servers there. 
