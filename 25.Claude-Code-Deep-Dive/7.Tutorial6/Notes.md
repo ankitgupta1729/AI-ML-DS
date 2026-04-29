@@ -99,5 +99,4 @@ Use
 
 - /clear
 - /compact
-- Keep Claude.md file lean and relevant because this file goes to model for each request
-- 
+- Keep Claude.md file lean and relevant because this file goes to model for each request.
