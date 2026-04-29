@@ -36,3 +36,22 @@ When you start a new project then run `/init` command to generate agents.md file
 7. LLMs are non-deterministic and so it can't be predictable. So, everytime, output of `/init` is different.
 
 8. You can use git commands in bash mode like `! git add . && git commit -m "chore: update" && git push origin main` or using source control in vscode or using claude terminal like `commit` but it consume some tokens and cost but generate a beautiful commit message.
+
+9. To make terminal elegant you can ask ` make the vscode terminal and claude terminal beautiful and elegant with colors and display of git branch or amny other features so make it more beautiful and elegant with modern look like uv package manager or any other modern beautiful and elegant terminal.`
+
+10. Effective Prompting:
+
+- Be specific and clear
+  
+So, instead of saying "Add Authentication", say "Add JWT-Based Authentication to the login endpoint using the existing User model."
+
+- Give Context
+
+- Be concise
+
+For example:
+
+`In @src/App.jsx, total income and expenses are not calculated correctly. Fix it.` 
+
+then ask, `In transactions array, amount should be a number.`
+
