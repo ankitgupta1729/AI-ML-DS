@@ -71,4 +71,33 @@ Enable the plan mode and ask `add the ability to delete transactions`.
 
 Now, when plan is made then it will ask few options like auto-accept edits, manually approve edits etc, So, select `Tell Claude what to change` and then put `add the confirmation dialogue box` in the plan mode itself for this option. Now, select auto-accept edits option.
 
-13. 
+13. Managing the Context:
+
+Think Context Window as claude's working memory. So, it is like claude can see at any given moment. Context Window can contain conversations, files, claude.md etc. 
+
+Now, put the `/context` command and see the content. Roughly Token is 3/4th of a word. 
+
+System tools are like bash command tools, read, write, git etc related tools.
+
+Now, we have `/compact` command which we use when context window gets full and we are working on a related task and we don't want to lose history or context. Claude will put the summary in context and clear the original context after the execution of this command.
+
+So, after executing `/compact` and then `/context`, we can see less consumption of tokens as compared to previous output of `/context`.
+
+`/clear` is used to clear the context and conversation history. So, to clear unrelated task, use it.
+
+Now, again if we use `/clear` and then `/context`, we get different output. (Why?)
+
+14. Claude automatically compacts at ~70%.
+
+15. Tracking cost and usage:
+
+`/cost` for API usage and `/usage` for Claude subscription plan.
+
+16. Cost Management:
+
+Use
+
+- /clear
+- /compact
+- Keep Claude.md file lean and relevant because this file goes to model for each request
+- 
