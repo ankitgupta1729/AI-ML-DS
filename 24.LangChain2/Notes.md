@@ -336,10 +336,30 @@ A: Your last question was "what are the shipping costs?"
 Q: 
 ```
 
-18. 
+18. Now, we create a user interface for the interactive chatbot. We use the `streamlit` which is an open source python library and from this, it is super easy to create interactive web application. First go to `https://docs.streamlit.io/get-started/installation` to get idea of how to install it.
 
+Use `Project1` folder here.
 
+- cd Project1
+- python3 -m venv .venv
+- source .venv/bin/activate
+- pip install -r requirements.txt
 
+Now, run `streamlit run app.py`
+
+19. Run `streamlit run app1.py` and ask questions like `what are the opening hours?` or `what is the return policy?` and `what was my first question?` (to test chat history). 
+
+20. Deployment of the streamlit app:
+
+Follow the doc `https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy` for the instructions.
+
+- Sign-in on `https://share.streamlit.io/` using github.
+- Click on `Create App` in right upper corner.
+- Now, first create a github repo with name `streamlit-chat-app` and add .gitignore also for secrets from .env file.
+- Now, we add `https://github.com/ankitgupta1729/streamlit-chat-app` to streamlit hub and then deploy the app.  
+- Go to `https://share.streamlit.io/deploy` and paste the github URL as `https://github.com/ankitgupta1729/streamlit-chat-app/blob/main/app.py` (app.py is the entrypoint of the application). 
+- Now go to Advanced Settings and put `OPENAI_API_KEY="..."`
+- Save and then deploy and run `https://my-chat-application.streamlit.app/` and ask questions like `what are the opening hours?` or `what is the return policy?` and `what was my first question?` (to test chat history).  
 
 
 
