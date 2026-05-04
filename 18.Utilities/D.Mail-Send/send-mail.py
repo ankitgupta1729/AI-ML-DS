@@ -48,8 +48,8 @@ from email.utils import formataddr
 # =============================================================================
 # CONFIG
 # =============================================================================
-SENDER_EMAIL   = "ankitgupta1729@gmail.com"
-RECEIVER_EMAIL = "Neha.Patel@crowe.com"
+SENDER_EMAIL   = "abc@gmail.com"
+RECEIVER_EMAIL = "xyz@gmail.com"
 SENDER_NAME    = "Ankit"
 
 # >>> IMPORTANT: replace this with your hosted letter.html URL <<<

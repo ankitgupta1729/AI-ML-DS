@@ -361,8 +361,33 @@ Follow the doc `https://docs.streamlit.io/deploy/streamlit-community-cloud/deplo
 - Now go to Advanced Settings and put `OPENAI_API_KEY="..."`
 - Save and then deploy and run `https://my-chat-application.streamlit.app/` and ask questions like `what are the opening hours?` or `what is the return policy?` and `what was my first question?` (to test chat history).  
 
+21. Handle Multiple Retrievers (mulyiple vectorstores) by using query analysis technique to use which vectorstore to use.:
 
+Here we have large documents with multiple resources.
 
+We know that language models are trained on millions of data but they have limited domain knowledge and a cutoff date. Using query analysis we can take multiple data sources and multiple retrievers and use the best one for the query. 
+
+Create `Project2` folder here in `LangChain2` folder and follow steps as:
+
+- cd Project2
+- python3 -m venv .venv
+- source .venv/bin/activate
+- pip install -r requirements.txt
+
+- Now, first run `python3 main.py` and get the output as:
+
+```
+🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/24.LangChain2/Project2 on  main [ ✱2 ?96  ] 🐍 (.venv) 🐍  v3.14.2 
+╰─ python3 main.py
+Ankush worked at Facebook
+
+```
+
+22.  Now, we see how to use Query Analysis to handle multiple data sources and then select which data source and which retrieval to use. In this setup, we use function calling that gives the language model the ability to make decisions based on the user query and the context. It can be used for routing also to handle multiple data sources.  
+
+Using `Pydantic`, format of the data can be defined.
+
+Here, we format every output after querying with a query and the Person.
 
 
 
