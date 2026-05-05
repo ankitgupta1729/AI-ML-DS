@@ -1,0 +1,25 @@
+MongoDB Atlas security best practices focus on protecting access, encrypting data,
+and reducing exposure of your database deployment.
+
+Atlas requires authentication and authorization for database access. Use strong
+database users, least privilege access, and role based access control.
+
+Atlas encrypts data in transit with TLS and encrypts data at rest by default.
+
+Atlas IP access lists help restrict which client networks can connect to your
+cluster. Private endpoints and network peering can further reduce public
+exposure.
+
+Audit logs and monitoring help track database activity and detect unusual access
+patterns.
+
+Backups and point in time recovery help protect data from operational mistakes
+or unexpected failures.
+
+Security best practices for MongoDB Atlas include:
+- enable strong authentication
+- restrict IP access
+- use least privilege roles
+- enable encryption in transit and at rest
+- monitor and audit access
+- configure backups and recovery

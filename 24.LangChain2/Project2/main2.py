@@ -1,6 +1,7 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
+from langchain_core.runnables import chain
 from langchain_text_splitters import CharacterTextSplitter, RecursiveCharacterTextSplitter
 from langchain_core.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -35,7 +36,7 @@ prompt = ChatPromptTemplate.from_messages(
         ("human", "{question}"),
     ]
 )
-structured_llm = llm_function_calling.with_structured_output(Search)
+structured_llm = llm_function_calling.with_structured_output(Search, method="function_calling")
 query_analyzer = {"question": RunnablePassthrough()} | prompt | structured_llm
 
 structured_output = query_analyzer.invoke({"question": "Where did Harrison work?"})
@@ -56,3 +57,23 @@ docs=vectorstore.similarity_search("Who worked at Facebook?")
 #print(docs[0].page_content)
 
 # Retrieval with query analysis
+
+retrievers = {
+    "HARRISON": retriever_harrison,
+    "ANKUSH": retriever_ankush,
+}
+
+@chain 
+def custom_chain(question):
+    structured_output = query_analyzer.invoke({"question": question})
+    # LLM may return different casing (e.g., "Ankush" vs "ANKUSH").
+    person_key = structured_output.person.strip().upper()
+    retriever = retrievers.get(person_key)
+    if retriever is None:
+        raise KeyError(
+            f"Unknown person={structured_output.person!r}. Expected one of: {', '.join(sorted(retrievers))}"
+        )
+    return retriever.invoke(structured_output.query)
+
+response = custom_chain.invoke("Where did Ankush work?") 
+print(response[0].page_content)
