@@ -517,6 +517,377 @@ Answer: The security best practices for MongoDB Atlas include:
 These practices focus on protecting access, encrypting data, and reducing exposure of your database deployment.
 ```
 
-28. 
+28. Interact with the NoSQL Database(MongoDB):
 
+Now, we use the Atlas Vector Search as `retriever` to allow the similarity search.
+
+Run the script `python3 main1.py` and get the output as:
+
+```
+╭─🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/24.LangChain2/Project3 on  main [ ✱1 ?95  ] 🐍 (.venv) 🐍  v3.14.2 
+╰─ python3 main1.py
+Connected to MongoDB Atlas
+['elearning', 'admin', 'local']
+page_content='MongoDB Atlas security best practices focus on protecting access, encrypting data,\nand reducing exposure of your database deployment.' metadata={'source': './atlas_security_notes.txt'}
+The security best practices for MongoDB Atlas include enabling strong authentication, restricting IP access, using least privilege roles, and enabling encryption in transit and at rest.
+```
+
+29. LLM Fine-Tuning with OpenAI tools and functions:
+
+The OpenAI tools allows to create agents with specific functions meaning that we can use multiple agents with multiple tools and actions in our application. 
+
+By using tools, we give the abilities to agents to query data from two different sources of information for example, vector search index and web search. 
+
+Use `Project4` folder to implement this.
+
+Here, we use a tool to find the length of a word. Refer `agent.py` for it.
+
+When we create our own agent, we need to provide a list of tools that it can use. Tools consist of several components:
+
+- name(str)
+- description(str)
+- args_schema(Pydantic BaseModel)
+
+We also need docstrings for tool decorator(@tool). So, decorator use the function's docstring as the tool's description. It MUST bee provided otherwise we get an error. Language model looks for this information/description to understand its purpose and use of a particular tool.
+
+Now, run `python3 agent.py` and get the output as:
+
+```
+🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/24.LangChain2/Project4 on  main [ ✱1 ?103  ] 🐍 (.venv) 🐍  v3.14.2 
+╰─ python3 agent.py
+Connected to MongoDB Atlas
+page_content='MongoDB Atlas security best practices focus on protecting access, encrypting data,\nand reducing exposure of your database deployment.' metadata={'source': './atlas_security_notes.txt'}
+/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/24.LangChain2/Project4/.venv/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:119: LangChainDeprecationWarning: The class `MongoDBAtlasVectorSearch` was deprecated in LangChain 0.0.25 and will be removed in 0.3.0. An updated version of the class exists in the langchain-mongodb package and should be used instead. To use it run `pip install -U langchain-mongodb` and import as `from langchain_mongodb import MongoDBAtlasVectorSearch`.
+  warn_deprecated(
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `vector_search_query` with `{'query': 'Security best practices for MongoDB Atlas'}`
+
+
+Security best practices for MongoDB Atlas include:
+
+- Enable strong authentication
+- Restrict IP access
+- Use least privilege roles
+- Enable encryption in transit and at restSecurity best practices for MongoDB Atlas include enabling strong authentication, restricting IP access, using least privilege roles, and enabling encryption in transit and at rest.
+
+> Finished chain.
+Answer: Security best practices for MongoDB Atlas include enabling strong authentication, restricting IP access, using least privilege roles, and enabling encryption in transit and at rest.
+
+╭─🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/24.LangChain2/Project4 on  main [ ✱1 ?103  ] 🐍 (.venv) 🐍  v3.14.2  took 9s 
+╰─ 
+```
+
+30. Creating the multitask agent:
+
+Here, we use the `web_search.py` to access the web documents and will use the new tool for it in `agent1.py`.
+
+- Before running the script make sure you have connected to cluster on mongodb cluster by adding IP address.
+
+Run the script `python3 agent1.py` and get the output as:
+
+```
+─🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/24.LangChain2/Project4 on  main [ ✱1 ?104  ] 🐍 (.venv) 🐍  v3.14.2  took 21s 
+╰─ python3 agent1.py
+Connected to MongoDB Atlas
+page_content='MongoDB Atlas security best practices focus on protecting access, encrypting data,\nand reducing exposure of your database deployment.' metadata={'source': './atlas_security_notes.txt'}
+/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/24.LangChain2/Project4/.venv/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:119: LangChainDeprecationWarning: The class `MongoDBAtlasVectorSearch` was deprecated in LangChain 0.0.25 and will be removed in 0.3.0. An updated version of the class exists in the langchain-mongodb package and should be used instead. To use it run `pip install -U langchain-mongodb` and import as `from langchain_mongodb import MongoDBAtlasVectorSearch`.
+  warn_deprecated(
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/24.LangChain2/Project4/.venv/lib/python3.14/site-packages/langchain/hub.py:86: DeprecationWarning: The `langchainhub sdk` is deprecated.
+Please use the `langsmith sdk` instead:
+  pip install langsmith
+Use the `pull_prompt` method.
+  res_dict = client.pull_repo(owner_repo_commit)
+
+
+> Entering new AgentExecutor chain...
+
+Invoking: `web_search_query` with `{'query': 'how to create a vector store'}`
+
+
+Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+To create a vector store in MongoDB, you need to pass your data through an embedding model to generate vector embeddings that capture the semantic meaning of your data. These embeddings can then be stored in a MongoDB collection as a field in a document. The dimensions of your vector embeddings are determined by the embedding model you choose, which must be specified in your MongoDB Vector Search index.To create a vector store in MongoDB, follow these general steps:
+
+1. **Generate Vector Embeddings**: Use an embedding model to transform your data into vector embeddings. This process captures the semantic meaning of your data.
+
+2. **Store in MongoDB**: Save these vector embeddings in a MongoDB collection as a field within your documents.
+
+3. **Define Index**: Create a Vector Search index in your MongoDB collection, specifying the dimensions of your vector embeddings based on the embedding model you are using.
+
+Make sure to consult the MongoDB documentation for specific details and examples related to your version and setup.
+
+> Finished chain.
+Answer: To create a vector store in MongoDB, follow these general steps:
+
+1. **Generate Vector Embeddings**: Use an embedding model to transform your data into vector embeddings. This process captures the semantic meaning of your data.
+
+2. **Store in MongoDB**: Save these vector embeddings in a MongoDB collection as a field within your documents.
+
+3. **Define Index**: Create a Vector Search index in your MongoDB collection, specifying the dimensions of your vector embeddings based on the embedding model you are using.
+
+Make sure to consult the MongoDB documentation for specific details and examples related to your version and setup.
+
+╭─🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/24.LangChain2/Project4 on  main [ ✱1 ?104  ] 🐍 (.venv) 🐍  v3.14.2  took 15s 
+╰─ 
+```
+
+- Here we are not using chroma or FAISS etc.
+
+31. LangServe:
+
+LangServe is a library provided by langchain that helps developer deploy Langchain runnables and chains as a REST API or RESTful API.
+
+This library is integrated with FASTAPI and uses pydantic for data validation.
+
+We can install it using `pip install langserve[all]`.
+
+uvicorn is a webserver implementation for python and this is what we used to run the server. 
+
+We use `Project5` folder here.
+
+and create virtual environment using `python3 -m venv .venv` and then activate it using `source .venv/bin/activate` and install required packages using `python3 -m pip install -r requirements.txt`.
+
+- we can start the server using `uvicorn server:app --reload`. Here, `--reload` is used because when any file is changed then server is automatically re-started.
+
+So, in vscode terminal, run `uvicorn server:app --reload` and then in browser go to `http://127.0.0.1:8000/docs`.
+
+We have to use ``pydantic==1.10.13` to use /invoke, /batch and /stream endpoints by-default.
+
+The /invoke, /batch and /stream endpoints will work with pydantic v1 and for that python 3.10 or 3.11 is required. So, create virtual environment with these versions and then use requirements.txt file and then start the server again.
+
+Now, in browser, use `http://127.0.0.1:8000/docs` and go to `invoke` endpoint and in request body, put:
+
+```
+{
+  "input": "Tell me a joke about cats",
+  "config": {},
+  "kwargs": {}
+}
+```
+Now, you get the response as:
+
+```
+{
+  "output": {
+    "content": "Why was the cat sitting on the computer?\n\nBecause it wanted to keep an eye on the mouse!",
+    "additional_kwargs": {},
+    "response_metadata": {
+      "token_usage": {
+        "completion_tokens": 20,
+        "prompt_tokens": 13,
+        "total_tokens": 33,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "model_name": "gpt-3.5-turbo",
+      "system_fingerprint": null,
+      "finish_reason": "stop",
+      "logprobs": null
+    },
+    "type": "ai",
+    "name": null,
+    "id": "run-e21a7667-bfd6-487b-b0c2-1866c0f40660-0",
+    "example": false,
+    "tool_calls": [],
+    "invalid_tool_calls": []
+  },
+  "metadata": {
+    "run_id": "e21a7667-bfd6-487b-b0c2-1866c0f40660",
+    "feedback_tokens": []
+  }
+}
+```
+- For /batch endpoint, put:
+
+```
+{
+  "inputs": [
+    "Tell me a joke about cats",
+    "Tell me a joke about programmers"
+  ],
+  "config": {},
+  "kwargs": {}
+}
+
+```
+
+and you get the response as:
+
+```
+{
+  "output": [
+    {
+      "content": "Why was the cat sitting on the computer? \n\nBecause it wanted to keep an eye on the mouse!",
+      "additional_kwargs": {},
+      "response_metadata": {
+        "token_usage": {
+          "completion_tokens": 21,
+          "prompt_tokens": 13,
+          "total_tokens": 34,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": 0,
+            "audio_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0
+          }
+        },
+        "model_name": "gpt-3.5-turbo",
+        "system_fingerprint": null,
+        "finish_reason": "stop",
+        "logprobs": null
+      },
+      "type": "ai",
+      "name": null,
+      "id": "run-10f6a822-43e1-43af-87c9-43301b079d3f-0",
+      "example": false,
+      "tool_calls": [],
+      "invalid_tool_calls": []
+    },
+    {
+      "content": "Why do programmers prefer dark mode? Because the light attracts bugs!",
+      "additional_kwargs": {},
+      "response_metadata": {
+        "token_usage": {
+          "completion_tokens": 13,
+          "prompt_tokens": 13,
+          "total_tokens": 26,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": 0,
+            "audio_tokens": 0,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": 0
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": 0,
+            "cached_tokens": 0
+          }
+        },
+        "model_name": "gpt-3.5-turbo",
+        "system_fingerprint": null,
+        "finish_reason": "stop",
+        "logprobs": null
+      },
+      "type": "ai",
+      "name": null,
+      "id": "run-fa9a316f-28e6-477d-b1f5-adacb87ea5b8-0",
+      "example": false,
+      "tool_calls": [],
+      "invalid_tool_calls": []
+    }
+  ],
+  "metadata": {
+    "responses": [
+      {
+        "run_id": "10f6a822-43e1-43af-87c9-43301b079d3f",
+        "feedback_tokens": []
+      },
+      {
+        "run_id": "fa9a316f-28e6-477d-b1f5-adacb87ea5b8",
+        "feedback_tokens": []
+      }
+    ],
+    "run_ids": [
+      "10f6a822-43e1-43af-87c9-43301b079d3f",
+      "fa9a316f-28e6-477d-b1f5-adacb87ea5b8"
+    ]
+  }
+}
+```
+
+32. Now, we create more routes with runnables.
+
+Now, restart the server again and you will see the endpoint for `joke` also.
+
+Now, open another terminal and put:
+
+```
+curl --location --request POST 'http://localhost:8000/joke/invoke' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "input": {
+            "topic": "cats"
+        }
+    }'
+```
+
+You will get the output as:
+
+```
+{"output":"Why was the cat sitting on the computer?\n\nBecause it wanted to keep an eye on the mouse!","metadata":{"run_id":"8d571431-6bdc-4938-935f-51f2857d3f6d","feedback_tokens":[]}}
+```
+
+In the joke/invoke endpoint in browser also, you can use:
+
+```
+{
+  "input": {
+    "topic": "honey"
+  },
+  "config": {},
+  "kwargs": {}
+}
+```
+
+33. You can add vector search root also. So, run again the server and go to query/invoke endpoint and ask query as:
+
+```
+{
+  "input": "What are the security best practices for MongoDB Atlas?",
+  "config": {},
+  "kwargs": {}
+}
+
+``` 
+
+You will get the output as: 
+
+```
+{
+  "output": "The security best practices for MongoDB Atlas include:\n- enable strong authentication\n- restrict IP access\n- use least privilege roles\n- enable encryption in transit and at rest",
+  "metadata": {
+    "run_id": "8120ad59-eab2-4d64-ad01-890b72c5bed7",
+    "feedback_tokens": []
+  }
+}
+```
+
+34. `Render(https://render.com/)` is cloud application hosting platform for developers.
+
+It provides an easy way to build, scale and deploy apps in production without hassle.
+
+Create an account on render using github and create web services by pulling github repo.
+
+Use `Project6/RAG-REST-API` folder for deployment here.
+
+- First go to `Project6/RAG-REST-API` location in vscode terminal.
+- then type `git init`
+- Now, go to github and create a remote repo with name as `rag-rest-webservice` with not selecting readme as it is already created locally.
+- Now, type `git add .`
+- Now, type `git commit -m "first commit"`
+- Now, type `git remote add origin https://github.com/ankitgupta1729/rag-rest-webservice.git`
+- Now, at the end, type `git push -u origin main`.
+
+Now, we pull this github repo in render. So, we create a new web service in render. So, go to render and select `New web service` under `Web Service`.
+
+Now, select git provider as github and add your repo there. 
+
+Now, put the start command as `uvicorn main:app --host 0.0.0.0` and then go to Environment variables and put all the things from .env as key-value pair like `OPENAI_API_KEY` as variable name and put its value..
+
+At the end, click on `Deploy Web Service` and at the end after build successful, check the URL displyed on the page by apending `docs` at the end i.e. `https://rag-rest-webservice.onrender.com/docs` with `joke` endpoint and topic as `python developers`.
 
