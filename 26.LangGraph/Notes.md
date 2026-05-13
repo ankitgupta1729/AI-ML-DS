@@ -95,5 +95,10 @@ Run the script as `python3 5.tool_calling/toolnode_manual.py` and see the output
 
 Run the script as `python3 5.tool_calling/toolnode_auto.py` and see the output.
 
-15. 
+15. Agentic RAG:
+
+Run the script as `python3 6.agentic_rag/rag_demo.py` and see the output.
+
+16. Human in the loop:
+
 
