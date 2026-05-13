@@ -146,5 +146,22 @@ Now, run the script as `python3 8.persistent_memory/permanent_memory.py` and see
 
 Also, check the created tables in postgres database where states are stored in the tables.
 
-18. 
+18. Subgraphs:
 
+A subgraph is a graph or workflow of its own which can be used across multiple other graphs. 
+
+It is like encapsulation applied to langgraph. The advantage of subgraphs is: it makes the complex multi-agentic systems simple. 
+
+They offer modularity means we can breakdown complex workflow into smaller simple workflows which can be worked by different teams. It is easy to develop and maintain them.  
+
+It can also provide reusability, testability, clean and better design etc.
+
+There are 2 ways to use in a graph:
+
+We can use subgraph as a node in the big graph if they have common states/keys (`patient_appointment.py`) otherwise we have to invoke subgraph from parent node (`rag_semo.py`).
+
+Run the script as `python3 9.subgraphs/patient_appointment.py` and see the output.
+
+Run the script as `python3 9.subgraphs/rag_demo.py` and see the output.
+
+19. 
