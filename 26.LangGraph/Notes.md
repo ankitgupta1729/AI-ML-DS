@@ -99,6 +99,35 @@ Run the script as `python3 5.tool_calling/toolnode_auto.py` and see the output.
 
 Run the script as `python3 6.agentic_rag/rag_demo.py` and see the output.
 
-16. Human in the loop:
+16. Human in the loop (HITL):
+
+HITL is a pattern where an AI agent pauses its execution to seek human validation, input and decision making etc. for continuing the workflow. 
+
+HITL can be applied for various use cases like:
+
+A. Accept/Reject:
+   - Report to stakehoders: Before the report sent out, it is reviewed by someone in middle and it can be whether accepted or rejected. If it is accepted then the report is sent out by agent and if it is rejected then it will be summarizing again by agent.
+  
+B. Review Tool Calls:
+
+This is where agent comes up various options which needs to be reviewed by human before agent pass it to next node.
+
+C. Fallback when agent is uncertain:
+
+Chatbot is a good example here. If chatbot is not confident to under the user's query from its knowledge base then it asks the user to give certain answer to proceed further.
+
+D. Review and Edit State:
+
+This is where human can review and edit the state of the workflow to proceed with next node.
+
+Here, we see the code and test generation use case for HITL. LLM will generate the code for us and then human will review and then accordingly test cases will be generated.
+
+Here we use `interrupt` and `command` functions from langgraph.
+
+Run the script as `python3 7.hitl/code_generator.py` and see the output.
+
+Run the script as `python3 7.hitl/test_generator1.py` and see the output.
+
+17. 
 
 
