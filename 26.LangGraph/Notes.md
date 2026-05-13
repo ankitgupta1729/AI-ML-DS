@@ -128,6 +128,23 @@ Run the script as `python3 7.hitl/code_generator.py` and see the output.
 
 Run the script as `python3 7.hitl/test_generator1.py` and see the output.
 
-17. 
+17. Long Term Memory (using Postgres):
 
+Earlier we used memory with `checkpointer` using `MemorySaver()` as workflows and it is in-memory only. Once the program execution is done and since it is in-memory so after the program execution is done then the memory is lost. 
+
+For persistence, we use permanent memory. 
+
+We use the Postgres database with `PostgresSaver()` function. 
+
+So, first download and install the Postgres database in your machine with username and password.
+
+For my system, pgadmin 4 v9.9 with `PostgresSQL 18` is installed. So, open it and then create a new database named `langgraph_memory`. Make sure postgres is up and running.
+
+Here, we use postgres as our permanent state store.
+
+Now, run the script as `python3 8.persistent_memory/permanent_memory.py` and see the output.
+
+Also, check the created tables in postgres database where states are stored in the tables.
+
+18. 
 
