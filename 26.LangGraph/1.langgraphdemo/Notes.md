@@ -164,4 +164,42 @@ Run the script as `python3 9.subgraphs/patient_appointment.py` and see the outpu
 
 Run the script as `python3 9.subgraphs/rag_demo.py` and see the output.
 
-19. 
+19. Now, based on the acquired knowledge of langgraph, we will create an app where we give the patient id, treatment code and claim details and bot will say claim should be approved or not and if more info requires then human in the loop or human review comes.
+
+First, go to pgadmin and create a new database with name "claims_db" then expand this database and go to schemas-->tables and then click on query tools and then copy and paste the content of claims.sql file and execute it.
+
+Run the code as `chainlit run app.py --port 8001` from the `10.usecase` folder and see the output after putting the patient id, treatment code and claim details from `test_data.txt` file.
+
+For FASTAPI implementation:
+
+run the code as `uvicorn claim_processing_api:app --reload --port 8001` from the `10.usecase` folder and see the output in `http://127.0.0.1:8001/docs` after putting the patient id, treatment code and claim details from `test_data.txt` file.
+
+20. Agentic Patterns:
+
+These are ready to use blueprints for a problem which we are trying to solve. It enables scalability, modularity and adaptability. 
+
+There can be many agentic patterns like:
+
+A. Reflection: Here agent reviews and improves its own response before the finalization.
+
+Reflection pattern in AI agent is a self-improvement mechanism where an agent generates an initial solution for the given problem. It also reviews and evaluates its own output. It also improves based on the feedback. It repeats this process until stopping criteria is met.
+
+Advantage from Reflection pattern is it enables AI agent to learn from its own mistakes and refine the output iteratively.
+
+For use case, run the script as `python3 11.patterns/reflection_agent.py` and see the output. Here, we have code generation agent.
+
+
+B. Tree of Thoughts: Here, agent explores multiple reasoning paths and selects the best one.   
+
+The Tree of Thought pattern is an AI reasoning pattern where agent generates multiple possible solutions for a given problem. Then it breaks down and evaluates each of those solutions separately and then it ranks and selects the best solution.
+
+For the use case, run the script as `python3 11.patterns/tree_of_thought.py` and see the output. Here we have business expansion strategy agent.
+
+C. Parallel Execution: Here agent performs multiple tasks simultaneously to increase the speed and efficiency.
+
+LangGraph has parallel processing in-built. 
+
+Run the script as `python3 11.patterns/parallel_processing.py` and see the output.
+
+21. 
+

@@ -1,0 +1,11 @@
+langchain
+langgraph
+langchain-openai
+langchain-chroma
+langchain-community
+psycopg[binary]
+chainlit
+python-dotenv
+requests
+fastapi
+uvicorn

@@ -1,0 +1,43 @@
+[
+  {
+    "policy_name": "Gold Plus Health Plan",
+    "procedure_code": "Z12.31",
+    "procedure_name": "Routine Screening Colonoscopy",
+    "coverage": [
+      "Fully approved and covered as preventive care for patients aged 45 years and older.",
+      "No copayment, deductible, or pre-authorization is required for eligible preventive screening.",
+      "Coverage explicitly includes routine colonoscopy once every 12 months for qualifying preventive care."
+    ],
+    "policy_restrictions": [
+      "Only preventive screenings performed more frequently than once per 12 months require additional clinical review."
+    ],
+    "patient_exceptions": [
+      "Patients with documented medical necessity, such as family history of colorectal cancer or high-risk findings, may qualify for earlier or more frequent screening."
+    ]
+  },
+  {
+    "icd_10_code": "M54.5",
+    "definition": "Chronic lower back pain.",
+    "coverage": [
+      "Treatment, including surgery, requires explicit pre-authorization.",
+      "Elective spinal surgery is generally not covered unless medically necessary and supported by clinical documentation."
+    ],
+    "policy_restrictions": [
+      "Procedures performed at facilities previously flagged for fraudulent claims are subject to denial and investigation."
+    ],
+    "patient_exceptions": []
+  },
+  {
+    "cpt_code": "83036",
+    "procedure": "Hemoglobin A1c Test",
+    "insurance_coverage": [
+      "Fully covered twice annually for diabetic patients or those enrolled in chronic disease management programs.",
+      "Additional tests beyond twice annually require explicit physician justification."
+    ],
+    "pre_authorization_required": "No",
+    "exclusions": "Additional A1c tests beyond two per year without physician justification are not covered.",
+    "patient_exceptions": [
+      "Documented cases involving unstable glucose control, medication changes, or other significant changes in diabetic condition may qualify for additional covered testing."
+    ]
+  }
+]
