@@ -1,0 +1,55 @@
+<p>It can either be that a potential client has provided us with a sample of - probably anonymized - company data, or it is completely up to us to create this sample using our intuition and perception of the business domain. Here, we assume that the latter holds. So we need to populate our knowledge base with some synthetic yet meaniningful data records. To do that, we can run the following code (e.g., create a <code>populate_db.py</code> script, paste and run the following code): </p><p><br></p><pre class="prettyprint linenums">import sqlite3
+
+
+def populate_spending_events():
+
+    conn = sqlite3.connect("demo.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+	CREATE TABLE IF NOT EXISTS spending_events (
+		event_id INTEGER PRIMARY KEY AUTOINCREMENT,
+		customer_id INTEGER,
+		plan_name TEXT NOT NULL,
+		billing_start DATE NOT NULL,
+		billing_end DATE NOT NULL,
+		amount_due REAL
+	)
+	"""
+    )
+
+    spending_events = [
+        (1, "Standard Plan", "2024-01-01", "2024-01-31", 50.00),
+        (1, "Standard Plan", "2024-02-01", "2024-02-29", 55.00),
+        (1, "Standard Plan", "2024-03-01", "2024-03-31", 53.00),
+        (1, "Standard Plan", "2024-04-01", "2024-04-30", 52.00),
+        (1, "Standard Plan", "2024-05-01", "2024-05-31", 54.00),
+        (1, "Standard Plan", "2024-06-01", "2024-06-30", 56.00),
+        (1, "Eco Plan", "2024-07-01", "2024-07-31", 58.00),
+        (1, "Eco Plan", "2024-08-01", "2024-08-31", 57.00),
+        (1, "Eco Plan", "2024-09-01", "2024-09-30", 59.00),
+        (1, "Standard Plan", "2024-10-01", "2024-10-31", 60.00),
+        (1, "Standard Plan", "2024-11-01", "2024-11-30", 62.00),
+        (1, "Standard Plan", "2024-12-01", "2024-12-31", 63.00),
+    ]
+
+    cursor.executemany(
+        """
+	INSERT INTO spending_events (
+		customer_id, 
+		plan_name, 
+		billing_start, 
+		billing_end, 
+		amount_due )  
+		VALUES (?, ?, ?, ?, ?)
+		""",
+        spending_events,
+    )
+
+    conn.commit()
+    conn.close()
+
+
+if __name__ == "__main__":
+    populate_spending_events()</pre><p><br></p><p>This script creates an SQLite table called <code>spending_events</code> and populates it with sample billing data for a single customer. Each record includes a customer ID, plan name, billing period (start &amp; end dates), and amount due. </p><p>Note that we opt for a simple scenario. Specifically:</p><ul><li><p>The hypothetical customer is unique (same customer id across all records),</p></li><li><p>The plan they are subsribed to is the "Standard Plan", except for July, June, and August where they went with the "Eco Plan", and </p></li><li><p>The entire period is a year split into 12 months </p></li></ul><p>The decision for such a simplistic data sample is supported by the following two:&nbsp;</p><ul><li><p><strong>Easy to follow scenario</strong>: The simplicity of the data sample helps the potential client easily follow the scenario during the demo session, ensuring they can validate the chatbot's responses without confusion. It’s important that the client can quickly understand how the chatbot is functioning to gain confidence in its reliability.</p></li><li><p><strong>Avoid over-engineering/premature optimization</strong>: Focusing on simplicity allows us to avoid getting caught up in unnecessary complexities or optimizations that don't add immediate value to the Proof of Concept. This keeps the project lean and focused on demonstrating key functionalities, rather than perfecting every detail before it's necessary.</p></li></ul>

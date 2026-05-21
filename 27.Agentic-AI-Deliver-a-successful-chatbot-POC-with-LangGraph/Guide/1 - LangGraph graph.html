@@ -1,0 +1,284 @@
+<p>We begin with some imports</p><p><br></p><pre class="prettyprint linenums">from typing import Optional, TypedDict, Dict, Literal, Callable
+from langchain_core.messages import ToolMessage, HumanMessage
+from langchain_core.runnables import RunnableLambda
+from langgraph.prebuilt import ToolNode
+from langgraph.graph import END, START, StateGraph
+from langgraph.checkpoint.memory import MemorySaver, BaseCheckpointSaver
+from langchain_openai import ChatOpenAI
+import os
+import json
+from copy import deepcopy
+from dotenv import load_dotenv</pre><p><br></p><p>Then we continue with some utility functions. </p><p><br></p><p><strong>Tool error handling </strong></p><p><br></p><pre class="prettyprint linenums">def handle_tool_error(state) -&gt; dict:
+&nbsp; &nbsp; error = state.get("error")
+&nbsp; &nbsp; tool_calls = state["messages"][-1].tool_calls
+&nbsp; &nbsp; return {
+&nbsp; &nbsp; &nbsp; &nbsp; "messages": [
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ToolMessage(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; content=f"Error: {repr(error)}\n please fix your mistakes.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tool_call_id=tc["id"],
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for tc in tool_calls
+&nbsp; &nbsp; &nbsp; &nbsp; ]
+&nbsp; &nbsp; }
+
+
+def create_tool_node_with_fallback(tools: list) -&gt; dict:
+&nbsp; &nbsp; return ToolNode(tools).with_fallbacks(
+&nbsp; &nbsp; &nbsp; &nbsp; [RunnableLambda(handle_tool_error)], exception_key="error"
+&nbsp; &nbsp; )</pre><p><br></p><p>These two methods are crucial for graceful error handling of tools. For example, if the Spending assistant creates an invalid SQL query for the <code>fetch_spending_events</code> tool, then our code will not break. Instead, the assistant will receive a message of the form "Error: sqlite3.OperationalError\n please fix your mistakes.". </p><p><br></p><p><strong>Set scope of Primary assistant after&nbsp; visiting "leave_skill" node</strong></p><p><br></p><pre class="prettyprint linenums">def pop_dialog_state(state) -&gt; dict:
+&nbsp; &nbsp; """
+&nbsp; &nbsp; Pop the dialog stack and return to the main assistant.
+
+&nbsp; &nbsp; This lets the full graph explicitly track the dialog flow and delegate control
+&nbsp; &nbsp; to specific sub-graphs.
+&nbsp; &nbsp; """
+&nbsp; &nbsp; messages = []
+&nbsp; &nbsp; if state["messages"][-1].tool_calls:
+&nbsp; &nbsp; &nbsp; &nbsp; # Note: Doesn't currently handle the edge case where the llm performs parallel tool calls
+&nbsp; &nbsp; &nbsp; &nbsp; messages.append(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ToolMessage(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; content="Resuming dialog with the primary assistant. Please reflect on the past conversation and assist the user as needed.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tool_call_id=state["messages"][-1].tool_calls[0]["id"],
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; return {
+&nbsp; &nbsp; &nbsp; &nbsp; "dialog_state": "pop",
+&nbsp; &nbsp; &nbsp; &nbsp; "messages": messages,
+&nbsp; &nbsp; }
+</pre><p>The above utility function will be useful to us when we want to escape from a specialized workflow. For example, when the Recommendation assistant calls the <code>CompleteOrEscalate</code> tool the conversation will be routed to the "leave_skill" node, according to our previous discussions. The "leave_skill" node has only one egress edge which points to the Primary assistant. However, there is no "entry_*" node for the Primary. The <code>pop_dialog_state</code> function serves this purpose when paired with the "leave_skill" node, by appending a scope-setting tool message in the <code>messages</code> of the <code>state</code>. </p><p><br></p><p><strong>Easy way to create entry nodes </strong></p><p>The code below implements a utility function that creates "entry_*" nodes. This function is agnostic to specific assistants, hence we can reuse it with different arguments to create all of our "entry_*" nodes. </p><p><br></p><pre class="prettyprint linenums">def create_entry_node(assistant_name: str, new_dialog_state: str) -&gt; Callable:
+&nbsp; &nbsp; def entry_node(state: TypedDict) -&gt; dict:
+&nbsp; &nbsp; &nbsp; &nbsp; tool_call_id = state["messages"][-1].tool_calls[0]["id"]
+&nbsp; &nbsp; &nbsp; &nbsp; return {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "messages": [
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ToolMessage(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; content=f"The assistant is now the {assistant_name}. Reflect on the above conversation between the primary assistant and the user."
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; f" The user's intent is unsatisfied. Use the provided tools to assist the user. Remember, you are {assistant_name},"
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " and the identification, resolution, or any other action is not complete until after you have successfully invoked the appropriate tool."
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " If the user changes their mind or needs help for other tasks, call the CompleteOrEscalate function to let the primary assistant take control."
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " Do not mention who you are - just act as the proxy for the assistant.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; tool_call_id=tool_call_id,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ],
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "dialog_state": new_dialog_state,
+&nbsp; &nbsp; &nbsp; &nbsp; }
+
+&nbsp; &nbsp; return entry_node</pre><p><br></p><p><strong>Define graph entry nodes</strong></p><p>Sometimes it does not make sense to always start the flow from the Primary assistant. For example, when the user is served by the Spending assistant for some billing inquiries, then we want the user messages to directly enter the graph from the Spending assistant, without needing to pass through the Primary assistant again and again. </p><p>The <code>route_to_workflow</code> function shown below realizes this functionality, effectively defining the <strong>entry nodes</strong> of the graph. </p><p><br></p><pre class="prettyprint linenums">def route_to_workflow(
+&nbsp; &nbsp; state: TypedDict,
+) -&gt; Literal[
+&nbsp; &nbsp; "primary_assistant", 
+&nbsp; &nbsp; "spending_assistant", 
+&nbsp; &nbsp; "recommendation_assistant"
+]:
+&nbsp; &nbsp; """If we are in a delegated state, route directly to the appropriate assistant."""
+&nbsp; &nbsp; dialog_state = state.get("dialog_state")
+&nbsp; &nbsp; if not dialog_state:
+&nbsp; &nbsp; &nbsp; &nbsp; return "primary_assistant"
+&nbsp; &nbsp; return dialog_state[-1]</pre><p><br></p><p><strong>Utility to convert checkpoints </strong></p><p><br></p><pre class="prettyprint linenums">def ckpnt_to_dict(checkpoint: BaseCheckpointSaver) -&gt; Dict:
+&nbsp; &nbsp; """
+&nbsp; &nbsp; Converts a checkpoint to a JSON-compliant dictionary.
+&nbsp; &nbsp; """
+&nbsp; &nbsp; checkpoint_copy = deepcopy(checkpoint)
+
+&nbsp; &nbsp; # Extract messages and transform them
+&nbsp; &nbsp; checkpoint_copy["channel_values"]["messages"] = [
+&nbsp; &nbsp; &nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "type": type(m).__name__,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "content": m.content,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "name": m.name,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "id": m.id,
+&nbsp; &nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; &nbsp; for m in checkpoint["channel_values"]["messages"]
+&nbsp; &nbsp; ]
+
+&nbsp; &nbsp; return checkpoint_copy</pre><p><br></p><p>The above utility extracts messages from a BaseCheckpointSaver object and stores them, along with metadata, in a dictionary. This is useful for saving the state in a json format and then loading it for the next iteration of the graph. </p><p><br></p><p><strong>The Chatbot class</strong></p><p><br></p><pre class="prettyprint linenums">load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+
+
+class ChatBot:
+
+&nbsp; &nbsp; def __init__(self):
+
+&nbsp; &nbsp; &nbsp; &nbsp; self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, api_key=api_key)
+&nbsp; &nbsp; &nbsp; &nbsp; self.checkpoint_saver = MemorySaver()
+&nbsp; &nbsp; &nbsp; &nbsp; self.config = {"configurable": {"thread_id": 0}}
+
+&nbsp; &nbsp; &nbsp; &nbsp; if not os.path.exists("checkpoints"):
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; os.makedirs("checkpoints")
+
+&nbsp; &nbsp; def build_graph(self):
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ---- Define the various assistants of the chatbot ----
+&nbsp; &nbsp; &nbsp; &nbsp; primary_assistant = PrimaryAssistant(self.llm)
+&nbsp; &nbsp; &nbsp; &nbsp; spending_assistant = SpendingAssistant(self.llm)
+&nbsp; &nbsp; &nbsp; &nbsp; recommendation_assistant = RecommendationAssistant(self.llm)
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ---- Specify the state of the LangGraph graph. ----
+&nbsp; &nbsp; &nbsp; &nbsp; builder = StateGraph(ChatbotState)
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ---- Add the nodes and edges of the LangGraph graph. ----
+
+&nbsp; &nbsp; &nbsp; &nbsp; # =====================================================================
+&nbsp; &nbsp; &nbsp; &nbsp; # Primary assistant nodes and edges
+&nbsp; &nbsp; &nbsp; &nbsp; # =====================================================================
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Add the primary assistant node.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node("primary_assistant", primary_assistant)
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Tools are placed within tool nodes.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "primary_assistant_tools",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; create_tool_node_with_fallback(primary_assistant.tools),
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Add conditional edges to enable routing to either i) spending assistant, ii) recommendation assistant, iii) tool node (for tool calling), or iv) END node (directly respond to the user).
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_conditional_edges(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "primary_assistant",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; primary_assistant.route_primary_assistant, &nbsp;# function to determine routing logic
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "enter_spending",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "enter_recommendation",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "primary_assistant_tools",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; END,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ],
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Add an edge between the tool node and the primary assistant to enable the assistant access the messages of its tools.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_edge("primary_assistant_tools", "primary_assistant")
+
+&nbsp; &nbsp; &nbsp; &nbsp; # =====================================================================
+&nbsp; &nbsp; &nbsp; &nbsp; # Spending assistant nodes and edges
+&nbsp; &nbsp; &nbsp; &nbsp; # =====================================================================
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Add the 'enter' node (this sets the scope for second level assistants).
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "enter_spending",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; create_entry_node("spending_assistant", "spending_assistant"),
+&nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; # Add the spending assistant node.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node("spending_assistant", spending_assistant)
+&nbsp; &nbsp; &nbsp; &nbsp; # Connect the enter node to the spending assistant node.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_edge("enter_spending", "spending_assistant")
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Add node for the tools of the spending assistant.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "spending_assistant_tools",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; create_tool_node_with_fallback(spending_assistant.tools),
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Edge from tools to assistant.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_edge("spending_assistant_tools", "spending_assistant")
+
+&nbsp; &nbsp; &nbsp; &nbsp; # The spending assistant can either i) call one of its tools, ii) trigger CompleteOrEscalate and delegate back to the primary assistant, or iii) respond directly to the user.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_conditional_edges(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "spending_assistant",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; spending_assistant.route_non_primary_assistants,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "spending_assistant_tools",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "leave_skill",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; END,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ],
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # =====================================================================
+&nbsp; &nbsp; &nbsp; &nbsp; # Recommendation assistant nodes and edges
+&nbsp; &nbsp; &nbsp; &nbsp; # =====================================================================
+
+&nbsp; &nbsp; &nbsp; &nbsp; # Similar to spending assistant.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "enter_recommendation",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; create_entry_node("recommendation_assistant", "recommendation_assistant"),
+&nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node("recommendation_assistant", recommendation_assistant)
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_edge("enter_recommendation", "recommendation_assistant")
+
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "recommendation_assistant_tools",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; create_tool_node_with_fallback(recommendation_assistant.tools),
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_edge("recommendation_assistant_tools", "recommendation_assistant")
+
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_conditional_edges(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "recommendation_assistant",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; recommendation_assistant.route_non_primary_assistants,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "recommendation_assistant_tools",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "leave_skill",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; END,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ],
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ---- From secondary assistant to 'leave_skill' then to primary. ----
+&nbsp; &nbsp; &nbsp; &nbsp; # Update state since we leave a secondary assistant.
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_node("leave_skill", pop_dialog_state)
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_edge("leave_skill", "primary_assistant")
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ---- Allow persistence in specialized assistants. ----
+&nbsp; &nbsp; &nbsp; &nbsp; builder.add_conditional_edges(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; START,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; route_to_workflow,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ["primary_assistant", "spending_assistant", "recommendation_assistant"],
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ---- Compile the graph. ----
+
+&nbsp; &nbsp; &nbsp; &nbsp; self.graph = builder.compile(checkpointer=self.checkpoint_saver)
+&nbsp; &nbsp; &nbsp; &nbsp; # Draw the graph and inspect if it seems correct.
+&nbsp; &nbsp; &nbsp; &nbsp; self.graph.get_graph().draw_mermaid_png(output_file_path="chatbot_graph.png")</pre><p><br></p><p>The code above implements our Chatbot class. </p><p><br></p><p>The <code>build_graph</code> function is effectively where we define our graph. Detailed comments in the code will help you go through the code and understand how everything sticks together. For reference, below is the figure of the previous lecture where we were discussing the various assistants and their routing logic:&nbsp;</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2025-02-21_14-40-06-570ebed6ff3aea8d9b055d0611c3575a.png"></figure><p><br></p><p>Running the <code>self.graph.get_graph().draw_mermaid_png(output_file_path="chatbot_graph.png") </code> will produce a figure like the one below:&nbsp;</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2025-02-21_14-40-06-f61a9fa2d94247816c8988821f9c915f.png"></figure><p><br></p><p>You can see the resemblance between the two graphs. The "__start__" node is a trivial node whose only purpose is to route user inputs towards the various entry points of the graph, depending on which assistant responded to the user last. </p><p><br></p><p><strong>How to run it</strong></p><p>To run the above, append the following code to your script and run it:&nbsp;</p><p><br></p><pre class="prettyprint linenums">if __name__ == "__main__":
+
+&nbsp; &nbsp; from colorama import Fore, init
+
+&nbsp; &nbsp; init(autoreset=True)
+
+&nbsp; &nbsp; chatbot = ChatBot()
+&nbsp; &nbsp; chatbot.build_graph()
+
+&nbsp; &nbsp; print("Chatbot initialized. Type 'exit' to end the chat.")
+
+&nbsp; &nbsp; while True:
+&nbsp; &nbsp; &nbsp; &nbsp; user_input = input("User: ")
+&nbsp; &nbsp; &nbsp; &nbsp; if user_input.lower() == "exit":
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print("Chatbot session ended.")
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; break
+
+&nbsp; &nbsp; &nbsp; &nbsp; for s in chatbot.graph.stream(
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {"messages": [HumanMessage(content=user_input, name="user")]},
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; config=chatbot.config,
+&nbsp; &nbsp; &nbsp; &nbsp; ):
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if "__end__" not in s:
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print("-" * 50)
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; print(Fore.LIGHTMAGENTA_EX + f"Internal graph message: {s}")
+
+&nbsp; &nbsp; &nbsp; &nbsp; checkpoint = chatbot.checkpoint_saver.get(chatbot.config)
+&nbsp; &nbsp; &nbsp; &nbsp; id = checkpoint["ts"].split(".")[0]
+&nbsp; &nbsp; &nbsp; &nbsp; id = id.replace(":", "-") &nbsp;# windows does not allow colons in file names
+&nbsp; &nbsp; &nbsp; &nbsp; chatbot.checkpoint_file = os.path.join("checkpoints", f"{id}.json")
+&nbsp; &nbsp; &nbsp; &nbsp; checkpoint_dict = ckpnt_to_dict(checkpoint)
+&nbsp; &nbsp; &nbsp; &nbsp; checkpoint_data = json.dumps(checkpoint_dict, ensure_ascii=False)
+
+&nbsp; &nbsp; &nbsp; &nbsp; with open(chatbot.checkpoint_file, "w", encoding="utf-8") as f:
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; json.dump(checkpoint_dict, f, ensure_ascii=False)
+
+&nbsp; &nbsp; &nbsp; &nbsp; bot_reply = (
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; chatbot.graph.get_state(config=chatbot.config)
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .values["messages"][-1]
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .content
+&nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; print("\n")
+&nbsp; &nbsp; &nbsp; &nbsp; print("-" * 50)
+&nbsp; &nbsp; &nbsp; &nbsp; print(Fore.CYAN + f"Chatbot: {bot_reply}")
+&nbsp; &nbsp; &nbsp; &nbsp; print("-" * 50)
+&nbsp; &nbsp; &nbsp; &nbsp; print("\n")</pre><p><br></p><p><strong>Run it without OpenAI</strong></p><p>If you do not have an OpenAI key, yet you have access to an ollama server (e.g., locally), then simply replace the Chatbot's LLM with:&nbsp;<br></p><pre class="prettyprint linenums">from langchain_ollama import ChatOllama
+
+
+class ChatBot:
+
+&nbsp; &nbsp; def __init__(self):
+
+        self.llm = ChatOllama(
+            base_url="the ollama url goes here, e.g., http://localhost:11434",
+            model="the name of an LLM in your ollama server, e.g., llama3.1:8b",
+            #&nbsp;more settings here...
+        )
+
+&nbsp; &nbsp; &nbsp; &nbsp; # ...</pre><p><br></p>

@@ -1,0 +1,71 @@
+<p>In this lecture we will implement our three assistants, namely the Primary, the Spending, and the Recommendation assistant. </p><p><br></p><p><strong>Base Assistant class</strong></p><p>We start with a base assistant class which will be inherited by all assistants. </p><p><br></p><pre class="prettyprint linenums">from langchain_core.runnables import Runnable, RunnableConfig
+from langgraph.prebuilt import tools_condition
+from langgraph.graph import END
+
+class Assistant:
+    """Base assistant class which will be inherited by other assistants."""
+
+    def __init__(self, runnable: Runnable, name: str, tools: list):
+        self.runnable = runnable
+        self.name = name
+        self.tools = tools
+
+    def __call__(self, state: ChatbotState, config: RunnableConfig):
+        while True:
+            result = self.runnable.invoke(state)
+
+            if not result.tool_calls and (
+                not result.content
+                or isinstance(result.content, list)
+                and not result.content[0].get("text")
+            ):
+                messages = state["messages"] + [("user", "Respond with a real output.")]
+                state = {**state, "messages": messages}
+            else:
+                break
+        return {"messages": result}
+
+    def route_non_primary_assistants(self, state: ChatbotState):
+        route = tools_condition(state)
+        if route == END:
+            return END
+        tool_calls = state["messages"][-1].tool_calls
+        did_cancel = any(tc["name"] == CompleteOrEscalate.__name__ for tc in tool_calls)
+        if did_cancel:
+            return "leave_skill"
+        return f"{self.name}_tools"</pre><p><br></p><p>To initialize an instance of the Assistant class, we need to specify: </p><p>1) A Runnable, which in our case will be an LLM interface that implements the <code>invoke</code> method (example: <code>ChatOpenAI</code> or <code>ChatOllama</code>), </p><p>2) A string name of the assistant (example: <code>"spending_asst"</code>) </p><p>3) A list of LangGraph tools, implemented either as functions or classes, as we discussed in the corresponding lecture (example: <code>[fetch_spending_events, CompleteOrEscalate]</code>).</p><p><br></p><p>The <code>__call__()</code> method basically returns only the meaningful output of the LLM that powers the assistant. That is, there will be conversation states where invoking the assistant's LLM will result in responses with empty content (e.g., when calling tools), and it makes no sense to communicate these to the end user. However, notice that the <code>state</code> is still updated to keep track of the changes in the dialog context.&nbsp; </p><p><br></p><p>To better understand the <code>route_non_primary_assistant</code>, we first need to clarify two things about a LangGraph graph: </p><p>1) First, there is a special type of node called <code>END</code> node that indicates that a message is addressed to the user.</p><p>2) Second, tool sets in LangGraph are stored in dedicated nodes. In order for an assistant to access a tool, it has to interact with the corresponding tool node. </p><p>The figure below illustrates our graph based on the above remarks (focus on the Spending and the Recommendation assistants, i.e., the non-primary assistants of the graph for now):</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2025-02-21_12-20-36-747e41b8db371978b0bf6f55902c0545.png"></figure><p><br></p><p>Both Spending and Recommendation assistant have three conditional edges (dashed arrows), meaning that they can route to three nodes conditionally. These are: </p><p>1)&nbsp;the END node, meaning that the assistant will respond to the user,</p><p>2) the tool node (i.e., "Tools of Spending asst" and "Tools of Recommendation asst" respectively), meaning that the assistant decides to call one of its tools, and</p><p>3) the "leave_skill" node, which is a special node visited after the <code>CompleteOrEscalate</code> tool is called to escape from the current workflow. Notice that once the flow reaches the "leave_skill" node, then it can only go towards the Primary assistant. This is a behavior that we want, so that the Primary assistant can decide whether to end the conversation or re-route to a different assistant. </p><p>With these in mind, we can understand better the <code>route_non_primary_assistants</code> method now. First, we get the <code>route</code> variable from the <code>tools_condition()</code> function. The <code>route</code> variable will either be "__end__" or "tools", depending on whether the assistant deems that they should respond directly to the user or if they have to call a tool (and hence access their tool node). Also, from the last message stored in the <code>ChatbotState</code> we check if the <code>CompleteOrEscalate</code> tool has been called, to enable the assistant to route towards the "leave_skill" node. </p><p><br></p><p>With the above in mind, let's proceed to the implementation of the Spending and the Recommendation assistant. </p><p><br></p><p><strong>Spending and Recommendation assistants</strong></p><p><br></p><pre class="prettyprint linenums">class SpendingAssistant(Assistant):
+    """Spending/billing assistant class."""
+
+    def __init__(self, llm: Runnable, name="spending_assistant"):
+        tools = [fetch_spending_events, CompleteOrEscalate]
+        runnable = spending_prompt | llm.bind_tools(tools)
+        super().__init__(runnable=runnable, name=name, tools=tools)
+
+
+class RecommendationAssistant(Assistant):
+    """Plan recommendation assistant class."""
+
+    def __init__(self, llm: Runnable, name="recommendation_assistant"):
+        tools = [list_supported_plans, fetch_plan_description, CompleteOrEscalate]
+        runnable = recommendation_prompt | llm.bind_tools(tools)
+        super().__init__(runnable=runnable, name=name, tools=tools)</pre><p><br></p><p>In the above, notice how we chain the corresponding system prompts of the assistants with the LLM runnable. Note that the latter is binded with the respective assistant tools. As such, each assistant is assigned with a tailored runnable. </p><p><br></p><p><strong>Primary assistant</strong></p><p>For the most part, the Primary assistant is similar to the other two assistants. However, note that the Primary assistant has different routing options compared to the second-level assistants. According to the figure above, the Primary assistant can:</p><p>1) respond to the user directly (END node), </p><p>2) route to the Spending or the Recommendation assistants, or </p><p>3)&nbsp;call any of its tools.</p><p>In fact, recall that we have implemented the <code>ToSpendingAssistant</code> and <code>ToRecommendationAssistant</code> routing tools for the Primary assistant to route between the two distinct workflows. Therefore, 2) and 3) coincide here.</p><p>The routing function of the Primary assistant is shown below: </p><p><br></p><pre class="prettyprint linenums">class PrimaryAssistant(Assistant):
+    """Primary assistant class."""
+
+    def __init__(self, llm: Runnable, name="primary_assistant"):
+        tools = [ToSpendingAssistant, ToRecommendationAssistant]
+        runnable = primary_prompt | llm.bind_tools(tools)
+        super().__init__(runnable=runnable, name=name, tools=tools)
+
+    def route_primary_assistant(self, state: ChatbotState):
+        route = tools_condition(state)
+        if route == END:
+            return END
+        tool_calls = state["messages"][-1].tool_calls
+        if tool_calls:
+            if tool_calls[0]["name"] == ToSpendingAssistant.__name__:
+                return "enter_spending"
+            elif tool_calls[0]["name"] == ToRecommendationAssistant.__name__:
+                return "enter_recommendation"
+            return "primary_assistant_tools"
+        raise ValueError("Invalid route")
+</pre><p><br></p><p>Notice that if the <code>ToSpendingAssistant</code> tool is called, the routing function will return the "enter_spending" node. Similarly, if the <code>ToRecommendationAssistant</code> tool is called, the routing function will return the "enter_recommendation"&nbsp;node. </p><p>But what are these "enter_*" nodes anyway? To answer this, let me show you how the actual LangGraph graph that we will be coding looks like:&nbsp;</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2025-02-21_12-43-05-e6cad51f09c42c97f3d05f0b533a64f1.png"></figure><p><br></p><p>To put it simply, we will interpose an "enter_*" node between the Primary and each second-level assistant. These "enter_*" nodes will have a single purpose: to set the scope and role of each second-level assistant. Without the "enter_*" nodes, and given that each assistant has a view of the entire state and hence the history of messages (including prompts of other assistants, tool callings, Human and AI messages), the assistant might become confused of what its role is within this architecture. So the "enter" nodes always set the correct scope of assistants by communicating a role- and scope-setting message just before the second-level assistant takes control, ensuring that they understand their role and behave as expected. </p><p><br></p><p>With these in place, let's now build the LangGraph graph.</p>

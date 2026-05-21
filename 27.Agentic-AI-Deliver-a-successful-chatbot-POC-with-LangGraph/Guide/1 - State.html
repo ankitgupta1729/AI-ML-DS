@@ -1,0 +1,21 @@
+<p>The notion of "state" in LangGraph is crucial. To get an intuition of the LangGraph state, let's use an illustration:</p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2025-02-20_13-27-58-28ed3520fa089cb7c54ea0b291dee734.png"></figure><p><br></p><p>In the example above, the conversation starts with a simple greeting from the user ("Hi"). This message is addressed to the Primary assistant, which we manually set as default entry node of the graph (we will implement this a few lectures later). </p><p>The Primary assistant then responds with "Hi, how can I assist you today?". This message goes directly to the user. </p><p>The user then responds, "I want information about my bills". Since the last assistant that responded to the user is the Primary assistant, this user's message is still addressed to the Primary assistant. </p><p>The Primary assistant then identifies that this message requires specialized handling by the Spending assistant, and redirects the flow towards it. The Spending assistant processes the user's message and replies "Are you interested in a specific billing period?", to narrow down the scope of the user's question. </p><p>The user then says "The past month". Now this is addressed to the Spending assistant directly and not the Primary assistant any more. That is because the <strong>dialog state changed</strong>. </p><p>Notice how as the conversation continues and the user receives responses from different assistants, the user inputs are addressed directly to these assistants dynamically. </p><p>To implement the above functionality we need to maintain a state object. The code is shown below:</p><p><br></p><pre class="prettyprint linenums">from typing import Annotated, TypedDict, Literal, Optional
+from langgraph.graph.message import AnyMessage, add_messages
+
+def update_dialog_stack(left: list[str], right: Optional[str]) -&gt; list[str]:
+&nbsp; &nbsp; """Push or pop the state."""
+&nbsp; &nbsp; if right is None:
+&nbsp; &nbsp; &nbsp; &nbsp; return left
+&nbsp; &nbsp; if right == "pop":
+&nbsp; &nbsp; &nbsp; &nbsp; return left[:-1]
+&nbsp; &nbsp; return left + [right]
+
+
+class ChatbotState(TypedDict):
+&nbsp; &nbsp; messages: Annotated[list[AnyMessage], add_messages]
+&nbsp; &nbsp; user_info: str
+&nbsp; &nbsp; dialog_state: Annotated[
+&nbsp; &nbsp; &nbsp; &nbsp; list[Literal["primary", "spending", "recommendation"]],
+&nbsp; &nbsp; &nbsp; &nbsp; update_dialog_stack,
+&nbsp; &nbsp; ]
+
+</pre><p><br></p><p>Our custom <code>ChatbotState</code> will be an object that dynamically updates the <code>dialog_state</code> field based on who was the last assistant that replied to the user. Also, it will maintain a <code>messages</code> field that will store all interactions between the user and the various assistants. </p>
