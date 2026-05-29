@@ -122,7 +122,10 @@ Now, commit all the changes in `feature/ci-pipeline` branch in vscode with commi
 
 Now, check the azure devops portal with the `feature/ci-pipeline` branch and see the changes.
 
-10. 
+10.  Before creating the pipeline, we need to merge changes of `feature/ci-pipeline` branch to `main` branch because if we create the pipeline first and then merge the changes to main branch then pipeline would start immediately since there will be an update in the main branch. Now, merge changes of `feature/ci-pipeline` branch to `main` branch without deleting the `feature/ci-pipeline` branch.
+
+
+
 
 
 
