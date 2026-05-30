@@ -124,8 +124,21 @@ Now, check the azure devops portal with the `feature/ci-pipeline` branch and see
 
 10.  Before creating the pipeline, we need to merge changes of `feature/ci-pipeline` branch to `main` branch because if we create the pipeline first and then merge the changes to main branch then pipeline would start immediately since there will be an update in the main branch. Now, merge changes of `feature/ci-pipeline` branch to `main` branch without deleting the `feature/ci-pipeline` branch.
 
+Now, in azure devops portal, In Pipelines, select Pipelines option and click on `Create Pipeline`. Then click on `Azure Repos Git` and select the `DatabricksCICDTutorial` repo. Then in `Configure Your Pipeline`, select `Existing Azure Pipeline YAML file` and then select branch as `main` and Path as `CICD/cicd-pipelines.yml` file and click on `Continue`.
 
+Now, first `Save` the pipeline and don't run it. Now, we have to give certain permissions to this pipeline. Go to `Environments` tab from left side panel, and then select `dev-environment-databricks-cicd` and then from upper right corner, click on three dots and select `Security` and then in `Pipeline permissions`, click on "+" symbol and select `DatabricksCICDTutorial`.
 
+Now, we give permission for pipeline so that it can read variable groups, for that go to `Library` and then select variable group and then from upper side, select `Pipeline permissions` and then in `Pipeline permissions`, click on "+" symbol and select `DatabricksCICDTutorial`.
+
+Also, we need to pipeline permissions to service connection. So, go to `Project Settings` and then click on `Service Connections` and then select `dev-service-connection` and then from three dots, select `Security` and then in `Pipeline permissions`, click on "+" symbol and select `DatabricksCICDTutorial`.
+
+11. Now, to test it, go to databricks workspace and then open `Notebooks` folder and then from main branch, create a new branch `testing-ci-pipeline` and Now, add a new notebook as `testing-ci-notebook` and then Commit and push changes and then create a new pull request from `testing-ci-pipeline` branch to `main` branch in azure devops portal.
+
+Now, go to Azure Devops portal and select `Pipelines` in `Pipelines` tab and then check the status of running pipeline.
+
+[For dev testing, don't use anything related to prod in yaml file]
+
+12. 
 
 
 
