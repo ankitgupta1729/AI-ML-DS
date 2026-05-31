@@ -188,4 +188,3 @@ Now, create a new pull request from `end-to-end-cicd-testing` branch to `main` b
 Now, go to azure devops portal and check the status of running pipeline.
 
 
-
