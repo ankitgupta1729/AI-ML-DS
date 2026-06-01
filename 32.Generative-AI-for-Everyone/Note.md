@@ -27,3 +27,29 @@ Using this we can see the model's capability.
 - Closed Source: These models are accessible via cloud programming interface. It is easy to use in applications. It contains more large/powerful models. Also, these are relatively inexpensive.
 
 - Open Source: Here, we have full control over these models, we don't have to worry if company retire or depricate these models. We can these models on our pc, on-prem etc. Also, we have full control over data privacy/access. 
+
+7. AGI (Artificial General Intelligence):
+
+Definition: AI that can do any intellectual task that a human can do.
+
+Examples:
+
+- Learn to drive a car through ~20 years of practice.
+- Complete a phd thesis after ~5 years of work.
+- Do all the tasks of a computer programmer (or any other knowledge worker)
+
+I think we are many decades away from AGI or even longer.
+
+8. Responsible AI: 
+
+It refers to developing and using AI in a way that ethical, trustworthy and socially responsible.
+
+Dimensions of responsible AI: 
+
+Fairness: Ensuring AI does not perpetuate or amplify biases
+Transparency: Making AI systems and their decisions understandable to stakeholders impacted
+Privacy: Protecting user data and ensure confidentiality
+Security: Safeguard AI systems from malicious attacks
+Ethical Use: Ensuring AI is used for beneficial purposes
+
+9. 
