@@ -1,0 +1,21 @@
+services:
+  api:
+    build: .
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./storage:/app/storage
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        # The frontend talks to /api, which nginx proxies to the api service.
+        VITE_API_BASE: /api
+    ports:
+      - "8080:80"
+    depends_on:
+      - api

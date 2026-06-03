@@ -1,0 +1,29 @@
+# Secrets
+.env
+*.key
+
+# Vector store / generated indexes
+storage/
+*.sqlite3
+
+# User-supplied study material (keep structure, not content)
+data/**
+!data/README.md
+!data/seed/
+!data/seed/**
+!data/**/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
