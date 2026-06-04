@@ -123,6 +123,67 @@ CAPABILITIES_REPLY = (
     "probability.\"*"
 )
 
+# Appended to the system prompt when Socratic tutor mode is on.
+SOCRATIC_ADDENDUM = (
+    "\n\n## Socratic tutor mode (ON)\n"
+    "Do NOT give the final answer immediately. First respond with 1–2 guiding "
+    "hints or a leading question that nudges the student toward the solution. "
+    "Only reveal the full worked solution if the student asks for it, gives an "
+    "answer, or says they're stuck. Keep hints short and encouraging."
+)
+
+
+def language_addendum(language: str) -> str:
+    """System-prompt addendum to answer in a specific language."""
+    return (
+        f"\n\n## Language\nRespond in {language}. Keep technical terms, formulas "
+        "and code in their standard form (usually English), but write all "
+        "explanations in {language}.".replace("{language}", language)
+    )
+
+
+# --- Structured-generation prompts (return strict JSON) -------------------- #
+QUIZ_PROMPT = """You are an expert GATE {exam} examiner. Using the reference \
+material below (which may include real previous-year questions) and your own \
+expert knowledge, create {n} high-quality practice questions on **{subject}** \
+at **{difficulty}** difficulty for the GATE {exam} exam.
+
+Rules:
+- Mix question types: "MCQ" (one correct), "MSQ" (one or more correct), and \
+"NAT" (numerical answer, no options).
+- Each question carries 1 or 2 marks (GATE style).
+- Make them exam-realistic and unambiguous, with a clear correct answer.
+- For MCQ/MSQ provide exactly 4 options. For NAT, options must be an empty list \
+and the answer is the numeric value (as a string).
+- Provide a concise step-by-step explanation for each.
+
+Reference material:
+----- CONTEXT -----
+{context}
+----- END CONTEXT -----
+
+Return ONLY valid JSON (no markdown fences) of the form:
+{{"questions":[{{"type":"MCQ|MSQ|NAT","question":"...","options":["A","B","C","D"],\
+"answer":"B" or ["A","C"] or "3.14","explanation":"...","subject":"{subject}",\
+"difficulty":"{difficulty}","marks":1}}]}}"""
+
+FLASHCARD_PROMPT = """Create {n} concise spaced-repetition flashcards on \
+**{topic}** for GATE {exam} preparation. Each card has a short question/prompt \
+on the front and a crisp, correct answer on the back (include a key formula if \
+relevant). Keep backs under 60 words.
+
+Return ONLY valid JSON (no markdown fences):
+{{"cards":[{{"front":"...","back":"...","subject":"{topic}"}}]}}"""
+
+PLAN_PROMPT = """You are a GATE {exam} mentor. Build a focused day-by-day study \
+plan covering {days} day(s) until the exam, for a student who can study about \
+{hours} hours/day. Prioritise high-weight subjects, mix learning with PYQ \
+practice and revision, and add a light buffer near the end.
+
+Return ONLY valid JSON (no markdown fences):
+{{"summary":"one-line strategy","days":[{{"day":1,"focus":"subject/topic",\
+"tasks":["...","..."],"hours":{hours}}}]}}"""
+
 # Shown when no relevant material is found AND the query looks off-topic.
 OUT_OF_SCOPE_REPLY = (
     f"I'm **{ASSISTANT_NAME}** from {APP_NAME}, focused on Computer Science, "

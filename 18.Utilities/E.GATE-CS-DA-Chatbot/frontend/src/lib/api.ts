@@ -1,4 +1,17 @@
-import type { Attachment, DonePayload, Meta, Role, Source } from "../types";
+import type {
+  Analytics,
+  Attachment,
+  DailyQuestion,
+  DonePayload,
+  Meta,
+  QuizQuestion,
+  QuizResult,
+  ReviewCard,
+  Role,
+  SendOpts,
+  Source,
+  StudyPlan,
+} from "../types";
 
 // In dev the Vite proxy maps /api/* → backend. In production set VITE_API_BASE
 // to the API origin (e.g. https://api.example.com) at build time.
@@ -55,6 +68,7 @@ async function consumeSSE(res: Response, cb: StreamCallbacks): Promise<void> {
               inScope: Boolean(p.in_scope),
               conversationId: (p.conversation_id as string) ?? null,
               messageId: (p.message_id as string) ?? null,
+              confidence: typeof p.confidence === "number" ? p.confidence : 0,
             });
           }
         } catch {
@@ -75,6 +89,7 @@ export async function streamChat(
   conversationId: string | null,
   attachments: Attachment[],
   cb: StreamCallbacks,
+  opts: SendOpts = {},
 ): Promise<void> {
   let res: Response;
   try {
@@ -85,6 +100,8 @@ export async function streamChat(
         question,
         history,
         conversation_id: conversationId,
+        tutor_mode: Boolean(opts.tutorMode),
+        language: opts.language ?? null,
         attachments: attachments.map((a) => ({
           name: a.name,
           mime: a.mime,
@@ -99,6 +116,52 @@ export async function streamChat(
   }
   await consumeSSE(res, cb);
 }
+
+// --- Study suite -------------------------------------------------------- //
+async function postJSON<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`${path} ${res.status}`);
+  return res.json();
+}
+
+async function getJSON<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`);
+  if (!res.ok) throw new Error(`${path} ${res.status}`);
+  return res.json();
+}
+
+export const generateQuiz = (body: {
+  exam: string; subject: string; num: number; difficulty: string; kind: string;
+}) => postJSON<{ ok: boolean; quiz_id: string; questions: QuizQuestion[]; error?: string }>(
+  "/quiz/generate", body,
+);
+
+export const submitQuiz = (quiz_id: string, answers: Record<string, unknown>, duration_sec: number) =>
+  postJSON<QuizResult>("/quiz/submit", { quiz_id, answers, duration_sec });
+
+export const generateFlashcards = (body: { exam: string; topic: string; num: number }) =>
+  postJSON<{ ok: boolean; cards: ReviewCard[]; error?: string }>("/flashcards/generate", body);
+
+export const dueReviews = () => getJSON<{ ok: boolean; items: ReviewCard[] }>("/review/due");
+
+export const gradeReview = (item_id: string, quality: number) =>
+  postJSON<{ ok: boolean }>("/review/grade", { item_id, quality });
+
+export const generatePlan = (body: {
+  exam: string; exam_date: string | null; days: number; hours: number;
+}) => postJSON<{ ok: boolean } & StudyPlan>("/plan/generate", body);
+
+export const getPlan = () => getJSON<{ ok: boolean; plan: StudyPlan | null }>("/plan");
+
+export const getDaily = () => getJSON<DailyQuestion>("/daily");
+
+export const getAnalytics = () => getJSON<Analytics>("/analytics");
+
+export const planCalendarUrl = `${API_BASE}/plan/calendar.ics`;
 
 /** Regenerate a previous assistant answer (steered by any prior feedback). */
 export async function streamRegenerate(

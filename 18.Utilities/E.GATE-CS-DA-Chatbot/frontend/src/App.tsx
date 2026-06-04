@@ -1,25 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import Composer from "./components/Composer";
+import { useCallback, useEffect, useState } from "react";
 import Header from "./components/Header";
-import Message from "./components/Message";
-import Welcome from "./components/Welcome";
-import { ArrowDownIcon } from "./components/icons";
+import Sidebar from "./components/Sidebar";
 import { useChat } from "./hooks/useChat";
 import { useTheme } from "./hooks/useTheme";
-import { fetchMeta } from "./lib/api";
-import type { Meta } from "./types";
+import { fetchMeta, getAnalytics } from "./lib/api";
+import type { Meta, View } from "./types";
+import ChatView from "./views/ChatView";
+import Daily from "./views/Daily";
+import Dashboard from "./views/Dashboard";
+import MockTest from "./views/MockTest";
+import Planner from "./views/Planner";
+import Review from "./views/Review";
 
 export default function App() {
   const { theme, toggle } = useTheme();
-  const { messages, isStreaming, send, stop, clear, regenerate, sendFeedback } =
-    useChat();
+  const chat = useChat();
   const [meta, setMeta] = useState<Meta | null>(null);
   const [connecting, setConnecting] = useState(true);
-  const [showScrollBtn, setShowScrollBtn] = useState(false);
-
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const atBottomRef = useRef(true);
+  const [view, setView] = useState<View>("chat");
+  const [dueCount, setDueCount] = useState(0);
 
   useEffect(() => {
     let alive = true;
@@ -27,94 +26,57 @@ export default function App() {
       .then((m) => alive && setMeta(m))
       .catch(() => {})
       .finally(() => alive && setConnecting(false));
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
 
-  // Only auto-scroll when the user is already near the bottom.
+  // Refresh the "cards due" badge when navigating (cheap, best-effort).
   useEffect(() => {
-    if (atBottomRef.current) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
-  }, [messages]);
+    getAnalytics().then((a) => a?.ok && setDueCount(a.due_reviews)).catch(() => {});
+  }, [view]);
 
-  const onScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const dist = el.scrollHeight - el.scrollTop - el.clientHeight;
-    atBottomRef.current = dist < 120;
-    setShowScrollBtn(dist > 240);
-  };
-
-  const scrollToBottom = () => {
-    atBottomRef.current = true;
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  };
-
-  const hasMessages = messages.length > 0;
+  const askInChat = useCallback(
+    (prompt: string) => {
+      setView("chat");
+      chat.send(prompt);
+    },
+    [chat],
+  );
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 text-slate-900 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
-      {/* Decorative brand glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/15 blur-3xl dark:bg-brand-500/10"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-24 right-0 h-64 w-64 rounded-full bg-accent-500/10 blur-3xl"
-      />
+      <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/10 blur-3xl" />
 
       <Header
         meta={meta}
         theme={theme}
         onToggleTheme={toggle}
-        onClear={clear}
-        hasMessages={hasMessages}
+        onClear={chat.clear}
+        hasMessages={view === "chat" && chat.messages.length > 0}
       />
 
-      <main
-        ref={scrollRef}
-        onScroll={onScroll}
-        className="relative flex-1 overflow-y-auto"
-      >
-        {!hasMessages ? (
-          <Welcome meta={meta} onPick={send} />
-        ) : (
-          <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-6">
-            {messages.map((m, i) => (
-              <Message
-                key={m.id}
-                message={m}
-                isStreaming={isStreaming}
-                isLast={i === messages.length - 1}
-                onRegenerate={() => regenerate(m.id)}
-                onFeedback={(rating, extra) => sendFeedback(m.id, rating, extra)}
-                onFollowUp={send}
-              />
-            ))}
-            <div ref={bottomRef} className="h-1" />
-          </div>
-        )}
+      <div className="flex min-h-0 flex-1">
+        <Sidebar view={view} onSelect={setView} dueCount={dueCount} />
 
-        {showScrollBtn && (
-          <button
-            onClick={scrollToBottom}
-            title="Scroll to latest"
-            className="animate-fade-in-up fixed bottom-28 left-1/2 z-10 grid h-10 w-10 -translate-x-1/2 place-items-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg transition hover:text-brand-600 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300"
-          >
-            <ArrowDownIcon width={18} height={18} />
-          </button>
-        )}
-      </main>
-
-      <Composer
-        onSend={send}
-        onStop={stop}
-        isStreaming={isStreaming}
-        disabled={connecting && !meta}
-      />
+        <main className="min-w-0 flex-1">
+          {view === "chat" && (
+            <ChatView
+              meta={meta}
+              connecting={connecting}
+              messages={chat.messages}
+              isStreaming={chat.isStreaming}
+              send={chat.send}
+              stop={chat.stop}
+              regenerate={chat.regenerate}
+              sendFeedback={chat.sendFeedback}
+            />
+          )}
+          {view === "mock" && <MockTest />}
+          {view === "review" && <Review />}
+          {view === "planner" && <Planner />}
+          {view === "dashboard" && <Dashboard />}
+          {view === "daily" && <Daily onAsk={askInChat} />}
+        </main>
+      </div>
     </div>
   );
 }

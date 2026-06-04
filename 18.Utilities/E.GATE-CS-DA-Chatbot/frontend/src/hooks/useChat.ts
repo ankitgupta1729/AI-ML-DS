@@ -6,7 +6,13 @@ import {
   type FeedbackInput,
   type HistoryTurn,
 } from "../lib/api";
-import type { Attachment, ChatMessage, DonePayload, Rating } from "../types";
+import type {
+  Attachment,
+  ChatMessage,
+  DonePayload,
+  Rating,
+  SendOpts,
+} from "../types";
 
 const uid = () =>
   `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -64,6 +70,7 @@ export function useChat() {
             sources: p.sources,
             inScope: p.inScope,
             messageId: p.messageId,
+            confidence: p.confidence,
             streaming: false,
           }));
           setIsStreaming(false);
@@ -85,7 +92,7 @@ export function useChat() {
   );
 
   const send = useCallback(
-    (question: string, attachments: Attachment[] = []) => {
+    (question: string, attachments: Attachment[] = [], opts: SendOpts = {}) => {
       const text = question.trim();
       if ((!text && attachments.length === 0) || isStreaming) return;
 
@@ -111,7 +118,9 @@ export function useChat() {
       setMessages((prev) => [...prev, userMsg, botMsg]);
 
       runStream(botId, (cb) =>
-        streamChat(text || "(see attachment)", history, convRef.current, attachments, cb),
+        streamChat(
+          text || "(see attachment)", history, convRef.current, attachments, cb, opts,
+        ),
       );
     },
     [messages, isStreaming, runStream],

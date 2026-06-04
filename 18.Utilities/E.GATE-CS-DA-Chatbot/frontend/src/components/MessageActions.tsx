@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { speak, stopSpeaking } from "../hooks/useSpeech";
 import type { ChatMessage, Rating } from "../types";
 import FeedbackForm from "./FeedbackForm";
 import {
   CheckIcon,
   CopyIcon,
   RegenerateIcon,
+  SpeakerIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "./icons";
@@ -27,6 +29,17 @@ export default function MessageActions({
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+
+  const toggleSpeak = () => {
+    if (speaking) {
+      stopSpeaking();
+      setSpeaking(false);
+    } else {
+      speak(message.content);
+      setSpeaking(true);
+    }
+  };
 
   const copy = async () => {
     try {
@@ -84,6 +97,13 @@ export default function MessageActions({
           className={btn}
         >
           <RegenerateIcon width={15} height={15} />
+        </button>
+        <button
+          onClick={toggleSpeak}
+          title={speaking ? "Stop" : "Read aloud"}
+          className={`${btn} ${speaking ? active : ""}`}
+        >
+          <SpeakerIcon width={15} height={15} />
         </button>
         {message.feedbackSent && message.rating === "up" && (
           <span className="ml-1 text-xs text-emerald-500">Thanks! 🎉</span>

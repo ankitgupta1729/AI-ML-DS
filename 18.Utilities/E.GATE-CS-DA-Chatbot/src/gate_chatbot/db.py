@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -121,6 +121,74 @@ class PreferencePair(Base):
     rejected: Mapped[str] = mapped_column(Text)
     kind: Mapped[str] = mapped_column(String(32))  # 'human_correction'|'regeneration'
     message_id: Mapped[Optional[str]] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class GeneratedQuiz(Base):
+    """A generated quiz held server-side (with answers) until it is submitted."""
+
+    __tablename__ = "generated_quizzes"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_uuid)
+    exam: Mapped[str] = mapped_column(String(8))
+    subject: Mapped[str] = mapped_column(String(80))
+    difficulty: Mapped[str] = mapped_column(String(16))
+    payload_json: Mapped[str] = mapped_column(Text)  # full questions incl answers
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class QuizAttempt(Base):
+    __tablename__ = "quiz_attempts"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_uuid)
+    kind: Mapped[str] = mapped_column(String(16), default="quiz")  # quiz | mock
+    exam: Mapped[str] = mapped_column(String(8), default="CS")
+    subject: Mapped[str] = mapped_column(String(80), default="mixed")
+    score: Mapped[float] = mapped_column(default=0.0)
+    max_score: Mapped[float] = mapped_column(default=0.0)
+    correct: Mapped[int] = mapped_column(default=0)
+    total: Mapped[int] = mapped_column(default=0)
+    accuracy: Mapped[float] = mapped_column(default=0.0)
+    percentile: Mapped[float] = mapped_column(default=0.0)
+    duration_sec: Mapped[int] = mapped_column(default=0)
+    subject_breakdown_json: Mapped[Optional[str]] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class ReviewItem(Base):
+    """A spaced-repetition card (SM-2 scheduled)."""
+
+    __tablename__ = "review_items"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_uuid)
+    front: Mapped[str] = mapped_column(Text)
+    back: Mapped[str] = mapped_column(Text)
+    subject: Mapped[str] = mapped_column(String(80), default="general")
+    source: Mapped[str] = mapped_column(String(24), default="manual")  # manual|quiz|flashcard
+    ease: Mapped[float] = mapped_column(default=2.5)
+    interval: Mapped[int] = mapped_column(default=0)
+    repetitions: Mapped[int] = mapped_column(default=0)
+    due_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+    last_reviewed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class StudyPlan(Base):
+    __tablename__ = "study_plans"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_uuid)
+    exam: Mapped[str] = mapped_column(String(8), default="CS")
+    exam_date: Mapped[Optional[str]] = mapped_column(String(20))
+    content_json: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+class ActivityLog(Base):
+    """One row per day the user was active — powers streaks."""
+
+    __tablename__ = "activity_log"
+
+    day: Mapped[str] = mapped_column(String(10), primary_key=True)  # YYYY-MM-DD
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
 
 
@@ -308,4 +376,159 @@ def stats(db: Session) -> dict:
         "likes": ups,
         "dislikes": downs,
         "preference_pairs": _count(PreferencePair),
+        "quiz_attempts": _count(QuizAttempt),
+        "review_items": _count(ReviewItem),
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Study-suite repository                                                       #
+# --------------------------------------------------------------------------- #
+def save_generated_quiz(db, *, exam, subject, difficulty, questions: list[dict]) -> str:
+    q = GeneratedQuiz(
+        exam=exam, subject=subject, difficulty=difficulty,
+        payload_json=json.dumps(questions),
+    )
+    db.add(q)
+    db.flush()
+    return q.id
+
+
+def load_generated_quiz(db, quiz_id: str) -> list[dict] | None:
+    q = db.get(GeneratedQuiz, quiz_id)
+    if not q:
+        return None
+    try:
+        return json.loads(q.payload_json)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def save_attempt(db, *, kind, exam, subject, scored: dict, duration_sec: int) -> QuizAttempt:
+    a = QuizAttempt(
+        kind=kind, exam=exam, subject=subject,
+        score=scored["score"], max_score=scored["max_score"],
+        correct=scored["correct"], total=scored["total"],
+        accuracy=scored["accuracy"], percentile=scored["percentile"],
+        duration_sec=duration_sec,
+        subject_breakdown_json=json.dumps(scored.get("subject_breakdown", {})),
+    )
+    db.add(a)
+    db.flush()
+    return a
+
+
+def add_review_item(db, *, front, back, subject="general", source="manual",
+                    due_at: datetime | None = None) -> ReviewItem:
+    item = ReviewItem(front=front, back=back, subject=subject, source=source,
+                      due_at=due_at or _now())
+    db.add(item)
+    db.flush()
+    return item
+
+
+def due_review_items(db, limit: int = 20) -> list[ReviewItem]:
+    return list(db.scalars(
+        select(ReviewItem).where(ReviewItem.due_at <= _now())
+        .order_by(ReviewItem.due_at).limit(limit)
+    ))
+
+
+def apply_sm2_update(db, item: ReviewItem, *, ease, interval, repetitions, due_in_days) -> None:
+    item.ease = ease
+    item.interval = interval
+    item.repetitions = repetitions
+    item.due_at = _now() + timedelta(days=int(due_in_days))
+    item.last_reviewed_at = _now()
+    db.flush()
+
+
+def save_plan(db, *, exam, exam_date, content: dict) -> StudyPlan:
+    p = StudyPlan(exam=exam, exam_date=exam_date, content_json=json.dumps(content))
+    db.add(p)
+    db.flush()
+    return p
+
+
+def latest_plan(db) -> dict | None:
+    p = db.scalars(select(StudyPlan).order_by(StudyPlan.created_at.desc()).limit(1)).first()
+    if not p:
+        return None
+    try:
+        content = json.loads(p.content_json)
+    except Exception:  # noqa: BLE001
+        content = {}
+    return {"exam": p.exam, "exam_date": p.exam_date, "created_at": p.created_at.isoformat(), **content}
+
+
+def log_activity(db, day: str | None = None) -> None:
+    day = day or date.today().isoformat()
+    if not db.get(ActivityLog, day):
+        db.add(ActivityLog(day=day))
+        db.flush()
+
+
+def current_streak(db) -> int:
+    days = set(db.scalars(select(ActivityLog.day)).all())
+    if not days:
+        return 0
+    streak = 0
+    cur = date.today()
+    # Allow the streak to count from today or yesterday (today not yet active).
+    if cur.isoformat() not in days:
+        cur = cur - timedelta(days=1)
+        if cur.isoformat() not in days:
+            return 0
+    while cur.isoformat() in days:
+        streak += 1
+        cur -= timedelta(days=1)
+    return streak
+
+
+def analytics(db) -> dict:
+    attempts = list(db.scalars(select(QuizAttempt).order_by(QuizAttempt.created_at.desc())))
+    n = len(attempts)
+    avg_acc = round(sum(a.accuracy for a in attempts) / n, 3) if n else 0.0
+    avg_pct = round(sum(a.percentile for a in attempts) / n, 1) if n else 0.0
+
+    # Aggregate subject accuracy across all attempts.
+    agg: dict[str, dict] = {}
+    for a in attempts:
+        try:
+            sb = json.loads(a.subject_breakdown_json or "{}")
+        except Exception:  # noqa: BLE001
+            sb = {}
+        for s, b in sb.items():
+            bucket = agg.setdefault(s, {"correct": 0, "total": 0})
+            bucket["correct"] += int(b.get("correct", 0))
+            bucket["total"] += int(b.get("total", 0))
+    by_subject = {
+        s: {**b, "accuracy": round(b["correct"] / b["total"], 3) if b["total"] else 0.0}
+        for s, b in agg.items()
+    }
+    streak = current_streak(db)
+    due = db.scalar(
+        select(func.count()).select_from(ReviewItem).where(ReviewItem.due_at <= _now())
+    ) or 0
+    weak = sorted(
+        [(s, b["accuracy"]) for s, b in by_subject.items() if b["total"] and b["accuracy"] < 0.6],
+        key=lambda x: x[1],
+    )
+    return {
+        "attempts": n,
+        "avg_accuracy": avg_acc,
+        "avg_percentile": avg_pct,
+        "streak": streak,
+        "due_reviews": int(due),
+        "review_items": db.scalar(select(func.count()).select_from(ReviewItem)) or 0,
+        "by_subject": by_subject,
+        "weak_areas": [s for s, _ in weak],
+        "recent": [
+            {
+                "kind": a.kind, "subject": a.subject, "score": a.score,
+                "max_score": a.max_score, "accuracy": a.accuracy,
+                "percentile": a.percentile, "at": a.created_at.isoformat(),
+            }
+            for a in attempts[:8]
+        ],
     }

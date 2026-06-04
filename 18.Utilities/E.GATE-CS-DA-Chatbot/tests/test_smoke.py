@@ -59,6 +59,64 @@ def test_dedupe_by_id_collapses_identical_chunks():
     assert [d.metadata["chunk_id"] for d in unique] == ["a", "b"]
 
 
+def test_extract_json_handles_fences_and_noise():
+    from gate_chatbot.study import extract_json
+
+    assert extract_json('```json\n{"a": 1}\n```') == {"a": 1}
+    assert extract_json('Here you go: [1, 2, 3] cheers') == [1, 2, 3]
+    assert extract_json("not json at all") is None
+
+
+def test_sm2_progression():
+    from gate_chatbot.study import sm2
+
+    # A failed recall resets repetitions and schedules tomorrow.
+    bad = sm2(quality=1, repetitions=4, ease=2.5, interval=30)
+    assert bad["repetitions"] == 0 and bad["interval"] == 1
+
+    # Successful recalls grow the interval and keep ease >= 1.3.
+    s1 = sm2(quality=5, repetitions=0, ease=2.5, interval=0)
+    assert s1["interval"] == 1 and s1["repetitions"] == 1
+    s2 = sm2(quality=5, repetitions=s1["repetitions"], ease=s1["ease"], interval=s1["interval"])
+    assert s2["interval"] == 6
+    s3 = sm2(quality=4, repetitions=s2["repetitions"], ease=s2["ease"], interval=s2["interval"])
+    assert s3["interval"] > 6 and s3["ease"] >= 1.3
+
+
+def test_score_quiz_gate_negative_marking():
+    from gate_chatbot.study import score_quiz
+
+    questions = [
+        {"id": "0", "type": "MCQ", "options": ["a", "b", "c", "d"], "answer": 1,
+         "marks": 1, "subject": "algorithms"},
+        {"id": "1", "type": "MCQ", "options": ["a", "b", "c", "d"], "answer": 2,
+         "marks": 2, "subject": "os"},
+        {"id": "2", "type": "MSQ", "options": ["a", "b", "c", "d"], "answer": [0, 2],
+         "marks": 2, "subject": "dbms"},
+        {"id": "3", "type": "NAT", "options": [], "answer": "3.14",
+         "marks": 1, "subject": "maths"},
+    ]
+    answers = {"0": 1, "1": 0, "2": [0, 2], "3": "3.14"}  # q1 wrong MCQ (2 mark)
+    r = score_quiz(questions, answers)
+    # +1 (q0) -2/3 (q1) +2 (q2) +1 (q3) = 3.333…
+    assert r["correct"] == 3
+    assert abs(r["score"] - (1 - 2 / 3 + 2 + 1)) < 0.01
+    assert r["max_score"] == 6
+    assert 0 <= r["percentile"] <= 100
+    assert "os" in r["subject_breakdown"]
+
+
+def test_score_quiz_no_negative_for_msq_nat():
+    from gate_chatbot.study import score_quiz
+
+    questions = [
+        {"id": "0", "type": "MSQ", "options": ["a", "b"], "answer": [0], "marks": 2, "subject": "x"},
+        {"id": "1", "type": "NAT", "options": [], "answer": "5", "marks": 1, "subject": "y"},
+    ]
+    r = score_quiz(questions, {"0": [0, 1], "1": "9"})  # both wrong
+    assert r["score"] == 0.0  # no negative marking on MSQ/NAT
+
+
 def test_db_feedback_and_preference_flow(tmp_path):
     pytest.importorskip("sqlalchemy")
     from gate_chatbot import db
@@ -89,3 +147,38 @@ def test_db_feedback_and_preference_flow(tmp_path):
         prefs = db.export_preferences(sess)
         assert len(prefs) == 1 and prefs[0]["chosen"] == "right"
         assert db.stats(sess)["dislikes"] == 1
+
+
+def test_db_study_flow():
+    pytest.importorskip("sqlalchemy")
+    from gate_chatbot import db
+    from gate_chatbot.study import score_quiz
+
+    db._engine = None
+    db._SessionLocal = None
+    db.init_db(Settings(OPENAI_API_KEY="test", DATABASE_URL="sqlite:///:memory:"))
+
+    questions = [
+        {"id": "0", "type": "MCQ", "options": ["a", "b"], "answer": 0, "marks": 1,
+         "subject": "algorithms", "explanation": "because a"},
+        {"id": "1", "type": "MCQ", "options": ["a", "b"], "answer": 1, "marks": 1,
+         "subject": "os", "explanation": "because b"},
+    ]
+    scored = score_quiz(questions, {"0": 0, "1": 0})  # q1 wrong
+
+    with db.session() as sess:
+        qid = db.save_generated_quiz(sess, exam="CS", subject="mixed",
+                                     difficulty="medium", questions=questions)
+        assert db.load_generated_quiz(sess, qid)
+        db.save_attempt(sess, kind="quiz", exam="CS", subject="mixed",
+                        scored=scored, duration_sec=42)
+        db.add_review_item(sess, front="q", back="a", subject="os", source="quiz")
+        db.log_activity(sess)
+        sess.commit()
+
+    with db.session() as sess:
+        assert db.current_streak(sess) >= 1
+        assert len(db.due_review_items(sess)) == 1
+        a = db.analytics(sess)
+        assert a["attempts"] == 1 and a["review_items"] == 1
+        assert "os" in a["by_subject"]

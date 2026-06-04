@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { useSpeechInput } from "../hooks/useSpeech";
 import type { Attachment } from "../types";
-import { DocIcon, PaperclipIcon, SendIcon, StopIcon, XIcon } from "./icons";
+import DrawCanvas from "./DrawCanvas";
+import { DocIcon, MicIcon, PaperclipIcon, PenIcon, SendIcon, StopIcon, XIcon } from "./icons";
 
 interface Props {
   onSend: (text: string, attachments: Attachment[]) => void;
@@ -37,8 +39,12 @@ export default function Composer({
   const [text, setText] = useState("");
   const [files, setFiles] = useState<Attachment[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [drawing, setDrawing] = useState(false);
   const ref = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const voice = useSpeechInput((t) =>
+    setText((prev) => (prev ? prev + " " : "") + t),
+  );
 
   useEffect(() => {
     const el = ref.current;
@@ -97,7 +103,21 @@ export default function Composer({
     }
   };
 
+  const addDrawing = (dataUrl: string) => {
+    if (files.length >= MAX_FILES) {
+      setError(`You can attach up to ${MAX_FILES} files.`);
+    } else {
+      setFiles((prev) => [
+        ...prev,
+        { name: `sketch-${Date.now()}.png`, mime: "image/png", data: dataUrl, isImage: true },
+      ]);
+    }
+    setDrawing(false);
+  };
+
   return (
+    <>
+      {drawing && <DrawCanvas onSave={addDrawing} onClose={() => setDrawing(false)} />}
     <div className="border-t border-slate-200/70 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/60">
       <div className="mx-auto max-w-4xl px-4 py-3">
         {files.length > 0 && (
@@ -154,6 +174,28 @@ export default function Composer({
           >
             <PaperclipIcon width={19} height={19} />
           </button>
+          <button
+            onClick={() => setDrawing(true)}
+            disabled={disabled || files.length >= MAX_FILES}
+            title="Draw / sketch a question"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-brand-600 disabled:opacity-40 dark:text-slate-400 dark:hover:bg-white/10"
+          >
+            <PenIcon width={18} height={18} />
+          </button>
+          {voice.supported && (
+            <button
+              onClick={voice.toggle}
+              disabled={disabled}
+              title={voice.listening ? "Stop listening" : "Speak your question"}
+              className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl transition disabled:opacity-40 ${
+                voice.listening
+                  ? "animate-pulse bg-brand-500/15 text-brand-600 dark:text-brand-300"
+                  : "text-slate-500 hover:bg-slate-100 hover:text-brand-600 dark:text-slate-400 dark:hover:bg-white/10"
+              }`}
+            >
+              <MicIcon width={18} height={18} />
+            </button>
+          )}
 
           <textarea
             ref={ref}
@@ -197,5 +239,6 @@ export default function Composer({
         </p>
       </div>
     </div>
+    </>
   );
 }
