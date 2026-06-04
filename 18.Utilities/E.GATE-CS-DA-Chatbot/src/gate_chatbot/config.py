@@ -28,6 +28,9 @@ class Settings(BaseSettings):
 
     # --- OpenAI ---------------------------------------------------------
     openai_api_key: str = Field(default="", alias="OPENAI_API_KEY")
+    # Optional: point at any OpenAI-compatible endpoint (local/offline models
+    # such as Ollama, LM Studio, vLLM). Leave blank to use OpenAI's API.
+    openai_base_url: str = Field(default="", alias="OPENAI_BASE_URL")
     chat_model: str = Field(default="gpt-4o-mini", alias="CHAT_MODEL")
     embedding_model: str = Field(
         default="text-embedding-3-small", alias="EMBEDDING_MODEL"

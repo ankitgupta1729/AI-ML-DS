@@ -22,8 +22,10 @@ from .prompts import (
     CONDENSE_PROMPT,
     FAREWELL_REPLY,
     GREETING_REPLY,
+    SOCRATIC_ADDENDUM,
     SYSTEM_PROMPT,
     THANKS_REPLY,
+    language_addendum,
 )
 from .vectorstore import get_vectorstore
 
@@ -84,6 +86,7 @@ class ChatResult:
     answer: str
     sources: list[Source] = field(default_factory=list)
     in_scope: bool = True
+    confidence: float = 0.0  # 0–1, how well the answer is grounded in sources
 
 
 def _format_locator(meta: dict) -> str:
@@ -100,18 +103,23 @@ class ChatEngine:
     def __init__(self, settings: Settings | None = None) -> None:
         self.settings = settings or get_settings()
         self._store = None
+        extra = {}
+        if self.settings.openai_base_url:
+            extra["base_url"] = self.settings.openai_base_url
         self._llm = ChatOpenAI(
             model=self.settings.chat_model,
             temperature=self.settings.temperature,
             max_tokens=self.settings.max_tokens,
             api_key=self.settings.openai_api_key,
             streaming=True,
+            **extra,
         )
-        # A cheap, deterministic model for query reformulation.
+        # A cheap, deterministic model for query reformulation & JSON generation.
         self._condenser = ChatOpenAI(
             model=self.settings.chat_model,
             temperature=0.0,
             api_key=self.settings.openai_api_key,
+            **extra,
         )
 
     @property
@@ -183,8 +191,15 @@ class ChatEngine:
         context: str,
         feedback_hint: str | None = None,
         image_parts: list[str] | None = None,
+        tutor_mode: bool = False,
+        language: str | None = None,
     ) -> list:
-        msgs: list = [SystemMessage(content=SYSTEM_PROMPT)]
+        system = SYSTEM_PROMPT
+        if tutor_mode:
+            system += SOCRATIC_ADDENDUM
+        if language and language.lower() not in ("english", "en"):
+            system += language_addendum(language)
+        msgs: list = [SystemMessage(content=system)]
         for m in history[-8:]:
             if m["role"] == "user":
                 msgs.append(HumanMessage(content=m["content"]))
@@ -218,6 +233,8 @@ class ChatEngine:
         history: list[dict] | None = None,
         feedback_hint: str | None = None,
         attachments: dict | None = None,
+        tutor_mode: bool = False,
+        language: str | None = None,
     ) -> Iterator[str | ChatResult]:
         """Yield answer tokens as they arrive, then a final :class:`ChatResult`.
 
@@ -236,7 +253,7 @@ class ChatEngine:
             if canned is not None:
                 for word in canned.split(" "):
                     yield word + " "
-                yield ChatResult(answer=canned, sources=[], in_scope=True)
+                yield ChatResult(answer=canned, sources=[], in_scope=True, confidence=1.0)
                 return
 
         standalone = self._condense(question, history)
@@ -259,7 +276,8 @@ class ChatEngine:
         context = "\n\n---\n\n".join(context_parts)
 
         messages = self._messages(
-            standalone or question, history, context, feedback_hint, image_parts
+            standalone or question, history, context, feedback_hint, image_parts,
+            tutor_mode=tutor_mode, language=language,
         )
         parts: list[str] = []
         try:
@@ -275,17 +293,40 @@ class ChatEngine:
 
         answer = "".join(parts).strip()
         sources = self._build_sources(docs, scores) if in_scope else []
-        yield ChatResult(answer=answer, sources=sources, in_scope=in_scope)
+        confidence = round(min(max(best, 0.0), 1.0), 2)
+        yield ChatResult(
+            answer=answer, sources=sources, in_scope=in_scope, confidence=confidence
+        )
+
+    # ------------------------------------------------------------------ #
+    # Structured generation (quizzes, flashcards, study plans)           #
+    # ------------------------------------------------------------------ #
+    def generate_json(self, prompt: str) -> str:
+        """Call the model for a structured (JSON) response. Returns raw text."""
+        return self._condenser.invoke(prompt).content or ""
+
+    def retrieve_context(self, query: str, k: int = 4) -> str:
+        """Return formatted top-k context for grounding generation (best-effort)."""
+        try:
+            scored = self.store.similarity_search_with_relevance_scores(query, k=k)
+        except Exception:  # noqa: BLE001
+            return ""
+        return "\n\n---\n\n".join(d.page_content for d, _ in scored)
 
     def chat(
         self,
         question: str,
         history: list[dict] | None = None,
         attachments: dict | None = None,
+        tutor_mode: bool = False,
+        language: str | None = None,
     ) -> ChatResult:
         """Non-streaming convenience wrapper."""
         result: ChatResult | None = None
-        for item in self.stream(question, history, attachments=attachments):
+        for item in self.stream(
+            question, history, attachments=attachments,
+            tutor_mode=tutor_mode, language=language,
+        ):
             if isinstance(item, ChatResult):
                 result = item
         assert result is not None

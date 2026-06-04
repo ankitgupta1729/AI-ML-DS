@@ -1,5 +1,7 @@
 export type Role = "user" | "assistant";
 
+export type View = "chat" | "mock" | "review" | "planner" | "dashboard" | "daily";
+
 export type Rating = "up" | "down" | null;
 
 export interface Attachment {
@@ -30,6 +32,102 @@ export interface ChatMessage {
   rating?: Rating;
   feedbackSent?: boolean;
   attachments?: Attachment[];
+  confidence?: number;
+}
+
+export interface SendOpts {
+  tutorMode?: boolean;
+  language?: string | null;
+}
+
+// --- Study suite -------------------------------------------------------- //
+export type QType = "MCQ" | "MSQ" | "NAT";
+
+export interface QuizQuestion {
+  id: string;
+  type: QType;
+  question: string;
+  options: string[];
+  marks: number;
+  subject: string;
+}
+
+export interface QuizResultItem {
+  id: string;
+  type: QType;
+  question: string;
+  options: string[];
+  your_answer: unknown;
+  correct_answer: unknown;
+  is_correct: boolean;
+  awarded: number;
+  marks: number;
+  explanation: string;
+  subject: string;
+}
+
+export interface QuizResult {
+  ok: boolean;
+  attempt_id?: string;
+  score: number;
+  max_score: number;
+  correct: number;
+  answered: number;
+  total: number;
+  accuracy: number;
+  percentile: number;
+  subject_breakdown: Record<string, { correct: number; total: number; accuracy: number }>;
+  results: QuizResultItem[];
+  weak_areas: string[];
+  review_cards_created: number;
+}
+
+export interface ReviewCard {
+  id: string;
+  front: string;
+  back: string;
+  subject: string;
+  repetitions?: number;
+}
+
+export interface PlanDay {
+  day: number;
+  focus: string;
+  tasks: string[];
+  hours: number;
+}
+
+export interface StudyPlan {
+  summary: string;
+  days: PlanDay[];
+  exam?: string;
+  exam_date?: string | null;
+}
+
+export interface Analytics {
+  ok: boolean;
+  attempts: number;
+  avg_accuracy: number;
+  avg_percentile: number;
+  streak: number;
+  due_reviews: number;
+  review_items: number;
+  readiness: number;
+  by_subject: Record<string, { correct: number; total: number; accuracy: number }>;
+  weak_areas: string[];
+  recent: {
+    kind: string; subject: string; score: number; max_score: number;
+    accuracy: number; percentile: number; at: string;
+  }[];
+}
+
+export interface DailyQuestion {
+  ok: boolean;
+  date: string;
+  topic: string;
+  question: string;
+  hint: string;
+  streak: number;
 }
 
 export interface Meta {
@@ -47,4 +145,5 @@ export interface DonePayload {
   inScope: boolean;
   conversationId: string | null;
   messageId: string | null;
+  confidence: number;
 }

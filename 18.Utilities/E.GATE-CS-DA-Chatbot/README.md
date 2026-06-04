@@ -52,6 +52,25 @@ rendering**, and a beautiful **React + Tailwind** interface.
   of a wrong retrieval-driven answer; clearly off-topic questions are politely
   declined.
 - **GateOverflow look** — the familiar "GO + red ?" wordmark and brand colours.
+
+### 🧪 Study suite (beyond chat)
+
+A full GATE preparation workspace, navigable from the sidebar:
+
+- **Mock Test & Practice** — LLM-generated MCQ/MSQ/NAT, **server-scored with GATE
+  negative marking**, estimated percentile, per-question explanations. Wrong
+  answers auto-become flashcards.
+- **Flashcards & Spaced Repetition** — **SM-2** scheduling; generate cards on any
+  topic or review the ones created from your mistakes.
+- **Study Planner** — a day-by-day plan to your exam date; **export to calendar
+  (.ics)**.
+- **Performance Dashboard** — readiness score, accuracy by subject, weak-area
+  detection, percentile and streak.
+- **Daily question + streaks** — a question of the day with a hint and a habit streak.
+- **Socratic tutor mode**, **multilingual answers** (Hindi & more), **voice in/out**
+  (Web Speech), **draw/sketch a question**, and a **confidence (grounding) meter**
+  on every answer.
+- **Local/offline model** support via `OPENAI_BASE_URL` (Ollama/LM Studio/vLLM).
 - **PYQ practice mode** — ask for previous-year questions by exam (GATE CS / DA,
   ISRO, NIELIT, UGC-NET, TIFR), get step-by-step solutions, and ask follow-ups.
 - **Feedback → RLHF loop** — every turn and rating is persisted; a disliked
@@ -141,22 +160,40 @@ python scripts/ingest.py --stats    # how many chunks are indexed?
 > take a few minutes and consume OpenAI credits. Subsequent runs skip unchanged
 > files automatically (manifest-based incremental indexing).
 
-### 4. Run the API
+### 4. Run the app
+
+The app has **two parts** that must BOTH be running: the **API** (port 8000) and
+the **frontend** (port 5173). You open the **frontend** in the browser.
+
+#### Option A — one command (recommended)
 
 ```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+make dev          # or:  bash scripts/dev.sh
 ```
 
-### 5. Run the frontend
+This starts the API **and** the frontend together (installing frontend deps on
+first run). Then open **<http://localhost:5173>**. Press `Ctrl+C` to stop both.
+
+#### Option B — two terminals (manual)
 
 ```bash
+# Terminal 1 — backend API (keep it running)
+source .venv/bin/activate
+uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+
+# Terminal 2 — frontend (keep it running)
 cd frontend
-npm install
+npm install        # first time only
 npm run dev
 ```
 
-Open <http://localhost:5173> — the dev server proxies `/api` → the FastAPI
-backend on port 8000. Start asking GATE questions. 🎉
+Now open **<http://localhost:5173>** — the dev server proxies `/api` → the API on
+port 8000. Start asking GATE questions. 🎉
+
+> ⚠️ **Seeing nothing at http://localhost:5173?**
+> That URL is the **frontend** — it only works while `npm run dev` (Terminal 2 /
+> `make dev`) is running. Running only `uvicorn` starts just the API; the API
+> itself lives at <http://localhost:8000/docs>, **not** 5173.
 
 ---
 
@@ -172,6 +209,15 @@ backend on port 8000. Start asking GATE questions. 🎉
 | POST   | `/regenerate/stream`   | Regenerate an answer, steered by prior feedback      |
 | GET    | `/export/preferences`  | Download the RLHF preference dataset as JSONL        |
 | GET    | `/admin/stats`         | Conversation / message / feedback counters           |
+| POST   | `/quiz/generate`       | Generate a quiz/mock test (questions sent without answers) |
+| POST   | `/quiz/submit`         | Score with GATE negative marking; returns explanations + analytics |
+| POST   | `/flashcards/generate` | Generate spaced-repetition cards on a topic          |
+| GET    | `/review/due`          | Cards due for review (SM-2)                          |
+| POST   | `/review/grade`        | Grade a card (0–5) → reschedule with SM-2            |
+| POST   | `/plan/generate`       | Generate a day-by-day study plan                     |
+| GET    | `/plan` · `/plan/calendar.ics` | Latest plan (JSON) / calendar export         |
+| GET    | `/daily`               | Question of the day + streak                         |
+| GET    | `/analytics`           | Readiness score, accuracy by subject, weak areas     |
 
 ```bash
 curl -s http://localhost:8000/chat \

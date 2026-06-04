@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GateOverflow Chatbot — Wireframe &amp; UX Spec</title>
+<style>
+  :root{
+    --bg:#0b1220; --panel:#0f172a; --line:rgba(255,255,255,.1);
+    --txt:#e2e8f0; --mut:#94a3b8; --red:#dc2626; --red2:#e11d48; --green:#22c55e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:linear-gradient(180deg,#020617,#0b1220);color:var(--txt);
+    line-height:1.55;padding:40px 28px 80px}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:30px;font-weight:900;letter-spacing:-.5px}
+  h1 .go{background:linear-gradient(90deg,#f87171,#e11d48);-webkit-background-clip:text;
+    background-clip:text;color:transparent}
+  .lede{color:var(--mut);margin:8px 0 4px;max-width:780px}
+  .meta{color:#64748b;font-size:13px}
+  h2{font-size:18px;margin:42px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:10px}
+  h2 .n{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;
+    background:rgba(220,38,38,.15);color:#f87171;font-size:13px;font-weight:800}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .tag{font-size:12px;border:1px solid var(--line);border-radius:9999px;padding:5px 12px;color:var(--mut)}
+  .tag b{color:#f87171}
+  .screens{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:22px}
+  .screen{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);
+    box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  .sc-head{display:flex;align-items:center;gap:8px;padding:9px 13px;border-bottom:1px solid var(--line);
+    background:rgba(2,6,23,.5)}
+  .sc-head .dots{display:flex;gap:5px}.dots i{width:9px;height:9px;border-radius:50%;background:#334155;display:block}
+  .sc-head .t{font-size:12px;color:var(--mut);margin-left:6px}
+  .frame{padding:14px;min-height:300px;position:relative}
+  .label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.4px;margin:14px 0 6px}
+  .bar{display:flex;align-items:center;gap:9px;padding:8px;border:1px solid var(--line);border-radius:12px;background:rgba(2,6,23,.4)}
+  .logo{width:30px;height:30px;border-radius:9px;background:#1e293b;border:1px solid var(--line);
+    display:grid;place-items:center;font:900 13px Arial;color:#fff;position:relative}
+  .logo::after{content:'?';position:absolute;top:-5px;right:5px;color:var(--red);font:700 14px Georgia;transform:rotate(9deg)}
+  .ttl{font-weight:800;font-size:13px;color:#fff}.sub{font-size:10.5px;color:var(--mut)}
+  .ubub{align-self:flex-end;max-width:80%;background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;
+    padding:8px 11px;border-radius:14px 14px 3px 14px;font-size:12.5px}
+  .bbub{max-width:88%;background:rgba(2,6,23,.5);border:1px solid var(--line);padding:9px 12px;
+    border-radius:14px 14px 14px 3px;font-size:12.5px;color:#dbeafe}
+  .conv{display:flex;flex-direction:column;gap:9px;margin-top:10px}
+  .row{display:flex;gap:8px}.row.u{justify-content:flex-end}
+  .mini-logo{width:26px;height:26px;border-radius:8px;background:#1e293b;border:1px solid var(--line);
+    display:grid;place-items:center;font:900 11px Arial;color:#fff;position:relative;flex:0 0 auto}
+  .mini-logo::after{content:'?';position:absolute;top:-4px;right:4px;color:var(--red);font:700 11px Georgia}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .chip{font-size:10.5px;border:1px solid var(--line);border-radius:9999px;padding:3px 9px;color:#cbd5e1}
+  .chip.red{border-color:rgba(220,38,38,.4);color:#fca5a5}
+  .acts{display:flex;gap:5px;margin-top:8px}
+  .acts span{width:24px;height:24px;border:1px solid var(--line);border-radius:7px;display:grid;place-items:center;font-size:11px;color:var(--mut)}
+  .acts span.on{color:#f87171;border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.12)}
+  .composer{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;
+    padding:8px 10px;margin-top:12px;background:rgba(2,6,23,.4)}
+  .composer .ph{flex:1;color:#64748b;font-size:11.5px}
+  .composer .clip,.composer .snd{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:12px}
+  .composer .clip{color:var(--mut);border:1px solid var(--line)}
+  .composer .snd{background:linear-gradient(135deg,#dc2626,#e11d48);color:#fff}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .card{border:1px solid var(--line);border-radius:11px;padding:9px;font-size:11px}
+  .card b{color:#f87171;font-size:10px;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:3px}
+  .src{border:1px solid var(--line);border-radius:10px;padding:7px 9px;font-size:10.5px;color:var(--mut);margin-top:8px}
+  .src .nm{color:#fff;font-weight:600}
+  .pill{font-size:9px;border-radius:9999px;padding:1px 6px}
+  .pill.s{background:rgba(220,38,38,.15);color:#f87171}.pill.m{background:rgba(34,197,94,.15);color:#4ade80;margin-left:4px}
+  .thumb{width:64px;height:46px;border-radius:8px;border:1px solid var(--line);
+    background:linear-gradient(135deg,#334155,#1e293b);display:grid;place-items:center;font-size:9px;color:#cbd5e1}
+  .fb{border:1px solid var(--line);border-radius:10px;padding:9px;margin-top:8px;font-size:11px}
+  .rchip{display:inline-block;font-size:10px;border:1px solid var(--line);border-radius:9999px;padding:2px 8px;margin:0 4px 4px 0;color:#cbd5e1}
+  .rchip.on{border-color:var(--red);background:rgba(220,38,38,.12);color:#fca5a5}
+  .navrail{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+  .nav{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--mut);padding:6px 9px;border-radius:9px}
+  .nav.on{background:linear-gradient(90deg,rgba(220,38,38,.18),rgba(225,29,72,.08));color:#fca5a5;font-weight:600}
+  .opt{border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:11px;color:#cbd5e1;margin-top:5px}
+  .opt.ok{border-color:#22c55e;background:rgba(34,197,94,.12);color:#bbf7d0}
+  .kgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+  .k{border:1px solid var(--line);border-radius:10px;padding:8px}
+  .k .n{font-size:18px;font-weight:900;color:#fff}.k .l{font-size:9.5px;color:var(--mut)}
+  .ann{list-style:none;margin-top:14px;display:grid;gap:8px}
+  .ann li{display:flex;gap:10px;font-size:13px;color:#cbd5e1}
+  .ann .pin{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:rgba(220,38,38,.18);
+    color:#f87171;font-size:11px;font-weight:800;display:grid;place-items:center}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px}
+  .step{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:rgba(2,6,23,.4);min-width:120px}
+  .step .k2{font-size:11px;color:#f87171;font-weight:700}.step .v{font-size:11.5px;color:var(--mut)}
+  .arr{color:#f87171;font-weight:800}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:rgba(220,38,38,.1);color:#fff}
+  code{background:rgba(220,38,38,.14);color:#fecaca;padding:1px 6px;border-radius:5px;font-size:12px}
+  .note{margin-top:18px;border:1px dashed var(--line);border-radius:12px;padding:14px;color:var(--mut);font-size:13px}
+  .note b{color:#f87171}
+  @media print{body{background:#fff;color:#111}.screen,.note{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1><span class="go">GateOverflow Chatbot</span> — Wireframe &amp; UX Spec</h1>
+  <p class="lede">Wireframe of the GATE CS &amp; DA study platform — chat plus a full
+    study suite (mock tests, flashcards, planner, dashboard, daily). Brand mark:
+    bold <b>“GO”</b> with a red question mark; accent colour GateOverflow red (#dc2626).</p>
+  <p class="meta">Open in any browser · Print → Save as PDF · Import to Figma with the
+    “html.to.design” plugin (File → Import) for editable layers.</p>
+
+  <div class="legend">
+    <span class="tag"><b>Primary</b> #dc2626</span>
+    <span class="tag"><b>Accent</b> #e11d48</span>
+    <span class="tag">Surface #0f172a</span>
+    <span class="tag">Text #e2e8f0 / muted #94a3b8</span>
+    <span class="tag">Type: Inter</span>
+    <span class="tag">Radius 12–18px</span>
+    <span class="tag">Dark + Light themes</span>
+  </div>
+
+  <h2><span class="n">1</span> Core screens</h2>
+  <div class="screens">
+
+    <!-- Welcome + nav -->
+    <div class="screen">
+      <div class="sc-head"><div class="dots"><i></i><i></i><i></i></div><span class="t">Workspace · sidebar + welcome</span></div>
+      <div class="frame">
+        <div class="bar"><div class="logo">GO</div><div><div class="ttl">GateOverflow Chatbot</div><div class="sub">Your AI study buddy for GATE CS &amp; DA</div></div></div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <div class="navrail" style="flex:0 0 96px">
+            <div class="nav on">💬 Chat</div><div class="nav">📝 Mock</div><div class="nav">🃏 Cards</div>
+            <div class="nav">🗓️ Plan</div><div class="nav">📊 Stats</div><div class="nav">🔥 Daily</div>
+          </div>
+          <div style="flex:1">
+            <div class="grid2">
+              <div class="card"><b>📝 PYQ practice</b>Solve a GATE CS PYQ.</div>
+              <div class="card"><b>🧠 Quiz me</b>5 MCQs, scored.</div>
+              <div class="card"><b>Explain</b>Conflict serializability.</div>
+              <div class="card"><b>Strategy</b>Last-30-days plan.</div>
+            </div>
+          </div>
+        </div>
+        <div class="composer"><span class="clip">📎</span><span class="ph">Ask anything · 🎙️ voice · ✏️ sketch</span><span class="snd">➤</span></div>
+      </div>
+    </div>
+
+    <!-- Conversation -->
+    <div class="screen">
+      <div class="sc-head"><div class="dots"><i></i><i></i><i></i></div><span class="t">Conversation · answer + citations</span></div>
+      <div class="frame">
+        <div class="conv">
+          <div class="row u"><div class="ubub">Explain merge sort complexity.</div></div>
+          <div class="row"><div class="mini-logo">GO</div><div class="bbub">
+            Merge sort is <b>O(n log n)</b> — splits in half, merges in linear time.
+            <div class="src">📄 <span class="nm">cs_core_concepts.md</span> <span class="pill s">computer_science</span><span class="pill m">91%</span></div>
+            <div class="acts"><span>⧉</span><span>👍</span><span>👎</span><span>↻</span><span>🔊</span></div>
+          </div></div>
+        </div>
+        <div class="chips"><span class="chip">Explain step by step</span><span class="chip">Similar PYQ</span><span class="chip">Why correct?</span></div>
+      </div>
+    </div>
+
+    <!-- Attachment -->
+    <div class="screen">
+      <div class="sc-head"><div class="dots"><i></i><i></i><i></i></div><span class="t">Attachments · image / PDF / sketch</span></div>
+      <div class="frame">
+        <div class="conv">
+          <div class="row u" style="align-items:flex-end"><div class="thumb">🖼️ question</div><div class="ubub">Solve the question in this image.</div></div>
+          <div class="row"><div class="mini-logo">GO</div><div class="bbub">Using Cayley’s formula, K₄ has 4² = <b>16</b> spanning trees ✅</div></div>
+        </div>
+        <div class="composer"><span class="clip">📎</span><span class="ph">Attach images / PDFs · or ✏️ draw…</span><span class="snd">➤</span></div>
+      </div>
+    </div>
+
+    <!-- Feedback / RLHF -->
+    <div class="screen">
+      <div class="sc-head"><div class="dots"><i></i><i></i><i></i></div><span class="t">Feedback · dislike form (RLHF)</span></div>
+      <div class="frame">
+        <div class="conv">
+          <div class="row"><div class="mini-logo">GO</div><div class="bbub">…worst-case quicksort is O(n log n).
+            <div class="acts"><span>⧉</span><span>👍</span><span class="on">👎</span><span>↻</span><span>🔊</span></div>
+            <div class="fb"><div style="color:#cbd5e1;font-weight:600;margin-bottom:6px">What went wrong?</div>
+              <span class="rchip on">Incorrect</span><span class="rchip">Incomplete</span><span class="rchip">Not helpful</span>
+              <div style="color:#64748b;margin-top:5px">+ Suggest a better answer → preference pair</div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mock test -->
+    <div class="screen">
+      <div class="sc-head"><div class="dots"><i></i><i></i><i></i></div><span class="t">Mock test · MCQ/MSQ/NAT + scoring</span></div>
+      <div class="frame">
+        <div style="font-size:11px;color:var(--mut)">Q3 · MCQ · 2 marks · Algorithms ⏱ 4:12</div>
+        <div style="font-size:12.5px;color:#fff;margin-top:4px">T(n)=2T(n/2)+n solves to:</div>
+        <div class="opt">A. Θ(n)</div>
+        <div class="opt ok">✓ Θ(n log n)</div>
+        <div class="opt">C. Θ(n²)</div>
+        <div class="chips"><span class="chip red">Score 7.3/10</span><span class="chip">96.4 pc</span><span class="chip">−1/3 wrong MCQ</span></div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="screen">
+      <div class="sc-head"><div class="dots"><i></i><i></i><i></i></div><span class="t">Dashboard · analytics</span></div>
+      <div class="frame">
+        <div class="kgrid">
+          <div class="k" style="background:linear-gradient(135deg,#dc2626,#e11d48);border:none"><div class="n">78</div><div class="l" style="color:#fff">Readiness</div></div>
+          <div class="k"><div class="n">82%</div><div class="l">Avg accuracy</div></div>
+          <div class="k"><div class="n">94.1</div><div class="l">Avg percentile</div></div>
+          <div class="k"><div class="n">12🔥</div><div class="l">Streak</div></div>
+        </div>
+        <div class="src" style="margin-top:8px">⚠ Weak areas: Computer Networks, Probability · accuracy bars by subject</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2><span class="n">2</span> Annotated layout (conversation screen)</h2>
+  <ul class="ann">
+    <li><span class="pin">1</span><div><b>Header</b> — GO brand mark, app name + tagline, live status (indexed chunks &amp; model), theme toggle, clear chat.</div></li>
+    <li><span class="pin">2</span><div><b>Sidebar</b> — navigate Chat · Mock Test · Flashcards · Planner · Dashboard · Daily (with a due-cards badge).</div></li>
+    <li><span class="pin">3</span><div><b>User message</b> — right-aligned red gradient bubble; shows attached image thumbnails / file chips.</div></li>
+    <li><span class="pin">4</span><div><b>Assistant message</b> — GO avatar + bubble; Markdown, KaTeX maths, code; streams token-by-token; grounding-confidence meter.</div></li>
+    <li><span class="pin">5</span><div><b>Source cards</b> — expandable: file, page/slide, subject tag, % match.</div></li>
+    <li><span class="pin">6</span><div><b>Action bar</b> — copy · 👍 · 👎 · ↻ regenerate · 🔊 read-aloud.</div></li>
+    <li><span class="pin">7</span><div><b>Follow-up chips</b> — contextual one-click prompts.</div></li>
+    <li><span class="pin">8</span><div><b>Composer</b> — auto-grow textarea, 📎 attach, ✏️ sketch, 🎙️ voice, Socratic toggle &amp; language select; Enter sends.</div></li>
+  </ul>
+
+  <h2><span class="n">3</span> Primary user flows</h2>
+  <div class="flow">
+    <div class="step"><div class="k2">Ask</div><div class="v">type / speak / attach</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Retrieve</div><div class="v">Chroma top-k</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Generate</div><div class="v">stream answer</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Cite</div><div class="v">sources + confidence</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Act</div><div class="v">rate / follow-up</div></div>
+  </div>
+  <div class="flow" style="margin-top:12px">
+    <div class="step"><div class="k2">Quiz</div><div class="v">generate</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Score</div><div class="v">GATE rules + percentile</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Flashcards</div><div class="v">wrong → SM-2</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Dashboard</div><div class="v">readiness + weak areas</div></div>
+  </div>
+  <div class="flow" style="margin-top:12px">
+    <div class="step"><div class="k2">👎 Dislike</div><div class="v">reason + comment</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">↻ Regenerate</div><div class="v">steered by feedback</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Preference pair</div><div class="v">(prompt, chosen, rejected)</div></div><span class="arr">→</span>
+    <div class="step"><div class="k2">Export JSONL</div><div class="v">DPO / reward model</div></div>
+  </div>
+
+  <h2><span class="n">4</span> Component inventory</h2>
+  <table>
+    <tr><th>Component</th><th>File</th><th>Notes</th></tr>
+    <tr><td>Header / Sidebar</td><td><code>Header.tsx</code> / <code>Sidebar.tsx</code></td><td>Brand, status, theme; module navigation.</td></tr>
+    <tr><td>ChatView</td><td><code>views/ChatView.tsx</code></td><td>Messages, Socratic + language controls, composer.</td></tr>
+    <tr><td>Message / Actions</td><td><code>Message.tsx</code>, <code>MessageActions.tsx</code></td><td>Bubbles, attachments, confidence, copy/like/dislike/regenerate/speak.</td></tr>
+    <tr><td>Composer</td><td><code>Composer.tsx</code></td><td>Input, 📎 attach, ✏️ sketch, 🎙️ voice, send/stop.</td></tr>
+    <tr><td>Mock Test</td><td><code>views/MockTest.tsx</code></td><td>Generate → take → server-scored results.</td></tr>
+    <tr><td>Review</td><td><code>views/Review.tsx</code></td><td>SM-2 flashcards; flip &amp; grade.</td></tr>
+    <tr><td>Planner / Dashboard / Daily</td><td><code>views/*.tsx</code></td><td>Plan + .ics, analytics, daily question + streak.</td></tr>
+  </table>
+
+  <div class="note">
+    <b>Responsive:</b> sidebar collapses to icons on mobile; bubbles cap ~85% width; cards reflow to one column; composer sticky. <b>Accessibility:</b> keyboard send, focus rings, semantic buttons, voice in/out, sufficient contrast in both themes.
+  </div>
+
+</div>
+</body>
+</html>

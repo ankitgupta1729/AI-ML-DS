@@ -86,6 +86,21 @@ export default function Message({
           )}
         </div>
 
+        {done && typeof message.confidence === "number" && message.confidence > 0 && (
+          <div className="mt-1.5 flex items-center gap-2">
+            <span className="text-[11px] text-slate-400">Grounding</span>
+            <span className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-200 dark:bg-white/10">
+              <span
+                className="block h-full rounded-full bg-gradient-to-r from-brand-500 to-accent-500"
+                style={{ width: `${Math.round(message.confidence * 100)}%` }}
+              />
+            </span>
+            <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              {Math.round(message.confidence * 100)}%
+            </span>
+          </div>
+        )}
+
         {message.inScope === false && done && (
           <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400">
             ⓘ Answered from general knowledge — no closely matching study

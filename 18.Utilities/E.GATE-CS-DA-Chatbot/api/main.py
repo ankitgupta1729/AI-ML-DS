@@ -20,6 +20,7 @@ import json
 import logging
 import sys
 from contextlib import asynccontextmanager
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -31,6 +32,7 @@ from pydantic import BaseModel, Field  # noqa: E402
 
 from gate_chatbot import __version__  # noqa: E402
 from gate_chatbot import db  # noqa: E402
+from gate_chatbot import study  # noqa: E402
 from gate_chatbot.config import get_settings  # noqa: E402
 from gate_chatbot.engine import ChatResult, get_engine  # noqa: E402
 from gate_chatbot.prompts import (  # noqa: E402
@@ -90,6 +92,8 @@ class ChatRequest(BaseModel):
     history: list[Message] = Field(default_factory=list)
     conversation_id: str | None = None
     attachments: list[Attachment] = Field(default_factory=list)
+    tutor_mode: bool = False
+    language: str | None = Field(default=None, max_length=40)
 
 
 # Max characters of extracted document text injected per file (token control).
@@ -194,7 +198,10 @@ def meta() -> dict:
 def chat(req: ChatRequest) -> dict:
     engine = get_engine()
     attachments = _process_attachments(req.attachments)
-    result: ChatResult = engine.chat(req.question, _history_dicts(req), attachments)
+    result: ChatResult = engine.chat(
+        req.question, _history_dicts(req), attachments,
+        tutor_mode=req.tutor_mode, language=req.language,
+    )
     sources = [s.__dict__ for s in result.sources]
 
     conv_id, msg_id = _persist_turn(
@@ -205,6 +212,7 @@ def chat(req: ChatRequest) -> dict:
         "message_id": msg_id,
         "answer": result.answer,
         "in_scope": result.in_scope,
+        "confidence": result.confidence,
         "sources": sources,
     }
 
@@ -219,7 +227,10 @@ def chat_stream(req: ChatRequest) -> StreamingResponse:
     def event_gen():
         parts: list[str] = []
         final: ChatResult | None = None
-        for item in engine.stream(req.question, history, attachments=attachments):
+        for item in engine.stream(
+            req.question, history, attachments=attachments,
+            tutor_mode=req.tutor_mode, language=req.language,
+        ):
             if isinstance(item, ChatResult):
                 final = item
             else:
@@ -229,6 +240,7 @@ def chat_stream(req: ChatRequest) -> StreamingResponse:
         answer = "".join(parts).strip()
         sources = [s.__dict__ for s in final.sources] if final else []
         in_scope = final.in_scope if final else True
+        confidence = final.confidence if final else 0.0
         conv_id, msg_id = _persist_turn(
             req.conversation_id, req.question, answer, in_scope, sources,
             model=settings.chat_model,
@@ -238,6 +250,7 @@ def chat_stream(req: ChatRequest) -> StreamingResponse:
             "conversation_id": conv_id,
             "message_id": msg_id,
             "in_scope": in_scope,
+            "confidence": confidence,
             "sources": sources,
         }
         yield f"data: {json.dumps(done)}\n\n"
@@ -406,6 +419,282 @@ def admin_stats() -> dict:
             return db.stats(s)
     except Exception as exc:  # noqa: BLE001
         return {"error": str(exc)}
+
+
+# --------------------------------------------------------------------------- #
+# Study suite: quizzes / mock tests, flashcards, spaced repetition,           #
+# study planner, daily question, analytics                                    #
+# --------------------------------------------------------------------------- #
+class QuizGenerateRequest(BaseModel):
+    exam: str = Field(default="CS", pattern="^(CS|DA)$")
+    subject: str = Field(default="mixed topics", max_length=80)
+    num: int = Field(default=5, ge=1, le=20)
+    difficulty: str = Field(default="medium", pattern="^(easy|medium|hard)$")
+    kind: str = Field(default="quiz", pattern="^(quiz|mock)$")
+
+
+class QuizSubmitRequest(BaseModel):
+    quiz_id: str
+    answers: dict[str, object] = Field(default_factory=dict)
+    duration_sec: int = Field(default=0, ge=0)
+
+
+class FlashcardRequest(BaseModel):
+    exam: str = Field(default="CS", pattern="^(CS|DA)$")
+    topic: str = Field(..., min_length=2, max_length=80)
+    num: int = Field(default=8, ge=1, le=20)
+
+
+class ReviewGradeRequest(BaseModel):
+    item_id: str
+    quality: int = Field(..., ge=0, le=5)
+
+
+class PlanRequest(BaseModel):
+    exam: str = Field(default="CS", pattern="^(CS|DA)$")
+    exam_date: str | None = Field(default=None, max_length=20)
+    days: int = Field(default=30, ge=1, le=180)
+    hours: float = Field(default=4.0, ge=0.5, le=16)
+
+
+def _log_activity() -> None:
+    try:
+        with db.session() as s:
+            db.log_activity(s)
+            s.commit()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("activity log failed: %s", exc)
+
+
+@app.post("/quiz/generate")
+def quiz_generate(req: QuizGenerateRequest) -> dict:
+    engine = get_engine()
+    n = req.num if req.kind == "quiz" else max(req.num, 10)
+    questions = study.generate_quiz(
+        engine, exam=req.exam, subject=req.subject, n=n, difficulty=req.difficulty
+    )
+    if not questions:
+        return {"ok": False, "error": "Could not generate questions. Try again."}
+    try:
+        with db.session() as s:
+            quiz_id = db.save_generated_quiz(
+                s, exam=req.exam, subject=req.subject,
+                difficulty=req.difficulty, questions=questions,
+            )
+            s.commit()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("save quiz failed: %s", exc)
+        quiz_id = ""
+    # Send questions WITHOUT answers/explanations (scored server-side).
+    public = [
+        {"id": q["id"], "type": q["type"], "question": q["question"],
+         "options": q["options"], "marks": q["marks"], "subject": q["subject"]}
+        for q in questions
+    ]
+    return {"ok": True, "quiz_id": quiz_id, "kind": req.kind, "exam": req.exam,
+            "subject": req.subject, "questions": public}
+
+
+@app.post("/quiz/submit")
+def quiz_submit(req: QuizSubmitRequest) -> dict:
+    with db.session() as s:
+        questions = db.load_generated_quiz(s, req.quiz_id)
+        if questions is None:
+            return {"ok": False, "error": "Quiz not found or expired."}
+        gq = s.get(db.GeneratedQuiz, req.quiz_id)
+        exam = gq.exam if gq else "CS"
+        subject = gq.subject if gq else "mixed"
+
+        scored = study.score_quiz(questions, req.answers)
+        attempt = db.save_attempt(
+            s, kind="quiz", exam=exam, subject=subject,
+            scored=scored, duration_sec=req.duration_sec,
+        )
+        # Auto-create spaced-repetition cards for wrong answers.
+        created = 0
+        for r in scored["results"]:
+            if not r["is_correct"] and r.get("explanation"):
+                db.add_review_item(
+                    s, front=r["question"],
+                    back=r["explanation"], subject=r["subject"], source="quiz",
+                )
+                created += 1
+        db.log_activity(s)
+        s.commit()
+        attempt_id = attempt.id
+
+    scored["ok"] = True
+    scored["attempt_id"] = attempt_id
+    scored["weak_areas"] = study.weak_areas(scored["subject_breakdown"])
+    scored["review_cards_created"] = created
+    return scored
+
+
+@app.post("/flashcards/generate")
+def flashcards_generate(req: FlashcardRequest) -> dict:
+    engine = get_engine()
+    cards = study.generate_flashcards(engine, exam=req.exam, topic=req.topic, num=req.num)
+    if not cards:
+        return {"ok": False, "error": "Could not generate flashcards. Try again."}
+    saved = []
+    try:
+        with db.session() as s:
+            for c in cards:
+                item = db.add_review_item(
+                    s, front=c["front"], back=c["back"],
+                    subject=c.get("subject", req.topic), source="flashcard",
+                )
+                saved.append({"id": item.id, "front": c["front"], "back": c["back"],
+                              "subject": c.get("subject", req.topic)})
+            db.log_activity(s)
+            s.commit()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("save flashcards failed: %s", exc)
+        saved = [{"id": None, **c} for c in cards]
+    return {"ok": True, "cards": saved}
+
+
+@app.get("/review/due")
+def review_due(limit: int = 20) -> dict:
+    try:
+        with db.session() as s:
+            items = db.due_review_items(s, limit=limit)
+            return {"ok": True, "items": [
+                {"id": i.id, "front": i.front, "back": i.back, "subject": i.subject,
+                 "repetitions": i.repetitions}
+                for i in items
+            ]}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc), "items": []}
+
+
+@app.post("/review/grade")
+def review_grade(req: ReviewGradeRequest) -> dict:
+    try:
+        with db.session() as s:
+            item = s.get(db.ReviewItem, req.item_id)
+            if not item:
+                return {"ok": False, "error": "Item not found."}
+            upd = study.sm2(req.quality, item.repetitions, item.ease, item.interval)
+            db.apply_sm2_update(
+                s, item, ease=upd["ease"], interval=upd["interval"],
+                repetitions=upd["repetitions"], due_in_days=upd["due_in_days"],
+            )
+            db.log_activity(s)
+            s.commit()
+            return {"ok": True, **upd}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
+
+
+@app.post("/plan/generate")
+def plan_generate(req: PlanRequest) -> dict:
+    engine = get_engine()
+    days = req.days
+    if req.exam_date:
+        try:
+            target = date.fromisoformat(req.exam_date)
+            days = max(1, min(180, (target - date.today()).days))
+        except ValueError:
+            pass
+    plan = study.generate_plan(engine, exam=req.exam, days=days, hours=req.hours)
+    if not plan.get("days"):
+        return {"ok": False, "error": "Could not generate a plan. Try again."}
+    try:
+        with db.session() as s:
+            db.save_plan(s, exam=req.exam, exam_date=req.exam_date, content=plan)
+            db.log_activity(s)
+            s.commit()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("save plan failed: %s", exc)
+    return {"ok": True, "exam": req.exam, "exam_date": req.exam_date, **plan}
+
+
+@app.get("/plan")
+def plan_latest() -> dict:
+    try:
+        with db.session() as s:
+            plan = db.latest_plan(s)
+        return {"ok": bool(plan), "plan": plan}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
+
+
+@app.get("/plan/calendar.ics")
+def plan_ics() -> PlainTextResponse:
+    """Export the latest study plan as an .ics calendar (offline, no email needed)."""
+    with db.session() as s:
+        plan = db.latest_plan(s)
+    if not plan:
+        return PlainTextResponse("no plan", status_code=404)
+    start = date.today()
+    try:
+        if plan.get("exam_date"):
+            start = date.fromisoformat(plan["exam_date"]) - timedelta(days=len(plan["days"]))
+            if start < date.today():
+                start = date.today()
+    except ValueError:
+        pass
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//GateOverflow Chatbot//EN"]
+    for d in plan.get("days", []):
+        day = start + timedelta(days=int(d.get("day", 1)) - 1)
+        ymd = day.strftime("%Y%m%d")
+        summary = f"GATE {plan.get('exam','')} — {d.get('focus','study')}"
+        desc = " \\n ".join(d.get("tasks", []))
+        lines += ["BEGIN:VEVENT", f"DTSTART;VALUE=DATE:{ymd}", f"DTEND;VALUE=DATE:{ymd}",
+                  f"SUMMARY:{summary}", f"DESCRIPTION:{desc}", "END:VEVENT"]
+    lines.append("END:VCALENDAR")
+    return PlainTextResponse(
+        "\r\n".join(lines), media_type="text/calendar",
+        headers={"Content-Disposition": "attachment; filename=gate-study-plan.ics"},
+    )
+
+
+@app.get("/daily")
+def daily() -> dict:
+    """A deterministic 'question of the day' prompt + streak info."""
+    engine = get_engine()
+    topics = [
+        "dynamic programming", "TCP congestion control", "Bayes' theorem",
+        "normalization (BCNF)", "process scheduling", "eigenvalues & PCA",
+        "pumping lemma", "pipelining hazards", "gradient descent",
+        "B+ tree indexing", "deadlock avoidance", "logistic regression",
+        "minimum spanning trees", "virtual memory & TLB",
+    ]
+    topic = topics[date.today().toordinal() % len(topics)]
+    prompt = (
+        f"Create ONE crisp GATE-style question on '{topic}'. "
+        'Return ONLY JSON: {"question":"...","hint":"...","topic":"' + topic + '"}'
+    )
+    data = study.extract_json(engine.generate_json(prompt)) or {}
+    streak = 0
+    try:
+        with db.session() as s:
+            streak = db.current_streak(s)
+    except Exception:  # noqa: BLE001
+        pass
+    return {
+        "ok": True,
+        "date": date.today().isoformat(),
+        "topic": data.get("topic", topic),
+        "question": data.get("question", f"Explain a key idea in {topic}."),
+        "hint": data.get("hint", ""),
+        "streak": streak,
+    }
+
+
+@app.get("/analytics")
+def analytics() -> dict:
+    try:
+        with db.session() as s:
+            data = db.analytics(s)
+        data["readiness"] = study.readiness_score(
+            data["avg_accuracy"], data["attempts"], data["streak"]
+        )
+        data["ok"] = True
+        return data
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
 
 
 # --------------------------------------------------------------------------- #

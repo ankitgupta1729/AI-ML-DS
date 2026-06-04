@@ -131,3 +131,82 @@ export const ArrowDownIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M12 5v14M19 12l-7 7-7-7" />
   </svg>
 );
+
+export const ChatIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z" />
+  </svg>
+);
+
+export const ClipboardIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="8" y="2" width="8" height="4" rx="1" />
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <path d="m9 14 2 2 4-4" />
+  </svg>
+);
+
+export const LayersIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="m12 2 9 5-9 5-9-5 9-5Z" />
+    <path d="m3 12 9 5 9-5M3 17l9 5 9-5" />
+  </svg>
+);
+
+export const CalendarIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M16 2v4M8 2v4M3 10h18" />
+  </svg>
+);
+
+export const ChartIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M3 3v18h18" />
+    <path d="M7 16v-5M12 16V8M17 16v-3" />
+  </svg>
+);
+
+export const FlameIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 2c1 3 4 4 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-2.5C8 9 9 5 12 2Z" />
+    <path d="M12 22a6 6 0 0 0 6-6c0-2-1-3.5-2-4.5.2 2-1 3.5-2 4 .5-2-.5-4-2-5-.2 3-3 3.5-3 6a3 3 0 0 0 3 5.5Z" />
+  </svg>
+);
+
+export const MicIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="9" y="2" width="6" height="12" rx="3" />
+    <path d="M5 10a7 7 0 0 0 14 0M12 19v3" />
+  </svg>
+);
+
+export const SpeakerIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+    <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14" />
+  </svg>
+);
+
+export const PenIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 19l7-7 3 3-7 7-3-3Z" />
+    <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5Z" />
+    <path d="m2 2 7.586 7.586" />
+    <circle cx="11" cy="11" r="2" />
+  </svg>
+);
+
+export const GlobeIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
+  </svg>
+);
+
+export const BulbIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M9 18h6M10 22h4" />
+    <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2Z" />
+  </svg>
+);
