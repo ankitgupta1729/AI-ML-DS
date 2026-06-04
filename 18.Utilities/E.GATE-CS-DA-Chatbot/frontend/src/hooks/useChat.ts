@@ -127,7 +127,7 @@ export function useChat() {
   );
 
   const regenerate = useCallback(
-    (clientId: string) => {
+    (clientId: string, opts: SendOpts = {}) => {
       if (isStreaming) return;
       const idx = messages.findIndex((m) => m.id === clientId);
       if (idx < 0) return;
@@ -146,7 +146,7 @@ export function useChat() {
 
       if (target.messageId) {
         runStream(clientId, (cb) =>
-          streamRegenerate(target.messageId as string, null, cb),
+          streamRegenerate(target.messageId as string, null, cb, opts),
         );
       } else {
         // No server id (DB off) → resend the preceding user question.
@@ -164,6 +164,7 @@ export function useChat() {
             convRef.current,
             [],
             cb,
+            opts,
           ),
         );
       }

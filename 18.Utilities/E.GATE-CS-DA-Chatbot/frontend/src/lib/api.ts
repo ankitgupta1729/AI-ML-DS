@@ -168,13 +168,19 @@ export async function streamRegenerate(
   messageId: string,
   guidance: string | null,
   cb: StreamCallbacks,
+  opts: SendOpts = {},
 ): Promise<void> {
   let res: Response;
   try {
     res = await fetch(`${API_BASE}/regenerate/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message_id: messageId, guidance }),
+      body: JSON.stringify({
+        message_id: messageId,
+        guidance,
+        tutor_mode: Boolean(opts.tutorMode),
+        language: opts.language ?? null,
+      }),
       signal: cb.signal,
     });
   } catch {

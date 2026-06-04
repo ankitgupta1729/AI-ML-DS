@@ -9,6 +9,9 @@ Everything you need to present the app: a **ready-made narrated video**, an
 | File | What it is | How to use |
 |---|---|---|
 | `GateOverflow-Chatbot-Demo.mp4` | ~3:15 narrated demo video, 17 scenes (1080p, voiced) — covers every feature + differentiation + sample Q&A | Play it directly in the meeting / embed in slides |
+| `GateOverflow-Chatbot-Feature-Guide.mp4` | ~6 min **detailed** guide (19 scenes) built from **real screenshots of the running app** — incl. sketch, multilingual (Hindi) answer, and dislike→regenerate — per feature: purpose, example, benefit vs ChatGPT/Claude, and how to use it | Train the team / onboarding deep-dive |
+| `live/` | Real screenshots captured from the running app (source stills for the guide video) | Reuse in slides/docs |
+| `build_live_video.py` | Rebuilds the detailed guide from `live/` screenshots (run the app first, recapture, then this) | Regenerate the real-footage video |
 | `GateOverflow-Chatbot-Demo.docx` | **Full documentation**: features, workflow, architecture, differentiation, sample Q&A, roadmap | Hand to the team / present alongside the video |
 | `Why-GateOverflow-Chatbot.docx` | Shorter positioning doc (why it beats general chatbots) | Quick read / leave-behind |
 | `wireframe.html` | Annotated wireframe + UX spec (screens, flow, components) | Open in a browser; Print → Save as PDF; or import to Figma |
