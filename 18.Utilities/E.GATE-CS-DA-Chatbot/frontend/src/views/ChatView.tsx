@@ -14,7 +14,7 @@ interface Props {
   isStreaming: boolean;
   send: (text: string, attachments?: Attachment[], opts?: { tutorMode?: boolean; language?: string | null }) => void;
   stop: () => void;
-  regenerate: (id: string) => void;
+  regenerate: (id: string, opts?: { tutorMode?: boolean; language?: string | null }) => void;
   sendFeedback: (id: string, rating: Rating, extra?: { reason?: string; comment?: string; correctedAnswer?: string }) => void;
 }
 
@@ -105,7 +105,7 @@ export default function ChatView({
                 message={m}
                 isStreaming={isStreaming}
                 isLast={i === messages.length - 1}
-                onRegenerate={() => regenerate(m.id)}
+                onRegenerate={() => regenerate(m.id, opts)}
                 onFeedback={(rating, extra) => sendFeedback(m.id, rating, extra)}
                 onFollowUp={doSend}
               />

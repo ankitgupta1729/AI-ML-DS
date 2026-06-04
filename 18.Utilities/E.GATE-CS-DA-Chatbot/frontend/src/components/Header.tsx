@@ -1,12 +1,13 @@
 import type { Meta } from "../types";
 import Logo from "./Logo";
-import { MoonIcon, SunIcon, TrashIcon } from "./icons";
+import { HelpIcon, MoonIcon, SunIcon, TrashIcon } from "./icons";
 
 interface Props {
   meta: Meta | null;
   theme: "light" | "dark";
   onToggleTheme: () => void;
   onClear: () => void;
+  onHelp: () => void;
   hasMessages: boolean;
 }
 
@@ -15,6 +16,7 @@ export default function Header({
   theme,
   onToggleTheme,
   onClear,
+  onHelp,
   hasMessages,
 }: Props) {
   const indexed = meta?.indexed_chunks ?? 0;
@@ -60,6 +62,13 @@ export default function Header({
               : "connecting…"}
           </span>
 
+          <button
+            onClick={onHelp}
+            title="How to use this app"
+            className="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-brand-600 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-brand-300"
+          >
+            <HelpIcon width={18} height={18} />
+          </button>
           {hasMessages && (
             <button
               onClick={onClear}

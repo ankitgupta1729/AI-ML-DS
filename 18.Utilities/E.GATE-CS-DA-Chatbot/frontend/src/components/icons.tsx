@@ -210,3 +210,11 @@ export const BulbIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2Z" />
   </svg>
 );
+
+export const HelpIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" />
+    <path d="M12 17h.01" />
+  </svg>
+);

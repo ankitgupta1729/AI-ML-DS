@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import GuideModal from "./components/GuideModal";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { useChat } from "./hooks/useChat";
@@ -19,6 +20,15 @@ export default function App() {
   const [connecting, setConnecting] = useState(true);
   const [view, setView] = useState<View>("chat");
   const [dueCount, setDueCount] = useState(0);
+  const [showGuide, setShowGuide] = useState(false);
+
+  // Open the guide automatically on a user's first visit.
+  useEffect(() => {
+    if (!localStorage.getItem("go-guide-seen")) {
+      setShowGuide(true);
+      localStorage.setItem("go-guide-seen", "1");
+    }
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -46,11 +56,14 @@ export default function App() {
     <div className="relative flex h-full flex-col overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100 text-slate-900 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/10 blur-3xl" />
 
+      {showGuide && <GuideModal onClose={() => setShowGuide(false)} />}
+
       <Header
         meta={meta}
         theme={theme}
         onToggleTheme={toggle}
         onClear={chat.clear}
+        onHelp={() => setShowGuide(true)}
         hasMessages={view === "chat" && chat.messages.length > 0}
       />
 

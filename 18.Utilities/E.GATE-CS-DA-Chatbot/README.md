@@ -71,6 +71,9 @@ A full GATE preparation workspace, navigable from the sidebar:
   (Web Speech), **draw/sketch a question**, and a **confidence (grounding) meter**
   on every answer.
 - **Local/offline model** support via `OPENAI_BASE_URL` (Ollama/LM Studio/vLLM).
+- **Built-in guide** — an in-app "How to use" walkthrough (auto-opens on first
+  visit; reopen via the **?** button in the header) explains every feature and
+  how to use it effectively.
 - **PYQ practice mode** — ask for previous-year questions by exam (GATE CS / DA,
   ISRO, NIELIT, UGC-NET, TIFR), get step-by-step solutions, and ask follow-ups.
 - **Feedback → RLHF loop** — every turn and rating is persisted; a disliked

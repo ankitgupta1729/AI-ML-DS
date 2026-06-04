@@ -156,6 +156,8 @@ class FeedbackRequest(BaseModel):
 class RegenerateRequest(BaseModel):
     message_id: str
     guidance: str | None = Field(default=None, max_length=2000)
+    tutor_mode: bool = False
+    language: str | None = Field(default=None, max_length=40)
 
 
 def _history_dicts(req: ChatRequest) -> list[dict]:
@@ -305,7 +307,10 @@ def regenerate_stream(req: RegenerateRequest) -> StreamingResponse:
     def event_gen():
         parts: list[str] = []
         final: ChatResult | None = None
-        for item in engine.stream(question, history, feedback_hint=feedback_hint):
+        for item in engine.stream(
+            question, history, feedback_hint=feedback_hint,
+            tutor_mode=req.tutor_mode, language=req.language,
+        ):
             if isinstance(item, ChatResult):
                 final = item
             else:
@@ -533,7 +538,7 @@ def quiz_submit(req: QuizSubmitRequest) -> dict:
 @app.post("/flashcards/generate")
 def flashcards_generate(req: FlashcardRequest) -> dict:
     engine = get_engine()
-    cards = study.generate_flashcards(engine, exam=req.exam, topic=req.topic, num=req.num)
+    cards = study.generate_flashcards(engine, exam=req.exam, topic=req.topic, n=req.num)
     if not cards:
         return {"ok": False, "error": "Could not generate flashcards. Try again."}
     saved = []
