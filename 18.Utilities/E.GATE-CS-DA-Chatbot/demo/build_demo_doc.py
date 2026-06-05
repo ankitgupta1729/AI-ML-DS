@@ -189,6 +189,7 @@ def main() -> int:
     bullet("JSONL export", "for offline reward-model / DPO fine-tuning, then redeploy an improved model.")
 
     heading("3.10 GateOverflow links, bookmarks, history & export", 2)
+    bullet("GateOverflow platform awareness", "the assistant also knows the gateoverflow.in website itself — its pages, the PYQ database, advanced search syntax, the online PDF Book Viewer, test series, rank predictor, badges and how to ask — so it can guide users around the site while they study.")
     bullet("Direct GateOverflow PYQ links", "for previous-year-question answers ONLY, the exact GateOverflow question thread(s) are shown at the end of the answer — extracted from the URLs embedded in the PYQ PDFs (gateoverflow.in/<id>/<slug>). Open the official discussion & community answers in one click.")
     bullet("Bookmarks & chat history", "star any answer to save it; revisit past conversations and saved answers from the history panel.")
     bullet("Cheat-sheet & PDF export", "turn a conversation into a concise revision cheat-sheet, or export the whole chat — print or save as PDF.")

@@ -84,6 +84,10 @@ A full GATE preparation workspace, navigable from the sidebar:
   export the whole conversation, to **PDF** (one click → print/save).
 - **Optional reranking** — set `RERANK=true` (with `flashrank`) for cross-encoder
   reranking of citations.
+- **GateOverflow site awareness** — the assistant also knows the **gateoverflow.in
+  platform** (pages, search syntax, PYQ database, PDFs/Book Viewer, test series,
+  rank predictor, badges, how to ask) and can guide users around it (system-prompt
+  overview + a `data/seed/gateoverflow_platform_guide.md` knowledge file).
 - **PYQ practice mode** — ask for previous-year questions by exam (GATE CS / DA,
   ISRO, NIELIT, UGC-NET, TIFR), get step-by-step solutions, and ask follow-ups.
 - **Feedback → RLHF loop** — every turn and rating is persisted; a disliked
