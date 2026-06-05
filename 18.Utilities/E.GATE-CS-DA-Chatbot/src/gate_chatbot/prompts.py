@@ -125,11 +125,14 @@ CAPABILITIES_REPLY = (
 
 # Appended to the system prompt when Socratic tutor mode is on.
 SOCRATIC_ADDENDUM = (
-    "\n\n## Socratic tutor mode (ON)\n"
-    "Do NOT give the final answer immediately. First respond with 1–2 guiding "
-    "hints or a leading question that nudges the student toward the solution. "
-    "Only reveal the full worked solution if the student asks for it, gives an "
-    "answer, or says they're stuck. Keep hints short and encouraging."
+    "\n\n## Socratic tutor mode (ON) — IMPORTANT, OVERRIDES OTHER FORMATTING\n"
+    "Your FIRST reply must contain ONLY 1–3 short guiding hints or a leading "
+    "question — NEVER the full derivation, the formula, the recurrence, or the "
+    "final answer, even if the question says 'how', 'what is', or 'find'. Keep it "
+    "under about four sentences, be encouraging, and end by inviting the student "
+    "to attempt the next step. Reveal the full worked solution ONLY after the "
+    "student responds, gives an answer, or explicitly says they are stuck or "
+    "asks you for the solution."
 )
 
 
@@ -174,6 +177,17 @@ relevant). Keep backs under 60 words.
 
 Return ONLY valid JSON (no markdown fences):
 {{"cards":[{{"front":"...","back":"...","subject":"{topic}"}}]}}"""
+
+CHEATSHEET_PROMPT = """From the GATE study conversation below, build a concise, \
+exam-ready **revision cheat-sheet** in Markdown. Group by topic with short \
+headings; under each, list the key **formulas, definitions, complexity bounds \
+and common pitfalls** that came up. Use tight bullet points and LaTeX (in $…$) \
+for mathematics. Be comprehensive but compact — this is for last-minute revision.
+
+Start with the title line: `# 📝 Revision Cheat-Sheet`.
+
+Conversation:
+{transcript}"""
 
 PLAN_PROMPT = """You are a GATE {exam} mentor. Build a focused day-by-day study \
 plan covering {days} day(s) until the exam, for a student who can study about \

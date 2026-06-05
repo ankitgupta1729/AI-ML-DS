@@ -124,6 +124,19 @@ class PreferencePair(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
 
 
+class Bookmark(Base):
+    """A saved assistant answer the user wants to revisit."""
+
+    __tablename__ = "bookmarks"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_uuid)
+    message_id: Mapped[str] = mapped_column(
+        ForeignKey("messages.id", ondelete="CASCADE"), unique=True, index=True
+    )
+    note: Mapped[Optional[str]] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
 class GeneratedQuiz(Base):
     """A generated quiz held server-side (with answers) until it is submitted."""
 
@@ -379,6 +392,87 @@ def stats(db: Session) -> dict:
         "quiz_attempts": _count(QuizAttempt),
         "review_items": _count(ReviewItem),
     }
+
+
+# --------------------------------------------------------------------------- #
+# History & bookmarks                                                          #
+# --------------------------------------------------------------------------- #
+def list_conversations(db, limit: int = 50) -> list[dict]:
+    convs = db.scalars(
+        select(Conversation).order_by(Conversation.updated_at.desc()).limit(limit)
+    ).all()
+    out = []
+    for c in convs:
+        n = db.scalar(
+            select(func.count()).select_from(Message).where(Message.conversation_id == c.id)
+        ) or 0
+        if n == 0:
+            continue
+        out.append({
+            "id": c.id, "title": c.title or "Untitled",
+            "messages": int(n), "updated_at": c.updated_at.isoformat(),
+        })
+    return out
+
+
+def conversation_messages(db, conversation_id: str) -> list[dict] | None:
+    conv = db.get(Conversation, conversation_id)
+    if not conv:
+        return None
+    msgs = db.scalars(
+        select(Message).where(Message.conversation_id == conversation_id)
+        .order_by(Message.created_at)
+    ).all()
+    bookmarked = {
+        b.message_id for b in db.scalars(select(Bookmark)).all()
+    }
+    out = []
+    for m in msgs:
+        try:
+            sources = json.loads(m.sources_json) if m.sources_json else []
+        except Exception:  # noqa: BLE001
+            sources = []
+        out.append({
+            "id": m.id, "role": m.role, "content": m.content,
+            "sources": sources, "in_scope": m.in_scope,
+            "bookmarked": m.id in bookmarked,
+        })
+    return out
+
+
+def toggle_bookmark(db, message_id: str, note: str | None = None) -> bool:
+    """Add or remove a bookmark. Returns True if now bookmarked."""
+    existing = db.scalars(
+        select(Bookmark).where(Bookmark.message_id == message_id)
+    ).first()
+    if existing:
+        db.delete(existing)
+        db.flush()
+        return False
+    if not db.get(Message, message_id):
+        return False
+    db.add(Bookmark(message_id=message_id, note=note))
+    db.flush()
+    return True
+
+
+def list_bookmarks(db, limit: int = 100) -> list[dict]:
+    rows = db.scalars(
+        select(Bookmark).order_by(Bookmark.created_at.desc()).limit(limit)
+    ).all()
+    out = []
+    for b in rows:
+        m = db.get(Message, b.message_id)
+        if not m:
+            continue
+        out.append({
+            "message_id": b.message_id,
+            "conversation_id": m.conversation_id,
+            "content": m.content,
+            "note": b.note,
+            "created_at": b.created_at.isoformat(),
+        })
+    return out
 
 
 # --------------------------------------------------------------------------- #

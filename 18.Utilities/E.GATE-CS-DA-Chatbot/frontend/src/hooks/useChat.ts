@@ -1,8 +1,10 @@
 import { useCallback, useRef, useState } from "react";
 import {
+  getConversation,
   streamChat,
   streamRegenerate,
   submitFeedback,
+  toggleBookmark,
   type FeedbackInput,
   type HistoryTurn,
 } from "../lib/api";
@@ -38,6 +40,33 @@ export function useChat() {
     setMessages([]);
   }, [stop]);
 
+  // Hydrate a past conversation from the server (chat history).
+  const loadConversation = useCallback(
+    async (conversationId: string) => {
+      stop();
+      try {
+        const res = await getConversation(conversationId);
+        if (!res.ok) return;
+        convRef.current = conversationId;
+        setMessages(
+          res.messages.map((m) => ({
+            id: uid(),
+            role: m.role,
+            content: m.content,
+            sources: m.role === "assistant" ? m.sources : undefined,
+            inScope: m.in_scope ?? undefined,
+            messageId: m.id,
+            bookmarked: m.bookmarked,
+            rating: null,
+          })),
+        );
+      } catch {
+        /* ignore */
+      }
+    },
+    [stop],
+  );
+
   const patchById = useCallback(
     (id: string, fn: (m: ChatMessage) => ChatMessage) =>
       setMessages((prev) => prev.map((m) => (m.id === id ? fn(m) : m))),
@@ -71,6 +100,7 @@ export function useChat() {
             inScope: p.inScope,
             messageId: p.messageId,
             confidence: p.confidence,
+            pyqLinks: p.pyqLinks,
             streaming: false,
           }));
           setIsStreaming(false);
@@ -198,6 +228,20 @@ export function useChat() {
     [messages, patchById],
   );
 
+  const bookmark = useCallback(
+    async (clientId: string) => {
+      const msg = messages.find((m) => m.id === clientId);
+      if (!msg?.messageId) return;
+      patchById(clientId, (m) => ({ ...m, bookmarked: !m.bookmarked }));
+      try {
+        await toggleBookmark(msg.messageId);
+      } catch {
+        patchById(clientId, (m) => ({ ...m, bookmarked: !m.bookmarked }));
+      }
+    },
+    [messages, patchById],
+  );
+
   return {
     messages,
     isStreaming,
@@ -206,5 +250,7 @@ export function useChat() {
     clear,
     regenerate,
     sendFeedback,
+    loadConversation,
+    bookmark,
   };
 }

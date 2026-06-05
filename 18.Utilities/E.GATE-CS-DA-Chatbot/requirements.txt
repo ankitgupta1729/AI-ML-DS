@@ -21,6 +21,10 @@ pypdf>=4.2
 docx2txt>=0.8
 python-pptx>=0.6.23
 
+# --- Optional: cross-encoder reranking (set RERANK=true to use) ---
+# Lightweight ONNX cross-encoder, no torch. Install to enable sharper citations.
+# flashrank>=0.2.0
+
 # --- Production API (consumed by the React frontend) ---
 fastapi>=0.111
 uvicorn[standard]>=0.30

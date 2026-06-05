@@ -27,7 +27,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from fastapi import FastAPI  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
-from fastapi.responses import PlainTextResponse, StreamingResponse  # noqa: E402
+from fastapi.responses import (  # noqa: E402
+    HTMLResponse,
+    PlainTextResponse,
+    StreamingResponse,
+)
 from pydantic import BaseModel, Field  # noqa: E402
 
 from gate_chatbot import __version__  # noqa: E402
@@ -46,12 +50,34 @@ from gate_chatbot.vectorstore import collection_size  # noqa: E402
 logger = logging.getLogger(__name__)
 
 
+UI_URL = "http://localhost:5173"
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     try:
         db.init_db(get_settings())
     except Exception as exc:  # noqa: BLE001 - chat still works without a DB
         logger.warning("Database init failed (continuing without persistence): %s", exc)
+
+    # Make it obvious where the *app* lives — uvicorn only prints the API port.
+    banner = (
+        "\n"
+        "┌───────────────────────────────────────────────────────────────┐\n"
+        f"│  {APP_NAME} — backend ready                          \n"
+        "│                                                               \n"
+        f"│   👉  Open the APP in your browser:   {UI_URL}      \n"
+        "│                                                               \n"
+        "│   This terminal runs the API only:                            \n"
+        "│     • API base : http://localhost:8000                        \n"
+        "│     • API docs : http://localhost:8000/docs                   \n"
+        "│                                                               \n"
+        "│   If the page doesn't load, start the frontend in another     \n"
+        "│   terminal:   cd frontend && npm run dev                      \n"
+        "│   (or run both at once from the project root:  make dev)      \n"
+        "└───────────────────────────────────────────────────────────────┘\n"
+    )
+    print(banner, flush=True)
     yield
 
 
@@ -167,6 +193,29 @@ def _history_dicts(req: ChatRequest) -> list[dict]:
 # --------------------------------------------------------------------------- #
 # Info endpoints                                                              #
 # --------------------------------------------------------------------------- #
+@app.get("/", response_class=HTMLResponse)
+def root() -> str:
+    """Friendly landing page if someone opens the API port in a browser."""
+    return f"""<!doctype html><html><head><meta charset="utf-8">
+<title>{APP_NAME} API</title>
+<style>body{{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1220;
+color:#e2e8f0;display:grid;place-items:center;height:100vh;margin:0;text-align:center}}
+a{{color:#f87171;font-weight:700}}.c{{max-width:520px;padding:32px;border:1px solid #1e293b;
+border-radius:18px;background:#0f172a}}.b{{display:inline-block;margin-top:14px;padding:10px 18px;
+border-radius:12px;background:linear-gradient(135deg,#dc2626,#e11d48);color:#fff;text-decoration:none;
+font-weight:700}}.m{{color:#94a3b8;font-size:14px}}</style></head>
+<body><div class="c">
+<h1>{APP_NAME} — API</h1>
+<p class="m">You're looking at the <b>backend API</b>. The actual app UI runs on a
+different port.</p>
+<a class="b" href="{UI_URL}">👉 Open the app at {UI_URL}</a>
+<p class="m" style="margin-top:18px">API docs: <a href="/docs">/docs</a> ·
+health: <a href="/health">/health</a><br>
+If the app doesn't load, start the frontend:
+<code>cd frontend &amp;&amp; npm run dev</code></p>
+</div></body></html>"""
+
+
 @app.get("/health")
 def health() -> dict:
     settings = get_settings()
@@ -216,6 +265,7 @@ def chat(req: ChatRequest) -> dict:
         "in_scope": result.in_scope,
         "confidence": result.confidence,
         "sources": sources,
+        "pyq_links": result.pyq_links,
     }
 
 
@@ -243,6 +293,7 @@ def chat_stream(req: ChatRequest) -> StreamingResponse:
         sources = [s.__dict__ for s in final.sources] if final else []
         in_scope = final.in_scope if final else True
         confidence = final.confidence if final else 0.0
+        pyq_links = final.pyq_links if final else []
         conv_id, msg_id = _persist_turn(
             req.conversation_id, req.question, answer, in_scope, sources,
             model=settings.chat_model,
@@ -254,6 +305,7 @@ def chat_stream(req: ChatRequest) -> StreamingResponse:
             "in_scope": in_scope,
             "confidence": confidence,
             "sources": sources,
+            "pyq_links": pyq_links,
         }
         yield f"data: {json.dumps(done)}\n\n"
 
@@ -356,6 +408,8 @@ def regenerate_stream(req: RegenerateRequest) -> StreamingResponse:
             "message_id": new_msg_id,
             "in_scope": in_scope,
             "sources": sources,
+            "pyq_links": [pl.__dict__ if hasattr(pl, "__dict__") else pl
+                          for pl in (final.pyq_links if final else [])],
         }
         yield f"data: {json.dumps(done)}\n\n"
 
@@ -424,6 +478,55 @@ def admin_stats() -> dict:
             return db.stats(s)
     except Exception as exc:  # noqa: BLE001
         return {"error": str(exc)}
+
+
+# --------------------------------------------------------------------------- #
+# History & bookmarks                                                         #
+# --------------------------------------------------------------------------- #
+class BookmarkRequest(BaseModel):
+    message_id: str
+    note: str | None = Field(default=None, max_length=500)
+
+
+@app.get("/conversations")
+def conversations(limit: int = 50) -> dict:
+    try:
+        with db.session() as s:
+            return {"ok": True, "conversations": db.list_conversations(s, limit=limit)}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc), "conversations": []}
+
+
+@app.get("/conversations/{conversation_id}")
+def conversation(conversation_id: str) -> dict:
+    try:
+        with db.session() as s:
+            msgs = db.conversation_messages(s, conversation_id)
+        if msgs is None:
+            return {"ok": False, "error": "not found"}
+        return {"ok": True, "conversation_id": conversation_id, "messages": msgs}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
+
+
+@app.post("/bookmark")
+def bookmark(req: BookmarkRequest) -> dict:
+    try:
+        with db.session() as s:
+            now = db.toggle_bookmark(s, req.message_id, req.note)
+            s.commit()
+        return {"ok": True, "bookmarked": now}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
+
+
+@app.get("/bookmarks")
+def bookmarks(limit: int = 100) -> dict:
+    try:
+        with db.session() as s:
+            return {"ok": True, "bookmarks": db.list_bookmarks(s, limit=limit)}
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc), "bookmarks": []}
 
 
 # --------------------------------------------------------------------------- #
@@ -686,6 +789,23 @@ def daily() -> dict:
         "hint": data.get("hint", ""),
         "streak": streak,
     }
+
+
+class CheatSheetRequest(BaseModel):
+    history: list[Message] = Field(default_factory=list)
+
+
+@app.post("/cheatsheet")
+def cheatsheet(req: CheatSheetRequest) -> dict:
+    if not req.history:
+        return {"ok": False, "error": "Nothing to summarise yet — chat first."}
+    transcript = "\n\n".join(
+        f"{'Q' if m.role == 'user' else 'A'}: {m.content}" for m in req.history
+    )
+    md = study.generate_cheatsheet(get_engine(), transcript=transcript)
+    if not md:
+        return {"ok": False, "error": "Could not build a cheat-sheet. Try again."}
+    return {"ok": True, "markdown": md}
 
 
 @app.get("/analytics")

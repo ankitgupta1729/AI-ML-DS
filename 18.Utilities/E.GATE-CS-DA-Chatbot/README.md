@@ -74,6 +74,16 @@ A full GATE preparation workspace, navigable from the sidebar:
 - **Built-in guide** — an in-app "How to use" walkthrough (auto-opens on first
   visit; reopen via the **?** button in the header) explains every feature and
   how to use it effectively.
+- **GateOverflow PYQ links** — for previous-year-question answers (and *only*
+  those), the exact GateOverflow question thread(s) are shown at the end of the
+  answer, extracted from the URLs embedded in the PYQ PDFs
+  (`python scripts/build_pyq_index.py` builds the lookup — no re-embedding).
+- **Bookmarks & chat history** — ★ any answer to save it; revisit past
+  conversations and saved answers from the **🕑 history** panel in the header.
+- **Cheat-sheet & PDF export** — build a revision cheat-sheet from a chat, or
+  export the whole conversation, to **PDF** (one click → print/save).
+- **Optional reranking** — set `RERANK=true` (with `flashrank`) for cross-encoder
+  reranking of citations.
 - **PYQ practice mode** — ask for previous-year questions by exam (GATE CS / DA,
   ISRO, NIELIT, UGC-NET, TIFR), get step-by-step solutions, and ask follow-ups.
 - **Feedback → RLHF loop** — every turn and rating is persisted; a disliked

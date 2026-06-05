@@ -46,6 +46,12 @@ class Settings(BaseSettings):
     # Used by the topic guardrail to decide whether the question is in scope.
     relevance_threshold: float = Field(default=0.25, alias="RELEVANCE_THRESHOLD")
 
+    # --- Reranking (optional) ------------------------------------------
+    # Over-fetch then re-order with a cross-encoder for sharper citations.
+    # Off by default; needs the lightweight `flashrank` package installed.
+    rerank_enabled: bool = Field(default=False, alias="RERANK")
+    rerank_top_n: int = Field(default=20, alias="RERANK_TOP_N")
+
     # --- Storage paths --------------------------------------------------
     data_dir: Path = Field(default=ROOT_DIR / "data", alias="DATA_DIR")
     vector_dir: Path = Field(

@@ -75,6 +75,11 @@ RAW = [
          howto="Expand “sources” under any answer.",
          narration="And every answer can show exactly where it came from — real previous-year-question PDFs with page references and match scores. That verifiability is the biggest difference from a general chatbot."),
 
+    dict(kind="shot", img="18_pyq_links.png", kicker="GateOverflow",
+         title="Direct GateOverflow question links", sub="PYQ answers link to the exact thread",
+         howto="Click a link under “See this question on GateOverflow”.",
+         narration="And for previous-year questions, the answer links straight to that exact question on GateOverflow — pulled from the URLs in the question PDFs — so you can read the official discussion and community answers. These links appear only for previous-year questions."),
+
     dict(kind="shot", img="07_mock_result.png", kicker="Practice",
          title="Mock tests, scored like GATE", sub="Negative marking · percentile · explanations",
          howto="Open Mock Test, answer, and submit.",
@@ -104,6 +109,11 @@ RAW = [
          title="Feedback → RLHF", sub="Dislike → reason → regenerate → preference data",
          howto="👎 an answer, give a reason, then ↻ regenerate.",
          narration="And it learns from you. Dislike an answer with a reason and it regenerates a better one, while your corrections build a preference dataset you can export to fine-tune an improved model. Unlike general chatbots, it gets better from your feedback."),
+
+    dict(kind="shot", img="19_cheatsheet.png", kicker="Productivity",
+         title="Save, revisit & export", sub="Bookmarks · history · cheat-sheet · PDF export",
+         howto="★ save answers · 🕑 history · “Cheat sheet” / “Export PDF”.",
+         narration="Everything you learn stays with you: star answers to save them, revisit any past conversation from the history panel, and with one click turn a chat into a revision cheat-sheet or export it to PDF for last-minute study."),
 
     dict(kind="center", title="Architecture", sub="React + TypeScript + Tailwind ⇄ FastAPI ⇄ Chroma RAG + OpenAI",
          narration="Under the hood, a React, TypeScript and Tailwind front-end talks to a FastAPI backend running retrieval-augmented generation over a Chroma vector store with OpenAI, and persists everything in a database.",
