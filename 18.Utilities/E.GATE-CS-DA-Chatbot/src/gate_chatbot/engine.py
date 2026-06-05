@@ -87,6 +87,9 @@ class ChatResult:
     sources: list[Source] = field(default_factory=list)
     in_scope: bool = True
     confidence: float = 0.0  # 0–1, how well the answer is grounded in sources
+    # GateOverflow question links — populated ONLY for previous-year-question
+    # (PYQ) answers, from the URLs embedded in the PYQ PDFs.
+    pyq_links: list[dict] = field(default_factory=list)
 
 
 def _format_locator(meta: dict) -> str:
@@ -128,6 +131,47 @@ class ChatEngine:
             self._store = get_vectorstore(self.settings)
         return self._store
 
+    @property
+    def _pyq_index(self) -> dict:
+        """Lazy-loaded {pdf_path: {page: [[url, label], ...]}} for PYQ links."""
+        if getattr(self, "_pyq_idx_cache", None) is None:
+            import json
+
+            path = self.settings.vector_dir.parent / "pyq_urls.json"
+            try:
+                self._pyq_idx_cache = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:  # noqa: BLE001 - no index yet → no PYQ links
+                self._pyq_idx_cache = {}
+        return self._pyq_idx_cache
+
+    def _collect_pyq_links(self, docs: list[Document]) -> list[dict]:
+        """GateOverflow links for retrieved PYQ chunks (from the PDF URL index)."""
+        idx = self._pyq_index
+        if not idx:
+            return []
+        out: list[dict] = []
+        seen: set[str] = set()
+        from pathlib import Path as _P
+
+        for d in docs:
+            meta = d.metadata
+            raw_path = meta.get("path")
+            page = meta.get("page")
+            if not raw_path or page is None:
+                continue
+            try:
+                key = str(_P(raw_path).resolve())
+            except Exception:  # noqa: BLE001
+                key = str(raw_path)
+            for url, label in idx.get(key, {}).get(str(page), []):
+                if url in seen:
+                    continue
+                seen.add(url)
+                out.append({"url": url, "label": label})
+                if len(out) >= 6:
+                    return out
+        return out
+
     # ------------------------------------------------------------------ #
     # Retrieval                                                          #
     # ------------------------------------------------------------------ #
@@ -149,14 +193,25 @@ class ChatEngine:
 
     def _retrieve(self, query: str) -> tuple[list[Document], list[float]]:
         k = self.settings.retriever_k
+        # Over-fetch when reranking so the cross-encoder has candidates to sort.
+        fetch = min(max(k * 4, k), self.settings.rerank_top_n) if self.settings.rerank_enabled else k
         try:
-            scored = self.store.similarity_search_with_relevance_scores(query, k=k)
+            scored = self.store.similarity_search_with_relevance_scores(query, k=fetch)
         except Exception as exc:  # noqa: BLE001
             logger.error("Retrieval failed: %s", exc)
             return [], []
         docs = [d for d, _ in scored]
         scores = [s for _, s in scored]
-        return docs, scores
+
+        if self.settings.rerank_enabled and len(docs) > k:
+            from .reranker import rerank
+
+            order = rerank(query, [d.page_content for d in docs], top_k=k)
+            if order is not None:
+                docs = [docs[i] for i in order]
+                scores = [scores[i] for i in order]
+                return docs, scores
+        return docs[:k], scores[:k]
 
     def _build_sources(
         self, docs: list[Document], scores: list[float]
@@ -294,8 +349,11 @@ class ChatEngine:
         answer = "".join(parts).strip()
         sources = self._build_sources(docs, scores) if in_scope else []
         confidence = round(min(max(best, 0.0), 1.0), 2)
+        # Attach GateOverflow question links only for grounded PYQ answers.
+        pyq_links = self._collect_pyq_links(docs) if in_scope else []
         yield ChatResult(
-            answer=answer, sources=sources, in_scope=in_scope, confidence=confidence
+            answer=answer, sources=sources, in_scope=in_scope,
+            confidence=confidence, pyq_links=pyq_links,
         )
 
     # ------------------------------------------------------------------ #

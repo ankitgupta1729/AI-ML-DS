@@ -69,6 +69,7 @@ async function consumeSSE(res: Response, cb: StreamCallbacks): Promise<void> {
               conversationId: (p.conversation_id as string) ?? null,
               messageId: (p.message_id as string) ?? null,
               confidence: typeof p.confidence === "number" ? p.confidence : 0,
+              pyqLinks: (p.pyq_links as { url: string; label: string }[]) || [],
             });
           }
         } catch {
@@ -159,9 +160,53 @@ export const getPlan = () => getJSON<{ ok: boolean; plan: StudyPlan | null }>("/
 
 export const getDaily = () => getJSON<DailyQuestion>("/daily");
 
+export const generateCheatsheet = (history: HistoryTurn[]) =>
+  postJSON<{ ok: boolean; markdown?: string; error?: string }>("/cheatsheet", {
+    history,
+  });
+
 export const getAnalytics = () => getJSON<Analytics>("/analytics");
 
 export const planCalendarUrl = `${API_BASE}/plan/calendar.ics`;
+
+// --- History & bookmarks ------------------------------------------------ //
+export interface ConversationSummary {
+  id: string;
+  title: string;
+  messages: number;
+  updated_at: string;
+}
+export interface BookmarkItem {
+  message_id: string;
+  conversation_id: string;
+  content: string;
+  note: string | null;
+  created_at: string;
+}
+export interface StoredMessage {
+  id: string;
+  role: Role;
+  content: string;
+  sources: Source[];
+  in_scope: boolean | null;
+  bookmarked: boolean;
+}
+
+export const listConversations = () =>
+  getJSON<{ ok: boolean; conversations: ConversationSummary[] }>("/conversations");
+
+export const getConversation = (id: string) =>
+  getJSON<{ ok: boolean; conversation_id: string; messages: StoredMessage[] }>(
+    `/conversations/${id}`,
+  );
+
+export const toggleBookmark = (messageId: string) =>
+  postJSON<{ ok: boolean; bookmarked: boolean }>("/bookmark", {
+    message_id: messageId,
+  });
+
+export const listBookmarks = () =>
+  getJSON<{ ok: boolean; bookmarks: BookmarkItem[] }>("/bookmarks");
 
 /** Regenerate a previous assistant answer (steered by any prior feedback). */
 export async function streamRegenerate(

@@ -7,6 +7,7 @@ import {
   CopyIcon,
   RegenerateIcon,
   SpeakerIcon,
+  StarIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "./icons";
@@ -15,6 +16,7 @@ interface Props {
   message: ChatMessage;
   isStreaming: boolean;
   onRegenerate: () => void;
+  onBookmark: () => void;
   onFeedback: (
     rating: Rating,
     extra?: { reason?: string; comment?: string; correctedAnswer?: string },
@@ -25,6 +27,7 @@ export default function MessageActions({
   message,
   isStreaming,
   onRegenerate,
+  onBookmark,
   onFeedback,
 }: Props) {
   const [copied, setCopied] = useState(false);
@@ -104,6 +107,13 @@ export default function MessageActions({
           className={`${btn} ${speaking ? active : ""}`}
         >
           <SpeakerIcon width={15} height={15} />
+        </button>
+        <button
+          onClick={onBookmark}
+          title={message.bookmarked ? "Remove bookmark" : "Save answer"}
+          className={`${btn} ${message.bookmarked ? "bg-amber-400/20 text-amber-500" : ""}`}
+        >
+          <StarIcon width={15} height={15} fill={message.bookmarked ? "currentColor" : "none"} />
         </button>
         {message.feedbackSent && message.rating === "up" && (
           <span className="ml-1 text-xs text-emerald-500">Thanks! 🎉</span>

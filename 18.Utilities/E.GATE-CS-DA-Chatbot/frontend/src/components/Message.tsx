@@ -11,6 +11,7 @@ interface Props {
   isStreaming: boolean;
   isLast: boolean;
   onRegenerate: () => void;
+  onBookmark: () => void;
   onFeedback: (
     rating: Rating,
     extra?: { reason?: string; comment?: string; correctedAnswer?: string },
@@ -23,6 +24,7 @@ export default function Message({
   isStreaming,
   isLast,
   onRegenerate,
+  onBookmark,
   onFeedback,
   onFollowUp,
 }: Props) {
@@ -108,6 +110,31 @@ export default function Message({
           </p>
         )}
 
+        {done && message.pyqLinks && message.pyqLinks.length > 0 && (
+          <div className="mt-3 rounded-xl border border-brand-500/30 bg-brand-500/5 p-3">
+            <div className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-brand-600 dark:text-brand-400">
+              📌 See this previous-year question on GateOverflow
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {message.pyqLinks.map((l, i) => (
+                <a
+                  key={i}
+                  href={l.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex items-center gap-1 rounded-full border border-brand-400/50 bg-white px-3 py-1 text-xs font-medium text-brand-700 transition hover:bg-brand-500 hover:text-white dark:bg-slate-900/60 dark:text-brand-300"
+                  title={l.url}
+                >
+                  {l.label} ↗
+                </a>
+              ))}
+            </div>
+            <p className="mt-1.5 text-[11px] text-slate-400">
+              Official discussion &amp; community answers on gateoverflow.in
+            </p>
+          </div>
+        )}
+
         {message.sources && <SourceList sources={message.sources} />}
 
         {done && (
@@ -116,6 +143,7 @@ export default function Message({
               message={message}
               isStreaming={isStreaming}
               onRegenerate={onRegenerate}
+              onBookmark={onBookmark}
               onFeedback={onFeedback}
             />
             {isLast && (

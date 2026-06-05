@@ -188,8 +188,14 @@ def main() -> int:
     bullet("Preference dataset", "corrections/regenerations stored as (prompt, chosen, rejected) pairs.")
     bullet("JSONL export", "for offline reward-model / DPO fine-tuning, then redeploy an improved model.")
 
-    heading("3.10 Persistence, branding & platform", 2)
-    bullet("Database", "SQLAlchemy (SQLite by default, Postgres-ready): conversations, messages, feedback, quizzes, reviews, plans, activity.")
+    heading("3.10 GateOverflow links, bookmarks, history & export", 2)
+    bullet("Direct GateOverflow PYQ links", "for previous-year-question answers ONLY, the exact GateOverflow question thread(s) are shown at the end of the answer — extracted from the URLs embedded in the PYQ PDFs (gateoverflow.in/<id>/<slug>). Open the official discussion & community answers in one click.")
+    bullet("Bookmarks & chat history", "star any answer to save it; revisit past conversations and saved answers from the history panel.")
+    bullet("Cheat-sheet & PDF export", "turn a conversation into a concise revision cheat-sheet, or export the whole chat — print or save as PDF.")
+    bullet("Optional reranking", "cross-encoder reranking of citations via the lightweight FlashRank package (set RERANK=true).")
+
+    heading("3.11 Persistence, branding & platform", 2)
+    bullet("Database", "SQLAlchemy (SQLite by default, Postgres-ready): conversations, messages, feedback, quizzes, reviews, plans, activity, bookmarks.")
     bullet("GateOverflow identity", "the 'GO + red ?' wordmark and brand colours; light & dark themes; responsive UI.")
     bullet("Local/offline model", "point at any OpenAI-compatible endpoint (Ollama, LM Studio, vLLM) via OPENAI_BASE_URL.")
 
@@ -249,6 +255,9 @@ def main() -> int:
             ["GET /review/due, POST /review/grade", "Due cards & SM-2 grading"],
             ["POST /plan/generate, GET /plan, /plan/calendar.ics", "Study plan & calendar export"],
             ["GET /daily, GET /analytics", "Daily question + streak; dashboard data"],
+            ["GET /conversations, /conversations/{id}", "Chat history (list + load)"],
+            ["POST /bookmark, GET /bookmarks", "Save / list bookmarked answers"],
+            ["POST /cheatsheet", "Build a revision cheat-sheet from a chat"],
             ["GET /meta, /health, /admin/stats", "Branding, liveness, usage counters"],
         ],
     )
@@ -313,7 +322,7 @@ def main() -> int:
     bullet("Predicted rank", "map performance to an estimated AIR using historical distributions.")
 
     heading("9.3 Engagement & platform", 2)
-    bullet("GateOverflow account sync", "personalise with a user's real attempts, profile and rank history.")
+    bullet("GateOverflow account sync", "personalise with a user's real attempts, profile and rank history (direct question-thread links are already implemented; account sync needs GateOverflow's API/OAuth).")
     bullet("Email / push digests", "weekly weak-area summaries and revision reminders (needs SMTP/push setup).")
     bullet("Community integration", "show AI answers beside GateOverflow's human Q&A and upvotes.")
     bullet("Gamification", "badges, leaderboards and shareable progress.")

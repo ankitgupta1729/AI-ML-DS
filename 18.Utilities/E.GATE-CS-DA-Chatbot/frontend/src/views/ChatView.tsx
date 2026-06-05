@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Composer from "../components/Composer";
 import Message from "../components/Message";
+import PrintPreviewModal, { type PrintBlock } from "../components/PrintPreviewModal";
 import Welcome from "../components/Welcome";
-import { ArrowDownIcon, BulbIcon, GlobeIcon } from "../components/icons";
+import { ArrowDownIcon, BulbIcon, DocIcon, DownloadIcon, GlobeIcon } from "../components/icons";
+import { generateCheatsheet } from "../lib/api";
 import type { Attachment, ChatMessage, Meta, Rating } from "../types";
 
 const LANGUAGES = ["English", "Hindi", "Bengali", "Telugu", "Tamil", "Marathi", "Kannada"];
@@ -16,6 +18,7 @@ interface Props {
   stop: () => void;
   regenerate: (id: string, opts?: { tutorMode?: boolean; language?: string | null }) => void;
   sendFeedback: (id: string, rating: Rating, extra?: { reason?: string; comment?: string; correctedAnswer?: string }) => void;
+  bookmark: (id: string) => void;
 }
 
 export default function ChatView({
@@ -27,9 +30,41 @@ export default function ChatView({
   stop,
   regenerate,
   sendFeedback,
+  bookmark,
 }: Props) {
   const [tutorMode, setTutorMode] = useState(false);
   const [language, setLanguage] = useState("English");
+  const [printTitle, setPrintTitle] = useState<string | null>(null);
+  const [printBlocks, setPrintBlocks] = useState<PrintBlock[]>([]);
+  const [printLoading, setPrintLoading] = useState(false);
+
+  const exportConversation = () => {
+    const blocks: PrintBlock[] = [];
+    let q = "";
+    for (const m of messages) {
+      if (m.role === "user") q = m.content;
+      else blocks.push({ question: q, markdown: m.content });
+    }
+    setPrintBlocks(blocks);
+    setPrintLoading(false);
+    setPrintTitle("Conversation — GateOverflow Chatbot");
+  };
+
+  const buildCheatSheet = async () => {
+    setPrintBlocks([]);
+    setPrintLoading(true);
+    setPrintTitle("Revision Cheat-Sheet");
+    try {
+      const res = await generateCheatsheet(
+        messages.map((m) => ({ role: m.role, content: m.content })),
+      );
+      setPrintBlocks([{ markdown: res.ok && res.markdown ? res.markdown : `⚠️ ${res.error || "Failed."}` }]);
+    } catch {
+      setPrintBlocks([{ markdown: "⚠️ Could not reach the server." }]);
+    } finally {
+      setPrintLoading(false);
+    }
+  };
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -92,7 +127,35 @@ export default function ChatView({
             ))}
           </select>
         </label>
+
+        {hasMessages && (
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              onClick={buildCheatSheet}
+              title="Build a revision cheat-sheet from this chat"
+              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 transition hover:border-brand-400 hover:text-brand-600 dark:border-white/10 dark:text-slate-400"
+            >
+              <DocIcon width={14} height={14} /> Cheat sheet
+            </button>
+            <button
+              onClick={exportConversation}
+              title="Export this conversation to PDF"
+              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 transition hover:border-brand-400 hover:text-brand-600 dark:border-white/10 dark:text-slate-400"
+            >
+              <DownloadIcon width={14} height={14} /> Export PDF
+            </button>
+          </div>
+        )}
       </div>
+
+      {printTitle && (
+        <PrintPreviewModal
+          title={printTitle}
+          blocks={printBlocks}
+          loading={printLoading}
+          onClose={() => setPrintTitle(null)}
+        />
+      )}
 
       <div ref={scrollRef} onScroll={onScroll} className="relative flex-1 overflow-y-auto">
         {!hasMessages ? (
@@ -106,6 +169,7 @@ export default function ChatView({
                 isStreaming={isStreaming}
                 isLast={i === messages.length - 1}
                 onRegenerate={() => regenerate(m.id, opts)}
+                onBookmark={() => bookmark(m.id)}
                 onFeedback={(rating, extra) => sendFeedback(m.id, rating, extra)}
                 onFollowUp={doSend}
               />

@@ -1,6 +1,6 @@
 import type { Meta } from "../types";
 import Logo from "./Logo";
-import { HelpIcon, MoonIcon, SunIcon, TrashIcon } from "./icons";
+import { ClockIcon, HelpIcon, MoonIcon, SunIcon, TrashIcon } from "./icons";
 
 interface Props {
   meta: Meta | null;
@@ -8,6 +8,7 @@ interface Props {
   onToggleTheme: () => void;
   onClear: () => void;
   onHelp: () => void;
+  onHistory: () => void;
   hasMessages: boolean;
 }
 
@@ -17,6 +18,7 @@ export default function Header({
   onToggleTheme,
   onClear,
   onHelp,
+  onHistory,
   hasMessages,
 }: Props) {
   const indexed = meta?.indexed_chunks ?? 0;
@@ -62,6 +64,13 @@ export default function Header({
               : "connecting…"}
           </span>
 
+          <button
+            onClick={onHistory}
+            title="History & saved answers"
+            className="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-brand-600 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-brand-300"
+          >
+            <ClockIcon width={18} height={18} />
+          </button>
           <button
             onClick={onHelp}
             title="How to use this app"

@@ -11,7 +11,7 @@ import json
 import re
 from typing import Any
 
-from .prompts import FLASHCARD_PROMPT, PLAN_PROMPT, QUIZ_PROMPT
+from .prompts import CHEATSHEET_PROMPT, FLASHCARD_PROMPT, PLAN_PROMPT, QUIZ_PROMPT
 
 # --------------------------------------------------------------------------- #
 # Robust JSON extraction from an LLM response                                 #
@@ -286,6 +286,16 @@ def generate_flashcards(engine, *, exam: str, topic: str, n: int) -> list[dict]:
         if front and back:
             out.append({"front": front, "back": back, "subject": str(c.get("subject", topic))})
     return out[:n]
+
+
+def generate_cheatsheet(engine, *, transcript: str) -> str:
+    """Build a Markdown revision cheat-sheet from a conversation transcript."""
+    prompt = CHEATSHEET_PROMPT.format(transcript=transcript[:12000])
+    text = (engine.generate_json(prompt) or "").strip()
+    # Strip stray ``` fences if the model wrapped the whole thing.
+    if text.startswith("```"):
+        text = re.sub(r"^```[a-z]*\n|\n```$", "", text)
+    return text
 
 
 def generate_plan(engine, *, exam: str, days: int, hours: float) -> dict:

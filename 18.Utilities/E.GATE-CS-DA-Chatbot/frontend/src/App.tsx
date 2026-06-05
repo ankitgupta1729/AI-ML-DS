@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import GuideModal from "./components/GuideModal";
 import Header from "./components/Header";
+import HistoryPanel from "./components/HistoryPanel";
 import Sidebar from "./components/Sidebar";
 import { useChat } from "./hooks/useChat";
 import { useTheme } from "./hooks/useTheme";
@@ -21,6 +22,7 @@ export default function App() {
   const [view, setView] = useState<View>("chat");
   const [dueCount, setDueCount] = useState(0);
   const [showGuide, setShowGuide] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   // Open the guide automatically on a user's first visit.
   useEffect(() => {
@@ -57,6 +59,15 @@ export default function App() {
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/10 blur-3xl" />
 
       {showGuide && <GuideModal onClose={() => setShowGuide(false)} />}
+      {showHistory && (
+        <HistoryPanel
+          onClose={() => setShowHistory(false)}
+          onOpen={(id) => {
+            setView("chat");
+            chat.loadConversation(id);
+          }}
+        />
+      )}
 
       <Header
         meta={meta}
@@ -64,6 +75,7 @@ export default function App() {
         onToggleTheme={toggle}
         onClear={chat.clear}
         onHelp={() => setShowGuide(true)}
+        onHistory={() => setShowHistory(true)}
         hasMessages={view === "chat" && chat.messages.length > 0}
       />
 
@@ -81,6 +93,7 @@ export default function App() {
               stop={chat.stop}
               regenerate={chat.regenerate}
               sendFeedback={chat.sendFeedback}
+              bookmark={chat.bookmark}
             />
           )}
           {view === "mock" && <MockTest />}

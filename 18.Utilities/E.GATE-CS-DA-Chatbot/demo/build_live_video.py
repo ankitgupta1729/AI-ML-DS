@@ -125,6 +125,11 @@ RAW = [
          howto="Click “sources” under any answer to see the exact files and pages used.",
          narration="Expand the sources panel and you see exactly where the answer came from — real previous-year-question PDFs, with page references and a match score for each. This is the biggest difference from general chatbots: instead of an unverifiable claim, every answer is traceable to your material, so you can trust it for the exam."),
 
+    dict(kind="shot", img="18_pyq_links.png", kicker="Feature · GateOverflow",
+         title="Direct GateOverflow question links", sub="For PYQ answers — open the exact thread & community answers",
+         howto="On a previous-year-question answer, click a link under “See this question on GateOverflow”.",
+         narration="When the answer is a previous-year question, you get something unique: a direct link to that exact question on GateOverflow — extracted from the URLs embedded in the question PDFs. One click opens the official thread with the community's discussion and answers. These links appear only for previous-year questions, never for general ones."),
+
     dict(kind="shot", img="05_mock_config.png", kicker="Feature · Practice",
          title="Mock Test & Practice", sub="Choose exam, subject, difficulty and length",
          howto="Open Mock Test, pick your settings, and click Start.",
@@ -140,10 +145,10 @@ RAW = [
          howto="Review your score, percentile and the explanation for every question.",
          narration="When you submit, it's scored on the server with real GATE negative marking and gives you an estimated percentile — here, a perfect seven out of seven at the ninety-ninth percentile. Every question comes with an explanation, and any you got wrong automatically become flashcards. This measurable feedback loop is something a general chatbot simply can't provide."),
 
-    dict(kind="shot", img="09_flashcards.png", kicker="Feature · Revision",
-         title="Flashcards & spaced repetition", sub="SM-2 schedule · generate decks or learn from mistakes",
-         howto="Generate a deck on a topic, then flip and grade each card.",
-         narration="Flashcards use the proven SM-2 spaced-repetition algorithm, scheduling each card for review right before you'd forget it. Cards come from your wrong answers automatically, or you can generate a deck on any topic — here, dynamic programming. Flip each card and grade your recall. Unlike ChatGPT, which forgets what you struggled with, this remembers and reinforces your weak spots."),
+    dict(kind="shot", img="17_flashcard_review.png", kicker="Feature · Revision",
+         title="Flashcards & SM-2 scheduling", sub="Grade your recall; the algorithm picks the next review date",
+         howto="Flip a card, then grade it: Again · Hard · Good · Easy.",
+         narration="Flashcards use the proven SM-2 spaced-repetition algorithm. Flip a card and grade your recall with one of four buttons. SM-2 then schedules the next review: tap “Again” and the card comes back tomorrow; tap “Good” or “Easy” and it pushes the next review further out — a few days, then weeks — as an ease factor grows. So material you know well appears rarely, while what you struggle with returns soon. Wrong quiz answers land here automatically, and you can generate a deck on any topic."),
 
     dict(kind="shot", img="10_planner.png", kicker="Feature · Planning",
          title="Study planner", sub="Day-by-day plan to your exam date · export to calendar",
@@ -161,9 +166,9 @@ RAW = [
          narration="A daily question, with a hint, builds the consistent habit that ultimately cracks GATE, and a streak keeps you coming back. Open it each day, attempt the question, and click Solve with GO Buddy to work through it in chat."),
 
     dict(kind="shot", img="02_welcome.png", kicker="Feature · Multimodal",
-         title="Voice, attachments & Socratic mode", sub="Study the way that suits you",
-         howto="Use 🎙️ to speak, 📎 to attach images/PDFs, and the Socratic toggle for hints-first tutoring.",
-         narration="Look at the composer. The microphone lets you ask by speaking and have answers read aloud — perfect for revision on the go. The paperclip attaches images and PDFs, which the vision model reads. And the Socratic toggle makes the tutor give hints before the full solution, building real understanding instead of just handing you the answer. These input options go far beyond a plain text box."),
+         title="Voice & attachments", sub="Speak, listen, or attach images and PDFs",
+         howto="Use 🎙️ to speak, 🔊 to listen, and 📎 to attach images/PDFs.",
+         narration="Look at the composer. The microphone lets you ask by speaking and have answers read aloud — perfect for revision on the go. The paperclip attaches images and PDFs, which the vision model reads. These input options go far beyond a plain text box."),
 
     dict(kind="shot", img="12_sketch.png", kicker="Feature · Multimodal",
          title="Sketch a question or your working", sub="Draw a diagram; the vision model reads it",
@@ -175,6 +180,11 @@ RAW = [
          howto="Pick a language from the dropdown above the chat, then ask normally.",
          narration="Choose your language from the dropdown and the explanation comes back in it — here, a full answer on dynamic programming in Hindi, while technical terms, code and formulas stay in their standard form. It's tailored for Indian students, and no global chatbot setting blends your language with this GATE-grounded material the same way."),
 
+    dict(kind="shot", img="16_socratic.png", kicker="Feature · Tutoring",
+         title="Socratic tutor mode (on / off)", sub="Hints first — builds real understanding",
+         howto="Toggle “Socratic” above the chat; ask, attempt the hint, then ask for the full solution.",
+         narration="Toggle Socratic mode on, above the chat, and the tutor changes how it answers. Instead of dumping the solution, it gives you guiding hints and a leading question — here, nudging you to think about how many times binary search halves the array — and waits for you to attempt the next step. Ask again, or say you're stuck, and it reveals the full worked solution. Turn it off for direct answers. It's the difference between being handed an answer and actually learning."),
+
     dict(kind="shot", img="14_feedback.png", kicker="Feature · Improvement",
          title="Feedback that trains the assistant", sub="Dislike → reason → optional correction (RLHF)",
          howto="👎 an answer, pick a reason, optionally suggest a better answer, and submit.",
@@ -184,6 +194,16 @@ RAW = [
          title="Regenerated — steered by your feedback", sub="A better, more complete answer",
          howto="Click ↻ regenerate; the new answer addresses your feedback.",
          narration="Click regenerate and the assistant rewrites the answer, steered by your feedback — here it returns a more complete explanation with the base case, tabulation and time complexity. Unlike ChatGPT, which forgets your corrections, this system actually improves from them."),
+
+    dict(kind="shot", img="20_history.png", kicker="Feature · Productivity",
+         title="Bookmarks & chat history", sub="Save answers; revisit past conversations",
+         howto="Tap ★ on any answer to save it; open the 🕑 history panel to revisit.",
+         narration="Found a great explanation? Tap the star to save it. The history panel in the header keeps all your past conversations and saved answers in one place — open any one to pick up exactly where you left off. Nothing you learn gets lost."),
+
+    dict(kind="shot", img="19_cheatsheet.png", kicker="Feature · Productivity",
+         title="Cheat-sheet & PDF export", sub="Turn a chat into a revision sheet — then print or save as PDF",
+         howto="Click “Cheat sheet” to build one, or “Export PDF” for the whole chat.",
+         narration="With one click, turn a whole conversation into a concise revision cheat-sheet — the key formulas, definitions and pitfalls, with proper maths. Print it or save it as a PDF for last-minute revision, or export the entire conversation. Your study sessions become take-away study material."),
 
     dict(kind="center", title="Getting started — in 4 steps", sub="Tap the “?” in the header for this guide anytime",
          narration="To get started: first, open the app and read the welcome guide. Second, ask a question or click an example prompt. Third, take a quick quiz to seed your dashboard. And fourth, review your flashcards and follow your planner every day. The in-app guide is always a tap away on the question-mark button.",

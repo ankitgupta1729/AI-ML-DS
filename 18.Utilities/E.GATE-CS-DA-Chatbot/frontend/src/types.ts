@@ -33,6 +33,13 @@ export interface ChatMessage {
   feedbackSent?: boolean;
   attachments?: Attachment[];
   confidence?: number;
+  pyqLinks?: PyqLink[];
+  bookmarked?: boolean;
+}
+
+export interface PyqLink {
+  url: string;
+  label: string;
 }
 
 export interface SendOpts {
@@ -146,4 +153,5 @@ export interface DonePayload {
   conversationId: string | null;
   messageId: string | null;
   confidence: number;
+  pyqLinks: PyqLink[];
 }

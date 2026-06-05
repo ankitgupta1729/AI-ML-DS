@@ -75,6 +75,39 @@ body {
   color: var(--color-brand-500);
 }
 
+/* Print isolation: when printing, show only the .print-only surface */
+@media print {
+  body.printing * {
+    visibility: hidden !important;
+  }
+  body.printing .print-only,
+  body.printing .print-only * {
+    visibility: visible !important;
+  }
+  body.printing .print-only {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 28px 32px;
+    background: #fff !important;
+    color: #111 !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+  body.printing .no-print {
+    display: none !important;
+  }
+  body.printing .print-only .md,
+  body.printing .print-only .md * {
+    color: #111 !important;
+  }
+  body.printing .print-only .print-q {
+    color: #b91c1c !important;
+    font-weight: 700;
+    margin-top: 14px;
+  }
+}
+
 /* Markdown ("prose") styling, theme-aware, scoped to .md */
 .md {
   line-height: 1.7;
