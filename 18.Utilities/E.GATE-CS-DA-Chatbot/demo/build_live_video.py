@@ -130,6 +130,11 @@ RAW = [
          howto="On a previous-year-question answer, click a link under “See this question on GateOverflow”.",
          narration="When the answer is a previous-year question, you get something unique: a direct link to that exact question on GateOverflow — extracted from the URLs embedded in the question PDFs. One click opens the official thread with the community's discussion and answers. These links appear only for previous-year questions, never for general ones."),
 
+    dict(kind="shot", img="21_site_aware.png", kicker="Feature · GateOverflow",
+         title="Knows the GateOverflow platform", sub="Ask how to use the site itself — not just the syllabus",
+         howto="Ask things like “How do I find PYQs / use search / read the PDFs on GateOverflow?”",
+         narration="The assistant also knows the GateOverflow website itself. Ask how to use the platform and it explains where to find previous-year questions, how to browse by subject or exam, the advanced search syntax, the online PDF Book Viewer, the rank predictor, badges and how to ask a question. So while you study, you also learn to get the most out of GateOverflow — something a general chatbot has no idea about."),
+
     dict(kind="shot", img="05_mock_config.png", kicker="Feature · Practice",
          title="Mock Test & Practice", sub="Choose exam, subject, difficulty and length",
          howto="Open Mock Test, pick your settings, and click Start.",

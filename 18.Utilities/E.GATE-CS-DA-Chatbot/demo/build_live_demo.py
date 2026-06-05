@@ -80,6 +80,11 @@ RAW = [
          howto="Click a link under “See this question on GateOverflow”.",
          narration="And for previous-year questions, the answer links straight to that exact question on GateOverflow — pulled from the URLs in the question PDFs — so you can read the official discussion and community answers. These links appear only for previous-year questions."),
 
+    dict(kind="shot", img="21_site_aware.png", kicker="GateOverflow",
+         title="Knows the GateOverflow platform", sub="Ask how to use the site itself",
+         howto="Ask “How do I find PYQs / search / read the PDFs on GateOverflow?”",
+         narration="It even knows the GateOverflow website itself — ask how to use the platform and it explains where to find previous-year questions, the search syntax, the online PDF viewer, the rank predictor and more. You learn to use GateOverflow while you study."),
+
     dict(kind="shot", img="07_mock_result.png", kicker="Practice",
          title="Mock tests, scored like GATE", sub="Negative marking · percentile · explanations",
          howto="Open Mock Test, answer, and submit.",
