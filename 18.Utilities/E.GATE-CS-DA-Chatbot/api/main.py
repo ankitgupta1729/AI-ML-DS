@@ -28,10 +28,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from fastapi import FastAPI  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from fastapi.responses import (  # noqa: E402
+    FileResponse,
     HTMLResponse,
     PlainTextResponse,
     StreamingResponse,
 )
+from fastapi.staticfiles import StaticFiles  # noqa: E402
 from pydantic import BaseModel, Field  # noqa: E402
 
 from gate_chatbot import __version__  # noqa: E402
@@ -89,13 +91,20 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Lock this down to your front-end origin(s) in production.
+# CORS origins from env (CORS_ORIGINS, comma-separated). Default "*". In the
+# single-container deploy the UI is same-origin, so CORS isn't even needed.
+_origins = [o.strip() for o in get_settings().cors_origins.split(",") if o.strip()] or ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Single-origin production: if a built frontend exists, the API also serves it.
+_DIST = Path(get_settings().frontend_dist)
+_SPA = _DIST / "index.html"
+_SERVE_SPA = _SPA.exists()
 
 
 # --------------------------------------------------------------------------- #
@@ -193,10 +202,12 @@ def _history_dicts(req: ChatRequest) -> list[dict]:
 # --------------------------------------------------------------------------- #
 # Info endpoints                                                              #
 # --------------------------------------------------------------------------- #
-@app.get("/", response_class=HTMLResponse)
-def root() -> str:
-    """Friendly landing page if someone opens the API port in a browser."""
-    return f"""<!doctype html><html><head><meta charset="utf-8">
+@app.get("/")
+def root():
+    """Serve the built React app if present, else a friendly API landing page."""
+    if _SERVE_SPA:
+        return FileResponse(str(_SPA))
+    return HTMLResponse(f"""<!doctype html><html><head><meta charset="utf-8">
 <title>{APP_NAME} API</title>
 <style>body{{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1220;
 color:#e2e8f0;display:grid;place-items:center;height:100vh;margin:0;text-align:center}}
@@ -213,7 +224,7 @@ different port.</p>
 health: <a href="/health">/health</a><br>
 If the app doesn't load, start the frontend:
 <code>cd frontend &amp;&amp; npm run dev</code></p>
-</div></body></html>"""
+</div></body></html>""")
 
 
 @app.get("/health")
@@ -855,3 +866,12 @@ def _persist_turn(
     except Exception as exc:  # noqa: BLE001
         logger.warning("Persisting chat turn failed: %s", exc)
         return conversation_id, None
+
+
+# --------------------------------------------------------------------------- #
+# Static frontend (single-origin production). Mounted LAST so all API routes  #
+# above take precedence; serves /assets, /favicon.svg, etc.                   #
+# --------------------------------------------------------------------------- #
+if _SERVE_SPA:
+    app.mount("/", StaticFiles(directory=str(_DIST), html=True), name="spa")
+    logger.info("Serving built frontend from %s", _DIST)

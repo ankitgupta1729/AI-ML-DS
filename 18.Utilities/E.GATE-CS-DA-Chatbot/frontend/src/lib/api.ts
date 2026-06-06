@@ -15,7 +15,9 @@ import type {
 
 // In dev the Vite proxy maps /api/* → backend. In production set VITE_API_BASE
 // to the API origin (e.g. https://api.example.com) at build time.
-const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) || "/api";
+// `??` (not `||`) so an explicit empty string ("" = same-origin, used by the
+// single-container production build) is respected; unset → dev proxy "/api".
+const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) ?? "/api";
 
 export interface HistoryTurn {
   role: Role;

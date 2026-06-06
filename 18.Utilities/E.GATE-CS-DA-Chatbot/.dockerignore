@@ -1,0 +1,34 @@
+# Keep the build context small & safe for Dockerfile.prod.
+# NOTE: storage/ is intentionally NOT ignored — the prebuilt vector store and
+# PYQ link index are baked into the image for instant retrieval.
+
+# Secrets — never ship into an image
+.env
+.env.*
+*.key
+
+# Large source PDFs (only needed to BUILD storage/, not at runtime)
+data/GATA-Data/
+data/open_resources/
+
+# Python envs / caches
+.venv/
+.venv-*/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node / build artifacts (frontend is rebuilt inside the image)
+**/node_modules/
+frontend/dist/
+
+# Demo build artifacts & heavy media (not needed to run the app)
+demo/frames/
+demo/frames_*/
+demo/*.mp4
+
+# VCS / OS / editor
+.git/
+.DS_Store
+.idea/
+.vscode/

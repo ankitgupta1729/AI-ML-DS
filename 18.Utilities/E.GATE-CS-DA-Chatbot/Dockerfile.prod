@@ -1,0 +1,57 @@
+# syntax=docker/dockerfile:1
+# Single-container production image: builds the React frontend and serves it
+# from the FastAPI backend (one origin, one URL). The prebuilt vector store in
+# storage/ is baked in so retrieval works immediately — NO re-embedding on the
+# server. The OpenAI key is provided at RUNTIME as a secret (never baked in).
+#
+# Build (from this project dir, with storage/ already built locally):
+#   docker build -f Dockerfile.prod -t gateoverflow-chatbot .
+# Run:
+#   docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... gateoverflow-chatbot
+# Then open http://localhost:8000
+
+# ---- 1. Build the frontend (same-origin: VITE_API_BASE empty) ------------- #
+FROM node:20-alpine AS web
+WORKDIR /web
+COPY frontend/package.json frontend/package-lock.json* ./
+RUN npm install
+COPY frontend/ ./
+ENV VITE_API_BASE=""
+RUN npm run build          # → /web/dist
+
+# ---- 2. Python runtime serving API + built frontend ----------------------- #
+FROM python:3.12-slim AS app
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    FRONTEND_DIST=/app/frontend/dist
+
+# Run as a non-root user (uid 1000) — required by Hugging Face Spaces and good
+# practice everywhere.
+RUN useradd -m -u 1000 user
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Application code
+COPY api/ ./api/
+COPY src/ ./src/
+COPY scripts/ ./scripts/
+
+# Prebuilt retrieval assets (vector store + PYQ link index). Required at runtime.
+# Build these locally first:  python scripts/ingest.py && python scripts/build_pyq_index.py
+COPY storage/ ./storage/
+
+# Built frontend from stage 1
+COPY --from=web /web/dist ./frontend/dist
+
+# Make the whole app dir writable by the runtime user (SQLite app.db, Chroma
+# locks, and ensure_dirs() all write under /app).
+RUN mkdir -p /app/data && chown -R user:user /app
+USER user
+
+EXPOSE 8000
+# Respect the platform's $PORT (Render/Railway/Cloud Run set it); default 8000
+# (matches app_port: 8000 in the Hugging Face Space README).
+CMD ["sh", "-c", "uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
