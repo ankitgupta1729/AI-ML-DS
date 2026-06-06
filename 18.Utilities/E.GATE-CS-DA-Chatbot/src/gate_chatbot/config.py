@@ -70,6 +70,13 @@ class Settings(BaseSettings):
     # --- API ------------------------------------------------------------
     api_host: str = Field(default="0.0.0.0", alias="API_HOST")
     api_port: int = Field(default=8000, alias="API_PORT")
+    # Comma-separated allowed CORS origins ("*" = all; lock down in production).
+    cors_origins: str = Field(default="*", alias="CORS_ORIGINS")
+    # If set and the directory exists, the API also serves the built React app
+    # from here (single-origin deploy). Defaults to ../../frontend/dist.
+    frontend_dist: str = Field(
+        default=str(ROOT_DIR / "frontend" / "dist"), alias="FRONTEND_DIST"
+    )
 
     def ensure_dirs(self) -> None:
         """Create storage directories if they do not yet exist."""
