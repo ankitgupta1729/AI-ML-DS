@@ -608,6 +608,22 @@ def analytics(db) -> dict:
         [(s, b["accuracy"]) for s, b in by_subject.items() if b["total"] and b["accuracy"] < 0.6],
         key=lambda x: x[1],
     )
+    # Last-7-days activity summary. SQLite returns tz-naive datetimes, so
+    # normalise to aware-UTC before comparing.
+    def _aware(dt):
+        return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+    cutoff = _now() - timedelta(days=7)
+    last7 = [a for a in attempts if a.created_at and _aware(a.created_at) >= cutoff]
+    last7_summary = {
+        "attempts": len(last7),
+        "avg_accuracy": round(sum(a.accuracy for a in last7) / len(last7), 3) if last7 else 0.0,
+    }
+    # Percentile trend (oldest → newest, last 15 attempts)
+    trend = [
+        {"at": a.created_at.isoformat(), "percentile": a.percentile, "accuracy": a.accuracy}
+        for a in reversed(attempts[:15])
+    ]
     return {
         "attempts": n,
         "avg_accuracy": avg_acc,
@@ -617,6 +633,8 @@ def analytics(db) -> dict:
         "review_items": db.scalar(select(func.count()).select_from(ReviewItem)) or 0,
         "by_subject": by_subject,
         "weak_areas": [s for s, _ in weak],
+        "last7": last7_summary,
+        "percentile_trend": trend,
         "recent": [
             {
                 "kind": a.kind, "subject": a.subject, "score": a.score,
@@ -626,3 +644,13 @@ def analytics(db) -> dict:
             for a in attempts[:8]
         ],
     }
+
+
+def activity_since(db, day_iso: str) -> int:
+    """Number of distinct active days on/after a given YYYY-MM-DD date."""
+    try:
+        return db.scalar(
+            select(func.count()).select_from(ActivityLog).where(ActivityLog.day >= day_iso)
+        ) or 0
+    except Exception:  # noqa: BLE001
+        return 0

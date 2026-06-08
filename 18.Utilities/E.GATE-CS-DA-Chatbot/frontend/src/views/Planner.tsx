@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { generatePlan, getPlan, planCalendarUrl } from "../lib/api";
-import type { StudyPlan } from "../types";
+import type { PlanAdherence, StudyPlan } from "../types";
 
 export default function Planner() {
   const [exam, setExam] = useState("CS");
@@ -8,11 +8,17 @@ export default function Planner() {
   const [days, setDays] = useState(30);
   const [hours, setHours] = useState(4);
   const [plan, setPlan] = useState<StudyPlan | null>(null);
+  const [adherence, setAdherence] = useState<PlanAdherence | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getPlan().then((r) => r.ok && r.plan && setPlan(r.plan)).catch(() => {});
+    getPlan()
+      .then((r) => {
+        if (r.ok && r.plan) setPlan(r.plan);
+        if (r.adherence) setAdherence(r.adherence);
+      })
+      .catch(() => {});
   }, []);
 
   const make = async () => {
@@ -72,6 +78,14 @@ export default function Planner() {
         </div>
 
         {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
+
+        {adherence && plan && (
+          <div className={`mt-4 rounded-xl border p-3 text-sm ${adherence.on_track
+            ? "border-emerald-300/60 bg-emerald-50/60 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/5 dark:text-emerald-300"
+            : "border-amber-300/60 bg-amber-50/60 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/5 dark:text-amber-300"}`}>
+            {adherence.on_track ? "🎯 " : "⏰ "}{adherence.message}
+          </div>
+        )}
 
         {plan && (
           <div className="mt-6">

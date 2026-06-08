@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAnalytics } from "../lib/api";
-import type { Analytics } from "../types";
+import { getAnalytics, getCoach } from "../lib/api";
+import type { Analytics, CoachReport } from "../types";
 
 function ring(pct: number) {
   const r = 34, c = 2 * Math.PI * r;
@@ -40,11 +40,37 @@ export default function Dashboard() {
       <div className="mx-auto max-w-4xl px-4 py-6">
         <h2 className="text-xl font-extrabold">📊 Performance Dashboard</h2>
 
+        <CoachCard />
+
         <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <Kpi label="Readiness" value={`${a.readiness}`} suffix="/100" accent />
           <Kpi label="Avg accuracy" value={`${Math.round(a.avg_accuracy * 100)}%`} />
           <Kpi label="Avg percentile" value={`${a.avg_percentile}`} />
           <Kpi label="Streak" value={`${a.streak}🔥`} />
+        </div>
+
+        {/* Rank band · this week · trend */}
+        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-white/10 dark:bg-slate-900">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Estimated rank</div>
+            <div className="mt-1 text-lg font-extrabold text-brand-600 dark:text-brand-400">
+              {a.rank_band || "—"}
+            </div>
+            <div className="mt-1 text-[11px] text-slate-400">Heuristic from your average percentile</div>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-white/10 dark:bg-slate-900">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">This week</div>
+            <div className="mt-1 text-lg font-extrabold">
+              {a.last7?.attempts ?? 0} <span className="text-sm font-medium text-slate-400">test(s)</span>
+            </div>
+            <div className="mt-1 text-[11px] text-slate-400">
+              {a.last7 && a.last7.attempts ? `${Math.round(a.last7.avg_accuracy * 100)}% avg accuracy` : "No tests in the last 7 days"}
+            </div>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-white/10 dark:bg-slate-900">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Percentile trend</div>
+            <Sparkline points={(a.percentile_trend || []).map((p) => p.percentile)} />
+          </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -130,6 +156,109 @@ function Kpi({ label, value, suffix, accent }: {
         {value}<span className={`text-sm font-medium ${accent ? "opacity-80" : "text-slate-400"}`}>{suffix}</span>
       </div>
       <div className={`text-xs ${accent ? "opacity-90" : "text-slate-500 dark:text-slate-400"}`}>{label}</div>
+    </div>
+  );
+}
+
+function CoachCard() {
+  const [report, setReport] = useState<CoachReport | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const run = async () => {
+    setLoading(true);
+    try {
+      setReport(await getCoach("CS"));
+    } catch {
+      setReport({ ok: false, message: "Couldn't reach the coach. Try again." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const Section = ({ title, items, icon }: { title: string; items?: string[]; icon: string }) =>
+    items && items.length ? (
+      <div className="mt-3">
+        <div className="mb-1 text-xs font-bold uppercase tracking-wide text-brand-600 dark:text-brand-400">
+          {icon} {title}
+        </div>
+        <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-200">
+          {items.map((t, i) => <li key={i}>{t}</li>)}
+        </ul>
+      </div>
+    ) : null;
+
+  return (
+    <div className="mt-4 rounded-2xl border border-brand-500/30 bg-gradient-to-br from-brand-500/10 to-accent-500/5 p-5">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h3 className="flex items-center gap-2 text-base font-bold">🧭 Your AI Coach</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Personalised, rank-focused feedback from your attempts, weak areas, streak &amp; plan.
+          </p>
+        </div>
+        <button
+          onClick={run}
+          disabled={loading}
+          className="rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:opacity-90 disabled:opacity-60"
+        >
+          {loading ? "Analysing…" : report ? "Refresh advice" : "Get coaching"}
+        </button>
+      </div>
+
+      {report && !report.ok && (
+        <p className="mt-3 text-sm text-amber-600 dark:text-amber-400">
+          {report.message || "No coaching available yet."}
+        </p>
+      )}
+
+      {report && report.ok && (
+        <div className="mt-3 rounded-xl border border-slate-200 bg-white p-4 dark:border-white/10 dark:bg-slate-900">
+          {report.headline && (
+            <p className="text-sm font-semibold text-slate-800 dark:text-white">{report.headline}</p>
+          )}
+          <Section title="Strengths" items={report.strengths} icon="✅" />
+          <Section title="Focus areas" items={report.focus_areas} icon="🎯" />
+          <Section title="This week" items={report.this_week} icon="🗓️" />
+          {report.rank_advice && (
+            <div className="mt-3 rounded-lg bg-brand-500/10 p-3 text-sm text-slate-700 dark:text-slate-200">
+              <b className="text-brand-600 dark:text-brand-400">🏆 Biggest lever for a top rank:</b>{" "}
+              {report.rank_advice}
+            </div>
+          )}
+          {report.habit && (
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">🔥 <b>Consistency:</b> {report.habit}</p>
+          )}
+          {report.encouragement && (
+            <p className="mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">{report.encouragement}</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Sparkline({ points }: { points: number[] }) {
+  if (!points.length) {
+    return <div className="mt-2 text-[11px] text-slate-400">Take a few tests to see your trend.</div>;
+  }
+  const W = 220, H = 44, n = points.length;
+  const max = 100, min = 0;
+  const x = (i: number) => (n === 1 ? W / 2 : (i / (n - 1)) * (W - 6) + 3);
+  const y = (v: number) => H - 4 - ((v - min) / (max - min)) * (H - 8);
+  const d = points.map((p, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(p).toFixed(1)}`).join(" ");
+  const up = points.length > 1 && points[points.length - 1] >= points[0];
+  return (
+    <div className="mt-1">
+      <svg width="100%" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="h-12 w-full">
+        <path d={d} fill="none" stroke={up ? "#22c55e" : "#ef4444"} strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round" />
+        {points.map((p, i) => (
+          <circle key={i} cx={x(i)} cy={y(p)} r="2" fill={up ? "#22c55e" : "#ef4444"} />
+        ))}
+      </svg>
+      <div className="text-[11px] text-slate-400">
+        {points.length} attempt(s) · latest {points[points.length - 1]} pc {up ? "↗" : "↘"}
+      </div>
     </div>
   );
 }
