@@ -230,4 +230,190 @@ After few seconds, instance will be up and running. Now, come back to cloud shel
 
 Now, start the apache service by typing `sudo systemctl start apache2` and then type `sudo systemctl status apache2` to check if apache is running or not.
 
-16. 
+16. Overview of GCP Storage Services:
+
+Storage services add persistence and durability to applications. When you are dealing with data, you got to store data in one of the 2 places:
+
+- Traditional Databases: It forms the data services.
+- We got to store it in storage services that provide persistence for both unstructured and structured data.
+
+At high level, storage services are classified into 3 types:
+
+- Object Storage
+- Block Storage
+- File System
+
+GCP Storage services can be used to store:
+
+- Unstructured data like images, pdfs, documents, HTML files and so on.
+- Folders and files that e typically migrate from local on-prem data center environment to cloud
+
+17. Google Cloud Storage:
+
+- It's an unified object storage service for a variety of applications.
+- Applications need to store and retrieve objects while dealing with the cloud and this typically happens through an API. That API is exposed by GCS or Google Cloud Storage.
+- GCS can scale from one byte to exabytes of data. There is almost ability to store infinite amount of data.
+- GCS is designed for 99.999999% durability which means the chance of losing data is almost nil.
+- GCS can be used to store high frequency as well as low frequency access to data. 
+
+GCS provides you an API driven object storage service that can be used by cloud applications. So, when you are storing data, you write and retrieve the data using APIs. This is the fundamental difference between dealing with file system and object storage.
+
+- Data can be stored in single region, dual region or multi-region depending on your policy, compliance and regulatory information. 
+
+18. Google Cloud Storage - Storage Classes:
+
+There is `Standard` Storage Class (name of the class) which is the most common storage class used by developers. It is optimized for low latency and frequent access. So, if you are storing images that you are going to retrieve very often then you would want to choose this storage class which is called the `High Frequency Access`. And this is the most common storage class preferred by developers because it's very easy to use and comes with the standard ability of accessing the data very often.
+
+But you may have data that you don't access very often. In that case, you can choose `low frequency access`  storage class called `Nearline`. It is meant for data access less frequently, typically chosen for data that is accessed less than once a month. 
+
+You may also have certain type of data that has the lowest frequency access maybe once in a year and you maintain that kind of data primarily for archival purpose and you don't retrieve often.
+
+19. Persistent Disks:
+
+Object Storage provides API-driven access. Persistent disks give us reliable block storage for GCE VMs. Many times, you may want to have storage attached to compute, pretty much like direct-attached storage of your on-premise data center or the way you use the USB storage.
+
+Persistent disks are essentially the block storage devices that can be attached to one of the Google Compute Engine instances or VMs. 
+
+Disks are independent of compute engine VMs which means the life cycle of persistent disks is completely independent of compute engine VMs. You can create them outside of the context of a VM and retain it even after VM is terminated. That's what persistent disks are really durable and reliable. 
+
+They also provide massive storage options to VMs. For example, each disk that you attached to VM can go up to 64TB in size. 
+
+Persistent disks can have one writer and multiple readers. So, we can make one VM as writer and multiple VMs can be readers in distributed applications with centralized data access. 
+
+Persistent disks can support both HDD and SDD. SDD offers the best throughput for I/O intensive applications like relational databases, NoSQL databases and so on.
+
+Persistent Disks are available in 3 storage types: Zonal, Regional and Local.
+
+20. Cloud Filestore:
+
+So apart from object storage and block storage, GCP also has cloud file store which will mimic your local file system or the distributed file system you may be running in your data center. So it's a managed file storage service for traditional and legacy applications that need NAS-like file system access. So when you are moving an application from on-premises to the cloud, applications expect similar exposure to storage and block storage or object storage may not be sufficient because the traditional legacy applications might be dependent on NAS like file system. So when you're moving those applications to gcp Google Cloud file Store will help you emulate exactly the same environment like nas, but in the cloud. 
+
+It's a centralized highly available file system for GOOGLE compute engine and Google Kubernetes engine. So file store exposes an NFS file share with fixed export settings and default Unix permissions. This compatibility makes applications think that they're actually running on-prem while they're still deployed in the cloud. 
+
+File store File shares are available as mount points in GC VMs. So applications continue to work the same way they have been on the data center or the on-prem environment. So on-prem applications using NAS can take advantage of this service, call the Filestore. 
+
+Like most of the other services Filestore has built-in zonal storage redundancy for high availability which means when you are writing data it is immediately replicated across multiple endpoints so that you have storage redundancy. And this ensures higher availability of data and file store also encrypts data while it is in transit. That means when you are writing data and data is in transit or in or addressed, it is always encrypted. And this ensures higher security for the data that is being used within the context of file store. 
+
+So to quickly summarize Google Cloud file store emulates NAS-like environment in cloud enabling legacy applications to continue to run while moving from on-prem to the cloud. 
+
+21. Demo - Storing Data in GCP:
+
+All right, let's take a look at the demo that deals with storing data in GCP. All right, we are now looking at the dashboard page of GCP console. So we can launch the storage dashboard by typing storage and selecting this option. So, buckets are going to be the containers within which we are going to create folders and store objects. So we start by creating the bucket and this is the highest level container within the GCS hierarchy. So a bucket may contain a folder and a folder may contain a file.
+
+So let's start creating the bucket. So we need to give a unique name, so I'm going to give my name followed by demo. So that's the name which is globally unique and I hope this is truly unique. So, let's click on continue to move to the next level. So, once we created the, or once we named the bucket then we need to choose where to store the data. And as we discussed in the section there is region where you have lowest latency but this is single region. You can choose multi-region that gives you highest availability across largest area.
+
+So multi-region gives you options like US, multiple regions within US, multiple regions within Europe and Asia. It delivers highest availability across the largest area. But if you are very specific, you can actually choose dual-region with high availability and low latency across two regions. And here we have Americas where it is stored within two locations within US and then within Europe it is stored within Netherlands and Finland. So, your location type obviously impacts the cost. So if you look at the, I'm sorry, not exactly the cost but the available SLA.
+
+So the region has 99.9% of availability while multi-region has slightly better and dual-region has exactly the same availability. But what really impacts the cost is going to be the storage class. So, let's choose region and click on continue. So here we have the storage classes, standard best for frequently access data, the data that is being written and read very often, nearline, which is best for backups and data accessed once in a month or or less. And as soon as we switch from standard to nearline, you notice that the cost involved in storage and retrieval is also changing.
+
+Coldline is best for disaster recovery and data accessed once a year or less. So this is completely meant for archival and cold storage. So let's choose standard which is typically the option that the developers choose when they're storing regular objects within GCS. The next option is to apply permissions. You can choose object level or bucket level permissions and bucket level permissions, which means we are going to apply a policy that is going to be replicated or applied to all the objects within the bucket.
+
+And then you can also get to choose how each object within the bucket is going to be accessed. So, we'll choose the default option here, set object level and bucket level permissions and advanced settings, we don't need to modify this. This is really how you enable encryption either through Google managed key or customer managed key. You can also define a retention policy that tells how long the object is going to be stored and when it's going to be deleted. For metadata you can add additional labels to the bucket.
+
+Now, we are not going to change anything here. Let's go ahead and click on create. So this is going to take just a few seconds and our first bucket is going to be created. And there we go. So now the bucket is created. Let's create a folder within that. And I'm going to store images, so I'll call this folder as images. And once we create the folder, we can now upload files. So from my local file system I'm going to upload an image called flower.jpeg and this is going to be uploaded to my Google Cloud storage.
+
+The bucket is configured for the standard storage class, and it is regional. That means if I have my application running in the same region, it gets the best possible performance and lowest possible latency. So, that was a quick walkthrough of how to create a bucket and what are the various choices you have in terms of the storage class, in terms of location. And remember all of them will impact the cost involved in storing the data. So that was a quick demo of dealing with Cloud storage within GCP.
+
+22. GCP Network Services:
+
+GCP network services. They're one of the key building blocks of GCP, and Google Cloud leverages Google's global network for connectivity. As we know, Google has a very expansive network to run some of their core services like Search, YouTube, Gmail, G Suite and so on. The advantage of using Google Cloud is that the customers will get to use the same global network that rest of the Google services rely on. And this gives unmatched network performance to applications running on GCP. To enable choice between choosing the premium backbone and the normal backbone, GCP offers standard and premium tiers.
+
+So these tiers of network services will offer a trade-off between performance and cost. So if your application demands higher throughput and low latency, you can go for a premium tier that uses the same network as rest of the Google services, or you could use a standard tier that leverages selection of ISP-based internet backbone for connectivity. So once you have chosen the standard or premium tier, then you can start using some of the services, network services offered by GCP. Load balancers are very popular because they route the traffic evenly to multiple applications or multiple instances of the applications.
+
+Virtual Private Cloud or VPC provides private and hybrid networking to applications and cloud-based deployments. Customers can extend their data center to GCP through hybrid connectivity. So let's understand each of those services in detail.
+
+23. GCP Network Service Tiers:
+
+Let's start this section by understanding more of Network Service Tiers. So, GCP offers two service tiers. There is a Premium Tier and there's a Standard Tier. Premium Tier delivers traffic via Google's premium backbone that powers rest of Google's services, like Google Search, G-Mail, G-Suite, YouTube, and so on. Standard Tier uses regular connectivity based on ISP networks. And because this is based on third-party connectivity and doesn't use the high throughput, high performance network backbone, Standard Tier is obviously cheaper.
+
+GCP recommends using the Premium Tier as the default option. So, that is if you don't change any settings by launching a load balancer or creating any of the network services, by default Google uses Premium but you are free to switch from Premium to Standard Network Tier.
+
+24. Load Balancers:
+
+Within the network services, load balancers are the most popular services that are used by developers and DevOps teams. So load balancer distributes traffic across multiple GCE VMs in a single or multiple regions. Now this statement is pretty loaded. Let me demystify that for you. So a load balancer, when put in front of GCE VMs can route the traffic across multiple instances, assuming all of them run a homogeneous application, and manage the state in an external service like Google Cloud SQL or Google Cloud storage.
+
+So when the traffic gets routed to one of the stateless services, the requests are evenly distributed across multiple endpoints or multiple instances of the applications. Now, the advantage of using Google Cloud load balancing is that you can actually route the traffic, not just to the instances running in the same zone or same region, but even across multiple regions. So you can deploy an application across the globe and front end that with a Google Cloud load balancer. So there are two types of load balancer.
+
+One is the HTTP or HTTPS load balancer and then there is a network load balancer. So HTTPS load balancer provides global load balancing. And as you can understand, this is typically meant for routing traffic to web apps that are deployed in more than one zone or more than one region. Network load balancer is routing the traffic across multiple TCP and UDP endpoints but within the same region. So the bottom line here is HTTP load balancer is global. That means it can route the traffic to pretty much any instance deployed anywhere in the in the world, whereas network load balancer is confined to a region where it is deployed.
+
+Apart from being global and local load balancers, these load balancers can be used as an internal or external load balancer. Now when do you use internal versus external? Well, let's take a look at an architectural diagram. So in this schematic that you see here, we have a mobile app or a web app that is actually using an external load balancer. So you have multiple users in US and Asia. So they are first hitting the external load balancer and from there, the traffic gets routed to one of the regions, there is us-central-1b and asia-east-1a.
+
+So depending on where the user is coming from, the role of the HTTP load balancer is to route the traffic to an appropriate location. Now, once the traffic hits the web tier in one of the locations, then it needs to talk to the database via a set of app servers. And because there are multiple app servers, there is more than one app server that also needs to be front ended with a load balancer. So the web tier talks to the app tier, which is an internal tier, via a load balancer and that load balancer is called as an internal load balancer.
+
+So you can use a combination of both external and internal to achieve maximum scalability and better performance. So this architectural diagram will help you visualize how and when internal and external load balancers are being used.
+
+![architecture](./4.png)
+
+25. VPC(Virtual Private Cloud):
+
+Applications deployed in the cloud demand higher level of security and isolation. And that's where we have Virtual Private Cloud. As the name suggests, it's a software defined network to enable private networking and private cloud within the public cloud. So when we deploy an application, it is possible for us to create a quadrant of space within the public cloud designated as a Virtual Private Cloud and deploy the applications and application resources within that quadrant of zone. And that quadrant of zone within the public cloud, that area is actually called as the Virtual Private Cloud.
+
+So it's a software defined network that provides private networking for VMs. And this essentially isolates the VMs running inside the VPC with rest of the world. VPC network is a global resource with regional subnets. If you're familiar with networking concepts, you must know that it is possible to create multiple subnets as a part of VPC. So a VPC network is a global resource which means you create a VPC that is visible from any of the regions that that you have within GCP and beyond that you can create a subnet per region which is going to be attached to the same VPC.
+
+And this gives a lot of flexibility, power and of course ease of use because you're not dealing with isolated, fragmented set of virtual private clouds but you have a concept of a global VPC but every region is treated as a subnet. Each VPC is logically isolated from each other. And this is one of the core requirements of Virtual Private Cloud or Hybrid Cloud. So, one VPC cannot see the resources deployed in another VPC because each VPC is completely running in its own isolated environment. And that is a sandbox that is within the GCP environment.
+
+So even if you are creating multiple VPCs you need to explicitly allow communication between these VPCs by creating firewall rules. So firewall rules either allow or restrict traffic within subnets. So it is quite common for customers to create a public subnet and multiple private subnets and keep sensitive resources within the private subnets and private subnets are never exposed to the outside world. Only those resources deployed in the public subnet become visible to the outside world and they act as the channel to talk to the resources deployed within the private subnet.
+
+And you use firewall rules to selectively route the traffic from the public subnet to one or more private subnets and that's how you create isolation. At the same time, high security by creating individual subnets that act as sandboxes to basically segregate resources into either private or public. Resources within a VPC communicate with standard IPV4 IP address and there is a DNS service within VPC that provides name resolution. VPC networks can be connected to other VPC networks through a concept called VPC peering.
+
+So if you are running multiple VPCs and you may want to share resources among them you can create what is called as a VPC peer which will bring one or more VPCs together and it becomes a logical extension of the VPCs. So they, the resources deployed in each of these VPCs get to talk to each other. And VPC networks are the essential building blocks for configuring hybrid network. And this is possible when you use services like cloud VPN or Cloud Interconnect. So VPC is the basic requirement for enabling hybrid cloud connectivity between your On Prem Data center and GCP Public Cloud.
+
+So by using the VPC networks through Cloud VPN or Cloud Interconnect you achieve a private communication between your data center and the resources running in the Public Cloud that is the GCP environment. 
+
+26.  Hybrid Connectivity:
+
+Google Cloud offers multiple mechanisms to extend your on-prem data center to the public cloud. And that's what is called as the hybrid connectivity. So it seamlessly and securely extends local data center to GCP infrastructure. There are three GCP services that enable hybrid connectivity. The first one is Cloud Interconnect, the second is Cloud VPN and finally, there is Peering. So Cloud Interconnect extends on-prem networks to GCP via Dedicated or Partner Interconnect. So when you are considering connecting your local data center to the cloud, you can choose between Google's own network, that is spread across the globe, or you could use one of the partners that Google designates for enabling the interconnectivity.
+
+But irrespective of how you get connected, the objective is to extend the data center to the cloud. For example, you may be running a database on-prem which is too heavy to migrate to the cloud. For example, a decade-old SAP instance or an Oracle database that is very difficult to migrate to the cloud. So you might want to retain it within the on-prem environment, but you want to run some of the modern applications that talk to the SAP or Oracle database in the cloud. So in that case, you continue to run your database on-prem but use hybrid connectivity via Cloud Interconnect to extend your database to the public cloud where modern, elastic applications are running inside app engine or compute engine or Kubernetes engine.
+
+So how you extend is based on either Dedicated or Partner Interconnect. But if you don't want to spend a lot on hybrid connectivity and you want to achieve basic secure connectivity, then you could choose Cloud VPN which connects on-prem environment to GCP over public internet. So this is very affordable, very economical mechanism to extend your data center because you're not using a dedicated network provided by Google or their partners. Instead, you choose public internet over VPN. So, this is the basic VPN connectivity that securely extends your on-prem data center to the cloud using public internet and a VPN appliance.
+
+So this is the second option. Then there is Peering, which gives direct access to Google Cloud resources with reduced internet egress fee. Google has partnered with a lot of ISPs and data center providers, and by tapping into one of those partner networks, you can enable direct access. So when compared to Interconnect, Peering gives you much lower egress fee. Egress fee is the bandwidth that you are charged for outbound connectivity. So when you are making requests to the cloud from your data center via Peering, there is an egress fee but this is much lower when compared to Cloud Interconnect.
+
+So you can choose from one of these depending on your use cases and scenarios.
+
+27. Demo - Configuring HTTP Load Balancer:
+
+All right, it's demo time and I am pretty excited to walk you through a comprehensive demo of using load balancing in GCP. All right, we are back at the GCP dashboard. Let's get onto the compute engine, instance templates. So the demo that we are going to configure is a couple of VMs deployed in a region connected to a load balancer where the traffic is routed evenly across the instances. So when we are launching the VMs instead of creating them independently and configuring them with exactly the same settings and same software, we can create what is called as an instance template.
+
+So an instance template acts like a blueprint and this blueprint can be used to launch multiple GCE VMs at one go. So let's first create an instance template. Most of the settings that you see here are going to be similar to configuring an individual VM, but the only difference is this is going to be the blueprint or the quicker template to launch multiple VMs at one shot. So let's call this as web-template. And then we are going to choose f1-micro to make sure that we are within the limits of free tier.
+
+And then we leave the OS image as this default one which is Debian. And enable HTTP traffic because we are actually going to run a web server. This is very important. and I want to introduce a technique where I'm going to launch the web server right at the boot. That is by passing what is called as the startup script. So I'm going to show you the script. This is exactly the same that we ran in one of the GCE demos. The only difference is we are now running this at the boot time so that Apache is installed as soon as the VM is up and running.
+
+So we actually install Apache and then create a default index.html page that shows us, Hello from the host name. And because the host name is very unique it is going to display the host responsible for serving that page. So let's copy the script and paste it in the startup script text box. That's it. Now we are going to go ahead and create the template. And this template, as I mentioned, is responsible as for for creating multiple VMs of identical configuration. Each of them would be based on the same instance type and it is launched in, launched with the web server up and running.
+
+So now the web template is created. We can launch an instance group from this template. So let's go to instance groups and create an instance group. And this group is going to be based on the, so let's call this as web-server. And it is going to be run across multiple zones. I'm going to choose asia-south1, which is the closest region for me. And here if you notice there is web-template, which is the template that we created in the previous step. And every configuration that we have used for this template will be automatically used by this group.
+
+We don't need autoscaling. So we're going to set that to off, and we launch two instances. And we also enable redistribution of auto automatic deployment of instances across zones. So that means the instances that we are launching as a part of this group will be evenly spread across multiple availability zones. It's also a good idea to create a health check. So let's create a health check. Let's call this web-hc. And the protocol would be HTTP. Port is 80. The request path is root, and the check interval is 10 seconds.
+
+Now what this means is every time the load balancer tries to send the traffic, it checks the health status and if the health check reports that there is a problem with the, with one of the web servers, the traffic will not be routed there. So this will ensure that the traffic is always routed to one of the healthy instances and avoids sending the traffic to a faulty instance which may result in errors. So we will configure this and add it to the instance group. So now if we have all the available configuration settings.
+
+One thing that I I want to do is to reduce the initial delay for the first health check. 300 seconds is a lot, so we'll turn this to 60. So this will make sure that you know within the first one minute the health check is attempted and hopefully by then the web server is up and running so it sends a green signal for the load balancer to route the traffic. That's it. Let's go ahead and launch this. This is going to take a few minutes so let's come back when the instance group is ready. All right, so now the web server is up and running.
+
+So we see that there are two instances. We can verify this by going to the VM instances section and we notice there are two web servers with unique identifiers added to them. This is an arbitrary string generated by GCE and appended to our instances. We didn't launch them directly. They are a part of the instance group based on the template that we configured in the previous step. These instances have default external IPs, the public IPs, and clicking on these will show us, Hello from the host name, which is the unique name assigned to each of the VMs.
+
+So, now we notice that the output from each of these web servers is different and unique. So, when we configure the load balancer and start hitting the load balancer from a from a browser, we are going to see the traffic getting evenly sent to one of these web servers. So we'll see the, the output varying from, coming from the load balancer depending on which VM is responsible for serving that request. So now we have the GCE infrastructure in place. We have two instances running with two external IPs.
+
+So let's go to the network section and create a load balancer. So we are currently at the networking services tab and let me launch load balancing. So we click on create load balancer. And choose HTTPS load balancing because we are talking to a web application backend. So we click on start configuration and here you choose whether you want to create an internal load balancer or external load balancer. Obviously the traffic is coming from internet to my VM so this is going to be an external load balancer.
+
+We choose this and click on continue. And let's call this web-lb. So that's the name of the load balancer, and then we go through a different set of configurations to configure the HTTP load balancer. The first one is the backend configuration. So the backend configuration will ensure that we have a set of resources responsible for serving the traffic. So we create the backend service by selecting create a backend service and let's call this web-lb-be. So we can choose network endpoint groups. If you're running individual VMs, this is a good choice, but since we already have an instance group we choose the backend type as the instance group and choose the web server instance group we have launched in the previous step.
+
+Port is 80. That is the default port on which Apache is listening. Balancing mode, this is very important. Whether you want to route the traffic based on CP utilization or the request per second. Now since we're not going to send a lot of traffic we choose rate and this will give us a good visual indication when the traffic is switched between one of the available instances. The maximum RPS that we are going to use per instance is say 100. Now this actually varies depending on your load conditions and your application configuration, but I'm giving an arbitrary number of 100.
+
+So once we have this, we can create the backend. And then we associate this backend with the health check we created earlier. And this health check will be a checkpoint for the load balancer to decide whether to route the traffic to the instance or not. If the health check fails for one of the instances load balancer will gracefully send a request to the other instance and this will enhance the user experience where they only see only see the output coming from healthy instances. And this will definitely result in better user experience.
+
+So we are now done with the backend configuration. Host and path rules, since we don't have multiple endpoints we leave that as the default. Front end configuration. The front end is basically how the consumer or the client of your application sees the endpoint. So we need to configure this. Let's start by giving it a name, web-lb-fe, front end. Protocol is HTTP. Premium, this is the network service there that we have discussed earlier. IPv4, it's an ephemeral IP address. We haven't attached static IP address, so this is fine.
+
+Just leave the options as they are with the default settings and click on this and finally review all the settings. This is called the web-lb-be and responsible for sending the traffic to the web server instance group we created. The host and path rules, the front end, which is using an ephemeral IP address. Network tier is premium. So let's go ahead and create this. Now, this is going to take a couple of more minutes for the web server to be completely configured and the health check to pass. In about five minutes, the load balancer will be completely functioning, which means it will be able to route the traffic to one of the instances in the backend group, which is based on the instance template that we created.
+
+So let's wait for a couple of minutes and come back and check the load balancer in action. So looks like the load balancer is fully configured and all the health checks have passed. So let's click on the load balancer link. And then we see that it's been assigned a public IP address and available on port 80. You can also see that the healthy status shows 2/2, which means both the web servers are now available and they are healthy. They have passed the health check. Now we can verify the functionality of this load balancer by copying this IP address and accessing it from the browser.
+
+So one of the web servers is responding and you can notice that the host name is unique. Now as we start refreshing, we'll actually see that the traffic is evenly routed among these instances. So every time we refresh we may end up hitting a different web server. And this is indicated by the host name. So this is a fully fledged load balancer in action that is able to route the traffic across multiple instances. In this case, we have two instances deployed in two different availability zones, but the load balancer is able to evenly route the traffic to one of the instances.
+
+So that is how you basically configure the load balancer pointing to a set of GCE VMs. To summarize what we have done so far, we first launched an instance template, configured the VM configuration, then from that instance we created a group and this group had two GCE VMs launched in two different availability zones. We also created a health check to make sure that the health is always checked periodically and reporting it back to the load balancer. So that was the configuration part done within the GCE environment.
+
+Then we switch to network services and configured the load balancing. Within the load balancing, we have the backend, which is pointing to the instance group associated with the health check. Then we created the front end, which is nothing but the ephemeral IP address and the port that is exposing the load balancer. And we connected the front end to the back end after which the health check has been performed. And once everything is green we got the public IP address and when we access that, the traffic is evenly routed to one of the instances.
+
+So that was the end to end configuration of load balancer talking to GCE VMs.
+
+28. 
