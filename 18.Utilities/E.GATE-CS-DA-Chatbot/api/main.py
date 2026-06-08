@@ -614,6 +614,42 @@ def quiz_generate(req: QuizGenerateRequest) -> dict:
             "subject": req.subject, "questions": public}
 
 
+@app.get("/quiz/adaptive")
+def quiz_adaptive(exam: str = "CS", num: int = 5) -> dict:
+    """Generate a quiz targeting the student's weakest subjects (from analytics)."""
+    exam = exam if exam in ("CS", "DA") else "CS"
+    num = max(3, min(15, num))
+    try:
+        with db.session() as s:
+            data = db.analytics(s)
+    except Exception:  # noqa: BLE001
+        data = {}
+    weak = (data.get("weak_areas") or [])[:2]
+    subject = " and ".join(weak) if weak else "your most exam-relevant topics"
+    questions = study.generate_quiz(
+        get_engine(), exam=exam, subject=subject, n=num, difficulty="medium"
+    )
+    if not questions:
+        return {"ok": False, "error": "Could not generate questions. Try again."}
+    try:
+        with db.session() as s:
+            quiz_id = db.save_generated_quiz(
+                s, exam=exam, subject=subject, difficulty="medium", questions=questions
+            )
+            s.commit()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("save adaptive quiz failed: %s", exc)
+        quiz_id = ""
+    public = [
+        {"id": q["id"], "type": q["type"], "question": q["question"],
+         "options": q["options"], "marks": q["marks"], "subject": q["subject"]}
+        for q in questions
+    ]
+    return {"ok": True, "quiz_id": quiz_id, "kind": "quiz", "exam": exam,
+            "subject": subject, "adaptive": True,
+            "targeted": weak, "questions": public}
+
+
 @app.post("/quiz/submit")
 def quiz_submit(req: QuizSubmitRequest) -> dict:
     with db.session() as s:
@@ -734,7 +770,26 @@ def plan_latest() -> dict:
     try:
         with db.session() as s:
             plan = db.latest_plan(s)
-        return {"ok": bool(plan), "plan": plan}
+            adherence = None
+            if plan and plan.get("created_at"):
+                created_day = plan["created_at"][:10]
+                days_since = max(0, (date.today() - date.fromisoformat(created_day)).days) + 1
+                active = db.activity_since(s, created_day)
+                total = len(plan.get("days", []) or []) or days_since
+                expected = min(days_since, total)
+                on_track = active >= max(1, expected - 1)
+                if on_track:
+                    msg = f"On track 🎯 — active {active} of {expected} planned day(s)."
+                else:
+                    behind = expected - active
+                    msg = (f"You're ~{behind} day(s) behind — active {active} of "
+                           f"{expected}. Do a focused session today to catch up.")
+                adherence = {
+                    "days_since": days_since, "active_days": active,
+                    "expected": expected, "total_days": total,
+                    "on_track": on_track, "message": msg,
+                }
+        return {"ok": bool(plan), "plan": plan, "adherence": adherence}
     except Exception as exc:  # noqa: BLE001
         return {"ok": False, "error": str(exc)}
 
@@ -827,10 +882,42 @@ def analytics() -> dict:
         data["readiness"] = study.readiness_score(
             data["avg_accuracy"], data["attempts"], data["streak"]
         )
+        data["rank_band"] = (
+            study.rank_band(data["avg_percentile"]) if data["attempts"] else ""
+        )
         data["ok"] = True
         return data
     except Exception as exc:  # noqa: BLE001
         return {"ok": False, "error": str(exc)}
+
+
+@app.get("/coach")
+def coach(exam: str = "CS") -> dict:
+    """AI Coach: personalized, rank-focused feedback from the student's own
+    quiz/mock performance, weak areas, streak and study plan."""
+    try:
+        with db.session() as s:
+            data = db.analytics(s)
+            plan = db.latest_plan(s)
+    except Exception as exc:  # noqa: BLE001
+        return {"ok": False, "error": str(exc)}
+
+    if not data.get("attempts"):
+        return {
+            "ok": False,
+            "reason": "no_data",
+            "message": "Take a quiz or mock test first — then your AI coach can "
+            "analyse your performance and tell you exactly how to improve.",
+        }
+
+    data["readiness"] = study.readiness_score(
+        data["avg_accuracy"], data["attempts"], data["streak"]
+    )
+    exam = exam if exam in ("CS", "DA") else "CS"
+    report = study.generate_coach(get_engine(), exam=exam, analytics=data, plan=plan)
+    if not report.get("headline") and not report.get("focus_areas"):
+        return {"ok": False, "error": "Could not generate coaching. Try again."}
+    return {"ok": True, "readiness": data["readiness"], **report}
 
 
 # --------------------------------------------------------------------------- #

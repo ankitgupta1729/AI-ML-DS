@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import MarkdownMessage from "../components/MarkdownMessage";
-import { generateQuiz, submitQuiz } from "../lib/api";
+import { adaptiveQuiz, generateQuiz, submitQuiz } from "../lib/api";
 import type { QuizQuestion, QuizResult } from "../types";
 
 type Phase = "config" | "loading" | "taking" | "result";
@@ -36,20 +36,34 @@ export default function MockTest() {
 
   useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);
 
+  const begin = (r: { ok: boolean; quiz_id: string; questions?: QuizQuestion[]; error?: string }) => {
+    if (!r.ok || !r.questions?.length) throw new Error(r.error || "generation failed");
+    setQuizId(r.quiz_id);
+    setQuestions(r.questions);
+    setAnswers({});
+    setElapsed(0);
+    setPhase("taking");
+    timer.current = setInterval(() => setElapsed((e) => e + 1), 1000);
+  };
+
   const start = async () => {
     setPhase("loading");
     setError(null);
     try {
-      const r = await generateQuiz({ exam, subject, num, difficulty, kind });
-      if (!r.ok || !r.questions?.length) throw new Error(r.error || "generation failed");
-      setQuizId(r.quiz_id);
-      setQuestions(r.questions);
-      setAnswers({});
-      setElapsed(0);
-      setPhase("taking");
-      timer.current = setInterval(() => setElapsed((e) => e + 1), 1000);
+      begin(await generateQuiz({ exam, subject, num, difficulty, kind }));
     } catch {
       setError("Couldn't generate the test. Check the API/key and try again.");
+      setPhase("config");
+    }
+  };
+
+  const startAdaptive = async () => {
+    setPhase("loading");
+    setError(null);
+    try {
+      begin(await adaptiveQuiz(exam, num));
+    } catch {
+      setError("Couldn't build an adaptive test. Take a quiz first so I know your weak areas.");
       setPhase("config");
     }
   };
@@ -118,6 +132,14 @@ export default function MockTest() {
           >
             {phase === "loading" ? "Generating questions…" : "Start"}
           </button>
+          <button
+            onClick={startAdaptive}
+            disabled={phase === "loading"}
+            title="Auto-targets the subjects you're weakest at (from your dashboard)"
+            className="mt-2 w-full rounded-xl border border-brand-400 py-2 text-sm font-semibold text-brand-600 transition hover:bg-brand-500/10 disabled:opacity-60 dark:text-brand-300"
+          >
+            🎯 Practice my weak areas
+          </button>
         </div>
       </Center>
     );
@@ -140,13 +162,27 @@ export default function MockTest() {
               <Stat label="Est. percentile" value={`${result.percentile}`} />
               <Stat label="Time" value={fmt(elapsed)} />
             </div>
-            {result.weak_areas.length > 0 && (
-              <p className="mt-3 text-sm text-amber-600 dark:text-amber-400">
-                Focus next on: {result.weak_areas.join(", ")}
+            {result.weak_areas.length > 0 ? (
+              <div className="mt-3 rounded-xl border border-amber-300/60 bg-amber-50/60 p-3 text-left dark:border-amber-500/30 dark:bg-amber-500/5">
+                <div className="text-sm font-semibold text-amber-700 dark:text-amber-300">📌 What to do next</div>
+                <p className="mt-0.5 text-sm text-amber-700/90 dark:text-amber-200/90">
+                  Focus on <b>{result.weak_areas.join(", ")}</b>. Review the explanations below,
+                  then drill these topics.
+                </p>
+                <button
+                  onClick={startAdaptive}
+                  className="mt-2 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:opacity-90"
+                >
+                  🎯 Practice these now
+                </button>
+              </div>
+            ) : (
+              <p className="mt-3 text-sm text-emerald-600 dark:text-emerald-400">
+                Strong all-round performance — keep it up! 🎉
               </p>
             )}
             {result.review_cards_created > 0 && (
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-2 text-xs text-slate-500">
                 {result.review_cards_created} flashcard(s) added to your review deck.
               </p>
             )}

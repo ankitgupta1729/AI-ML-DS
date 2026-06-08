@@ -1,6 +1,7 @@
 import type {
   Analytics,
   Attachment,
+  CoachReport,
   DailyQuestion,
   DonePayload,
   Meta,
@@ -158,7 +159,13 @@ export const generatePlan = (body: {
   exam: string; exam_date: string | null; days: number; hours: number;
 }) => postJSON<{ ok: boolean } & StudyPlan>("/plan/generate", body);
 
-export const getPlan = () => getJSON<{ ok: boolean; plan: StudyPlan | null }>("/plan");
+export const getPlan = () =>
+  getJSON<{ ok: boolean; plan: StudyPlan | null; adherence: import("../types").PlanAdherence | null }>("/plan");
+
+export const adaptiveQuiz = (exam = "CS", num = 5) =>
+  getJSON<{ ok: boolean; quiz_id: string; subject: string; targeted?: string[]; questions: QuizQuestion[]; error?: string }>(
+    `/quiz/adaptive?exam=${encodeURIComponent(exam)}&num=${num}`,
+  );
 
 export const getDaily = () => getJSON<DailyQuestion>("/daily");
 
@@ -168,6 +175,9 @@ export const generateCheatsheet = (history: HistoryTurn[]) =>
   });
 
 export const getAnalytics = () => getJSON<Analytics>("/analytics");
+
+export const getCoach = (exam = "CS") =>
+  getJSON<CoachReport>(`/coach?exam=${encodeURIComponent(exam)}`);
 
 export const planCalendarUrl = `${API_BASE}/plan/calendar.ics`;
 

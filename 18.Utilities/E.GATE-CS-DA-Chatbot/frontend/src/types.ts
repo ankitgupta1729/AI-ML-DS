@@ -120,12 +120,24 @@ export interface Analytics {
   due_reviews: number;
   review_items: number;
   readiness: number;
+  rank_band?: string;
+  last7?: { attempts: number; avg_accuracy: number };
+  percentile_trend?: { at: string; percentile: number; accuracy: number }[];
   by_subject: Record<string, { correct: number; total: number; accuracy: number }>;
   weak_areas: string[];
   recent: {
     kind: string; subject: string; score: number; max_score: number;
     accuracy: number; percentile: number; at: string;
   }[];
+}
+
+export interface PlanAdherence {
+  days_since: number;
+  active_days: number;
+  expected: number;
+  total_days: number;
+  on_track: boolean;
+  message: string;
 }
 
 export interface DailyQuestion {
@@ -135,6 +147,20 @@ export interface DailyQuestion {
   question: string;
   hint: string;
   streak: number;
+}
+
+export interface CoachReport {
+  ok: boolean;
+  reason?: string;
+  message?: string;
+  readiness?: number;
+  headline?: string;
+  strengths?: string[];
+  focus_areas?: string[];
+  this_week?: string[];
+  rank_advice?: string;
+  habit?: string;
+  encouragement?: string;
 }
 
 export interface Meta {

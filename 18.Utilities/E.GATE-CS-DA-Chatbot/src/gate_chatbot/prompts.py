@@ -221,6 +221,25 @@ Start with the title line: `# 📝 Revision Cheat-Sheet`.
 Conversation:
 {transcript}"""
 
+COACH_PROMPT = """You are an elite GATE {exam} mentor and performance coach. \
+Analyse the student's REAL performance data and study plan below, then give \
+honest, specific, data-grounded coaching to help them reach a TOP rank. Be \
+encouraging but direct. Never invent numbers — reason only from the data given. \
+Prioritise the highest-impact changes. Keep each item short and actionable.
+
+Student data (JSON — quiz/mock attempts, accuracy by subject, weak areas, \
+streak, readiness score 0–100, recent attempts, and current study plan):
+{data}
+
+Return ONLY valid JSON (no markdown fences) of the form:
+{{"headline":"one honest line on where they stand",\
+"strengths":["subject/skill they're doing well in — keep it up"],\
+"focus_areas":["weak subject — WHY it matters & exactly what to do"],\
+"this_week":["concrete action for the next 7 days","..."],\
+"rank_advice":"the single biggest lever to push toward a top rank, given this data",\
+"habit":"feedback on their consistency/streak and how to fix it",\
+"encouragement":"one short motivating line"}}"""
+
 PLAN_PROMPT = """You are a GATE {exam} mentor. Build a focused day-by-day study \
 plan covering {days} day(s) until the exam, for a student who can study about \
 {hours} hours/day. Prioritise high-weight subjects, mix learning with PYQ \

@@ -11,7 +11,13 @@ import json
 import re
 from typing import Any
 
-from .prompts import CHEATSHEET_PROMPT, FLASHCARD_PROMPT, PLAN_PROMPT, QUIZ_PROMPT
+from .prompts import (
+    CHEATSHEET_PROMPT,
+    COACH_PROMPT,
+    FLASHCARD_PROMPT,
+    PLAN_PROMPT,
+    QUIZ_PROMPT,
+)
 
 # --------------------------------------------------------------------------- #
 # Robust JSON extraction from an LLM response                                 #
@@ -313,3 +319,51 @@ def generate_plan(engine, *, exam: str, days: int, hours: float) -> dict:
             "hours": float(d.get("hours", hours) or hours),
         })
     return {"summary": str(data.get("summary", "")).strip(), "days": clean}
+
+
+def generate_coach(engine, *, exam: str, analytics: dict, plan: dict | None) -> dict:
+    """Produce personalized, rank-focused coaching from the student's own data."""
+    payload = {
+        "exam": exam,
+        "attempts": analytics.get("attempts"),
+        "avg_accuracy": analytics.get("avg_accuracy"),
+        "avg_percentile": analytics.get("avg_percentile"),
+        "readiness_0_100": analytics.get("readiness"),
+        "streak_days": analytics.get("streak"),
+        "due_reviews": analytics.get("due_reviews"),
+        "accuracy_by_subject": analytics.get("by_subject"),
+        "weak_areas": analytics.get("weak_areas"),
+        "recent_attempts": analytics.get("recent"),
+        "study_plan_summary": (plan or {}).get("summary"),
+        "study_plan_days": len((plan or {}).get("days", []) or []),
+    }
+    prompt = COACH_PROMPT.format(exam=exam, data=json.dumps(payload, ensure_ascii=False))
+    data = extract_json(engine.generate_json(prompt)) or {}
+    if not isinstance(data, dict):
+        data = {}
+
+    def _list(key):
+        v = data.get(key) or []
+        return [str(x).strip() for x in v if str(x).strip()] if isinstance(v, list) else []
+
+    return {
+        "headline": str(data.get("headline", "")).strip(),
+        "strengths": _list("strengths"),
+        "focus_areas": _list("focus_areas"),
+        "this_week": _list("this_week"),
+        "rank_advice": str(data.get("rank_advice", "")).strip(),
+        "habit": str(data.get("habit", "")).strip(),
+        "encouragement": str(data.get("encouragement", "")).strip(),
+    }
+
+
+def rank_band(avg_percentile: float, exam: str = "CS") -> str:
+    """A rough estimated AIR band from average percentile (heuristic, motivational).
+
+    Uses an approximate appeared-candidate count per exam. Clearly an estimate.
+    """
+    appeared = 100000 if exam == "CS" else 12000
+    p = max(0.0, min(100.0, float(avg_percentile)))
+    rank = max(1, int(round((1 - p / 100) * appeared)))
+    lo, hi = max(1, int(rank * 0.7)), int(rank * 1.3)
+    return f"≈ AIR {lo:,}–{hi:,}  (top {round(100 - p, 1)}%)"
