@@ -195,7 +195,14 @@ def main() -> int:
     bullet("Cheat-sheet & PDF export", "turn a conversation into a concise revision cheat-sheet, or export the whole chat — print or save as PDF.")
     bullet("Optional reranking", "cross-encoder reranking of citations via the lightweight FlashRank package (set RERANK=true).")
 
-    heading("3.11 Persistence, branding & platform", 2)
+    heading("3.11 AI Coach & personalized performance feedback", 2)
+    bullet("AI Coach", "on the Dashboard, analyses the student's own attempts, weak areas, streak, readiness and study plan and returns rank-focused coaching: strengths, focus areas, a this-week action plan, the single biggest lever for a top rank, and consistency feedback. ChatGPT can't — it doesn't know the student.")
+    bullet("Adaptive weak-area practice", "one click ('Practice my weak areas' / 'Practice these now') generates a quiz targeting the weakest subjects auto-detected from the dashboard.")
+    bullet("Per-mock instant next-steps", "every test ends with a clear 'what to do next' focus and one-click practice; missed questions auto-become flashcards.")
+    bullet("Estimated rank band & percentile trend", "a heuristic AIR band from average percentile, a percentile-trend sparkline, and a last-7-days activity summary.")
+    bullet("Plan-adherence feedback", "the planner compares active days vs the plan and tells the student if they're on track or behind, with a nudge to catch up.")
+
+    heading("3.12 Persistence, branding & platform", 2)
     bullet("Database", "SQLAlchemy (SQLite by default, Postgres-ready): conversations, messages, feedback, quizzes, reviews, plans, activity, bookmarks.")
     bullet("GateOverflow identity", "the 'GO + red ?' wordmark and brand colours; light & dark themes; responsive UI.")
     bullet("Local/offline model", "point at any OpenAI-compatible endpoint (Ollama, LM Studio, vLLM) via OPENAI_BASE_URL.")
@@ -259,6 +266,8 @@ def main() -> int:
             ["GET /conversations, /conversations/{id}", "Chat history (list + load)"],
             ["POST /bookmark, GET /bookmarks", "Save / list bookmarked answers"],
             ["POST /cheatsheet", "Build a revision cheat-sheet from a chat"],
+            ["GET /coach", "AI coach: personalized rank-focused feedback"],
+            ["GET /quiz/adaptive", "Generate a quiz targeting the weakest subjects"],
             ["GET /meta, /health, /admin/stats", "Branding, liveness, usage counters"],
         ],
     )

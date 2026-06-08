@@ -150,6 +150,16 @@ RAW = [
          howto="Review your score, percentile and the explanation for every question.",
          narration="When you submit, it's scored on the server with real GATE negative marking and gives you an estimated percentile — here, a perfect seven out of seven at the ninety-ninth percentile. Every question comes with an explanation, and any you got wrong automatically become flashcards. This measurable feedback loop is something a general chatbot simply can't provide."),
 
+    dict(kind="shot", img="25_adaptive_quiz.png", kicker="Feature · Adaptive",
+         title="Practice your weak areas", sub="One click builds a quiz on exactly what you're weakest at",
+         howto="On Mock Test, click “🎯 Practice my weak areas”.",
+         narration="Instead of generic practice, one click builds a quiz targeting your weakest subjects — here it automatically picked Computer Networks and Operating Systems, drawn from your dashboard. You always practise exactly what will move your rank the most."),
+
+    dict(kind="shot", img="25_nextsteps.png", kicker="Feature · Coaching",
+         title="Instant ‘what to do next’", sub="Every test ends with a clear focus + one-click practice",
+         howto="Read the “What to do next” box on your results, then “Practice these now”.",
+         narration="And every test ends with coaching, not just a score: a clear “what to do next” box — the topics to focus on, a one-click button to practise them immediately, and missed questions auto-added to your flashcards. Studying becomes a tight, guided loop."),
+
     dict(kind="shot", img="17_flashcard_review.png", kicker="Feature · Revision",
          title="Flashcards & SM-2 scheduling", sub="Grade your recall; the algorithm picks the next review date",
          howto="Flip a card, then grade it: Again · Hard · Good · Easy.",
@@ -160,10 +170,20 @@ RAW = [
          howto="Set your exam date and hours/day, click Build plan, then export the .ics.",
          narration="The planner builds a concrete, day-by-day schedule to your exam date, prioritising high-weight subjects with previous-year practice and revision built in. You can export the whole plan to your calendar as an ICS file. It turns a vague intention to study into an actionable schedule."),
 
-    dict(kind="shot", img="08_dashboard.png", kicker="Feature · Insight",
-         title="Performance dashboard", sub="Readiness score · accuracy by subject · weak areas",
-         howto="Take a few quizzes, then open Dashboard to see where to focus.",
-         narration="The dashboard turns your attempts into insight: an exam-readiness score, accuracy broken down by subject, your streak, and automatic weak-area detection. Because general chatbots keep no history, they can't tell you where you stand — this does, so you always know what to study next."),
+    dict(kind="shot", img="26_adherence.png", kicker="Feature · Planning",
+         title="Plan-adherence feedback", sub="Are you actually keeping up with your plan?",
+         howto="Open the Planner — it shows if you're on track or behind.",
+         narration="The planner also keeps you honest: it compares the days you've actually been active against your plan and tells you whether you're on track or falling behind — with a nudge to catch up. A static study plan can't do that."),
+
+    dict(kind="shot", img="23_dash_analytics.png", kicker="Feature · Insight",
+         title="Dashboard: rank, trend & weekly", sub="Readiness · estimated AIR · percentile trend · weekly activity · weak areas",
+         howto="Take a few quizzes, then open Dashboard.",
+         narration="The dashboard turns your attempts into real insight: an exam-readiness score, an estimated all-India-rank band, your percentile trend over time, this week's activity, and accuracy by subject with automatic weak-area detection. Because general chatbots keep no history, they can't tell you where you stand — this does."),
+
+    dict(kind="shot", img="22_coach.png", kicker="Feature · AI Coach",
+         title="Your personal AI Coach", sub="Rank-focused feedback from YOUR data — not generic tips",
+         howto="On the Dashboard, click “Get coaching”.",
+         narration="And the headline feature: a personal AI coach. It analyses your own performance — weak subjects, accuracy, streak, readiness and study plan — and gives specific, rank-focused feedback: what you're doing well, exactly what to fix, your plan for this week, and the single biggest lever to push toward a top rank. ChatGPT fundamentally can't do this, because it doesn't know you."),
 
     dict(kind="shot", img="11_daily.png", kicker="Feature · Habit",
          title="Daily question & streaks", sub="One question a day keeps the momentum",
