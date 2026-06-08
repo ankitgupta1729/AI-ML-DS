@@ -8,8 +8,8 @@ Everything you need to present the app: a **ready-made narrated video**, an
 
 | File | What it is | How to use |
 |---|---|---|
-| `GateOverflow-Chatbot-Demo.mp4` | ~3:25 narrated demo, 16 scenes (1080p, voiced) from **real app footage** — every feature + differentiation + GateOverflow PYQ links + site awareness + save/export | Play it directly in the meeting / embed in slides |
-| `GateOverflow-Chatbot-Feature-Guide.mp4` | ~7:45 **detailed** guide (24 scenes) from **real screenshots of the running app** — incl. GateOverflow PYQ links, **GateOverflow platform awareness**, bookmarks & history, cheat-sheet & PDF export, sketch, multilingual (Hindi), Socratic, dislike→regenerate — per feature: purpose, example, benefit vs ChatGPT/Claude, how to use | Train the team / onboarding deep-dive |
+| `GateOverflow-Chatbot-Demo.mp4` | ~4 min narrated demo, 18 scenes (1080p, voiced) from **real app footage** — every feature + differentiation + GateOverflow PYQ links + site awareness + **AI Coach** + **adaptive practice** + save/export | Play it directly in the meeting / embed in slides |
+| `GateOverflow-Chatbot-Feature-Guide.mp4` | ~9 min **detailed** guide (28 scenes) from **real screenshots of the running app** — incl. **AI Coach**, **adaptive weak-area practice**, **rank band / percentile trend**, **plan-adherence**, GateOverflow PYQ links, platform awareness, bookmarks & history, cheat-sheet & PDF export, sketch, multilingual, Socratic, dislike→regenerate — per feature: purpose, example, benefit vs ChatGPT/Claude, how to use | Train the team / onboarding deep-dive |
 | `live/` | Real screenshots captured from the running app (source stills for the guide video) | Reuse in slides/docs |
 | `build_live_video.py` | Rebuilds the detailed guide from `live/` screenshots (run the app first, recapture, then this) | Regenerate the real-footage video |
 | `GateOverflow-Chatbot-Demo.docx` | **Full documentation**: features, workflow, architecture, differentiation, sample Q&A, roadmap | Hand to the team / present alongside the video |

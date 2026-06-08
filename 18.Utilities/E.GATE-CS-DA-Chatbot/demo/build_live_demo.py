@@ -100,10 +100,20 @@ RAW = [
          howto="Set your exam date, build the plan, export the .ics.",
          narration="The planner builds a day-by-day schedule to your exam date, prioritising high-weight subjects, and exports straight to your calendar."),
 
-    dict(kind="shot", img="08_dashboard.png", kicker="Insight",
-         title="Performance dashboard", sub="Readiness · accuracy by subject · weak areas",
+    dict(kind="shot", img="23_dash_analytics.png", kicker="Insight",
+         title="Dashboard: rank, trend & weak areas", sub="Readiness · estimated AIR · percentile trend · weekly activity",
          howto="Take a few quizzes, then open Dashboard.",
-         narration="A dashboard turns your attempts into insight: an exam-readiness score, accuracy by subject, your streak, and the weak areas to prioritise next."),
+         narration="A dashboard turns your attempts into insight: a readiness score, an estimated all-India-rank band, your percentile trend, weekly activity, and the weak areas to prioritise next."),
+
+    dict(kind="shot", img="22_coach.png", kicker="AI Coach",
+         title="Your personal AI Coach", sub="Rank-focused feedback from your own data",
+         howto="On the Dashboard, click “Get coaching”.",
+         narration="And your personal AI coach reads all of that — weak subjects, accuracy, streak, plan — and gives specific, rank-focused feedback: what to fix, your plan for the week, and the biggest lever toward a top rank. A general chatbot can't, because it doesn't know you."),
+
+    dict(kind="shot", img="25_nextsteps.png", kicker="Adaptive",
+         title="Adaptive practice & next-steps", sub="One-click drill of your weakest topics",
+         howto="“🎯 Practice my weak areas”, or “Practice these now” on results.",
+         narration="One click builds a quiz on exactly your weakest topics, and every test ends with a clear what-to-do-next plus missed questions saved as flashcards — a tight, guided improvement loop."),
 
     dict(kind="shot", img="13_hindi.png", kicker="Multimodal",
          title="Multilingual, voice, sketch & more", sub="Study the way that suits you",
