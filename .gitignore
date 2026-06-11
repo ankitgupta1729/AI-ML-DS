@@ -13,6 +13,3 @@ __pycache__/
 0.Resources/PDFs/Behind Gen AI_ NLP, LLM and ChatGPT by Et Tu Code.pdf
 .DS_Store
 .claude/settings.json
-
-# Oversized media (exceeds GitHub 100MB limit)
-34.Fundamentals-of-Google-Cloud-Udemy/Guide-and-Resources/90_006 Demo - Anthos - NEW!.mp4
