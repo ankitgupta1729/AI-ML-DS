@@ -20,14 +20,29 @@ The top-level folder name becomes the `subject` tag shown in citations.
 
 ## Get more free, open material
 
-Run the bundled fetcher to download openly-licensed textbooks (Mathematics for
-ML, Dive into Deep Learning, CS229, OSTEP, Jurafsky & Martin) into
-`data/open_resources/`:
+Run the bundled fetcher to download a curated library of **free / openly-licensed
+standard textbooks** across the CS & DS/AI syllabus into `data/open_resources/`:
 
 ```bash
 python scripts/fetch_open_resources.py            # list the catalogue
-python scripts/fetch_open_resources.py --download # download them
+python scripts/fetch_open_resources.py --download # download them all
+python scripts/fetch_open_resources.py --download --only mml d2l prml  # a subset
 ```
+
+Current catalogue (≈18 books, organised into subject sub-folders):
+
+| Area | Books |
+|---|---|
+| Discrete math | Mathematics for CS (MIT 6.042) · Discrete Math: An Open Introduction · Book of Proof |
+| Algorithms / DS | Erickson *Algorithms* · *Open Data Structures* · *Competitive Programmer's Handbook* |
+| Math for ML | *Mathematics for ML* · Boyd *Convex Optimization* · MacKay *Information Theory* |
+| Machine learning | Stanford CS229 notes · *Understanding ML* · Bishop *PRML* · Murphy *Probabilistic ML* |
+| Deep learning / NLP / CV | *Dive into Deep Learning* · Jurafsky & Martin *SLP3* · Szeliski *Computer Vision* |
+| Data science / mining | *Foundations of Data Science* · *Mining of Massive Datasets* |
+
+Each entry carries a licence label; most are CC/OER or author/publisher-provided
+free PDFs. A few hosts gate automated downloads (ESL, ISLR, OSTEP-combined,
+Sutton-Barto RL) — they're listed but may need a manual download.
 
 ## Supported formats
 
@@ -79,3 +94,15 @@ Only use authoritative sources so the bot gives trustworthy answers:
 
 After adding or changing files, re-run `python scripts/ingest.py`
 (or `python scripts/ingest.py --reset` for a clean rebuild).
+
+## Scraping gatecse.in (optional)
+
+`python scripts/scrape_gatecse.py` pulls all posts & pages from **gatecse.in**
+(via its public WordPress REST API — `Allow: /` in robots.txt) into
+`data/gatecse/` as **SQLite + JSONL + Markdown**, ready for `ingest.py`.
+Respect gatecse.in's terms/copyright; use it for your own study tool.
+
+> **gateoverflow.in is deliberately NOT bulk-scraped.** It is behind an active
+> Cloudflare bot challenge and its robots.txt sets `ai-train=no`. We use the
+> *permitted* routes instead: GateOverflow's officially-published **PYQ PDFs**
+> (already ingested) and per-question **links** shown under PYQ answers.
