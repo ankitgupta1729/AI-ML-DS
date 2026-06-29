@@ -1,0 +1,558 @@
+<meta charset="utf-8"/>
+<co-content>
+ <h1 level="1">
+  Machine Learning Modeling Pipelines in Production
+ </h1>
+ <p>
+  This is a compilation of resources including URLs and papers appearing in lecture videos. If you wish to dive more deeply into the topics covered this week, feel free to check out these optional references.
+ </p>
+ <h2 level="2">
+  Week 1. Model Serving: introduction
+ </h2>
+ <h3 level="3">
+  NoSQL Databases:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://cloud.google.com/memorystore" title="">
+     Google Cloud Memorystore
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/firestore" title="">
+     Google Cloud Firestore
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/bigtable" title="">
+     Google Cloud Bigtable
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://aws.amazon.com/dynamodb/" title="">
+     Amazon DynamoDB
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  MobileNets:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://arxiv.org/abs/1704.04861" title="">
+     MobileNets
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Serving Systems:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://rise.cs.berkeley.edu/projects/clipper/" title="">
+     Clipper
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/tfx/guide/serving" title="">
+     TensorFlow Serving
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h2 level="2">
+  Week 2. Model Serving: patterns and infrastructure
+ </h2>
+ <h3 level="3">
+  Model Serving Architecture:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://medium.com/@vikati/the-rise-of-the-model-servers-9395522b6c58" title="">
+     Model Server Architecture
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/tfx/serving/architecture" title="">
+     TensorFlow Serving
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://developer.nvidia.com/nvidia-triton-inference-server" title="">
+     NVIDIA Triton Inference Server
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://github.com/pytorch/serve" title="">
+     Torch Serve
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.kubeflow.org/docs/components/serving/" title="">
+     Kubeflow Serving
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Scaling Infrastructure:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://phoenixnap.com/blog/what-is-container-orchestration" title="">
+     Container Orchestration
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://kubernetes.io/" title="">
+     Kubernetes
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://docs.docker.com/engine/swarm/" title="">
+     Docker Swarm
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.kubeflow.org/" title="">
+     Kubeflow
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Online Inference:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://mlinproduction.com/batch-inference-vs-online-inference/" title="">
+     Batch vs. Online Inference
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Batch Processing with ETL:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://github.com/ertis-research/kafka-ml#:~:text=Kafka%2DML%20is%20a%20framework,(ML)%20models%20on%20Kubernetes.&amp;text=The%20training%20and%20inference%20datasets,ones%20provided%20by%20the%20IoT." title="">
+     Kafka ML
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/pubsub" title="">
+     Pub Sub
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/dataflow" title="">
+     Cloud DataFlow
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://spark.apache.org/" title="">
+     Apache Spark
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h2 level="2">
+  Week 3. Model Management and Delivery
+ </h2>
+ <h3 level="3">
+  Experiment Tracking and Management:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://towardsdatascience.com/machine-learning-experiment-tracking-93b796e501b0" title="">
+     Tracking
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://neptune.ai/blog/experiment-management" title="">
+     Management
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Notebooks:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://nbconvert.readthedocs.io/" title="">
+     nbconvert
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://nbdime.readthedocs.io/" title="">
+     nbdime
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://jupytext.readthedocs.io/en/latest/install.html" title="">
+     jupytext
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://docs.neptune.ai/" title="">
+     neptune-notebooks
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://git-scm.com/" title="">
+     git
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Tools for Data Versioning:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://docs.neptune.ai/how-to-guides/data-versioning" title="">
+     Neptune
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.pachyderm.com/" title="">
+     Pachyderm
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://delta.io/" title="">
+     Delta Lake
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://git-lfs.github.com/" title="">
+     Git LFS
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://github.com/dolthub/dolt" title="">
+     DoIt
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://lakefs.io/data-versioning/" title="">
+     lakeFS
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://dvc.org/" title="">
+     DVC
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://blog.tensorflow.org/2021/01/ml-metadata-version-control-for-ml.html" title="">
+     ML-Metadata
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Tooling for Teams:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/tensorboard/image_summaries" title="">
+     Image Summaries
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://neptune.ai/for-teams" title="">
+     neptune-ai
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/vertex-ai/docs/experiments/tensorboard-overview" title="">
+     Vertex TensorBoard
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  MLOps:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning" title="">
+     MLOps: Continuous delivery and automation pipelines in machine learning
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Orchestrated Workflows with TFX:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://blog.tensorflow.org/2020/01/creating-custom-tfx-component.html" title="">
+     Creating a Custom TFX Component
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://github.com/tensorflow/tfx/blob/master/docs/guide/custom_component.md" title="">
+     Building Fully Custom Components
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h3 level="3">
+  Continuous and Progressive Delivery:
+ </h3>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://www.split.io/glossary/progressive-delivery/" title="">
+     Progressive Delivery
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://launchdarkly.com/blog/continuous-incrementalprogressive-delivery-pick-three/" title="">
+     Continuous, Incremental, &amp; Progressive Delivery
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://dev.to/mostlyjason/intro-to-deployment-strategies-blue-green-canary-and-more-3a3" title="">
+     Deployment Strategies
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://martinfowler.com/bliki/BlueGreenDeployment.html" title="">
+     Blue/Green Deployment
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://medium.com/capital-one-tech/the-role-of-a-b-testing-in-the-machine-learning-future-3d2ba035daeb" title="">
+     A/B Testing
+    </a>
+   </p>
+  </li>
+ </ul>
+ <h2 level="2">
+  Week 4. Model Monitoring and Logging
+ </h2>
+ <ul bullettype="bullets">
+  <li>
+   <p>
+    <a href="https://papers.nips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf" title="">
+     Hidden Technical Debt in Machine Learning Systems
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://christophergs.com/machine%20learning/2020/03/14/how-to-monitor-machine-learning-models/" title="">
+     Monitoring Machine Learning Models in Production
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/monitoring" title="">
+     Google Cloud Monitoring
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://aws.amazon.com/cloudwatch/" title="">
+     Amazon CloudWatch
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/overview#:~:text=Azure%20Monitor%20helps%20you%20maximize,cloud%20and%20on%2Dpremises%20environments.&amp;text=Collect%20data%20from%20monitored%20resources%20using%20Azure%20Monitor%20Metrics." title="">
+     Azure Monitor
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/36356.pdf" title="">
+     Dapper
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.jaegertracing.io/" title="">
+     Jaeger
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://zipkin.io/" title="">
+     Zipkin
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/vertex-ai" title="">
+     Vertex Prediction
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://cloud.google.com/vertex-ai/docs/datasets/label-using-console" title="">
+     Vertex Labelling Service
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.kdnuggets.com/2020/08/anonymous-anonymized-data.html" title="">
+     How “Anonymous” is Anonymized Data?
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://dataprivacymanager.net/pseudonymization-according-to-the-gdpr/" title="">
+     Pseudonymization
+    </a>
+   </p>
+  </li>
+ </ul>
+ <p>
+ </p>
+ <h2 level="2">
+ </h2>
+</co-content>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>

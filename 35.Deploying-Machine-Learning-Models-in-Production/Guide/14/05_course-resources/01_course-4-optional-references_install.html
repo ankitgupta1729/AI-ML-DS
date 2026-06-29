@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Installation &#8212; Jupytext  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="/_/static/css/badge_only.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
+    <link rel="canonical" href="https://jupytext.readthedocs.io/en/latest/install.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Paired notebooks" href="paired-notebooks.html" />
+    <link rel="prev" title="Jupyter Notebooks as Markdown Documents, Julia, Python or R Scripts" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2023-06-04T20:25:21Z", "builder": "sphinx", "canonical_url": null, "commit": "64b84b74", "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "install", "programming_language": "py", "project": "jupytext", "proxied_api_host": "/_", "source_suffix": ".md", "subprojects": {}, "theme": "alabaster", "user_analytics_code": "", "version": "latest"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="/_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://anaconda.org/conda-forge/jupytext"><img alt="" src="https://img.shields.io/conda/vn/conda-forge/jupytext.svg" /></a>
+<a class="reference external" href="https://pypi.python.org/pypi/jupytext"><img alt="" src="https://img.shields.io/pypi/v/jupytext.svg" /></a>
+<a class="reference external" href="https://pypi.python.org/pypi/jupytext"><img alt="" src="https://img.shields.io/pypi/pyversions/jupytext.svg" /></a></p>
+<p>Jupytext is available on pypi and on conda-forge. Run either of</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install jupytext --upgrade
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install jupytext -c conda-forge
+</pre></div>
+</div>
+<p>If you want to use Jupytext within Jupyter Notebook or JupyterLab, make sure you install Jupytext in the Python environment where the Jupyter server runs. If that environment is read-only, for instance if your server is started using JupyterHub, install Jupytext in user mode with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path_to_your_jupyter_environment</span><span class="o">/</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">jupytext</span> <span class="o">--</span><span class="n">upgrade</span> <span class="o">--</span><span class="n">user</span>
+</pre></div>
+</div>
+<section id="jupytext-s-contents-manager">
+<h2>Jupytext’s contents manager<a class="headerlink" href="#jupytext-s-contents-manager" title="Permalink to this heading">¶</a></h2>
+<p>Jupytext provides a contents manager for Jupyter that allows Jupyter to open and save notebooks as text files. When Jupytext’s content manager is active in Jupyter, scripts and Markdown documents have a notebook icon.</p>
+<p>In most cases, Jupytext’s contents manager is activated automatically by Jupytext’s server extension. When you restart either <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code> or <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code>, you should see a line that looks like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>I <span class="m">10</span>:28:31.646 LabApp<span class="o">]</span> <span class="o">[</span>Jupytext Server Extension<span class="o">]</span> Changing NotebookApp.contents_manager_class from LargeFileManager to jupytext.TextFileContentsManager
+</pre></div>
+</div>
+<p>If you don’t have the notebook icon on text documents after a fresh restart of your Jupyter server, you can either enable our server extension explicitly (with <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">serverextension</span> <span class="pre">enable</span> <span class="pre">jupytext</span></code>), or install the contents manager manually. Append</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">contents_manager_class</span> <span class="o">=</span> <span class="s2">&quot;jupytext.TextFileContentsManager&quot;</span>
+</pre></div>
+</div>
+<p>to your <code class="docutils literal notranslate"><span class="pre">.jupyter/jupyter_notebook_config.py</span></code> file (generate a Jupyter config, if you don’t have one yet, with <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span> <span class="pre">--generate-config</span></code>). Our contents manager accepts a few options: default formats, default metadata filter, etc. Then, restart Jupyter Notebook or JupyterLab, either from the JupyterHub interface or from the command line with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter notebook <span class="c1"># or lab</span>
+</pre></div>
+</div>
+</section>
+<section id="jupytext-menu-in-jupyter-notebook">
+<h2>Jupytext menu in Jupyter Notebook<a class="headerlink" href="#jupytext-menu-in-jupyter-notebook" title="Permalink to this heading">¶</a></h2>
+<p>Jupytext includes an extensions for Jupyter Notebook that adds a Jupytext section in the File menu.</p>
+<p><img alt="" src="https://raw.githubusercontent.com/mwouts/jupytext/main/jupytext/nbextension/jupytext_menu.png" /></p>
+<p>If the extension was not automatically installed, install and activate it with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">nbextension</span> <span class="n">install</span> <span class="o">--</span><span class="n">py</span> <span class="n">jupytext</span> <span class="p">[</span><span class="o">--</span><span class="n">user</span><span class="p">]</span>
+<span class="n">jupyter</span> <span class="n">nbextension</span> <span class="n">enable</span> <span class="o">--</span><span class="n">py</span> <span class="n">jupytext</span> <span class="p">[</span><span class="o">--</span><span class="n">user</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="jupytext-commands-in-jupyterlab">
+<h2>Jupytext commands in JupyterLab<a class="headerlink" href="#jupytext-commands-in-jupyterlab" title="Permalink to this heading">¶</a></h2>
+<p>In JupyterLab, Jupytext adds a set of commands to the command palette (View / Activate Command Palette, or Ctrl+Shift+C):</p>
+<p><img alt="" src="https://raw.githubusercontent.com/mwouts/jupytext/main/packages/labextension/jupytext_commands.png" /></p>
+<p>The Jupytext extension for JupyterLab is bundled with Jupytext. In most cases you don’t need to install it explicitly.</p>
+<p>From Jupytext 1.9.0 on, the version of the extension is compatible with JupyterLab 3.x only. If you wish to use Jupytext with JupyterLab 2.x or 1.x, please</p>
+<ul class="simple">
+<li><p>install the <code class="docutils literal notranslate"><span class="pre">jupytext</span></code> package using <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code></p></li>
+<li><p>and then, install the last version of the <code class="docutils literal notranslate"><span class="pre">jupyterlab-jupytext</span></code> extension that is compatible with your version of JupyterLab, i.e.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">labextension</span> <span class="n">install</span> <span class="n">jupyterlab</span><span class="o">-</span><span class="n">jupytext</span><span class="o">@</span><span class="mf">1.2.2</span>  <span class="c1"># for JupyterLab 2.x</span>
+<span class="n">jupyter</span> <span class="n">labextension</span> <span class="n">install</span> <span class="n">jupyterlab</span><span class="o">-</span><span class="n">jupytext</span><span class="o">@</span><span class="mf">1.1.1</span>  <span class="c1"># for JupyterLab 1.x</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.svg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=mwouts&repo=jupytext&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="paired-notebooks.html">Paired notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formats.html">Notebook formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="languages.html">Supported Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-cli.html">Using at the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-pre-commit.html">Using as a pre-commit hook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-library.html">Using as a Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Sample Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Demos and Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html">Developing Jupytext</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Jupytext ChangeLog</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018-2020, The Jupytext Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/install.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

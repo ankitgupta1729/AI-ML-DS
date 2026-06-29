@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+<meta content = 'uft-8' name = 'charset'></meta>
+
+<title>BlueGreenDeployment</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta content = 'summary_large_image' name = 'twitter:card'></meta>
+
+<meta content = '16665197' name = 'twitter:site:id'></meta>
+
+<meta content = '@martinfowler' name = 'twitter:site'></meta>
+
+<meta content = 'bliki: BlueGreenDeployment' property = 'og:title'></meta>
+
+<meta content = 'https://martinfowler.com/bliki/BlueGreenDeployment.html' property = 'og:url'></meta>
+
+<meta content = 'Blue-green deployment allows you to upgrade production software without downtime. You deploy the new version into a copy of the production environment and change routing to switch.' property = 'og:description'></meta>
+
+<meta content = 'https://martinfowler.com/bliki/images/blueGreenDeployment/blue_green_deployments.png' property = 'og:image'></meta>
+
+<meta content = 'martinfowler.com' property = 'og:site_name'></meta>
+
+<meta content = 'article' property = 'og:type'></meta>
+
+<meta content = '2010-03-01 09:25:00 -0500' property = 'og:article:modified_time'></meta>
+
+<meta content = 'width=device-width, initial-scale=1' name = 'viewport'></meta>
+
+<link href = '/bliki/entry.css' rel = 'stylesheet' type = 'text/css'></link>
+</head>
+
+<body><header id = 'banner' style = 'background-image: url("../img/bloomsbury.png"); background-repeat: no-repeat'>
+
+<div class = 'name-logo'><a href = 'https://martinfowler.com'><img src = '/mf-name-white.png'></img></a></div>
+  <div class = 'search'>
+    <!-- SiteSearch Google -->
+    <form method='GET' action="https://www.google.com/search">
+      <input type='hidden' name='ie' value='UTF-8'/>
+      <input type='hidden' name='oe' value='UTF-8'/>
+      <input class = 'field' type='text' 
+             name='q' size='15' maxlength='255' value=""/>
+      <button class = 'button' type='submit' 
+             name='btnG' value=" " title = "Search"/>
+      <input type='hidden' name='domains' value="martinfowler.com"/>
+      <input type='hidden' name='sitesearch' value=""/> 
+      <input
+          type='hidden' name='sitesearch' value="martinfowler.com"/>
+    </form>
+  </div>
+
+<div class = 'menu-button navmenu-button'><a class = 'icon icon-bars' href = '#navmenu-bottom'></a></div>
+
+<nav class = 'top-menu'>
+<ul>
+<li><a class = '' href = 'https://refactoring.com'>Refactoring</a></li>
+
+<li><a class = '' href = '/agile.html'>Agile</a></li>
+
+<li><a class = '' href = '/architecture'>Architecture</a></li>
+
+<li><a class = '' href = '/aboutMe.html'>About</a></li>
+
+<li><a class = 'tw' href = 'https://www.thoughtworks.com'>Thoughtworks</a></li>
+
+<li><a class = 'icon icon-rss' href = '/feed.atom' title = 'feed'></a></li>
+
+<li><a class = 'icon icon-twitter' href = 'https://www.twitter.com/martinfowler' title = 'Twitter stream'></a></li>
+
+<li class = 'icon'><a href = 'https://toot.thoughtworks.com/@mfowler' title = 'Mastoton stream'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></a></li>
+</ul>
+</nav>
+</header>
+<nav id = 'top-navmenu'>
+<nav class = 'navmenu'>
+<div class = 'nav-head'>  <div class = 'search'>
+    <!-- SiteSearch Google -->
+    <form method='GET' action="https://www.google.com/search">
+      <input type='hidden' name='ie' value='UTF-8'/>
+      <input type='hidden' name='oe' value='UTF-8'/>
+      <input class = 'field' type='text' 
+             name='q' size='15' maxlength='255' value=""/>
+      <button class = 'button' type='submit' 
+             name='btnG' value=" " title = "Search"/>
+      <input type='hidden' name='domains' value="martinfowler.com"/>
+      <input type='hidden' name='sitesearch' value=""/> 
+      <input
+          type='hidden' name='sitesearch' value="martinfowler.com"/>
+    </form>
+  </div>
+
+<div class = 'closediv'>
+<span class = 'close' title = 'close'></span>
+</div>
+</div>
+
+<div class = 'nav-body'>
+<div class = 'topics'>
+<h2>Topics</h2>
+
+<p><a href = '/architecture'>Architecture</a></p>
+
+<p><a href = 'https://refactoring.com'>Refactoring</a></p>
+
+<p><a href = '/agile.html'>Agile</a></p>
+
+<p><a href = '/delivery.html'>Delivery</a></p>
+
+<p><a href = '/microservices'>Microservices</a></p>
+
+<p><a href = '/data'>Data</a></p>
+
+<p><a href = '/testing'>Testing</a></p>
+
+<p><a href = '/dsl.html'>DSL</a></p>
+</div>
+
+<div class = 'about'>
+<h2>about me</h2>
+
+<p><a href = '/aboutMe.html'>About</a></p>
+
+<p><a href = '/books'>Books</a></p>
+
+<p><a href = '/faq.html'>FAQ</a></p>
+</div>
+
+<div class = 'content'>
+<h2>content</h2>
+
+<p><a href = '/videos.html'>Videos</a></p>
+
+<p><a href = '/tags'>Content Index</a></p>
+
+<p><a href = '/articles/eurogames'>Board Games</a></p>
+
+<p><a href = '/photos'>Photography</a></p>
+</div>
+
+<div class = 'tw'>
+<h2>Thoughtworks</h2>
+
+<p><a href = 'https://thoughtworks.com/insights'>Insights</a></p>
+
+<p><a href = 'https://thoughtworks.com/careers'>Careers</a></p>
+
+<p><a href = 'https://thoughtworks.com/products'>Products</a></p>
+</div>
+
+<div class = 'feeds'>
+<h2>follow</h2>
+
+<p><a href = 'https://www.twitter.com/martinfowler'>Twitter</a></p>
+
+<p><a href = '/feed.atom'>RSS</a></p>
+
+<p><a href = 'https://toot.thoughtworks.com/@mfowler'>Mastodon</a></p>
+</div>
+</div>
+</nav>
+</nav>
+
+<main>
+<article>
+<h1><a href = BlueGreenDeployment.html>BlueGreenDeployment</a></h1>
+
+<p class = 'date'>1 March 2010</p>
+
+<div class = 'frontMatter'>
+<div class = 'author'>
+<p class = 'author-photo'><a href = '/'><img src = '/mf.jpg' title = 'Photo of Martin Fowler'></img></a></p>
+
+<p class = 'name'><a href = '/' rel = 'author'>Martin Fowler</a></p>
+</div>
+
+<div class = 'spacer'></div>
+
+<div class = 'tags'>
+<p class = 'tag-link'><a href = /tags/continuous%20delivery.html>continuous delivery</a></p>
+</div>
+</div>
+
+<div class = 'clear'></div>
+
+<div class = 'paperBody'>
+<p>One of the goals that my colleagues and I urge on our clients is
+  that of a completely automated deployment process. Automating your
+  deployment helps reduce the frictions and delays that crop up in
+  between getting the software "done" and getting it to realize its
+  value. Dave Farley and Jez Humble are finishing up a book on this topic
+  - <a href = '/books/continuousDelivery.html'>Continuous
+  Delivery</a>. It builds upon many of the ideas that are commonly
+  associated with <a href = '/articles/continuousIntegration.html'>Continuous
+  Integration</a>, driving more towards this ability to rapidly put
+  software into production and get it doing something. Their section
+  on blue-green deployment caught my eye as one of those techniques
+  that's underused, so I thought I'd give a brief overview of it here.</p>
+
+<div class = 'fullPhoto '><img src = 'images/blueGreenDeployment/blue_green_deployments.png'></img>
+<p class = 'photoCaption'></p>
+</div>
+
+<div class = 'clear'></div>
+
+<p>One of the challenges with automating deployment is the cut-over
+  itself, taking software from the final stage of testing to live
+  production. You usually need to do this quickly in order to minimize
+  downtime. The blue-green deployment approach does this by ensuring
+  you have two production environments, as identical as possible. At
+  any time one of them, let's say blue for the example, is live. As you
+  prepare a new release of your software you do your final stage of
+  testing in the green environment. Once the software is working in the
+  green environment, you switch the router so that all incoming
+  requests go to the green environment - the blue one is now idle.</p>
+
+<p>Blue-green deployment also gives you a rapid way to rollback - if
+  anything goes wrong you switch the router back to your blue
+  environment. There's still the issue of dealing with missed
+  transactions while the green environment was live, but depending on
+  your design you may be able to feed transactions to both
+  environments in such a way as to keep the blue environment as a
+  backup when the green is live. Or you may be able to put the application
+  in read-only mode before cut-over, run it for a while in read-only
+  mode, and then switch it to read-write mode. That may be enough to
+  flush out many outstanding issues.</p>
+
+<p>The two environments need to be different but as identical as
+  possible. In some situations they can be different pieces of
+  hardware, or they can be different virtual machines running on the
+  same (or different) hardware. They can also be a single operating
+  environment partitioned into separate zones with separate IP
+  addresses for the two slices.</p>
+
+<p>Once you've put your green environment live and you're happy with
+  its stability, you then use the blue environment as your staging
+  environment for the final testing step for your next deployment.
+  When you are ready for your next release, you switch from green to
+  blue in the same way that you did from blue to green earlier. That
+  way both green and blue environments are regularly cycling between live, previous
+  version (for rollback) and staging the next version.</p>
+
+<p>An advantage of this approach is that it's the same basic
+  mechanism as you need to get a hot-standby working. Hence this
+  allows you to test your disaster-recovery procedure on every
+  release. (I hope that you release more frequently than you have a
+  disaster.)</p>
+
+<p>The fundamental idea is to have two easily switchable
+  environments to switch between, there are plenty of ways to vary the
+  details. One project did the switch by bouncing the web server
+  rather than working on the router. Another variation would be to use
+  the same database, making the blue-green switches for web and domain
+  layers.</p>
+
+<p>Databases can often be a challenge with this technique,
+  particularly when you need to change the schema to support a new
+  version of the software. The trick is to separate the deployment of
+  schema changes from application upgrades. So first apply a <a href = '/books/refactoringDatabases.html'>database refactoring</a> to
+  change the schema to support both the new and old version of the
+  application, deploy that, check everything is working fine so you
+  have a rollback point, then deploy the new version of the
+  application. (And when the upgrade has bedded
+  down remove the database support for the old version.)
+  </p>
+
+<p>This technique has been "out there" for ages, but I don't see it
+  used as often as it should be. Some foggy combination of <a href = 'http://dannorth.net/'>Daniel Terhorst-North</a> and Jez Humble <a href = 'https://gitlab.com/snippets/1846041'>came up with the
+  name</a>.</p>
+
+<div class = 'furtherReading'>
+<h2>Further Reading</h2>
+
+<p>You can find much more detail on this and related techniques
+    from the <a href = '/books/continuousDelivery.html'>Continuous
+    Delivery book</a> by Jez Humble and Dave Farley. My <a href = '/delivery.html'>guide page on
+    delivery</a> points to more material on these topcis.</p>
+</div>
+
+<div class = 'acknowledgements'>
+<h2>Acknowledgements</h2>
+
+    Illustration by Ketan Padegaonkar
+  </div>
+
+<div class = 'appendix'>
+<section id = 'Updates'>
+<h2>Updates</h2>
+
+<p>2015-06-05: The page got a lot more page traffic today as
+      Hacker News noticed it. So I added a paragraph on database
+      changes and the further reading section.</p>
+</section>
+</div>
+</div>
+</article>
+
+<div class = 'clear'></div>
+</main>
+
+<nav id = 'bottom-navmenu'>
+<nav class = 'navmenu'>
+<div class = 'nav-head'>  <div class = 'search'>
+    <!-- SiteSearch Google -->
+    <form method='GET' action="https://www.google.com/search">
+      <input type='hidden' name='ie' value='UTF-8'/>
+      <input type='hidden' name='oe' value='UTF-8'/>
+      <input class = 'field' type='text' 
+             name='q' size='15' maxlength='255' value=""/>
+      <button class = 'button' type='submit' 
+             name='btnG' value=" " title = "Search"/>
+      <input type='hidden' name='domains' value="martinfowler.com"/>
+      <input type='hidden' name='sitesearch' value=""/> 
+      <input
+          type='hidden' name='sitesearch' value="martinfowler.com"/>
+    </form>
+  </div>
+
+<div class = 'closediv'>
+<span class = 'close' title = 'close'></span>
+</div>
+</div>
+
+<div class = 'nav-body'>
+<div class = 'topics'>
+<h2>Topics</h2>
+
+<p><a href = '/architecture'>Architecture</a></p>
+
+<p><a href = 'https://refactoring.com'>Refactoring</a></p>
+
+<p><a href = '/agile.html'>Agile</a></p>
+
+<p><a href = '/delivery.html'>Delivery</a></p>
+
+<p><a href = '/microservices'>Microservices</a></p>
+
+<p><a href = '/data'>Data</a></p>
+
+<p><a href = '/testing'>Testing</a></p>
+
+<p><a href = '/dsl.html'>DSL</a></p>
+</div>
+
+<div class = 'about'>
+<h2>about me</h2>
+
+<p><a href = '/aboutMe.html'>About</a></p>
+
+<p><a href = '/books'>Books</a></p>
+
+<p><a href = '/faq.html'>FAQ</a></p>
+</div>
+
+<div class = 'content'>
+<h2>content</h2>
+
+<p><a href = '/videos.html'>Videos</a></p>
+
+<p><a href = '/tags'>Content Index</a></p>
+
+<p><a href = '/articles/eurogames'>Board Games</a></p>
+
+<p><a href = '/photos'>Photography</a></p>
+</div>
+
+<div class = 'tw'>
+<h2>Thoughtworks</h2>
+
+<p><a href = 'https://thoughtworks.com/insights'>Insights</a></p>
+
+<p><a href = 'https://thoughtworks.com/careers'>Careers</a></p>
+
+<p><a href = 'https://thoughtworks.com/products'>Products</a></p>
+</div>
+
+<div class = 'feeds'>
+<h2>follow</h2>
+
+<p><a href = 'https://www.twitter.com/martinfowler'>Twitter</a></p>
+
+<p><a href = '/feed.atom'>RSS</a></p>
+
+<p><a href = 'https://toot.thoughtworks.com/@mfowler'>Mastodon</a></p>
+</div>
+</div>
+</nav>
+</nav>
+<footer id='page-footer'>
+<div class='tw-logo'>
+<a href='http://www.thoughtworks.com'>
+<img src='/thoughtworks_white.png'>
+</a>
+</div>
+<div class='menu-button'>
+<div class='icon-bars navmenu-button'></div>
+</div>
+<div class='copyright'>
+<p>© Martin Fowler | <a href="http://www.thoughtworks.com/privacy-policy">Privacy Policy</a> | <a href="/aboutMe.html#disclosures">Disclosures</a></p>
+</div>
+</footer>
+<!-- Google Analytics -->
+<!-- old Google Universal -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-17005812-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- New Google GA4 -->
+<!-- global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6D51F4BDVF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6D51F4BDVF');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script src = '/jquery-1.11.3.min.js' type = 'text/javascript'></script>
+
+<script src = '/mfcom.js' type = 'text/javascript'></script>
+</body>
+</html>
