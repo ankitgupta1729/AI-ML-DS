@@ -1,0 +1,22 @@
+artifact_path: /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/39.mlflow/demo/mlruns/3/models/m-56d4853b7b174269bab7487b75fa0cce/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 3.8.1
+model_id: m-56d4853b7b174269bab7487b75fa0cce
+model_size_bytes: 38245
+model_uuid: m-56d4853b7b174269bab7487b75fa0cce
+prompts: null
+run_id: 9f53f872843b4a02a62be2c6acf37f47
+utc_time_created: '2026-07-04 12:20:39.146521'
