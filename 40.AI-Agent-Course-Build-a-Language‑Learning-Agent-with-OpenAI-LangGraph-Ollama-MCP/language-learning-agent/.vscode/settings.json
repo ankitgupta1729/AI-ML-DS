@@ -1,0 +1,4 @@
+{
+    "jupyter.venvFolders": [".venv"],
+    "python.defaultInterpreterPath": "./.venv/bin/python"
+}
