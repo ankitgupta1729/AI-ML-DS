@@ -20,3 +20,4 @@ First, run the code from clean-word-lists.ipynb to clean the data. Spacy is a fa
 
 Select the accurate model instead of efficient from here `https://spacy.io/models` because here accuracy matters.
 
+We use zipf's law to find rare words and use wordfreq library to find rare words.
