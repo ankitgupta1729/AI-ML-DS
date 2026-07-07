@@ -13,3 +13,7 @@ __pycache__/
 0.Resources/PDFs/Behind Gen AI_ NLP, LLM and ChatGPT by Et Tu Code.pdf
 .DS_Store
 .claude/settings.json
+# Large PDF files - exceeding GitHub size limit
+0.Resources/PDFs/AI-ML-DS/book1*.pdf
+0.Resources/PDFs/AI-ML-DS/*Large*.pdf
+0.Resources/PDFs/AI-ML-DS/Probabilistic*Advanced*.pdf
