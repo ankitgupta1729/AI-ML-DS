@@ -1,0 +1,339 @@
+<meta charset="utf-8"/>
+<h3>
+ Question 1
+</h3>
+<co-content>
+ <p>
+  You are working on a binary classification ML algorithm that detects whether a patient has a specific disease. In your dataset, 98% of the training examples (patients) don’t have the disease, so the dataset is very skewed. Accuracy on both positive and negative classes is important. You read a research paper claiming to have developed a system that achieves 95% on ____ metric. What metric would give you the most confidence they’ve built a useful and non-trivial system? (Select one)
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    Accuracy
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    Precision
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    F1 score
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    Recall
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 2
+</h3>
+<co-content>
+ <p>
+  On the previous problem above with 98% negative examples, if your algorithm is print(“1”) (i.e., it says everyone has the disease). Which of these statements is true?
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="1" type="radio"/>
+  <co-content>
+   <span>
+    The algorithm achieves 0% precision.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="1" type="radio"/>
+  <co-content>
+   <span>
+    The algorithm achieves 100% precision.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="1" type="radio"/>
+  <co-content>
+   <span>
+    The algorithm achieves 100% recall.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="1" type="radio"/>
+  <co-content>
+   <span>
+    The algorithm achieves 0% recall.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 3
+</h3>
+<co-content>
+ <p>
+  True or False? During error analysis, each example should only be assigned one tag. For example, in a speech recognition application you may have the tags: “car noise”, “people noise” and “low bandwidth”. If you encounter an example with both car noise and low bandwidth audio, you should use your judgement to assign just one of these two tags rather than apply both tags.
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="2" type="radio"/>
+  <co-content>
+   <span>
+    False
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="2" type="radio"/>
+  <co-content>
+   <span>
+    True
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 4
+</h3>
+<co-content>
+ <p>
+  You are building a visual inspection system. Error analysis finds:
+ </p>
+ <table columns="4" rows="3">
+  <thead>
+   <tr>
+    <th>
+     <p>
+      Type of defect
+     </p>
+    </th>
+    <th>
+     <p>
+      Accuracy
+     </p>
+    </th>
+    <th>
+     <p>
+      HLP
+     </p>
+    </th>
+    <th>
+     <p>
+      % of data
+     </p>
+    </th>
+   </tr>
+  </thead>
+  <tr>
+   <td>
+    <p>
+     Scratch
+    </p>
+   </td>
+   <td>
+    <p>
+     95%
+    </p>
+   </td>
+   <td>
+    <p>
+     98%
+    </p>
+   </td>
+   <td>
+    <p>
+     50%
+    </p>
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <p>
+     Discoloration
+    </p>
+   </td>
+   <td>
+    <p>
+     90%
+    </p>
+   </td>
+   <td>
+    <p>
+     90%
+    </p>
+   </td>
+   <td>
+    <p>
+     50%
+    </p>
+   </td>
+  </tr>
+ </table>
+ <p>
+  Based on this, what is the more promising type of defect to work on?
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="3" type="radio"/>
+  <co-content>
+   <span>
+    Discoloration, because the algorithm’s accuracy is lower and thus there’s more room for improvement.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="3" type="radio"/>
+  <co-content>
+   <span>
+    Discoloration, because HLP is lower which suggests this is therefore the harder problem that thus needs more attention.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="3" type="radio"/>
+  <co-content>
+   <span>
+    Scratch defects, because the gap to HLP is higher and thus there’s more room for improvement.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="3" type="radio"/>
+  <co-content>
+   <span>
+    Work on both classes equally because they are each 50% of the data.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 5
+</h3>
+<co-content>
+ <p>
+  You’re considering applying data augmentation to a phone visual inspection problem. Which of the following statements are true about data augmentation? (Select all that apply)
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="4" type="checkbox"/>
+  <co-content>
+   <span>
+    Data augmentation should try to generate more examples in the parts of the input space where the algorithm is already doing well and there’s no need for improvement.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="4" type="checkbox"/>
+  <co-content>
+   <span>
+    Data augmentation should try to generate more examples in the parts of the input space where you’d like to see improvement in the algorithm’s performance.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="4" type="checkbox"/>
+  <co-content>
+   <span>
+    Data augmentation should distort the input sufficiently to make sure they are hard to classify by humans as well.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="4" type="checkbox"/>
+  <co-content>
+   <span>
+    GANs can be used for data augmentation.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>

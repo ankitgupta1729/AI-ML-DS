@@ -1,0 +1,37 @@
+---
+title: "How HTTPS Actually Keeps You Safe"
+description: "The little padlock in your address bar hides a clever choreography: a public-key handshake to agree on a secret, a certificate to prove you're talking to who you think, and fast symmetric encryption for everything after. Here's the whole dance."
+category: "technology"
+tags: ["security", "tls", "web"]
+author: "Ankit Gupta"
+pubDate: 2026-06-20
+heroEmoji: "🔒"
+featured: false
+---
+
+Every time you log in, pay a bill, or read your email in a browser, your data crosses dozens of machines you'll never see. HTTPS is the reason a café's Wi-Fi router, your ISP, and any eavesdropper in between can't read or tamper with it. It solves three problems at once: **secrecy**, **identity**, and **integrity**.
+
+## Problem 1: agreeing on a secret in public
+
+To encrypt traffic, both sides need a shared secret key — but they've never met. This is the chicken-and-egg of cryptography, and it's solved by **public-key** math (like [Diffie–Hellman](/blog/diffie-hellman-secret-in-public) or [elliptic curves](/blog/elliptic-curve-cryptography-intuition)): two strangers can exchange public values over an open line and *each* compute the same secret, while an observer who saw everything still can't.
+
+## Problem 2: proving who you're talking to
+
+A secret is useless if you accidentally set it up with an impostor. So servers present a **certificate** — a digital ID signed by a trusted **Certificate Authority (CA)**. Your browser ships with a list of CAs it trusts; it checks the signature to confirm the certificate for `yourbank.com` was really vouched for, and wasn't forged. This is what stops a "man in the middle" from impersonating the site.
+
+## Problem 3: keeping it fast
+
+Public-key crypto is powerful but slow. So it's used only briefly — for the handshake — to agree on a **symmetric key**. Everything afterward uses fast symmetric encryption (like AES), which is cheap enough to encrypt a video stream in real time.
+
+## The handshake, start to finish
+
+1. **Hello.** Your browser and the server agree on which crypto versions they'll use.
+2. **Certificate.** The server sends its certificate; your browser verifies the CA's signature and that the name matches.
+3. **Key exchange.** Using public-key math, both sides derive the *same* shared secret without ever sending it.
+4. **Switch to symmetric.** From here on, all data is encrypted with that secret. Each message also carries an authentication tag, so any tampering is detected instantly.
+
+All of this happens in a fraction of a second, before the page even loads.
+
+## What the padlock does and doesn't promise
+
+HTTPS guarantees the **connection** is private and the site is who its certificate says. It does **not** promise the site itself is honest — a scam site can also get a valid certificate. So the padlock means "no one is snooping on this conversation," not "trust this business." Knowing that distinction is half of staying safe online.

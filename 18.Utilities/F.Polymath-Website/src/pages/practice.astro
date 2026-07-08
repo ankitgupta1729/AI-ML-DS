@@ -1,0 +1,140 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { EXAMS } from "../consts";
+const examMap = Object.fromEntries(EXAMS.map((e) => [e.slug, e.name]));
+---
+
+<BaseLayout title="My practice" description="Your personal spaced-repetition revision queue, saved questions, and weak-topic tracker — review the right questions at the right time.">
+  <section class="aurora">
+    <div class="mx-auto max-w-4xl px-4 py-12 text-center sm:px-6">
+      <h1 class="font-serif text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">My practice 🧠</h1>
+      <p class="mx-auto mt-3 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+        Spaced repetition beats cramming. Save questions, add tricky ones to your revision queue, and we'll resurface them on a smart schedule — sooner if you miss, later as you master them.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <div class="rounded-2xl border border-gray-200 bg-white/70 px-5 py-3 backdrop-blur dark:border-white/10 dark:bg-white/5"><div id="st-due" class="text-2xl font-extrabold text-amber-600 dark:text-amber-400">0</div><div class="text-xs text-gray-500">Due today</div></div>
+        <div class="rounded-2xl border border-gray-200 bg-white/70 px-5 py-3 backdrop-blur dark:border-white/10 dark:bg-white/5"><div id="st-queue" class="text-2xl font-extrabold text-brand-600 dark:text-brand-300">0</div><div class="text-xs text-gray-500">In revision</div></div>
+        <div class="rounded-2xl border border-gray-200 bg-white/70 px-5 py-3 backdrop-blur dark:border-white/10 dark:bg-white/5"><div id="st-saved" class="text-2xl font-extrabold text-gray-900 dark:text-white">0</div><div class="text-xs text-gray-500">Saved</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+    <!-- Due for revision -->
+    <h2 class="mb-3 font-serif text-2xl font-bold text-gray-900 dark:text-white">📅 Due for revision</h2>
+    <div id="due-list" class="space-y-3"></div>
+    <p id="due-empty" class="hidden rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500 dark:border-white/10">
+      Nothing due right now. Add questions to your revision queue from any <a href="/pyq" class="text-brand-600 hover:underline dark:text-brand-300">PYQ</a> or low-scoring <a href="/mock-tests" class="text-brand-600 hover:underline dark:text-brand-300">mock test</a>.
+    </p>
+
+    <!-- Weak topics -->
+    <h2 class="mb-3 mt-12 font-serif text-2xl font-bold text-gray-900 dark:text-white">🎯 Your weak topics</h2>
+    <div id="weak-box" class="rounded-2xl border border-gray-200 p-5 dark:border-white/10"></div>
+
+    <!-- Upcoming -->
+    <div id="up-wrap" class="hidden">
+      <h2 class="mb-3 mt-12 font-serif text-2xl font-bold text-gray-900 dark:text-white">🗓️ Upcoming reviews</h2>
+      <div id="up-list" class="space-y-2"></div>
+    </div>
+
+    <!-- Saved -->
+    <h2 class="mb-3 mt-12 font-serif text-2xl font-bold text-gray-900 dark:text-white">★ Saved questions</h2>
+    <div id="saved-list" class="space-y-2"></div>
+    <p id="saved-empty" class="hidden rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500 dark:border-white/10">
+      No saved questions yet. Tap the ☆ on any question to save it here for later.
+    </p>
+
+    <p class="mt-10 text-center text-xs text-gray-400">Your practice data is stored on this device. Sign in is not required — but it won't sync across devices yet.</p>
+  </section>
+</BaseLayout>
+
+<script is:inline src="/poly-practice.js?v=2"></script>
+<script is:inline define:vars={{ examMap }}>
+  (function () {
+    const P = window.PolyPractice;
+    if (!P) return;
+    const esc = (s) => (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const relDue = (ts) => {
+      const d = ts - Date.now(); const days = Math.round(d / 86400000);
+      if (d <= 0) return "now"; if (days <= 0) return "today"; if (days === 1) return "tomorrow"; return "in " + days + " days";
+    };
+    const meta = (it) => [it.kind === "quiz" ? "Mock test" : "PYQ", it.year, it.subject || examMap[it.exam] || it.exam].filter(Boolean).join(" · ");
+
+    function render() {
+      document.getElementById("st-due").textContent = P.dueCount();
+      document.getElementById("st-queue").textContent = P.revisitCount();
+      document.getElementById("st-saved").textContent = P.savedCount();
+
+      // Due
+      const due = P.dueItems();
+      document.getElementById("due-empty").classList.toggle("hidden", due.length > 0);
+      document.getElementById("due-list").innerHTML = due.map((it) =>
+        '<div class="rounded-xl border border-amber-200 bg-amber-50/40 p-4 dark:border-amber-500/30 dark:bg-amber-900/10">' +
+          '<div class="flex items-start justify-between gap-3">' +
+            '<div class="min-w-0"><a href="' + it.url + '" class="font-bold text-gray-900 hover:underline dark:text-white">' + esc(it.title) + '</a>' +
+              '<div class="mt-0.5 text-xs text-gray-500">' + esc(meta(it)) + (it.reps ? " · reviewed " + it.reps + "×" : "") + '</div></div>' +
+            '<a href="' + it.url + '" class="shrink-0 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-700">Open</a>' +
+          '</div>' +
+          '<div class="mt-3 flex gap-2">' +
+            '<button data-ok="' + esc(it.id) + '" class="rounded-lg border border-green-400 px-3 py-1.5 text-sm font-semibold text-green-700 transition hover:bg-green-50 dark:text-green-300 dark:hover:bg-white/5">✓ Got it</button>' +
+            '<button data-miss="' + esc(it.id) + '" class="rounded-lg border border-rose-400 px-3 py-1.5 text-sm font-semibold text-rose-700 transition hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-white/5">✗ Missed</button>' +
+            '<button data-drop="' + esc(it.id) + '" class="ml-auto rounded-lg px-3 py-1.5 text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">Remove</button>' +
+          '</div>' +
+        '</div>'
+      ).join("");
+
+      // Upcoming
+      const up = P.upcomingItems();
+      document.getElementById("up-wrap").classList.toggle("hidden", up.length === 0);
+      document.getElementById("up-list").innerHTML = up.map((it) =>
+        '<div class="flex items-center gap-3 rounded-xl border border-gray-200 p-3 text-sm dark:border-white/10">' +
+          '<a href="' + it.url + '" class="min-w-0 flex-1 truncate font-medium text-gray-900 hover:underline dark:text-gray-100">' + esc(it.title) + '</a>' +
+          '<span class="shrink-0 text-xs text-gray-400">next review ' + relDue(it.due) + '</span>' +
+          '<button data-drop="' + esc(it.id) + '" class="shrink-0 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">✕</button>' +
+        '</div>'
+      ).join("");
+
+      // Saved
+      const saved = P.listSaved();
+      document.getElementById("saved-empty").classList.toggle("hidden", saved.length > 0);
+      document.getElementById("saved-list").innerHTML = saved.map((it) =>
+        '<div class="flex items-center gap-3 rounded-xl border border-gray-200 p-3 text-sm dark:border-white/10">' +
+          '<div class="min-w-0 flex-1"><a href="' + it.url + '" class="font-medium text-gray-900 hover:underline dark:text-gray-100">' + esc(it.title) + '</a>' +
+            '<span class="ml-2 text-xs text-gray-400">' + esc(meta(it)) + '</span></div>' +
+          (P.inQueue(it.id) ? '<span class="shrink-0 text-xs font-semibold text-amber-600 dark:text-amber-400">in revision</span>' : '<button data-addrev="' + esc(it.id) + '" class="shrink-0 rounded-lg border border-amber-400 px-2.5 py-1 text-xs font-semibold text-amber-700 hover:bg-amber-50 dark:text-amber-300 dark:hover:bg-white/5">📅 Revise</button>') +
+          '<button data-unsave="' + esc(it.id) + '" class="shrink-0 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">✕</button>' +
+        '</div>'
+      ).join("");
+
+      // Weak topics (from mock-test history)
+      let attempts = []; try { attempts = JSON.parse(localStorage.getItem("quizAttempts") || "[]"); } catch (e) {}
+      const freq = {}, examF = {};
+      attempts.forEach((a) => { (a.weakTopics || []).forEach((tp) => (freq[tp] = (freq[tp] || 0) + 1)); if (a.exam && a.total) { examF[a.exam] = examF[a.exam] || { n: 0, sum: 0 }; examF[a.exam].n++; examF[a.exam].sum += (a.score / a.total) * 100; } });
+      const topics = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      const weakExam = Object.entries(examF).map(([e, v]) => [e, Math.round(v.sum / v.n)]).sort((a, b) => a[1] - b[1])[0];
+      const wb = document.getElementById("weak-box");
+      if (!topics.length && !weakExam) {
+        wb.innerHTML = '<p class="text-sm text-gray-500 dark:text-gray-400">Take a few <a href="/mock-tests" class="text-brand-600 hover:underline dark:text-brand-300">mock tests</a> and the topics you keep missing will show up here — with one-tap links to practise them.</p>';
+      } else {
+        wb.innerHTML =
+          (weakExam ? '<p class="mb-3 text-sm text-gray-700 dark:text-gray-200">Weakest exam so far: <b>' + esc(examMap[weakExam[0]] || weakExam[0]) + '</b> (' + weakExam[1] + '% avg) — <a href="/pyq?exam=' + esc(weakExam[0]) + '" class="text-brand-600 hover:underline dark:text-brand-300">practise its PYQs →</a></p>' : '') +
+          (topics.length ? '<p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Topics to revise</p><div class="flex flex-wrap gap-2">' +
+            topics.map(([tp, n]) => '<a href="/pyq?fresh=1#' + encodeURIComponent(tp) + '" class="rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-sm font-medium text-rose-700 dark:border-rose-500/30 dark:bg-rose-900/20 dark:text-rose-300">' + esc(tp) + (n > 1 ? ' ·' + n : '') + '</a>').join("") + '</div>' : '') ;
+      }
+    }
+
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-ok],[data-miss],[data-drop],[data-unsave],[data-addrev]");
+      if (!t) return;
+      if (t.hasAttribute("data-ok")) P.grade(t.getAttribute("data-ok"), true);
+      else if (t.hasAttribute("data-miss")) P.grade(t.getAttribute("data-miss"), false);
+      else if (t.hasAttribute("data-drop")) P.removeFromQueue(t.getAttribute("data-drop"));
+      else if (t.hasAttribute("data-unsave")) P.toggleSave({ id: t.getAttribute("data-unsave") });
+      else if (t.hasAttribute("data-addrev")) { const it = P.listSaved().find((x) => x.id === t.getAttribute("data-addrev")); if (it) P.addToQueue(it); }
+      render();
+    });
+
+    render();
+    document.addEventListener("polypractice", render); // re-render after cross-device sync
+  })();
+</script>

@@ -1,0 +1,142 @@
+---
+// Recommended for you — reads the student's mock-test history (same source as
+// /progress: localStorage 'quizAttempts' + Supabase quiz_attempts), finds the
+// weakest exam, and recommends unsolved previous-year questions to attempt,
+// concept guides to revise, and a test to retake. Falls back to a featured
+// mix of fresh PYQs when there's no history yet.
+import { EXAMS } from "../consts";
+import { getCollection } from "astro:content";
+
+const examMap = Object.fromEntries(EXAMS.map((e) => [e.slug, e.name]));
+const posts = (await getCollection("blog")).filter((p) => !p.data.draft);
+const guides = posts.flatMap((p) =>
+  (p.data.exams || []).map((ex) => ({ title: p.data.title, url: `/blog/${p.id}`, exam: ex }))
+);
+const uid = "rec" + Math.random().toString(36).slice(2, 8);
+---
+
+<section id={uid} class="not-prose mt-10 hidden">
+  <div class="mb-2 flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl font-bold text-gray-900 dark:text-white">🎯 Recommended for you</h2>
+    <span data-why class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-semibold text-brand-700 dark:bg-brand-900/30 dark:text-brand-300"></span>
+  </div>
+  <a data-nudge href="/practice" class="mb-4 hidden items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-800 transition hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-900/15 dark:text-amber-200"></a>
+  <div data-topics class="mb-4 flex flex-wrap gap-1.5"></div>
+  <div class="grid gap-5 lg:grid-cols-3">
+    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-white/10 dark:bg-white/[0.03]">
+      <h3 class="mb-2 flex items-center gap-2 font-bold text-gray-900 dark:text-white">📑 Practice these questions</h3>
+      <div data-pyqs class="space-y-2"></div>
+    </div>
+    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-white/10 dark:bg-white/[0.03]">
+      <h3 class="mb-2 flex items-center gap-2 font-bold text-gray-900 dark:text-white">📖 Revise these concepts</h3>
+      <div data-guides class="space-y-2"></div>
+    </div>
+    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-white/10 dark:bg-white/[0.03]">
+      <h3 class="mb-2 flex items-center gap-2 font-bold text-gray-900 dark:text-white">📝 Test yourself</h3>
+      <p data-test-sub class="mb-3 text-sm text-gray-600 dark:text-gray-400"></p>
+      <a data-test href="/mock-tests" class="inline-block rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700">Take a mock test →</a>
+      <a href="/pyq" class="mt-2 block text-sm font-semibold text-brand-600 hover:underline dark:text-brand-300">Browse the full PYQ bank →</a>
+    </div>
+  </div>
+</section>
+
+<script is:inline src="/poly-qa.js?v=9"></script>
+<script is:inline src="/poly-practice.js?v=2"></script>
+<script is:inline define:vars={{ uid, examMap, guides }}>
+  (function () {
+    const root = document.getElementById(uid);
+    if (!root || !window.PolyQA) return;
+    const esc = (s) => (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+    function readLocal() { try { return (JSON.parse(localStorage.getItem("quizAttempts") || "[]")).map((a) => ({ exam: a.exam, score: a.score, total: a.total, subject: a.subject, weakTopics: a.weakTopics || [] })); } catch (e) { return []; } }
+
+    async function attempts(user) {
+      let rows = readLocal();
+      if (user && user.id && window.polyDB) {
+        try {
+          const sb = await window.polyDB();
+          if (sb) { const { data } = await sb.from("quiz_attempts").select("exam,score,total").eq("user_id", user.id); if (data) rows = rows.concat(data); }
+        } catch (e) {}
+      }
+      return rows;
+    }
+
+    // pick the exam with the lowest average accuracy (needs >=1 attempt with a known exam)
+    function weakestExam(rows) {
+      const by = {};
+      rows.forEach((r) => { if (!r.exam || !r.total) return; by[r.exam] = by[r.exam] || { n: 0, sum: 0 }; by[r.exam].n++; by[r.exam].sum += (r.score / r.total) * 100; });
+      let best = null;
+      Object.keys(by).forEach((e) => { const avg = by[e].sum / by[e].n; if (best === null || avg < best.avg) best = { exam: e, avg: Math.round(avg), n: by[e].n }; });
+      return best;
+    }
+
+    const pyqLink = (q) =>
+      '<a href="/question?id=' + encodeURIComponent(q.id) + '" class="block rounded-lg border border-gray-200 p-2.5 text-sm transition hover:border-brand-300 dark:border-white/10 dark:hover:border-brand-500/40">' +
+        '<span class="font-medium text-gray-900 dark:text-gray-100">' + esc(q.title) + '</span>' +
+        '<span class="mt-0.5 block text-xs text-gray-400">' + (q.year ? q.year + " · " : "") + esc(q.subject || (examMap[q.exam] || "")) + (q.status === "solved" ? " · ✓ has answers" : " · unsolved") + '</span>' +
+      '</a>';
+    const guideLink = (g) =>
+      '<a href="' + g.url + '" class="block rounded-lg border border-gray-200 p-2.5 text-sm transition hover:border-brand-300 dark:border-white/10 dark:hover:border-brand-500/40"><span class="font-medium text-gray-900 dark:text-gray-100">' + esc(g.title) + '</span></a>';
+
+    async function render(user) {
+      let pyqs = [];
+      try { pyqs = await window.PolyQA.listPYQs(); } catch (e) { return; }
+      if (!pyqs.length) return;
+
+      const rows = await attempts(user);
+      const weak = weakestExam(rows);
+      const whyEl = root.querySelector("[data-why]");
+      const testSub = root.querySelector("[data-test-sub]");
+      let examSlug = null;
+
+      if (weak) {
+        examSlug = weak.exam;
+        whyEl.textContent = "Your weakest area: " + (examMap[weak.exam] || weak.exam) + " (" + weak.avg + "% avg)";
+        testSub.textContent = "Another " + (examMap[weak.exam] || weak.exam) + " mock test will sharpen this area fast.";
+        root.querySelector("[data-test]").href = "/mock-tests?exam=" + weak.exam;
+      } else {
+        whyEl.textContent = "Take a mock test to personalise this — meanwhile, try these";
+        testSub.textContent = "Take any mock test and we'll tailor these picks to your weak spots.";
+      }
+
+      // Spaced-repetition nudge: if anything is due, push the student to /practice
+      const nudge = root.querySelector("[data-nudge]");
+      const due = (window.PolyPractice && window.PolyPractice.dueCount()) || 0;
+      if (due > 0) { nudge.textContent = "📅 " + due + " question" + (due === 1 ? "" : "s") + " due for revision — review now →"; nudge.classList.remove("hidden"); nudge.classList.add("flex"); }
+
+      // Weak topics (from mock-test history) → chips + bias PYQ ranking
+      const topicFreq = {};
+      rows.forEach((r) => (r.weakTopics || []).forEach((tp) => (topicFreq[tp] = (topicFreq[tp] || 0) + 1)));
+      const weakTopics = Object.entries(topicFreq).sort((a, b) => b[1] - a[1]).map(([t]) => t);
+      const topicsEl = root.querySelector("[data-topics]");
+      topicsEl.innerHTML = weakTopics.slice(0, 6).map((t) =>
+        '<span class="rounded-full border border-rose-200 bg-rose-50 px-2.5 py-0.5 text-xs font-medium text-rose-700 dark:border-rose-500/30 dark:bg-rose-900/20 dark:text-rose-300">⚠ ' + esc(t) + '</span>'
+      ).join("");
+      const lcTopics = weakTopics.map((t) => t.toLowerCase());
+      const matches = (q) => { const hay = ((q.tags || []).join(" ") + " " + (q.subject || "") + " " + q.title).toLowerCase(); return lcTopics.some((t) => hay.indexOf(t) >= 0); };
+
+      // PYQs: prefer the weak exam, then weak-topic matches, then unsolved, then recent
+      let recoPyqs = examSlug ? pyqs.filter((q) => q.exam === examSlug) : pyqs.slice();
+      recoPyqs.sort((a, b) =>
+        (matches(b) ? 1 : 0) - (matches(a) ? 1 : 0) ||
+        (a.status === "solved" ? 1 : 0) - (b.status === "solved" ? 1 : 0) ||
+        (b.year || 0) - (a.year || 0));
+      if (recoPyqs.length < 3) recoPyqs = recoPyqs.concat(pyqs.filter((q) => recoPyqs.indexOf(q) < 0));
+      root.querySelector("[data-pyqs]").innerHTML = recoPyqs.slice(0, 3).map(pyqLink).join("") || '<p class="text-sm text-gray-400">No questions yet.</p>';
+
+      // Guides for the weak exam, else a general mix
+      let recoGuides = examSlug ? guides.filter((g) => g.exam === examSlug) : [];
+      if (recoGuides.length < 3) { const seen = new Set(recoGuides.map((g) => g.url)); guides.forEach((g) => { if (recoGuides.length < 3 && !seen.has(g.url)) { seen.add(g.url); recoGuides.push(g); } }); }
+      root.querySelector("[data-guides]").innerHTML = recoGuides.slice(0, 3).map(guideLink).join("") ||
+        '<p class="text-sm text-gray-400">No guides yet — <a href="/write" class="text-brand-600 hover:underline">write the first</a>.</p>';
+
+      root.classList.remove("hidden");
+    }
+
+    const curUser = () => (window.PolyAuth && window.PolyAuth.user) || null;
+    if (window.PolyAuth) window.PolyAuth.onChange(render);
+    document.addEventListener("polyauth", (e) => render(e.detail));
+    document.addEventListener("polypractice", () => render(curUser())); // refresh nudge/picks after sync
+    render(curUser());
+  })();
+</script>

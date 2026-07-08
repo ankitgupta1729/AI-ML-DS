@@ -1,0 +1,43 @@
+---
+title: "Elliptic Curve Cryptography, Without the Fear"
+description: "ECC secures your phone, your messages and most modern websites — with keys a fraction the size of RSA's. Here's the surprisingly visual idea behind it: bouncing points around a curve in a way that's trivial forward and brutal to reverse."
+category: "cryptography"
+tags: ["ecc", "public-key", "security"]
+author: "Ankit Gupta"
+pubDate: 2026-06-18
+heroEmoji: "🔐"
+featured: false
+---
+
+Public-key cryptography needs a **one-way street**: an operation easy to do and miserable to undo. RSA uses multiplying primes (easy) versus factoring (hard). Elliptic Curve Cryptography (ECC) uses a different, more efficient trick — and it's more geometric than it sounds.
+
+## The curve
+
+An elliptic curve is just the set of points $(x, y)$ satisfying an equation like
+
+$$y^2 = x^3 + ax + b$$
+
+It's a smooth, symmetric curve. The clever part is that you can define a way to **"add" two points** on it.
+
+## Adding points (the weird, wonderful rule)
+
+To add points $P$ and $Q$: draw the line through them. It hits the curve at exactly one more point; reflect that across the x-axis, and *that's* $P + Q$. It looks arbitrary, but this operation behaves beautifully — it's associative, has an identity, and gives every point an inverse. Mathematicians call that a **group**.
+
+The key move is adding a point to **itself, over and over**: $P, 2P, 3P, \dots, kP$. Computers can compute $kP$ for an enormous $k$ very fast (by doubling repeatedly).
+
+## The one-way street
+
+Here's the trap door. Given $P$ and the result $kP$, finding the multiplier $k$ is the **elliptic curve discrete logarithm problem** — and no one knows a fast way to do it. So:
+
+- Your **private key** is the secret number $k$.
+- Your **public key** is the point $kP$ (which you can share freely).
+
+Anyone can verify things with $kP$; nobody can run the operation backward to recover $k$.
+
+## Why everyone switched to it
+
+The discrete-log problem on curves is *so* hard that ECC needs far smaller keys for the same security:
+
+- A **256-bit** ECC key is roughly as strong as a **3072-bit** RSA key.
+
+Smaller keys mean less data to send, less battery to spend, and faster handshakes — which is exactly what phones, smart cards, and the modern web need. When you open an `https://` site today, there's a good chance two points were bounced around a curve to set up your secure connection. ([Diffie–Hellman](/blog/diffie-hellman-secret-in-public) and [RSA](/blog/how-rsa-encryption-works) are the classic cousins of this idea.)

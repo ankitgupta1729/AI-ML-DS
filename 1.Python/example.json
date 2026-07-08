@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "age": 28,
+    "city": "New York",
+    "salary": 75000,
+    "department": "Engineering"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "age": 32,
+    "city": "Los Angeles",
+    "salary": 85000,
+    "department": "Marketing"
+  },
+  {
+    "id": 3,
+    "name": "Bob Johnson",
+    "age": 45,
+    "city": "Chicago",
+    "salary": 95000,
+    "department": "Sales"
+  },
+  {
+    "id": 4,
+    "name": "Alice Brown",
+    "age": 29,
+    "city": "San Francisco",
+    "salary": 80000,
+    "department": "Engineering"
+  },
+  {
+    "id": 5,
+    "name": "Charlie Wilson",
+    "age": 35,
+    "city": "Boston",
+    "salary": 70000,
+    "department": "HR"
+  }
+]

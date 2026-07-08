@@ -1,0 +1,275 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import Newsletter from "../components/Newsletter.astro";
+import Counter from "../components/Counter.astro";
+import BrainTeaser from "../components/BrainTeaser.astro";
+import ProblemOfWeek from "../components/ProblemOfWeek.astro";
+import PyqOfDay from "../components/PyqOfDay.astro";
+import { readingTime } from "../lib/utils";
+import { CATEGORIES, SITE, SOCIAL, EXAMS } from "../consts";
+
+const allPosts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featured = allPosts.find((p) => p.data.featured) ?? allPosts[0];
+const latest = allPosts.filter((p) => p.id !== featured?.id).slice(0, 6);
+const totalMinutes = allPosts.reduce((s, p) => s + readingTime(p.body ?? ""), 0);
+
+// Compact index for client-side Trending ranking.
+const articleIndex = allPosts.map((p) => ({
+  id: p.id,
+  url: `/blog/${p.id}/`,
+  title: p.data.title,
+  emoji: p.data.heroEmoji,
+  category: p.data.category,
+}));
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="aurora relative overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 text-center">
+      <div class="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 px-4 py-1.5 text-sm font-medium text-brand-700 backdrop-blur dark:border-brand-500/30 dark:bg-white/5 dark:text-brand-300">
+        ✨ Free forever · Open · Community-driven
+      </div>
+      <h1 class="mx-auto max-w-4xl font-serif text-5xl font-bold leading-[1.05] tracking-tight text-gray-900 sm:text-7xl dark:text-white">
+        Curiosity, <span class="text-gradient">organized</span> beautifully.
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-600 sm:text-xl dark:text-gray-300">
+        {SITE.name} is a free knowledge hub for the endlessly curious — deep, readable explainers across
+        AI, mathematics, physics, finance, history and more. Read, react, and discuss with people who love learning.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+        <a href="/start-here" class="rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white shadow-lg shadow-brand-600/20 transition hover:bg-brand-700 hover:shadow-brand-600/30">
+          🧭 Start here →
+        </a>
+        <a href="/blog" class="rounded-xl border border-gray-300 bg-white/70 px-6 py-3 font-semibold text-gray-800 backdrop-blur transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">
+          All articles
+        </a>
+        <a href="/categories" class="rounded-xl border border-gray-300 bg-white/70 px-6 py-3 font-semibold text-gray-800 backdrop-blur transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">
+          Explore topics
+        </a>
+        <a href={SOCIAL.github} target="_blank" rel="noopener" class="rounded-xl border border-gray-300 bg-white/70 px-6 py-3 font-semibold text-gray-800 backdrop-blur transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">
+          ⭐ Star on GitHub
+        </a>
+      </div>
+
+      <div class="mx-auto mt-14 grid max-w-2xl grid-cols-3 gap-4">
+        <Counter value={allPosts.length} suffix="+" label="Articles" />
+        <Counter value={CATEGORIES.length} label="Topics" />
+        <Counter value={totalMinutes} label="Min of reading" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Continue reading + Trending (client-populated) -->
+  <section id="home-dynamic" class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div id="continue-reading" class="hidden pt-8">
+      <a id="cr-link" href="#" class="card-lift flex items-center gap-4 rounded-2xl border border-brand-200 bg-brand-50/50 p-4 dark:border-brand-500/30 dark:bg-brand-900/20">
+        <span id="cr-emoji" class="text-3xl"></span>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-300">↩ Continue reading</p>
+          <p id="cr-title" class="font-bold text-gray-900 dark:text-white"></p>
+        </div>
+        <span class="ml-auto text-sm font-semibold text-brand-600 dark:text-brand-300">Resume →</span>
+      </a>
+    </div>
+
+    <div id="trending" class="hidden pt-12">
+      <h2 class="mb-6 font-serif text-3xl font-bold text-gray-900 dark:text-white">🔥 Trending now</h2>
+      <div id="trending-list" class="grid gap-4 sm:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- Exam prep band -->
+  <section class="mx-auto max-w-6xl px-4 pt-12 sm:px-6">
+    <div class="overflow-hidden rounded-3xl border border-brand-200/50 bg-gradient-to-br from-brand-50 via-white to-pink-50 p-8 sm:p-10 dark:border-white/10 dark:from-brand-900/30 dark:via-transparent dark:to-pink-900/20">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div class="max-w-lg">
+          <span class="inline-block rounded-full bg-brand-600/10 px-3 py-1 text-xs font-semibold text-brand-700 dark:text-brand-300">🎯 New: Exam Prep</span>
+          <h2 class="mt-3 font-serif text-3xl font-bold text-gray-900 dark:text-white">Preparing for IIT-JEE, GATE, ISI &amp; more?</h2>
+          <p class="mt-2 text-gray-600 dark:text-gray-300">Clear concept guides, a solved bank of previous-year questions, a doubt-solving community, and timed mock tests with instant feedback — all free.</p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/exams" class="rounded-xl bg-brand-600 px-5 py-2.5 font-semibold text-white transition hover:bg-brand-700">Explore exam prep →</a>
+            <a href="/pyq" class="rounded-xl border border-gray-300 bg-white px-5 py-2.5 font-semibold text-gray-800 transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">📑 Previous-year Qs</a>
+            <a href="/exam-alerts" class="rounded-xl border border-gray-300 bg-white px-5 py-2.5 font-semibold text-gray-800 transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">🔔 Exam alerts</a>
+            <a href="/mock-tests" class="rounded-xl border border-gray-300 bg-white px-5 py-2.5 font-semibold text-gray-800 transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">📝 Mock tests</a>
+          </div>
+        </div>
+        <div class="grid shrink-0 grid-cols-3 gap-3 text-center sm:grid-cols-2">
+          {CATEGORIES.length && EXAMS.slice(0, 4).map((e) => (
+            <a href={`/exams/${e.slug}`} class="card-lift grid h-20 w-20 place-items-center rounded-2xl border border-gray-200 bg-white dark:border-white/10 dark:bg-white/[0.03]">
+              <span class="text-2xl">{e.icon}</span>
+              <span class="text-[11px] font-semibold text-gray-600 dark:text-gray-300">{e.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frontiers + Arcade strip -->
+  <section class="mx-auto max-w-6xl px-4 pt-10 sm:px-6">
+    <div class="grid gap-5 sm:grid-cols-2">
+      <a href="/frontiers" class="card-lift group overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 dark:border-white/10 dark:bg-white/[0.03]">
+        <div class="text-4xl">🚀</div>
+        <h2 class="mt-3 font-serif text-2xl font-bold text-gray-900 dark:text-white">Open Frontiers</h2>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">The great unsolved problems of science — with explainers, legendary video lectures and interactive simulations to spark your curiosity.</p>
+        <span class="mt-3 inline-block font-semibold text-brand-600 transition group-hover:translate-x-0.5 dark:text-brand-300">Explore the mysteries →</span>
+      </a>
+      <a href="/play" class="card-lift group overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 dark:border-white/10 dark:bg-white/[0.03]">
+        <div class="text-4xl">🎮</div>
+        <h2 class="mt-3 font-serif text-2xl font-bold text-gray-900 dark:text-white">The Arcade</h2>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">Take a brain break — speed-math drills, reaction tests, memory games, Monty Hall and a Game of Life sandbox.</p>
+        <span class="mt-3 inline-block font-semibold text-brand-600 transition group-hover:translate-x-0.5 dark:text-brand-300">Play now →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Daily teaser + problem of the week + PYQ of the day -->
+  <section class="mx-auto max-w-6xl px-4 pt-10 sm:px-6">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <BrainTeaser />
+      <ProblemOfWeek />
+    </div>
+    <div class="mt-5">
+      <PyqOfDay />
+    </div>
+  </section>
+
+  <!-- Topics grid -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="mb-8 flex items-end justify-between">
+      <div>
+        <h2 class="font-serif text-3xl font-bold text-gray-900 dark:text-white">Browse by topic</h2>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">Ten domains, one curious mind. Pick a rabbit hole.</p>
+      </div>
+      <a href="/categories" class="hidden text-sm font-semibold text-brand-600 hover:underline sm:block dark:text-brand-300">View all →</a>
+    </div>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      {
+        CATEGORIES.map((c) => (
+          <a
+            href={`/categories/${c.slug}`}
+            data-reveal
+            class="card-lift group rounded-2xl border border-gray-200 bg-white p-5 hover:border-brand-300 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-brand-500/50"
+          >
+            <div class="grid h-11 w-11 place-items-center rounded-xl text-2xl" style={`background:${c.color}1a`}>
+              {c.icon}
+            </div>
+            <h3 class="mt-3 font-bold text-gray-900 dark:text-white">{c.name}</h3>
+            <p class="mt-1 text-xs leading-relaxed text-gray-500 dark:text-gray-400">{c.blurb}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Featured -->
+  {
+    featured && (
+      <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        <h2 class="mb-6 font-serif text-3xl font-bold text-gray-900 dark:text-white">Editor's pick</h2>
+        <ArticleCard
+          url={`/blog/${featured.id}`}
+          title={featured.data.title}
+          description={featured.data.description}
+          category={featured.data.category}
+          pubDate={featured.data.pubDate}
+          heroEmoji={featured.data.heroEmoji}
+          minutes={readingTime(featured.body ?? "")}
+          featured={true}
+        />
+      </section>
+    )
+  }
+
+  <!-- Latest -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="mb-8 flex items-end justify-between">
+      <h2 class="font-serif text-3xl font-bold text-gray-900 dark:text-white">Latest articles</h2>
+      <a href="/blog" class="text-sm font-semibold text-brand-600 hover:underline dark:text-brand-300">All articles →</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        latest.map((p) => (
+          <ArticleCard
+            url={`/blog/${p.id}`}
+            title={p.data.title}
+            description={p.data.description}
+            category={p.data.category}
+            pubDate={p.data.pubDate}
+            heroEmoji={p.data.heroEmoji}
+            minutes={readingTime(p.body ?? "")}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <Newsletter variant="card" />
+  </section>
+
+  <!-- Community CTA -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="overflow-hidden rounded-3xl border border-brand-200/50 bg-gradient-to-br from-brand-50 to-pink-50 p-8 sm:p-12 dark:border-white/10 dark:from-brand-900/30 dark:to-pink-900/20">
+      <div class="max-w-2xl">
+        <h2 class="font-serif text-3xl font-bold text-gray-900 dark:text-white">A community of curious minds</h2>
+        <p class="mt-3 text-gray-700 dark:text-gray-300">
+          Every article has reactions and threaded comments. Disagree? Found a better explanation? Have a question?
+          Jump into the forum, debate ideas, and help others learn. No ads, no algorithm — just good conversation.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/forum" class="rounded-xl bg-brand-600 px-5 py-2.5 font-semibold text-white transition hover:bg-brand-700">Visit the forum</a>
+          <a href="/feedback" class="rounded-xl border border-amber-300 bg-amber-50 px-5 py-2.5 font-semibold text-amber-800 transition hover:border-amber-400 dark:border-amber-500/40 dark:bg-amber-900/20 dark:text-amber-300">⭐ Suggest a feature</a>
+          <a href="/about" class="rounded-xl border border-gray-300 bg-white px-5 py-2.5 font-semibold text-gray-800 transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">How it works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ articleIndex }}>
+    (function () {
+      const esc = (s) => (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+      // Continue reading
+      try {
+        const lr = JSON.parse(localStorage.getItem("lastRead") || "null");
+        if (lr && lr.url) {
+          document.getElementById("cr-emoji").textContent = lr.emoji || "📖";
+          document.getElementById("cr-title").textContent = lr.title;
+          document.getElementById("cr-link").href = lr.url;
+          document.getElementById("continue-reading").classList.remove("hidden");
+        }
+      } catch (e) {}
+
+      // Trending (by comments ×2 + likes)
+      (async function () {
+        if (!window.polyDB) return;
+        try {
+          const sb = await window.polyDB();
+          if (!sb) return;
+          const [cc, al] = await Promise.all([sb.rpc("comment_counts"), sb.from("article_likes").select("slug,likes")]);
+          const score = {};
+          (cc.data || []).forEach((r) => (score[r.slug] = (score[r.slug] || 0) + r.n * 2));
+          (al.data || []).forEach((r) => (score[r.slug] = (score[r.slug] || 0) + r.likes));
+          const ranked = articleIndex.map((a) => ({ a, s: score[a.id] || 0 })).filter((x) => x.s > 0).sort((a, b) => b.s - a.s).slice(0, 3);
+          if (!ranked.length) return;
+          document.getElementById("trending-list").innerHTML = ranked.map((x, i) =>
+            '<a href="' + x.a.url + '" class="card-lift flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.03]">' +
+              '<span class="text-2xl font-black text-gray-200 dark:text-white/20">' + (i + 1) + '</span>' +
+              '<span class="text-2xl">' + (x.a.emoji || "📖") + '</span>' +
+              '<span class="flex-1 font-bold leading-snug text-gray-900 dark:text-white">' + esc(x.a.title) + '</span>' +
+            '</a>'
+          ).join("");
+          document.getElementById("trending").classList.remove("hidden");
+        } catch (e) {}
+      })();
+    })();
+  </script>
+</BaseLayout>

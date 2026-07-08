@@ -1,0 +1,305 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import AIAssistant from "../components/AIAssistant.astro";
+import CommandPalette from "../components/CommandPalette.astro";
+import { SITE } from "../consts";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = "/og-default.svg",
+  article = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).toString();
+const ogImage = new URL(image, SITE.url).toString();
+---
+
+<!doctype html>
+<html lang={SITE.locale} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#6366f1" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Polymath" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.author} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={article ? "article" : "website"} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content={SITE.name} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+
+    <!-- KaTeX styles for server-rendered article math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opt@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme: apply before paint to avoid flash -->
+    <script is:inline>
+      (function () {
+        // Mark that JS is available so reveal animations can hide content.
+        document.documentElement.classList.add("js");
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (stored === "dark" || (!stored && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+
+    <!-- JSON-LD -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: SITE.name,
+        url: SITE.url,
+        description: SITE.description,
+        author: { "@type": "Person", name: SITE.author },
+      })}
+    />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">Skip to content</a>
+    <div
+      id="reading-progress"
+      class="fixed top-0 left-0 z-50 h-1 w-full bg-gradient-to-r from-brand-500 via-pink-500 to-teal-400"
+    >
+    </div>
+    <Header />
+    <main id="main" class="flex-1 page-enter">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Back to top -->
+    <button
+      id="back-to-top"
+      aria-label="Back to top"
+      class="fixed bottom-6 right-6 z-40 grid h-11 w-11 translate-y-4 place-items-center rounded-full bg-brand-600 text-white opacity-0 shadow-lg transition hover:bg-brand-700 pointer-events-none"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"></path></svg>
+    </button>
+
+    <AIAssistant />
+    <CommandPalette />
+
+    <!-- Reading progress, back-to-top, copy-code, keyboard shortcut -->
+    <script is:inline>
+      (function () {
+        const bar = document.getElementById("reading-progress");
+        const toTop = document.getElementById("back-to-top");
+        function onScroll() {
+          const h = document.documentElement;
+          const max = h.scrollHeight - h.clientHeight;
+          const p = max > 0 ? h.scrollTop / max : 0;
+          if (bar) bar.style.transform = `scaleX(${p})`;
+          if (toTop) {
+            const show = h.scrollTop > 600;
+            toTop.style.opacity = show ? "1" : "0";
+            toTop.style.transform = show ? "none" : "translateY(1rem)";
+            toTop.style.pointerEvents = show ? "auto" : "none";
+          }
+        }
+        document.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+        toTop?.addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        );
+
+        // Copy buttons on code blocks
+        document.querySelectorAll("article pre").forEach((pre) => {
+          pre.style.position = "relative";
+          const btn = document.createElement("button");
+          btn.textContent = "Copy";
+          btn.setAttribute("aria-label", "Copy code");
+          btn.style.cssText =
+            "position:absolute;top:.5rem;right:.5rem;font-size:.7rem;font-weight:600;padding:.25rem .5rem;border-radius:.4rem;background:rgba(127,127,127,.18);color:inherit;border:0;cursor:pointer;opacity:0;transition:opacity .15s";
+          pre.addEventListener("mouseenter", () => (btn.style.opacity = "1"));
+          pre.addEventListener("mouseleave", () => (btn.style.opacity = "0"));
+          btn.addEventListener("click", async () => {
+            const code = pre.querySelector("code");
+            try {
+              await navigator.clipboard.writeText(code ? code.innerText : pre.innerText);
+              btn.textContent = "Copied!";
+              setTimeout(() => (btn.textContent = "Copy"), 1200);
+            } catch (e) {}
+          });
+          pre.appendChild(btn);
+        });
+
+        // Hover anchor links on article headings (click to copy section URL)
+        document.querySelectorAll(".prose h2[id], .prose h3[id]").forEach((h) => {
+          const a = document.createElement("a");
+          a.href = "#" + h.id;
+          a.className = "heading-anchor";
+          a.setAttribute("aria-label", "Link to this section");
+          a.textContent = "#";
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            const url = location.origin + location.pathname + "#" + h.id;
+            history.replaceState(null, "", "#" + h.id);
+            h.scrollIntoView({ behavior: "smooth" });
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(url).then(() => {
+                a.textContent = "✓";
+                setTimeout(() => (a.textContent = "#"), 1000);
+              }).catch(() => {});
+            }
+          });
+          h.appendChild(a);
+        });
+      })();
+
+      // Engagement counts (💬 comments · ❤️ likes) on article cards
+      (async function () {
+        const els = document.querySelectorAll("[data-counts]");
+        if (!els.length || !window.polyDB) return;
+        try {
+          const sb = await window.polyDB();
+          if (!sb) return;
+          const [cc, al] = await Promise.all([
+            sb.rpc("comment_counts"),
+            sb.from("article_likes").select("slug,likes"),
+          ]);
+          const cmap = {}; (cc.data || []).forEach((r) => (cmap[r.slug] = r.n));
+          const lmap = {}; (al.data || []).forEach((r) => (lmap[r.slug] = r.likes));
+          els.forEach((el) => {
+            const s = el.getAttribute("data-slug");
+            const c = cmap[s] || 0, l = lmap[s] || 0;
+            if (c || l) {
+              el.innerHTML = "<span>·</span>" + (c ? "<span>💬 " + c + "</span>" : "") + (l ? "<span>❤️ " + l + "</span>" : "");
+              el.classList.remove("hidden"); el.classList.add("flex");
+            }
+          });
+        } catch (e) {}
+      })();
+
+      // Lazy code-syntax highlighting for client-rendered user posts.
+      window.polyHighlight = async function (el) {
+        if (!el) return;
+        try {
+          if (!document.getElementById("hljs-theme")) {
+            const link = document.createElement("link");
+            link.id = "hljs-theme"; link.rel = "stylesheet";
+            link.href = "https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css";
+            document.head.appendChild(link);
+          }
+          if (!window.__hljs) window.__hljs = (await import("https://esm.sh/highlight.js@11")).default;
+          el.querySelectorAll("pre code").forEach((c) => { try { window.__hljs.highlightElement(c); } catch (e) {} });
+        } catch (e) {}
+      };
+
+      // Reusable likes + comments widget for community posts (slug = "post:<id>")
+      window.PolyEngage = async function (el, slug) {
+        if (!el || !window.polyDB) return;
+        const sb = await window.polyDB();
+        if (!sb) return;
+        const esc = (s) => String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const dice = (s) => "https://api.dicebear.com/9.x/thumbs/svg?seed=" + encodeURIComponent(s || "anon") + "&radius=50";
+
+        let likes = 0;
+        try { const r = await sb.from("article_likes").select("likes").eq("slug", slug).maybeSingle(); likes = (r.data && r.data.likes) || 0; } catch (e) {}
+        const lk = "liked:" + slug;
+        let mine = localStorage.getItem(lk) === "1";
+        el.innerHTML =
+          '<div class="flex items-center gap-3 border-y border-gray-200 py-3 dark:border-white/10">' +
+            '<button id="pe-like" class="inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 text-sm font-semibold"></button>' +
+            '<span class="text-sm text-gray-400">Enjoyed this? Leave a comment 👇</span></div>' +
+            '<div id="pe-comments" class="mt-4"></div>';
+        const likeBtn = el.querySelector("#pe-like");
+        function paintLike() { likeBtn.className = "inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 text-sm font-semibold " + (mine ? "border-pink-400 text-pink-600" : "border-gray-200 text-gray-600 dark:border-white/10 dark:text-gray-300"); likeBtn.innerHTML = (mine ? "❤️" : "🤍") + " " + likes; }
+        paintLike();
+        likeBtn.addEventListener("click", async () => {
+          const delta = mine ? -1 : 1; mine = !mine; localStorage.setItem(lk, mine ? "1" : "0"); likes = Math.max(0, likes + delta); paintLike();
+          try { await sb.rpc("toggle_like", { article_slug: slug, delta }); } catch (e) {}
+        });
+
+        const wrap = el.querySelector("#pe-comments");
+        async function renderComments() {
+          wrap.innerHTML = '<p class="text-sm text-gray-400">Loading comments…</p>';
+          let rows = []; try { const r = await sb.from("comments").select("*").eq("slug", slug).order("created_at", { ascending: true }); rows = r.data || []; } catch (e) {}
+          const u = window.PolyAuth && window.PolyAuth.user;
+          wrap.innerHTML =
+            '<div class="rounded-2xl border border-gray-200 p-4 dark:border-white/10"><div class="flex flex-wrap gap-2">' +
+              '<input id="pe-name" placeholder="Name" value="' + esc(u ? u.name : "") + '" class="w-32 rounded-lg border border-gray-300 bg-transparent px-2 py-1.5 text-sm dark:border-white/15"/>' +
+              '<input id="pe-body" placeholder="Add a comment…" class="min-w-40 flex-1 rounded-lg border border-gray-300 bg-transparent px-2 py-1.5 text-sm dark:border-white/15"/>' +
+              '<button id="pe-post" class="rounded-lg bg-brand-600 px-3 text-sm font-semibold text-white">Post</button></div></div>' +
+            '<p class="mt-3 text-sm text-gray-500">' + rows.length + ' comment' + (rows.length === 1 ? "" : "s") + '</p>' +
+            '<div class="mt-2 space-y-3">' + (rows.length ? rows.map((c) =>
+              '<div class="flex items-start gap-3"><img src="' + (c.avatar_url || dice(c.name)) + '" width="32" height="32" class="h-8 w-8 shrink-0 rounded-full bg-gray-100 dark:bg-white/10"/>' +
+              '<div><div class="text-sm font-semibold text-gray-900 dark:text-white">' + esc(c.name) + '</div>' +
+              '<p class="whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-200">' + esc(c.body) + '</p></div></div>'
+            ).join("") : '<p class="text-sm text-gray-400">No comments yet — start the conversation!</p>') + "</div>";
+          el.querySelector("#pe-post").addEventListener("click", async () => {
+            const name = (el.querySelector("#pe-name").value || "").trim() || "Anonymous";
+            const body = (el.querySelector("#pe-body").value || "").trim();
+            if (!body) return;
+            const u2 = window.PolyAuth && window.PolyAuth.user;
+            const payload = { slug, name, body };
+            if (u2 && u2.avatar) payload.avatar_url = u2.avatar;
+            if (u2 && u2.id) payload.author_id = u2.id;
+            try { let r = await sb.from("comments").insert(payload); if (r.error && (payload.avatar_url || payload.author_id)) await sb.from("comments").insert({ slug, name, body }); } catch (e) {}
+            renderComments();
+          });
+        }
+        renderComments();
+      };
+
+      // Register service worker (installable PWA + offline reading)
+      if ("serviceWorker" in navigator && location.protocol === "https:") {
+        window.addEventListener("load", () => { navigator.serviceWorker.register("/sw.js").catch(() => {}); });
+      }
+
+      // "Install app" button — shown only when the browser offers installation
+      (function () {
+        let deferred = null;
+        const btn = document.getElementById("install-app");
+        window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferred = e; if (btn) { btn.classList.remove("hidden"); btn.classList.add("inline-flex"); } });
+        btn?.addEventListener("click", async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; btn.classList.add("hidden"); });
+        window.addEventListener("appinstalled", () => btn && btn.classList.add("hidden"));
+      })();
+    </script>
+  </body>
+</html>

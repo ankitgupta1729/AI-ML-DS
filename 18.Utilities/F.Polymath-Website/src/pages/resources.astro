@@ -1,0 +1,117 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { EXAMS } from "../consts";
+import { RESOURCES, PLATFORMS, resourcesFor } from "../lib/resources";
+
+const examMeta = Object.fromEntries(EXAMS.map((e) => [e.slug, e]));
+const exams = RESOURCES.map((r) => examMeta[r.slug]).filter(Boolean);
+---
+
+<BaseLayout title="Books & lectures" description="Hand-picked standard textbooks and free, reputable video lectures (NPTEL, MIT OCW, Khan Academy and more) for IIT-JEE, NEET, GATE, CAT, ISI/CMI and UPSC — everything you need to prepare, in one place.">
+  <section class="aurora relative overflow-hidden">
+    <div class="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6">
+      <span class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 px-4 py-1.5 text-sm font-medium text-brand-700 backdrop-blur dark:border-brand-500/30 dark:bg-white/5 dark:text-brand-300">📚 Curated for serious preparation</span>
+      <h1 class="mx-auto mt-4 max-w-3xl font-serif text-4xl font-bold leading-tight tracking-tight text-gray-900 sm:text-6xl dark:text-white">
+        The right <span class="text-gradient">books</span> &amp; <span class="text-gradient">lectures</span>
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+        Standard textbooks the toppers actually use, paired with free, reliable video courses from NPTEL, MIT OpenCourseWare, Khan Academy and trusted channels. Pick your exam and start.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
+    <!-- Exam filter -->
+    <div class="sticky top-16 z-20 -mx-4 mb-10 flex flex-wrap justify-center gap-2 bg-paper/80 px-4 py-3 backdrop-blur dark:bg-ink/80">
+      <button data-exam="all" class="filter-chip active">All exams</button>
+      {exams.map((e) => (
+        <button data-exam={e.slug} class="filter-chip">{e.icon} {e.name}</button>
+      ))}
+    </div>
+
+    <div class="space-y-14">
+      {exams.map((e) => {
+        const r = resourcesFor(e.slug)!;
+        return (
+          <div class="exam-block" data-block={e.slug}>
+            <div class="mb-6 flex items-center gap-4">
+              <div class="grid h-14 w-14 place-items-center rounded-2xl text-3xl" style={`background:${e.color}1a`}>{e.icon}</div>
+              <div>
+                <h2 class="font-serif text-2xl font-bold text-gray-900 dark:text-white">{e.name}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{e.subjects.join(" · ")}</p>
+              </div>
+              <a href={`/exams/${e.slug}`} class="ml-auto hidden shrink-0 text-sm font-semibold text-brand-600 hover:underline sm:block dark:text-brand-300">Exam hub →</a>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-2">
+              <!-- Books -->
+              <div class="rounded-2xl border border-gray-200 bg-white p-6 dark:border-white/10 dark:bg-white/[0.03]">
+                <h3 class="mb-4 flex items-center gap-2 font-bold text-gray-900 dark:text-white">📘 Recommended textbooks</h3>
+                <ul class="space-y-3">
+                  {r.books.map((b) => (
+                    <li class="border-l-2 pl-3" style={`border-color:${e.color}`}>
+                      <p class="font-semibold text-gray-900 dark:text-gray-100">{b.title}</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">by {b.author}</p>
+                      {b.note && <p class="mt-0.5 text-sm text-gray-600 dark:text-gray-300">{b.note}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Lectures -->
+              <div class="rounded-2xl border border-gray-200 bg-white p-6 dark:border-white/10 dark:bg-white/[0.03]">
+                <h3 class="mb-4 flex items-center gap-2 font-bold text-gray-900 dark:text-white">🎥 Free video lectures</h3>
+                <ul class="space-y-3">
+                  {r.lectures.map((l) => (
+                    <li>
+                      <a href={l.url} target="_blank" rel="noopener noreferrer" class="group flex items-start gap-3 rounded-xl border border-gray-200 p-3 transition hover:border-brand-400 hover:bg-brand-50/40 dark:border-white/10 dark:hover:bg-white/5">
+                        <span class="mt-0.5 text-lg">▶️</span>
+                        <span class="min-w-0">
+                          <span class="block font-semibold text-gray-900 dark:text-gray-100">{l.source} <span class="text-brand-600 opacity-0 transition group-hover:opacity-100 dark:text-brand-300">↗</span></span>
+                          <span class="block text-sm text-gray-600 dark:text-gray-300">{l.title}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a href={`/pyq?exam=${e.slug}`} class="mt-4 inline-block text-sm font-semibold text-brand-600 hover:underline dark:text-brand-300">Then practise with {e.name} PYQs →</a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Free platforms -->
+    <div class="mt-16 rounded-3xl border border-brand-200/50 bg-gradient-to-br from-brand-50 via-white to-pink-50 p-8 dark:border-white/10 dark:from-brand-900/30 dark:via-transparent dark:to-pink-900/20">
+      <h2 class="font-serif text-2xl font-bold text-gray-900 dark:text-white">🌐 Always-free learning platforms</h2>
+      <p class="mt-1 text-gray-600 dark:text-gray-300">World-class courses and materials, free for everyone — great beyond exam prep too.</p>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {PLATFORMS.map((p) => (
+          <a href={p.url} target="_blank" rel="noopener noreferrer" class="card-lift rounded-2xl border border-gray-200 bg-white p-5 dark:border-white/10 dark:bg-white/[0.03]">
+            <p class="font-bold text-gray-900 dark:text-white">{p.source}</p>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{p.title}</p>
+            <span class="mt-3 inline-block text-sm font-semibold text-brand-600 dark:text-brand-300">Visit ↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <p class="mt-8 text-center text-xs text-gray-400">Recommendations are widely-used standards, listed for guidance. Buy books from any seller you like; all linked courses are free.</p>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const chips = document.querySelectorAll("[data-exam]");
+    const blocks = document.querySelectorAll("[data-block]");
+    chips.forEach((c) => c.addEventListener("click", () => {
+      const sel = c.getAttribute("data-exam");
+      chips.forEach((x) => x.classList.toggle("active", x === c));
+      blocks.forEach((b) => b.classList.toggle("hidden", sel !== "all" && b.getAttribute("data-block") !== sel));
+    }));
+    // deep-link via ?exam=
+    const want = new URLSearchParams(location.search).get("exam");
+    if (want) { const chip = document.querySelector('[data-exam="' + want + '"]'); if (chip) chip.click(); }
+  })();
+</script>

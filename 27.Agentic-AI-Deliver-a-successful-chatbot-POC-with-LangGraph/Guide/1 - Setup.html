@@ -1,0 +1,7 @@
+<p>If you want to follow along, you can proceed to these setup actions:</p><p>- Interpreter: <code>Python 3.12.8</code></p><p>- Open a new folder, e.g., "chatbot_poc", and access it through a Python editor, e.g., visual studio code</p><p>- Inside the folder, create and activate a Python virtual environment using the following:</p><p>&nbsp; &nbsp; &nbsp;- <code>python -m venv .venv</code> (this creates a virtual environment named ".venv")</p><p>&nbsp; &nbsp; &nbsp;- Activate it by running <code>.venv\Scripts\activate</code></p><p>The above is for Windows users. If you are on Linux or Mac, use the corresponding commands. </p><p>- Make a <code>requirements.txt</code> file and paste the following:</p><p><br></p><pre class="prettyprint linenums">langchain-core==0.3.33
+langchain-openai==0.3.3
+langgraph==0.2.69
+matplotlib==3.10.0
+openai==1.61.1
+colorama==0.4.6
+python-dotenv==1.0.1</pre><p><br></p><p>- Then run <code>pip install -r requirements.txt</code> </p><p>- Also, make a <code>.env</code> file and paste your OpenAI key inside:</p><p>&nbsp;</p><pre class="prettyprint linenums">OPENAI_API_KEY = 'your secret OpenAI key goes here'</pre><p><br></p><p>If you do not have such a key, there are instructions to run the code with ollama, e.g., locally. </p><p><br></p><p>And that's it! </p>

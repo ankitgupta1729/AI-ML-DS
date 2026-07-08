@@ -1,0 +1,40 @@
+---
+title: "The Central Limit Theorem: Why Bell Curves Are Everywhere"
+description: "Heights, measurement errors, polling averages, test scores — they all pile up into the same bell shape. The Central Limit Theorem explains why averaging almost anything conjures a normal distribution out of chaos."
+category: "data-science"
+tags: ["statistics", "probability", "distributions"]
+exams: ["isi-cmi"]
+author: "Ankit Gupta"
+pubDate: 2026-06-19
+heroEmoji: "🔔"
+featured: false
+---
+
+Roll one die and the outcomes are flat — every face equally likely, no bell shape in sight. Roll *ten* dice and add them up, repeat thousands of times, and a beautiful bell curve appears. Nobody designed that. It's the **Central Limit Theorem (CLT)** quietly at work.
+
+## The statement, in plain words
+
+Take any quantity with a finite spread — *any* shape, skewed or lumpy or weird. Draw a sample of size $n$ and compute its **average**. Do that many times. As $n$ grows, the distribution of those averages approaches a **normal (bell) distribution** — regardless of the original shape.
+
+Formally, for a population with mean $\mu$ and standard deviation $\sigma$, the sample mean $\bar{X}$ of $n$ independent draws satisfies:
+
+$$\bar{X} \approx \mathcal{N}\!\left(\mu,\ \frac{\sigma^2}{n}\right)$$
+
+Two things are baked into that line:
+
+- The averages center on the **true mean** $\mu$.
+- Their spread *shrinks* as $\sigma/\sqrt{n}$ — bigger samples give tighter, more reliable averages.
+
+## Why √n matters more than you'd think
+
+To halve the uncertainty in an average, you don't double the sample — you **quadruple** it. That single fact governs how big a poll must be, how many measurements a lab needs, and why doubling your data only modestly sharpens an estimate. Diminishing returns are built into the math.
+
+## Where you've already seen it
+
+- **Polling:** averaging 1000 random opinions gives a stable estimate with a predictable margin of error, even though each person's view is a coarse yes/no.
+- **Measurement:** average ten noisy readings and the errors — high here, low there — partly cancel, tightening around the truth.
+- **Quality control & finance:** sums and averages of many small independent effects drift toward normal, which is why the bell curve is the default model (and why fat-tailed exceptions are so dangerous when the independence assumption breaks).
+
+## The catch worth remembering
+
+The CLT needs the pieces to be **roughly independent** and to have a **finite variance**. When events are strongly linked (a market panic, a viral cascade) or the tails are extreme, averages *don't* tame into a tidy bell — and assuming they do is how confident models blow up. The theorem is a gift, but it comes with a contract.

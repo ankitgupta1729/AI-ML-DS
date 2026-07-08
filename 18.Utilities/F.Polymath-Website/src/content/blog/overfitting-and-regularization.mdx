@@ -1,0 +1,51 @@
+---
+title: "Overfitting and the Art of Knowing Less"
+description: "A model that memorises its training data looks brilliant — until it meets the real world. Here's why overfitting happens and how regularization gently forces a model to generalise."
+category: "machine-learning"
+tags: ["overfitting", "regularization", "generalization"]
+exams: ["gate"]
+author: "Ankit Gupta"
+pubDate: 2026-06-15
+heroEmoji: "📉"
+featured: false
+---
+
+Imagine a student who memorises every answer in last year's question bank, word for word. On those exact questions they score 100%. Give them a *new* paper and they fall apart. They learned the answers, not the subject.
+
+That's **overfitting** — and machine-learning models do it constantly.
+
+## What overfitting looks like
+
+When you train a model, you minimise its error on the **training set**. But the goal was never to do well on data you already have the answers to — it's to do well on data you *haven't seen*. The gap between those two is the whole game.
+
+- **Training error keeps dropping** as the model grows more flexible.
+- **Test error drops too — at first** — then turns around and climbs back up.
+
+That turning point is where the model stops learning the *signal* and starts learning the *noise*: the random quirks of your particular sample that won't repeat.
+
+## Why flexible models are dangerous
+
+A straight line can only do so much. A degree-20 polynomial can wiggle through *every* training point exactly — but between those points it swings wildly. High capacity is a double-edged sword: enough power to capture real structure also means enough power to memorise accidents.
+
+## Regularization: a budget on complexity
+
+**Regularization** adds a penalty for complexity to the loss function, so the model pays a price for using large weights:
+
+$$\text{Loss} = \underbrace{\text{Error}(\text{data})}_{\text{fit the data}} + \lambda \underbrace{\|w\|}_{\text{stay simple}}$$
+
+The knob $\lambda$ controls the trade-off. Crank it up and the model is forced toward simpler explanations; set it to zero and you're back to unconstrained memorisation.
+
+- **L2 (ridge)** penalises the sum of *squared* weights — it shrinks everything smoothly toward zero.
+- **L1 (lasso)** penalises the sum of *absolute* weights — it drives many weights *exactly* to zero, effectively selecting features.
+
+## Other ways to say "learn less"
+
+Regularization is a mindset, not one formula. The same goal shows up as:
+
+- **Early stopping** — quit training at the point test error bottoms out.
+- **Dropout** — randomly switch off neurons during training so the network can't over-rely on any one path.
+- **More data** — the cleanest fix of all; noise averages out when the sample is large.
+
+## The takeaway
+
+A good model is a *humble* one. It admits it can't explain every wiggle, and in exchange it generalises to tomorrow's data. The skill in machine learning is rarely making a model more powerful — it's knowing exactly how much to hold it back.

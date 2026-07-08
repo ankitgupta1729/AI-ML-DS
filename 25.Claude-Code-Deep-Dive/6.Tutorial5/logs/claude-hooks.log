@@ -1,0 +1,71 @@
+[2026-04-29 12:55:31] [PENDING]  session=ae3c9ba8-ba1d-4933-8e88-28e9861acd82  tool=Bash  detail=jq . /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/settings.local.j
+[2026-04-29 12:55:41] [PENDING]  session=ae3c9ba8-ba1d-4933-8e88-28e9861acd82  tool=Bash  detail=\
+export CLAUDE_PROJECT_DIR="$PWD" && \
+echo "=== Test 1: Stop hook (task done) ===" && \
+echo '{"session_id":"test-sess
+[2026-04-29 12:55:47] [APPROVAL] session=ae3c9ba8-ba1d-4933-8e88-28e9861acd82  Claude needs your permission to use Bash
+[2026-04-29 12:55:55] [DONE]     session=test-sess-001  Claude finished responding.
+[2026-04-29 12:55:55] [PENDING]  session=test-sess-001  tool=Bash  detail=npm run build
+[2026-04-29 12:55:55] [PENDING]  session=test-sess-001  tool=Write  detail=/tmp/example.txt
+[2026-04-29 12:55:55] [APPROVAL] session=test-sess-001  Claude needs your permission to use Bash
+[2026-04-29 12:55:59] [PENDING]  session=ae3c9ba8-ba1d-4933-8e88-28e9861acd82  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/logs/claude-hooks.log
+[2026-04-29 12:56:36] [DONE]     session=ae3c9ba8-ba1d-4933-8e88-28e9861acd82  Claude finished responding.
+[2026-04-29 13:08:38] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Bash  detail=ls -la /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/
+[2026-04-29 13:08:38] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/Notes.md
+[2026-04-29 13:08:45] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Bash  detail=ls -la /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client /Users/ankit/Wo
+[2026-04-29 13:08:46] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/README.md
+[2026-04-29 13:08:59] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server/package.json
+[2026-04-29 13:09:01] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/package.json
+[2026-04-29 13:09:01] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/settings.local.json
+[2026-04-29 13:09:03] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Bash  detail=ls /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/hooks /Users/ankit
+[2026-04-29 13:10:06] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/MULTI_AGENT_GUIDE.md
+[2026-04-29 13:10:32] [PENDING]  session=cdc8347d-f546-4322-894a-c0a201c6fb23  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/CLAUDE.md
+[2026-04-29 13:10:48] [DONE]     session=cdc8347d-f546-4322-894a-c0a201c6fb23  Claude finished responding.
+[2026-04-29 13:55:32] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/MULTI_AGENT_GUIDE.md
+[2026-04-29 13:56:20] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/App.tsx
+[2026-04-29 13:56:21] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/main.tsx
+[2026-04-29 13:56:22] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/index.css
+[2026-04-29 13:56:22] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server/src/index.ts
+[2026-04-29 13:56:23] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=ls /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/assets/ 2>/dev/
+[2026-04-29 13:56:33] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskCreate  
+[2026-04-29 13:56:34] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskCreate  
+[2026-04-29 13:56:35] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskCreate  
+[2026-04-29 13:56:38] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskUpdate  
+[2026-04-29 13:56:38] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskUpdate  
+[2026-04-29 13:57:02] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Agent  
+[2026-04-29 13:57:05] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/App.tsx
+[2026-04-29 13:57:06] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/main.tsx
+[2026-04-29 13:57:06] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/index.css
+[2026-04-29 13:57:07] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/api.ts
+[2026-04-29 13:57:08] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=ls /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/assets/ 2>/dev/
+[2026-04-29 13:57:15] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Agent  
+[2026-04-29 13:57:18] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server/src/index.ts
+[2026-04-29 13:57:25] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/App.tsx
+[2026-04-29 13:57:31] [APPROVAL] session=192c828e-602d-4aca-b358-abd16a66bffa  Claude needs your permission to use Write
+[2026-04-29 13:57:34] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Edit  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server/src/index.ts
+[2026-04-29 13:58:14] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/main.tsx
+[2026-04-29 13:58:14] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/index.css
+[2026-04-29 13:58:14] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=rm /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/assets/hero.png
+[2026-04-29 13:58:17] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=cd /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server && npx tsc --noEmit
+[2026-04-29 13:58:17] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=cd /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client && npx tsc -b --noE
+[2026-04-29 13:58:23] [APPROVAL] session=192c828e-602d-4aca-b358-abd16a66bffa  Claude needs your permission to use Bash
+[2026-04-29 13:58:45] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskUpdate  
+[2026-04-29 13:58:46] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskUpdate  
+[2026-04-29 13:58:46] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskUpdate  
+[2026-04-29 13:58:47] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/App.tsx
+[2026-04-29 13:58:47] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/main.tsx
+[2026-04-29 13:58:48] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/client/src/index.css
+[2026-04-29 13:58:49] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Read  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server/src/index.ts
+[2026-04-29 13:58:55] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=cd /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/server && npm run dev 2>&1
+[2026-04-29 13:59:02] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=sleep 2 && echo "=== /health ===" && curl -s http://localhost:3001/health && echo "" && echo "=== POST valid ===" && cur
+[2026-04-29 13:59:08] [APPROVAL] session=192c828e-602d-4aca-b358-abd16a66bffa  Claude needs your permission to use Bash
+[2026-04-29 13:59:23] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=kill bzstd2mr2 2>/dev/null; pkill -f "tsx watch src/index.ts" 2>/dev/null; echo done
+[2026-04-29 13:59:27] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=TaskUpdate  
+[2026-04-29 13:59:45] [DONE]     session=192c828e-602d-4aca-b358-abd16a66bffa  Claude finished responding.
+[2026-04-29 14:13:28] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=ls -la /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/ 2>&1
+[2026-04-29 14:13:33] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=mkdir -p /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/agents
+[2026-04-29 14:13:39] [APPROVAL] session=192c828e-602d-4aca-b358-abd16a66bffa  Claude needs your permission to use Bash
+[2026-04-29 14:14:37] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/agents/frontend-perf.md
+[2026-04-29 14:14:47] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Write  detail=/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/agents/backend-robustness.md
+[2026-04-29 14:14:51] [PENDING]  session=192c828e-602d-4aca-b358-abd16a66bffa  tool=Bash  detail=ls /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/25.Claude-Code-Deep-Dive/6.Tutorial5/.claude/agents/
+[2026-04-29 14:15:01] [DONE]     session=192c828e-602d-4aca-b358-abd16a66bffa  Claude finished responding.

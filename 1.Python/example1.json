@@ -1,0 +1,8 @@
+{
+  "id": [1, 2, 3, 4, 5],
+  "name": ["John Doe", "Jane Smith", "Bob Johnson", "Alice Brown", "Charlie Wilson"],
+  "age": [28, 32, 45, 29, 35],
+  "city": ["New York", "Los Angeles", "Chicago", "San Francisco", "Boston"],
+  "salary": [75000, 85000, 95000, 80000, 70000],
+  "department": ["Engineering", "Marketing", "Sales", "Engineering", "HR"]
+}

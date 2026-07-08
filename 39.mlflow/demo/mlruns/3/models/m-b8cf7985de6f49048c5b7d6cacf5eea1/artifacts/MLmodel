@@ -1,0 +1,22 @@
+artifact_path: /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/39.mlflow/demo/mlruns/3/models/m-b8cf7985de6f49048c5b7d6cacf5eea1/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.13.5
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.3.0
+mlflow_version: 3.8.1
+model_id: m-b8cf7985de6f49048c5b7d6cacf5eea1
+model_size_bytes: 104641
+model_uuid: m-b8cf7985de6f49048c5b7d6cacf5eea1
+prompts: null
+run_id: 554a980b009641d2956527c83de27151
+utc_time_created: '2026-07-04 12:19:22.926966'

@@ -1,0 +1,263 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { EXAMS } from "../consts";
+const examOpts = EXAMS.map((e) => ({ slug: e.slug, name: e.name, subjects: e.subjects }));
+const subjectsByExam = Object.fromEntries(EXAMS.map((e) => [e.slug, e.subjects]));
+
+// Official sources for the COMPLETE year-by-year question papers (we can't host
+// every copyrighted paper, so we point students to the authoritative archives).
+const archives = [
+  { exam: "IIT-JEE — Main", links: [["NTA · JEE Main portal", "https://jeemain.nta.nic.in"]] },
+  { exam: "IIT-JEE — Advanced", links: [["JEE Advanced · past papers archive", "https://jeeadv.ac.in/past_question_papers.php"]] },
+  { exam: "NEET", links: [["NTA · NEET portal", "https://neet.nta.nic.in"]] },
+  { exam: "GATE", links: [["Official GATE portal (IISc/IITs)", "https://gate.iisc.ac.in"]] },
+  { exam: "CAT", links: [["IIM · CAT official", "https://iimcat.ac.in"]] },
+  { exam: "ISI / CMI", links: [["ISI Kolkata", "https://www.isical.ac.in"], ["CMI admissions", "https://www.cmi.ac.in/admissions"]] },
+  { exam: "UPSC", links: [["UPSC · Previous Question Papers", "https://upsc.gov.in/examinations/previous-question-papers"]] },
+];
+---
+
+<BaseLayout title="Previous-Year Questions" description="A growing, community-solved bank of previous-year questions for IIT-JEE, GATE, CAT, ISI/CMI, NEET and UPSC — filter by exam, subject, year and tags; post solutions, vote and accept the best.">
+  <section class="aurora">
+    <div class="mx-auto max-w-4xl px-4 py-12 text-center sm:px-6">
+      <span class="inline-block rounded-full border border-brand-200 bg-white/60 px-3 py-1 text-xs font-semibold text-brand-700 backdrop-blur dark:border-brand-500/30 dark:bg-white/5 dark:text-brand-300">📑 Previous-Year Questions</span>
+      <h1 class="mt-3 font-serif text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">PYQ Bank</h1>
+      <p class="mx-auto mt-3 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
+        Real questions from past papers — solved by the community. Filter by exam, subject &amp; year, post your own solution, vote on answers, and accept the best one. Add the questions you remember to grow the bank for everyone.
+      </p>
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <button id="add-toggle" class="rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white transition hover:bg-brand-700">+ Add a question</button>
+        <button id="rand-btn" class="rounded-xl border border-gray-300 bg-white/70 px-6 py-3 font-semibold text-gray-800 backdrop-blur transition hover:border-brand-400 dark:border-white/15 dark:bg-white/5 dark:text-gray-100">🎲 Surprise me</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <!-- Add form -->
+    <form id="add-form" class="mb-8 hidden rounded-2xl border border-gray-200 bg-white p-5 dark:border-white/10 dark:bg-white/[0.03]">
+      <h2 class="mb-1 text-lg font-bold text-gray-900 dark:text-white">Add a previous-year question</h2>
+      <p class="mb-3 text-xs text-gray-500 dark:text-gray-400">Type the question as accurately as you can. Markdown + LaTeX supported (e.g. <code>$E=mc^2$</code>). Leave the answer blank — let the community solve it!</p>
+      <input id="p-title" required maxlength="240" placeholder="The question — e.g. 'GATE CSE 2021: time complexity of T(n)=2T(n/2)+n'" class="w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-brand-500 dark:border-white/15" />
+      <textarea id="p-body" rows="4" placeholder="Full question statement, options, and source (paper/section) if you remember it." class="mt-3 w-full resize-y rounded-lg border border-gray-300 bg-transparent px-3 py-2 font-mono text-sm outline-none focus:border-brand-500 dark:border-white/15"></textarea>
+      <div class="mt-3 grid gap-3 sm:grid-cols-3">
+        <select id="p-exam" required class="rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm dark:border-white/15">
+          <option value="">Exam…</option>
+          {examOpts.map((e) => <option value={e.slug}>{e.name}</option>)}
+        </select>
+        <select id="p-subject" class="rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm dark:border-white/15">
+          <option value="">Subject…</option>
+        </select>
+        <input id="p-year" type="number" min="1990" max="2030" placeholder="Year (e.g. 2023)" class="rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm dark:border-white/15" />
+      </div>
+      <input id="p-tags" placeholder="Topic tags (comma separated) — e.g. recurrence, master-theorem" class="mt-3 w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm dark:border-white/15" />
+      <div class="mt-3 flex items-center justify-between">
+        <span id="p-asname" class="text-xs text-gray-400"></span>
+        <button type="submit" class="rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700">Add to bank</button>
+      </div>
+      <p id="p-msg" class="mt-2 hidden text-sm font-medium"></p>
+    </form>
+
+    <!-- Filters -->
+    <div class="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <input id="f-search" placeholder="🔍 Search questions & tags…" class="rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-brand-500 dark:border-white/15 lg:col-span-2" />
+      <select id="f-exam" class="rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm dark:border-white/15">
+        <option value="">All exams</option>
+        {examOpts.map((e) => <option value={e.slug}>{e.name}</option>)}
+      </select>
+      <select id="f-subject" class="rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm dark:border-white/15">
+        <option value="">All subjects</option>
+      </select>
+    </div>
+    <div class="mb-5 flex flex-wrap items-center gap-3">
+      <div id="f-years" class="flex flex-wrap gap-1.5"></div>
+      <div class="ml-auto flex gap-1 rounded-lg bg-gray-100 p-1 text-xs font-semibold dark:bg-white/5">
+        <button data-sort="year" class="rounded-md px-2.5 py-1">Recent years</button>
+        <button data-sort="votes" class="rounded-md px-2.5 py-1">Top</button>
+        <button data-sort="unanswered" class="rounded-md px-2.5 py-1">Unsolved</button>
+      </div>
+    </div>
+
+    <p id="f-count" class="mb-3 text-sm text-gray-500 dark:text-gray-400"></p>
+    <div id="p-skeleton" class="grid gap-3 sm:grid-cols-2">
+      {[0, 1, 2, 3].map(() => (
+        <div class="rounded-xl border border-gray-200 p-4 dark:border-white/10"><div class="skeleton h-4 w-2/3"></div><div class="skeleton mt-3 h-3 w-full"></div><div class="skeleton mt-2 h-3 w-1/2"></div></div>
+      ))}
+    </div>
+    <div id="p-list" class="grid gap-3 sm:grid-cols-2"></div>
+    <p id="p-empty" class="hidden rounded-2xl border border-dashed border-gray-300 p-10 text-center text-gray-500 dark:border-white/10">No questions match these filters. Try clearing them — or be the first to add one!</p>
+
+    <!-- Official full archives -->
+    <div class="mt-12 rounded-2xl border border-gray-200 p-6 dark:border-white/10">
+      <h2 class="font-serif text-xl font-bold text-gray-900 dark:text-white">📚 Complete year-by-year papers (official sources)</h2>
+      <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        Our bank is a growing set of <strong>curated, fully-solved</strong> questions. For <strong>every</strong> paper from 2000 onward, the authoritative archives are below — download the originals, then bring tricky ones back here to discuss and save for revision.
+      </p>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {archives.map((a) => (
+          <div class="rounded-xl border border-gray-200 p-4 dark:border-white/10">
+            <h3 class="font-bold text-gray-900 dark:text-white">{a.exam}</h3>
+            <ul class="mt-2 space-y-1">
+              {a.links.map(([label, href]) => (
+                <li><a href={href} target="_blank" rel="noopener noreferrer" class="text-sm text-brand-600 hover:underline dark:text-brand-300">{label} ↗</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-900/10 dark:text-amber-200">
+      📚 This is a <strong>community question bank</strong>. Questions are reproduced for educational discussion; always cross-check with official papers. Spotted an error or know a cleaner solution? Post an answer and upvote the best ones.
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline src="/poly-qa.js?v=9"></script>
+<script is:inline src="/poly-practice.js?v=2"></script>
+<script is:inline define:vars={{ examMap: Object.fromEntries(EXAMS.map((e) => [e.slug, e.name])), subjectsByExam }}>
+  (function () {
+    const listEl = document.getElementById("p-list");
+    const skel = document.getElementById("p-skeleton");
+    const emptyEl = document.getElementById("p-empty");
+    const countEl = document.getElementById("f-count");
+    let all = [], answerCounts = {}, sort = "year";
+    const url = new URLSearchParams(location.search);
+    let examFilter = url.get("exam") || "";
+    let subjectFilter = "";
+    let yearFilter = "";
+
+    const esc = (s) => (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const strip = (s) => esc((s || "").replace(/[#*_`$>\[\]()]/g, "").replace(/\s+/g, " ").trim().slice(0, 150));
+
+    function user() { return (window.PolyAuth && window.PolyAuth.user) || null; }
+    function syncName() { const u = user(); document.getElementById("p-asname").textContent = u ? "Adding as " + u.name : "Adding anonymously — sign in to attach your name"; }
+    if (window.PolyAuth) window.PolyAuth.onChange(syncName);
+    document.addEventListener("polyauth", syncName);
+
+    // dependent subject dropdowns (filter + add form)
+    function fillSubjects(selectEl, examSlug, includeAll) {
+      const subs = (examSlug && subjectsByExam[examSlug]) || [];
+      selectEl.innerHTML = (includeAll ? '<option value="">All subjects</option>' : '<option value="">Subject…</option>') +
+        subs.map((s) => '<option value="' + esc(s) + '">' + esc(s) + "</option>").join("");
+    }
+    const fSubjectEl = document.getElementById("f-subject");
+    const pExamEl = document.getElementById("p-exam");
+    const pSubjectEl = document.getElementById("p-subject");
+    document.getElementById("f-exam").addEventListener("change", (e) => {
+      examFilter = e.target.value; subjectFilter = "";
+      fillSubjects(fSubjectEl, examFilter, true);
+      render();
+    });
+    fSubjectEl.addEventListener("change", (e) => { subjectFilter = e.target.value; render(); });
+    pExamEl.addEventListener("change", (e) => fillSubjects(pSubjectEl, e.target.value, false));
+    if (examFilter) { document.getElementById("f-exam").value = examFilter; fillSubjects(fSubjectEl, examFilter, true); }
+
+    document.getElementById("add-toggle").addEventListener("click", () => {
+      const f = document.getElementById("add-form"); f.classList.toggle("hidden"); if (!f.classList.contains("hidden")) document.getElementById("p-title").focus();
+    });
+    document.getElementById("rand-btn").addEventListener("click", () => {
+      if (!all.length) return;
+      const r = all[Math.floor(Math.random() * all.length)];
+      location.href = "/question?id=" + encodeURIComponent(r.id);
+    });
+
+    function years() {
+      return Array.from(new Set(all.map((q) => q.year).filter(Boolean))).sort((a, b) => b - a);
+    }
+    function renderYearChips() {
+      const yrs = years();
+      const box = document.getElementById("f-years");
+      box.innerHTML = ['<button data-year="" class="yr rounded-full border px-3 py-1 text-xs font-semibold ' + (yearFilter === "" ? "border-brand-500 bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300" : "border-gray-200 text-gray-600 dark:border-white/10 dark:text-gray-300") + '">All years</button>']
+        .concat(yrs.map((y) => '<button data-year="' + y + '" class="yr rounded-full border px-3 py-1 text-xs font-semibold ' + (String(yearFilter) === String(y) ? "border-brand-500 bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300" : "border-gray-200 text-gray-600 dark:border-white/10 dark:text-gray-300") + '">' + y + "</button>")).join("");
+      box.querySelectorAll(".yr").forEach((b) => b.addEventListener("click", () => { yearFilter = b.getAttribute("data-year"); renderYearChips(); render(); }));
+    }
+
+    function render() {
+      skel.classList.add("hidden");
+      const term = (document.getElementById("f-search").value || "").toLowerCase();
+      let rows = all.filter((q) =>
+        (!examFilter || q.exam === examFilter) &&
+        (!subjectFilter || q.subject === subjectFilter) &&
+        (!yearFilter || String(q.year) === String(yearFilter)) &&
+        (!term || (q.title + " " + (q.body || "") + " " + (q.tags || []).join(" ")).toLowerCase().includes(term)));
+      if (sort === "votes") rows.sort((a, b) => (b.votes || 0) - (a.votes || 0));
+      else if (sort === "unanswered") rows = rows.filter((q) => !(answerCounts[q.id] > 0)).sort((a, b) => (b.year || 0) - (a.year || 0));
+      else rows.sort((a, b) => (b.year || 0) - (a.year || 0) || new Date(b.created_at) - new Date(a.created_at));
+
+      emptyEl.classList.toggle("hidden", rows.length > 0);
+      countEl.textContent = rows.length + " question" + (rows.length === 1 ? "" : "s") + (examFilter || subjectFilter || yearFilter || term ? " · filtered" : " in the bank");
+      listEl.innerHTML = rows.map((q) => {
+        const ac = answerCounts[q.id] || 0;
+        const solved = q.status === "solved";
+        return (
+          '<a href="/question?id=' + encodeURIComponent(q.id) + '" class="card-lift flex flex-col rounded-xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.03]">' +
+            '<div class="mb-2 flex flex-wrap items-center gap-1.5 text-xs">' +
+              (q.exam && examMap[q.exam] ? '<span class="rounded-full bg-brand-50 px-2 py-0.5 font-semibold text-brand-700 dark:bg-brand-900/30 dark:text-brand-300">' + esc(examMap[q.exam]) + '</span>' : '') +
+              (q.year ? '<span class="rounded-full bg-gray-100 px-2 py-0.5 font-semibold text-gray-600 dark:bg-white/5 dark:text-gray-300">' + esc(String(q.year)) + '</span>' : '') +
+              (q.subject ? '<span class="rounded-full bg-gray-100 px-2 py-0.5 text-gray-500 dark:bg-white/5 dark:text-gray-400">' + esc(q.subject) + '</span>' : '') +
+              (solved ? '<span class="rounded-full bg-green-100 px-2 py-0.5 font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-300">✓ solved</span>' : '') +
+              '<button data-save-id="' + encodeURIComponent(q.id) + '" title="Save question" class="ml-auto text-base leading-none text-gray-300 transition hover:text-brand-500 dark:text-gray-500">' + (window.PolyPractice && window.PolyPractice.isSaved(q.id) ? '<span class="text-brand-500">★</span>' : '☆') + '</button>' +
+            '</div>' +
+            '<h3 class="font-bold leading-snug text-gray-900 dark:text-white">' + esc(q.title) + '</h3>' +
+            '<p class="mt-1 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">' + strip(q.body) + '</p>' +
+            '<div class="mt-3 flex items-center gap-3 text-xs text-gray-400">' +
+              '<span>▲ ' + (q.votes || 0) + '</span>' +
+              '<span>' + ac + ' answer' + (ac === 1 ? "" : "s") + '</span>' +
+              (q.tags || []).slice(0, 2).map((t) => '<span class="rounded bg-gray-100 px-1.5 py-0.5 dark:bg-white/5">#' + esc(t) + '</span>').join("") +
+            '</div>' +
+          '</a>'
+        );
+      }).join("");
+      // save (★) buttons — don't navigate the card
+      const byId = {}; all.forEach((q) => (byId[q.id] = q));
+      listEl.querySelectorAll("[data-save-id]").forEach((b) => b.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const P = window.PolyPractice; if (!P) return;
+        const q = byId[decodeURIComponent(b.getAttribute("data-save-id"))]; if (!q) return;
+        const on = P.toggleSave({ id: q.id, title: q.title, exam: q.exam, year: q.year, subject: q.subject, kind: "pyq", url: "/question?id=" + encodeURIComponent(q.id) });
+        b.innerHTML = on ? '<span class="text-brand-500">★</span>' : "☆";
+      }));
+    }
+
+    async function refresh() {
+      all = await window.PolyQA.listPYQs();
+      answerCounts = {};
+      await Promise.all(all.map(async (q) => { try { answerCounts[q.id] = (await window.PolyQA.listAnswers(q.id)).length; } catch (e) { answerCounts[q.id] = 0; } }));
+      renderYearChips();
+      render();
+    }
+
+    document.getElementById("f-search").addEventListener("input", render);
+    document.querySelectorAll("[data-sort]").forEach((b) => b.addEventListener("click", () => {
+      sort = b.getAttribute("data-sort");
+      document.querySelectorAll("[data-sort]").forEach((x) => x.classList.remove("bg-white", "text-brand-600", "shadow-sm", "dark:bg-white/10"));
+      b.classList.add("bg-white", "text-brand-600", "shadow-sm", "dark:bg-white/10");
+      render();
+    }));
+    document.querySelector('[data-sort="year"]').classList.add("bg-white", "text-brand-600", "shadow-sm", "dark:bg-white/10");
+
+    document.getElementById("add-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("p-title").value.trim();
+      const exam = pExamEl.value;
+      const msg = document.getElementById("p-msg");
+      if (!title || !exam) { msg.textContent = "Please add the question and pick an exam."; msg.style.color = "#e11d48"; msg.classList.remove("hidden"); return; }
+      const u = user();
+      const yearVal = parseInt(document.getElementById("p-year").value, 10);
+      const q = {
+        kind: "pyq", title,
+        body: document.getElementById("p-body").value.trim(),
+        exam, subject: pSubjectEl.value || null,
+        year: Number.isFinite(yearVal) ? yearVal : null,
+        tags: document.getElementById("p-tags").value.split(",").map((t) => t.trim()).filter(Boolean),
+        author_id: u && u.id, author_name: u && u.name,
+      };
+      const { data, error } = await window.PolyQA.createQuestion(q);
+      if (error) { msg.textContent = (error.message || "Couldn't add.") + " — your Supabase questions table may need the kind/year/subject columns (see README)."; msg.style.color = "#e11d48"; msg.classList.remove("hidden"); return; }
+      location.href = "/question?id=" + encodeURIComponent(data.id);
+    });
+
+    syncName(); refresh();
+    document.addEventListener("polypractice", () => { if (all.length) render(); }); // refresh save stars after sync
+  })();
+</script>

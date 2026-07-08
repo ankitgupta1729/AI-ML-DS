@@ -1,0 +1,114 @@
+---
+import { SITE, NAV } from "../consts";
+import ThemeToggle from "./ThemeToggle.astro";
+import AuthWidget from "./AuthWidget.astro";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-gray-200/70 bg-white/80 backdrop-blur-md dark:border-white/10 dark:bg-ink/80"
+>
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href="/" class="group flex items-center gap-2">
+      <span
+        class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-pink-500 text-lg font-black text-white shadow-sm transition group-hover:scale-105"
+        >P</span
+      >
+      <span class="text-lg font-extrabold tracking-tight text-gray-900 dark:text-white">
+        {SITE.name}
+      </span>
+    </a>
+
+    <div class="hidden items-center gap-1 md:flex">
+      {
+        NAV.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-lg px-3 py-2 text-sm font-medium transition",
+              isActive(item.href)
+                ? "bg-brand-50 text-brand-700 dark:bg-white/10 dark:text-white"
+                : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white",
+            ]}
+          >
+            {item.name}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a
+        id="revise-badge"
+        href="/practice"
+        title="Questions due for revision"
+        class="hidden items-center gap-1 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-900/20 dark:text-amber-300"
+      >
+        📅 <span id="revise-count">0</span>
+      </a>
+      <button
+        id="palette-trigger"
+        aria-label="Search (press / or Cmd-K)"
+        class="hidden items-center gap-2 rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm text-gray-500 transition hover:border-brand-400 hover:text-brand-600 sm:flex dark:border-white/10 dark:text-gray-400"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+        <span class="hidden md:inline">Search</span>
+        <kbd class="hidden rounded border border-gray-200 px-1 text-[10px] md:inline dark:border-white/10">⌘K</kbd>
+      </button>
+      <AuthWidget />
+      <ThemeToggle />
+      <button
+        id="mobile-menu-btn"
+        aria-label="Open menu"
+        class="grid h-9 w-9 place-items-center rounded-lg text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5 md:hidden"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden border-t border-gray-200/70 px-4 py-3 dark:border-white/10 md:hidden">
+    {
+      NAV.map((item) => (
+        <a
+          href={item.href}
+          class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-white/5"
+        >
+          {item.name}
+        </a>
+      ))
+    }
+  </div>
+</header>
+
+<script is:inline src="/poly-practice.js?v=2"></script>
+<script is:inline>
+  (function () {
+    const btn = document.getElementById("mobile-menu-btn");
+    const menu = document.getElementById("mobile-menu");
+    btn?.addEventListener("click", () => menu?.classList.toggle("hidden"));
+    document.getElementById("palette-trigger")?.addEventListener("click", () => window.PolyPalette && window.PolyPalette.open());
+
+    // Revision-due badge in the nav
+    function updateBadge() {
+      const el = document.getElementById("revise-badge");
+      const c = document.getElementById("revise-count");
+      if (!el || !c || !window.PolyPractice) return;
+      const n = window.PolyPractice.dueCount();
+      c.textContent = n;
+      el.classList.toggle("hidden", n <= 0);
+      el.classList.toggle("flex", n > 0);
+    }
+    updateBadge();
+    document.addEventListener("polypractice", updateBadge);
+    if (window.PolyAuth && window.PolyAuth.onChange) window.PolyAuth.onChange(updateBadge);
+  })();
+</script>

@@ -1,0 +1,51 @@
+---
+// Previous-Year Question of the Day — picks a deterministic PYQ from the bank
+// (stable for the whole day) and invites students to solve it.
+import { EXAMS } from "../consts";
+const uid = "pod" + Math.random().toString(36).slice(2, 8);
+const examMap = Object.fromEntries(EXAMS.map((e) => [e.slug, e.name]));
+---
+
+<div id={uid} class="not-prose rounded-2xl border border-brand-300/60 bg-gradient-to-br from-brand-50 to-indigo-50 p-5 dark:border-brand-500/30 dark:from-brand-900/20 dark:to-indigo-900/10">
+  <div class="mb-1 flex items-center justify-between">
+    <span class="text-xs font-bold uppercase tracking-wide text-brand-700 dark:text-brand-300">📑 PYQ of the Day</span>
+    <span data-meta class="flex flex-wrap items-center gap-1"></span>
+  </div>
+  <h3 data-title class="font-serif text-xl font-bold text-gray-900 dark:text-white">Loading today's question…</h3>
+  <p data-sub class="mt-2 text-sm text-gray-600 dark:text-gray-300"></p>
+  <div class="mt-3 flex flex-wrap gap-2">
+    <a data-solve href="/pyq" class="inline-block rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700">🧠 Solve it</a>
+    <a href="/pyq" class="inline-block rounded-lg border border-brand-300 px-4 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50 dark:border-brand-500/40 dark:text-brand-300 dark:hover:bg-white/5">Browse the bank →</a>
+  </div>
+</div>
+
+<script is:inline src="/poly-qa.js?v=9"></script>
+<script is:inline define:vars={{ uid, examMap }}>
+  (function () {
+    const root = document.getElementById(uid);
+    if (!root || !window.PolyQA) return;
+    const esc = (s) => (s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    (async () => {
+      let all = [];
+      try { all = await window.PolyQA.listPYQs(); } catch (e) { return; }
+      if (!all.length) return;
+      // stable order (independent of source) so the "of the day" pick is deterministic
+      all = all.slice().sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+      const day = Math.floor(Date.now() / 86400000);
+      const q = all[day % all.length];
+      let ac = 0; try { ac = (await window.PolyQA.listAnswers(q.id)).length; } catch (e) {}
+
+      const badge = (txt, strong) => '<span class="rounded-full ' + (strong ? "bg-brand-100 font-semibold text-brand-700 dark:bg-brand-900/40 dark:text-brand-200" : "bg-white/70 text-gray-600 dark:bg-white/10 dark:text-gray-300") + ' px-2 py-0.5 text-xs">' + esc(txt) + "</span>";
+      root.querySelector("[data-meta]").innerHTML =
+        (q.exam && examMap[q.exam] ? badge(examMap[q.exam], true) : "") +
+        (q.year ? badge(String(q.year)) : "") +
+        (q.subject ? badge(q.subject) : "");
+      root.querySelector("[data-title]").textContent = q.title;
+      const solved = q.status === "solved";
+      root.querySelector("[data-sub]").textContent =
+        (ac > 0 ? ac + " answer" + (ac === 1 ? "" : "s") + (solved ? " · ✓ solved" : "") : "Be the first to solve this one") + " — a fresh question every day.";
+      const solve = root.querySelector("[data-solve]");
+      solve.href = "/question?id=" + encodeURIComponent(q.id);
+    })();
+  })();
+</script>

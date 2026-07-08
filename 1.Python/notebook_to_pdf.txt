@@ -1,0 +1,21 @@
+1. install:
+pip install "notebook>=6.0" "nbconvert>=6.0" "jupyter-client>=7.0"
+pip install "notebook==6.4.12" "nbconvert==6.4.4" "jupyter-client==7.4.9"
+pip install jupyter_contrib_nbextensions
+
+2. run:
+jupyter nbconvert --to pdf Practice1.ipynb
+
+(or)
+
+jupyter nbconvert Practice1.ipynb --to pdf
+
+
+-------------------------------------------------------------
+
+-- Convert jupyter notebook to html and then pdf:
+
+### Using wkhtmltopdf (install first: brew install wkhtmltopdf or apt-get install wkhtmltopdf)
+
+jupyter nbconvert --to html Practice8.ipynb
+wkhtmltopdf Practice8.html Practice8.pdf 

@@ -1,0 +1,54 @@
+<p>Similar to the spending data, we will also populate our database with some electricity plans to experiment upon. </p><p>Use the following code to create the <code>electricity_plans</code> table in the <code>demo</code> database and populate it with some dummy electricity subscription plans (e.g., run it in the same <code>populate_db.py</code> script):</p><p><br></p><pre class="prettyprint linenums">def populate_electricity_plans():
+
+&nbsp; &nbsp; conn = sqlite3.connect("demo.db")
+&nbsp; &nbsp; cursor = conn.cursor()
+
+&nbsp; &nbsp; cursor.execute(
+&nbsp; &nbsp; &nbsp; &nbsp; """
+&nbsp; &nbsp; &nbsp; &nbsp; CREATE TABLE IF NOT EXISTS electricity_plans (
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; plan_id INTEGER PRIMARY KEY AUTOINCREMENT,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; plan_name TEXT NOT NULL,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; plan_description TEXT NOT NULL,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; selling_points TEXT NOT NULL
+&nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; &nbsp; &nbsp; """
+&nbsp; &nbsp; )
+
+&nbsp; &nbsp; electricity_plans = [
+&nbsp; &nbsp; &nbsp; &nbsp; (
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "Standard Plan",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "A well-rounded electricity plan designed for typical households, offering stable pricing and reliable service without any peak-hour surcharges.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "Affordable rates, predictable billing, ideal for families",
+&nbsp; &nbsp; &nbsp; &nbsp; ),
+&nbsp; &nbsp; &nbsp; &nbsp; (
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "Eco Plan",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "A renewable energy plan that prioritizes sustainability by sourcing electricity from solar, wind, and hydroelectric power. Perfect for environmentally conscious consumers.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "100% green energy, reduces carbon footprint, government incentives may apply",
+&nbsp; &nbsp; &nbsp; &nbsp; ),
+&nbsp; &nbsp; &nbsp; &nbsp; (
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "Night Plan",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "An electricity plan that provides significant cost savings for customers who consume most of their energy during off-peak nighttime hours. Ideal for night-shift workers and EV owners.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "Lower rates at night, great for electric vehicle charging, smart meter integration",
+&nbsp; &nbsp; &nbsp; &nbsp; )
+&nbsp; &nbsp; ]
+
+&nbsp; &nbsp; cursor.executemany(
+&nbsp; &nbsp; &nbsp; &nbsp; """
+&nbsp; &nbsp; INSERT INTO electricity_plans (
+&nbsp; &nbsp; &nbsp; &nbsp; plan_id, 
+&nbsp; &nbsp; &nbsp; &nbsp; plan_name, 
+&nbsp; &nbsp; &nbsp; &nbsp; plan_description, 
+&nbsp; &nbsp; &nbsp; &nbsp; selling_points ) &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; VALUES (?, ?, ?, ?)
+&nbsp; &nbsp; &nbsp; &nbsp; """,
+&nbsp; &nbsp; &nbsp; &nbsp; electricity_plans,
+&nbsp; &nbsp; )
+
+&nbsp; &nbsp; conn.commit()
+&nbsp; &nbsp; conn.close()
+
+if __name__ == "__main__":
+    populate_electricity_plans()</pre><p><br></p><p>Once again, we choose synthetic data records to showcase our chatbot's capabilities while ensuring that its responses are easily interpretable for correctness.</p>

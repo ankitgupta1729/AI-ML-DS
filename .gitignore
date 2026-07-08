@@ -1,0 +1,19 @@
+.venv/
+17.OpenCode/
+20.LlamaIndex/llamaindex-helloworld/.env
+__pycache__/
+*.pyc
+.env
+.cache/
+storage/
+__pycache__/
+.env
+4.Theory/Notes/*.pdf
+24.LangChain2/Project/env/
+0.Resources/PDFs/Behind Gen AI_ NLP, LLM and ChatGPT by Et Tu Code.pdf
+.DS_Store
+.claude/settings.json
+# Large PDF files - exceeding GitHub size limit
+0.Resources/PDFs/AI-ML-DS/book1*.pdf
+0.Resources/PDFs/AI-ML-DS/*Large*.pdf
+0.Resources/PDFs/AI-ML-DS/Probabilistic*Advanced*.pdf

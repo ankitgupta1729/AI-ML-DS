@@ -1,0 +1,109 @@
+parameters:
+  - name: stageId
+    type: string
+  - name: dependsOn
+    type: object
+    default: []
+  - name: env
+    type: string
+  - name: environmentName
+    type: string
+  - name: resourceGroupName
+    type: string
+  - name: serviceConnection
+    type: string
+  - name: notebooksPath
+    type: string
+
+stages:
+  - stage: "${{ parameters.stageId }}"
+    displayName: "Deploying to [${{upper(parameters.env)}}] Environment"
+    dependsOn: ${{ parameters.dependsOn }}
+    jobs:
+      # A "deployment" job (not a plain "job") binds to an Azure DevOps Environment.
+      # This is what makes the environment's Approvals & checks actually gate the stage
+      # (e.g. the manual approval configured on prod-environment-databricks-cicd).
+      - deployment: Deploy
+        displayName: "Deploying Databricks Notebooks"
+        environment: ${{ parameters.environmentName }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: AzureCLI@2
+                  inputs:
+                    azureSubscription: ${{parameters.serviceConnection}}
+                    scriptType: "pscore"
+                    scriptLocation: "inlineScript"
+                    inlineScript: |
+                      $ErrorActionPreference = "Stop"
+                      az config set extension.use_dynamic_install=yes_without_prompt
+
+                      Write-Host "Build.SourceBranch: $env:BUILD_SOURCEBRANCH"
+                      Write-Host "Build.SourceVersion: $env:BUILD_SOURCEVERSION"
+                      Write-Host "Build.Repository.LocalPath: $env:BUILD_REPOSITORY_LOCALPATH"
+                      Write-Host "resource-group-name resolved to: ${{parameters.resourceGroupName}}"
+                      Write-Host "service-connection-name resolved to: ${{parameters.serviceConnection}}"
+
+                      # Locate the Databricks workspace in the resource group.
+                      $databricksWorkspace = (az resource list --resource-group ${{parameters.resourceGroupName}} --query "[?type=='Microsoft.Databricks/workspaces']" | ConvertFrom-Json)[0]
+                      if ($null -eq $databricksWorkspace) {
+                        throw "No Azure Databricks workspace was found in resource group '${{parameters.resourceGroupName}}'."
+                      }
+                      $databricksWorkspaceInfo = (az databricks workspace show --ids $databricksWorkspace.id | ConvertFrom-Json)
+
+                      # Mint a short-lived Microsoft Entra (AAD) token for Azure Databricks using the
+                      # service principal that AzureCLI@2 is already logged in as. No PAT / secret
+                      # variables required. 2ff814a6-3304-4ab8-85cb-cd0e6f879c1d is the well-known
+                      # Azure Databricks login application id.
+                      $azureDatabricksPrincipalId = "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d"
+                      $bearerToken = (az account get-access-token --resource $azureDatabricksPrincipalId | ConvertFrom-Json).accessToken
+                      if ([string]::IsNullOrWhiteSpace($bearerToken)) {
+                        throw "Failed to acquire a Microsoft Entra token for Azure Databricks from the service principal session."
+                      }
+                      Write-Host "Acquired Microsoft Entra token for Azure Databricks. Token length: $($bearerToken.Length)"
+
+                      $workspaceApi = "https://$($databricksWorkspaceInfo.workspaceUrl)/api/2.0/workspace"
+                      $headers = @{ Authorization = "Bearer $bearerToken" }
+                      $sourcePath = Join-Path $env:BUILD_REPOSITORY_LOCALPATH "${{parameters.notebooksPath}}"
+                      # Deploy into the workspace-wide /Shared area. The pipeline runs as the service
+                      # principal, which cannot write into a personal /Users/<email>/ home folder
+                      # (that returns "User not authorized"). /Shared is writable by all workspace
+                      # users and is the natural home for a "live" copy consumed by ADF.
+                      $targetRoot = "/Shared/live"
+                      Write-Host "Notebook source path: $sourcePath"
+                      Write-Host "Databricks target path: $targetRoot"
+
+                      try {
+                        Invoke-RestMethod -Method Post -Uri "$workspaceApi/delete" -Headers $headers -ContentType "application/json" -Body (@{
+                          path = $targetRoot
+                          recursive = $true
+                        } | ConvertTo-Json)
+                      } catch {
+                        Write-Host "Target folder did not exist or could not be deleted. Continuing with import."
+                      }
+
+                      Invoke-RestMethod -Method Post -Uri "$workspaceApi/mkdirs" -Headers $headers -ContentType "application/json" -Body (@{
+                        path = $targetRoot
+                      } | ConvertTo-Json)
+
+                      Get-ChildItem -Path $sourcePath -Recurse -File | ForEach-Object {
+                        $relativePath = [System.IO.Path]::GetRelativePath($sourcePath, $_.FullName).Replace('\', '/')
+                        $databricksPath = "$targetRoot/$relativePath"
+                        $parentPath = $databricksPath.Substring(0, $databricksPath.LastIndexOf('/'))
+
+                        Invoke-RestMethod -Method Post -Uri "$workspaceApi/mkdirs" -Headers $headers -ContentType "application/json" -Body (@{
+                          path = $parentPath
+                        } | ConvertTo-Json)
+
+                        $content = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($_.FullName))
+                        Invoke-RestMethod -Method Post -Uri "$workspaceApi/import" -Headers $headers -ContentType "application/json" -Body (@{
+                          path = $databricksPath
+                          format = "JUPYTER"
+                          content = $content
+                          overwrite = $true
+                        } | ConvertTo-Json)
+
+                        Write-Host "Imported $relativePath to $databricksPath"
+                      }

@@ -1,0 +1,105 @@
+<p>Now let's proceed to the definition and coding of our tools. These tools will be Python functions, decorated with the <code>@tool</code> decorator of the LangGraph framework. This way, the various assistants will be able to access them in an agentic way, meaning that the assistatns will call these tools as they see fit, and they will handle the tool outputs appropriately.&nbsp; </p><p><br></p><p>Recall that we have three assistants in our architecture. Each one will have access to its own set of tools, as shown below:&nbsp; </p><p><br></p><figure><img src="https://img-c.udemycdn.com/redactor/raw/article_lecture/2025-02-20_10-37-07-0e77669754b4b03693cea5af7d50774f.png"></figure><p><br></p><p>Based on our previous discussion about system prompts, we made clear that the Spending and the Recommendation assistant have access to some tools. So let's start by coding the tools of these two.</p><p><br></p><p><strong>Spending assistant tools </strong></p><p>The code below implements the <code>fetch_spending_events</code> tool. </p><p><br></p><pre class="prettyprint linenums">import sqlite3
+from langchain_core.tools import tool
+
+
+@tool
+def fetch_spending_events(sql_query: str) -&gt; str:
+    """
+    Fetches the spending events for a given user from an SQL database.
+    The SQL table is called "spending_events". The table schema is given below:
+            {
+				event_id: INTEGER PRIMARY KEY AUTOINCREMENT,
+				customer_id: INTEGER,
+				plan_name: TEXT NOT NULL,
+				billing_start: DATE NOT NULL,
+				billing_end: DATE NOT NULL,
+				amount_due: REAL
+            }
+    In our case, customer_id is always 1, so you can simply ignore this field.
+    """
+
+    conn = sqlite3.connect("demo.db")
+    cursor = conn.cursor()
+
+    cursor.execute(sql_query)
+    result = cursor.fetchall()
+
+    message = ""
+    for entry in result:
+        message += f"\n{entry}"
+
+    conn.close()
+
+    return message</pre><p><br></p><p>The <code>fetch_spending_events</code> tool accepts an SQL query as a string argument, it establishes a connection to the <code>demo</code> database, then executes the SQL query upon the database, and it finally returns the result of the query in a string format. However, it is crucial to understand how this works under the hood:&nbsp;</p><ul><li><p>Tool argument: the <code>sql_query</code> argument will be dynamically created by the LLM that powers the Spending assistant. That means that we will not have a programmatic control over this argument. </p></li><li><p>Tool docstring: the docstring of the tool is of paramount importance. Effectively, the assistant will evaluate this docstring to check if the tool is right for its task and hence decide if it needs to call it or not. Further, the docstring should entail important information about the scope of the tool. For example, here we specify that the assistant should look at the <code>spending_events</code> SQL table and its schema. Without this information, we cannot expect the LLM to form an appropriate SQL query for the tool argument. In case we observe frequent wrong tool argument passing, we can experiment with different docstrings to see if they help. </p></li></ul><p><strong>Recommendation assistant tools</strong></p><p>The code below implements the <code>list_supported_plans</code> and <code>fetch_plan_description</code> tools. </p><p><br></p><pre class="prettyprint linenums">@tool
+def list_supported_plans() -&gt; list[str]:
+&nbsp; &nbsp; """Returns a list of plans the assistant has knowledge about."""
+&nbsp; &nbsp; message = ["Standard Plan", "Eco Plan", "Night Plan"]
+
+&nbsp; &nbsp; return f"Supported plans are: {message}"
+
+
+@tool
+def fetch_plan_description(sql_query: str) -&gt; str:
+&nbsp; &nbsp; """
+&nbsp; &nbsp; Fetches the detailed description of an electricity plan for an SQL database.
+&nbsp; &nbsp; The SQL table is called "electricity_plans". The table schema is given below:
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; plan_id: INTEGER PRIMARY KEY AUTOINCREMENT,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; plan_name: TEXT NOT NULL,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; plan_description: TEXT NOT NULL,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; selling_points: TEXT NOT NULL
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; """
+
+&nbsp; &nbsp; conn = sqlite3.connect("demo.db")
+&nbsp; &nbsp; cursor = conn.cursor()
+
+&nbsp; &nbsp; cursor.execute(sql_query)
+&nbsp; &nbsp; charging_events = cursor.fetchall()
+
+&nbsp; &nbsp; message = ""
+&nbsp; &nbsp; for event in charging_events:
+&nbsp; &nbsp; &nbsp; &nbsp; message += f"\n{event}"
+
+&nbsp; &nbsp; # Close the connection
+&nbsp; &nbsp; conn.close()
+
+&nbsp; &nbsp; return message</pre><p><br></p><p>The&nbsp; <code>list_supported_plans</code> tool takes no arguments and simply returns a list of electricity plans that are offered by the electricity company. We expect this tool to be used if the user asks something along the lines of "What electricity plans do you offer?" or if the user specifies a plan that does not exist and we have to re-direct them to only supported plans. Notice here the docstring, which is a concise message that specifies the purpose of the tool. </p><p>The <code>fetch_plan_description</code> tool is very similar to the <code>fetch_spending_events</code> tool. It connects to the <code>demo</code> database and fetches a more detailed description of a particular plan. The corresponding LLM that fuels the Recommendation assistant will have to generate the SQL query that fetches information about the plan of interest. </p><p><br></p><p><strong>Common tools</strong></p><p>Our assistants can have some tools in common. Here, we define the <code>CompleteOrEscalate</code> tool, this time as a <code>BaseModel</code> class instead of a function. This tool is adopted from the LangGraph tutorial that we follow (https://langchain-ai.github.io/langgraph/tutorials/customer-support/customer-support/#assistants).&nbsp; </p><p><br></p><pre class="prettyprint linenums">from pydantic import BaseModel
+
+
+class CompleteOrEscalate(BaseModel):
+&nbsp; &nbsp; """A tool to mark the current task as completed and/or to escalate control of the dialog to the primary assistant, who can re-route the dialog based on the user's needs."""
+
+&nbsp; &nbsp; cancel: bool = True
+&nbsp; &nbsp; reason: str
+
+&nbsp; &nbsp; class Config:
+&nbsp; &nbsp; &nbsp; &nbsp; json_schema_extra = {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "example": {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "cancel": True,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "reason": "User changed their mind about the current task.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "example 2": {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "cancel": True,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "reason": "I have fully completed the task.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "example 3": {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "cancel": False,
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "reason": "I can try searching into another database.",
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },
+&nbsp; &nbsp; &nbsp; &nbsp; }</pre><p><br></p><p>The <code>CompleteOrEscalate</code> tool has a very special purpose: to enable the conversation to escape from a particular specialized assistant/workflow. This hints another dimension of tools; they can be used for routing purposes as well. For example, assume that a user interacts with the Spending assistant and at some point of the conversation they ask "Tell me about the Standard plan". Apparently, this question does not fall under the scope of the Spending assistant, rather it is more appropriate for the Recommendation assistant. The Spending assistant can then trigger the <code>CompleteOrEscalate</code> tool to delegate back to the Primary assistant, who will hopefully then steer the flow towards the Recommendation assistant. </p><p>In the <code>CompleteOrEscalate</code> tool, the <code>cancel</code> and <code>reason</code> arguments will be populated dynamically by an LLM, similar to function tool arguments. A few lines below, there is the <code>json_schema_extra</code> variable that is used to provide some examples of how these arguments should be filled. </p><p><br></p><p><strong>Primary assistant (routing) tools</strong></p><p>In contrast to the Spending and the Recommendation assistants, no tool usage is implied for the Primary assistant, at least based on its system prompt defined previously. Nonetheless, and given the "routing" dimension of tools that we have just discovered, we can design a few tools for the Primary assistant also. </p><p>The code below implements the <code>ToSpendingAssistant</code> and <code>ToRecommendationAssistant</code> routing tools. </p><p><br></p><pre class="prettyprint linenums">from pydantic import Field
+
+class ToSpendingAssistant(BaseModel):
+&nbsp; &nbsp; """Transfers work to a specialized assistant to handle billing inquiries."""
+
+&nbsp; &nbsp; request: str = Field(
+&nbsp; &nbsp; &nbsp; &nbsp; description="Any necessary followup questions the spending assistant should clarify before proceeding."
+&nbsp; &nbsp; )
+
+
+class ToRecommendationAssistant(BaseModel):
+&nbsp; &nbsp; """Transfers work to a specialized assistant to handle electricity plan recommendations."""
+
+&nbsp; &nbsp; request: str = Field(
+&nbsp; &nbsp; &nbsp; &nbsp; description="Any necessary followup questions the recommendation assistant should clarify before proceeding."
+&nbsp; &nbsp; )</pre><p><br></p><p>The two tools above will be triggered by the Primary assistant conditionally, depending on whether the flow of the conversation should be handled by the Spending or the Recommendation assistant. The <code>request</code> filled will be populated by an LLM dynamically. </p>
