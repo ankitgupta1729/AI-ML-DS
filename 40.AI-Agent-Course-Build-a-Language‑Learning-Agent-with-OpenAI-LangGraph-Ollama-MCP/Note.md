@@ -166,3 +166,102 @@ All of these post-training steps have forced the model into specializing in prob
 15. We can build many types of agents using LangGraph. You can build those more structured agents which require the LLM to only sort of make decisions at certain points. You can build multi-agent applications. Here, we build the ReAct agent.
 
 Now, see the code of main.py.
+
+In ReAct agent, we essentially allowing the LLM to do the planning and decision-making when it comes solving this problem. 
+
+16. Execute main.py file and you will get the following output:
+
+╭─🍎 ankit@MacBook-Air 💻  …/AI-ML-DS/40.AI-Agent-Course-Build-a-Language‑Learning-Agent-with-OpenAI-LangGraph-Ollama-MCP/language-learning-agent on  main [ ✱3  ] 🐍 (.venv) 🐍  v3.13.14 is  v0.1.0 
+╰─ python3 main.py
+Final messages: Here are 10 random words in German:
+
+1. Verkehrsdrehscheibe
+2. Kreisprozeß
+3. Giftmischerei
+4. Zentralkrankenhaus
+5. Automobilmarke
+6. überbiete
+7. Managerin
+8. Expertenrunde
+9. Sonnenfest
+10. Colonia
+
+17.  
+
+Using Open-source local models:
+
+So now we have basic agent which is running off the back of a proprietary model which is managed by a third party company.
+
+And, while using these sort of proprietary models for agents is very convenient. They are very fast. They tend to be very powerful.
+
+They do also come with a number of downsides. The first of these is cost. We need to pay for these models and because agentic application, in particular, tend to be very hungry. The cost can add up rather quickly. Another important consideration is data
+privacy. Now, depending on the data that you are using in your agent, you may not want it sent to a third party provider, especially
+if your contract for using the LLMs allows them to use your data for training the models.
+
+And, a final consideration is using the right model for the job. 
+
+Using a smaller LLM that is trained for your specific use case has a number of advantages. It can save you in costs, in can save you in GPU utilization, and it can also make productionizing your agentic application much simpler.
+
+Here, we use the Ollama. Ollama is a very popular tool for running LLMs locally. So, people might prefer to run LLMs locally for a number of reasons. It might be cost reasons, it might be the privacy reasons etc.
+
+Ollama models are specifically designed to run locally, they tend to very lightweight models compared to these absolutely enormous closed source models or proprietary models that we were using in the previous section. These open source models have 3 billion or 7 billion parameters compared to 100 billion parameters of closed source models.
+
+The other way in which ollama models are made smaller is through a process called quantization. So, this is basically where the model weights that is numbers that the model has learned during the training are reduced in precision. And, basically what it does is, it reduces the memory use and also speeds up the model, but it really tends to not impact the model performance that much.
+
+- First download ollama from ollama.com/download for your operating system and then install it.
+- Because we need a reasoning model then go to ollama site and navigate to the models page. Then filter on `Thinking` and see the models list.
+- Here I settled on `qwen3` for this ReAct agent. Number of parameters of this model you choose depend on your machine.
+- Using `ollama list`, check all the models which are installed in your vscode terminal.
+- First, we need to install the model from the page `https://ollama.com/library/qwen3:8b` using command `ollama pull qwen3:8b` in the terminal and then run using `ollama run qwen3:8b` [5GB model]. 
+
+18.  
+
+Here, to use ollama, we are using main_ollama.py and agent_ollama folder for tools.py. Check the code and then run `python3 main_ollama.py` to see the output using qwen3 model. After that, we have used custom tools as well. Fo
+r language translation tool, we are using llama3, so run it using `ollama run llama3` and also `ollama run qwen3:8b` in 2 different terminals and run the script `python3 main_ollama.py` in the third terminal.
+
+LLMs are not deterministic, they do mistakes. So, double check everything. 
+
+19. 
+
+Calling External tools through MCP: 
+
+MCP is a standardized protocol which makes communication between AI systems like AI agents and external tools much easier by standardizing those communications and breaking away from reliance on custom connections. These external tools are hosted on MCP servers. This is just a fancy way of describing any local program, any background service, any remote AI wrapper which communicates with AI agents via MCP.
+
+There are an absolutely enormous number of MCP servers available. Some free, some paid. And these really help expand the range of
+functionality of your AI agent. And then because we are talking of external tools, some of these carry security risks when used with 
+agents. 
+
+`https://mcpservers.org/` site has many many MCP servers and these falls under all sorts of different purposes, things like web scrapping, communication, productivity, development, etc. Check the site for more information.
+
+For now, we are going to be using an MCP server called `Clanki` `(https://mcpservers.org/servers/jasperket/clanki)` which is going to allow us to create flashcards with a very popular piece of flashcard software called `Anki`. Both `Clanki` and `Anki` are free to use. Although Clanki says it is designed to use with Claude but it can be used with any LLM. So, we can use it with Qwen3 model as well.
+
+Clanki has a quite large number of tools that allow us to interact with Anki. It allows us to create and manage Anki decks, create basic flashcards, create close cards, update existing cards, add and manage tags, view deck contents and information and it integrates with a plugin for Anki called AnkiConnect which we use here.
+
+Installation: 
+
+- clone `git clone https://github.com/yourusername/clanki.git` where you want 
+- cd clanki
+- npm install
+- Run `npm run build` inside clanki directory
+
+Now, inside `clanki` directory, go to `index.js` object and copy the `args` parameter value under `mcpServers`.
+
+The next thing we need to create Anki flashcards is of course the Anki Application (`https://apps.ankiweb.net/`), this application is a free desktop application. You can download it from `https://apps.ankiweb.net/` and install it on your machine. 
+
+The final piece of setup we need to do is we need to add the AnkitConnect plugin to Anki. AnkiConnect is basically going to allow our agent to communicate with Anki. Run this app in the background when you have to run the code.
+
+So, run the following commands in vs code terminal:
+
+- git clone https://github.com/jasperket/clanki.git ~/Documents/clanki_setup/clanki
+cd ~/Documents/clanki_setup/clanki && npm install && npm run build
+ 
+- go to `clanki --> build --> index.js` and use this path in `main_ollama.py`.
+- You also need to setup AnkiConnect setup as well by the following process:
+
+Installing the AnkiConnect plugin on your Mac takes just a few clicks. Open Anki, go to Tools > Add-ons > Get Add-ons..., enter the code 2055492159, and restart the application or don't restart if it is already working after running `python3 main_ollama.py`.
+
+Now, see the output in Anki app.
+
+20. For LLM tools, you can sandbox your agents so their access is limited and you can split tasks so that sensitive data and untrusted content are never mixing in the same step.  
+  
+

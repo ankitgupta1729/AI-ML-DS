@@ -3,63 +3,28 @@ import json
 import random
 
 from langchain_core.tools import tool
+from langchain_ollama import ChatOllama
+from langchain_core.messages import HumanMessage
 
-# It's best practices when you are creating a python function to use things 
-# like type hinting or create docstrings, this is absolutely mandatory when 
-# you are creating a LangGraph tool. And the reason for this is that when 
-# the agent is considering which tools to use, it needs to understand in 
-# natural language, what the tool does, which is provided by docstring and 
-# it needs to understand both the input and the output types of each tool. 
-# So, it knows what is a valid input and what the output of that tool has been.
-# So, in this way agent knows what the tool does. But how can the agent know
-# this information before it calls the tool ? 
-# We can put this information in system prompt or message. 
-# So, copy the docstring from the below function and other input-output thing
-# and paste it into the assistant function into textual_description_of_tools variable.
-# Also comment the docstring of the below function.
-# Also, we need to paas textual_description_of_tools to the system message string.
-# Something else we can do to help guide the agent is we can add more information to 
-# the system prompt about how it should use that tool. Here we have provided few examples
-# as well and this type of learning is called meta-learning and in this case, it is few-shot learning.
-# This helps the guide the LLM's output to be mode like this. So, we are now asking our agent 
-# to keep track of these two additional fields: source language and number of words.
-# Now, you may have noticed these these correspond to the arguments for our tool.
-# So, this is why we need the LLM to extract them and keep track of them, because 
-# when it uses the tool, it will need this information. But if we want these fields to be 
-# specifically tracked as the agent works, we need to add them as a new fields to the agent state.
+translation_model = ChatOllama(
+    model="qwen3:8b",
+    temperature=0.7
+)
 
-# This is very straightforward to do. We need to add Source Language and number of words as the fields/keys 
-# in the AgentState class. And we give them the optional type because depending on the user query, these 
-# particular fields may not be needed. Accordingly change the return statement as well.  
-
-# Now, we have finished the building blocks of our agent.
-
-# Now, we can finish things off by building the agent graph, passing over a user prompt and then invoking it.
-
-# That is being able to run our agent. Now, import langgraph libraries in main.py.
-
-# Next thing, we are going to do is to bundle up our local tools in a function called `setup_tools()`.
-
- 
-
-   
 @tool
 def get_n_random_words(language: str,
                        n: int, ) -> list:
-    # """
-    # Selects a specified number of random words from a language-specific word list.
+    """
+    Selects a specified number of random words from a language-specific word list.
 
-    # The function reads a JSON file containing words for the specified language from
-    # a predefined directory. It then selects `n` random words from the file and
-    # returns them in a list.
+    The function reads a JSON file containing words for the specified language from
+    a predefined directory. It then selects `n` random words from the file and
+    returns them in a list.
 
-    # :param language: A string representing the language for which to fetch the word list.
-    # :param n: An integer specifying the number of random words to retrieve.
-    # :return: A list containing `n` randomly selected words.
-    # """
-    
-    """ getting n random words """
-    
+    :param language: A string representing the language for which to fetch the word list.
+    :param n: An integer specifying the number of random words to retrieve.
+    :return: A list containing `n` randomly selected words.
+    """
     path = os.path.join("data", f"{language}", "word-list-cleaned.json")
 
     with open(path) as f:

@@ -1,9 +1,12 @@
-# This is the basic building block code for an agent. 
-from typing import TypedDict, Annotated
+# This is the basic building block code for an agent.
+import asyncio 
+from typing import TypedDict, Optional, Annotated
 
-from langchain_core.messages import AnyMessage, SystemMessage
+from langchain_core.messages import AnyMessage, SystemMessage, HumanMessage
 from langchain_openai import ChatOpenAI
 from langgraph.graph.message import add_messages
+from langgraph.graph import StateGraph, START
+from langgraph.prebuilt import ToolNode, tools_condition
 
 from dotenv import load_dotenv
 
@@ -25,6 +28,8 @@ load_dotenv()
 # some tools.    
 class AgentState(TypedDict):
     messages: Annotated[list[AnyMessage], add_messages]
+    source_language: Optional[str]
+    number_of_words: Optional[str]
 
 #### Step 2 #####
 # At the moment, I have one custom built-in tool that I have created called get_n_random_words. First we import it as above and then we
@@ -35,6 +40,9 @@ class AgentState(TypedDict):
 local_tools = [
     get_n_random_words,
 ]
+
+async def setup_tools():
+    return [*local_tools]
 
 #### Step 3 #####
 # Now, we are going to start by using a model from OpenAI, called GPT-4o (a powerful reasoning model and also it is a multi-modal model, 
@@ -106,5 +114,57 @@ def assistant(state: AgentState):
     )
     return {
         "messages": [llm_with_tools.invoke([sys_msg]+state["messages"])],
+        "source_language": state["source_language"],
+        "number_of_words": state["number_of_words"]
     }
 
+async def build_graph():
+    """ Build the state graph with properly initialized tools. """
+    tools = await setup_tools()
+    assistant.tools = tools # Store tools for access in assistant function
+    
+    builder = StateGraph(AgentState)
+    
+    builder.add_node("assistant", assistant)
+    builder.add_node("tools", ToolNode(tools))
+    
+    builder.add_edge(START, "assistant")
+    builder.add_conditional_edges(
+        "assistant",
+        tools_condition)
+    # conditional edge allows the LLM to decide whether it need the tools or not
+    # for a particular action  
+    builder.add_edge("tools", "assistant")
+    
+    # Print the LangGraph
+    from pathlib import Path
+    graph=builder.compile()
+    png_data = graph.get_graph().draw_mermaid_png()
+
+    output_path = Path("langgraph.png")
+    output_path.write_bytes(png_data)
+
+    print(f"Graph saved to: {output_path.resolve()}\n")
+    
+    # To finish this function, we just need to compile that graph and return it.
+    return graph
+
+async def main():
+    """ Main async function to run the application"""
+    react_graph = await build_graph()
+    user_prompt = "Please get 10 random words in German."
+    messages = [HumanMessage(content=user_prompt)]
+    
+    # Use ainvoke instead of invoke for async execution
+    result = await react_graph.ainvoke(
+        {
+            "messages": messages,
+            "source_language": None,
+            "number_of_words": None
+        }
+    )
+    print(f"Final messages: {result["messages"][-1].content}")
+    
+
+if __name__ == "__main__":
+    asyncio.run(main())
