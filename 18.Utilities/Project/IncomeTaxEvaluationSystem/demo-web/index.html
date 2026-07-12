@@ -643,6 +643,27 @@ function renderDashboard(){
   let lg=auditLog.slice(0,15);
   $('dashLog').innerHTML=lg.length?lg.map(l=>`<div class="activity-item"><div class="act-dot ${['blue','green','amber','red'][Math.floor(Math.random()*4)]}"></div><div class="act-text"><strong>${l.user}</strong> ${l.action}<br><small style="color:#94a3b8;font-size:11px">${new Date(l.date).toLocaleString()}</small></div></div>`).join(''):'<div class="activity-item" style="color:var(--text2);font-size:12px">No recent activity</div>';
 }
+function showDebugInfo(){
+  const dbgUsers=document.getElementById('dbgUsers');
+  const dbgClients=document.getElementById('dbgClients');
+  const dbgTheme=document.getElementById('dbgTheme');
+  const dbgStorage=document.getElementById('dbgStorage');
+  const dbgAction=document.getElementById('dbgAction');
+  if(dbgUsers)dbgUsers.textContent=users.length;
+  if(dbgClients)dbgClients.textContent=clients.length;
+  if(dbgTheme)dbgTheme.textContent=darkMode?'dark':'light';
+  if(dbgStorage){
+    try{
+      localStorage.setItem('_test','1');
+      localStorage.removeItem('_test');
+      dbgStorage.textContent='working';
+      dbgStorage.style.color='#10b981';
+    }catch(e){
+      dbgStorage.textContent='BLOCKED';
+      dbgStorage.style.color='#ef4444';
+    }
+  }
+}
 function populateAllClients(){
   const sel=document.querySelectorAll('.client-select');
   sel.forEach(s=>{
@@ -920,7 +941,7 @@ function exportCSV(){
       loadTheme();
       if(!loadData()){initSeed()}
       populateAllClients();
-      console.log('App initialized successfully');console.log('Users loaded:',users.length,'Clients:',clients.length);document.querySelector('.login-btn')?.addEventListener('click',()=>console.log('Login btn listener OK'));const dbg=document.getElementById('debugPanel');if(dbg){dbg.style.display='block';document.getElementById('dbgUsers').textContent=users.length;document.getElementById('dbgClients').textContent=clients.length;document.getElementById('dbgTheme').textContent=darkMode?'dark':'light';try{localStorage.setItem('_test','1');localStorage.removeItem('_test');document.getElementById('dbgStorage').textContent='working (read/write OK)';document.getElementById('dbgStorage').style.color='#0f0';}catch(e){document.getElementById('dbgStorage').textContent='BLOCKED';document.getElementById('dbgStorage').style.color='#f00';}}
+      console.log('App initialized successfully');console.log('Users loaded:',users.length,'Clients:',clients.length);console.log('App initialized successfully');console.log('Users loaded:',users.length,'Clients:',clients.length);showDebugInfo();
     }catch(e){
       console.error('Init error:',e);
       initSeed();
