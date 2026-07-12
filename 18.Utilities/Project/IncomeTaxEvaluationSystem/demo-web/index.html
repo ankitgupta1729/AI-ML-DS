@@ -195,7 +195,7 @@ tbody tr{animation:fadeInRow .3s ease}
 <p class="sub">Maintenance System - Sign In</p>
 <div class="login-field"><label>User ID</label><input id="uid" placeholder="admin" autocomplete="username"></div>
 <div class="login-field"><label>Password</label><input id="pwd" type="password" placeholder="admin123" autocomplete="current-password"></div>
-<button class="login-btn" onclick="doLogin()">Sign In</button>
+<button class="login-btn" onclick="console.log('Button clicked!');doLogin()">Sign In</button>
 <p class="login-hint">&#128274; Demo credentials<br>User: <b>admin</b> &nbsp;|&nbsp; Pass: <b>admin123</b><br><span style="color:#334155">Data stored locally in your browser</span></p>
 </div>
 </div>
@@ -600,7 +600,7 @@ function initSeed(){
 function doLogin(){
   try{
     const uid=$('uid').value.trim(),pwd=$('pwd').value.trim();
-    if(!uid||!pwd){toast('Enter User ID and Password','error');return}
+    if(!uid||!pwd){toast('Enter User ID and Password','error');console.log('Login: empty credentials');return}
     console.log('Login attempt:',uid);
     const r=users.find(u=>u.id===uid&&u.pwd===pwd);
     if(r){
@@ -920,7 +920,7 @@ function exportCSV(){
       loadTheme();
       if(!loadData()){initSeed()}
       populateAllClients();
-      console.log('App initialized successfully');
+      console.log('App initialized successfully');console.log('Users loaded:',users.length,'Clients:',clients.length);document.querySelector('.login-btn')?.addEventListener('click',()=>console.log('Login btn listener OK'));
     }catch(e){
       console.error('Init error:',e);
       initSeed();
