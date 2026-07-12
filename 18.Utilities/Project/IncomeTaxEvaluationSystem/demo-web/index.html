@@ -563,13 +563,20 @@ function valPhone(v){return !v||/^[+?0-9-]{10,15}$/.test(v)}
 function logAudit(action,detail){auditLog.unshift({date:new Date().toISOString(),user:currentUser,action,detail});if(auditLog.length>100)auditLog.length=100;saveData()}
 function saveData(){localStorage.setItem(SKEY,JSON.stringify({users,clients,taxR,trading,pls,bs,auditLog}))}
 function loadData(){
-  const d=localStorage.getItem(SKEY);
-  if(!d)return false;
-  const o=JSON.parse(d);
-  users=o.users||[];clients=o.clients||[];taxR=o.taxR||[];trading=o.trading||[];pls=o.pls||[];bs=o.bs||[];auditLog=o.auditLog||[];
-  return true;
+  try{
+    const d=localStorage.getItem(SKEY);
+    if(!d)return false;
+    const o=JSON.parse(d);
+    users=o.users||[];clients=o.clients||[];taxR=o.taxR||[];trading=o.trading||[];pls=o.pls||[];bs=o.bs||[];auditLog=o.auditLog||[];
+    return true;
+  }catch(e){
+    console.error('loadData error:',e);
+    localStorage.removeItem(SKEY);
+    return false;
+  }
 }
 function initSeed(){
+  console.log('Initializing seed data...');
   users.push({id:'admin',pwd:'admin123',name:'System Administrator'});
   users.push({id:'manager',pwd:'manager123',name:'Tax Manager'});
   clients.push({code:'CLI-001',name:'Rahul Sharma',pan:'ABCDE1234F',dob:'1985-03-15',gender:'Male',address:'12 MG Road',city:'Delhi',state:'Delhi',pincode:'110001',tel:'011-23456789',mobile:'9876543210',email:'rahul@test.com',occ:'Software Engineer',aadhar:'123456789012',ward:'Ward 1',ay:'2024-25',createdAt:new Date().toISOString()});
