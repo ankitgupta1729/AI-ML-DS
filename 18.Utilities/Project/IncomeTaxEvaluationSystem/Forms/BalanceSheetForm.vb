@@ -1,10 +1,19 @@
 Public Class BalanceSheetForm
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If cmbClient.SelectedIndex < 0 Then
+            MessageBox.Show("Please select a client", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
         Dim record As New Models.BalanceSheet()
         record.ClientCode = cmbClient.Text.Split("-"c)(0).Trim()
         record.AssessmentYear = txtAY.Text.Trim()
-        record.TotalLiabilities = CDec(txtLiabilities.Text)
-        record.TotalAssets = CDec(txtAssets.Text)
+        Dim tl As Decimal, ta As Decimal
+        If Not Decimal.TryParse(txtLiabilities.Text, tl) OrElse Not Decimal.TryParse(txtAssets.Text, ta) Then
+            MessageBox.Show("Please enter valid numeric values for Liabilities and Assets", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        record.TotalLiabilities = tl
+        record.TotalAssets = ta
         record.CreatedBy = MainForm.UserId
         Data.OracleDataAccess.InsertUpdateBalanceSheet(record)
         MessageBox.Show("Balance sheet saved", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)

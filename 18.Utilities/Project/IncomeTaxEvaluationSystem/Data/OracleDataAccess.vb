@@ -1,4 +1,5 @@
 Imports Oracle.ManagedDataAccess.Client
+Imports System.Collections.Generic
 Imports System.Configuration
 
 Namespace Data
@@ -18,6 +19,7 @@ Namespace Data
             Dim dt As New DataTable()
             Using conn As OracleConnection = GetConnection()
                 Using cmd As New OracleCommand(query, conn)
+                    cmd.BindByName = True
                     If params IsNot Nothing Then cmd.Parameters.AddRange(params)
                     Using adapter As New OracleDataAdapter(cmd)
                         adapter.Fill(dt)
@@ -30,6 +32,7 @@ Namespace Data
         Public Shared Function ExecuteNonQuery(query As String, Optional params As OracleParameter() = Nothing) As Integer
             Using conn As OracleConnection = GetConnection()
                 Using cmd As New OracleCommand(query, conn)
+                    cmd.BindByName = True
                     If params IsNot Nothing Then cmd.Parameters.AddRange(params)
                     conn.Open()
                     Return cmd.ExecuteNonQuery()
@@ -40,6 +43,7 @@ Namespace Data
         Public Shared Function ExecuteScalar(query As String, Optional params As OracleParameter() = Nothing) As Object
             Using conn As OracleConnection = GetConnection()
                 Using cmd As New OracleCommand(query, conn)
+                    cmd.BindByName = True
                     If params IsNot Nothing Then cmd.Parameters.AddRange(params)
                     conn.Open()
                     Return cmd.ExecuteScalar()
@@ -57,13 +61,14 @@ Namespace Data
         End Function
 
         Public Shared Function GetAllClients(Optional search As String = "") As DataTable
-            Dim sql = "SELECT * FROM CLIENT_RECORD"
+            Dim sql As String = "SELECT * FROM CLIENT_RECORD"
+            Dim params As New List(Of OracleParameter)()
             If Not String.IsNullOrEmpty(search) Then
                 sql &= " WHERE CLIENT_CODE LIKE :search OR FULL_NAME LIKE :search OR PAN LIKE :search"
+                params.Add(New OracleParameter(":search", "%" & search & "%"))
             End If
             sql &= " ORDER BY UPDATED_DATE DESC"
-            Dim p() As OracleParameter = {New OracleParameter(":search", "%" & search & "%")}
-            Return ExecuteQuery(sql, p)
+            Return ExecuteQuery(sql, If(params.Count > 0, params.ToArray(), Nothing))
         End Function
 
         Public Shared Function GetClientByCode(clientCode As String) As DataTable
@@ -76,8 +81,9 @@ Namespace Data
             Dim checkSql = "SELECT COUNT(*) FROM CLIENT_RECORD WHERE CLIENT_CODE = :code"
             Dim count = Convert.ToInt32(ExecuteScalar(checkSql, New OracleParameter(":code", record.ClientCode)))
             If count > 0 Then
-                Dim sql = "UPDATE CLIENT_RECORD SET FULL_NAME=:name, PAN=:pan, DATE_OF_BIRTH=:dob, GENDER=:gender, ADDRESS=:addr, CITY=:city, STATE=:state, PINCODE=:pin, TELEPHONE=:tel, MOBILE=:mob, EMAIL=:email, OCCUPATION=:occ, AADHAR_NUMBER=:aadhar, WARD_CIRCLE_SPECIAL_RANGE=:ward, ASSESSMENT_YEAR=:year, UPDATED_DATE=SYSDATE, UPDATED_BY=:updatedBy WHERE ID=:id"
+                Dim sql = "UPDATE CLIENT_RECORD SET FULL_NAME=:name, PAN=:pan, DATE_OF_BIRTH=:dob, GENDER=:gender, ADDRESS=:addr, CITY=:city, STATE=:state, PINCODE=:pin, TELEPHONE=:tel, MOBILE=:mob, EMAIL=:email, OCCUPATION=:occ, AADHAR_NUMBER=:aadhar, WARD_CIRCLE_SPECIAL_RANGE=:ward, ASSESSMENT_YEAR=:year, UPDATED_DATE=SYSDATE, UPDATED_BY=:updatedBy WHERE CLIENT_CODE=:code"
                 Dim p() As OracleParameter = {
+                    New OracleParameter(":code", record.ClientCode),
                     New OracleParameter(":name", record.FullName), New OracleParameter(":pan", record.PAN),
                     New OracleParameter(":dob", record.DateOfBirth), New OracleParameter(":gender", record.Gender),
                     New OracleParameter(":addr", record.Address), New OracleParameter(":city", record.City),
@@ -85,8 +91,7 @@ Namespace Data
                     New OracleParameter(":tel", record.Telephone), New OracleParameter(":mob", record.Mobile),
                     New OracleParameter(":email", record.Email), New OracleParameter(":occ", record.Occupation),
                     New OracleParameter(":aadhar", record.AadharNumber), New OracleParameter(":ward", record.WardCircleSpecialRange),
-                    New OracleParameter(":year", record.AssessmentYear), New OracleParameter(":updatedBy", record.UpdatedBy),
-                    New OracleParameter(":id", record.ID)
+                    New OracleParameter(":year", record.AssessmentYear), New OracleParameter(":updatedBy", record.UpdatedBy)
                 }
                 Return ExecuteNonQuery(sql, p)
             Else
@@ -120,7 +125,7 @@ Namespace Data
             Dim checkSql = "SELECT COUNT(*) FROM INCOME_TAX_RECORD WHERE CLIENT_CODE=:code AND ASSESSMENT_YEAR=:year"
             Dim count = Convert.ToInt32(ExecuteScalar(checkSql, New OracleParameter(":code", record.ClientCode), New OracleParameter(":year", record.AssessmentYear)))
             If count > 0 Then
-                Dim sql = "UPDATE INCOME_TAX_RECORD SET FINANCIAL_YEAR=:fy, SALARY_INCOME=:sal, HOUSE_PROPERTY_INCOME=:hpi, BUSINESS_INCOME=:bi, CAPITAL_GAINS=:cg, OTHER_SOURCES_INCOME=:osi, TOTAL_INCOME=:ti, DEDUCTION_80C=:d80c, DEDUCTION_80D=:d80d, DEDUCTION_80G=:d80g, OTHER_DEDUCTIONS=:od, TAXABLE_INCOME=:taxi, TAX_ON_INCOME=:toi, REBATE_87A=:reb, SURCHARGE=:sur, HEALTH_EDU_CESS=:hec, TOTAL_TAX_LIABILITY=:ttl, TDS_DEDUCTED=:tds, ADVANCE_TAX_PAID=:atp, SELF_ASSESSMENT_TAX=:sat, REFUND_DUE=:ref, FILING_STATUS=:fs, FILING_DATE=:fd, RETURN_TYPE=:rt, REMARKS=:rem, UPDATED_DATE=SYSDATE WHERE CLIENT_CODE=:code AND ASSESSMENT_YEAR=:year"
+                Dim sql = "UPDATE INCOME_TAX_RECORD SET FINANCIAL_YEAR=:fy, SALARY_INCOME=:sal, HOUSE_PROPERTY_INCOME=:hpi, BUSINESS_INCOME=:bi, CAPITAL_GAINS=:cg, OTHER_SOURCES_INCOME=:osi, TOTAL_INCOME=:ti, DEDUCTION_80C=:d80c, DEDUCTION_80D=:d80d, DEDUCTION_80G=:d80g, OTHER_DEDUCTIONS=:od, TOTAL_DEDUCTIONS=:tded, TAXABLE_INCOME=:taxi, TAX_ON_INCOME=:toi, REBATE_87A=:reb, SURCHARGE=:sur, HEALTH_EDU_CESS=:hec, TOTAL_TAX_LIABILITY=:ttl, TDS_DEDUCTED=:tds, ADVANCE_TAX_PAID=:atp, SELF_ASSESSMENT_TAX=:sat, REFUND_DUE=:ref, FILING_STATUS=:fs, FILING_DATE=:fd, RETURN_TYPE=:rt, REMARKS=:rem, UPDATED_DATE=SYSDATE WHERE CLIENT_CODE=:code AND ASSESSMENT_YEAR=:year"
                 Dim p() As OracleParameter = {
                     New OracleParameter(":code", record.ClientCode), New OracleParameter(":year", record.AssessmentYear),
                     New OracleParameter(":fy", record.FinancialYear), New OracleParameter(":sal", record.SalaryIncome),
@@ -128,18 +133,19 @@ Namespace Data
                     New OracleParameter(":cg", record.CapitalGains), New OracleParameter(":osi", record.OtherSourcesIncome),
                     New OracleParameter(":ti", record.TotalIncome), New OracleParameter(":d80c", record.Deduction80C),
                     New OracleParameter(":d80d", record.Deduction80D), New OracleParameter(":d80g", record.Deduction80G),
-                    New OracleParameter(":od", record.OtherDeductions), New OracleParameter(":taxi", record.TaxableIncome),
-                    New OracleParameter(":toi", record.TaxOnIncome), New OracleParameter(":reb", record.Rebate87A),
-                    New OracleParameter(":sur", record.Surcharge), New OracleParameter(":hec", record.HealthEduCess),
-                    New OracleParameter(":ttl", record.TotalTaxLiability), New OracleParameter(":tds", record.TDSDeducted),
-                    New OracleParameter(":atp", record.AdvanceTaxPaid), New OracleParameter(":sat", record.SelfAssessmentTax),
-                    New OracleParameter(":ref", record.RefundDue), New OracleParameter(":fs", record.FilingStatus),
+                    New OracleParameter(":od", record.OtherDeductions), New OracleParameter(":tded", record.TotalDeductions),
+                    New OracleParameter(":taxi", record.TaxableIncome), New OracleParameter(":toi", record.TaxOnIncome),
+                    New OracleParameter(":reb", record.Rebate87A), New OracleParameter(":sur", record.Surcharge),
+                    New OracleParameter(":hec", record.HealthEduCess), New OracleParameter(":ttl", record.TotalTaxLiability),
+                    New OracleParameter(":tds", record.TDSDeducted), New OracleParameter(":atp", record.AdvanceTaxPaid),
+                    New OracleParameter(":sat", record.SelfAssessmentTax), New OracleParameter(":ref", record.RefundDue),
+                    New OracleParameter(":fs", record.FilingStatus),
                     New OracleParameter(":fd", If(record.FilingDate = Date.MinValue, DBNull.Value, record.FilingDate)),
                     New OracleParameter(":rt", record.ReturnType), New OracleParameter(":rem", record.Remarks)
                 }
                 Return ExecuteNonQuery(sql, p)
             Else
-                Dim sql = "INSERT INTO INCOME_TAX_RECORD (CLIENT_CODE, ASSESSMENT_YEAR, FINANCIAL_YEAR, SALARY_INCOME, HOUSE_PROPERTY_INCOME, BUSINESS_INCOME, CAPITAL_GAINS, OTHER_SOURCES_INCOME, TOTAL_INCOME, DEDUCTION_80C, DEDUCTION_80D, DEDUCTION_80G, OTHER_DEDUCTIONS, TAXABLE_INCOME, TAX_ON_INCOME, REBATE_87A, SURCHARGE, HEALTH_EDU_CESS, TOTAL_TAX_LIABILITY, TDS_DEDUCTED, ADVANCE_TAX_PAID, SELF_ASSESSMENT_TAX, REFUND_DUE, FILING_STATUS, RETURN_TYPE, REMARKS, CREATED_BY) VALUES (:code, :year, :fy, :sal, :hpi, :bi, :cg, :osi, :ti, :d80c, :d80d, :d80g, :od, :taxi, :toi, :reb, :sur, :hec, :ttl, :tds, :atp, :sat, :ref, :fs, :rt, :rem, :createdBy)"
+                Dim sql = "INSERT INTO INCOME_TAX_RECORD (CLIENT_CODE, ASSESSMENT_YEAR, FINANCIAL_YEAR, SALARY_INCOME, HOUSE_PROPERTY_INCOME, BUSINESS_INCOME, CAPITAL_GAINS, OTHER_SOURCES_INCOME, TOTAL_INCOME, DEDUCTION_80C, DEDUCTION_80D, DEDUCTION_80G, OTHER_DEDUCTIONS, TOTAL_DEDUCTIONS, TAXABLE_INCOME, TAX_ON_INCOME, REBATE_87A, SURCHARGE, HEALTH_EDU_CESS, TOTAL_TAX_LIABILITY, TDS_DEDUCTED, ADVANCE_TAX_PAID, SELF_ASSESSMENT_TAX, REFUND_DUE, FILING_STATUS, RETURN_TYPE, REMARKS, CREATED_BY) VALUES (:code, :year, :fy, :sal, :hpi, :bi, :cg, :osi, :ti, :d80c, :d80d, :d80g, :od, :tded, :taxi, :toi, :reb, :sur, :hec, :ttl, :tds, :atp, :sat, :ref, :fs, :rt, :rem, :createdBy)"
                 Dim p() As OracleParameter = {
                     New OracleParameter(":code", record.ClientCode), New OracleParameter(":year", record.AssessmentYear),
                     New OracleParameter(":fy", record.FinancialYear), New OracleParameter(":sal", record.SalaryIncome),
@@ -147,12 +153,13 @@ Namespace Data
                     New OracleParameter(":cg", record.CapitalGains), New OracleParameter(":osi", record.OtherSourcesIncome),
                     New OracleParameter(":ti", record.TotalIncome), New OracleParameter(":d80c", record.Deduction80C),
                     New OracleParameter(":d80d", record.Deduction80D), New OracleParameter(":d80g", record.Deduction80G),
-                    New OracleParameter(":od", record.OtherDeductions), New OracleParameter(":taxi", record.TaxableIncome),
-                    New OracleParameter(":toi", record.TaxOnIncome), New OracleParameter(":reb", record.Rebate87A),
-                    New OracleParameter(":sur", record.Surcharge), New OracleParameter(":hec", record.HealthEduCess),
-                    New OracleParameter(":ttl", record.TotalTaxLiability), New OracleParameter(":tds", record.TDSDeducted),
-                    New OracleParameter(":atp", record.AdvanceTaxPaid), New OracleParameter(":sat", record.SelfAssessmentTax),
-                    New OracleParameter(":ref", record.RefundDue), New OracleParameter(":fs", record.FilingStatus),
+                    New OracleParameter(":od", record.OtherDeductions), New OracleParameter(":tded", record.TotalDeductions),
+                    New OracleParameter(":taxi", record.TaxableIncome), New OracleParameter(":toi", record.TaxOnIncome),
+                    New OracleParameter(":reb", record.Rebate87A), New OracleParameter(":sur", record.Surcharge),
+                    New OracleParameter(":hec", record.HealthEduCess), New OracleParameter(":ttl", record.TotalTaxLiability),
+                    New OracleParameter(":tds", record.TDSDeducted), New OracleParameter(":atp", record.AdvanceTaxPaid),
+                    New OracleParameter(":sat", record.SelfAssessmentTax), New OracleParameter(":ref", record.RefundDue),
+                    New OracleParameter(":fs", record.FilingStatus),
                     New OracleParameter(":rt", record.ReturnType), New OracleParameter(":rem", record.Remarks),
                     New OracleParameter(":createdBy", record.CreatedBy)
                 }

@@ -1,4 +1,14 @@
 Public Class ReportsForm
+    Private Sub ReportsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim dt = Data.OracleDataAccess.GetAllClients()
+        cmbClient.Items.Clear()
+        cmbClient.Items.Add("-- All Clients --")
+        For Each row As DataRowView In dt.DefaultView
+            cmbClient.Items.Add(row("CLIENT_CODE").ToString() + " - " + row("FULL_NAME").ToString())
+        Next
+        cmbClient.SelectedIndex = 0
+    End Sub
+
     Private Sub btnGenerate_Click(sender As Object, e As EventArgs) Handles btnGenerate.Click
         Dim rptType = cmbType.Text
         Dim clientCode = cmbClient.Text.Split("-"c)(0).Trim()

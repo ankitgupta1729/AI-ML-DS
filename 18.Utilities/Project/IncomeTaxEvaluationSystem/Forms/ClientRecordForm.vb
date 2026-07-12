@@ -4,10 +4,21 @@ Public Class ClientRecordForm
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim code = txtCode.Text.Trim()
+        Dim name = txtName.Text.Trim()
+        Dim pan = txtPAN.Text.Trim().ToUpper()
+        If String.IsNullOrEmpty(code) OrElse String.IsNullOrEmpty(name) OrElse String.IsNullOrEmpty(pan) Then
+            MessageBox.Show("Client Code, Name and PAN are required", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        If Not Modules.Validation.IsValidPAN(pan) Then
+            MessageBox.Show("Invalid PAN format (e.g., ABCDE1234F)", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
         Dim record As New Models.ClientRecord()
-        record.ClientCode = txtCode.Text.Trim()
-        record.FullName = txtName.Text.Trim()
-        record.PAN = txtPAN.Text.Trim().ToUpper()
+        record.ClientCode = code
+        record.FullName = name
+        record.PAN = pan
         record.Gender = cmbGender.Text
         record.City = txtCity.Text.Trim()
         record.Mobile = txtMobile.Text.Trim()
@@ -39,7 +50,7 @@ Public Class ClientRecordForm
 
     Private Sub clearForm()
         txtCode.Clear() : txtName.Clear() : txtPAN.Clear() : txtCity.Clear()
-        txtMobile.Clear() : txtAY.Clear()
+        txtMobile.Clear() : txtAY.Clear() : cmbGender.SelectedIndex = -1
     End Sub
 
     Private Sub ClientRecordForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load

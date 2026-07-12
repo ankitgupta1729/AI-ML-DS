@@ -1,9 +1,18 @@
 Public Class PLAccountForm
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If cmbClient.SelectedIndex < 0 Then
+            MessageBox.Show("Please select a client", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
         Dim record As New Models.PLAccount()
         record.ClientCode = cmbClient.Text.Split("-"c)(0).Trim()
         record.AssessmentYear = txtAY.Text.Trim()
-        record.NetProfit = CDec(txtNetProfit.Text)
+        Dim np As Decimal
+        If Not Decimal.TryParse(txtNetProfit.Text, np) Then
+            MessageBox.Show("Please enter a valid numeric value for Net Profit", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        record.NetProfit = np
         record.CreatedBy = MainForm.UserId
         Data.OracleDataAccess.InsertUpdatePLAccount(record)
         MessageBox.Show("P&L saved", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
