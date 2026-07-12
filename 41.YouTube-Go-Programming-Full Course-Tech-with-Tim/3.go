@@ -20,6 +20,15 @@ func main() {
 	y := 3
 	fmt.Println(x)
 	fmt.Println(y)
-
+	fmt.Printf("%T",y)
 	// y=3 is still static and here if we change its type as y ="hello"
+	// Just put the cursor on y:=3 and we can see its type as int
+
+	z := 2.3
+	fmt.Println(z)
+	fmt.Printf("%T",z)
+
+	a :=false
+	fmt.Println(a)
+	fmt.Printf("%T",a)
 }
