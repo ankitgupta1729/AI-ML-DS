@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Tax Evaluation & Maintenance System - Web Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body{background:#f5f7fa;color:#333;min-height:100vh}
+.hidden{display:none!important}
+.btn{padding:7px 13px;border:none;border-radius:4px;cursor:pointer;color:#fff;font-size:13px}
+.btn-primary{background:#4682B4}.btn-success{background:#2E8B57}.btn-danger{background:#CD5C5C}.btn-secondary{background:#6c757d}
+.btn:hover{opacity:.9}
+.card{background:#fff;border-radius:8px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:14px}
+input,select{padding:7px 9px;border:1px solid #ccc;border-radius:4px;font-size:13px;width:100%}
+input:focus,select:focus{outline:1px solid #4682B4;border-color:#4682B4}
+label{font-size:12px;font-weight:600;margin-bottom:3px;display:block;color:#444}
+.frow{display:flex;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+.frow>div{flex:1;min-width:130px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:6px;border:1px solid #ddd;text-align:left}
+th{background:#4682B4;color:#fff}
+tr:nth-child(even){background:#f9f9f9}
+.nav{background:#2c3e50;color:#fff;padding:9px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:6px}
+.nav a{color:#fff;text-decoration:none;margin-left:10px;font-size:12px;cursor:pointer}
+.nav a:hover{text-decoration:underline}
+.toast{position:fixed;top:14px;right:14px;padding:9px 14px;border-radius:6px;color:#fff;font-size:13px;z-index:1000;animation:fadeIn .3s;max-width:90%}
+.toast-success{background:#2E8B57}.toast-error{background:#CD5C5C}.toast-info{background:#4682B4}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.dash-card{background:#fff;border-radius:8px;padding:16px;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .2s}
+.dash-card:hover{transform:translateY(-3px)}
+.dash-card h3{font-size:11px;color:#666;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.dash-card .count{font-size:24px;font-weight:700;color:#4682B4}
+.sec-title{font-size:16px;color:#4682B4;margin-bottom:10px;border-bottom:2px solid #4682B4;padding-bottom:5px;display:inline-block}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
+.login-box{background:#fff;border-radius:10px;padding:24px;width:360px;max-width:92%;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.login-box h2{text-align:center;color:#4682B4;margin-bottom:5px}
+.login-box p{text-align:center;color:#666;font-size:12px;margin-bottom:16px}
+.help-text{font-size:11px;color:#888;margin-top:3px;text-align:center}
+.required::after{content:" *";color:red}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal-box{background:#fff;border-radius:8px;padding:18px;width:600px;max-width:95%;max-height:90vh;overflow-y:auto}
+.modal-box h3{margin-bottom:10px;color:#4682B4}
+@media(max-width:768px){.frow{flex-direction:column;gap:7px}.nav{flex-direction:column;gap:6px;align-items:flex-start}table{font-size:11px}th,td{padding:4px}.modal-box{padding:12px}}
+</style>
+</head>
+<body>
+<div class="login-wrap" id="loginScreen">
+<div class="login-box">
+<h2>Income Tax Eval. System</h2>
+<p>Web Demo - Login Required</p>
+<div class="frow"><div><label>User ID</label><input id="uid" placeholder="admin"></div></div>
+<div class="frow"><div><label>Password</label><input id="pwd" type="password" placeholder="admin123"></div></div>
+<div class="frow"><button class="btn btn-primary" style="width:100%;padding:10px" onclick="doLogin()">Login</button></div>
+<p class="help-text">Demo: admin / admin123<br>Data stored in browser localStorage</p>
+</div>
+</div>
+
+<div class="hidden" id="app">
+<div class="nav">
+<strong>Income Tax Evaluation System</strong>
+<nav>
+<a onclick="showScreen('dashboard')">Dashboard</a>
+<a onclick="showScreen('clients')">Clients</a>
+<a onclick="showScreen('tax')">Income Tax</a>
+<a onclick="showScreen('trading')">Trading</a>
+<a onclick="showScreen('pl')">P&L</a>
+<a onclick="showScreen('bs')">Balance Sheet</a>
+<a onclick="showScreen('reports')">Reports</a>
+<a onclick="doLogout()">Logout</a>
+</nav>
+</div>
+<div style="padding:14px;max-width:1400px;margin:0 auto">
+<div id="screen-dashboard" class="screen">
+<h2 class="sec-title">Dashboard</h2>
+<div class="grid" id="dashCards"></div>
+<div class="card" style="margin-top:14px"><h3 style="color:#4682B4;margin-bottom:8px">Recent Activity</h3><div id="dashLog"></div></div>
+</div>
+<div id="screen-clients" class="screen hidden">
+<h2 class="sec-title">Client Records</h2>
+<div class="card">
+<div class="frow">
+<div><label>Search (PAN/Name)</label><input id="cliSearch" onkeyup="searchClient()" placeholder="Search..."></div>
+<div style="display:flex;align-items:flex-end"><button class="btn btn-primary" onclick="openClientModal()">+ New Client</button></div>
+</div>
+<table><thead><tr><th>Code</th><th>Name</th><th>PAN</th><th>City</th><th>Mobile</th><th>AY</th><th>Actions</th></tr></thead><tbody id="cliTable"></tbody></table>
+</div>
+</div>
+<div id="screen-tax" class="screen hidden">
+<h2 class="sec-title">Income Tax Records</h2>
+<div class="card">
+<div class="frow">
+<div><label>Client</label><select id="taxClient" onchange="loadTaxRows()"><option value="">-- Select Client --</option></select></div>
+<div><label>Assessment Year</label><input id="taxAY" placeholder="2024-25"></div>
+<div style="display:flex;align-items:flex-end"><button class="btn btn-primary" onclick="saveTax()">Save</button></div>
+</div>
+<div class="frow">
+<div><label>Financial Year</label><input id="tFy"></div>
+<div><label>Filing Status</label><select id="tStatus"><option>Pending</option><option>Filed</option><option>Verified</option><option>Rejected</option></select></div>
+<div><label>Return Type</label><input id="tRt" placeholder="ITR-1"></div>
+</div>
+<h4 style="color:#4682B4;margin:8px 0">Income</h4>
+<div class="frow">
+<div><label>Salary</label><input id="tSal" type="number" step="0.01"></div>
+<div><label>House Property</label><input id="tHpi" type="number" step="0.01"></div>
+<div><label>Business</label><input id="tBi" type="number" step="0.01"></div>
+<div><label>Capital Gains</label><input id="tCg" type="number" step="0.01"></div>
+<div><label>Other Sources</label><input id="tOsi" type="number" step="0.01"></div>
+<div><label>Total Income</label><input id="tTi" type="number" step="0.01" readonly></div>
+</div>
+<h4 style="color:#2E8B57;margin:8px 0">Deductions</h4>
+<div class="frow">
+<div><label>80C</label><input id="t80c" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>80D</label><input id="t80d" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>80G</label><input id="t80g" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Others</label><input id="tOd" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Total Deductions</label><input id="tDed" type="number" step="0.01" readonly></div>
+</div>
+<h4 style="color:#CD5C5C;margin:8px 0">Tax & Cess</h4>
+<div class="frow">
+<div><label>Taxable Income</label><input id="tTaxi" type="number" step="0.01" readonly></div>
+<div><label>Tax on Income</label><input id="tToi" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Rebate 87A</label><input id="tReb" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Surcharge</label><input id="tSur" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Health/Edu Cess</label><input id="tHec" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Total Tax</label><input id="tTtl" type="number" step="0.01" readonly></div>
+</div>
+<div class="frow">
+<div><label>TDS Deducted</label><input id="tTds" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Advance Tax</label><input id="tAtp" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Self Assessment Tax</label><input id="tSat" type="number" step="0.01" onchange="calcTax()"></div>
+<div><label>Refund Due</label><input id="tRef" type="number" step="0.01" readonly></div>
+</div>
+<div><label>Remarks</label><input id="tRem"></div>
+</div>
+<table><thead><tr><th>Client</th><th>AY</th><th>Total Income</th><th>Taxable Income</th><th>Tax Liability</th><th>Status</th><th>Actions</th></tr></thead><tbody id="taxTable"></tbody></table>
+</div>
+<div id="screen-trading" class="screen hidden">
+<h2 class="sec-title">Trading Account</h2>
+<div class="card">
+<div class="frow">
+<div><label>Client</label><select id="trdClient" onchange="loadTrading()"><option value="">-- Select --</option></select></div>
+<div><label>Assessment Year</label><input id="trdAY" placeholder="2024-25" onchange="loadTrading()"></div>
+</div>
+<div class="frow">
+<div><label>Opening Balance</label><input id="trdOb" type="number" step="0.01" onchange="calcTrading()"></div>
+<div><label>Purchases</label><input id="trdPur" type="number" step="0.01" onchange="calcTrading()"></div>
+<div><label>Purchase Return</label><input id="trdPr" type="number" step="0.01" onchange="calcTrading()"></div>
+</div>
+<div class="frow">
+<div><label>Gross Purchases</label><input id="trdGp" type="number" step="0.01" readonly></div>
+<div><label>Closing Stock</label><input id="trdCs" type="number" step="0.01" onchange="calcTrading()"></div>
+<div><label>Direct Expenses</label><input id="trdDe" type="number" step="0.01" onchange="calcTrading()"></div>
+</div>
+<div class="frow">
+<div><label>Gross Profit</label><input id="trdGprof" type="number" step="0.01" readonly></div>
+<div><label>Other Income</label><input id="trdOi" type="number" step="0.01" onchange="calcTrading()"></div>
+<div><label>Net Profit</label><input id="trdNp" type="number" step="0.01" readonly></div>
+</div>
+<div class="frow">
+<div><label>Creditors</label><input id="trdCred" type="number" step="0.01"></div>
+<div><label>Sales</label><input id="trdSal" type="number" step="0.01" onchange="calcTrading()"></div>
+<div><label>Sales Return</label><input id="trdSr" type="number" step="0.01" onchange="calcTrading()"></div>
+</div>
+<div class="frow">
+<div><label>Net Sales</label><input id="trdNs" type="number" step="0.01" readonly></div>
+<div><label>Debtors</label><input id="trdDeb" type="number" step="0.01"></div>
+<div><button class="btn btn-success" onclick="saveTrading()" style="align-self:flex-end">Save Trading</button></div>
+</div>
+</div>
+</div>
+
+<div id="screen-pl" class="screen hidden">
+<h2 class="sec-title">Profit & Loss Account</h2>
+<div class="card">
+<div class="frow">
+<div><label>Client</label><select id="plClient" onchange="loadPL()"><option value="">-- Select --</option></select></div>
+<div><label>Assessment Year</label><input id="plAY" placeholder="2024-25" onchange="loadPL()"></div>
+</div>
+<div class="frow"><div><label>Opening Stock</label><input id="plOs" type="number" step="0.01" onchange="calcPL()"></div><div><label>Purchases</label><input id="plPur" type="number" step="0.01" onchange="calcPL()"></div><div><label>Closing Stock</label><input id="plCs" type="number" step="0.01" onchange="calcPL()"></div></div>
+<div class="frow"><div><label>COGS</label><input id="plCogs" type="number" step="0.01" readonly></div><div><label>Gross Profit</label><input id="plGprof" type="number" step="0.01" readonly></div><div><label>Administrative Exp.</label><input id="plAe" type="number" step="0.01" onchange="calcPL()"></div></div>
+<div class="frow"><div><label>Selling Exp.</label><input id="plSe" type="number" step="0.01" onchange="calcPL()"></div><div><label>Employee Benefit Exp.</label><input id="plEbe" type="number" step="0.01" onchange="calcPL()"></div><div><label>Finance Costs</label><input id="plFc" type="number" step="0.01" onchange="calcPL()"></div></div>
+<div class="frow"><div><label>Depreciation</label><input id="plDep" type="number" step="0.01" onchange="calcPL()"></div><div><label>Other Expenses</label><input id="plOe" type="number" step="0.01" onchange="calcPL()"></div><div><label>Total Expenses</label><input id="plTe" type="number" step="0.01" readonly></div></div>
+<div class="frow"><div><label>Net Profit</label><input id="plNp" type="number" step="0.01" readonly></div><div><label>Other Income</label><input id="plOi" type="number" step="0.01" onchange="calcPL()"></div><div><label>Interest Income</label><input id="plIi" type="number" step="0.01" onchange="calcPL()"></div></div>
+<div class="frow"><div><label>Dividend Income</label><input id="plDi" type="number" step="0.01" onchange="calcPL()"></div><div></div><div><button class="btn btn-success" onclick="savePL()" style="align-self:flex-end">Save P&L</button></div></div>
+</div>
+</div>
+
+<div id="screen-bs" class="screen hidden">
+<h2 class="sec-title">Balance Sheet</h2>
+<div class="card">
+<div class="frow">
+<div><label>Client</label><select id="bsClient" onchange="loadBS()"><option value="">-- Select --</option></select></div>
+<div><label>Assessment Year</label><input id="bsAY" placeholder="2024-25" onchange="loadBS()"></div>
+</div>
+<h4 style="color:#4682B4;margin:8px 0">Liabilities</h4>
+<div class="frow"><div><label>Share Capital</label><input id="bsSc" type="number" step="0.01" onchange="calcBS()"></div><div><label>Reserves & Surplus</label><input id="bsRs" type="number" step="0.01" onchange="calcBS()"></div><div><label>Secured Loans</label><input id="bsSl" type="number" step="0.01" onchange="calcBS()"></div></div>
+<div class="frow"><div><label>Unsecured Loans</label><input id="bsUl" type="number" step="0.01" onchange="calcBS()"></div><div><label>Current Liabilities</label><input id="bsCl" type="number" step="0.01" onchange="calcBS()"></div><div><label>Total Liabilities</label><input id="bsTl" type="number" step="0.01" readonly></div></div>
+<h4 style="color:#2E8B57;margin:8px 0">Assets</h4>
+<div class="frow"><div><label>Fixed Assets</label><input id="bsFa" type="number" step="0.01" onchange="calcBS()"></div><div><label>Investments</label><input id="bsInv" type="number" step="0.01" onchange="calcBS()"></div><div><label>Inventory</label><input id="bsInv2" type="number" step="0.01" onchange="calcBS()"></div></div>
+<div class="frow"><div><label>Debtors</label><input id="bsDeb" type="number" step="0.01" onchange="calcBS()"></div><div><label>Cash & Bank</label><input id="bsCb" type="number" step="0.01" onchange="calcBS()"></div><div><label>Other Current Assets</label><input id="bsOca" type="number" step="0.01" onchange="calcBS()"></div></div>
+<div class="frow"><div><label>Total Assets</label><input id="bsTa" type="number" step="0.01" readonly></div><div><label>Contingent Liabilities</label><input id="bsCont"></div><div><button class="btn btn-success" onclick="saveBS()" style="align-self:flex-end">Save Balance Sheet</button></div></div>
+</div>
+</div>
+
+<div id="screen-reports" class="screen hidden">
+<h2 class="sec-title">Reports</h2>
+<div class="card">
+<div class="frow">
+<div><label>Report Type</label><select id="rptType"><option value="clients">Client Records</option><option value="tax">Income Tax Records</option><option value="trading">Trading Accounts</option><option value="pl">P&L Accounts</option><option value="bs">Balance Sheets</option></select></div>
+<div><label>Client (optional)</label><select id="rptClient"><option value="">-- All --</option></select></div>
+<div style="display:flex;align-items:flex-end"><button class="btn btn-primary" onclick="generateReport()">Generate</button></div>
+</div>
+</div>
+<div id="rptResult"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+const SKEY='ites_demo_v2';let users=[];let clients=[];let taxR=[];let trading=[];let pls=[];let bs=[];let auditLog=[];let currentUser=null;
+function $(id){return document.getElementById(id)}
+function toast(msg,type='info'){const t=document.createElement('div');t.className='toast toast-'+type;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000)}
+function num(id){const v=$(id).value;return parseFloat(v)||0}
+function showScreen(s){document.querySelectorAll('.screen').forEach(x=>x.classList.add('hidden'));$('screen-'+s).classList.remove('hidden')}
+function valPAN(v){return /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(v.toUpperCase())}
+function valPin(v){return /^[0-9]{6}$/.test(v)}
+function valPhone(v){return !v||/^[+?0-9-]{10,15}$/.test(v)}
+function logAudit(action,detail){auditLog.unshift({date:new Date().toISOString(),user:currentUser,action,detail});if(auditLog.length>100)auditLog.length=100;saveData()}
+function saveData(){localStorage.setItem(SKEY,JSON.stringify({users,clients,taxR,trading,pls,bs,auditLog}))}
+function loadData(){const d=localStorage.getItem(SKEY);if(!d)return false;const o=JSON.parse(d);users=o.users||[];clients=o.clients||[];taxR=o.taxR||[];trading=o.trading||[];pls=o.pls||[];bs=o.bs||[];auditLog=o.auditLog||[];return true}
+function initSeed(){
+users.push({id:'admin',pwd:'admin123',name:'System Administrator'});
+users.push({id:'manager',pwd:'manager123',name:'Tax Manager'});
+clients.push({code:'CLI-001',name:'Rahul Sharma',pan:'ABCDE1234F',dob:'1985-03-15',gender:'Male',address:'12 MG Road',city:'Delhi',state:'Delhi',pincode:'110001',tel:'011-23456789',mobile:'9876543210',email:'rahul@test.com',occ:'Software Engineer',aadhar:'123456789012',ward:'Ward 1',ay:'2024-25',createdAt:new Date().toISOString()});
+clients.push({code:'CLI-002',name:'Priya Patel',pan:'FGHIJ5678K',dob:'1990-07-22',gender:'Female',address:'45 Residency Rd',city:'Mumbai',state:'Maharashtra',pincode:'400001',tel:'022-12345678',mobile:'9876543211',email:'priya@test.com',occ:'CA',aadhar:'223456789012',ward:'Ward 12',ay:'2024-25',createdAt:new Date().toISOString()});
+clients.push({code:'CLI-003',name:'Amit Kumar',pan:'HIJKL9012M',dob:'1982-11-05',gender:'Male',address:'78 Park Street',city:'Kolkata',state:'West Bengal',pincode:'700001',tel:'033-12345678',mobile:'9876543212',email:'amit@test.com',occ:'Business',aadhar:'323456789012',ward:'Range 5',ay:'2024-25',createdAt:new Date().toISOString()});
+clients.push({code:'CLI-004',name:'Sneha Reddy',pan:'MNOPQ3456R',dob:'1992-01-30',gender:'Female',address:'23 Jubilee Hills',city:'Hyderabad',state:'Telangana',pincode:'500001',tel:'040-12345678',mobile:'9876543213',email:'sneha@test.com',occ:'Doctor',aadhar:'423456789012',ward:'Ward 8',ay:'2024-25',createdAt:new Date().toISOString()});
+clients.push({code:'CLI-005',name:'Vikram Singh',pan:'PQRST7890U',dob:'1988-06-18',gender:'Male',address:'56 Mall Road',city:'Chandigarh',state:'Chandigarh',pincode:'160001',tel:'0172-12345678',mobile:'9876543214',email:'vikram@test.com',occ:'Advocate',aadhar:'523456789012',ward:'Circle 3',ay:'2024-25',createdAt:new Date().toISOString()});
+taxR.push({code:'CLI-001',ay:'2024-25',fy:'2023-24',sal:1200000,hpi:0,bi:0,cg:50000,osi:20000,ti:1270000,d80c:150000,d80d:25000,d80g:10000,od:5000,taxi:1040000,toi:104000,reb:0,sur:0,hec:7800,ttl:111800,tds:115000,atp:0,sat:0,ref:3200,status:'Filed',filingDate:'2024-07-15',retType:'ITR-1'});
+taxR.push({code:'CLI-002',ay:'2024-25',fy:'2023-24',sal:2500000,hpi:120000,bi:500000,cg:100000,osi:50000,ti:3170000,d80c:150000,d80d:50000,d80g:50000,od:20000,taxi:2700000,toi:540000,reb:0,sur:50000,hec:17400,ttl:607400,tds:610000,atp:0,sat:0,ref:2600,status:'Filed',filingDate:'2024-07-20',retType:'ITR-2'});
+taxR.push({code:'CLI-003',ay:'2024-25',fy:'2023-24',sal:800000,hpi:0,bi:200000,cg:0,osi:30000,ti:1030000,d80c:100000,d80d:0,d80g:20000,od:0,taxi:910000,toi:91000,reb:12500,sur:0,hec:2355,ttl:80855,tds:82000,atp:0,sat:0,ref:1145,status:'Verified',filingDate:'2024-08-01',retType:'ITR-1'});
+trading.push({code:'CLI-001',ay:'2024-25',ob:50000,pur:200000,pr:5000,gp:195000,cs:30000,de:20000,gprof:90000,oi:5000,np:90000,cred:15000,sal:350000,sr:10000,ns:340000,deb:25000});
+trading.push({code:'CLI-002',ay:'2024-25',ob:100000,pur:500000,pr:10000,gp:490000,cs:80000,de:60000,gprof:220000,oi:10000,np:220000,cred:35000,sal:800000,sr:20000,ns:780000,deb:50000});
+pls.push({code:'CLI-001',ay:'2024-25',os:30000,pur:195000,gp:195000,cs:35000,cogs:190000,gprof:90000,ae:15000,se:10000,ebe:20000,fc:5000,dep:8000,oe:5000,te:63000,np:27000,oi:5000,ii:3000,di:2000});
+pls.push({code:'CLI-002',ay:'2024-25',os:80000,pur:490000,gp:490000,cs:100000,cogs:470000,gprof:220000,ae:30000,se:15000,ebe:40000,fc:10000,dep:15000,oe:8000,te:105000,np:115000,oi:10000,ii:8000,di:5000});
+bs.push({code:'CLI-001',ay:'2024-25',sc:100000,rs:50000,sl:80000,ul:20000,cl:30000,tl:280000,fa:150000,inv:50000,inv2:30000,deb:35000,cb:15000,oca:5000,ta:280000,cont:'Pending litigation'});
+bs.push({code:'CLI-002',ay:'2024-25',sc:500000,rs:200000,sl:300000,ul:100000,cl:80000,tl:1180000,fa:600000,inv:100000,inv2:80000,deb:50000,cb:25000,oca:15000,ta:1180000,cont:'Nil'});
+logAudit('System','Demo seed data initialized');
+}
+function doLogin(){const uid=$('uid').value.trim(),pwd=$('pwd').value.trim();if(!uid||!pwd){toast('Enter User ID and Password','error');return}const r=users.find(u=>u.id===uid&&u.pwd===pwd);if(r){currentUser=uid;logAudit('Login','User '+uid+' logged in');$('loginScreen').classList.add('hidden');$('app').classList.remove('hidden');renderDashboard();toast('Welcome '+r.name)}else{toast('Invalid credentials (try admin/admin123)','error')}}
+function doLogout(){logAudit('Logout','User '+currentUser+' logged out');currentUser=null;$('app').classList.add('hidden');$('loginScreen').classList.remove('hidden');$('uid').value='';$('pwd').value=''}
+function renderDashboard(){$('dashCards').innerHTML='<div class="dash-card" onclick="showScreen(\'clients\')"><h3>Clients</h3><div class="count">'+clients.length+'</div></div><div class="dash-card" onclick="showScreen(\'tax\')"><h3>Tax Records</h3><div class="count">'+taxR.length+'</div></div><div class="dash-card" onclick="showScreen(\'trading\')"><h3>Trading</h3><div class="count">'+trading.length+'</div></div><div class="dash-card" onclick="showScreen(\'pl\')"><h3>P&L</h3><div class="count">'+pls.length+'</div></div><div class="dash-card" onclick="showScreen(\'bs\')"><h3>Balance Sheets</h3><div class="count">'+bs.length+'</div></div><div class="dash-card" onclick="showScreen(\'reports\')"><h3>Users</h3><div class="count">'+users.length+'</div></div>';let lg=auditLog.slice(0,15);$('dashLog').innerHTML=lg.length?lg.map(l=>'<div style="padding:4px 0;border-bottom:1px solid #eee;font-size:12px;color:#555"><strong>'+l.user+'</strong> '+l.action+'<br><small style="color:#999">'+new Date(l.date).toLocaleString()+'</small></div>').join(''):'<p style="color:#888">No activity</p>';populateAllClients()}
+function populateAllClients(){const sels=document.querySelectorAll('select[id$="Client"]');sels.forEach(s=>{if(s.id==='rptClient')return;const cur=s.value;let h='<option value="">-- Select --</option>';clients.forEach(c=>{h+='<option value="'+c.code+'">'+c.code+' - '+c.name+'</option>'});s.innerHTML=h;if(cur)s.value=cur});const rs=$('rptClient');if(rs){let h='<option value="">-- All --</option>';clients.forEach(c=>{h+='<option value="'+c.code+'">'+c.code+' - '+c.name+'</option>'});rs.innerHTML=h}}
+function searchClient(){const q=$('cliSearch').value.toLowerCase();const f=clients.filter(c=>c.code.toLowerCase().includes(q)||c.name.toLowerCase().includes(q)||c.pan.toLowerCase().includes(q));renderClientTable(f)}
+function renderClientTable(data){$('cliTable').innerHTML=data.map(c=>'<tr><td>'+c.code+'</td><td>'+c.name+'</td><td>'+c.pan+'</td><td>'+c.city+'</td><td>'+c.mobile+'</td><td>'+c.ay+'</td><td><button class="btn btn-primary" style="padding:4px 8px;font-size:11px" onclick="editClient(\''+c.code+'\')">Edit</button> <button class="btn btn-danger" style="padding:4px 8px;font-size:11px" onclick="deleteClient(\''+c.code+'\')">Del</button></td></tr>').join('')||'<tr><td colspan="7" style="text-align:center">No records</td></tr>'}
+function openClientModal(){showClientForm()}
+function showClientForm(c){let isEdit=!!c;const h='<h3>'+(isEdit?'Edit':'New')+' Client</h3><div class="frow"><div><label class="required">Client Code</label><input id="mfCode" value="'+(c?c.code:'')+'" '+(isEdit?'readonly':'')+'></div><div><label class="required">Full Name</label><input id="mfName" value="'+(c?c.name:'')+'"></div></div><div class="frow"><div><label class="required">PAN</label><input id="mfPAN" value="'+(c?c.pan:'')+'" maxlength="10"></div><div><label>DOB</label><input id="mfDob" type="date" value="'+(c?c.dob:'')+'"></div></div><div class="frow"><div><label>Gender</label><select id="mfGen"><option value="">--</option><option>Male</option><option>Female</option><option>Other</option></select></div><div><label>Occupation</label><input id="mfOcc" value="'+(c?c.occ:'')+'"></div></div><div class="frow"><div><label>Aadhar</label><input id="mfAadhar" maxlength="12" value="'+(c?c.aadhar:'')+'"></div><div><label>Ward/Circle/Range</label><input id="mfWard" value="'+(c?c.ward:'')+'"></div></div><div class="frow"><div><label>Address</label><input id="mfAddr" value="'+(c?c.address:'')+'"></div><div><label>City</label><input id="mfCity" value="'+(c?c.city:'')+'"></div></div><div class="frow"><div><label>State</label><input id="mfState" value="'+(c?c.state:'')+'"></div><div><label>Pincode</label><input id="mfPin" maxlength="6" value="'+(c?c.pincode:'')+'"></div></div><div class="frow"><div><label>Telephone</label><input id="mfTel" value="'+(c?c.tel:'')+'"></div><div><label>Mobile</label><input id="mfMob" maxlength="10" value="'+(c?c.mobile:'')+'"></div></div><div class="frow"><div><label>Email</label><input id="mfEmail" value="'+(c?c.email:'')+'"></div><div><label>Assessment Year</label><input id="mfAY" value="'+(c?c.ay:'')+'"></div></div><div class="frow"><div><button class="btn btn-success" onclick="saveClient()">Save</button></div><div><button class="btn btn-secondary" onclick="closeModal()">Cancel</button></div></div>'+(isEdit?'<input type="hidden" id="mfOrigCode" value="'+c.code+'">':'');closeModal();const ov=document.createElement('div');ov.className='modal-overlay';ov.id='clientModal';ov.innerHTML='<div class="modal-box">'+h+'</div>';document.body.appendChild(ov);if(isEdit){$('mfName').focus()}else{$('mfCode').focus()}}
+function closeModal(){const m=$('clientModal');if(m)m.remove()}
+function editClient(code){const c=clients.find(x=>x.code===code);if(c)showClientForm(c)}
+function deleteClient(code){if(!confirm('Delete client '+code+'?'))return;clients=clients.filter(c=>c.code!==code);taxR=taxR.filter(t=>t.code!==code);trading=trading.filter(t=>t.code!==code);pls=pls.filter(p=>p.code!==code);bs=bs.filter(b=>b.code!==code);logAudit('Delete','Client '+code+' deleted');searchClient();saveData();toast('Client deleted','success')}
+function saveClient(){const code=$('mfCode').value.trim().toUpperCase();const name=$('mfName').value.trim();const pan=$('mfPAN').value.trim().toUpperCase();const dob=$('mfDob').value;const gender=$('mfGen').value;const occ=$('mfOcc').value.trim();const aadhar=$('mfAadhar').value.trim();const ward=$('mfWard').value.trim();const addr=$('mfAddr').value.trim();const city=$('mfCity').value.trim();const state=$('mfState').value.trim();const pin=$('mfPin').value.trim();const tel=$('mfTel').value.trim();const mob=$('mfMob').value.trim();const email=$('mfEmail').value.trim();const ay=$('mfAY').value.trim();if(!code||!name||!pan){toast('Code, Name, PAN required','error');return}if(!valPAN(pan)){toast('Invalid PAN format','error');return}if(!valPin(pin)){toast('Invalid pincode','error');return}const idx=clients.findIndex(c=>c.code===code);const obj={code,name,pan,dob,gender,occ,aadhar,ward,addr,city,state,pin,tel,mob,email,ay,createdAt:idx>=0?clients[idx].createdAt:new Date().toISOString()};if(idx>=0){clients[idx]=obj;logAudit('Update','Client '+code+' updated')}else{clients.push(obj);logAudit('Create','Client '+code+' created')}saveData();closeModal();searchClient();toast('Client saved','success')}
+function loadTaxRows(){const cc=$('taxClient').value;if(!cc){$('taxTable').innerHTML='';return}const rows=taxR.filter(t=>t.code===cc);$('taxTable').innerHTML=rows.map(r=>'<tr><td>'+r.code+'</td><td>'+r.ay+'</td><td>'+r.ti.toLocaleString()+'</td><td>'+r.taxi.toLocaleString()+'</td><td>'+r.ttl.toLocaleString()+'</td><td>'+r.status+'</td><td><button class="btn btn-danger" style="padding:4px 8px;font-size:11px" onclick="deleteTax(\\\''+r.code+'\\\',\\\''+r.ay+'\\\')">Del</button></td></tr>').join('')||'<tr><td colspan=\"7\" style=\"text-align:center\">No records</td></tr>'}
+function calcTax(){const ti=num('tSal')+num('tHpi')+num('tBi')+num('tCg')+num('tOsi');const ded=num('t80c')+num('t80d')+num('t80g')+num('tOd');const taxi=ti-ded;const toi=taxi*0.1;const reb=Math.min(toi,12500);const sur=0;const hec=(toi-reb)*0.04;const ttl=toi-reb+sur+hec;const tds=num('tTds'),atp=num('tAtp'),sat=num('tSat');$('tTi').value=ti.toFixed(2);$('tDed').value=ded.toFixed(2);$('tTaxi').value=taxi.toFixed(2);$('tToi').value=toi.toFixed(2);$('tReb').value=reb.toFixed(2);$('tSur').value=sur.toFixed(2);$('tHec').value=hec.toFixed(2);$('tTtl').value=ttl.toFixed(2);$('tRef').value=Math.max(0,tds+atp+sat-ttl).toFixed(2)}
+function saveTax(){const code=$('taxClient').value,ay=$('taxAY').value.trim();if(!code||!ay){toast('Select client and enter AY','error');return}const obj={code,ay,fy:$('tFy').value,sal:num('tSal'),hpi:num('tHpi'),bi:num('tBi'),cg:num('tCg'),osi:num('tOsi'),ti:num('tTi'),d80c:num('t80c'),d80d:num('t80d'),d80g:num('t80g'),od:num('tOd'),taxi:num('tTaxi'),toi:num('tToi'),reb:num('tReb'),sur:num('tSur'),hec:num('tHec'),ttl:num('tTtl'),tds:num('tTds'),atp:num('tAtp'),sat:num('tSat'),ref:num('tRef'),status:$('tStatus').value,retType:$('tRt').value,remarks:$('tRem').value};const idx=taxR.findIndex(t=>t.code===code&&t.ay===ay);if(idx>=0){taxR[idx]=obj;logAudit('Update','Tax '+code+'/'+ay+' updated')}else{taxR.push(obj);logAudit('Create','Tax '+code+'/'+ay+' created')}saveData();loadTaxRows();toast('Tax record saved','success')}
+function deleteTax(code,ay){if(!confirm('Delete tax record?'))return;taxR=taxR.filter(t=>!(t.code===code&&t.ay===ay));logAudit('Delete','Tax '+code+'/'+ay+' deleted');loadTaxRows();saveData();toast('Tax deleted','success')}
+function calcTrading(){const pur=num('trdPur'),pr=num('trdPr'),cs=num('trdCs'),de=num('trdDe'),ob=num('trdOb'),sal=num('trdSal'),sr=num('trdSr');$('trdGp').value=(pur-pr).toFixed(2);$('trdNs').value=(sal-sr).toFixed(2);const cb=ob+parseFloat($('trdGp').value||0)-cs-de;$('trdGprof').value=cb.toFixed(2);const oi=num('trdOi'),nprof=cb+oi;$('trdNp').value=nprof.toFixed(2)}
+function saveTrading(){const code=$('trdClient').value,ay=$('trdAY').value.trim();if(!code||!ay){toast('Select client/AY','error');return}const obj={code,ay,ob:num('trdOb'),pur:num('trdPur'),pr:num('trdPr'),gp:parseFloat($('trdGp').value||0),cs:num('trdCs'),de:num('trdDe'),gprof:parseFloat($('trdGprof').value||0),oi:num('trdOi'),np:parseFloat($('trdNp').value||0),cred:num('trdCred'),sal:num('trdSal'),sr:num('trdSr'),ns:parseFloat($('trdNs').value||0),deb:num('trdDeb')};const idx=trading.findIndex(t=>t.code===code&&t.ay===ay);if(idx>=0){trading[idx]=obj;logAudit('Update','Trading '+code+' updated')}else{trading.push(obj);logAudit('Create','Trading '+code+' created')}saveData();toast('Trading saved','success')}
+function loadPL(){const cc=$('plClient').value,ay=$('plAY').value.trim();if(!cc||!ay){$('plNp').value='0.00';return}const r=pls.find(t=>t.code===cc&&t.ay===ay);if(r){$('plOs').value=r.os;$('plPur').value=r.pur;$('plCs').value=r.cs;$('plCogs').value=r.cogs;$('plGprof').value=r.gprof;$('plAe').value=r.ae;$('plSe').value=r.se;$('plEbe').value=r.ebe;$('plFc').value=r.fc;$('plDep').value=r.dep;$('plOe').value=r.oe;$('plTe').value=r.te;$('plNp').value=r.np;$('plOi').value=r.oi;$('plIi').value=r.ii;$('plDi').value=r.di}else{$('plOs').value='0';$('plPur').value='0';$('plCs').value='0';$('plCogs').value='0';$('plGprof').value='0';$('plAe').value='0';$('plSe').value='0';$('plEbe').value='0';$('plFc').value='0';$('plDep').value='0';$('plOe').value='0';$('plTe').value='0';$('plNp').value='0';$('plOi').value='0';$('plIi').value='0';$('plDi').value='0'}}
+function calcPL(){const os=num('plOs'),pur=num('plPur'),cs=num('plCs');const gpur=pur, cogs=gpur-os+cs;$('plCogs').value=cogs.toFixed(2);const gp=parseFloat($('plCogs').value||0);$('plGprof').value=gp.toFixed(2);const ae=num('plAe'),se=num('plSe'),ebe=num('plEbe'),fc=num('plFc'),dep=num('plDep'),oe=num('plOe');const te=ae+se+ebe+fc+dep+oe;$('plTe').value=te.toFixed(2);const np=gp-te;$('plNp').value=np.toFixed(2)}
+function savePL(){const code=$('plClient').value,ay=$('plAY').value.trim();if(!code||!ay){toast('Select client/AY','error');return}const obj={code,ay,os:num('plOs'),pur:num('plPur'),gp:num('plPur'),cs:num('plCs'),cogs:num('plCogs'),gprof:parseFloat($('plGprof').value||0),ae:num('plAe'),se:num('plSe'),ebe:num('plEbe'),fc:num('plFc'),dep:num('plDep'),oe:num('plOe'),te:num('plTe'),np:parseFloat($('plNp').value||0),oi:num('plOi'),ii:num('plIi'),di:num('plDi')};const idx=pls.findIndex(t=>t.code===code&&t.ay===ay);if(idx>=0){pls[idx]=obj;logAudit('Update','P&L '+code+' updated')}else{pls.push(obj);logAudit('Create','P&L '+code+' created')}saveData();toast('P&L saved','success')}
+function loadBS(){const cc=$('bsClient').value,ay=$('bsAY').value.trim();if(!cc||!ay){$('bsTa').value='0.00';return}const r=bs.find(t=>t.code===cc&&t.ay===ay);if(r){$('bsSc').value=r.sc;$('bsRs').value=r.rs;$('bsSl').value=r.sl;$('bsUl').value=r.ul;$('bsCl').value=r.cl;$('bsTl').value=r.tl;$('bsFa').value=r.fa;$('bsInv').value=r.inv;$('bsInv2').value=r.inv2;$('bsDeb').value=r.deb;$('bsCb').value=r.cb;$('bsOca').value=r.oca;$('bsTa').value=r.ta;$('bsCont').value=r.cont}else{$('bsSc').value='0';$('bsRs').value='0';$('bsSl').value='0';$('bsUl').value='0';$('bsCl').value='0';$('bsTl').value='0';$('bsFa').value='0';$('bsInv').value='0';$('bsInv2').value='0';$('bsDeb').value='0';$('bsCb').value='0';$('bsOca').value='0';$('bsTa').value='0';$('bsCont').value=''}}
+function calcBS(){const tl=num('bsSc')+num('bsRs')+num('bsSl')+num('bsUl')+num('bsCl');$('bsTl').value=tl.toFixed(2);const ta=num('bsFa')+num('bsInv')+num('bsInv2')+num('bsDeb')+num('bsCb')+num('bsOca');$('bsTa').value=ta.toFixed(2)}
+function saveBS(){const code=$('bsClient').value,ay=$('bsAY').value.trim();if(!code||!ay){toast('Select client/AY','error');return}const obj={code,ay,sc:num('bsSc'),rs:num('bsRs'),sl:num('bsSl'),ul:num('bsUl'),cl:num('bsCl'),tl:parseFloat($('bsTl').value||0),fa:num('bsFa'),inv:num('bsInv'),inv2:num('bsInv2'),deb:num('bsDeb'),cb:num('bsCb'),oca:num('bsOca'),ta:parseFloat($('bsTa').value||0),cont:$('bsCont').value};const idx=bs.findIndex(b=>b.code===code&&b.ay===ay);if(idx>=0){bs[idx]=obj;logAudit('Update','BalanceSheet '+code+' updated')}else{bs.push(obj);logAudit('Create','BalanceSheet '+code+' created')}saveData();toast('BalanceSheet saved','success')}
+function generateReport(){const type=$('rptType').value;const client=$('rptClient').value;let data=[],headers=[],title='';if(type==='clients'){title='Client Records';headers=['Code','Name','PAN','City','Mobile','AY'];data=clients.map(c=>[c.code,c.name,c.pan,c.city,c.mobile,c.ay])}else if(type==='tax'){title='Income Tax Records';headers=['Client','AY','FY','Total Income','Taxable','Tax','Status'];data=(client?taxR.filter(t=>t.code===client):taxR).map(t=>[t.code,t.ay,t.fy,t.ti,t.taxi,t.ttl,t.status])}else if(type==='trading'){title='Trading Accounts';headers=['Client','AY','Op Bal','Purchases','Sales','Net Profit'];data=(client?trading.filter(t=>t.code===client):trading).map(t=>[t.code,t.ay,t.ob,t.pur,t.sal,t.np])}else if(type==='pl'){title='P&L Accounts';headers=['Client','AY','COGS','Gross Profit','Expenses','Net Profit'];data=(client?pls.filter(p=>p.code===client):pls).map(p=>[p.code,p.ay,p.cogs,p.gprof,p.te,p.np])}else if(type==='bs'){title='Balance Sheets';headers=['Client','AY','Liabilities','Assets','Contingent'];data=(client?bs.filter(b=>b.code===client):bs).map(b=>[b.code,b.ay,b.tl,b.ta,b.cont])}let html='<div class="card"><h3>'+title+'</h3><table><thead><tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+(data.length?data.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+headers.length+'" style="text-align:center">No data</td></tr>')+'</tbody></table></div>';$('rptResult').innerHTML=html;logAudit('Report','Generated '+title+' report');saveData();toast('Report generated','success')}
+function exportCSV(){const type=$('rptType').value;let data=[],headers=[],title='';if(type==='clients'){title='Client_Records';headers=['Code','Name','PAN','City','Mobile','AY'];data=clients.map(c=>[c.code,c.name,c.pan,c.city,c.mobile,c.ay])}else if(type==='tax'){title='Tax_Records';headers=['Client','AY','FY','Total Income','Taxable','Tax','Status'];data=(client?taxR.filter(t=>t.code===client):taxR).map(t=>[t.code,t.ay,t.fy,t.ti,t.taxi,t.ttl,t.status])}else if(type==='trading'){title='Trading';headers=['Client','AY','Op Bal','Purchases','Sales','Net Profit'];data=(client?trading.filter(t=>t.code===client):trading).map(t=>[t.code,t.ay,t.ob,t.pur,t.sal,t.np])}else if(type==='pl'){title='PL_Accounts';headers=['Client','AY','COGS','Gross Profit','Expenses','Net Profit'];data=(client?pls.filter(p=>p.code===client):pls).map(p=>[p.code,p.ay,p.cogs,p.gprof,p.te,p.np])}else if(type==='bs'){title='Balance_Sheet';headers=['Client','AY','Liabilities','Assets','Contingent'];data=(client?bs.filter(b=>b.code===client):bs).map(b=>[b.code,b.ay,b.tl,b.ta,b.cont])}let csv=headers.join(',')+"\\n"+data.map(r=>r.join(',')).join("\\n");const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=title+'.csv';a.click();URL.revokeObjectURL(url)}
+window.addEventListener('DOMContentLoaded',()=>{if(loadData()){initSeed()}else{initSeed()}populateAllClients()});
+</script>
+</body>
+</html>
