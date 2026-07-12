@@ -195,7 +195,7 @@ tbody tr{animation:fadeInRow .3s ease}
 <p class="sub">Maintenance System - Sign In</p>
 <div class="login-field"><label>User ID</label><input id="uid" placeholder="admin" autocomplete="username"></div>
 <div class="login-field"><label>Password</label><input id="pwd" type="password" placeholder="admin123" autocomplete="current-password"></div>
-<button class="login-btn" onclick="console.log('Button clicked!');doLogin()">Sign In</button>
+<button class="login-btn" type="button" onclick="console.log('Button clicked!');try{doLogin()}catch(e){alert('Error: '+e.message)}">Sign In</button>
 <p class="login-hint">&#128274; Demo credentials<br>User: <b>admin</b> &nbsp;|&nbsp; Pass: <b>admin123</b><br><span style="color:#334155">Data stored locally in your browser</span></p>
 </div>
 </div>
@@ -920,7 +920,7 @@ function exportCSV(){
       loadTheme();
       if(!loadData()){initSeed()}
       populateAllClients();
-      console.log('App initialized successfully');console.log('Users loaded:',users.length,'Clients:',clients.length);document.querySelector('.login-btn')?.addEventListener('click',()=>console.log('Login btn listener OK'));
+      console.log('App initialized successfully');console.log('Users loaded:',users.length,'Clients:',clients.length);document.querySelector('.login-btn')?.addEventListener('click',()=>console.log('Login btn listener OK'));const dbg=document.getElementById('debugPanel');if(dbg){dbg.style.display='block';document.getElementById('dbgUsers').textContent=users.length;document.getElementById('dbgClients').textContent=clients.length;document.getElementById('dbgTheme').textContent=darkMode?'dark':'light';try{localStorage.setItem('_test','1');localStorage.removeItem('_test');document.getElementById('dbgStorage').textContent='working (read/write OK)';document.getElementById('dbgStorage').style.color='#0f0';}catch(e){document.getElementById('dbgStorage').textContent='BLOCKED';document.getElementById('dbgStorage').style.color='#f00';}}
     }catch(e){
       console.error('Init error:',e);
       initSeed();
