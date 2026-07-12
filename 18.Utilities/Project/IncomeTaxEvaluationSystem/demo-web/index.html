@@ -187,7 +187,7 @@ tbody tr{animation:fadeInRow .3s ease}
 </head>
 <body>
 
-<div class="login-wrap" id="loginScreen">
+<div class="login-wrap" id="loginScreen" style="display:flex!important">
 <div class="login-card">
 <div class="login-logo">&#128100;</div>
 <h2>Income Tax Evaluation</h2>
@@ -199,7 +199,7 @@ tbody tr{animation:fadeInRow .3s ease}
 </div>
 </div>
 
-<div class="hidden" id="app">
+<div class="hidden" id="app" style="display:none!important">
 <aside class="sidebar" id="sidebar">
 <div class="sidebar-logo">
 <div class="logo-icon">&#128100;</div>
@@ -525,19 +525,26 @@ function num(id){const v=$(id).value;return parseFloat(v)||0}
 function fmt(n){return new Intl.NumberFormat('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)}
 function showScreen(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$('screen-'+s).classList.add('active')}
 function navTo(s){
-  showScreen(s);
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelector('.nav-item[data-nav="'+s+'"]')?.classList.add('active');
-  const titles={dashboard:'Dashboard',clients:'Client Records',tax:'Income Tax Records',trading:'Trading Account',pl:'P&L Account',bs:'Balance Sheet',reports:'Reports'};
-  $('bcCur').textContent=titles[s]||s;
-  if(s==='dashboard')renderDashboard();
-  if(s==='clients')renderClientTable(clients);
-  if(s==='tax'){populateTaxClients();loadTaxRows()}
-  if(s==='trading'){populateTradingClients();}
-  if(s==='pl'){populatePLClients();}
-  if(s==='bs'){populateBSClients();}
-  if(s==='reports')populateReportClients();
-  if(window.innerWidth<=768)$('sidebar').classList.remove('open');
+  try{
+    showScreen(s);
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const navItem=document.querySelector('.nav-item[data-nav="'+s+'"]');
+    if(navItem)navItem.classList.add('active');
+    const titles={dashboard:'Dashboard',clients:'Client Records',tax:'Income Tax Records',trading:'Trading Account',pl:'P&L Account',bs:'Balance Sheet',reports:'Reports'};
+    if($('bcCur'))$('bcCur').textContent=titles[s]||s;
+    if(s==='dashboard')renderDashboard();
+    if(s==='clients')renderClientTable(clients);
+    if(s==='tax'){populateTaxClients();loadTaxRows()}
+    if(s==='trading')populateTradingClients();
+    if(s==='pl')populatePLClients();
+    if(s==='bs')populateBSClients();
+    if(s==='reports')populateReportClients();
+    if(window.innerWidth<=768)$('sidebar').classList.remove('open');
+    console.log('Navigated to:',s);
+  }catch(e){
+    console.error('Navigation error:',e);
+    toast('Navigation error: '+e.message,'error');
+  }
 }
 function toggleSidebar(){$('sidebar').classList.toggle('open')}
 function toggleTheme(){
@@ -583,20 +590,28 @@ function initSeed(){
   saveData();
 }
 function doLogin(){
-  const uid=$('uid').value.trim(),pwd=$('pwd').value.trim();
-  if(!uid||!pwd){toast('Enter User ID and Password','error');return}
-  const r=users.find(u=>u.id===uid&&u.pwd===pwd);
-  if(r){
-    currentUser=uid;
-    logAudit('Login','User '+uid+' logged in');
-    $('loginScreen').classList.add('hidden');
-    $('app').classList.remove('hidden');
-    $('sidebarName').textContent=r.name;
-    $('sidebarAvatar').textContent=r.name.charAt(0).toUpperCase();
-    renderDashboard();
-    toast('Welcome '+r.name,'success');
-  }else{
-    toast('Invalid credentials (try admin/admin123)','error');
+  try{
+    const uid=$('uid').value.trim(),pwd=$('pwd').value.trim();
+    if(!uid||!pwd){toast('Enter User ID and Password','error');return}
+    console.log('Login attempt:',uid);
+    const r=users.find(u=>u.id===uid&&u.pwd===pwd);
+    if(r){
+      currentUser=uid;
+      logAudit('Login','User '+uid+' logged in');
+      $('loginScreen').classList.add('hidden');
+      $('app').classList.remove('hidden');
+      $('sidebarName').textContent=r.name;
+      $('sidebarAvatar').textContent=r.name.charAt(0).toUpperCase();
+      renderDashboard();
+      toast('Welcome '+r.name,'success');
+      console.log('Login successful');
+    }else{
+      toast('Invalid credentials (try admin/admin123)','error');
+      console.log('Login failed - invalid credentials');
+    }
+  }catch(e){
+    console.error('Login error:',e);
+    toast('Login error: '+e.message,'error');
   }
 }
 function doLogout(){
@@ -891,11 +906,24 @@ function exportCSV(){
   const a=document.createElement('a');a.href=url;a.download=title+'.csv';a.click();
   URL.revokeObjectURL(url);toast('CSV exported','success');
 }
-window.addEventListener('DOMContentLoaded',()=>{
-  loadTheme();
-  if(!loadData()){initSeed()}
-  populateAllClients();
-});
+(function(){
+  function init(){
+    try{
+      loadTheme();
+      if(!loadData()){initSeed()}
+      populateAllClients();
+      console.log('App initialized successfully');
+    }catch(e){
+      console.error('Init error:',e);
+      initSeed();
+    }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
+})();
 </script>
 </body>
 </html>
