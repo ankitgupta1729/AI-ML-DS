@@ -11,6 +11,8 @@
 // types that we'll look at later. Example: y := 3 will be implicitly typed as int.   
 
 
+// Most of the time around 90% time, we use implicit assignment operator.
+
 package main
 
 import "fmt"
@@ -31,4 +33,25 @@ func main() {
 	a :=false
 	fmt.Println(a)
 	fmt.Printf("%T",a)
+	var number int32
+	number = 3 //explicit assignment
+	fmt.Println(number)
+	fmt.Printf("%T",number)
+
+	b := uint(0) //typecasting
+	fmt.Println(b)
+	fmt.Printf("%T",b)
+
+	c := int64(b)
+	fmt.Println(c)
+	fmt.Printf("%T",b,c)
+
+
+	d :=-9
+	e := uint(d) // we are squeezing signed integer to unsigned integer
+	fmt.Println(d,e)
+
+	f := -1000
+	g := int8(f)
+	fmt.Println(f,g)
 }
