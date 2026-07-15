@@ -1,0 +1,18 @@
+# --- VB.NET / Visual Studio build artifacts ---
+[Bb]in/
+[Oo]bj/
+packages/
+*.user
+*.suo
+.vs/
+_UpgradeReport_Files/
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+
+# --- demo-video intermediate render files (keep the final mp4) ---
+demo-video/build/
+
+# demo-video audio intermediates (keep final .mp4 + slides + script)
+demo-video/audio/

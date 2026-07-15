@@ -1,0 +1,48 @@
+<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.Master.vb" Inherits="ITEMS.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITEMS · Income Tax Evaluation &amp; Maintenance System</title>
+  <link rel="stylesheet" href="<%= ResolveUrl("~/Content/site.css") %>" />
+  <asp:ContentPlaceHolder ID="Head" runat="server" />
+</head>
+<body>
+  <form id="form1" runat="server">
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand"><span class="mark">₹</span><div><b>ITEMS</b><small>Tax Maintenance Suite</small></div></div>
+        <nav class="nav">
+          <div class="group">Overview</div>
+          <a href="<%= ResolveUrl("~/Default.aspx") %>"><span class="ico">📊</span>Dashboard</a>
+          <div class="group">Master</div>
+          <a href="<%= ResolveUrl("~/Clients.aspx") %>"><span class="ico">👤</span>Client Information</a>
+          <div class="group">Transactions</div>
+          <a href="<%= ResolveUrl("~/Returns.aspx") %>"><span class="ico">📄</span>Return Filing</a>
+          <a href="<%= ResolveUrl("~/FirmAccount.aspx?m=trading") %>"><span class="ico">📦</span>Trading Account</a>
+          <a href="<%= ResolveUrl("~/FirmAccount.aspx?m=pl") %>"><span class="ico">💹</span>Profit &amp; Loss A/c</a>
+          <a href="<%= ResolveUrl("~/FirmAccount.aspx?m=balance") %>"><span class="ico">⚖️</span>Balance Sheet</a>
+          <div class="group">Output</div>
+          <a href="<%= ResolveUrl("~/Reports.aspx") %>"><span class="ico">🗂️</span>Reports</a>
+        </nav>
+        <div style="padding:.8rem 1rem;border-top:1px solid var(--line);font-size:.72rem;color:var(--muted)">
+          v1.0 · ASP.NET Web Forms (VB.NET) + Oracle</div>
+      </aside>
+      <div class="main">
+        <header class="topbar">
+          <div class="crumbs"><asp:ContentPlaceHolder ID="Crumb" runat="server">Dashboard</asp:ContentPlaceHolder></div>
+          <div class="spacer"></div>
+          <div class="user-chip"><span class="av"><asp:Literal ID="litInitial" runat="server" /></span>
+            <div><b style="font-size:.82rem"><asp:Literal ID="litUser" runat="server" /></b><small>Signed in</small></div>
+            <asp:LinkButton ID="btnLogout" runat="server" CssClass="icon-btn" ToolTip="Sign out"
+              OnClick="btnLogout_Click" CausesValidation="false">⏻</asp:LinkButton></div>
+        </header>
+        <div class="content">
+          <asp:ContentPlaceHolder ID="Main" runat="server" />
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

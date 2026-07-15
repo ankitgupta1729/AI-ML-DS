@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ITEMS — User & Feature Guide</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #14213d; line-height: 1.5; font-size: 12px; margin: 0; }
+  h1,h2,h3 { color: #1e3a8a; line-height: 1.2; }
+  h2 { font-size: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 6px; margin: 26px 0 12px; page-break-after: avoid; }
+  h3 { font-size: 15px; margin: 18px 0 6px; page-break-after: avoid; }
+  p { margin: 0 0 9px; }
+  code { background: #eef2ff; color: #1e3a8a; padding: 1px 5px; border-radius: 4px; font-weight: 700; }
+  ul { margin: 4px 0 10px; padding-left: 18px; } li { margin: 3px 0; }
+  .muted { color: #64748b; }
+  .cover { height: 250mm; display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(135deg,#1e3a8a,#3730a3 45%,#0f766e); color: #fff; margin: -16mm -14mm 0;
+    padding: 0 24mm; page-break-after: always; }
+  .cover .logo { width: 68px; height: 68px; border-radius: 18px; background: rgba(255,255,255,.18);
+    display: grid; place-items: center; font-size: 36px; font-weight: 800; margin-bottom: 24px; }
+  .cover h1 { color: #fff; font-size: 46px; margin: 0 0 10px; }
+  .cover .sub { font-size: 19px; opacity: .92; max-width: 520px; }
+  .cover .meta { margin-top: 40px; font-size: 13px; opacity: .9; }
+  .cover .meta b { display: inline-block; min-width: 130px; }
+  .shot { border: 1px solid #d7deea; border-radius: 8px; width: 100%; margin: 8px 0 4px; page-break-inside: avoid; }
+  .cap { font-size: 10.5px; color: #64748b; margin: 0 0 14px; }
+  .grid { display: flex; gap: 14px; flex-wrap: wrap; }
+  .card { flex: 1 1 44%; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; page-break-inside: avoid; }
+  .card b { color: #1e3a8a; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 11px; }
+  th,td { border: 1px solid #d7deea; padding: 5px 8px; text-align: left; }
+  th { background: #eef2ff; color: #1e3a8a; }
+  .callout { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 9px 12px; border-radius: 6px; margin: 10px 0; }
+  .callout.warn { background: #fffbeb; border-left-color: #d97706; }
+  .toc { columns: 2; font-size: 12px; } .toc a { color: #14213d; text-decoration: none; }
+  .pill { display:inline-block;background:#eef2ff;color:#1e3a8a;border-radius:999px;padding:2px 9px;font-size:10px;font-weight:700;margin:0 4px 4px 0;}
+  section { page-break-inside: avoid; }
+  .newpage { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="logo">₹</div>
+  <h1>ITEMS</h1>
+  <div class="sub">Income Tax Evaluation &amp; Maintenance System — User &amp; Feature Guide</div>
+  <div class="meta">
+    <div><b>Document</b> Team demo &amp; user manual</div>
+    <div><b>Live demo</b> ankitgupta1729.github.io/items-income-tax-system</div>
+    <div><b>Stack</b> VB.NET (ASP.NET Web Forms) · Oracle · Responsive web demo</div>
+    <div><b>Version</b> 1.0</div>
+  </div>
+</div>
+
+<h2>1. Contents</h2>
+<div class="toc">
+  <p>1. Contents<br>2. What is ITEMS?<br>3. Objectives<br>4. How to access &amp; sign in<br>
+  5. Dashboard<br>6. Client Information module<br>7. Return Filing &amp; tax computation<br>
+  8. Firm accounts (Trading / P&amp;L / Balance Sheet)<br>9. Reports<br>10. Works on any device<br>
+  11. Security<br>12. Running the VB.NET + Oracle build<br>13. Quick reference</p>
+</div>
+
+<h2>2. What is ITEMS?</h2>
+<p><b>ITEMS</b> — the Income Tax Evaluation &amp; Maintenance System — is application software that
+implements the core work of an income-tax practice. It replaces manual registers with a single,
+secure, computerised system that keeps client records, files original and revised income-tax
+returns, maintains firm accounts, and generates statutory reports.</p>
+<div class="grid">
+  <div class="card"><b>Who is it for</b><br>Tax lawyers and practitioners who maintain returns for many clients across assessment years.</div>
+  <div class="card"><b>Why it helps</b><br>Removes paperwork and manual calculation, reduces errors, and makes years of records instantly searchable.</div>
+</div>
+
+<h2>3. Objectives</h2>
+<ul>
+  <li>Maintain the records of each client.</li>
+  <li>Based on the client's category, provide the forms to file the original return for a fiscal year.</li>
+  <li>Provide the facility to file a revised return in case of any mistake in the original return.</li>
+  <li>For firms, maintain the Trading A/c, Profit &amp; Loss A/c and Balance Sheet.</li>
+  <li>Generate reports: return history of a client, returns filed in a fiscal, and revised returns by a client.</li>
+</ul>
+
+<h2 class="newpage">4. How to access &amp; sign in</h2>
+<p>Open the live link in any browser — no installation is needed:</p>
+<p><code>https://ankitgupta1729.github.io/items-income-tax-system/</code></p>
+<p>Sign in with one of the demo accounts:</p>
+<table>
+  <tr><th>User ID</th><th>Password</th><th>Role</th></tr>
+  <tr><td><code>admin</code></td><td><code>admin@123</code></td><td>Administrator</td></tr>
+  <tr><td><code>operator</code></td><td><code>items@2025</code></td><td>Operator</td></tr>
+</table>
+<img class="shot" src="screenshots/01-login.png"><p class="cap">Figure 1 — The secure login screen. Access to every module is protected.</p>
+<div class="callout">All navigation is on the left sidebar: <b>Dashboard</b>, <b>Client Information</b>,
+<b>Return Filing</b>, <b>Trading Account</b>, <b>Profit &amp; Loss A/c</b>, <b>Balance Sheet</b> and <b>Reports</b>.
+The top bar has a guided tour (🧭), a light/dark toggle (🌓) and sign-out (⏻).</div>
+
+<h2 class="newpage">5. Dashboard</h2>
+<p>After signing in you land on the dashboard — a live overview of the practice: total clients,
+returns filed, revised returns, and net tax recorded, plus a chart of returns by assessment year
+and a list of recent returns.</p>
+<img class="shot" src="screenshots/02-dashboard.png"><p class="cap">Figure 2 — Dashboard with key metrics and recent activity.</p>
+
+<h2 class="newpage">6. Client Information module</h2>
+<p>This is the master module. It maintains the basic information of each client — PAN, name, father's
+name, date of birth, address, category and ward/circle — and is responsible for adding, updating and
+deleting each client's record.</p>
+<h3>Add / edit a client</h3>
+<p>Click <b>+ Insert Client Record</b>, fill the form, and Save. The <b>PAN</b> is validated
+(format <code>ABCDE1234F</code>) and used as the unique primary key. Deleting a client also removes
+all of that client's linked returns and firm accounts.</p>
+<img class="shot" src="screenshots/09-clients-desktop.png"><p class="cap">Figure 3 — Client list with instant search, category badges and row actions.</p>
+<img class="shot" src="screenshots/10-client-form.png"><p class="cap">Figure 4 — Client entry form grouped into Identification, Contact and Classification.</p>
+
+<h2 class="newpage">7. Return Filing &amp; tax computation</h2>
+<p>The Return module files the <b>Original</b> return for a client and assessment year, and lets you
+file a <b>Revised</b> return to correct mistakes. The system enforces the rule that a revised return
+can only be filed if an original return already exists for that year.</p>
+<h3>Filing a return</h3>
+<ul>
+  <li>Choose the client (verified via PAN) and the return type.</li>
+  <li>Enter the assessment year and income under each head (salary, house property, business, capital gains, other sources).</li>
+  <li>The <b>Computation of Tax</b> panel updates live — total income, tax by slab, rebate u/s 87A, surcharge, 4% cess, and the final balance payable or refund.</li>
+</ul>
+<img class="shot" src="screenshots/04-return-taxcalc.png"><p class="cap">Figure 5 — Return form with the live tax-computation panel on the right.</p>
+<div class="callout warn">Tax figures use old-regime slabs (AY 2024-25) for individuals and a flat 30% for firms.
+They are illustrative for demonstration and training — verify against the current Finance Act before any real filing.</div>
+
+<h2 class="newpage">8. Firm accounts — Trading / P&amp;L / Balance Sheet</h2>
+<p>When a client's category is <b>Firm</b>, three additional modules become relevant. Each has two
+sides that are totalled automatically, and the system shows whether they balance.</p>
+<div class="grid">
+  <div class="card"><b>Trading Account</b><br>Debit (To) vs Credit (By) — opening stock, purchases, wages, gross profit vs sales, closing stock.</div>
+  <div class="card"><b>Profit &amp; Loss A/c</b><br>All indirect expenses vs incomes, resolving to net profit or net loss.</div>
+  <div class="card"><b>Balance Sheet</b><br>Assets vs Liabilities &amp; Capital, checked for balance.</div>
+</div>
+<img class="shot" src="screenshots/07-balance.png"><p class="cap">Figure 6 — Balance Sheet records with automatic totals and a Balanced/Δ status.</p>
+
+<h2 class="newpage">9. Reports</h2>
+<p>The Report Generation module produces the statutory reports defined in the requirements. Generate a
+report, then use your browser's Print (Ctrl/Cmd+P) to save it as a PDF for the client file.</p>
+<ul>
+  <li><b>Return history of a client</b> — every original and revised return, across years.</li>
+  <li><b>Returns filed in a fiscal</b> — all clients for a chosen assessment year.</li>
+  <li><b>Revised returns by a client</b> — total revised returns filed.</li>
+</ul>
+<img class="shot" src="screenshots/05-report.png"><p class="cap">Figure 7 — A generated return-history report, ready to print or save as PDF.</p>
+
+<h2 class="newpage">10. Works on any device</h2>
+<p>The interface is fully responsive and includes a polished light and dark theme, so the team gets a
+great experience whether on a laptop, tablet or mobile phone.</p>
+<div class="grid">
+  <div style="flex:1"><img class="shot" src="screenshots/11-dark-dashboard.png"><p class="cap">Figure 8 — Dark theme.</p></div>
+  <div style="flex:0 0 210px"><img class="shot" src="screenshots/06-mobile-dashboard.png"><p class="cap">Figure 9 — Mobile layout.</p></div>
+</div>
+
+<h2>11. Security</h2>
+<ul>
+  <li><b>Login</b> — every module is behind a user id and password.</li>
+  <li><b>Password hashing</b> — passwords are stored as SHA-256 hashes, never in clear text.</li>
+  <li><b>Audit log</b> — the Oracle build records every insert, update and delete with user, table, key and timestamp.</li>
+</ul>
+
+<h2 class="newpage">12. Running the VB.NET + Oracle build</h2>
+<p>The production system is ASP.NET Web Forms (VB.NET) on Oracle. To run it:</p>
+<ol>
+  <li>Run the SQL scripts in <code>database/</code> in order (01 → 04) to create the schema, seed data, audit triggers and report views.</li>
+  <li>Set the Oracle connection string in <code>src/ITEMS/Web.config</code>.</li>
+  <li>Open <code>src/ITEMS.sln</code> in Visual Studio, restore the <code>Oracle.ManagedDataAccess</code> NuGet package, and run (F5) — or host on IIS / Oracle Cloud.</li>
+</ol>
+<p>Full step-by-step instructions are in the project <code>README.md</code>.</p>
+
+<h2>13. Quick reference</h2>
+<table>
+  <tr><th>Task</th><th>Where</th></tr>
+  <tr><td>Add a client</td><td>Client Information → + Insert Client Record</td></tr>
+  <tr><td>File an original return</td><td>Return Filing → + File New Return → Original</td></tr>
+  <tr><td>File a revised return</td><td>Return Filing → + File New Return → Revised</td></tr>
+  <tr><td>Maintain firm accounts</td><td>Trading Account / Profit &amp; Loss A/c / Balance Sheet</td></tr>
+  <tr><td>Generate a report</td><td>Reports → choose report → Generate → Print/Save PDF</td></tr>
+  <tr><td>Guided tour</td><td>Top bar → 🧭</td></tr>
+  <tr><td>Light / dark</td><td>Top bar → 🌓</td></tr>
+</table>
+<p class="muted" style="margin-top:20px">ITEMS — Income Tax Evaluation &amp; Maintenance System · Team demo guide · v1.0</p>
+
+</body>
+</html>
