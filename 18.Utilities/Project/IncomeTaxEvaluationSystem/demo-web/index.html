@@ -677,7 +677,7 @@ function saveClient(){
   if(!valPAN(pan)){toast('Invalid PAN format (e.g., ABCDE1234F)','error');return}
   if(pin&&!valPin(pin)){toast('Invalid pincode (must be 6 digits)','error');return}
   const idx=clients.findIndex(c=>c.code===code);
-  const obj={code,name,pan,dob,gender,occ,aadhar,ward,addr,city,state,pin,tel,mob,email,ay,createdAt:idx>=0?clients[idx].createdAt:new Date().toISOString()};
+  const obj={code,name,pan,dob,gender,occ,aadhar,ward,address:addr,city,state,pincode:pin,tel,mobile:mob,email,ay,createdAt:idx>=0?clients[idx].createdAt:new Date().toISOString()};
   if(idx>=0){clients[idx]=obj;logAudit('Update','Client '+code+' updated')}
   else{clients.push(obj);logAudit('Create','Client '+code+' created')}
   saveData();closeModal();searchClient();toast('Client saved successfully','success');
