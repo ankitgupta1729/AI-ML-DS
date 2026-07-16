@@ -1,5 +1,4 @@
 .venv/
-17.OpenCode/
 20.LlamaIndex/llamaindex-helloworld/.env
 __pycache__/
 *.pyc
@@ -18,3 +17,8 @@ __pycache__/
 0.Resources/PDFs/AI-ML-DS/*Large*.pdf
 0.Resources/PDFs/AI-ML-DS/Probabilistic*Advanced*.pdf
 demo-web/screenshots/
+# Node / Next.js artifacts and local dev databases
+node_modules/
+.next/
+*.db
+*.db-journal
