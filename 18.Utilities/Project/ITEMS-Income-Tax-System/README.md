@@ -1,5 +1,10 @@
 # Income Tax Evaluation System
 
+<p align="center">
+  <b>🔗 Live demo:</b> <a href="https://income-tax-evaluation-system.netlify.app">https://income-tax-evaluation-system.netlify.app</a><br>
+  <sub>Works on laptop, tablet and mobile · nothing to install</sub>
+</p>
+
 > A modern implementation of the **Income Tax Evaluation & Maintenance System** specified in
 > `project.pdf` — a workspace for tax practitioners to maintain client records, file
 > **original & revised** income-tax returns with automatic tax computation, keep firm accounts
