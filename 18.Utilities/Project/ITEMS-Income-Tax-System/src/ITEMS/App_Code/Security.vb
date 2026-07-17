@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · Security.vb — authentication against APP_USER (SRS §7 & §15)
+' Income Tax Evaluation System · Security.vb — authentication against APP_USER (SRS §7 & §15)
 ' Passwords are verified against stored SHA-256 hashes; never compared in clear.
 ' =============================================================================
 Imports System.Security.Cryptography

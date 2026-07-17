@@ -1,5 +1,5 @@
 /* =============================================================================
- * ITEMS · Income Tax Evaluation & Maintenance System
+ * Income Tax Evaluation System
  * db.js — Client-side data layer (mirrors the Oracle schema from project.pdf)
  *
  * This module emulates the 5 Oracle tables described in the SRS
@@ -24,7 +24,7 @@
   /* ---- Demo credentials (documented in README) ---------------------------- */
   const USERS = [
     { username: "admin", password: "admin@123", name: "System Administrator", role: "Administrator" },
-    { username: "operator", password: "items@2025", name: "Data Entry Operator", role: "Operator" }
+    { username: "operator", password: "demo@2025", name: "Data Entry Operator", role: "Operator" }
   ];
 
   /* ---- Seed data ---------------------------------------------------------- *
@@ -75,8 +75,8 @@
 
     // Recompute tax for the current-year returns using the engine.
     returns.forEach(r => {
-      if (r.ASSES_YEAR_1 >= "2024-01-01" && global.ITEMS_TAX) {
-        Object.assign(r, global.ITEMS_TAX.compute(r));
+      if (r.ASSES_YEAR_1 >= "2024-01-01" && global.TaxEngine) {
+        Object.assign(r, global.TaxEngine.compute(r));
       }
     });
 
@@ -262,7 +262,7 @@
   }
   function logout() { global.sessionStorage.removeItem(SESSION_KEY); }
 
-  global.ITEMS_DB = {
+  global.TaxDB = {
     CATEGORY, RESIDENCE, SEX, WARD, RETURN_TYPE, USERS,
     RETURN_NUM_FIELDS, TRADING_FIELDS, PL_FIELDS, BALANCE_FIELDS,
     all, findClient, upsertClient, deleteClient,

@@ -1,4 +1,4 @@
-<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Returns.aspx.vb" Inherits="ITEMS.ReturnsPage" %>
+<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false" CodeBehind="Returns.aspx.vb" Inherits="ITEMS.ReturnsPage" %>
 <asp:Content ContentPlaceHolderID="Crumb" runat="server">Return Filing</asp:Content>
 <asp:Content ContentPlaceHolderID="Main" runat="server">
   <div class="page-head"><div><h2>Return Filing</h2>

@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · Global.asax.vb — application lifecycle hooks
+' Income Tax Evaluation System · Global.asax.vb — application lifecycle hooks
 ' =============================================================================
 Imports System.Web
 

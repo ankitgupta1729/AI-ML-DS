@@ -1,7 +1,7 @@
-<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="ITEMS.DefaultPage" %>
+<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false" CodeBehind="Default.aspx.vb" Inherits="ITEMS.DefaultPage" %>
 <asp:Content ContentPlaceHolderID="Crumb" runat="server">Dashboard</asp:Content>
 <asp:Content ContentPlaceHolderID="Main" runat="server">
-  <div class="page-head"><div><h2>Welcome to ITEMS</h2>
+  <div class="page-head"><div><h2>Welcome back</h2>
     <p class="muted">A consolidated view of clients, returns and tax collections.</p></div>
     <div class="btn-row"><a class="btn btn-primary" href="ClientEdit.aspx">+ New client</a></div></div>
   <div class="grid grid-4" style="margin-bottom:1.2rem">

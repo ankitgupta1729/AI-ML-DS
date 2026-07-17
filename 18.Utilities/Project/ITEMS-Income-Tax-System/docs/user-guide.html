@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>ITEMS — User & Feature Guide</title>
+<title>Income Tax Evaluation System — User & Feature Guide</title>
 <style>
   @page { size: A4; margin: 16mm 14mm; }
   * { box-sizing: border-box; }
@@ -43,11 +43,11 @@
 
 <div class="cover">
   <div class="logo">₹</div>
-  <h1>ITEMS</h1>
-  <div class="sub">Income Tax Evaluation &amp; Maintenance System — User &amp; Feature Guide</div>
+  <h1>Income Tax<br>Evaluation System</h1>
+  <div class="sub">User &amp; Feature Guide — a workspace for tax practitioners</div>
   <div class="meta">
     <div><b>Document</b> Team demo &amp; user manual</div>
-    <div><b>Live demo</b> ankitgupta1729.github.io/items-income-tax-system</div>
+    
     <div><b>Stack</b> VB.NET (ASP.NET Web Forms) · Oracle · Responsive web demo</div>
     <div><b>Version</b> 1.0</div>
   </div>
@@ -55,14 +55,14 @@
 
 <h2>1. Contents</h2>
 <div class="toc">
-  <p>1. Contents<br>2. What is ITEMS?<br>3. Objectives<br>4. How to access &amp; sign in<br>
+  <p>1. Contents<br>2. What is this system?<br>3. Objectives<br>4. How to access &amp; sign in<br>
   5. Dashboard<br>6. Client Information module<br>7. Return Filing &amp; tax computation<br>
   8. Firm accounts (Trading / P&amp;L / Balance Sheet)<br>9. Reports<br>10. Works on any device<br>
   11. Security<br>12. Running the VB.NET + Oracle build<br>13. Quick reference</p>
 </div>
 
-<h2>2. What is ITEMS?</h2>
-<p><b>ITEMS</b> — the Income Tax Evaluation &amp; Maintenance System — is application software that
+<h2>2. What is this system?</h2>
+<p>The <b>Income Tax Evaluation System</b> is application software that
 implements the core work of an income-tax practice. It replaces manual registers with a single,
 secure, computerised system that keeps client records, files original and revised income-tax
 returns, maintains firm accounts, and generates statutory reports.</p>
@@ -81,13 +81,12 @@ returns, maintains firm accounts, and generates statutory reports.</p>
 </ul>
 
 <h2 class="newpage">4. How to access &amp; sign in</h2>
-<p>Open the live link in any browser — no installation is needed:</p>
-<p><code>https://ankitgupta1729.github.io/items-income-tax-system/</code></p>
+<p>Open the demo link shared with this guide in any browser — no installation is needed.</p>
 <p>Sign in with one of the demo accounts:</p>
 <table>
   <tr><th>User ID</th><th>Password</th><th>Role</th></tr>
   <tr><td><code>admin</code></td><td><code>admin@123</code></td><td>Administrator</td></tr>
-  <tr><td><code>operator</code></td><td><code>items@2025</code></td><td>Operator</td></tr>
+  <tr><td><code>operator</code></td><td><code>demo@2025</code></td><td>Operator</td></tr>
 </table>
 <img class="shot" src="screenshots/01-login.png"><p class="cap">Figure 1 — The secure login screen. Access to every module is protected.</p>
 <div class="callout">All navigation is on the left sidebar: <b>Dashboard</b>, <b>Client Information</b>,
@@ -108,8 +107,8 @@ deleting each client's record.</p>
 <p>Click <b>+ Insert Client Record</b>, fill the form, and Save. The <b>PAN</b> is validated
 (format <code>ABCDE1234F</code>) and used as the unique primary key. Deleting a client also removes
 all of that client's linked returns and firm accounts.</p>
-<img class="shot" src="screenshots/09-clients-desktop.png"><p class="cap">Figure 3 — Client list with instant search, category badges and row actions.</p>
-<img class="shot" src="screenshots/10-client-form.png"><p class="cap">Figure 4 — Client entry form grouped into Identification, Contact and Classification.</p>
+<img class="shot" src="screenshots/03-clients.png"><p class="cap">Figure 3 — Client list with instant search, category badges and row actions.</p>
+<img class="shot" src="screenshots/04-client-form.png"><p class="cap">Figure 4 — Client entry form grouped into Identification, Contact and Classification.</p>
 
 <h2 class="newpage">7. Return Filing &amp; tax computation</h2>
 <p>The Return module files the <b>Original</b> return for a client and assessment year, and lets you
@@ -121,7 +120,7 @@ can only be filed if an original return already exists for that year.</p>
   <li>Enter the assessment year and income under each head (salary, house property, business, capital gains, other sources).</li>
   <li>The <b>Computation of Tax</b> panel updates live — total income, tax by slab, rebate u/s 87A, surcharge, 4% cess, and the final balance payable or refund.</li>
 </ul>
-<img class="shot" src="screenshots/04-return-taxcalc.png"><p class="cap">Figure 5 — Return form with the live tax-computation panel on the right.</p>
+<img class="shot" src="screenshots/05-return-taxcalc.png"><p class="cap">Figure 5 — Return form with the live tax-computation panel on the right.</p>
 <div class="callout warn">Tax figures use old-regime slabs (AY 2024-25) for individuals and a flat 30% for firms.
 They are illustrative for demonstration and training — verify against the current Finance Act before any real filing.</div>
 
@@ -133,7 +132,7 @@ sides that are totalled automatically, and the system shows whether they balance
   <div class="card"><b>Profit &amp; Loss A/c</b><br>All indirect expenses vs incomes, resolving to net profit or net loss.</div>
   <div class="card"><b>Balance Sheet</b><br>Assets vs Liabilities &amp; Capital, checked for balance.</div>
 </div>
-<img class="shot" src="screenshots/07-balance.png"><p class="cap">Figure 6 — Balance Sheet records with automatic totals and a Balanced/Δ status.</p>
+<img class="shot" src="screenshots/06-balance.png"><p class="cap">Figure 6 — Balance Sheet records with automatic totals and a Balanced/Δ status.</p>
 
 <h2 class="newpage">9. Reports</h2>
 <p>The Report Generation module produces the statutory reports defined in the requirements. Generate a
@@ -143,14 +142,14 @@ report, then use your browser's Print (Ctrl/Cmd+P) to save it as a PDF for the c
   <li><b>Returns filed in a fiscal</b> — all clients for a chosen assessment year.</li>
   <li><b>Revised returns by a client</b> — total revised returns filed.</li>
 </ul>
-<img class="shot" src="screenshots/05-report.png"><p class="cap">Figure 7 — A generated return-history report, ready to print or save as PDF.</p>
+<img class="shot" src="screenshots/08-report-output.png"><p class="cap">Figure 7 — A generated return-history report, ready to print or save as PDF.</p>
 
 <h2 class="newpage">10. Works on any device</h2>
 <p>The interface is fully responsive and includes a polished light and dark theme, so the team gets a
 great experience whether on a laptop, tablet or mobile phone.</p>
 <div class="grid">
-  <div style="flex:1"><img class="shot" src="screenshots/11-dark-dashboard.png"><p class="cap">Figure 8 — Dark theme.</p></div>
-  <div style="flex:0 0 210px"><img class="shot" src="screenshots/06-mobile-dashboard.png"><p class="cap">Figure 9 — Mobile layout.</p></div>
+  <div style="flex:1"><img class="shot" src="screenshots/09-dark-dashboard.png"><p class="cap">Figure 8 — Dark theme.</p></div>
+  <div style="flex:0 0 210px"><img class="shot" src="screenshots/10-mobile-dashboard.png"><p class="cap">Figure 9 — Mobile layout.</p></div>
 </div>
 
 <h2>11. Security</h2>
@@ -180,7 +179,7 @@ great experience whether on a laptop, tablet or mobile phone.</p>
   <tr><td>Guided tour</td><td>Top bar → 🧭</td></tr>
   <tr><td>Light / dark</td><td>Top bar → 🌓</td></tr>
 </table>
-<p class="muted" style="margin-top:20px">ITEMS — Income Tax Evaluation &amp; Maintenance System · Team demo guide · v1.0</p>
+<p class="muted" style="margin-top:20px">Income Tax Evaluation System · Team demo guide · v1.0</p>
 
 </body>
 </html>

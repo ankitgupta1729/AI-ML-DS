@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · FirmAccountRepository.vb — generic CRUD for the three firm-account
+' Income Tax Evaluation System · FirmAccountRepository.vb — generic CRUD for the three firm-account
 ' tables (TRADING_ACCOUNT, PL_ACCOUNT, BALANCE_SHEET). One code path drives all
 ' three by describing each table's money columns and its two ledger sides.
 ' =============================================================================

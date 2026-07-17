@@ -1,4 +1,4 @@
-<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ReturnEdit.aspx.vb" Inherits="ITEMS.ReturnEditPage" %>
+<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false" CodeBehind="ReturnEdit.aspx.vb" Inherits="ITEMS.ReturnEditPage" %>
 <asp:Content ContentPlaceHolderID="Crumb" runat="server">Return Filing / File Return</asp:Content>
 <asp:Content ContentPlaceHolderID="Main" runat="server">
   <div class="page-head"><div><h2><asp:Literal ID="litTitle" runat="server" /> Income Tax Return</h2>

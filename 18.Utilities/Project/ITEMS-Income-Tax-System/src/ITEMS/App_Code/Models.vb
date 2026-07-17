@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · Models.vb — plain data objects for the seven modules
+' Income Tax Evaluation System · Models.vb — plain data objects for the seven modules
 ' =============================================================================
 Namespace Models
 

@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · ReturnEdit.aspx.vb — file / edit a return with server-side tax calc
+' Income Tax Evaluation System · ReturnEdit.aspx.vb — file / edit a return with server-side tax calc
 ' Enforces the SRS rule: a revised return needs an existing original one.
 ' =============================================================================
 Imports System.Globalization
@@ -7,6 +7,8 @@ Imports System.Linq
 Imports ITEMS.Logic
 Imports ITEMS.Models
 Imports ITEMS.Repositories
+Imports System.Web.UI
+Imports System.Web.UI.WebControls
 
 Namespace ITEMS
 

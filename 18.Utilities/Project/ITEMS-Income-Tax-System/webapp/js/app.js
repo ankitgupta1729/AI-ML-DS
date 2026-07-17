@@ -1,10 +1,9 @@
 /* =============================================================================
- * ITEMS · app.js — SPA router, views and module logic
- * Income Tax Evaluation & Maintenance System (web demo)
+ * Income Tax Evaluation System · app.js — SPA router, views and module logic
  * ===========================================================================*/
 (function (global) {
   "use strict";
-  const DB = global.ITEMS_DB, TAX = global.ITEMS_TAX;
+  const DB = global.TaxDB, TAX = global.TaxEngine;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const el = (h) => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content.firstElementChild; };
@@ -62,9 +61,9 @@
     document.body.innerHTML = "";
     const wrap = el(`<div class="login-wrap"><div class="login-card">
       <div class="login-head">
-        <div class="logo"><span class="mark">₹</span> ITEMS</div>
-        <h1>Income Tax Evaluation &amp; Maintenance System</h1>
-        <p>Secure access &middot; Tax practitioner workspace</p>
+        <div class="logo"><span class="mark">₹</span> Income Tax Evaluation System</div>
+        <h1>Sign in to your workspace</h1>
+        <p>Client records &middot; Return filing &middot; Firm accounts &middot; Reports</p>
       </div>
       <form class="login-body" id="loginForm" autocomplete="off">
         <div class="field"><label>User ID <span class="req">*</span></label>
@@ -74,7 +73,7 @@
         <div class="err-text" id="loginErr"></div>
         <button class="btn btn-primary" style="width:100%" type="submit">Sign in &rarr;</button>
         <div class="hint">Demo credentials &mdash; Admin: <code>admin</code> / <code>admin@123</code> &nbsp;·&nbsp;
-          Operator: <code>operator</code> / <code>items@2025</code></div>
+          Operator: <code>operator</code> / <code>demo@2025</code></div>
       </form></div></div>`);
     document.body.appendChild(wrap);
     $("#loginForm").addEventListener("submit", (e) => {
@@ -107,7 +106,7 @@
     document.body.innerHTML = "";
     const app = el(`<div class="app">
       <aside class="sidebar" id="sidebar">
-        <div class="brand"><span class="mark">₹</span><div><b>ITEMS</b><small>Tax Maintenance Suite</small></div></div>
+        <div class="brand"><span class="mark">₹</span><div><b>Income Tax</b><small>Evaluation System</small></div></div>
         <nav class="nav" id="nav"></nav>
         <div style="padding:.8rem 1rem;border-top:1px solid var(--line);font-size:.72rem;color:var(--muted)">
           v1.0 &middot; Demo build<br>Data stored locally in your browser</div>
@@ -162,7 +161,7 @@
     const maxF = Math.max(1, ...Object.values(byFiscal));
 
     view.innerHTML = `
-      <div class="page-head"><div><h2>Welcome to ITEMS</h2>
+      <div class="page-head"><div><h2>Welcome back</h2>
         <p class="muted">A consolidated view of clients, returns and tax collections.</p></div>
         <div class="btn-row no-print"><a class="btn btn-ghost" href="#/reports">View reports</a>
           <a class="btn btn-primary" href="#/clients/new">+ New client</a></div></div>
@@ -431,7 +430,6 @@
         `<div class="total" style="border-top:2px dashed var(--line);margin-top:.6rem">
           <span>${bal < 0 ? "Refund Due" : "Balance Payable"}</span>
           <span class="${bal<0?'balanced':''}">${inr(Math.abs(bal))}</span></div>`;
-      rec._comp = comp;
     };
     recompute();
     $$("#rForm .calc, #PAN, input[name='rt']").forEach(i => i.addEventListener("input", recompute));
@@ -603,7 +601,7 @@
     out.innerHTML = `<div class="btn-row no-print" style="justify-content:flex-end;margin-bottom:.6rem">
         <button class="btn btn-accent" onclick="window.print()">🖨️ Print / Save PDF</button></div>
       <div class="report-doc"><h1>${esc(title)}</h1>
-      <div class="rmeta"><span>ITEMS — Income Tax Evaluation &amp; Maintenance System</span><span>Generated: ${new Date().toLocaleString("en-GB")}</span></div>
+      <div class="rmeta"><span>Income Tax Evaluation System</span><span>Generated: ${new Date().toLocaleString("en-GB")}</span></div>
       ${subtitle?`<p style="text-align:center;color:#555;margin-top:-.5rem">${esc(subtitle)}</p>`:""}
       <table><thead><tr>${cols.map(c=>`<th${c.num?' style="text-align:right"':''}>${esc(c.label)}</th>`).join("")}</tr></thead>
       <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td${c.num?' style="text-align:right;font-variant-numeric:tabular-nums"':''}>${c.num?inr(r[c.key]):esc(r[c.key])}</td>`).join("")}</tr>`).join("")}</tbody></table>
@@ -722,5 +720,5 @@
   if (document.readyState !== "loading") boot();
 
   // expose a tiny console helper for demos
-  global.ITEMS = { reset: () => { DB.resetDemo(); location.reload(); } };
+  global.TaxSystem = { reset: () => { DB.resetDemo(); location.reload(); } };
 })(window);

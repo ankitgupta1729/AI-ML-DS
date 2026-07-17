@@ -9,9 +9,9 @@ SET DEFINE OFF;
 INSERT INTO APP_USER (USERNAME, PASSWORD_HASH, FULL_NAME, ROLE) VALUES
   ('admin',    '7676aaafb027c825bd9abab78b234070e702752f625b752e55e55b48e607e358', 'System Administrator', 'Administrator');
 INSERT INTO APP_USER (USERNAME, PASSWORD_HASH, FULL_NAME, ROLE) VALUES
-  ('operator', '013aebeef1e40cad08222251354769c64abc10f4844d10516dcdcc55d717a88a', 'Data Entry Operator', 'Operator');
+  ('operator', '6b59e0e363a3169b35befef396ef605d0e86ddd58ad2a86f9bd7bff6f1128127', 'Data Entry Operator', 'Operator');
 --   admin    / admin@123
---   operator / items@2025
+--   operator / demo@2025
 
 -- ---- CLIENT_RECORD --------------------------------------------------------
 INSERT INTO CLIENT_RECORD VALUES ('ABCPP1234D','Digamber Prasad','Sri Nageshwar Lal',DATE '1984-10-10','110003','12, Rajendra Nagar, New Delhi','09891141538',1,0,0,'Ward-24(3)');

@@ -1,4 +1,4 @@
-<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FirmAccount.aspx.vb" Inherits="ITEMS.FirmAccountPage" %>
+<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false" CodeBehind="FirmAccount.aspx.vb" Inherits="ITEMS.FirmAccountPage" %>
 <asp:Content ContentPlaceHolderID="Crumb" runat="server"><asp:Literal ID="litCrumb" runat="server" /></asp:Content>
 <asp:Content ContentPlaceHolderID="Main" runat="server">
   <div class="page-head"><div><h2><asp:Literal ID="litTitle" runat="server" /></h2>

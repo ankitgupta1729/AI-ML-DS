@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · OracleDb.vb — thin data-access helper over ODP.NET (managed)
+' Income Tax Evaluation System · OracleDb.vb — thin data-access helper over ODP.NET (managed)
 ' Centralises connection handling and parameterised commands (prevents SQL
 ' injection). Every module's repository builds on these primitives.
 ' =============================================================================

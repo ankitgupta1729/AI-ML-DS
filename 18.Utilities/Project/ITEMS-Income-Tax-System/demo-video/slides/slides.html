@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>ITEMS — Demo Slides</title>
+<title>Income Tax Evaluation System — Demo Slides</title>
 <link rel="stylesheet" href="slides.css">
 </head>
 <body>
 <div id="stage"></div>
 <script>
-const URL_LIVE = "ankitgupta1729.github.io/items-income-tax-system";
+/* Host-agnostic deck: no URLs and no personal names are ever rendered, so the
+   exported video stays valid wherever the app is hosted. */
+const BRAND = "Income Tax Evaluation System";
 const A = "../assets/";
 const slides = [
   { type:"title", kicker:"Team Demo · Product Walkthrough",
-    title:"ITEMS", h1big:true,
-    sub:"Income Tax Evaluation &amp; Maintenance System — a modern workspace for tax practitioners.",
+    title:"Income Tax<br>Evaluation System", h1big:false,
+    sub:"A modern workspace for tax practitioners — clients, returns, firm accounts and reports in one place.",
     badges:["Client records","Return filing","Automatic tax computation","Firm accounts","Reports"] },
 
   { type:"content", kicker:"The Problem", h2:"From paperwork to a secure system",
@@ -21,60 +23,60 @@ const slides = [
     bullets:["Confidential client data scattered across registers",
              "Original and revised returns tracked by hand",
              "Trading, P&amp;L and balance-sheet totals recomputed repeatedly",
-             "ITEMS replaces all of it with one computerised system"] },
+             "One computerised system replaces all of it"] },
 
-  { type:"content", kicker:"Objectives", h2:"What ITEMS does",
+  { type:"content", kicker:"Objectives", h2:"What the system does",
     bullets:["Maintain a complete record for every client",
              "File the original return for a fiscal year, with tax computed automatically",
              "File a revised return to correct any mistake",
              "For firms — maintain Trading A/c, Profit &amp; Loss A/c and Balance Sheet",
              "Generate ready-to-print statutory reports"] },
 
-  { type:"content", kicker:"Architecture", h2:"Visual Basic + Oracle, and a live web demo",
-    sub:"The production application is built with VB.NET (ASP.NET Web Forms) on an Oracle database — exactly as specified. A live web edition mirrors every module so anyone can try it instantly.",
+  { type:"content", kicker:"Architecture", h2:"Visual Basic + Oracle, plus a live web edition",
+    sub:"The production application is built with VB.NET (ASP.NET Web Forms) on an Oracle database. A live web edition mirrors every module so anyone can try it instantly.",
     bullets:["Production: VB.NET + Oracle (ODP.NET) — deployable on IIS / Oracle Cloud",
-             "Live demo: responsive web app on GitHub Pages — no installation",
+             "Live edition: responsive web app — nothing to install",
              "Identical five-table data model and tax engine in both"] },
 
   { type:"shot", kicker:"Security", h2:"Sign in — protected access", img:A+"01-login.png",
-    sub:"Forms-based login guards every module.",
+    sub:"Every module sits behind a login.",
     chips:["User id &amp; password","SHA-256 hashes","Audit log of all changes"] },
 
   { type:"shot", kicker:"Overview", h2:"The dashboard", img:A+"02-dashboard.png",
     sub:"A live snapshot of your practice the moment you sign in.",
     chips:["Client &amp; return counts","Net tax recorded","Recent activity"] },
 
-  { type:"shot", kicker:"Module 1", h2:"Client Information", img:A+"09-clients-desktop.png",
+  { type:"shot", kicker:"Module 1", h2:"Client Information", img:A+"03-clients.png",
     sub:"The master record — add, edit and delete clients.",
     chips:["PAN validated as primary key","Search instantly","Safe cascade delete"] },
 
-  { type:"shot", kicker:"Module 2 &amp; 3", h2:"Return filing with live tax", img:A+"04-return-taxcalc.png",
+  { type:"shot", kicker:"Module 2 &amp; 3", h2:"Return filing with live tax", img:A+"05-return-taxcalc.png",
     sub:"Enter income heads; the tax is computed as you type.",
     chips:["Slabs · Rebate · Surcharge · Cess","Original &amp; revised returns","Balance payable / refund"] },
 
-  { type:"shot", kicker:"Modules 4–6", h2:"Firm accounts, balanced", img:A+"07-balance.png",
+  { type:"shot", kicker:"Modules 4–6", h2:"Firm accounts, balanced", img:A+"06-balance.png",
     sub:"Trading A/c, Profit &amp; Loss A/c and Balance Sheet for firms.",
     chips:["Automatic Dr / Cr totals","Assets = Liabilities check","Per assessment year"] },
 
-  { type:"shot", kicker:"Module 7", h2:"Statutory reports", img:A+"05-report.png",
-    sub:"Four reports, printable to PDF for the client file.",
+  { type:"shot", kicker:"Module 7", h2:"Statutory reports", img:A+"08-report-output.png",
+    sub:"Reports print straight to PDF for the client file.",
     chips:["Return history","Returns in a fiscal","Revised returns by client"] },
 
   { type:"duo", kicker:"Anywhere", h2:"Laptop, tablet, mobile — light or dark",
     sub:"Fully responsive, with a polished light and dark theme for a great experience on any device.",
-    img:A+"11-dark-dashboard.png", phone:A+"06-mobile-dashboard.png" },
+    img:A+"09-dark-dashboard.png", phone:A+"10-mobile-dashboard.png" },
 
   { type:"title", kicker:"Get started", title:"Try it now", h1big:false,
-    sub:"Open the live link and sign in with the demo credentials below.",
-    creds:[["Live demo", URL_LIVE],["Admin","admin / admin@123"],["Operator","operator / items@2025"]] }
+    sub:"Open the demo link shared alongside this video and sign in with the credentials below.",
+    creds:[["Admin","admin / admin@123"],["Operator","operator / demo@2025"]] }
 ];
 
 function head(){
   return `<div class="bar"></div><div class="head"><div class="logo">₹</div>
-    <div><div class="t">ITEMS</div><div class="s">Income Tax Evaluation &amp; Maintenance System</div></div></div>`;
+    <div><div class="t">INCOME TAX</div><div class="s">Evaluation System</div></div></div>`;
 }
 function foot(n){
-  return `<div class="foot"><span class="url">${URL_LIVE}</span><span class="pageno">${n} / ${slides.length}</span></div>`;
+  return `<div class="foot"><span class="url">${BRAND}</span><span class="pageno">${n} / ${slides.length}</span></div>`;
 }
 function render(n){
   const s = slides[n-1]; const stage = document.getElementById("stage");
@@ -82,9 +84,9 @@ function render(n){
   if(s.type==="title"){
     cls += " title-slide";
     inner = head() + `<div class="body"><span class="kicker">${s.kicker}</span>
-      <h1 style="${s.h1big?'':'font-size:96px'}">${s.title}</h1><p class="sub">${s.sub}</p>` +
+      <h1 style="${s.h1big?'':'font-size:92px'}">${s.title}</h1><p class="sub">${s.sub}</p>` +
       (s.badges?`<div class="badges">${s.badges.map(b=>`<span class="badge">${b}</span>`).join("")}</div>`:"") +
-      (s.creds?`<div class="creds">${s.creds.map(c=>`<div class="cred"><b>${c[0]}</b><br>${c[1]}</div>`).join("")}</div>`:"") +
+      (s.creds?`<div class="creds">${s.creds.map(c=>`<div class="cred"><b>${c[0]}</b>${c[1]}</div>`).join("")}</div>`:"") +
       `</div>` + foot(n);
   } else if(s.type==="content"){
     inner = head() + `<div class="body"><span class="kicker">${s.kicker}</span><h2>${s.h2}</h2>` +
@@ -95,19 +97,17 @@ function render(n){
     inner = head() + `<div class="body">
       <div class="copy"><span class="kicker">${s.kicker}</span><h2>${s.h2}</h2><p class="sub">${s.sub}</p>
         ${s.chips?`<div class="chips">${s.chips.map(c=>`<span class="chip">${c}</span>`).join("")}</div>`:""}</div>
-      <div class="frame"><img src="${s.img}"></div></div>` + foot(n);
+      <div class="frame"><img src="${s.img}" alt=""></div></div>` + foot(n);
   } else if(s.type==="duo"){
     cls += " shot-slide";
     inner = head() + `<div class="body" style="flex-direction:column;align-items:flex-start;gap:8px">
       <span class="kicker">${s.kicker}</span><h2>${s.h2}</h2><p class="sub">${s.sub}</p>
-      <div class="duo"><div class="frame"><img src="${s.img}"></div>
-        <div class="frame phone"><img src="${s.phone}"></div></div></div>` + foot(n);
+      <div class="duo"><div class="frame"><img src="${s.img}" alt=""></div>
+        <div class="frame phone"><img src="${s.phone}" alt=""></div></div></div>` + foot(n);
   }
-  stage.className = "";
   stage.innerHTML = `<div class="${cls}">${inner}</div>`;
 }
-const params = new URLSearchParams(location.search);
-render(parseInt(params.get("n")||"1",10));
+render(parseInt(new URLSearchParams(location.search).get("n")||"1",10));
 window.SLIDE_COUNT = slides.length;
 </script>
 </body>

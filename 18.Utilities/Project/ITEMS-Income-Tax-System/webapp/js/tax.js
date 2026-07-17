@@ -1,5 +1,5 @@
 /* =============================================================================
- * ITEMS · tax.js — Income-tax computation engine
+ * Income Tax Evaluation System · tax.js — computation engine
  *
  * Implements a self-consistent slab computation for the INCOME_TAX_RECORD
  * form fields described in project.pdf (Gross Total Income -> deductions ->
@@ -116,5 +116,5 @@
     };
   }
 
-  global.ITEMS_TAX = { compute, slabTax, SLABS };
+  global.TaxEngine = { compute, slabTax, SLABS };
 })(window);

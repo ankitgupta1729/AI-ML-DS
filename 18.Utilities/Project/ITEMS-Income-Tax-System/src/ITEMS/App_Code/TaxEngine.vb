@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · TaxEngine.vb — income-tax computation (old regime, AY 2024-25)
+' Income Tax Evaluation System · TaxEngine.vb — income-tax computation (old regime, AY 2024-25)
 ' Server-side port of the browser engine used in the web demo, so the figures
 ' match. Gross Total Income -> deductions -> Total Income -> slab tax ->
 ' rebate 87A -> surcharge -> health & education cess -> net & balance.

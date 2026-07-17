@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Income Tax Evaluation System — The Code, Explained</title>
+<style>
+  @page { size: A4; margin: 17mm 15mm 15mm; }
+  :root{
+    --ink:#111827; --muted:#5b6577; --line:#dfe4ec; --brand:#1e3a8a; --teal:#0f766e;
+    --amber:#b45309; --rose:#be123c; --paper:#ffffff; --tint:#f4f6fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+       color:var(--ink);font-size:11.4px;line-height:1.62;background:var(--paper)}
+  h1,h2,h3,h4,.ui{font-family:"Helvetica Neue",Arial,sans-serif}
+  h2{font-size:19px;color:var(--brand);margin:24px 0 10px;padding-bottom:6px;
+     border-bottom:2px solid var(--brand);page-break-after:avoid}
+  h3{font-size:13.5px;color:var(--teal);margin:16px 0 5px;page-break-after:avoid;letter-spacing:.01em}
+  h4{font-size:11.5px;margin:12px 0 4px;color:var(--ink);page-break-after:avoid}
+  p{margin:0 0 8px} ul,ol{margin:4px 0 9px 17px} li{margin:2px 0}
+  .lead{font-size:12.6px;color:var(--muted)}
+  .muted{color:var(--muted)}
+  code,kbd{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:9.6px;
+    background:#eef2ff;color:var(--brand);padding:1px 4px;border-radius:3px}
+
+  /* Cover */
+  .cover{height:252mm;margin:-17mm -15mm 0;padding:0 22mm;display:flex;flex-direction:column;
+    justify-content:center;background:linear-gradient(150deg,#0f172a 0%,#1e3a8a 45%,#0f766e 100%);
+    color:#fff;page-break-after:always}
+  .cover .mark{width:64px;height:64px;border-radius:17px;background:rgba(255,255,255,.16);
+    display:grid;place-items:center;font-size:34px;font-weight:800;margin-bottom:22px}
+  .cover h1{font-size:41px;line-height:1.08;margin-bottom:12px;font-weight:800;letter-spacing:-.5px}
+  .cover .sub{font-size:15.5px;opacity:.93;max-width:470px;line-height:1.5}
+  .cover .rule{width:64px;height:3px;background:rgba(255,255,255,.5);margin:24px 0}
+  .cover .meta{font-size:11px;opacity:.9;line-height:1.9}
+  .cover .meta b{display:inline-block;min-width:112px;opacity:.75;font-weight:600}
+
+  /* Callouts */
+  .note{background:var(--tint);border-left:3px solid var(--brand);padding:8px 11px;border-radius:0 6px 6px 0;
+    margin:9px 0;page-break-inside:avoid}
+  .note.plain{border-left-color:var(--teal);background:#f0fdfa}
+  .note.warn{border-left-color:var(--amber);background:#fffbeb}
+  .note.fix{border-left-color:var(--rose);background:#fff1f2}
+  .note b{font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;text-transform:uppercase;
+    letter-spacing:.07em;color:var(--brand);display:block;margin-bottom:2px}
+  .note.plain b{color:var(--teal)} .note.warn b{color:var(--amber)} .note.fix b{color:var(--rose)}
+
+  /* Code with line numbers */
+  .code{background:#0f172a;border-radius:7px;padding:9px 11px;margin:8px 0;overflow:hidden;
+    page-break-inside:avoid}
+  .code .fn{font-family:"Helvetica Neue",Arial,sans-serif;font-size:8.6px;color:#93a1bd;
+    letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;display:block}
+  .code pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:8.8px;line-height:1.62;
+    color:#e7ecf5;white-space:pre-wrap;word-break:break-word}
+  .code .ln{color:#5b6b8c;user-select:none}
+  .k{color:#c4b5fd} .s{color:#86efac} .c{color:#64748b;font-style:italic} .f{color:#7dd3fc} .n{color:#fca5a5}
+
+  /* Line-by-line explanation table */
+  table.lbl{width:100%;border-collapse:collapse;margin:6px 0 12px;page-break-inside:auto}
+  table.lbl th{background:#eef2ff;color:var(--brand);font-family:"Helvetica Neue",Arial,sans-serif;
+    font-size:9px;text-transform:uppercase;letter-spacing:.06em;text-align:left;padding:5px 8px;
+    border:1px solid var(--line)}
+  table.lbl td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;font-size:10.4px}
+  table.lbl td:first-child{width:58px;font-family:"SF Mono",Menlo,monospace;font-size:9.2px;
+    color:var(--brand);background:#fafbfe;text-align:center;white-space:nowrap}
+  table.lbl tr{page-break-inside:avoid}
+
+  table.grid{width:100%;border-collapse:collapse;margin:6px 0 12px;font-size:10.2px}
+  table.grid th,table.grid td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+  table.grid th{background:#eef2ff;color:var(--brand);font-family:"Helvetica Neue",Arial,sans-serif;font-size:9px;
+    text-transform:uppercase;letter-spacing:.06em}
+
+  .toc{font-size:11px;line-height:1.95}
+  .toc .num{display:inline-block;width:22px;color:var(--teal);font-weight:700}
+  .newpage{page-break-before:always}
+  .kv{display:flex;gap:8px;margin:3px 0} .kv .k2{min-width:118px;color:var(--muted);font-size:10px}
+  .analogy{border:1px dashed var(--line);border-radius:7px;padding:9px 11px;margin:9px 0;background:#fcfdff}
+  .analogy b{color:var(--teal);font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;
+    text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px}
+  footer{margin-top:26px;padding-top:8px;border-top:1px solid var(--line);color:var(--muted);font-size:9px}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="mark">₹</div>
+  <h1>The Code,<br>Explained</h1>
+  <div class="sub">A line-by-line walkthrough of the Income Tax Evaluation System — written so that a reader with no programming background can follow every part.</div>
+  <div class="rule"></div>
+  <div class="meta">
+    <div><b>Document</b> Technical explainer &amp; code review</div>
+    <div><b>Audience</b> Everyone — no coding knowledge assumed</div>
+    <div><b>Covers</b> Visual Basic (VB.NET) · Oracle SQL · Web edition</div>
+    <div><b>Version</b> 1.0</div>
+  </div>
+</div>
+
+<h2>1 · How to read this document</h2>
+<p class="lead">This document opens up the entire application and explains it in plain English. You do not need to know Visual Basic, SQL, or any programming language.</p>
+<p>Every code section follows the same three-step rhythm, so you always know what you are looking at:</p>
+<ol>
+  <li><b>What it does</b> — one plain sentence, before any code appears.</li>
+  <li><b>The code</b> — shown on a dark background with line numbers down the side.</li>
+  <li><b>Line by line</b> — a table that takes each line number and explains it in ordinary words.</li>
+</ol>
+<div class="note plain"><b>Plain-English box</b>Whenever a technical idea appears for the first time, a box like this explains it with an everyday comparison. You can safely skip the dark code blocks and still understand the whole system by reading the tables and boxes.</div>
+<div class="analogy"><b>Analogy</b>Think of the application as a <b>tax office</b>. The <i>database</i> is the filing cabinet, the <i>code</i> is the clerk who knows the rules, and the <i>screen</i> is the counter where the public interacts. Most of this document explains what the clerk does.</div>
+
+<h3>Contents</h3>
+<div class="toc">
+  <div><span class="num">2</span>What the system actually does</div>
+  <div><span class="num">3</span>The big picture — how the parts fit together</div>
+  <div><span class="num">4</span>The filing cabinet — the Oracle database</div>
+  <div><span class="num">5</span>The tax engine, line by line</div>
+  <div><span class="num">6</span>Security — how passwords are protected</div>
+  <div><span class="num">7</span>Talking to the database safely</div>
+  <div><span class="num">8</span>A complete screen, end to end (Login)</div>
+  <div><span class="num">9</span>The Client module — adding a client</div>
+  <div><span class="num">10</span>The Return module — and the one business rule</div>
+  <div><span class="num">11</span>Firm accounts — one design for three screens</div>
+  <div><span class="num">12</span>The web edition</div>
+  <div><span class="num">13</span>Code review — what was checked and what was fixed</div>
+  <div><span class="num">14</span>Glossary</div>
+</div>
+
+<h2 class="newpage">2 · What the system actually does</h2>
+<p>A tax practitioner looks after many clients. For each client, every year, they must record income, work out the tax, file a return, and sometimes file a corrected ("revised") return. If the client is a firm, they must also keep three account books. This system does all of that on a computer instead of on paper.</p>
+<table class="grid">
+  <tr><th>Module</th><th>In plain words</th></tr>
+  <tr><td>Client Information</td><td>The address book. One record per client, identified by their PAN.</td></tr>
+  <tr><td>Original Return</td><td>The tax return filed for a year, with the tax worked out automatically.</td></tr>
+  <tr><td>Revised Return</td><td>A correction to a return already filed.</td></tr>
+  <tr><td>Trading Account</td><td>For firms: goods bought and sold, ending in gross profit.</td></tr>
+  <tr><td>Profit &amp; Loss Account</td><td>For firms: running expenses against income, ending in net profit.</td></tr>
+  <tr><td>Balance Sheet</td><td>For firms: what the firm owns vs. what it owes.</td></tr>
+  <tr><td>Reports</td><td>Printable summaries for the client file.</td></tr>
+</table>
+
+<h2>3 · The big picture — how the parts fit together</h2>
+<div class="analogy"><b>Analogy</b>When you use the system you are the <b>customer at the counter</b>. Your browser sends a request; the <b>server</b> (the clerk) reads it, looks things up in the <b>database</b> (the filing cabinet), works out the answer, and sends back a page.</div>
+<p>The project ships the same system twice, because it must satisfy two different needs:</p>
+<table class="grid">
+  <tr><th>Edition</th><th>Built with</th><th>Why it exists</th></tr>
+  <tr><td>Production</td><td>Visual Basic (VB.NET) + Oracle database</td><td>The real, deployable system as specified.</td></tr>
+  <tr><td>Web edition</td><td>HTML + JavaScript, data kept in the browser</td><td>So anyone can open a link and try it — no install, no database.</td></tr>
+</table>
+<p>Both editions use the <b>same seven modules</b>, the <b>same five tables</b>, and the <b>same tax rules</b>. The explanations below therefore apply to both.</p>
+
+<h3>The folders</h3>
+<table class="grid">
+  <tr><th>Folder</th><th>What lives there</th></tr>
+  <tr><td><code>src/</code></td><td>The Visual Basic production application.</td></tr>
+  <tr><td><code>webapp/</code></td><td>The web edition (what the live demo runs).</td></tr>
+  <tr><td><code>database/</code></td><td>Four SQL scripts that build the Oracle database.</td></tr>
+  <tr><td><code>docs/</code></td><td>This document and the user guide.</td></tr>
+  <tr><td><code>demo-video/</code>, <code>share/</code></td><td>The narrated demo video and shareable bundle.</td></tr>
+</table>
+<div class="note"><b>Why two files per screen?</b>In Visual Basic web projects each screen is two files: a <code>.aspx</code> file that describes <i>what the page looks like</i>, and a <code>.aspx.vb</code> file (the "code-behind") that describes <i>what the page does</i>. Design and behaviour are kept apart on purpose.</div>
+
+<h2 class="newpage">4 · The filing cabinet — the Oracle database</h2>
+<p>Everything the system remembers lives in five tables. A <b>table</b> is just a grid: columns are the fields, rows are the records.</p>
+<table class="grid">
+  <tr><th>Table</th><th>One row means…</th></tr>
+  <tr><td>CLIENT_RECORD</td><td>one client</td></tr>
+  <tr><td>INCOME_TAX_RECORD</td><td>one return, for one client, for one year</td></tr>
+  <tr><td>TRADING_ACCOUNT</td><td>one firm's trading account for one year</td></tr>
+  <tr><td>PL_ACCOUNT</td><td>one firm's profit &amp; loss account for one year</td></tr>
+  <tr><td>BALANCE_SHEET</td><td>one firm's balance sheet for one year</td></tr>
+</table>
+
+<h3>4.1 The client table, line by line</h3>
+<p><b>What it does:</b> creates the table that stores clients, and refuses to store one that is invalid.</p>
+<div class="code"><span class="fn">database/02_create_schema.sql</span><pre><span class="ln">1 </span><span class="k">CREATE TABLE</span> CLIENT_RECORD (
+<span class="ln">2 </span>  PAN                   <span class="f">VARCHAR2(10)</span> <span class="k">CONSTRAINT</span> PK_CLIENT_RECORD <span class="k">PRIMARY KEY</span>,
+<span class="ln">3 </span>  CLIENT_NAME           <span class="f">VARCHAR2(30)</span> <span class="k">NOT NULL</span>,
+<span class="ln">4 </span>  DOB                   <span class="f">DATE</span>,
+<span class="ln">5 </span>  INDV_HUF_FIRM_AOP_LA  <span class="f">NUMBER(1)</span> <span class="k">DEFAULT</span> 0
+<span class="ln">6 </span>    <span class="k">CONSTRAINT</span> CK_CATEGORY <span class="k">CHECK</span> (INDV_HUF_FIRM_AOP_LA <span class="k">BETWEEN</span> 0 <span class="k">AND</span> 4),
+<span class="ln">7 </span>  <span class="k">CONSTRAINT</span> CK_PAN_FORMAT <span class="k">CHECK</span> (<span class="f">REGEXP_LIKE</span>(PAN, <span class="s">'^[A-Z]{5}[0-9]{4}[A-Z]$'</span>))
+<span class="ln">8 </span>);</pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1</td><td>"Make a new grid called CLIENT_RECORD."</td></tr>
+  <tr><td>2</td><td>PAN holds up to 10 characters and is the <b>primary key</b> — the unique label for the row. Two clients can never share a PAN.</td></tr>
+  <tr><td>3</td><td>The name may be up to 30 characters and <b>cannot be left blank</b>.</td></tr>
+  <tr><td>4</td><td>Date of birth is stored as a real date, not text — so the computer can compare and sort dates.</td></tr>
+  <tr><td>5–6</td><td>Category is a single digit. The <b>CHECK</b> rule allows only 0–4 (Individual, HUF, Firm, AOP, Local Authority). Anything else is rejected.</td></tr>
+  <tr><td>7</td><td>A pattern rule: PAN must be 5 letters, 4 digits, 1 letter — the real PAN format. A typo is refused <i>by the database itself</i>.</td></tr>
+</table>
+<div class="note plain"><b>Why this matters</b>These rules live in the database, not just on the screen. Even if someone bypassed the app entirely, bad data still could not get in. This is called <i>defence in depth</i>.</div>
+
+<h3>4.2 Linking tables together</h3>
+<div class="code"><span class="fn">database/02_create_schema.sql — INCOME_TAX_RECORD</span><pre><span class="ln">1 </span><span class="k">CONSTRAINT</span> PK_INCOME_TAX_RECORD <span class="k">PRIMARY KEY</span>
+<span class="ln">2 </span>  (PAN, ASSES_YEAR_1, ASSES_YEAR_2, RETURN_ORIGINAL_REVISED),
+<span class="ln">3 </span><span class="k">CONSTRAINT</span> FK_INCOME_TAX_RECORD <span class="k">FOREIGN KEY</span> (PAN)
+<span class="ln">4 </span>  <span class="k">REFERENCES</span> CLIENT_RECORD (PAN) <span class="k">ON DELETE CASCADE</span></pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1–2</td><td>A return is identified by four things together: which client, which year (from and to), and whether it is the original or the revised one. This is exactly why one client can have both an original <i>and</i> a revised return for the same year — but never two of the same kind.</td></tr>
+  <tr><td>3</td><td>A <b>foreign key</b>: the PAN here must already exist in CLIENT_RECORD. You cannot file a return for a client who does not exist.</td></tr>
+  <tr><td>4</td><td><b>ON DELETE CASCADE</b>: if a client is deleted, all their returns are deleted automatically — no orphaned paperwork left behind.</td></tr>
+</table>
+
+<h2 class="newpage">5 · The tax engine, line by line</h2>
+<p>This is the heart of the system: given the income, work out the tax. It is written twice — once in Visual Basic for the production app, once in JavaScript for the web edition — and both follow identical rules so the numbers always agree.</p>
+
+<h3>5.1 The slab table</h3>
+<div class="analogy"><b>Analogy</b>Indian income tax works like a <b>staircase</b>, not a single rate. The first ₹2.5 lakh is free; the next slice is taxed at 5%; the next at 20%; anything above at 30%. You never pay one flat rate on everything — only each slice at its own rate.</div>
+<div class="code"><span class="fn">src/ITEMS/App_Code/TaxEngine.vb</span><pre><span class="ln">1 </span><span class="k">Private Shared ReadOnly</span> SlabUpto() <span class="k">As Decimal</span> = {250000D, 500000D, 1000000D, <span class="f">Decimal.MaxValue</span>}
+<span class="ln">2 </span><span class="k">Private Shared ReadOnly</span> SlabRate() <span class="k">As Decimal</span> = {0D, 0.05D, 0.2D, 0.3D}
+<span class="ln">3 </span>
+<span class="ln">4 </span><span class="k">Public Shared Function</span> <span class="f">SlabTax</span>(income <span class="k">As Decimal</span>) <span class="k">As Decimal</span>
+<span class="ln">5 </span>    <span class="k">Dim</span> tax <span class="k">As Decimal</span> = 0D, lower <span class="k">As Decimal</span> = 0D
+<span class="ln">6 </span>    <span class="k">For</span> i = 0 <span class="k">To</span> SlabUpto.Length - 1
+<span class="ln">7 </span>        <span class="k">If</span> income > lower <span class="k">Then</span>
+<span class="ln">8 </span>            <span class="k">Dim</span> band = <span class="f">Math.Min</span>(income, SlabUpto(i)) - lower
+<span class="ln">9 </span>            tax += band * SlabRate(i)
+<span class="ln">10</span>            lower = SlabUpto(i)
+<span class="ln">11</span>        <span class="k">Else</span>
+<span class="ln">12</span>            <span class="k">Exit For</span>
+<span class="ln">13</span>        <span class="k">End If</span>
+<span class="ln">14</span>    <span class="k">Next</span>
+<span class="ln">15</span>    <span class="k">Return Math.Round</span>(tax)
+<span class="ln">16</span><span class="k">End Function</span></pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1</td><td>The ceilings of each step: ₹2,50,000 / ₹5,00,000 / ₹10,00,000 / no limit. (<code>D</code> just tells VB "this is an exact decimal number" — money must never be stored as an approximate value.)</td></tr>
+  <tr><td>2</td><td>The rate for each matching step: 0%, 5%, 20%, 30%.</td></tr>
+  <tr><td>4</td><td>Start of the calculator. It takes one number in (the income) and gives one number back (the tax).</td></tr>
+  <tr><td>5</td><td><code>tax</code> is the running total, starting at zero. <code>lower</code> remembers the bottom of the current step, also starting at zero.</td></tr>
+  <tr><td>6</td><td>"Walk up the staircase, one step at a time."</td></tr>
+  <tr><td>7</td><td>Only bother if the income actually reaches this step.</td></tr>
+  <tr><td>8</td><td>Work out how much income falls <i>inside this step</i>: whichever is smaller — the income or the step's ceiling — minus the step's floor.</td></tr>
+  <tr><td>9</td><td>Tax that slice at this step's rate and add it to the running total.</td></tr>
+  <tr><td>10</td><td>Move the floor up, ready for the next step.</td></tr>
+  <tr><td>11–13</td><td>If the income never reached this step, stop — every higher step is empty too.</td></tr>
+  <tr><td>15</td><td>Round to whole rupees and hand the answer back.</td></tr>
+</table>
+
+<h4>A worked example — salary of ₹12,00,000</h4>
+<table class="grid">
+  <tr><th>Step</th><th>Slice of income</th><th>Rate</th><th>Tax on the slice</th></tr>
+  <tr><td>0 – 2,50,000</td><td>2,50,000</td><td>0%</td><td>₹0</td></tr>
+  <tr><td>2,50,000 – 5,00,000</td><td>2,50,000</td><td>5%</td><td>₹12,500</td></tr>
+  <tr><td>5,00,000 – 10,00,000</td><td>5,00,000</td><td>20%</td><td>₹1,00,000</td></tr>
+  <tr><td>10,00,000 – 12,00,000</td><td>2,00,000</td><td>30%</td><td>₹60,000</td></tr>
+  <tr><td colspan="3"><b>Tax on total income</b></td><td><b>₹1,72,500</b></td></tr>
+  <tr><td colspan="3">Add: Health &amp; Education Cess @ 4%</td><td>₹6,900</td></tr>
+  <tr><td colspan="3"><b>Total tax payable</b></td><td><b>₹1,79,400</b></td></tr>
+</table>
+<div class="note plain"><b>Verified</b>The live application was tested with exactly this input and displayed <b>₹1,79,400</b> — matching the hand calculation above.</div>
+
+<h3 class="newpage">5.2 The full computation</h3>
+<p><b>What it does:</b> takes every income figure, applies the rules in the legal order, and returns the final position — pay this much, or get this much back.</p>
+<div class="code"><span class="fn">src/ITEMS/App_Code/TaxEngine.vb — Compute()</span><pre><span class="ln">1 </span><span class="k">Dim</span> gross = r.IncomeFromSalary + r.IncomeFromHouseProperty + r.IncomeFromBusiness +
+<span class="ln">2 </span>            capital + r.IncomeFromOtherSources + r.OtherPersonIncome
+<span class="ln">3 </span><span class="k">Dim</span> deductions = <span class="f">Math.Min</span>(r.DeductionUnderVIA, gross)
+<span class="ln">4 </span><span class="k">Dim</span> totalIncome = <span class="f">Math.Max</span>(0D, gross - deductions)
+<span class="ln">5 </span>
+<span class="ln">6 </span><span class="k">Dim</span> taxNormal = <span class="k">If</span>(isFirm, <span class="f">Math.Round</span>(totalIncome * FIRM_RATE), <span class="f">SlabTax</span>(normalBase))
+<span class="ln">7 </span><span class="k">Dim</span> rebate <span class="k">As Decimal</span> = 0D
+<span class="ln">8 </span><span class="k">If Not</span> isFirm <span class="k">AndAlso</span> totalIncome &lt;= REBATE_LIMIT <span class="k">Then</span> rebate = <span class="f">Math.Min</span>(taxOnTotal, REBATE_MAX)
+<span class="ln">9 </span><span class="k">Dim</span> taxPayable = <span class="f">Math.Max</span>(0D, taxOnTotal - rebate)
+<span class="ln">10</span><span class="k">Dim</span> surcharge = <span class="f">Math.Round</span>(taxPayable * <span class="f">SurchargeRate</span>(totalIncome))
+<span class="ln">11</span><span class="k">Dim</span> cess = <span class="f">Math.Round</span>((taxPayable + surcharge) * CESS_RATE)
+<span class="ln">12</span><span class="k">Dim</span> totalTax = taxPayable + surcharge + cess
+<span class="ln">13</span><span class="k">Dim</span> balance = netTax + r.InterestPayable - r.TdsAtSource - r.AdvanceTaxPaid - r.SelfAssessmentPaid</pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1–2</td><td>Add up every kind of income: salary, rent from house property, business profit, capital gains, other sources, and any income of another person that the law says must be counted here. This total is the <b>Gross Total Income</b>.</td></tr>
+  <tr><td>3</td><td>Subtract savings-based deductions (Chapter VI-A, e.g. insurance, PF). <code>Math.Min</code> is a safety guard: you can never deduct more than you earned.</td></tr>
+  <tr><td>4</td><td>The result is the <b>Total Income</b> — the figure tax is actually charged on. <code>Math.Max(0, …)</code> stops it ever going negative.</td></tr>
+  <tr><td>6</td><td>A fork in the road: a <b>firm</b> pays a flat 30%; an <b>individual</b> goes up the staircase from §5.1.</td></tr>
+  <tr><td>7–8</td><td>The small-income rebate (section 87A): if total income is within the limit, knock off up to ₹12,500 — but never more tax than is owed.</td></tr>
+  <tr><td>9</td><td>Tax after the rebate; again floored at zero.</td></tr>
+  <tr><td>10</td><td><b>Surcharge</b> — an extra percentage on the tax itself for very high incomes.</td></tr>
+  <tr><td>11</td><td><b>Cess</b> — 4% charged on (tax + surcharge), funding health and education.</td></tr>
+  <tr><td>12</td><td>Everything added together: the total tax payable.</td></tr>
+  <tr><td>13</td><td>Finally, subtract what has already been paid (tax deducted at source, advance tax, self-assessment tax). A <b>positive</b> answer means the client still owes money; a <b>negative</b> answer means a refund is due.</td></tr>
+</table>
+<div class="note warn"><b>Important</b>The rates here follow the old-regime slabs for AY 2024-25 and are intended for demonstration and training. Always check the current Finance Act before using any figure for a real filing.</div>
+
+<h2 class="newpage">6 · Security — how passwords are protected</h2>
+<div class="analogy"><b>Analogy</b>The system never stores your password. It stores a <b>fingerprint</b> of it. A fingerprint can be produced from a person, but you cannot rebuild the person from the fingerprint. When you log in, the system takes a fresh fingerprint and compares the two.</div>
+<div class="code"><span class="fn">src/ITEMS/App_Code/Security.vb</span><pre><span class="ln">1 </span><span class="k">Public Shared Function</span> <span class="f">Sha256</span>(text <span class="k">As String</span>) <span class="k">As String</span>
+<span class="ln">2 </span>    <span class="k">Using</span> sha = <span class="f">SHA256.Create</span>()
+<span class="ln">3 </span>        <span class="k">Dim</span> bytes = sha.<span class="f">ComputeHash</span>(<span class="f">Encoding.UTF8.GetBytes</span>(<span class="k">If</span>(text, <span class="s">""</span>)))
+<span class="ln">4 </span>        ...
+<span class="ln">5 </span><span class="k">End Function</span>
+<span class="ln">6 </span>
+<span class="ln">7 </span><span class="k">Public Shared Function</span> <span class="f">Authenticate</span>(username <span class="k">As String</span>, password <span class="k">As String</span>) <span class="k">As String</span>
+<span class="ln">8 </span>    <span class="k">Dim</span> row = OracleDb.<span class="f">QueryRow</span>(
+<span class="ln">9 </span>        <span class="s">"SELECT FULL_NAME, PASSWORD_HASH, ROLE FROM APP_USER WHERE USERNAME = :u AND IS_ACTIVE = 'Y'"</span>,
+<span class="ln">10</span>        OracleDb.<span class="f">PStr</span>(<span class="s">"u"</span>, username.<span class="f">Trim</span>().<span class="f">ToLowerInvariant</span>()))
+<span class="ln">11</span>    <span class="k">If</span> row <span class="k">Is Nothing Then Return Nothing</span>
+<span class="ln">12</span>    <span class="k">If Not String.Equals</span>(<span class="f">Convert.ToString</span>(row(<span class="s">"PASSWORD_HASH"</span>)), <span class="f">Sha256</span>(password),
+<span class="ln">13</span>                          <span class="f">StringComparison.OrdinalIgnoreCase</span>) <span class="k">Then</span>
+<span class="ln">14</span>        <span class="k">Return Nothing</span>
+<span class="ln">15</span>    <span class="k">End If</span>
+<span class="ln">16</span>    <span class="k">Return Convert.ToString</span>(row(<span class="s">"FULL_NAME"</span>))
+<span class="ln">17</span><span class="k">End Function</span></pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1–3</td><td>The fingerprint machine. Feed it any text, get back a fixed 64-character code (a <b>SHA-256 hash</b>). The same text always gives the same code; a one-letter change gives a completely different code.</td></tr>
+  <tr><td>7</td><td>The login check. It is handed a username and password and answers with the person's name if they are genuine — or nothing at all.</td></tr>
+  <tr><td>8–10</td><td>Fetch that user's stored fingerprint from the database. <code>IS_ACTIVE = 'Y'</code> means disabled accounts can never log in.</td></tr>
+  <tr><td>11</td><td>No such user? Stop immediately.</td></tr>
+  <tr><td>12–15</td><td>Fingerprint the password that was just typed and compare it with the stored one. If they differ, refuse.</td></tr>
+  <tr><td>16</td><td>Both checks passed — return the person's real name, which the screen then greets them with.</td></tr>
+</table>
+<div class="note plain"><b>Notice what is missing</b>At no point does the code fetch the real password, because the real password is not stored anywhere. Even someone who stole the whole database would only find fingerprints.</div>
+
+<h3>6.1 The audit trail</h3>
+<p>Every insert, update and delete is recorded automatically by the database itself using a <b>trigger</b> — a small piece of code Oracle runs by itself whenever a table changes.</p>
+<div class="code"><span class="fn">database/04_triggers_audit.sql</span><pre><span class="ln">1 </span><span class="k">CREATE OR REPLACE TRIGGER</span> TRG_AUDIT_CLIENT
+<span class="ln">2 </span>  <span class="k">AFTER INSERT OR UPDATE OR DELETE ON</span> CLIENT_RECORD
+<span class="ln">3 </span>  <span class="k">FOR EACH ROW</span>
+<span class="ln">4 </span><span class="k">BEGIN</span>
+<span class="ln">5 </span>  <span class="k">IF</span> INSERTING <span class="k">THEN</span> v_op := <span class="s">'INSERT'</span>; v_key := :NEW.PAN;
+<span class="ln">6 </span>  ...
+<span class="ln">7 </span>  <span class="k">INSERT INTO</span> AUDIT_LOG (TABLE_NAME, OPERATION, KEY_VALUE, DB_USER)
+<span class="ln">8 </span>  <span class="k">VALUES</span> (<span class="s">'CLIENT_RECORD'</span>, v_op, v_key, <span class="f">USER</span>);
+<span class="ln">9 </span><span class="k">END</span>;</pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1–3</td><td>"Oracle: after anything changes in the client table, for every row affected, run the following."</td></tr>
+  <tr><td>5</td><td>Work out which kind of change happened and which client it was.</td></tr>
+  <tr><td>7–8</td><td>Write a line into the log book: which table, what happened, which record, which database user — with the time stamped automatically.</td></tr>
+</table>
+<div class="note"><b>Why a trigger, not app code?</b>Because it cannot be bypassed. Even a database administrator changing data directly is recorded.</div>
+
+<h2 class="newpage">7 · Talking to the database safely</h2>
+<div class="analogy"><b>Analogy</b>Imagine dictating a form to a clerk. If you say "write <i>Ravi</i> in the name box", that is safe. If the clerk instead pastes whatever you say straight into the <i>instructions</i>, a mischievous person could dictate "…and also shred the cabinet". That attack is called <b>SQL injection</b>, and parameters are the fix.</div>
+<div class="code"><span class="fn">src/ITEMS/App_Code/OracleDb.vb</span><pre><span class="ln">1 </span><span class="k">Public Shared Function</span> <span class="f">Query</span>(sql <span class="k">As String</span>, <span class="k">ParamArray</span> ps <span class="k">As</span> OracleParameter()) <span class="k">As</span> DataTable
+<span class="ln">2 </span>    <span class="k">Using</span> cn = <span class="f">OpenConnection</span>()
+<span class="ln">3 </span>        <span class="k">Using</span> cmd <span class="k">As New</span> <span class="f">OracleCommand</span>(sql, cn)
+<span class="ln">4 </span>            cmd.BindByName = <span class="k">True</span>
+<span class="ln">5 </span>            <span class="k">If</span> ps <span class="k">IsNot Nothing Then</span> cmd.Parameters.<span class="f">AddRange</span>(ps)
+<span class="ln">6 </span>            <span class="k">Using</span> da <span class="k">As New</span> <span class="f">OracleDataAdapter</span>(cmd)
+<span class="ln">7 </span>                <span class="k">Dim</span> dt <span class="k">As New</span> <span class="f">DataTable</span>() : da.<span class="f">Fill</span>(dt) : <span class="k">Return</span> dt
+<span class="ln">8 </span>            <span class="k">End Using</span>
+<span class="ln">9 </span>        <span class="k">End Using</span>
+<span class="ln">10</span>    <span class="k">End Using</span>
+<span class="ln">11</span><span class="k">End Function</span></pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1</td><td>One reusable helper for every "go and look something up" in the whole application. Writing it once means the safety rules are applied everywhere.</td></tr>
+  <tr><td>2</td><td>Open a connection to Oracle. <code>Using</code> is a promise: <i>whatever happens</i> — even a crash — the connection will be closed. This prevents the app slowly leaking connections until the database refuses new ones.</td></tr>
+  <tr><td>3–4</td><td>Prepare the instruction. <code>BindByName</code> means values are matched by name (<code>:pan</code>), not by position — so re-ordering can never silently swap two values.</td></tr>
+  <tr><td>5</td><td>Attach the values <b>separately</b> from the instruction. This is the line that defeats SQL injection: user text is only ever data, never commands.</td></tr>
+  <tr><td>6–7</td><td>Run it and pour the results into a grid in memory, then hand that back.</td></tr>
+</table>
+<div class="note plain"><b>Every single database call in this project</b>goes through this helper (or its <code>Execute</code>/<code>Scalar</code> siblings). There is no place where user input is glued into a query by hand.</div>
+
+<h2 class="newpage">8 · A complete screen, end to end (Login)</h2>
+<p>Two files make one screen. First, <b>what it looks like</b>:</p>
+<div class="code"><span class="fn">src/ITEMS/Login.aspx (the appearance)</span><pre><span class="ln">1 </span>&lt;%@ <span class="k">Page</span> Language=<span class="s">"VB"</span> AutoEventWireup=<span class="s">"false"</span>
+<span class="ln">2 </span>    CodeBehind=<span class="s">"Login.aspx.vb"</span> Inherits=<span class="s">"ITEMS.LoginPage"</span> %&gt;
+<span class="ln">3 </span>&lt;<span class="f">asp:TextBox</span> ID=<span class="s">"txtUser"</span> runat=<span class="s">"server"</span> placeholder=<span class="s">"e.g. admin"</span> /&gt;
+<span class="ln">4 </span>&lt;<span class="f">asp:TextBox</span> ID=<span class="s">"txtPass"</span> runat=<span class="s">"server"</span> TextMode=<span class="s">"Password"</span> /&gt;
+<span class="ln">5 </span>&lt;<span class="f">asp:Button</span> ID=<span class="s">"btnLogin"</span> runat=<span class="s">"server"</span> Text=<span class="s">"Sign in →"</span> OnClick=<span class="s">"btnLogin_Click"</span> /&gt;</pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1–2</td><td>"This page is written in Visual Basic; its behaviour lives in <code>Login.aspx.vb</code>."</td></tr>
+  <tr><td>3</td><td>A box to type the user id into. <code>runat="server"</code> is the key phrase: it means the <i>server</i> can read this box, not just the browser.</td></tr>
+  <tr><td>4</td><td>The same, but <code>TextMode="Password"</code> makes the browser show dots instead of letters.</td></tr>
+  <tr><td>5</td><td>A button. When clicked, run the procedure named <code>btnLogin_Click</code> on the server.</td></tr>
+</table>
+<p>Second, <b>what it does</b>:</p>
+<div class="code"><span class="fn">src/ITEMS/Login.aspx.vb (the behaviour)</span><pre><span class="ln">1 </span><span class="k">Protected Sub</span> <span class="f">btnLogin_Click</span>(sender <span class="k">As Object</span>, e <span class="k">As</span> EventArgs)
+<span class="ln">2 </span>    <span class="k">Dim</span> fullName = Security.<span class="f">Authenticate</span>(txtUser.Text, txtPass.Text)
+<span class="ln">3 </span>    <span class="k">If String.IsNullOrEmpty</span>(fullName) <span class="k">Then</span>
+<span class="ln">4 </span>        litErr.Text = <span class="s">"Invalid user id or password. Please try again."</span>
+<span class="ln">5 </span>        <span class="k">Return</span>
+<span class="ln">6 </span>    <span class="k">End If</span>
+<span class="ln">7 </span>    <span class="f">FormsAuthentication.SetAuthCookie</span>(fullName, <span class="k">False</span>)
+<span class="ln">8 </span>    <span class="k">Dim</span> target = Request.QueryString(<span class="s">"ReturnUrl"</span>)
+<span class="ln">9 </span>    Response.<span class="f">Redirect</span>(<span class="k">If</span>(<span class="f">String.IsNullOrEmpty</span>(target), <span class="s">"~/Default.aspx"</span>, target))
+<span class="ln">10</span><span class="k">End Sub</span></pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1</td><td>"When the Sign in button is clicked, do this."</td></tr>
+  <tr><td>2</td><td>Hand the typed user id and password to the security checker from §6.</td></tr>
+  <tr><td>3–5</td><td>If nothing came back, the details were wrong: show one message and stop. Note it does <b>not</b> say "wrong password" — telling an attacker which half was right is a security weakness.</td></tr>
+  <tr><td>7</td><td>Success. Issue a <b>cookie</b> — a signed pass the browser shows on each later page, so the user does not log in again for every click.</td></tr>
+  <tr><td>8–9</td><td>If the user was bounced here from a page they wanted, send them back to it; otherwise, to the dashboard.</td></tr>
+</table>
+<div class="note"><b>How every other page stays protected</b>One rule in <code>Web.config</code> — <code>&lt;deny users="?" /&gt;</code> — means "anyone not signed in is refused", applied to the whole site at once. The <code>?</code> stands for an anonymous visitor.</div>
+
+<h2 class="newpage">9 · The Client module — adding a client</h2>
+<p><b>What it does:</b> checks the typed details, refuses duplicates, then writes one new row.</p>
+<div class="code"><span class="fn">src/ITEMS/ClientEdit.aspx.vb</span><pre><span class="ln">1 </span><span class="k">Protected Sub</span> <span class="f">btnSave_Click</span>(sender <span class="k">As Object</span>, e <span class="k">As</span> EventArgs)
+<span class="ln">2 </span>    <span class="k">If Not</span> Page.IsValid <span class="k">Then Return</span>
+<span class="ln">3 </span>    <span class="k">Dim</span> pan = txtPan.Text.<span class="f">Trim</span>().<span class="f">ToUpperInvariant</span>()
+<span class="ln">4 </span>    <span class="k">If Not</span> IsEdit <span class="k">AndAlso</span> ClientRepository.<span class="f">Exists</span>(pan) <span class="k">Then</span>
+<span class="ln">5 </span>        litErr.Text = <span class="s">"A client with this PAN already exists."</span>
+<span class="ln">6 </span>        <span class="k">Return</span>
+<span class="ln">7 </span>    <span class="k">End If</span>
+<span class="ln">8 </span>    <span class="k">Dim</span> c <span class="k">As New</span> <span class="f">Client</span> <span class="k">With</span> {.Pan = pan, .Name = txtName.Text.<span class="f">Trim</span>(), ...}
+<span class="ln">9 </span>    <span class="k">If</span> IsEdit <span class="k">Then</span> ClientRepository.<span class="f">Update</span>(c) <span class="k">Else</span> ClientRepository.<span class="f">Insert</span>(c)
+<span class="ln">10</span>    Response.<span class="f">Redirect</span>(<span class="s">"Clients.aspx"</span>)
+<span class="ln">11</span><span class="k">End Sub</span></pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>2</td><td>Were the on-screen checks satisfied (PAN pattern, name present)? If not, stop — the page already shows the messages.</td></tr>
+  <tr><td>3</td><td>Tidy the PAN: remove stray spaces and force capitals, so <code>abcde1234f</code> and <code>ABCDE1234F </code> are stored identically.</td></tr>
+  <tr><td>4–7</td><td>If this is a new client, make sure the PAN is not already taken, and say so clearly if it is.</td></tr>
+  <tr><td>8</td><td>Gather everything typed on screen into one tidy <b>Client</b> object — a parcel of related facts passed around as a unit.</td></tr>
+  <tr><td>9</td><td>The same button serves both jobs: update an existing row, or insert a new one.</td></tr>
+  <tr><td>10</td><td>Go back to the list, where the change is now visible.</td></tr>
+</table>
+<div class="note plain"><b>Three layers of defence</b>The same PAN rule is enforced in the browser (instant feedback), in the VB code (line 4), and in the database (§4.1). Each layer alone could be bypassed; together they cannot.</div>
+
+<h2 class="newpage">10 · The Return module — and the one business rule</h2>
+<p>The specification states a revised return may only be filed if an original return already exists for that client and year. Here is that sentence, turned into code.</p>
+<div class="code"><span class="fn">src/ITEMS/ReturnEdit.aspx.vb</span><pre><span class="ln">1 </span><span class="k">If Not</span> IsEdit <span class="k">AndAlso</span> rec.ReturnType = 1 <span class="k">AndAlso</span>
+<span class="ln">2 </span>   <span class="k">Not</span> ReturnRepository.<span class="f">HasOriginal</span>(rec.Pan, rec.AyFrom, rec.AyTo) <span class="k">Then</span>
+<span class="ln">3 </span>    litErr.Text = <span class="s">"An original return must be filed before a revised one."</span>
+<span class="ln">4 </span>    <span class="f">RenderComputation</span>(rec)
+<span class="ln">5 </span>    <span class="k">Return</span>
+<span class="ln">6 </span><span class="k">End If</span>
+<span class="ln">7 </span>ReturnRepository.<span class="f">Save</span>(rec, <span class="f">IsFirm</span>(), <span class="k">Not</span> IsEdit)</pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1</td><td>Three conditions, all of which must be true to raise the objection: this is a <i>new</i> filing, it is marked <i>revised</i> (type 1), and…</td></tr>
+  <tr><td>2</td><td>…no original return can be found for that client and year.</td></tr>
+  <tr><td>3–5</td><td>Explain the problem in the user's language, redraw the tax panel so nothing they typed is lost, and stop before saving.</td></tr>
+  <tr><td>7</td><td>Rule satisfied — save. <code>IsFirm()</code> tells the tax engine which rate to use; <code>Not IsEdit</code> tells the repository whether to insert or update.</td></tr>
+</table>
+<div class="note"><b>Where the tax is worked out</b>Notice the screen never calculates anything itself. It gathers numbers and calls the tax engine (§5). Because the engine is one shared piece of code, the web edition and the Visual Basic edition can never drift apart.</div>
+
+<h2>11 · Firm accounts — one design for three screens</h2>
+<p>Trading Account, Profit &amp; Loss Account and Balance Sheet look different but behave identically: two columns of money that must add up to the same total. Rather than write three near-identical screens, the project <b>describes</b> each one as data and lets one screen serve all three.</p>
+<div class="code"><span class="fn">src/ITEMS/App_Code/FirmAccountRepository.vb</span><pre><span class="ln">1 </span><span class="k">Return New</span> <span class="f">FirmAccountSpec</span> <span class="k">With</span> {
+<span class="ln">2 </span>    .Table = <span class="s">"BALANCE_SHEET"</span>, .Title = <span class="s">"Balance Sheet"</span>,
+<span class="ln">3 </span>    .LeftHead = <span class="s">"Liabilities &amp; Capital"</span>, .RightHead = <span class="s">"Assets"</span>,
+<span class="ln">4 </span>    .LeftCols = {<span class="s">"BILLS_PAYABLE"</span>, <span class="s">"SUNDRY_CREDITORS"</span>, <span class="s">"LOANS"</span>, ...},
+<span class="ln">5 </span>    .RightCols = {<span class="s">"CASH_IN_HAND"</span>, <span class="s">"CASH_AT_BANK"</span>, <span class="s">"INVESTMENTS"</span>, ...}}</pre></div>
+<table class="lbl">
+  <tr><th>Line</th><th>What it means in plain words</th></tr>
+  <tr><td>1</td><td>A <b>specification</b>: a description of one of the three account books, written as plain data rather than as code.</td></tr>
+  <tr><td>2</td><td>Which table to store it in, and what to call it on screen.</td></tr>
+  <tr><td>3</td><td>The heading over each column. For a balance sheet these are "Liabilities" and "Assets"; for the other two they are "Dr." and "Cr.".</td></tr>
+  <tr><td>4–5</td><td>Which money fields belong on the left, and which on the right. The screen builds its input boxes by reading these lists.</td></tr>
+</table>
+<div class="note plain"><b>Why this is good design</b>Adding a new field to the balance sheet means adding one name to a list — the input box, the total, and the balance check all follow automatically. One screen (<code>FirmAccount.aspx</code>) serves three modules, so a fix applies to all three at once.</div>
+
+<h2 class="newpage">12 · The web edition</h2>
+<p>The live demo is the same system rewritten so it needs no server and no Oracle — that is what lets anyone open a link and use it. The differences are deliberate and small:</p>
+<table class="grid">
+  <tr><th>Concern</th><th>Production (VB + Oracle)</th><th>Web edition</th></tr>
+  <tr><td>Where data lives</td><td>Oracle database on a server</td><td><code>localStorage</code> — a private store inside your own browser</td></tr>
+  <tr><td>Tax rules</td><td><code>TaxEngine.vb</code></td><td><code>tax.js</code> — identical logic</td></tr>
+  <tr><td>Who can see the data</td><td>Everyone who logs in</td><td>Only you, on your device</td></tr>
+</table>
+<div class="note"><b>Consequence worth knowing</b>Because the web edition stores data in your own browser, two people opening the link each get their own private copy. That is ideal for a demo — nobody can spoil anyone else's walkthrough — but it is not shared storage. The Oracle edition is what provides that.</div>
+<p>The same staircase calculation, in the web edition's language:</p>
+<div class="code"><span class="fn">webapp/js/tax.js</span><pre><span class="ln">1 </span><span class="k">function</span> <span class="f">slabTax</span>(income) {
+<span class="ln">2 </span>  <span class="k">let</span> tax = 0, lower = 0;
+<span class="ln">3 </span>  <span class="k">for</span> (<span class="k">const</span> s <span class="k">of</span> SLABS) {
+<span class="ln">4 </span>    <span class="k">if</span> (income > lower) {
+<span class="ln">5 </span>      <span class="k">const</span> band = <span class="f">Math.min</span>(income, s.upto) - lower;
+<span class="ln">6 </span>      tax += band * s.rate;
+<span class="ln">7 </span>      lower = s.upto;
+<span class="ln">8 </span>    } <span class="k">else break</span>;
+<span class="ln">9 </span>  }
+<span class="ln">10</span>  <span class="k">return Math.round</span>(tax);
+<span class="ln">11</span>}</pre></div>
+<p class="muted">Compare this with §5.1: the words differ (<code>function</code> instead of <code>Function</code>, <code>break</code> instead of <code>Exit For</code>) but the reasoning is line-for-line the same — which is exactly why both editions always produce ₹1,79,400 for a ₹12,00,000 salary.</p>
+
+<h2 class="newpage">13 · Code review — what was checked and what was fixed</h2>
+<p>Before release the whole project was reviewed line by line. The web edition was additionally <b>driven in a real browser</b> — signing in, adding data, computing tax, generating reports, and checked at both desktop and mobile sizes. The issues below were found and corrected.</p>
+
+<h3>13.1 Defects found and fixed</h3>
+<table class="grid">
+  <tr><th>#</th><th>Issue</th><th>Effect if shipped</th><th>Fix</th></tr>
+  <tr><td>1</td><td>Missing <code>.designer.vb</code> files</td><td>The project would not compile at all — every on-screen control was undeclared.</td><td>Generated a designer file per page declaring all controls; registered them in the project.</td></tr>
+  <tr><td>2</td><td><code>Imports System.Web.UI.WebControls</code> missing in 4 code-behinds</td><td>Compile errors on <code>TextBox</code>, <code>GridViewCommandEventArgs</code>.</td><td>Added the required imports to each file.</td></tr>
+  <tr><td>3</td><td><code>Data.DataTable</code> in Reports</td><td>Compile error: <code>Data</code> resolved to the project's own <code>ITEMS.Data</code>, not <code>System.Data</code>.</td><td>Qualified it fully as <code>System.Data.DataTable</code>.</td></tr>
+  <tr><td>4</td><td><code>AutoEventWireup="true"</code> together with <code>Handles Me.Load</code></td><td><b>Every page would load twice</b> — double database reads on every request.</td><td>Set <code>AutoEventWireup="false"</code> (the correct convention for VB).</td></tr>
+  <tr><td>5</td><td>Oracle driver version mismatch in <code>Web.config</code></td><td>The app could fail at start-up unable to load the Oracle library.</td><td>Aligned the declared version with the installed package.</td></tr>
+  <tr><td>6</td><td>Unbalanced demo balance sheets</td><td>The demo opened showing a red "difference" warning — bad first impression.</td><td>Corrected the sample figures so assets equal liabilities.</td></tr>
+  <tr><td>7</td><td>Credentials invisible on the closing slide</td><td>White text on a white card — the demo video showed blank boxes.</td><td>Set an explicit dark colour on the card.</td></tr>
+  <tr><td>8</td><td>Temporary calculation object saved with each return</td><td>Harmless today, but stored junk that would confuse future maintenance.</td><td>Removed the stray assignment.</td></tr>
+</table>
+
+<h3>13.2 Verified working</h3>
+<table class="grid">
+  <tr><th>Area</th><th>How it was checked</th><th>Result</th></tr>
+  <tr><td>Tax computation</td><td>₹12,00,000 salary, computed by hand vs. the app</td><td>Both give ₹1,79,400 ✓</td></tr>
+  <tr><td>Sign in / sign out</td><td>Driven in a real browser, both accounts</td><td>Works ✓</td></tr>
+  <tr><td>Client add / edit / delete</td><td>Exercised with validation and duplicates</td><td>Works ✓</td></tr>
+  <tr><td>Original &amp; revised returns</td><td>Rule tested with and without an original</td><td>Correctly enforced ✓</td></tr>
+  <tr><td>Firm accounts</td><td>Totals and balance status re-checked</td><td>Both firms balance ✓</td></tr>
+  <tr><td>Reports</td><td>Return history generated for a client</td><td>Shows original + revised ✓</td></tr>
+  <tr><td>Mobile &amp; dark mode</td><td>Rendered at 390 px and in dark theme</td><td>Correct ✓</td></tr>
+</table>
+
+<h3>13.3 Honest limitations</h3>
+<ul>
+  <li>The Visual Basic edition was reviewed by inspection and corrected, but it has <b>not been compiled or run</b> here — that needs Windows, .NET and an Oracle instance. Build it once in Visual Studio before the client demo.</li>
+  <li>Tax rates are illustrative (old regime, AY 2024-25). Verify against the current Finance Act before real use.</li>
+  <li>The demo passwords are public by design. Change them before any real deployment.</li>
+</ul>
+
+<h2 class="newpage">14 · Glossary</h2>
+<table class="grid">
+  <tr><th>Term</th><th>Plain meaning</th></tr>
+  <tr><td>Table</td><td>A grid of data. Columns are fields; rows are records.</td></tr>
+  <tr><td>Primary key</td><td>The field that uniquely identifies a row — here, the PAN.</td></tr>
+  <tr><td>Foreign key</td><td>A link from one table to another, e.g. a return points at its client.</td></tr>
+  <tr><td>Cascade delete</td><td>Deleting a client automatically removes everything attached to them.</td></tr>
+  <tr><td>Constraint</td><td>A rule the database enforces itself, such as the PAN pattern.</td></tr>
+  <tr><td>Trigger</td><td>Code the database runs by itself when data changes — used here for the audit log.</td></tr>
+  <tr><td>SQL</td><td>The language used to ask a database questions.</td></tr>
+  <tr><td>SQL injection</td><td>An attack where typed text is mistaken for commands. Prevented by parameters.</td></tr>
+  <tr><td>Parameter</td><td>A value sent to the database separately from the instruction — the safe way.</td></tr>
+  <tr><td>Hash (SHA-256)</td><td>A one-way fingerprint of text. Used so passwords are never stored.</td></tr>
+  <tr><td>Code-behind</td><td>The file holding a screen's behaviour, separate from its appearance.</td></tr>
+  <tr><td>Postback</td><td>The page sending itself back to the server when a button is pressed.</td></tr>
+  <tr><td>Repository</td><td>The one place that knows how to read/write a particular table.</td></tr>
+  <tr><td>Assessment year</td><td>The year in which the previous year's income is assessed to tax.</td></tr>
+  <tr><td>TDS</td><td>Tax Deducted at Source — tax already withheld, subtracted at the end.</td></tr>
+  <tr><td>Cess</td><td>An extra 4% charged on the tax, funding health and education.</td></tr>
+  <tr><td>Surcharge</td><td>An additional percentage on the tax itself for high incomes.</td></tr>
+  <tr><td>Rebate 87A</td><td>A reduction in tax for smaller total incomes.</td></tr>
+</table>
+
+<footer>Income Tax Evaluation System · The Code, Explained · v1.0 — written for readers with no programming background.</footer>
+
+</body>
+</html>

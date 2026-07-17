@@ -1,6 +1,6 @@
 /* =============================================================================
- * ITEMS · styles.css — design system for the Income Tax Evaluation &
- * Maintenance System web demo. Vanilla CSS, no external dependencies.
+ * Income Tax Evaluation System · styles.css — design system.
+ * Vanilla CSS, no external dependencies.
  * ===========================================================================*/
 
 :root {
@@ -36,7 +36,20 @@ body {
   -webkit-font-smoothing: antialiased; font-size: 15px; line-height: 1.5;
 }
 a { color: var(--brand); text-decoration: none; }
-h1,h2,h3,h4 { margin: 0 0 .35em; line-height: 1.25; font-weight: 700; letter-spacing: -.01em; }
+h1,h2,h3,h4 { margin: 0 0 .35em; line-height: 1.25; font-weight: 700; letter-spacing: -.01em; text-wrap: balance; }
+
+/* Keyboard accessibility: a visible focus ring on every interactive control. */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px;
+}
+:root[data-theme="dark"] a:focus-visible, :root[data-theme="dark"] button:focus-visible { outline-color: #a5b4fc; }
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
 p { margin: 0 0 1em; }
 .muted { color: var(--muted); }
 .hidden { display: none !important; }
@@ -247,4 +260,13 @@ table.data td.num, table.data th.num { text-align: right; font-variant-numeric: 
   .form-grid, .ledger, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .content { padding: 1rem; }
 }
-@media (max-width: 520px) { .page-head h2 { font-size: 1.2rem; } .stat .val { font-size: 1.4rem; } .user-chip small { display: none; } }
+@media (max-width: 520px) {
+  .page-head h2 { font-size: 1.2rem; } .stat .val { font-size: 1.4rem; }
+  /* Keep the user chip inside the bar: hide the role line and clamp a long name
+     instead of letting it push the sign-out button off screen. */
+  .user-chip small { display: none; }
+  .user-chip { padding-left: .4rem; min-width: 0; }
+  .user-chip > div { min-width: 0; overflow: hidden; }
+  .user-chip b { display: block; max-width: 8ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar { gap: .5rem; padding: .7rem .8rem; }
+}

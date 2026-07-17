@@ -1,5 +1,5 @@
 ' =============================================================================
-' ITEMS · ClientRepository.vb — CRUD for the Client Information module
+' Income Tax Evaluation System · ClientRepository.vb — CRUD for the Client Information module
 ' =============================================================================
 Imports System.Collections.Generic
 Imports System.Data

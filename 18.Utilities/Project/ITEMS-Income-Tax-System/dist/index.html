@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Tax Evaluation System</title>
+  <meta name="description" content="Income Tax Evaluation System — a web workspace for tax practitioners: client records, original & revised return filing with automatic tax computation, firm accounts (Trading, P&L, Balance Sheet) and statutory reports.">
+  <meta name="theme-color" content="#1e3a8a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231e3a8a'/%3E%3Ctext x='50' y='70' font-size='62' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3E%E2%82%B9%3C/text%3E%3C/svg%3E">
+  <style>
+/* =============================================================================
+ * Income Tax Evaluation System · styles.css — design system.
+ * Vanilla CSS, no external dependencies.
+ * ===========================================================================*/
+
+:root {
+  --brand: #1e3a8a;         /* indigo 800 */
+  --brand-2: #0f766e;       /* teal 700 */
+  --brand-grad: linear-gradient(135deg, #1e3a8a 0%, #3730a3 45%, #0f766e 100%);
+  --accent: #f59e0b;        /* amber 500 */
+  --ok: #16a34a; --warn: #d97706; --danger: #dc2626; --info: #2563eb;
+
+  --bg: #eef2f7;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --line: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --shadow: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
+  --shadow-lg: 0 12px 40px rgba(15,23,42,.16);
+  --radius: 14px; --radius-sm: 9px;
+  --sidebar-w: 256px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+:root[data-theme="dark"] {
+  --bg: #0b1220; --surface: #131c2e; --surface-2: #0f1729; --line: #24304a;
+  --text: #e7ecf5; --muted: #93a1bd; --brand: #6366f1; --brand-2: #2dd4bf;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,.5);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; font-family: var(--font); color: var(--text); background: var(--bg);
+  -webkit-font-smoothing: antialiased; font-size: 15px; line-height: 1.5;
+}
+a { color: var(--brand); text-decoration: none; }
+h1,h2,h3,h4 { margin: 0 0 .35em; line-height: 1.25; font-weight: 700; letter-spacing: -.01em; text-wrap: balance; }
+
+/* Keyboard accessibility: a visible focus ring on every interactive control. */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px;
+}
+:root[data-theme="dark"] a:focus-visible, :root[data-theme="dark"] button:focus-visible { outline-color: #a5b4fc; }
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+p { margin: 0 0 1em; }
+.muted { color: var(--muted); }
+.hidden { display: none !important; }
+.mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+/* ---- Buttons ------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  padding: .6rem 1rem; border-radius: var(--radius-sm); font: inherit; font-weight: 600;
+  transition: transform .06s ease, box-shadow .15s ease, background .15s ease, border-color .15s;
+}
+.btn:hover { box-shadow: var(--shadow); }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-accent { background: var(--accent); border-color: var(--accent); color: #3b2600; }
+.btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn-ghost { background: transparent; }
+.btn-sm { padding: .38rem .7rem; font-size: .85rem; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+/* ---- Badges & chips ------------------------------------------------------ */
+.badge { display: inline-flex; align-items: center; gap: .35rem; padding: .16rem .55rem;
+  border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .02em; }
+.badge-original { background: rgba(37,99,235,.12); color: var(--info); }
+.badge-revised { background: rgba(217,119,6,.15); color: var(--warn); }
+.badge-firm { background: rgba(15,118,110,.14); color: var(--brand-2); }
+.badge-indv { background: rgba(99,102,241,.14); color: #6366f1; }
+.pill { padding: .1rem .5rem; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line);
+  font-size: .72rem; font-weight: 600; color: var(--muted); }
+
+/* ---- Login --------------------------------------------------------------- */
+.login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem;
+  background: radial-gradient(1200px 700px at 15% -10%, rgba(55,48,163,.25), transparent 60%),
+              radial-gradient(1000px 600px at 110% 120%, rgba(15,118,110,.28), transparent 55%), var(--bg); }
+.login-card { width: min(420px, 96vw); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; }
+.login-head { background: var(--brand-grad); color: #fff; padding: 2rem 1.75rem 1.5rem; }
+.login-head .logo { display: flex; align-items: center; gap: .7rem; font-weight: 800; letter-spacing: .04em; }
+.login-head .logo .mark { width: 40px; height: 40px; display: grid; place-items: center;
+  background: rgba(255,255,255,.16); border-radius: 12px; font-size: 1.2rem; }
+.login-head h1 { font-size: 1.15rem; margin: .9rem 0 .1rem; }
+.login-head p { margin: 0; opacity: .85; font-size: .86rem; }
+.login-body { padding: 1.6rem 1.75rem 1.9rem; }
+.hint { margin-top: 1rem; padding: .7rem .85rem; background: var(--surface-2); border: 1px dashed var(--line);
+  border-radius: 10px; font-size: .8rem; color: var(--muted); }
+.hint code { background: rgba(30,58,138,.08); padding: .05rem .35rem; border-radius: 5px; color: var(--brand); font-weight: 700; }
+
+/* ---- Form controls ------------------------------------------------------- */
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: .35rem; color: var(--muted); }
+.field .req { color: var(--danger); }
+input, select, textarea {
+  width: 100%; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text); font: inherit; transition: border-color .15s, box-shadow .15s;
+}
+textarea { resize: vertical; min-height: 62px; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(30,58,138,.15); }
+input.invalid, select.invalid { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(220,38,38,.12); }
+.err-text { color: var(--danger); font-size: .76rem; margin-top: .25rem; min-height: 1em; }
+.radio-row { display: flex; flex-wrap: wrap; gap: .4rem .5rem; }
+.radio-row label { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border: 1px solid var(--line);
+  border-radius: 999px; cursor: pointer; font-size: .84rem; font-weight: 600; color: var(--text); background: var(--surface); }
+.radio-row input { width: auto; }
+.radio-row label:has(input:checked) { border-color: var(--brand); background: rgba(30,58,138,.08); color: var(--brand); }
+
+/* ---- App shell ----------------------------------------------------------- */
+.app { display: grid; grid-template-columns: var(--sidebar-w) 1fr; min-height: 100vh; }
+.sidebar { background: var(--surface); border-right: 1px solid var(--line); position: sticky; top: 0;
+  height: 100vh; display: flex; flex-direction: column; z-index: 30; }
+.brand { display: flex; align-items: center; gap: .7rem; padding: 1.1rem 1.15rem; border-bottom: 1px solid var(--line); }
+.brand .mark { width: 38px; height: 38px; border-radius: 11px; background: var(--brand-grad); color: #fff;
+  display: grid; place-items: center; font-weight: 800; }
+.brand b { font-size: 1.02rem; letter-spacing: .02em; } .brand small { display: block; color: var(--muted); font-size: .72rem; }
+.nav { padding: .75rem .6rem; overflow-y: auto; flex: 1; }
+.nav .group { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted);
+  margin: 1rem .7rem .35rem; font-weight: 700; }
+.nav a { display: flex; align-items: center; gap: .7rem; padding: .58rem .75rem; border-radius: 10px;
+  color: var(--text); font-weight: 600; font-size: .9rem; margin-bottom: 2px; }
+.nav a .ico { width: 20px; text-align: center; opacity: .85; }
+.nav a:hover { background: var(--surface-2); }
+.nav a.active { background: rgba(30,58,138,.1); color: var(--brand); }
+:root[data-theme="dark"] .nav a.active { background: rgba(99,102,241,.18); color: #c7ccff; }
+
+.main { display: flex; flex-direction: column; min-width: 0; }
+.topbar { display: flex; align-items: center; gap: 1rem; padding: .8rem 1.4rem; background: var(--surface);
+  border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+.topbar .crumbs { font-weight: 700; }
+.topbar .crumbs small { display: block; color: var(--muted); font-weight: 500; font-size: .76rem; }
+.topbar .spacer { flex: 1; }
+.icon-btn { border: 1px solid var(--line); background: var(--surface); width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center; cursor: pointer; font-size: 1.05rem; }
+.icon-btn:hover { background: var(--surface-2); }
+.user-chip { display: flex; align-items: center; gap: .6rem; padding: .3rem .3rem .3rem .7rem; border: 1px solid var(--line);
+  border-radius: 999px; background: var(--surface); }
+.user-chip .av { width: 30px; height: 30px; border-radius: 50%; background: var(--brand-grad); color: #fff;
+  display: grid; place-items: center; font-weight: 700; font-size: .82rem; }
+.user-chip small { color: var(--muted); }
+.hamburger { display: none; }
+
+.content { padding: 1.5rem 1.4rem 3rem; max-width: 1180px; width: 100%; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.page-head h2 { font-size: 1.4rem; } .page-head p { margin: .2rem 0 0; }
+
+/* ---- Cards & grids ------------------------------------------------------- */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); }
+.card .card-head { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem; }
+.card .card-head h3 { font-size: 1rem; margin: 0; } .card .card-body { padding: 1.2rem; }
+.grid { display: grid; gap: 1.1rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.2rem; }
+.form-grid .full { grid-column: 1 / -1; }
+.section-title { grid-column: 1/-1; font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--brand); font-weight: 800; margin: .7rem 0 .5rem; padding-top: .7rem; border-top: 1px dashed var(--line); }
+.section-title:first-child { border-top: 0; padding-top: 0; }
+
+/* ---- Stat tiles ---------------------------------------------------------- */
+.stat { padding: 1.15rem 1.2rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line);
+  box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.stat .lbl { color: var(--muted); font-size: .82rem; font-weight: 600; }
+.stat .val { font-size: 1.7rem; font-weight: 800; letter-spacing: -.02em; margin-top: .2rem; }
+.stat .sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+.stat .ico { position: absolute; right: 1rem; top: 1rem; width: 40px; height: 40px; border-radius: 11px;
+  display: grid; place-items: center; font-size: 1.15rem; }
+.stat.i1 .ico { background: rgba(30,58,138,.12); color: var(--brand); }
+.stat.i2 .ico { background: rgba(15,118,110,.14); color: var(--brand-2); }
+.stat.i3 .ico { background: rgba(245,158,11,.16); color: var(--warn); }
+.stat.i4 .ico { background: rgba(22,163,74,.14); color: var(--ok); }
+
+/* ---- Table --------------------------------------------------------------- */
+.table-wrap { overflow-x: auto; border-radius: var(--radius); }
+table.data { width: 100%; border-collapse: collapse; font-size: .9rem; }
+table.data th, table.data td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.data th { background: var(--surface-2); font-size: .74rem; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--muted); position: sticky; top: 0; }
+table.data tbody tr:hover { background: var(--surface-2); }
+table.data td.num, table.data th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.row-actions { display: flex; gap: .4rem; }
+.empty { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+.empty .big { font-size: 2.4rem; margin-bottom: .5rem; }
+
+/* ---- Toolbar / search ---------------------------------------------------- */
+.toolbar { display: flex; gap: .7rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.toolbar .search { flex: 1; min-width: 200px; position: relative; }
+.toolbar .search input { padding-left: 2.2rem; }
+.toolbar .search .mag { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%); color: var(--muted); }
+
+/* ---- Ledger (Trading/PL/Balance two-column) ------------------------------ */
+.ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.ledger .side h4 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--brand);
+  padding-bottom: .5rem; border-bottom: 2px solid var(--brand); margin-bottom: .3rem; }
+.ledger .lrow { display: flex; justify-content: space-between; gap: 1rem; padding: .3rem 0; border-bottom: 1px dotted var(--line); }
+.ledger .lrow .amt { font-variant-numeric: tabular-nums; font-weight: 600; }
+.ledger .total { display: flex; justify-content: space-between; margin-top: .5rem; padding-top: .5rem;
+  border-top: 2px solid var(--line); font-weight: 800; }
+.balanced { color: var(--ok); } .unbalanced { color: var(--danger); }
+
+/* ---- Toast / modal ------------------------------------------------------- */
+.toast-wrap { position: fixed; right: 1.1rem; bottom: 1.1rem; display: flex; flex-direction: column; gap: .6rem; z-index: 200; }
+.toast { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--ok);
+  box-shadow: var(--shadow-lg); border-radius: 10px; padding: .8rem 1rem; min-width: 260px; animation: slideIn .2s ease; }
+.toast.err { border-left-color: var(--danger); } .toast.warn { border-left-color: var(--warn); }
+.toast b { display: block; } .toast small { color: var(--muted); }
+@keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.modal-back { position: fixed; inset: 0; background: rgba(15,23,42,.55); display: grid; place-items: center; z-index: 150; padding: 1rem; }
+.modal { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow-lg); width: min(440px, 96vw); overflow: hidden; }
+.modal .m-head { padding: 1.2rem 1.3rem .3rem; } .modal .m-body { padding: .3rem 1.3rem 1rem; color: var(--muted); }
+.modal .m-foot { padding: 1rem 1.3rem 1.3rem; display: flex; justify-content: flex-end; gap: .6rem; }
+
+/* ---- Print (reports) ----------------------------------------------------- */
+.report-doc { background: #fff; color: #111; padding: 2rem; border-radius: var(--radius); border: 1px solid var(--line); }
+.report-doc h1 { text-align: center; font-size: 1.4rem; }
+.report-doc .rmeta { display: flex; justify-content: space-between; color: #555; font-size: .82rem; border-bottom: 2px solid #111; padding-bottom: .5rem; margin-bottom: 1rem; }
+.report-doc table { width: 100%; border-collapse: collapse; }
+.report-doc th, .report-doc td { border: 1px solid #ccc; padding: .5rem .7rem; font-size: .86rem; }
+.report-doc th { background: #f1f5f9; }
+@media print {
+  .sidebar, .topbar, .no-print { display: none !important; }
+  .app { display: block; } .content { padding: 0; max-width: none; }
+  body { background: #fff; } .report-doc { border: 0; padding: 0; }
+}
+
+/* ---- Guided tour --------------------------------------------------------- */
+.tour-back { position: fixed; inset: 0; background: rgba(15,23,42,.5); z-index: 300; }
+.tour-pop { position: fixed; z-index: 301; width: min(340px, 92vw); background: var(--surface); border-radius: 14px;
+  box-shadow: var(--shadow-lg); padding: 1.1rem 1.2rem; border: 1px solid var(--line); }
+.tour-pop h4 { margin: 0 0 .3rem; } .tour-pop p { font-size: .88rem; color: var(--muted); }
+.tour-pop .t-foot { display: flex; align-items: center; justify-content: space-between; margin-top: .8rem; }
+.tour-highlight { position: relative; z-index: 302 !important; box-shadow: 0 0 0 4px var(--accent), var(--shadow-lg) !important; border-radius: 12px; }
+
+/* ---- Responsive ---------------------------------------------------------- */
+@media (max-width: 960px) { .grid-4 { grid-template-columns: repeat(2,1fr); } .grid-3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 820px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 82vw; max-width: 320px; transform: translateX(-102%);
+    transition: transform .22s ease; box-shadow: var(--shadow-lg); }
+  .sidebar.open { transform: none; }
+  .hamburger { display: grid; }
+  .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 25; }
+  .form-grid, .ledger, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+}
+@media (max-width: 520px) {
+  .page-head h2 { font-size: 1.2rem; } .stat .val { font-size: 1.4rem; }
+  /* Keep the user chip inside the bar: hide the role line and clamp a long name
+     instead of letting it push the sign-out button off screen. */
+  .user-chip small { display: none; }
+  .user-chip { padding-left: .4rem; min-width: 0; }
+  .user-chip > div { min-width: 0; overflow: hidden; }
+  .user-chip b { display: block; max-width: 8ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar { gap: .5rem; padding: .7rem .8rem; }
+}
+
+</style>
+</head>
+<body>
+  <noscript>
+    <div style="max-width:640px;margin:4rem auto;font-family:sans-serif;text-align:center">
+      <h2>JavaScript is required</h2>
+      <p>The Income Tax Evaluation System is an interactive application. Please enable JavaScript in your browser to continue.</p>
+    </div>
+  </noscript>
+<script>
+/* =============================================================================
+ * Income Tax Evaluation System · tax.js — computation engine
+ *
+ * Implements a self-consistent slab computation for the INCOME_TAX_RECORD
+ * form fields described in project.pdf (Gross Total Income -> deductions ->
+ * Total Income -> tax by slab -> rebate 87A -> surcharge -> health & education
+ * cess -> less TDS/advance/self-assessment -> balance payable / refundable).
+ *
+ * Slabs follow the Indian "old regime" (AY 2024-25) for a resident individual.
+ * Firms are taxed at a flat 30%. Values are illustrative for demonstration.
+ * ===========================================================================*/
+(function (global) {
+  "use strict";
+
+  const CESS_RATE = 0.04;            // Health & Education Cess
+  const REBATE_87A_LIMIT = 500000;   // total income up to which rebate applies
+  const REBATE_87A_MAX = 12500;
+  const FIRM_RATE = 0.30;
+
+  const SLABS = [
+    { upto: 250000, rate: 0.00 },
+    { upto: 500000, rate: 0.05 },
+    { upto: 1000000, rate: 0.20 },
+    { upto: Infinity, rate: 0.30 }
+  ];
+
+  // Surcharge on income-tax when total income crosses these thresholds.
+  const SURCHARGE = [
+    { over: 50000000, rate: 0.37 },
+    { over: 20000000, rate: 0.25 },
+    { over: 10000000, rate: 0.15 },
+    { over: 5000000, rate: 0.10 },
+    { over: 0, rate: 0.00 }
+  ];
+
+  function n(v) { const x = Number(v); return isFinite(x) ? x : 0; }
+
+  function slabTax(income) {
+    let tax = 0, lower = 0;
+    for (const s of SLABS) {
+      if (income > lower) {
+        const band = Math.min(income, s.upto) - lower;
+        tax += band * s.rate;
+        lower = s.upto;
+      } else break;
+    }
+    return Math.round(tax);
+  }
+
+  function surchargeRate(totalIncome) {
+    for (const s of SURCHARGE) if (totalIncome > s.over) return s.rate;
+    return 0;
+  }
+
+  /**
+   * compute(rec) — given an INCOME_TAX_RECORD (partial), returns the derived
+   * computation fields. Non-destructive: returns only the computed keys.
+   * @param {object} rec  return record with income + payment fields
+   * @param {object} client  optional CLIENT_RECORD (to detect firm category)
+   */
+  function compute(rec, client) {
+    const salary = n(rec.INCOME_FROM_SALARY);
+    const house = n(rec.INCOME_FROM_HOUSE_PROPERTY);
+    const business = n(rec.INCOME_FROM_BUSINESS);
+    const stcg = n(rec.TOTAL_SHORT_TERM_GAIN);
+    const ltcg = n(rec.TOTAL_LONG_TERM_GAIN);
+    const capital = n(rec.TOTAL_CAPITAL_GAINS) || (stcg + ltcg);
+    const other = n(rec.INCOME_FROM_OTHER_SOURCES);
+    const clubbed = n(rec.INCM_OTHER_PERS_TO_ADDED);
+
+    const gross = salary + house + business + capital + other + clubbed;
+    const deductions = Math.min(n(rec.LESS_DEDUCTION_UNDER_VIA), gross);
+    const totalIncome = Math.max(0, gross - deductions);
+
+    const isFirm = client && Number(client.INDV_HUF_FIRM_AOP_LA) === 2;
+
+    // Special-rate income (LTCG @ 20% here for illustration); rest at normal.
+    const spclBase = ltcg;
+    const normalBase = Math.max(0, totalIncome - spclBase);
+
+    const taxNormal = isFirm ? Math.round(totalIncome * FIRM_RATE) : slabTax(normalBase);
+    const taxSpecial = isFirm ? 0 : Math.round(spclBase * 0.20);
+    const taxOnTotal = taxNormal + taxSpecial;
+
+    let rebate = 0;
+    if (!isFirm && totalIncome <= REBATE_87A_LIMIT) rebate = Math.min(taxOnTotal, REBATE_87A_MAX);
+
+    const taxPayable = Math.max(0, taxOnTotal - rebate);
+    const surcharge = Math.round(taxPayable * surchargeRate(totalIncome));
+    const cess = Math.round((taxPayable + surcharge) * CESS_RATE);
+    const totalTaxPayable = taxPayable + surcharge + cess;
+
+    const relief = n(rec.LESS_RELIEF);
+    const tds = n(rec.TAX_DEDUC_AT_SOURCE);
+    const advance = n(rec.ADVANCE_TAX_PAID);
+    const selfAssess = n(rec.TOT_SELF_ASSESS_TAX_PAID);
+    const interest = n(rec.INTEREST_PAYABLE);
+
+    const netTaxPayable = Math.max(0, totalTaxPayable - relief);
+    const balance = netTaxPayable + interest - tds - advance - selfAssess;
+
+    return {
+      GROSS_TOTAL_INCOME: gross,
+      TOTAL_INCOME: totalIncome,
+      INCOME_AT_NORM_RATE: normalBase,
+      INCOME_TAX_NORM_RATE: taxNormal,
+      INCOME_AT_SPCL_RATE: spclBase,
+      INCOME_TAX_SPCL_RATE: taxSpecial,
+      TAX_ON_TOTAL_INCOME: taxOnTotal,
+      LESS_REBATE: rebate,
+      TAX_PAYABLE: taxPayable,
+      ADDITIONAL_SURCHARGE: surcharge,
+      TOTAL_TAX_PAYABLE: totalTaxPayable,
+      NET_TAX_PAYABLE: netTaxPayable,
+      BAL_TAX_PAYABLE_REFUND: Math.round(balance)
+    };
+  }
+
+  global.TaxEngine = { compute, slabTax, SLABS };
+})(window);
+
+/* =============================================================================
+ * Income Tax Evaluation System
+ * db.js — Client-side data layer (mirrors the Oracle schema from project.pdf)
+ *
+ * This module emulates the 5 Oracle tables described in the SRS
+ * (CLIENT_RECORD, INCOME_TAX_RECORD, TRADING_ACCOUNT, PL_ACCOUNT,
+ * BALANCE_SHEET) using browser localStorage so the demo runs fully offline
+ * on GitHub Pages. The production build (see /src) uses the identical schema
+ * on Oracle via ODP.NET.
+ * ===========================================================================*/
+(function (global) {
+  "use strict";
+
+  const STORE_KEY = "items_db_v1";
+  const SESSION_KEY = "items_session_v1";
+
+  /* ---- Reference / lookup values (match PDF radio-button semantics) ------- */
+  const CATEGORY = ["Individual", "HUF", "Firm", "AOP", "Local Authority"];
+  const RESIDENCE = ["Resident", "Non Resident", "Not Ordinarily Resident"];
+  const SEX = ["Female", "Male"]; // index 1 = Male, matches PDF boolean
+  const WARD = ["Ward", "Circle", "Special Range"];
+  const RETURN_TYPE = ["Original", "Revised"];
+
+  /* ---- Demo credentials (documented in README) ---------------------------- */
+  const USERS = [
+    { username: "admin", password: "admin@123", name: "System Administrator", role: "Administrator" },
+    { username: "operator", password: "demo@2025", name: "Data Entry Operator", role: "Operator" }
+  ];
+
+  /* ---- Seed data ---------------------------------------------------------- *
+   * Clients + AY 2007-08 figures are taken verbatim from the Crystal Report
+   * screenshots in project.pdf (pages 184-186). Two firms are added so the
+   * Trading / P&L / Balance-Sheet modules have realistic content, plus a
+   * current-year (AY 2024-25) return so the app feels live.
+   * ------------------------------------------------------------------------- */
+  function seed() {
+    const clients = [
+      mkClient({ PAN: "ABCPP1234D", CLIENT_NAME: "Digamber Prasad", FATHERS_NAME: "Sri Nageshwar Lal",
+        DOB: "1984-10-10", ADDRESS: "12, Rajendra Nagar, New Delhi", PINCODE: "110003",
+        TELEPHONE: "09891141538", SEX: 1, INDV_HUF_FIRM_AOP_LA: 0, RESIDENT_NR_NOR: 0, WARD: "Ward-24(3)" }),
+      mkClient({ PAN: "AAKPV5521R", CLIENT_NAME: "Ravi Verma", FATHERS_NAME: "Sri Mohan Verma",
+        DOB: "1970-12-01", ADDRESS: "88, Civil Lines, Kanpur", PINCODE: "208001",
+        TELEPHONE: "09415012233", SEX: 1, INDV_HUF_FIRM_AOP_LA: 0, RESIDENT_NR_NOR: 0, WARD: "Circle-3" }),
+      mkClient({ PAN: "AFZPR7788K", CLIENT_NAME: "Anish Ranjan", FATHERS_NAME: "Sri Vijay Ranjan",
+        DOB: "1985-03-23", ADDRESS: "5B, Boring Road, Patna", PINCODE: "800001",
+        TELEPHONE: "09334455667", SEX: 1, INDV_HUF_FIRM_AOP_LA: 0, RESIDENT_NR_NOR: 0, WARD: "Ward-6(1)" }),
+      mkClient({ PAN: "AABFA9090J", CLIENT_NAME: "Anuranjan Traders", FATHERS_NAME: "—",
+        DOB: "1980-01-01", ADDRESS: "Plot 41, Industrial Area, Ghaziabad", PINCODE: "201001",
+        TELEPHONE: "01204567890", SEX: 1, INDV_HUF_FIRM_AOP_LA: 2, RESIDENT_NR_NOR: 0, WARD: "Special Range" }),
+      mkClient({ PAN: "AADFS1212Q", CLIENT_NAME: "Sunrise Textiles", FATHERS_NAME: "—",
+        DOB: "1992-06-15", ADDRESS: "Unit 7, MIDC, Bhiwandi, Maharashtra", PINCODE: "421302",
+        TELEPHONE: "02522334455", SEX: 1, INDV_HUF_FIRM_AOP_LA: 2, RESIDENT_NR_NOR: 0, WARD: "Circle-9" })
+    ];
+
+    const returns = [
+      mkReturn({ PAN: "ABCPP1234D", AY1: "2007-04-01", AY2: "2008-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_SALARY: 210000, TOTAL_INCOME: 200000, NET_TAX_PAYABLE: 5000, TAX_DEDUC_AT_SOURCE: 4000 }),
+      mkReturn({ PAN: "AAKPV5521R", AY1: "2007-04-01", AY2: "2008-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_SALARY: 315000, TOTAL_INCOME: 300000, NET_TAX_PAYABLE: 15000, TAX_DEDUC_AT_SOURCE: 10000 }),
+      mkReturn({ PAN: "AFZPR7788K", AY1: "2007-04-01", AY2: "2008-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_BUSINESS: 360000, TOTAL_INCOME: 350000, NET_TAX_PAYABLE: 21000, ADVANCE_TAX_PAID: 15000 }),
+      mkReturn({ PAN: "AFZPR7788K", AY1: "2007-04-01", AY2: "2008-03-31", RETURN_ORIGINAL_REVISED: 1,
+        INCOME_FROM_BUSINESS: 372000, TOTAL_INCOME: 362000, NET_TAX_PAYABLE: 23400, ADVANCE_TAX_PAID: 15000 }),
+      mkReturn({ PAN: "AABFA9090J", AY1: "2007-04-01", AY2: "2008-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_BUSINESS: 260000, TOTAL_INCOME: 250000, NET_TAX_PAYABLE: 12000, ADVANCE_TAX_PAID: 8000 }),
+      /* Current-year returns so reports have recent fiscals too */
+      mkReturn({ PAN: "ABCPP1234D", AY1: "2024-04-01", AY2: "2025-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_SALARY: 1180000, INCOME_FROM_HOUSE_PROPERTY: 120000, TOTAL_INCOME: 1150000,
+        LESS_DEDUCTION_UNDER_VIA: 150000, TAX_DEDUC_AT_SOURCE: 120000 }),
+      mkReturn({ PAN: "AADFS1212Q", AY1: "2024-04-01", AY2: "2025-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_BUSINESS: 2450000, TOTAL_INCOME: 2450000, ADVANCE_TAX_PAID: 600000 }),
+      mkReturn({ PAN: "AAKPV5521R", AY1: "2024-04-01", AY2: "2025-03-31", RETURN_ORIGINAL_REVISED: 0,
+        INCOME_FROM_SALARY: 640000, TOTAL_INCOME: 640000, TAX_DEDUC_AT_SOURCE: 25000 })
+    ];
+
+    // Recompute tax for the current-year returns using the engine.
+    returns.forEach(r => {
+      if (r.ASSES_YEAR_1 >= "2024-01-01" && global.TaxEngine) {
+        Object.assign(r, global.TaxEngine.compute(r));
+      }
+    });
+
+    const trading = [
+      mkTrading({ PAN: "AABFA9090J", AY1: "2007-04-01", AY2: "2008-03-31",
+        TO_OPENING_STOCK: 120000, TO_PURCHASES: 860000, TO_WAGES: 145000, TO_CARRIAGE: 22000,
+        TO_GROSS_PROFIT: 383000, BY_SALES: 1350000, BY_CLOSING_STOCK: 180000 }),
+      mkTrading({ PAN: "AADFS1212Q", AY1: "2024-04-01", AY2: "2025-03-31",
+        TO_OPENING_STOCK: 540000, TO_PURCHASES: 6200000, TO_WAGES: 820000, TO_COAL_WATER_GAS: 96000,
+        TO_GROSS_PROFIT: 3244000, BY_SALES: 10200000, BY_CLOSING_STOCK: 700000 })
+    ];
+
+    const pl = [
+      mkPL({ PAN: "AABFA9090J", AY1: "2007-04-01", AY2: "2008-03-31",
+        TO_SALARIES_WAGES: 96000, TO_OFFICE_GODOWN_RENT: 48000, TO_INSURANCE: 14000,
+        TO_DEPRECIATION: 35000, TO_NET_PROFIT: 210000, BY_GROSS_PROFIT: 383000, BY_INTEREST_RECEIVED: 20000 }),
+      mkPL({ PAN: "AADFS1212Q", AY1: "2024-04-01", AY2: "2025-03-31",
+        TO_SALARIES_WAGES: 640000, TO_OFFICE_GODOWN_RENT: 240000, TO_ADVERTISEMENT: 180000,
+        TO_DEPRECIATION: 210000, TO_NET_PROFIT: 2100000, BY_GROSS_PROFIT: 3244000, BY_RENT_RECEIVED: 126000 })
+    ];
+
+    const balance = [
+      mkBalance({ PAN: "AABFA9090J", AY1: "2007-04-01", AY2: "2008-03-31",
+        CAPITAL: 800000, SUNDRY_CREDITORS: 210000, LOANS: 150000, NET_PROFIT: 210000,
+        CASH_IN_HAND: 45000, CASH_AT_BANK: 260000, INVESTMENTS: 210000, SUNDRY_DEBTORS: 320000,
+        CLOSING_STOCK: 180000, PLANT_AND_MACHINERY: 355000 }),
+      mkBalance({ PAN: "AADFS1212Q", AY1: "2024-04-01", AY2: "2025-03-31",
+        CAPITAL: 5200000, SUNDRY_CREDITORS: 1400000, LOANS: 900000, NET_PROFIT: 2100000,
+        CASH_IN_HAND: 180000, CASH_AT_BANK: 2100000, INVESTMENTS: 800000, SUNDRY_DEBTORS: 2600000,
+        CLOSING_STOCK: 700000, PLANT_AND_MACHINERY: 3220000 })
+    ];
+
+    return {
+      CLIENT_RECORD: clients,
+      INCOME_TAX_RECORD: returns,
+      TRADING_ACCOUNT: trading,
+      PL_ACCOUNT: pl,
+      BALANCE_SHEET: balance,
+      _meta: { seededAt: new Date().toISOString(), version: 1 }
+    };
+  }
+
+  /* ---- Record factories (default every numeric column to 0) --------------- */
+  function mkClient(o) {
+    return Object.assign({
+      PAN: "", CLIENT_NAME: "", FATHERS_NAME: "", DOB: "", ADDRESS: "", PINCODE: "",
+      TELEPHONE: "", SEX: 1, INDV_HUF_FIRM_AOP_LA: 0, RESIDENT_NR_NOR: 0,
+      WARD_CIRCLE_SPECIAL_RANGE: o.WARD || "Ward"
+    }, stripWard(o));
+  }
+  function stripWard(o) { const c = Object.assign({}, o); delete c.WARD; return c; }
+
+  const RETURN_NUM_FIELDS = [
+    "INCOME_FOR_PREV_YEAR", "INCOME_FROM_SALARY", "INCOME_FROM_HOUSE_PROPERTY", "INCOME_FROM_BUSINESS",
+    "TOTAL_SHORT_TERM_GAIN", "TOTAL_LONG_TERM_GAIN", "TOTAL_CAPITAL_GAINS", "INCOME_FROM_OTHER_SOURCES",
+    "INCM_OTHER_PERS_TO_ADDED", "GROSS_TOTAL_INCOME", "LESS_DEDUCTION_UNDER_VIA", "TOTAL_INCOME",
+    "AGRICULTURAL_INCOME", "INCOME_TO_BE_EXEMPTED", "INCOME_AT_NORM_RATE", "INCOME_TAX_NORM_RATE",
+    "INCOME_AT_SPCL_RATE", "INCOME_TAX_SPCL_RATE", "TAX_ON_TOTAL_INCOME", "LESS_REBATE", "TAX_PAYABLE",
+    "ADDITIONAL_SURCHARGE", "TOTAL_TAX_PAYABLE", "LESS_RELIEF", "NET_TAX_PAYABLE", "TAX_DEDUC_AT_SOURCE",
+    "ADVANCE_TAX_PAID", "INTEREST_PAYABLE", "TOT_SELF_ASSESS_TAX_PAID", "BAL_TAX_PAYABLE_REFUND"
+  ];
+  function mkReturn(o) {
+    const base = { PAN: "", ASSES_YEAR_1: o.AY1 || "", ASSES_YEAR_2: o.AY2 || "", RETURN_ORIGINAL_REVISED: 0 };
+    RETURN_NUM_FIELDS.forEach(f => base[f] = 0);
+    const c = Object.assign(base, o);
+    delete c.AY1; delete c.AY2;
+    return c;
+  }
+
+  function mkTrading(o) { return mkAcct(o, TRADING_FIELDS); }
+  function mkPL(o) { return mkAcct(o, PL_FIELDS); }
+  function mkBalance(o) { return mkAcct(o, BALANCE_FIELDS); }
+  function mkAcct(o, fields) {
+    const base = { PAN: "", ASSES_YEAR_1: o.AY1 || "", ASSES_YEAR_2: o.AY2 || "" };
+    fields.forEach(f => base[f] = 0);
+    const c = Object.assign(base, o);
+    delete c.AY1; delete c.AY2;
+    return c;
+  }
+
+  const TRADING_FIELDS = ["TO_OPENING_STOCK","TO_STOCK","TO_PURCHASES","TO_CARRIAGE","TO_OCTROI",
+    "TO_IMPORT_DUTY_CUSTOMS","TO_WAGES","TO_COAL_WATER_GAS","TO_HEATING_LIGHTING_POWER",
+    "TO_MANU_ASSEM_EXPEN","TO_CONSUMABLE_STORES","TO_DRCT_FACT_PROD_EXP","TO_ROYALTY","TO_GROSS_PROFIT",
+    "BY_SALES","BY_CLOSING_STOCK","BY_STOCK","BY_GROSS_LOSS"];
+  const PL_FIELDS = ["TO_GROSS_LOSS","TO_SALARIES_WAGES","TO_OFFICE_GODOWN_RENT","TO_OFFICE_EXPENSES",
+    "TO_MISC_SUNDRY_EXPENSE","TO_INSURANCE","TO_STATION_PRINT","TO_STAFF_WELF_EXPENSE","TO_LIGHT_WATER_ELECT",
+    "TO_ESTAB_EXPENSE","TO_POST_TLGRM_FAX_COUR_PH","TO_LAW_CHARGES","TO_REPAIRS","TO_DISTRIBUTION_EXPENSES",
+    "TO_TRAVEL_EXPENSE","TO_GENERAL_EXPENSES","TO_STABLE_EXPENSES","TO_SELLING_EXPENSES","TO_CARRIAGE_OUTWARD",
+    "TO_CARRIAGE_ON_SALES","TO_INDIRECT_WAGES","TO_AUDIT_FEES","TO_ENTERTAIN_EXPENSES","TO_INTEREST_PAID",
+    "TO_DISCOUNT_ALLOWED","TO_BAD_DEBTS","TO_RESERVE_FOR_BAD_DEBTS","TO_DEPRECIATION","TO_INTEREST_ON_CAPITAL",
+    "TO_DISCOUNTING_CHARGES","TO_BANK_CHARGES","TO_EXPORT_CHARGES","TO_TRADE_EXPENSES","TO_ADMIN_EXPENSES",
+    "TO_FINANCIAL_EXPENSES","TO_COMMISSION_PAID","TO_ADVERTISEMENT","TO_CHARITY","TO_SAMPLE_EXPENSES",
+    "TO_LICENCE_FEE","TO_DELIVERY_CHARGES","TO_BROKERAGE","TO_SALES_TAX","TO_LOSS_ON_SALE_OF_ASSET",
+    "TO_LOSS_BY_THEFT_ACCIDENT","TO_NET_PROFIT","BY_GROSS_PROFIT","BY_INTEREST_RECEIVED","BY_RENT_RECEIVED",
+    "BY_DISCOUNT_RECEIVED","BY_DIVIDENDS_RECEIVED","BY_PROF_FROM_SALE_OF_ASSET","BY_REFUND_OF_TAX",
+    "BY_COMPENSAT_RECEIVED","BY_APPRENTICESHIP_PREMIUM","BY_DIFFER_IN_EXCHANGE","BY_INTEREST_ON_DRAWINGS",
+    "BY_DISCOUNT_ON_CREDITORS","BY_BAD_DEBTS_RECOVERED","BY_MISC_RECEIPTS","BY_INC_IN_VALUE_OF_ASSET",
+    "BY_INCOME_FROM_INVESTMENT","BY_RES_FOR_BAD_DOUBTS","BY_NET_LOSS"];
+  const BALANCE_FIELDS = ["BILLS_PAYABLE","SUNDRY_CREDITORS","LOANS","OUTSTANDING_EXPENSES","CAPITAL",
+    "NET_PROFIT","INTEREST_ON_CAPITAL","DRAWINGS","NET_LOSS","INCOME_TAX","CASH_IN_HAND","CASH_AT_BANK",
+    "INVESTMENTS","BILLS_RECEIVABLE","SUNDRY_DEBTORS","CLOSING_STOCK","STORES","PLANT_AND_MACHINERY",
+    "FREEHOLD_PREMISES","UNEXPIRED_EXPENSES","GOODWILL"];
+
+  /* ---- Persistence -------------------------------------------------------- */
+  function load() {
+    let raw = null;
+    try { raw = JSON.parse(global.localStorage.getItem(STORE_KEY)); } catch (e) { raw = null; }
+    if (!raw || !raw.CLIENT_RECORD) { raw = seed(); persist(raw); }
+    return raw;
+  }
+  function persist(db) {
+    try { global.localStorage.setItem(STORE_KEY, JSON.stringify(db)); } catch (e) {/* private mode */}
+  }
+
+  let _db = null;
+  function db() { if (!_db) _db = load(); return _db; }
+
+  /* ---- Generic table operations ------------------------------------------ */
+  function all(table) { return db()[table].slice(); }
+
+  function findClient(pan) { return db().CLIENT_RECORD.find(c => c.PAN === pan) || null; }
+
+  function returnKey(r) { return [r.PAN, r.ASSES_YEAR_1, r.ASSES_YEAR_2, r.RETURN_ORIGINAL_REVISED].join("|"); }
+  function acctKey(r) { return [r.PAN, r.ASSES_YEAR_1, r.ASSES_YEAR_2].join("|"); }
+
+  function upsertClient(rec) {
+    const arr = db().CLIENT_RECORD;
+    const i = arr.findIndex(c => c.PAN === rec.PAN);
+    if (i >= 0) arr[i] = rec; else arr.push(rec);
+    persist(_db); return rec;
+  }
+  function deleteClient(pan) {
+    const d = db();
+    d.CLIENT_RECORD = d.CLIENT_RECORD.filter(c => c.PAN !== pan);
+    // Cascade like the Oracle FK relationships in the SRS.
+    d.INCOME_TAX_RECORD = d.INCOME_TAX_RECORD.filter(r => r.PAN !== pan);
+    d.TRADING_ACCOUNT = d.TRADING_ACCOUNT.filter(r => r.PAN !== pan);
+    d.PL_ACCOUNT = d.PL_ACCOUNT.filter(r => r.PAN !== pan);
+    d.BALANCE_SHEET = d.BALANCE_SHEET.filter(r => r.PAN !== pan);
+    persist(d);
+  }
+
+  function upsertReturn(rec) {
+    const arr = db().INCOME_TAX_RECORD;
+    const i = arr.findIndex(r => returnKey(r) === returnKey(rec));
+    if (i >= 0) arr[i] = rec; else arr.push(rec);
+    persist(_db); return rec;
+  }
+  function deleteReturn(rec) {
+    const d = db();
+    d.INCOME_TAX_RECORD = d.INCOME_TAX_RECORD.filter(r => returnKey(r) !== returnKey(rec));
+    persist(d);
+  }
+  function hasOriginal(pan, ay1, ay2) {
+    return db().INCOME_TAX_RECORD.some(r => r.PAN === pan && r.ASSES_YEAR_1 === ay1 &&
+      r.ASSES_YEAR_2 === ay2 && Number(r.RETURN_ORIGINAL_REVISED) === 0);
+  }
+
+  function upsertAcct(table, rec) {
+    const arr = db()[table];
+    const i = arr.findIndex(r => acctKey(r) === acctKey(rec));
+    if (i >= 0) arr[i] = rec; else arr.push(rec);
+    persist(_db); return rec;
+  }
+  function deleteAcct(table, rec) {
+    const d = db();
+    d[table] = d[table].filter(r => acctKey(r) !== acctKey(rec));
+    persist(d);
+  }
+
+  function resetDemo() { _db = seed(); persist(_db); return _db; }
+
+  /* ---- Session ------------------------------------------------------------ */
+  function login(username, password) {
+    const u = USERS.find(x => x.username === username && x.password === password);
+    if (!u) return null;
+    const s = { username: u.username, name: u.name, role: u.role, at: Date.now() };
+    global.sessionStorage.setItem(SESSION_KEY, JSON.stringify(s));
+    return s;
+  }
+  function session() {
+    try { return JSON.parse(global.sessionStorage.getItem(SESSION_KEY)); } catch (e) { return null; }
+  }
+  function logout() { global.sessionStorage.removeItem(SESSION_KEY); }
+
+  global.TaxDB = {
+    CATEGORY, RESIDENCE, SEX, WARD, RETURN_TYPE, USERS,
+    RETURN_NUM_FIELDS, TRADING_FIELDS, PL_FIELDS, BALANCE_FIELDS,
+    all, findClient, upsertClient, deleteClient,
+    upsertReturn, deleteReturn, hasOriginal, returnKey, acctKey,
+    upsertAcct, deleteAcct, resetDemo,
+    mkClient, mkReturn, mkTrading, mkPL, mkBalance,
+    login, session, logout
+  };
+})(window);
+
+/* =============================================================================
+ * Income Tax Evaluation System · app.js — SPA router, views and module logic
+ * ===========================================================================*/
+(function (global) {
+  "use strict";
+  const DB = global.TaxDB, TAX = global.TaxEngine;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const el = (h) => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content.firstElementChild; };
+
+  /* ---- Formatting --------------------------------------------------------- */
+  const inr = (v) => "₹" + Number(v || 0).toLocaleString("en-IN");
+  const inr2 = (v) => "₹" + Number(v || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fyLabel = (r) => `AY ${String(r.ASSES_YEAR_1).slice(0,4)}-${String(r.ASSES_YEAR_2).slice(2,4)}`;
+  const fmtDate = (d) => { if (!d) return "—"; const x = new Date(d); return isNaN(x) ? d : x.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }); };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+  const humanize = (k) => {
+    const over = { TO_POST_TLGRM_FAX_COUR_PH: "Postage, Telegram, Fax etc.", TO_MANU_ASSEM_EXPEN: "Manufacturing & Assembling Exp.",
+      TO_DRCT_FACT_PROD_EXP: "Direct Factory Productive Exp.", TO_MISC_SUNDRY_EXPENSE: "Miscellaneous & Sundry Exp.",
+      TO_LIGHT_WATER_ELECT: "Lighting, Water & Electricity", TO_STAFF_WELF_EXPENSE: "Staff Welfare Expenses",
+      TO_ESTAB_EXPENSE: "Establishment Expenses", TO_IMPORT_DUTY_CUSTOMS: "Import Duty & Customs",
+      TO_HEATING_LIGHTING_POWER: "Heating, Lighting & Power", TO_COAL_WATER_GAS: "Coal, Water & Gas",
+      TO_LOSS_ON_SALE_OF_ASSET: "Loss on Sale of Assets", TO_LOSS_BY_THEFT_ACCIDENT: "Loss by Fire/Theft/Accident",
+      BY_PROF_FROM_SALE_OF_ASSET: "Profit from Sale of Assets", BY_INC_IN_VALUE_OF_ASSET: "Increase in Value of Assets",
+      BY_RES_FOR_BAD_DOUBTS: "Reserve for Bad Doubts", BY_APPRENTICESHIP_PREMIUM: "Apprenticeship Premium",
+      PLANT_AND_MACHINERY: "Plant & Machinery" };
+    if (over[k]) return over[k];
+    return k.replace(/^TO_|^BY_/, "").replace(/_/g, " ").toLowerCase()
+      .replace(/\b\w/g, c => c.toUpperCase()).replace(/\bAnd\b/g, "&").replace(/Pl\b/, "P&L");
+  };
+
+  /* ---- Toast / modal ------------------------------------------------------ */
+  function toast(title, sub, type) {
+    let wrap = $(".toast-wrap"); if (!wrap) { wrap = el(`<div class="toast-wrap"></div>`); document.body.appendChild(wrap); }
+    const t = el(`<div class="toast ${type||""}"><b>${esc(title)}</b>${sub?`<small>${esc(sub)}</small>`:""}</div>`);
+    wrap.appendChild(t); setTimeout(() => { t.style.opacity = "0"; setTimeout(() => t.remove(), 300); }, 3200);
+  }
+  function confirmModal(title, body, okLabel, onOk, danger) {
+    const back = el(`<div class="modal-back"><div class="modal">
+      <div class="m-head"><h3>${esc(title)}</h3></div>
+      <div class="m-body">${body}</div>
+      <div class="m-foot"><button class="btn btn-ghost" data-x>Cancel</button>
+      <button class="btn ${danger?"btn-danger":"btn-primary"}" data-ok>${esc(okLabel)}</button></div></div></div>`);
+    document.body.appendChild(back);
+    const close = () => back.remove();
+    back.addEventListener("click", e => { if (e.target === back) close(); });
+    $("[data-x]", back).onclick = close;
+    $("[data-ok]", back).onclick = () => { close(); onOk(); };
+  }
+
+  /* ---- Theme -------------------------------------------------------------- */
+  function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); localStorage.setItem("items_theme", t); }
+  applyTheme(localStorage.getItem("items_theme") || "light");
+  function toggleTheme() { applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"); }
+
+  /* =========================================================================
+   * AUTH
+   * =======================================================================*/
+  function renderLogin() {
+    document.body.innerHTML = "";
+    const wrap = el(`<div class="login-wrap"><div class="login-card">
+      <div class="login-head">
+        <div class="logo"><span class="mark">₹</span> Income Tax Evaluation System</div>
+        <h1>Sign in to your workspace</h1>
+        <p>Client records &middot; Return filing &middot; Firm accounts &middot; Reports</p>
+      </div>
+      <form class="login-body" id="loginForm" autocomplete="off">
+        <div class="field"><label>User ID <span class="req">*</span></label>
+          <input id="u" placeholder="e.g. admin" required></div>
+        <div class="field"><label>Password <span class="req">*</span></label>
+          <input id="p" type="password" placeholder="Enter password" required></div>
+        <div class="err-text" id="loginErr"></div>
+        <button class="btn btn-primary" style="width:100%" type="submit">Sign in &rarr;</button>
+        <div class="hint">Demo credentials &mdash; Admin: <code>admin</code> / <code>admin@123</code> &nbsp;·&nbsp;
+          Operator: <code>operator</code> / <code>demo@2025</code></div>
+      </form></div></div>`);
+    document.body.appendChild(wrap);
+    $("#loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const s = DB.login($("#u").value.trim(), $("#p").value);
+      if (!s) { $("#loginErr").textContent = "Invalid user id or password. Please try again."; return; }
+      location.hash = "#/dashboard"; boot();
+    });
+  }
+
+  /* =========================================================================
+   * SHELL
+   * =======================================================================*/
+  const NAV = [
+    { group: "Overview" },
+    { id: "dashboard", icon: "📊", label: "Dashboard" },
+    { group: "Master" },
+    { id: "clients", icon: "👤", label: "Client Information" },
+    { group: "Transactions" },
+    { id: "returns", icon: "📄", label: "Return Filing" },
+    { id: "trading", icon: "📦", label: "Trading Account" },
+    { id: "pl", icon: "💹", label: "Profit & Loss A/c" },
+    { id: "balance", icon: "⚖️", label: "Balance Sheet" },
+    { group: "Output" },
+    { id: "reports", icon: "🗂️", label: "Reports" }
+  ];
+
+  function renderShell() {
+    const s = DB.session();
+    document.body.innerHTML = "";
+    const app = el(`<div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand"><span class="mark">₹</span><div><b>Income Tax</b><small>Evaluation System</small></div></div>
+        <nav class="nav" id="nav"></nav>
+        <div style="padding:.8rem 1rem;border-top:1px solid var(--line);font-size:.72rem;color:var(--muted)">
+          v1.0 &middot; Demo build<br>Data stored locally in your browser</div>
+      </aside>
+      <div class="main">
+        <header class="topbar">
+          <button class="icon-btn hamburger" id="ham" aria-label="Menu">☰</button>
+          <div class="crumbs" id="crumbs">Dashboard<small>Welcome back</small></div>
+          <div class="spacer"></div>
+          <button class="icon-btn no-print" id="tourBtn" title="Guided tour">🧭</button>
+          <button class="icon-btn no-print" id="themeBtn" title="Toggle theme">🌓</button>
+          <div class="user-chip"><span class="av">${esc((s.name||"U").slice(0,1))}</span>
+            <div><b style="font-size:.82rem">${esc(s.name)}</b><small>${esc(s.role)}</small></div>
+            <button class="icon-btn" id="logout" title="Sign out">⏻</button></div>
+        </header>
+        <div class="content" id="view"></div>
+      </div>
+    </div>`);
+    document.body.appendChild(app);
+
+    const nav = $("#nav");
+    NAV.forEach(n => {
+      if (n.group) nav.appendChild(el(`<div class="group">${esc(n.group)}</div>`));
+      else nav.appendChild(el(`<a href="#/${n.id}" data-nav="${n.id}"><span class="ico">${n.icon}</span>${esc(n.label)}</a>`));
+    });
+    $("#logout").onclick = () => confirmModal("Sign out?", "You will be returned to the login screen.", "Sign out",
+      () => { DB.logout(); location.hash = ""; renderLogin(); });
+    $("#themeBtn").onclick = toggleTheme;
+    $("#tourBtn").onclick = startTour;
+    $("#ham").onclick = () => $("#sidebar").classList.toggle("open");
+    nav.addEventListener("click", () => $("#sidebar").classList.remove("open"));
+  }
+
+  function setCrumbs(title, sub) {
+    const c = $("#crumbs"); if (c) c.innerHTML = `${esc(title)}<small>${esc(sub||"")}</small>`;
+    $$("#nav a").forEach(a => a.classList.remove("active"));
+  }
+  function markNav(id) { const a = $(`#nav a[data-nav="${id}"]`); if (a) a.classList.add("active"); }
+
+  /* =========================================================================
+   * DASHBOARD
+   * =======================================================================*/
+  function viewDashboard(view) {
+    setCrumbs("Dashboard", "Practice overview"); markNav("dashboard");
+    const clients = DB.all("CLIENT_RECORD"), returns = DB.all("INCOME_TAX_RECORD");
+    const firms = clients.filter(c => Number(c.INDV_HUF_FIRM_AOP_LA) === 2).length;
+    const revised = returns.filter(r => Number(r.RETURN_ORIGINAL_REVISED) === 1).length;
+    const totalTax = returns.reduce((a, r) => a + Number(r.NET_TAX_PAYABLE || 0), 0);
+    const byFiscal = {};
+    returns.forEach(r => { const k = fyLabel(r); byFiscal[k] = (byFiscal[k] || 0) + 1; });
+    const fiscals = Object.keys(byFiscal).sort();
+    const maxF = Math.max(1, ...Object.values(byFiscal));
+
+    view.innerHTML = `
+      <div class="page-head"><div><h2>Welcome back</h2>
+        <p class="muted">A consolidated view of clients, returns and tax collections.</p></div>
+        <div class="btn-row no-print"><a class="btn btn-ghost" href="#/reports">View reports</a>
+          <a class="btn btn-primary" href="#/clients/new">+ New client</a></div></div>
+      <div class="grid grid-4" style="margin-bottom:1.2rem">
+        <div class="stat i1"><div class="ico">👥</div><div class="lbl">Total Clients</div>
+          <div class="val mono">${clients.length}</div><div class="sub">${firms} firm(s) · ${clients.length-firms} individual(s)</div></div>
+        <div class="stat i2"><div class="ico">📄</div><div class="lbl">Returns Filed</div>
+          <div class="val mono">${returns.length}</div><div class="sub">${returns.length-revised} original · ${revised} revised</div></div>
+        <div class="stat i3"><div class="ico">🔁</div><div class="lbl">Revised Returns</div>
+          <div class="val mono">${revised}</div><div class="sub">Corrections to original filings</div></div>
+        <div class="stat i4"><div class="ico">💰</div><div class="lbl">Net Tax (recorded)</div>
+          <div class="val mono">${inr(totalTax)}</div><div class="sub">Across all assessment years</div></div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card"><div class="card-head"><h3>Returns by Assessment Year</h3></div>
+          <div class="card-body"><div id="bars" style="display:flex;flex-direction:column;gap:.7rem">
+          ${fiscals.map(f => `<div><div style="display:flex;justify-content:space-between;font-size:.84rem;margin-bottom:.2rem">
+            <span>${esc(f)}</span><b class="mono">${byFiscal[f]}</b></div>
+            <div style="height:12px;background:var(--surface-2);border-radius:99px;overflow:hidden">
+            <div style="height:100%;width:${(byFiscal[f]/maxF*100).toFixed(0)}%;background:var(--brand-grad);border-radius:99px"></div>
+            </div></div>`).join("") || `<p class="muted">No returns yet.</p>`}
+          </div></div></div>
+        <div class="card"><div class="card-head"><h3>Recent Returns</h3><a class="btn btn-sm btn-ghost no-print" href="#/returns">All &rarr;</a></div>
+          <div class="card-body" style="padding:0"><div class="table-wrap"><table class="data"><thead><tr>
+          <th>Client</th><th>AY</th><th>Type</th><th class="num">Total Income</th></tr></thead><tbody>
+          ${returns.slice().reverse().slice(0,6).map(r => { const c = DB.findClient(r.PAN);
+            return `<tr><td>${esc(c?c.CLIENT_NAME:r.PAN)}</td><td>${esc(fyLabel(r))}</td>
+              <td><span class="badge ${Number(r.RETURN_ORIGINAL_REVISED)?"badge-revised":"badge-original"}">${Number(r.RETURN_ORIGINAL_REVISED)?"Revised":"Original"}</span></td>
+              <td class="num mono">${inr(r.TOTAL_INCOME)}</td></tr>`; }).join("") ||
+            `<tr><td colspan="4" class="empty">No returns filed.</td></tr>`}
+          </tbody></table></div></div></div>
+      </div>`;
+  }
+
+  /* =========================================================================
+   * CLIENT MODULE
+   * =======================================================================*/
+  function viewClients(view) {
+    setCrumbs("Client Information", "Master records"); markNav("clients");
+    const render = (q) => {
+      let rows = DB.all("CLIENT_RECORD");
+      if (q) { q = q.toLowerCase(); rows = rows.filter(c => (c.CLIENT_NAME+c.PAN+c.ADDRESS).toLowerCase().includes(q)); }
+      const body = rows.length ? rows.map(c => `<tr>
+        <td class="mono">${esc(c.PAN)}</td><td><b>${esc(c.CLIENT_NAME)}</b><br><small class="muted">${esc(c.FATHERS_NAME)}</small></td>
+        <td><span class="badge ${Number(c.INDV_HUF_FIRM_AOP_LA)===2?"badge-firm":"badge-indv"}">${esc(DB.CATEGORY[c.INDV_HUF_FIRM_AOP_LA])}</span></td>
+        <td>${esc(fmtDate(c.DOB))}</td><td>${esc(c.WARD_CIRCLE_SPECIAL_RANGE)}</td>
+        <td class="no-print"><div class="row-actions">
+          <a class="btn btn-sm btn-ghost" href="#/clients/edit/${encodeURIComponent(c.PAN)}">Edit</a>
+          <button class="btn btn-sm btn-danger" data-del="${esc(c.PAN)}">Delete</button></div></td></tr>`).join("")
+        : `<tr><td colspan="6"><div class="empty"><div class="big">👤</div>No clients found. Add your first client to begin.</div></td></tr>`;
+      $("#clientBody").innerHTML = body;
+      $$("#clientBody [data-del]").forEach(b => b.onclick = () => {
+        const pan = b.getAttribute("data-del"); const c = DB.findClient(pan);
+        confirmModal("Delete client?", `This will permanently remove <b>${esc(c.CLIENT_NAME)}</b> (${esc(pan)}) and all linked returns, trading, P&amp;L and balance-sheet records.`,
+          "Delete", () => { DB.deleteClient(pan); toast("Client deleted", c.CLIENT_NAME); render($("#cSearch").value); }, true);
+      });
+    };
+    view.innerHTML = `
+      <div class="page-head"><div><h2>Client Information</h2>
+        <p class="muted">Add, update and remove clients. PAN is the unique primary key.</p></div>
+        <a class="btn btn-primary no-print" href="#/clients/new">+ Insert Client Record</a></div>
+      <div class="toolbar no-print"><div class="search"><span class="mag">🔍</span>
+        <input id="cSearch" placeholder="Search by name, PAN or address..."></div></div>
+      <div class="card"><div class="table-wrap"><table class="data"><thead><tr>
+        <th>PAN</th><th>Name / Father</th><th>Category</th><th>Date of Birth</th><th>Ward/Circle</th><th class="no-print">Actions</th>
+        </tr></thead><tbody id="clientBody"></tbody></table></div></div>`;
+    render("");
+    $("#cSearch").addEventListener("input", (e) => render(e.target.value));
+  }
+
+  function viewClientForm(view, mode, pan) {
+    const editing = mode === "edit";
+    const rec = editing ? DB.findClient(pan) : DB.mkClient({ PAN: "" });
+    if (editing && !rec) { toast("Not found", "Client does not exist", "err"); location.hash = "#/clients"; return; }
+    setCrumbs(editing ? "Update Client" : "Insert Client", "Client Information module"); markNav("clients");
+
+    view.innerHTML = `
+      <div class="page-head"><div><h2>${editing?"Update":"Insert"} Client Record</h2>
+        <p class="muted">${editing?"Modify the details of "+esc(rec.CLIENT_NAME):"Enter the basic information of a new client."}</p></div>
+        <a class="btn btn-ghost no-print" href="#/clients">&larr; Back to list</a></div>
+      <div class="card"><div class="card-body"><form id="cForm" autocomplete="off"><div class="form-grid">
+        <div class="section-title">Identification</div>
+        <div class="field"><label>PAN <span class="req">*</span></label>
+          <input id="PAN" maxlength="10" value="${esc(rec.PAN)}" ${editing?"readonly":""} placeholder="ABCDE1234F" style="text-transform:uppercase">
+          <div class="err-text" data-err="PAN"></div></div>
+        <div class="field"><label>Full Name <span class="req">*</span></label>
+          <input id="CLIENT_NAME" maxlength="30" value="${esc(rec.CLIENT_NAME)}"><div class="err-text" data-err="CLIENT_NAME"></div></div>
+        <div class="field"><label>Father's Name</label>
+          <input id="FATHERS_NAME" maxlength="30" value="${esc(rec.FATHERS_NAME)}"></div>
+        <div class="field"><label>Date of Birth</label>
+          <input id="DOB" type="date" value="${esc(rec.DOB)}"></div>
+        <div class="section-title">Contact</div>
+        <div class="field full"><label>Address</label>
+          <textarea id="ADDRESS" maxlength="60">${esc(rec.ADDRESS)}</textarea></div>
+        <div class="field"><label>PIN Code</label>
+          <input id="PINCODE" maxlength="6" value="${esc(rec.PINCODE)}" placeholder="6 digits"><div class="err-text" data-err="PINCODE"></div></div>
+        <div class="field"><label>Telephone</label>
+          <input id="TELEPHONE" maxlength="15" value="${esc(rec.TELEPHONE)}"><div class="err-text" data-err="TELEPHONE"></div></div>
+        <div class="section-title">Classification</div>
+        <div class="field"><label>Category (I / HUF / Firm / AOP / LA)</label>
+          <div class="radio-row" id="cat">${DB.CATEGORY.map((c,i)=>`<label><input type="radio" name="cat" value="${i}" ${i==rec.INDV_HUF_FIRM_AOP_LA?"checked":""}>${esc(c)}</label>`).join("")}</div></div>
+        <div class="field"><label>Residential Status</label>
+          <div class="radio-row" id="res">${DB.RESIDENCE.map((c,i)=>`<label><input type="radio" name="res" value="${i}" ${i==rec.RESIDENT_NR_NOR?"checked":""}>${esc(c)}</label>`).join("")}</div></div>
+        <div class="field"><label>Sex</label>
+          <div class="radio-row" id="sex"><label><input type="radio" name="sex" value="1" ${rec.SEX==1?"checked":""}>Male</label>
+            <label><input type="radio" name="sex" value="0" ${rec.SEX==0?"checked":""}>Female</label></div></div>
+        <div class="field"><label>Ward / Circle / Special Range</label>
+          <input id="WARD_CIRCLE_SPECIAL_RANGE" maxlength="20" value="${esc(rec.WARD_CIRCLE_SPECIAL_RANGE)}"></div>
+      </div>
+      <div class="btn-row no-print" style="margin-top:1rem">
+        <button class="btn btn-primary" type="submit">${editing?"💾 Update":"💾 Save"} Client</button>
+        <a class="btn btn-ghost" href="#/clients">Cancel</a></div></form></div></div>`;
+
+    $("#cForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const val = (id) => $("#"+id).value.trim();
+      const errs = {};
+      const panV = val("PAN").toUpperCase();
+      if (!editing) {
+        if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panV)) errs.PAN = "PAN must match format ABCDE1234F.";
+        else if (DB.findClient(panV)) errs.PAN = "A client with this PAN already exists.";
+      }
+      if (!val("CLIENT_NAME")) errs.CLIENT_NAME = "Name is required.";
+      if (val("PINCODE") && !/^[0-9]{6}$/.test(val("PINCODE"))) errs.PINCODE = "PIN code must be 6 digits.";
+      if (val("TELEPHONE") && !/^[0-9+\-\s]{6,15}$/.test(val("TELEPHONE"))) errs.TELEPHONE = "Enter a valid phone number.";
+      $$("[data-err]").forEach(n => n.textContent = "");
+      $$("#cForm input, #cForm textarea").forEach(n => n.classList.remove("invalid"));
+      if (Object.keys(errs).length) {
+        Object.entries(errs).forEach(([k,v]) => { const e2 = $(`[data-err="${k}"]`); if (e2) e2.textContent = v; const inp = $("#"+k); if (inp) inp.classList.add("invalid"); });
+        toast("Please fix the highlighted fields", "", "err"); return;
+      }
+      const out = DB.mkClient({
+        PAN: editing ? rec.PAN : panV, CLIENT_NAME: val("CLIENT_NAME"), FATHERS_NAME: val("FATHERS_NAME"),
+        DOB: val("DOB"), ADDRESS: val("ADDRESS"), PINCODE: val("PINCODE"), TELEPHONE: val("TELEPHONE"),
+        SEX: +($('input[name="sex"]:checked')?.value ?? 1),
+        INDV_HUF_FIRM_AOP_LA: +($('input[name="cat"]:checked')?.value ?? 0),
+        RESIDENT_NR_NOR: +($('input[name="res"]:checked')?.value ?? 0),
+        WARD: val("WARD_CIRCLE_SPECIAL_RANGE") || "Ward"
+      });
+      DB.upsertClient(out);
+      toast(editing ? "Client updated" : "Client saved", out.CLIENT_NAME);
+      location.hash = "#/clients";
+    });
+  }
+
+  /* =========================================================================
+   * RETURN MODULE (Original / Revised) + tax computation
+   * =======================================================================*/
+  function viewReturns(view) {
+    setCrumbs("Return Filing", "Original & Revised returns"); markNav("returns");
+    const render = (q) => {
+      let rows = DB.all("INCOME_TAX_RECORD");
+      if (q) { q = q.toLowerCase(); rows = rows.filter(r => { const c = DB.findClient(r.PAN); return ((c?c.CLIENT_NAME:"")+r.PAN+fyLabel(r)).toLowerCase().includes(q); }); }
+      $("#rBody").innerHTML = rows.length ? rows.map(r => { const c = DB.findClient(r.PAN); const rev = Number(r.RETURN_ORIGINAL_REVISED);
+        return `<tr><td class="mono">${esc(r.PAN)}</td><td><b>${esc(c?c.CLIENT_NAME:"—")}</b></td>
+        <td>${esc(fyLabel(r))}</td>
+        <td><span class="badge ${rev?"badge-revised":"badge-original"}">${rev?"Revised":"Original"}</span></td>
+        <td class="num mono">${inr(r.TOTAL_INCOME)}</td><td class="num mono">${inr(r.NET_TAX_PAYABLE)}</td>
+        <td class="num mono">${Number(r.BAL_TAX_PAYABLE_REFUND)<0?'<span style="color:var(--ok)">'+inr(-r.BAL_TAX_PAYABLE_REFUND)+' Ref</span>':inr(r.BAL_TAX_PAYABLE_REFUND)}</td>
+        <td class="no-print"><div class="row-actions">
+          <a class="btn btn-sm btn-ghost" href="#/returns/edit/${encodeURIComponent(DB.returnKey(r))}">Edit</a>
+          <button class="btn btn-sm btn-danger" data-del="${esc(DB.returnKey(r))}">Delete</button></div></td></tr>`; }).join("")
+        : `<tr><td colspan="8"><div class="empty"><div class="big">📄</div>No returns filed yet.</div></td></tr>`;
+      $$("#rBody [data-del]").forEach(b => b.onclick = () => {
+        const key = b.getAttribute("data-del"); const rec = DB.all("INCOME_TAX_RECORD").find(x => DB.returnKey(x)===key);
+        confirmModal("Delete return?", `Delete this ${Number(rec.RETURN_ORIGINAL_REVISED)?"revised":"original"} return for ${esc(rec.PAN)} (${esc(fyLabel(rec))})?`,
+          "Delete", () => { DB.deleteReturn(rec); toast("Return deleted"); render($("#rSearch").value); }, true);
+      });
+    };
+    view.innerHTML = `
+      <div class="page-head"><div><h2>Return Filing</h2>
+        <p class="muted">File original returns, revise mistakes, and let the engine compute the tax.</p></div>
+        <a class="btn btn-primary no-print" href="#/returns/new">+ File New Return</a></div>
+      <div class="toolbar no-print"><div class="search"><span class="mag">🔍</span>
+        <input id="rSearch" placeholder="Search by client, PAN or assessment year..."></div></div>
+      <div class="card"><div class="table-wrap"><table class="data"><thead><tr>
+        <th>PAN</th><th>Client</th><th>AY</th><th>Type</th><th class="num">Total Income</th>
+        <th class="num">Net Tax</th><th class="num">Balance</th><th class="no-print">Actions</th>
+        </tr></thead><tbody id="rBody"></tbody></table></div></div>`;
+    render("");
+    $("#rSearch").addEventListener("input", e => render(e.target.value));
+  }
+
+  function viewReturnForm(view, mode, key) {
+    const editing = mode === "edit";
+    const clients = DB.all("CLIENT_RECORD");
+    if (!clients.length) { view.innerHTML = `<div class="empty"><div class="big">👤</div>Add a client first before filing a return.
+      <div style="margin-top:1rem"><a class="btn btn-primary" href="#/clients/new">+ Add client</a></div></div>`; return; }
+    let rec = editing ? DB.all("INCOME_TAX_RECORD").find(r => DB.returnKey(r) === key) : DB.mkReturn({ PAN: clients[0].PAN });
+    if (editing && !rec) { location.hash = "#/returns"; return; }
+    rec = Object.assign({}, rec);
+    setCrumbs(editing ? "Edit Return" : "File Return", "Return Information module"); markNav("returns");
+
+    const incomeFields = [
+      ["INCOME_FROM_SALARY", "Income from Salary"], ["INCOME_FROM_HOUSE_PROPERTY", "Income from House Property"],
+      ["INCOME_FROM_BUSINESS", "Income from Business / Profession"], ["TOTAL_SHORT_TERM_GAIN", "Short-term Capital Gain"],
+      ["TOTAL_LONG_TERM_GAIN", "Long-term Capital Gain"], ["INCOME_FROM_OTHER_SOURCES", "Income from Other Sources"],
+      ["INCM_OTHER_PERS_TO_ADDED", "Income of Other Person (clubbed)"], ["LESS_DEDUCTION_UNDER_VIA", "Less: Deductions (Chapter VI-A)"]
+    ];
+    const payFields = [
+      ["TAX_DEDUC_AT_SOURCE", "Tax Deducted at Source (TDS)"], ["ADVANCE_TAX_PAID", "Advance Tax Paid"],
+      ["TOT_SELF_ASSESS_TAX_PAID", "Self-Assessment Tax Paid"], ["INTEREST_PAYABLE", "Interest Payable (234A/B/C)"],
+      ["LESS_RELIEF", "Less: Relief u/s 89/90/91"]
+    ];
+
+    view.innerHTML = `
+      <div class="page-head"><div><h2>${editing?"Edit":"File"} Income Tax Return</h2>
+        <p class="muted">Verify the client via PAN, enter income heads, and compute the tax liability.</p></div>
+        <a class="btn btn-ghost no-print" href="#/returns">&larr; Back</a></div>
+      <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:1.1rem" id="rGrid">
+        <div class="card"><div class="card-body"><form id="rForm"><div class="form-grid">
+          <div class="section-title">Return header</div>
+          <div class="field"><label>Client (PAN) <span class="req">*</span></label>
+            <select id="PAN" ${editing?"disabled":""}>${clients.map(c=>`<option value="${esc(c.PAN)}" ${c.PAN===rec.PAN?"selected":""}>${esc(c.CLIENT_NAME)} — ${esc(c.PAN)}</option>`).join("")}</select></div>
+          <div class="field"><label>Return Type</label>
+            <div class="radio-row" id="rt"><label><input type="radio" name="rt" value="0" ${!Number(rec.RETURN_ORIGINAL_REVISED)?"checked":""}>Original</label>
+            <label><input type="radio" name="rt" value="1" ${Number(rec.RETURN_ORIGINAL_REVISED)?"checked":""}>Revised</label></div>
+            <div class="err-text" data-err="rt"></div></div>
+          <div class="field"><label>Assessment Year — From</label>
+            <input id="AY1" type="date" value="${esc(rec.ASSES_YEAR_1)}" ${editing?"readonly":""}></div>
+          <div class="field"><label>Assessment Year — To</label>
+            <input id="AY2" type="date" value="${esc(rec.ASSES_YEAR_2)}" ${editing?"readonly":""}></div>
+          <div class="section-title">Income heads</div>
+          ${incomeFields.map(([k,l]) => `<div class="field"><label>${esc(l)}</label>
+            <input class="calc" data-k="${k}" type="number" min="0" step="1" value="${Number(rec[k])||""}" placeholder="0"></div>`).join("")}
+          <div class="section-title">Taxes already paid</div>
+          ${payFields.map(([k,l]) => `<div class="field"><label>${esc(l)}</label>
+            <input class="calc" data-k="${k}" type="number" min="0" step="1" value="${Number(rec[k])||""}" placeholder="0"></div>`).join("")}
+        </div>
+        <div class="btn-row no-print" style="margin-top:1rem">
+          <button class="btn btn-primary" type="submit">💾 ${editing?"Update":"File"} Return</button>
+          <a class="btn btn-ghost" href="#/returns">Cancel</a></div></form></div></div>
+        <div><div class="card" style="position:sticky;top:76px"><div class="card-head"><h3>Computation of Tax</h3>
+          <span class="pill" id="regimePill">Old regime</span></div>
+          <div class="card-body" id="computed"></div></div></div>
+      </div>`;
+
+    const readForm = () => {
+      const o = Object.assign({}, rec);
+      $$("#rForm .calc").forEach(i => o[i.getAttribute("data-k")] = Number(i.value) || 0);
+      o.PAN = $("#PAN").value;
+      o.RETURN_ORIGINAL_REVISED = +($('input[name="rt"]:checked')?.value ?? 0);
+      o.ASSES_YEAR_1 = $("#AY1").value; o.ASSES_YEAR_2 = $("#AY2").value;
+      return o;
+    };
+    const recompute = () => {
+      const o = readForm(); const client = DB.findClient(o.PAN);
+      const comp = TAX.compute(o, client);
+      $("#regimePill").textContent = Number(client?.INDV_HUF_FIRM_AOP_LA) === 2 ? "Firm @ 30%" : "Old regime";
+      const line = (l, v, strong, hl) => `<div class="lrow" style="${strong?'font-weight:800;':''}">
+        <span style="${hl?'color:var(--brand)':''}">${esc(l)}</span><span class="amt" style="${hl?'color:var(--brand)':''}">${inr(v)}</span></div>`;
+      const bal = comp.BAL_TAX_PAYABLE_REFUND;
+      $("#computed").innerHTML =
+        line("Gross Total Income", comp.GROSS_TOTAL_INCOME) +
+        line("Less: Deductions VI-A", Number(o.LESS_DEDUCTION_UNDER_VIA)) +
+        line("Total Income", comp.TOTAL_INCOME, true, true) +
+        `<div style="height:.5rem"></div>` +
+        line("Tax at normal rates", comp.INCOME_TAX_NORM_RATE) +
+        line("Tax at special rates", comp.INCOME_TAX_SPCL_RATE) +
+        line("Tax on Total Income", comp.TAX_ON_TOTAL_INCOME) +
+        line("Less: Rebate u/s 87A", comp.LESS_REBATE) +
+        line("Add: Surcharge", comp.ADDITIONAL_SURCHARGE) +
+        line("Add: Health & Edu Cess (4%)", comp.TOTAL_TAX_PAYABLE - comp.TAX_PAYABLE - comp.ADDITIONAL_SURCHARGE) +
+        line("Total Tax Payable", comp.TOTAL_TAX_PAYABLE, true) +
+        line("Net Tax Payable", comp.NET_TAX_PAYABLE, true, true) +
+        `<div class="total" style="border-top:2px dashed var(--line);margin-top:.6rem">
+          <span>${bal < 0 ? "Refund Due" : "Balance Payable"}</span>
+          <span class="${bal<0?'balanced':''}">${inr(Math.abs(bal))}</span></div>`;
+    };
+    recompute();
+    $$("#rForm .calc, #PAN, input[name='rt']").forEach(i => i.addEventListener("input", recompute));
+
+    $("#rForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const o = readForm();
+      if (!o.ASSES_YEAR_1 || !o.ASSES_YEAR_2) { toast("Assessment year is required", "", "err"); return; }
+      const isRevised = Number(o.RETURN_ORIGINAL_REVISED) === 1;
+      if (!editing && isRevised && !DB.hasOriginal(o.PAN, o.ASSES_YEAR_1, o.ASSES_YEAR_2)) {
+        $(`[data-err="rt"]`).textContent = "An original return must be filed before a revised one (per SRS rule).";
+        toast("Cannot file revised return", "No original return exists for this AY", "err"); return;
+      }
+      Object.assign(o, TAX.compute(o, DB.findClient(o.PAN)));
+      DB.upsertReturn(o);
+      toast(editing ? "Return updated" : (isRevised ? "Revised return filed" : "Original return filed"),
+        DB.findClient(o.PAN)?.CLIENT_NAME);
+      location.hash = "#/returns";
+    });
+  }
+
+  /* =========================================================================
+   * LEDGER MODULES (Trading / P&L / Balance Sheet)
+   * =======================================================================*/
+  const LEDGERS = {
+    trading: { table: "TRADING_ACCOUNT", title: "Trading Account", icon: "📦",
+      fields: DB.TRADING_FIELDS, leftPrefix: "TO_", rightPrefix: "BY_",
+      leftHead: "Dr. (To)", rightHead: "Cr. (By)", firmOnly: true },
+    pl: { table: "PL_ACCOUNT", title: "Profit & Loss Account", icon: "💹",
+      fields: DB.PL_FIELDS, leftPrefix: "TO_", rightPrefix: "BY_",
+      leftHead: "Dr. (To)", rightHead: "Cr. (By)", firmOnly: true },
+    balance: { table: "BALANCE_SHEET", title: "Balance Sheet", icon: "⚖️",
+      fields: DB.BALANCE_FIELDS, firmOnly: true,
+      left: ["BILLS_PAYABLE","SUNDRY_CREDITORS","LOANS","OUTSTANDING_EXPENSES","CAPITAL","NET_PROFIT","INTEREST_ON_CAPITAL","DRAWINGS","NET_LOSS","INCOME_TAX"],
+      right: ["CASH_IN_HAND","CASH_AT_BANK","INVESTMENTS","BILLS_RECEIVABLE","SUNDRY_DEBTORS","CLOSING_STOCK","STORES","PLANT_AND_MACHINERY","FREEHOLD_PREMISES","UNEXPIRED_EXPENSES","GOODWILL"],
+      leftHead: "Liabilities & Capital", rightHead: "Assets" }
+  };
+
+  function viewLedger(view, kind) {
+    const cfg = LEDGERS[kind];
+    setCrumbs(cfg.title, "Firm accounts module"); markNav(kind);
+    const firms = DB.all("CLIENT_RECORD").filter(c => Number(c.INDV_HUF_FIRM_AOP_LA) === 2);
+    const render = () => {
+      const rows = DB.all(cfg.table);
+      $("#lBody").innerHTML = rows.length ? rows.map(r => { const c = DB.findClient(r.PAN);
+        const t = ledgerTotals(cfg, r);
+        return `<tr><td class="mono">${esc(r.PAN)}</td><td><b>${esc(c?c.CLIENT_NAME:"—")}</b></td>
+          <td>${esc(fyLabel({ASSES_YEAR_1:r.ASSES_YEAR_1,ASSES_YEAR_2:r.ASSES_YEAR_2}))}</td>
+          <td class="num mono">${inr(t.left)}</td><td class="num mono">${inr(t.right)}</td>
+          <td>${t.balanced?'<span class="badge badge-firm">Balanced</span>':'<span class="badge badge-revised">Δ '+inr(Math.abs(t.left-t.right))+'</span>'}</td>
+          <td class="no-print"><div class="row-actions">
+            <button class="btn btn-sm btn-ghost" data-edit="${esc(DB.acctKey(r))}">Edit</button>
+            <button class="btn btn-sm btn-danger" data-del="${esc(DB.acctKey(r))}">Delete</button></div></td></tr>`; }).join("")
+        : `<tr><td colspan="7"><div class="empty"><div class="big">${cfg.icon}</div>No ${esc(cfg.title.toLowerCase())} records yet.</div></td></tr>`;
+      $$("#lBody [data-del]").forEach(b => b.onclick = () => { const rec = DB.all(cfg.table).find(x => DB.acctKey(x)===b.getAttribute("data-del"));
+        confirmModal("Delete record?", `Delete the ${esc(cfg.title.toLowerCase())} for ${esc(rec.PAN)}?`, "Delete",
+          () => { DB.deleteAcct(cfg.table, rec); toast("Record deleted"); render(); }, true); });
+      $$("#lBody [data-edit]").forEach(b => b.onclick = () => openLedgerForm(cfg, kind, DB.all(cfg.table).find(x => DB.acctKey(x)===b.getAttribute("data-edit"))));
+    };
+    view.innerHTML = `
+      <div class="page-head"><div><h2>${esc(cfg.title)}</h2>
+        <p class="muted">${kind==="balance"?"Maintain assets, liabilities & capital for firm clients.":"Record the "+esc(cfg.title.toLowerCase())+" for firm clients; both sides are auto-totalled."}</p></div>
+        <button class="btn btn-primary no-print" id="newL" ${firms.length?"":"disabled title='Add a firm client first'"}>+ New ${esc(cfg.title)}</button></div>
+      <div class="card"><div class="table-wrap"><table class="data"><thead><tr>
+        <th>PAN</th><th>Firm</th><th>AY</th><th class="num">${esc(cfg.leftHead)}</th><th class="num">${esc(cfg.rightHead)}</th><th>Status</th><th class="no-print">Actions</th>
+        </tr></thead><tbody id="lBody"></tbody></table></div></div>
+      ${firms.length?"":`<p class="muted" style="margin-top:1rem">Only <b>Firm</b> category clients can have ${esc(cfg.title.toLowerCase())} records. Create a firm client first.</p>`}`;
+    render();
+    if (firms.length) $("#newL").onclick = () => openLedgerForm(cfg, kind, null);
+    global.__ledgerRender = render;
+  }
+
+  function ledgerTotals(cfg, rec) {
+    const sum = (keys) => keys.reduce((a,k)=>a+Number(rec[k]||0),0);
+    let left, right;
+    if (cfg.left) { left = sum(cfg.left); right = sum(cfg.right); }
+    else { left = sum(cfg.fields.filter(f=>f.startsWith(cfg.leftPrefix))); right = sum(cfg.fields.filter(f=>f.startsWith(cfg.rightPrefix))); }
+    return { left, right, balanced: Math.abs(left-right) < 1 };
+  }
+
+  function openLedgerForm(cfg, kind, existing) {
+    const firms = DB.all("CLIENT_RECORD").filter(c => Number(c.INDV_HUF_FIRM_AOP_LA) === 2);
+    let rec = existing ? Object.assign({}, existing) :
+      (kind==="trading"?DB.mkTrading:kind==="pl"?DB.mkPL:DB.mkBalance)({ PAN: firms[0].PAN });
+    const leftKeys = cfg.left || cfg.fields.filter(f=>f.startsWith(cfg.leftPrefix));
+    const rightKeys = cfg.right || cfg.fields.filter(f=>f.startsWith(cfg.rightPrefix));
+    const inputRows = (keys) => keys.map(k => `<div class="field" style="margin-bottom:.5rem">
+      <label>${esc(humanize(k))}</label><input class="lcalc" data-k="${k}" type="number" min="0" step="1" value="${Number(rec[k])||""}" placeholder="0"></div>`).join("");
+
+    const back = el(`<div class="modal-back"><div class="modal" style="width:min(920px,96vw)">
+      <div class="m-head" style="display:flex;justify-content:space-between;align-items:center">
+        <h3>${existing?"Edit":"New"} ${esc(cfg.title)}</h3><button class="icon-btn" data-x>✕</button></div>
+      <div class="m-body" style="max-height:70vh;overflow:auto">
+        <div class="form-grid" style="margin-bottom:.5rem">
+          <div class="field"><label>Firm (PAN)</label><select id="lPAN" ${existing?"disabled":""}>
+            ${firms.map(c=>`<option value="${esc(c.PAN)}" ${c.PAN===rec.PAN?"selected":""}>${esc(c.CLIENT_NAME)} — ${esc(c.PAN)}</option>`).join("")}</select></div>
+          <div class="field"><label>AY From</label><input id="lAY1" type="date" value="${esc(rec.ASSES_YEAR_1)}" ${existing?"readonly":""}></div>
+          <div class="field"><label>AY To</label><input id="lAY2" type="date" value="${esc(rec.ASSES_YEAR_2)}" ${existing?"readonly":""}></div>
+        </div>
+        <div class="ledger"><div class="side"><h4>${esc(cfg.leftHead)}</h4>${inputRows(leftKeys)}
+            <div class="total"><span>Total</span><span id="lLeft" class="mono">₹0</span></div></div>
+          <div class="side"><h4>${esc(cfg.rightHead)}</h4>${inputRows(rightKeys)}
+            <div class="total"><span>Total</span><span id="lRight" class="mono">₹0</span></div></div></div>
+        <div id="lStatus" style="text-align:center;margin-top:.8rem;font-weight:700"></div>
+      </div>
+      <div class="m-foot"><button class="btn btn-ghost" data-x>Cancel</button>
+        <button class="btn btn-primary" data-save>💾 Save</button></div></div></div>`);
+    document.body.appendChild(back);
+    const close = () => back.remove();
+    $$("[data-x]", back).forEach(b => b.onclick = close);
+    back.addEventListener("click", e => { if (e.target === back) close(); });
+
+    const read = () => { const o = Object.assign({}, rec);
+      $$(".lcalc", back).forEach(i => o[i.getAttribute("data-k")] = Number(i.value)||0);
+      o.PAN = $("#lPAN", back).value; o.ASSES_YEAR_1 = $("#lAY1", back).value; o.ASSES_YEAR_2 = $("#lAY2", back).value; return o; };
+    const upd = () => { const o = read(); const t = ledgerTotals(cfg, o);
+      $("#lLeft", back).textContent = inr(t.left); $("#lRight", back).textContent = inr(t.right);
+      $("#lStatus", back).innerHTML = t.balanced ? '<span class="balanced">✓ Both sides balanced</span>'
+        : `<span class="unbalanced">Difference of ${inr(Math.abs(t.left-t.right))} — ${cfg.title==="Balance Sheet"?"assets ≠ liabilities":"credit ≠ debit"}</span>`; };
+    upd();
+    $$(".lcalc", back).forEach(i => i.addEventListener("input", upd));
+
+    $("[data-save]", back).onclick = () => {
+      const o = read();
+      if (!o.ASSES_YEAR_1 || !o.ASSES_YEAR_2) { toast("Assessment year required", "", "err"); return; }
+      DB.upsertAcct(cfg.table, o);
+      toast(cfg.title + " saved", DB.findClient(o.PAN)?.CLIENT_NAME);
+      close(); if (global.__ledgerRender) global.__ledgerRender();
+    };
+  }
+
+  /* =========================================================================
+   * REPORTS
+   * =======================================================================*/
+  function viewReports(view) {
+    setCrumbs("Reports", "Report Generation module"); markNav("reports");
+    const clients = DB.all("CLIENT_RECORD"), returns = DB.all("INCOME_TAX_RECORD");
+    const fiscals = Array.from(new Set(returns.map(fyLabel))).sort();
+    view.innerHTML = `
+      <div class="page-head"><div><h2>Report Generation</h2>
+        <p class="muted">Generate the four statutory reports defined in the SRS. Use “Print” to save as PDF.</p></div></div>
+      <div class="grid grid-2 no-print">
+        <div class="card"><div class="card-head"><h3>1 · Return history of a client</h3></div>
+          <div class="card-body"><div class="field"><label>Select client</label>
+            <select id="r1"><option value="">— choose —</option>${clients.map(c=>`<option value="${esc(c.PAN)}">${esc(c.CLIENT_NAME)} (${esc(c.PAN)})</option>`).join("")}</select></div>
+            <button class="btn btn-primary" data-run="1">Generate</button></div></div>
+        <div class="card"><div class="card-head"><h3>2 · Return filed by a client in a fiscal</h3></div>
+          <div class="card-body"><div class="form-grid">
+            <div class="field"><label>Client</label><select id="r2c"><option value="">— choose —</option>${clients.map(c=>`<option value="${esc(c.PAN)}">${esc(c.CLIENT_NAME)}</option>`).join("")}</select></div>
+            <div class="field"><label>Fiscal</label><select id="r2f">${fiscals.map(f=>`<option>${esc(f)}</option>`).join("")}</select></div></div>
+            <button class="btn btn-primary" data-run="2">Generate</button></div></div>
+        <div class="card"><div class="card-head"><h3>3 · Total returns filed in a fiscal</h3></div>
+          <div class="card-body"><div class="field"><label>Fiscal</label>
+            <select id="r3">${fiscals.map(f=>`<option>${esc(f)}</option>`).join("")}</select></div>
+            <button class="btn btn-primary" data-run="3">Generate</button></div></div>
+        <div class="card"><div class="card-head"><h3>4 · Total revised returns by a client</h3></div>
+          <div class="card-body"><div class="field"><label>Client</label>
+            <select id="r4"><option value="">— choose —</option>${clients.map(c=>`<option value="${esc(c.PAN)}">${esc(c.CLIENT_NAME)}</option>`).join("")}</select></div>
+            <button class="btn btn-primary" data-run="4">Generate</button></div></div>
+      </div>
+      <div id="reportOut" style="margin-top:1.4rem"></div>`;
+
+    $$("[data-run]").forEach(b => b.onclick = () => runReport(+b.getAttribute("data-run")));
+  }
+
+  function reportShell(title, rows, cols, subtitle) {
+    const out = $("#reportOut");
+    if (!rows.length) { out.innerHTML = `<div class="empty">No matching records for this selection.</div>`; return; }
+    out.innerHTML = `<div class="btn-row no-print" style="justify-content:flex-end;margin-bottom:.6rem">
+        <button class="btn btn-accent" onclick="window.print()">🖨️ Print / Save PDF</button></div>
+      <div class="report-doc"><h1>${esc(title)}</h1>
+      <div class="rmeta"><span>Income Tax Evaluation System</span><span>Generated: ${new Date().toLocaleString("en-GB")}</span></div>
+      ${subtitle?`<p style="text-align:center;color:#555;margin-top:-.5rem">${esc(subtitle)}</p>`:""}
+      <table><thead><tr>${cols.map(c=>`<th${c.num?' style="text-align:right"':''}>${esc(c.label)}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td${c.num?' style="text-align:right;font-variant-numeric:tabular-nums"':''}>${c.num?inr(r[c.key]):esc(r[c.key])}</td>`).join("")}</tr>`).join("")}</tbody></table>
+      </div>`;
+    out.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function runReport(n) {
+    const returns = DB.all("INCOME_TAX_RECORD");
+    const nm = (pan) => { const c = DB.findClient(pan); return c ? c.CLIENT_NAME : pan; };
+    if (n === 1) {
+      const pan = $("#r1").value; if (!pan) return toast("Select a client", "", "warn");
+      const rows = returns.filter(r => r.PAN === pan).map(r => ({ ay: fyLabel(r), type: Number(r.RETURN_ORIGINAL_REVISED)?"Revised":"Original",
+        ti: r.TOTAL_INCOME, tax: r.NET_TAX_PAYABLE, bal: r.BAL_TAX_PAYABLE_REFUND }));
+      reportShell("Return History — " + nm(pan), rows,
+        [{label:"Assessment Year",key:"ay"},{label:"Type",key:"type"},{label:"Total Income",key:"ti",num:1},{label:"Net Tax",key:"tax",num:1},{label:"Balance",key:"bal",num:1}],
+        "PAN: " + pan);
+    } else if (n === 2) {
+      const pan = $("#r2c").value, f = $("#r2f").value; if (!pan) return toast("Select a client", "", "warn");
+      const rows = returns.filter(r => r.PAN === pan && fyLabel(r) === f).map(r => ({ type: Number(r.RETURN_ORIGINAL_REVISED)?"Revised":"Original",
+        gti: r.GROSS_TOTAL_INCOME, ti: r.TOTAL_INCOME, tax: r.NET_TAX_PAYABLE }));
+      reportShell(`Return filed in ${f} — ${nm(pan)}`, rows,
+        [{label:"Type",key:"type"},{label:"Gross Total Income",key:"gti",num:1},{label:"Total Income",key:"ti",num:1},{label:"Net Tax",key:"tax",num:1}]);
+    } else if (n === 3) {
+      const f = $("#r3").value;
+      const rows = returns.filter(r => fyLabel(r) === f).map(r => ({ pan: r.PAN, name: nm(r.PAN),
+        type: Number(r.RETURN_ORIGINAL_REVISED)?"Revised":"Original", ti: r.TOTAL_INCOME, tax: r.NET_TAX_PAYABLE }));
+      reportShell(`All Returns filed in ${f}`, rows,
+        [{label:"PAN",key:"pan"},{label:"Client",key:"name"},{label:"Type",key:"type"},{label:"Total Income",key:"ti",num:1},{label:"Net Tax",key:"tax",num:1}],
+        `${rows.length} return(s) · Net tax ${inr(rows.reduce((a,r)=>a+Number(r.tax||0),0))}`);
+    } else if (n === 4) {
+      const pan = $("#r4").value; if (!pan) return toast("Select a client", "", "warn");
+      const rows = returns.filter(r => r.PAN === pan && Number(r.RETURN_ORIGINAL_REVISED) === 1).map(r => ({ ay: fyLabel(r),
+        ti: r.TOTAL_INCOME, tax: r.NET_TAX_PAYABLE }));
+      reportShell(`Revised Returns — ${nm(pan)}`, rows,
+        [{label:"Assessment Year",key:"ay"},{label:"Revised Total Income",key:"ti",num:1},{label:"Revised Net Tax",key:"tax",num:1}],
+        `Total revised returns: ${rows.length}`);
+    }
+  }
+
+  /* =========================================================================
+   * GUIDED TOUR
+   * =======================================================================*/
+  const TOUR = [
+    { sel: '[data-nav="dashboard"]', title: "Dashboard", body: "Start here for a live overview — client counts, returns filed, revised returns and total tax recorded." },
+    { sel: '[data-nav="clients"]', title: "Client Information", body: "The master module. Add, edit and delete clients. PAN is validated and used as the primary key across all records." },
+    { sel: '[data-nav="returns"]', title: "Return Filing", body: "File Original or Revised returns. The tax is computed live on the right — slabs, rebate, surcharge and cess." },
+    { sel: '[data-nav="trading"]', title: "Firm Accounts", body: "For Firm clients, maintain the Trading Account, Profit & Loss Account and Balance Sheet with automatic Dr/Cr balancing." },
+    { sel: '[data-nav="reports"]', title: "Reports", body: "Generate the four statutory reports and print or save them as PDF for the client file." },
+    { sel: '#themeBtn', title: "Light / Dark", body: "Toggle the theme anytime. Your data lives safely in this browser — nothing leaves your device." }
+  ];
+  function startTour() {
+    let i = 0; const back = el(`<div class="tour-back"></div>`); document.body.appendChild(back);
+    let pop;
+    const show = () => {
+      const step = TOUR[i]; const target = $(step.sel);
+      $$(".tour-highlight").forEach(n => n.classList.remove("tour-highlight"));
+      if (target) target.classList.add("tour-highlight");
+      if (pop) pop.remove();
+      pop = el(`<div class="tour-pop"><h4>${esc(step.title)}</h4><p>${esc(step.body)}</p>
+        <div class="t-foot"><small class="muted">${i+1} / ${TOUR.length}</small>
+        <div class="btn-row"><button class="btn btn-sm btn-ghost" data-skip>Skip</button>
+        <button class="btn btn-sm btn-primary" data-next>${i===TOUR.length-1?"Done":"Next →"}</button></div></div></div>`);
+      document.body.appendChild(pop);
+      const r = target ? target.getBoundingClientRect() : { left: innerWidth/2-170, bottom: 90, top: 90, right: 0 };
+      let left = Math.min(Math.max(12, r.right + 12), innerWidth - 360);
+      let top = Math.min(r.top, innerHeight - 180);
+      if (innerWidth < 820) { left = Math.max(12, innerWidth/2 - 170); top = Math.min(r.bottom + 10, innerHeight - 180); }
+      pop.style.left = left + "px"; pop.style.top = Math.max(12, top) + "px";
+      $("[data-next]", pop).onclick = () => { i++; if (i >= TOUR.length) return end(); show(); };
+      $("[data-skip]", pop).onclick = end;
+    };
+    const end = () => { $$(".tour-highlight").forEach(n => n.classList.remove("tour-highlight")); if (pop) pop.remove(); back.remove(); };
+    back.onclick = end; show();
+  }
+
+  /* =========================================================================
+   * ROUTER
+   * =======================================================================*/
+  function route() {
+    if (!DB.session()) { renderLogin(); return; }
+    if (!$(".app")) renderShell();
+    const view = $("#view"); if (!view) { renderShell(); return route(); }
+    $("#sidebar")?.classList.remove("open");
+    const h = (location.hash || "#/dashboard").replace(/^#\//, "");
+    const parts = h.split("/");
+    view.innerHTML = "";
+    try {
+      switch (parts[0]) {
+        case "dashboard": return viewDashboard(view);
+        case "clients":
+          if (parts[1] === "new") return viewClientForm(view, "new");
+          if (parts[1] === "edit") return viewClientForm(view, "edit", decodeURIComponent(parts[2] || ""));
+          return viewClients(view);
+        case "returns":
+          if (parts[1] === "new") return viewReturnForm(view, "new");
+          if (parts[1] === "edit") return viewReturnForm(view, "edit", decodeURIComponent(parts.slice(2).join("/")));
+          return viewReturns(view);
+        case "trading": return viewLedger(view, "trading");
+        case "pl": return viewLedger(view, "pl");
+        case "balance": return viewLedger(view, "balance");
+        case "reports": return viewReports(view);
+        default: location.hash = "#/dashboard";
+      }
+    } catch (err) {
+      console.error(err);
+      view.innerHTML = `<div class="empty"><div class="big">⚠️</div>Something went wrong rendering this page.<br>
+        <small class="muted">${esc(err.message)}</small><div style="margin-top:1rem"><a class="btn btn-primary" href="#/dashboard">Back to dashboard</a></div></div>`;
+    }
+  }
+
+  function boot() { if (!DB.session()) renderLogin(); else { renderShell(); route(); } }
+
+  window.addEventListener("hashchange", route);
+  window.addEventListener("DOMContentLoaded", boot);
+  if (document.readyState !== "loading") boot();
+
+  // expose a tiny console helper for demos
+  global.TaxSystem = { reset: () => { DB.resetDemo(); location.reload(); } };
+})(window);
+
+</script>
+</body>
+</html>

@@ -1,7 +1,9 @@
 ' =============================================================================
-' ITEMS · Site.Master.vb — shared shell (sidebar, top bar, sign-out)
+' Income Tax Evaluation System · Site.Master.vb — shared shell (sidebar, top bar, sign-out)
 ' =============================================================================
 Imports System.Web.Security
+Imports System.Web.UI
+Imports System.Web.UI.WebControls
 
 Namespace ITEMS
 

@@ -52,6 +52,15 @@
     <Compile Include="App_Code\ReturnRepository.vb" />
     <Compile Include="App_Code\FirmAccountRepository.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
+    <Compile Include="Site.Master.designer.vb"><DependentUpon>Site.Master</DependentUpon></Compile>
+    <Compile Include="ClientEdit.aspx.designer.vb"><DependentUpon>ClientEdit.aspx</DependentUpon></Compile>
+    <Compile Include="Clients.aspx.designer.vb"><DependentUpon>Clients.aspx</DependentUpon></Compile>
+    <Compile Include="Default.aspx.designer.vb"><DependentUpon>Default.aspx</DependentUpon></Compile>
+    <Compile Include="FirmAccount.aspx.designer.vb"><DependentUpon>FirmAccount.aspx</DependentUpon></Compile>
+    <Compile Include="Login.aspx.designer.vb"><DependentUpon>Login.aspx</DependentUpon></Compile>
+    <Compile Include="Reports.aspx.designer.vb"><DependentUpon>Reports.aspx</DependentUpon></Compile>
+    <Compile Include="ReturnEdit.aspx.designer.vb"><DependentUpon>ReturnEdit.aspx</DependentUpon></Compile>
+    <Compile Include="Returns.aspx.designer.vb"><DependentUpon>Returns.aspx</DependentUpon></Compile>
     <!-- Master + Global -->
     <Compile Include="Site.Master.vb"><DependentUpon>Site.Master</DependentUpon><SubType>ASPXCodeBehind</SubType></Compile>
     <Compile Include="Global.asax.vb"><DependentUpon>Global.asax</DependentUpon></Compile>

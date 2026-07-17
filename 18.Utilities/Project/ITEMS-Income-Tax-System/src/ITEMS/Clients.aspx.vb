@@ -1,9 +1,11 @@
 ' =============================================================================
-' ITEMS · Clients.aspx.vb — list, search and delete clients
+' Income Tax Evaluation System · Clients.aspx.vb — list, search and delete clients
 ' =============================================================================
 Imports System.Data
 Imports ITEMS.Data
 Imports ITEMS.Repositories
+Imports System.Web.UI
+Imports System.Web.UI.WebControls
 
 Namespace ITEMS
 

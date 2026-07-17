@@ -1,4 +1,4 @@
-<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.vb" Inherits="ITEMS.ReportsPage" %>
+<%@ Page Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false" CodeBehind="Reports.aspx.vb" Inherits="ITEMS.ReportsPage" %>
 <asp:Content ContentPlaceHolderID="Crumb" runat="server">Reports</asp:Content>
 <asp:Content ContentPlaceHolderID="Main" runat="server">
   <div class="page-head"><div><h2>Report Generation</h2>

@@ -1,10 +1,10 @@
-<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.Master.vb" Inherits="ITEMS.SiteMaster" %>
+<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Site.Master.vb" Inherits="ITEMS.SiteMaster" %>
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ITEMS · Income Tax Evaluation &amp; Maintenance System</title>
+  <title>Income Tax Evaluation System</title>
   <link rel="stylesheet" href="<%= ResolveUrl("~/Content/site.css") %>" />
   <asp:ContentPlaceHolder ID="Head" runat="server" />
 </head>
@@ -12,7 +12,7 @@
   <form id="form1" runat="server">
     <div class="app">
       <aside class="sidebar" id="sidebar">
-        <div class="brand"><span class="mark">₹</span><div><b>ITEMS</b><small>Tax Maintenance Suite</small></div></div>
+        <div class="brand"><span class="mark">₹</span><div><b>Income Tax</b><small>Evaluation System</small></div></div>
         <nav class="nav">
           <div class="group">Overview</div>
           <a href="<%= ResolveUrl("~/Default.aspx") %>"><span class="ico">📊</span>Dashboard</a>
