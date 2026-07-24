@@ -1,0 +1,404 @@
+<meta charset="utf-8"/>
+<co-content>
+ <h2 level="2">
+  Machine Learning Data Lifecycle in Production
+ </h2>
+ <p>
+  This is a compilation of resources including URLs and papers appearing in lecture videos. If you wish to dive more deeply into the topics covered this week, feel free to check out these optional references.
+ </p>
+ <h2 level="2">
+  Overall resources:
+ </h2>
+ <p>
+  Konstantinos, Katsiapis, Karmarkar, A., Altay, A., Zaks, A., Polyzotis, N., … Li, Z. (2020). Towards ML Engineering: A brief history of TensorFlow Extended (TFX).
+  <a href="http://arxiv.org/abs/2010.02013" title="">
+   <u>
+    http://arxiv.org/abs/2010.02013
+   </u>
+  </a>
+ </p>
+ <p>
+  Paleyes, A., Urma, R.-G., &amp; Lawrence, N. D. (2020). Challenges in deploying machine learning: A survey of case studies.
+  <a href="http://arxiv.org/abs/2011.09926" title="">
+   <u>
+    http://arxiv.org/abs/2011.09926
+   </u>
+  </a>
+ </p>
+ <h2 level="2">
+  Week 1: Collecting, Labeling and Validating Data
+ </h2>
+ <p>
+  ML code fraction:
+ </p>
+ <p>
+  <a href="https://cd.foundation/blog/2020/02/11/announcing-the-cd-foundation-mlops-sig/" title="">
+   MLops
+  </a>
+ </p>
+ <p>
+  <a href="https://medium.com/@karpathy/software-2-0-a64152b37c35" title="">
+   Data 1st class citizen
+  </a>
+ </p>
+ <p>
+  <a href="https://pair.withgoogle.com/chapter/data-collection/" title="">
+   Runners app
+  </a>
+ </p>
+ <p>
+  <a href="https://developers.google.com/machine-learning/guides/rules-of-ml" title="">
+   Rules of ML
+  </a>
+ </p>
+ <p>
+  <a href="https://ai.googleblog.com/2018/09/introducing-inclusive-images-competition.html" title="">
+   Bias in datasets
+  </a>
+ </p>
+ <p>
+  <a href="https://www.elastic.co/logstash" title="">
+   Logstash
+  </a>
+ </p>
+ <p>
+  <a href="https://www.fluentd.org/" title="">
+   Fluentd
+  </a>
+ </p>
+ <p>
+  <a href="https://cloud.google.com/logging/" title="">
+   Google Cloud Logging
+  </a>
+ </p>
+ <p>
+  <a href="https://aws.amazon.com/elasticsearch-service/" title="">
+   AWS ElasticSearch
+  </a>
+ </p>
+ <p>
+  <a href="https://azure.microsoft.com/en-us/services/monitor/" title="">
+   Azure Monitor
+  </a>
+ </p>
+ <p>
+  <a href="https://blog.tensorflow.org/2018/09/introducing-tensorflow-data-validation.html" title="">
+   TFDV
+  </a>
+ </p>
+ <p>
+  <a href="https://en.wikipedia.org/wiki/Chebyshev_distance" title="">
+   Chebyshev distance
+  </a>
+ </p>
+ <p>
+  Sculley, D., Holt, G., Golovin, D., Davydov, E., &amp; Phillips, T. (n.d.). Hidden technical debt in machine learning systems. Retrieved April 28, 2021, from Nips.cc
+  <a href="https://papers.nips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf" title="">
+   <u>
+    https://papers.nips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf
+   </u>
+  </a>
+ </p>
+ <h2 level="2">
+  Week 2: Feature Engineering, Transformation and Selection
+ </h2>
+ <p>
+  <a href="https://developers.google.com/machine-learning/crash-course/representation/feature-engineering" title="">
+   Mapping raw data into feature
+  </a>
+ </p>
+ <p>
+  <a href="https://www.commonlounge.com/discussion/3ce75d036e924c70ab7e47f534ec40fc/history" title="">
+   Feature engineering techniques
+  </a>
+ </p>
+ <p>
+  <a href="https://pair-code.github.io/facets/" title="">
+   Facets
+  </a>
+ </p>
+ <p>
+  <a href="http://projector.tensorflow.org/" title="">
+   Embedding projector
+  </a>
+ </p>
+ <p>
+  <a href="https://developers.google.com/machine-learning/crash-course/feature-crosses/encoding-nonlinearity" title="">
+   Encoding features
+  </a>
+ </p>
+ <p>
+  TFX:
+ </p>
+ <ol bullettype="numbers">
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/tfx/guide#tfx_pipelines" title="">
+     <u>
+      https://www.tensorflow.org/tfx/guide#tfx_pipelines
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://ai.googleblog.com/2017/02/preprocessing-for-machine-learning-with.html" title="">
+     <u>
+      https://ai.googleblog.com/2017/02/preprocessing-for-machine-learning-with.html
+     </u>
+    </a>
+   </p>
+  </li>
+ </ol>
+ <p>
+  <a href="http://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+%28diagnostic%29" title="">
+   Breast Cancer Dataset
+  </a>
+ </p>
+ <h2 level="2">
+  Week 3: Data Journey and Data Storage
+ </h2>
+ <p>
+  Data Versioning:
+ </p>
+ <ol bullettype="numbers">
+  <li>
+   <p>
+    <a href="https://dvc.org/" title="">
+     <u>
+      https://dvc.org/
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://git-lfs.github.com/" title="">
+     <u>
+      https://git-lfs.github.com/
+     </u>
+    </a>
+   </p>
+  </li>
+ </ol>
+ <p>
+  ML Metadata:
+ </p>
+ <ol bullettype="numbers">
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/tfx/guide/mlmd#data_model" title="">
+     <u>
+      https://www.tensorflow.org/tfx/guide/mlmd#data_model
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/tfx/guide/understanding_custom_components" title="">
+     <u>
+      https://www.tensorflow.org/tfx/guide/understanding_custom_components
+     </u>
+    </a>
+   </p>
+  </li>
+ </ol>
+ <p>
+  Chicago taxi trips data set:
+ </p>
+ <ol bullettype="numbers">
+  <li>
+   <p>
+    <a href="https://data.cityofchicago.org/Transportation/Taxi-Trips/wrvz-psew/data" title="">
+     <u>
+      https://data.cityofchicago.org/Transportation/Taxi-Trips/wrvz-psew/data
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://archive.ics.uci.edu/ml/datasets/covertype" title="">
+     <u>
+      https://archive.ics.uci.edu/ml/datasets/covertype
+     </u>
+    </a>
+   </p>
+  </li>
+ </ol>
+ <p>
+  Feast:
+ </p>
+ <ol bullettype="numbers">
+  <li>
+   <p>
+    <a href="https://cloud.google.com/blog/products/ai-machine-learning/introducing-feast-an-open-source-feature-store-for-machine-learning" title="">
+     <u>
+      https://cloud.google.com/blog/products/ai-machine-learning/introducing-feast-an-open-source-feature-store-for-machine-learning
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://github.com/feast-dev/feast" title="">
+     <u>
+      https://github.com/feast-dev/feast
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://blog.gojekengineering.com/feast-bridging-ml-models-and-data-efd06b7d1644" title="">
+     <u>
+      https://blog.gojekengineering.com/feast-bridging-ml-models-and-data-efd06b7d1644
+     </u>
+    </a>
+   </p>
+  </li>
+ </ol>
+ <h2 level="2">
+  Week 4: Advanced Labeling, Augmentation and Data Preprocessing
+ </h2>
+ <p>
+  <a href="https://twitter.com/jeffdean/status/1106325994913189888?lang=en" title="">
+   Hand Labeling
+  </a>
+ </p>
+ <p>
+  <a href="https://dawn.cs.stanford.edu/2017/07/16/weak-supervision/" title="">
+   Weak supervision
+  </a>
+ </p>
+ <p>
+  <a href="https://www.snorkel.org/" title="">
+   Snorkel
+  </a>
+ </p>
+ <p>
+  <a href="https://ai.googleblog.com/2018/06/improving-deep-learning-performance.html" title="">
+   How do you get more data?
+  </a>
+ </p>
+ <p>
+  <a href="https://github.com/google-research/uda" title="">
+   Advanced Techniques
+  </a>
+ </p>
+ <p>
+  <a href="https://www.tensorflow.org/lite/models/image_classification/overview" title="">
+   Images in tensorflow
+  </a>
+ </p>
+ <p>
+  CIFAR-10
+ </p>
+ <ol bullettype="numbers">
+  <li>
+   <p>
+    <a href="https://www.cs.toronto.edu/~kriz/cifar.html" title="">
+     <u>
+      https://www.cs.toronto.edu/~kriz/cifar.html
+     </u>
+    </a>
+   </p>
+  </li>
+  <li>
+   <p>
+    <a href="https://www.tensorflow.org/datasets/catalog/cifar10" title="">
+     <u>
+      https://www.tensorflow.org/datasets/catalog/cifar10
+     </u>
+    </a>
+   </p>
+  </li>
+ </ol>
+ <p>
+  <a href="https://www.bgc-jena.mpg.de/wetter/" title="">
+   Weather dataset
+  </a>
+ </p>
+ <p>
+  <a href="https://www.cis.fordham.edu/wisdm/dataset.php" title="">
+   Human Activity Recognition
+  </a>
+ </p>
+ <p>
+  <strong>
+   Papers
+  </strong>
+ </p>
+ <p>
+  Label Propagation:
+ </p>
+ <p>
+  Iscen, A., Tolias, G., Avrithis, Y., &amp; Chum, O. (2019). Label propagation for deep semi-supervised learning.
+  <a href="https://arxiv.org/pdf/1904.04717.pdf" title="">
+   <u>
+    https://arxiv.org/pdf/1904.04717.pdf
+   </u>
+  </a>
+ </p>
+ <p>
+  Slide 13 active learning:
+ </p>
+ <p>
+  Source: Original slides by Yale Cong
+ </p>
+ <p>
+ </p>
+ <p>
+ </p>
+ <p>
+ </p>
+</co-content>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>
