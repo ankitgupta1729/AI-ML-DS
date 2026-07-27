@@ -1,0 +1,69 @@
+<meta charset="utf-8"/>
+<co-content>
+ <p>
+  In this ungraded lab, you are going to perform a distributed training strategy using TensorFlow and Keras, specifically  the
+  <em>
+   <strong>
+    tf.distribute.MultiWorkerMirroredStrategy.
+   </strong>
+  </em>
+ </p>
+ <p>
+  You will perform training with a single worker. Then you will learn about the requirements for a multi-worker setup and implement a multi-worker strategy by simulating different machines through magic commands.
+ </p>
+ <p>
+  <a href="https://colab.research.google.com/github/https-deeplearning-ai/machine-learning-engineering-for-production-public/blob/main/course3/week3-ungraded-lab/C3_W3_Lab_1_Distributed_Training.ipynb" title="colab">
+   <strong>
+    Launch Colab!
+   </strong>
+  </a>
+ </p>
+</co-content>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>
