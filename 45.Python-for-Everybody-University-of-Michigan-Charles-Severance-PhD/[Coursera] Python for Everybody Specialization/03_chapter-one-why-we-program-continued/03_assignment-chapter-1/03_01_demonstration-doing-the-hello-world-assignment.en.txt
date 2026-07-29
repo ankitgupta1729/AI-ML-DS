@@ -1,0 +1,78 @@
+So, welcome to our first assignment. Our first assignment, of course,
+like in all decent programming classes, is printing Hello World. Now we're going to use the
+autograder for this. And so, here we are,
+and let me scroll down. We have a demonstration and it's kind of
+matic because that's the demonstration I'm doing right now,
+it's not all that matters. So, here's an assignment, and assignments
+are a little bit different when you click them because there's the honor code and
+you have to type your name and hit this check box to sort of
+point out that you're human and that you're the right human, etc. And then it's going to launch the tool when you press open tool here
+in a new window, and here we go. And so, basically,
+this is a Python simulated environment. It's only good enough to do the first
+ten chapters, but it's great. Now, the idea that I have is that you will
+actually write the Python on your computer using a real text editor like Atom, and
+then just paste the code in here to get graded, but we understand that if
+you're using an iPad or something else like that that this might be the only way
+that you're going to do it, or if you're in a school or something and they've only
+got Chromebooks, it's okay, you can do it. But at some point, like by chapter 11,
+you need to have Python, but that's okay. So some of the buttons that you're
+going to see here, you won't see, these are the teaching assistant and configuration buttons, but you will see
+the check code and the reset code button. And so what you often find when you
+get this is like I give you some code that is sort of partially there,
+in this particular one it has a mistake. And so I'm going to run it,
+say check code, and this actually submits the code
+to Python and it'll run. And in this case, it's got an error, name error print cue is
+not defined on line two. And, of course, the bug here is, it
+says please correct your code and rerun, the bug here is that's supposed
+to be a t not a q, see, that's just powerful, so
+this first program is really quite easy. And so, it also shows you in
+the autograder the desired output. And so we'll do check code,
+and this is going to work. And you see this little spinner, that is
+the autograder sending your grade back to Coursera, so that it gets
+back in your Coursera gradebook. And if you don't see that, then you got
+a problem, or you can go back and check it in Coursera, but that is the moment where
+it's decided that you've done a good job. Now, one thing about this is that once
+your grade has been set in Coursera, you can play around here, mess around, and
+it doesn't like send back bad grades, it only sends back good grades. These are all pass/fail, so
+you either have a 100% or 0%, and if you later mess it up,
+you still keep a 100% for your grade. So it's not like the last grade that
+you sent, it's actually the high grade, which is really it's pass/fail,
+so it's 0% or 100%. But the other thing that you'll notice
+is if I make a mistake in the output it's not going to update the grade,
+and so I'm going to make it so the desired output is hello world. And so, if I check the code now, it's going to say,
+please correct your code and re-run. It points over here in a mismatch, because
+this is the output of your program, this is the output it wanted
+to have happen, okay? And so, that's what happens, right? Now, the other thing that you will notice,
+and I can't really demonstrate it on this first one, is there is a bit of
+static analysis that this autograder does to your code, and it's like you should
+have used a for statement in this problem, or you should have used the input
+statement in this problem, etc, etc, etc. And so,
+that also can catch you if you sort of, are supposed to compute something but
+you just print out the answer. And so it's not just enough to match the
+output, you have to match the output, and it does a little bit of looking at your
+Python code to make sure your Python code makes some sense. Another thing that's cool about this is
+this view grades button that you don't see that we the teaching assistants and
+teaching staff see. If you're having problems on
+an assignment, you don't have to put your code in the forum, you can simply talk
+to a teaching assistant in the forum and they can come into the assignment and they
+can actually see your exact code sitting in the autograder,
+they can even run your code. And so it's a much better way to exchange
+code with the teaching assistants than sort of posting code in the forums. In the very last course we do
+let you post code in the forums, but in the first four we don't. I know that's frustrating to people, but
+working code makes it too easy for people to just like cut and paste it because we'd
+like, let me just finish this assignment. And if you don't struggle on the first
+few assignments and understand them, then you won't actually understand
+the fifth or sixth assignment. And so, taking a shortcut by borrowing
+code from someone else is really just cheating yourself. And if you put bad code in the forum,
+that's even worse. You say, my code is broken and
+it doesn't work, and then students are like, well,
+I'll just take your broken code. And so, we just don't like
+putting code in the forum. And so, that's basically the idea,
+let me finish this and get it back correct again, so
+I print out the right output. So it runs it, you can have
+a syntax error, which I showed you. You can have an output error. But if the syntax is right and
+the output is right and you've passed all the static checks, then
+it sends the grade back to Coursera and your grade is updated on Coursera,
+then you just click to done button when you're all done,
+then you're back in Coursera. So, I hope that was helpful to
+help get you through writing your first assignment for this class.

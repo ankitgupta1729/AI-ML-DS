@@ -1,0 +1,42 @@
+Camera and you're fine. Is it working? >> It's working. >> Are you selfie-ing? >> Yeah, this is my selfie cam. My Gimble selfie cam. >> It works great. >> Yeah. So this way I can tape my
+meeting of Allen Downey. >> Sweet. >> That's gonna be sweet. >> Moments. >> The moment that I meet Allen. >> Palpable. >> It is.
+>> Very cool indeed, I'd say. [LAUGH]
+>> Folks. That's Allen Downey, who started the whole
+Think Java, Think Python revolution. Back in 1999, and
+I'm going to meet him now the first time. >> You can ask him that question that I
+should have asked him a long time ago. >> [SOUND] So what are your thoughts, Jeff, before
+we meet the great Allen Downey? >> But you've met Alan before? >> I have. >> This is my first time. >> But it's always exciting. >> Exactly. >> I'm Charles Severance. >> Charles, it's great to see you. >> We're co-authors. >> Yes?
+>> We've never met in person. We talked on the phone. This is the famous Jeff Elkner, of course. >> Made famous by this guy. >> Well everybody got made famous. >> [LAUGH]
+>> So the first question I was asking Jeff and he doesn't even know the answer to
+is why did you choose GFDL back in 1999? That was before Creative Commons,
+before OCW, before everything. What possessed you? >> You know,
+actually the first version of the book, I put it under the GNU Free
+>> GFDL. >> Not not-
+>> GFDL. The GPL.
+>> Oh, you did the GPL. >> Because I didn't even
+know about the GFTL. >> And then somebody got ahold of you,
+from MIT. >> And they said wait
+a minute, this is documentation,
+this is not code. You should use this other license,
+and so I switched. And then when Creative Commons came along,
+some of those licenses has been useful. Actually part of the reason that working
+with O'Reilly has worked out very well. I do things usually under a non-commercial
+Creative Commons license, and then that's kind of a compromise. >> Yeah.
+>> So it's not ideal. >> But those are the details, so why
+>> Though the non-commmercial's I think a beautiful thing. Actually Creative Commons is thinking
+about getting rid of it. [INAUDIBLE] Yeah. >> And I'm sad about that, because I
+think it is a fine middle ground. E-copies can delivered free and
+no one feels bad about that. Print copies you make money off of. So it's pretty cool. >> I agree I think there's
+a nice use case for it. >> So have you ever tried to count
+the number of derivative books of Think Python? >> No.
+>> Do you think it's 100? 200? 300? >> I don't think. >> How to Think Like a Computer
+Scientist Java version. >> If you go all the way back. >> There are a number of English language books that are modified versions. >> Including mine. >> There are translations into >> I count those as separate ones. >> Yep.
+>> But like Runestone, like Brad Miller's stuff,
+>> Active more, I guess. >> Do you have an interactive version? >> No no I just have the Python for
+Informatics print and e-version. >> Yeah, that's
+>> I did that many years ago, and then I fought with Cambridge Press. Remember that? >> Yes.
+>> Remember those calls? Yeah.
+So, but that's, but like why did you give it away? I mean, it wasn't so
+cool in 1999 just to give books away. It was not normal. >> True.
+No. But that's the question that I wanted. >> Can we pause? I do want to,
+I want to finish signing books >> So we have to talk later. >> Okay, we'll get back to this. >> [LAUGH]

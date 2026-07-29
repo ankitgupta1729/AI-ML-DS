@@ -1,4 +1,10 @@
 {
+     "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+     "code-runner.executorMap": {
+          "python": "/opt/homebrew/bin/python3 -u"
+     },
+     "code-runner.runInTerminal": true,
+     "code-runner.fileDirectoryAsCwd": true,
      "python.terminal.activateEnvironment": false,
      "python.terminal.activateEnvInCurrentTerminal": false,
      "codescene.enableAutoRefactor": false,

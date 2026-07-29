@@ -1,0 +1,154 @@
+[MUSIC] [MUSIC] >> Just look, looking around in
+2005, 2006, at the number of people applying to study computer science, and just this
+sudden horrible realization that we had driven off a cliff. And, you know, kind of like Wile E Coyote,
+you know, we'd driven, we'd gone off a cliff, and now we look down,
+and, yeah, we're in real trouble. So, so, yeah, it was just trying to eke our way back towards that
+1980s world, in which every child who had wanted to be a
+computer programmer had a machine that they could
+use to learn on. Then there was this period of three or
+four years, five years, where we were just kind of grinding through iterating
+different, first of all iterating different processor
+architecture choices, different vendors. So we started off with something that
+actually looked a lot like an Arduino. Turns out you can take one of those.
+We wanted it to be a real computer, we wanted it to be a
+computer with a user interface. And it turns out you can take those
+microcontrollers that are in, in the Arduino, and you
+can make them generate a video signal if you,
+if you clock them hard enough and you write the right
+software for them. You can make them generate a component video, a standard-definition
+component video signal. And so we started off. I had a, I still have it, it's a piece of aeroboard which is about that
+sort of size, which has a, an Atmel chip
+on it and a block of SRAM. And it gives you actually a very kind of a
+1980s computer experience. And the lovely thing about it is because they're all 0.1-inch
+through hole components, you can build it yourself, you can
+build it in it takes about an afternoon,
+a rainy afternoon. You can go in with a piece of
+aeroboard and some chips come out with a, come out
+with a computer. And that seemed like a really nice idea,
+but when you take it and you show it to children, what you'll find
+is they're not really, it's not exciting. You know, it's not contemporary. It's not, it's not modern. You know, people, those computers
+we got in 1980s, we didn't necessarily get them
+to learn to program on. We got them to play games on, to,
+got them to do other things with. And they just, wheedled their way
+into our lives. Right? They, they, they snuck into our lives and once they were in our lives, then we
+learned to program. We didn't necessarily get them. Yeah, and so, so really I think
+probably most of that five-year journey was about seeing if
+we could reconcile the idea of a $25 computer with a, with a feature set that would make it
+attractive to a modern child. And another thing we found with all of these, with that and with some subsequent
+architectures we tried, what we found, all of which were based on kind of very special-purpose pieces of
+hardware, you know. What we found was we were having to
+everything ourselves. So we were, we were writing our
+own SD card drivers, and our own terminal software, and
+our own keyboard drivers. And, you know, you end up doing an enormous amount of work because you've chosen to,
+you have cheaped out on some aspect of the hobby. You're using some, some wacky DSP as your,
+your processor. You're writing this giant
+software stack yourself. And it was only really at the point
+where we, getting, from a point where we put an arm,
+we were lucky enough. So I, my day job for most of that period
+has been working for, working for a company called Broadcom, they're a big famous
+semiconductor company. We make chips for communications.
+Pretty much every communications application has a, has a,
+has a Broadcom chip. And you know, we were, we're looking,
+we were looking at a range, we took the Raspberry Pi concept
+through a series of Broadcom chips, seeing whether we could
+get something compelling. And we were very lucky that towards the
+end of that period, one of these chips ended up with
+an arm in it. So we made that leap from a, from the
+special-purpose world with us doing all the work into a very general-purpose world where really what we're making
+is an arm-like Xbox. And so we, we're a not-for-profit. You know, our funding came from
+a couple of us throwing money in a hat,
+you know, quite a lot of money in a hat, but you know,
+it was quite a big hat. But you know, it was, that
+seemed seemed appropriate. But the thing that was really surprising
+to us after we announced in 2011 after it kind of almost leaked out, it was just kind
+of a slip of the tongue, you know. [LAUGH] We didn't, so we were
+surprised by the level of interest. And it became apparent to us that we really weren't going to be able to
+manufacture these. We weren't going to be able to
+manufacture them in anything like the numbers that were going to be
+required to suit the demand. And that's why, you come see us,
+if you go look back at our web site, you see us in 2011
+talking all about manufacturing. And then towards the end of 2011,
+start of 2012, our entire business changes, so we become
+a, a licensing company. So what we are now is this very
+capital-light licensing company. We design this. We, we work on the brand. We work on the software. We work on the hardware. But all of the manufacturing, or the
+capital provision, or the logistics, they're all
+provided for us by our partners. We have a couple of partners, RS components and Premier Farnell,
+who are kind of multi-billion-dollar electronic component distributors,
+and that's really the thing that's let us go to scale. The really wonderful thing is
+that we were able, in terms of who does the
+manufacturing, you know, like everyone else, they don't
+manufacture, they commission manufacturing from a
+third party, from a CEM. The wonderful thing for us was that
+last year we were able to move back,
+move our manufacturing back. So we started building, like everyone else,
+when you say I'm going to build something cheap, where am I going to build
+it? I'm going to build it in China. And, over the course of the last year, we've steadily reshored
+manufacturing of these things to a point where now 100% of these
+are being built in South Wales. So they're being built in the UK. So that level of support, having these,
+these kind of big UK PLCs on our side has given us the kind of level of volume and the
+level of support that we needed in order to really
+make that happen. >> What is really on this little
+little chip? That's like a whole, that's pretty much
+it, right? >> That's pretty much it and
+really you can see the Raspberry Pi almost as being a breakout
+board for that chip. So this chip's called BCM 2835, it was designed here in Cambridge,
+it was designed by the by the team that I'm, I'm a member of
+just about two miles away from here. It's a, it was originally intended
+as a coprocessor, it was intended as a multimedia
+coprocessor for a mobile phone. So if you've got a mobile phone platform
+that's performing well, because maybe it's half way through
+its life, and you want to give it a little bit of a shot
+in the arm and bring it up to, to particularly maybe five years ago
+when we were moving from a world of really fairly simple
+mobile phones to a world in which every mobile phone is
+expected to have video playback and good camera processing
+and 3D, 3D graphics, this could be used as a shot in the
+arm processor to allow you to to bring an old platform up into,
+up into the modern era. And then the last one of them grew an arm. So this thing already had a, already had
+most of the other stuff you needed. It could drive an HDMI display. It could drive a standard-definition
+display. It could have a 3D accelerator and a video accelerator and a
+camera processor and some DSP and a USB controller, which was kind
+of a unusual feature to have in there. And really, what we found was that we, we were looking at this chip. Man. We are only an arm away. You know? We're only an arm core away from this being a a pro, a computer. A single chip. A single-chip computer. So we were lucky enough to be able to get
+an arm core into the, the, the last step in the 2835, the final
+productional step grew an arm 11. And that's what allows us to relax. The really interesting thing is being that
+most of what, a lot of what people have done with this, has
+been hardware hacking, you know. We have this, these GPIs here,
+which for me were kind of a little of an afterthought
+in the design, but in practice a lot of the cool stuff people have been
+doing, adults and children, have been about using this
+as a machine. Because you, you ask what can this, is
+this just a cheap PC? What can this do that a PC can't do? And in a lot of ways it is just a
+cheap PC. But this stuff is something that,
+you know, your most expensive PC can't do without an
+add-on, an add-on card. And so people have been, you know,
+taking these. They've been putting them in boats, and they've been
+putting them in planes, and they've been putting them
+under balloons and sending them up to the edge of space. And they've been using them to
+automate their homes. There's a wonderful example someone had
+the other day of an augmented microwave. He'd taken an old microwave and
+completely overhauled the, the, the user experience of using this microwave
+so it had, like a new, a new touch panel on, it had
+voice commands, it had a web interface so you could control it
+from your IPad. It had a bar code scanner, so you could
+scan your, the product. And he'd built a database of mapped bar
+codes to cooking instructions, so you could just scan it, put it in,
+and it would cook it for you. And he built this thing with a
+Raspberry Pi, you know? These, it's given people access to a kind
+of a level of technology. It's given people access to a
+platform that they can use to do all this really
+amazing stuff. And so it's wonderful because,
+you know, a lot of people doing this are
+adults, right? But the lovely thing is, a lot of these
+things adults are doing with it feed immediately into the range of
+projects that are available for teachers. We take this and we take it into schools,
+and at the end of the lessons, mixed-ability classes, you know,
+at the end of the lessons there's always a hard core of
+kids, boys and girls, who you have to basically pry this little
+thing out of their hands. Because, you know particularly if it's
+their first experience at programming. And even if they've done
+something very simple, like taken a, we, we often use like a snake game, and even if they've done
+very simple stuff like change the color of the snake or make the snake go a little bit faster,
+that kind of power, you can see it in their eyes. You know, they are like, hang on a second,
+I can make this machine do what I want. And, and for some, for, for, for a sizable
+minority of children, that's a really, as it was for me, I think
+a transformative experience. [MUSIC] [MUSIC]

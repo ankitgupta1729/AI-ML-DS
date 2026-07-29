@@ -1,0 +1,109 @@
+[MUSIC] Python was created by
+Guido van Rossum in 1989 while working at CWI in the Netherlands. Python was released as
+Open Source in February. 1991. The open source community
+grew around the world. And the first Python workshop
+was hosted by NIST in 1994. >> From 95 to 2000, I worked in the U.S.
+in Northern Virginia at CNRI. And so, there we worked through
+a lot of growth of the community and the infrastructure. We created the Python website. I think when I started there,
+Python 1.3 was about to be released. And then while I was there, we released several subsequent
+versions leading up to 1.5.2. Which for some reason, 1.5.0 was nothing, but
+1.5.2 remained the sort of, the standard, the gold standard of Python
+for a very long time afterwards. Disagreement was brewing between
+the people working on Python at CNRI and the CNRI leadership about open source. I was sort of courted by
+a small no name startup, and they said, oh,
+you gotta come work for us. We're an open source startup. We're going to build an
+open source portal. And find a number of other
+good Python engineers, and we'll give you all the time you want
+to sort of work on Python full time. And I thought, wow, that sounds great! Especially, given that I
+already had this sort of discontent at the place where I
+had been for five years, and so, reluctantly, I agreed to join these guys. Well, by then, by the time we
+actually started, it was 2000. And with, our start date was May 15,
+the bubble had actually already burst. I wasn't even aware that there was
+a bubble and that it had burst. I was in Northern Virginia
+doing open source software. I wasn't, I didn't really know
+what a startup was. I didn't really know how to tell whether
+these people were trustworthy or not. Well, we spent the summer in blissful
+ignorance working full time on Python. We built and released Python 2,
+which was a big deal. It contained Unicode. We also,
+because we had to have some kind of graceful exit from my previous employer, who claimed a certain amount of
+ownership over the source code. They didn't claim that it was all theirs,
+because it wasn't theirs to begin with. It was open source before I joined, which
+was an incredibly lucky circumstance. But, nevertheless, they sort of claimed ownership over what had been added to it
+over the five years I worked there and other people who were also employed there,
+also worked there. And so, with negotiations
+facilitated by Eric Raymond, and I think also even
+more in the background Eben Moglen, the free software lawyer, we negotiated some way to make sure
+that Python remained open source, with a license that CNRI's
+lawyers were agreeable to. And that was sort of,
+Python still has a very awkward license. And the history of that awkward
+license lies in the way I left CNRI. So, this little startup,
+we didn't even move to the west coast. We just sort of, we worked from our homes. And I remember that once a week,
+we had a team meeting and a catch-up with the leadership
+in California in my living room. And within five months, it was over. They suddenly stopped paying us. And those five months, we had had the time of our lives working
+on Python, doing this Python 2 release. We also had to do a Python 1.6 release, that was actually nearly
+identical to Python 2.0. That was the first Python 1.0
+release with CNRI's license on it. And sort of over the summer and
+the fall of 2000, this startup company began to show
+more and more signs of dysfunction. Other teams suddenly disappeared. We later heard that they had been fired. They flew us out to the west
+coast to talk to random potential customers,
+to sort of show off our technical prowess and somehow, get some kind of deal
+where we would do work for a customer. None of those deals ever closed. So they were going deeper and
+deeper in the hole. And at the end of the year,
+the investors decided to stop funding it. And then suddenly, we were like,
+we were out in the streets. We were relatively well off,
+because we had been paid well until then. But, yeah, the company was gone. So, what, all we got out of it was,
+they had given each of us, they had bought each of us a good
+computer to work from home. So, that was our last payment. [LAUGH] Cuz we talked to lawyers or somehow we got advice where someone said,
+yeah, sure. Just hold onto that equipment. Nobody's going to have the power
+to take that away from you. They're not going to go after you. And so, then there was actually,
+well I wouldn't call it a bidding war. But we were negotiating
+with both Active State, which was a small software company
+in Vancouver, and Zope Corporation, which was a small Python-exclusive
+software company in Northern Virginia. And the whole Python labs team,
+five of us, ended up working for Zope. And that was an incredibly lucky rescue. >> With the terms and conditions that
+pretty much keep working on Python, right? I mean, that
+Zope didn't tell you you had to go- >> No, Zope was very clear. They said, we have no design on
+the ownership of that software. We want you guys,
+you guys are really good programmers. You guys are the top of
+the Python community. You are going to get some time and it wasn't stated very
+precisely how much time. And we were fine with that at the time. We realized that what we had done for this failing startup was not
+actually a realistic option. That they would just pay our salaries and
+we would only do open source development. Nobody could maintain that, so
+we had sort of grown up quickly. We did continue to do a lot of sort of fundamental Python
+work at the time at Zope. We also did a lot of
+fundamental Zope work. Over time, sort of, the team dispersed. I got a job offer to come work for
+a small startup again in California. This time I did my
+homework a little better. Python just kept, sort of, growing, and
+the community kept self-organizing. And so, what started out as
+a workshop we had with about 20, 25 people at most attending in '94. Within a few years,
+we had an annual, what we called the International Python Conference, with
+with three or four hundred people attending. I always encouraged
+the community to self-organize rather than sort of looking at me for
+every decision. And so,
+one of the things that gradually appeared was the notion of Python warts. I'm not sure, but I think that Andrew
+Kuchling was actually one of the first to talk about Python warts, and sort of
+blog about it or give a talk about it. Of course, different people have different
+ideas about what's wrong with Python. But, sort of the idea of
+warts is things that keep tripping people up over and over. And so, there is at least some notion of,
+these are objectively problems. Every sort of feature release,
+2.1, 2.2, 2.3. We tried to fix some of these things. But we also came up against a wall of
+things that we could never fix because the fix was sort of, required changing
+the language in an incompatible way. Because it's always
+easy to add new syntax, that sort of doesn't get in
+the way of existing syntax. But it's very hard to
+take away a particular syntactic construct that has
+an unfortunate but well-defined meaning. And all these things built up and,
+sort of, in the middle of the first
+decade of the new century, this idea of Python 3000 was born. Like, okay, we have so many things that we
+would like to fix. We know roughly how to fix them,
+but the fix would be incompatible. Let's create a new version of
+the language that fixes a whole bunch of those things together. While at the same time, not making
+the new version of the language so different that it alienates the users. Every year at PyCon,
+I sort of take the census of well, who is using Python 3 and
+how committed are they? And how happy are they? And sort of,
+are there users actually using Python 3? And, I see tremendous
+progress there every year. But, we're still not, we're not in,
+sort of, where we finally want to be. I mean, at the last PyCon conference,
+I had to, sort of, hold off a whole bunch of people with very good arguments of
+why we should do a Python 2.8 release. And so, Python 3 is winning the race. But it will, the race hasn't been run yet. We're still in the race. It's clear that Python
+3 is going to win it. [MUSIC]

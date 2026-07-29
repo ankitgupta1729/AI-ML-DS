@@ -1,0 +1,52 @@
+Welcome to this week. Last week we talked about the theory of programming and
+computer science and the Macarena and all that
+stuff, and that's cool. But now we're going to
+start writing programming, writing programs using Python. One of the things we're trying
+to encourage you to do is install Python and run
+it because sooner or later you are going
+to have to do that. You're going to have to
+install it and run it. We've got a bunch of videos. But in Courses 1 and Courses 2 you don't actually
+have to do that. Now we know that some
+people are using iPads or Chromebooks, something else, and you
+can't install Python. Maybe you're a school
+that can install Python, so it's great that you can write Python programs using software we've provided in the browser, and we have this
+Python Playground. As you go through the course, you'll find assignments
+that you have to do. But what this is, is this is an ungraded assignment;
+Python Code Playground. It's launched externally using a technology called Learning
+Tools Interoperability. It's going to pop this
+open in a new tab, so you see that
+it's in a new tab, and it's the Python Playground. Now this is like the Autograder, except it has no
+expectations and you can write any
+code that you want. Let me hit the
+"Reset Code" button. You can always go back to the default code and this is the code that's there for you. If I want to run it, I can just say go ahead
+and run this code. The code runs and the
+output is over here. It actually ran the Python and the code came out over here. Now this is a file, this is like Chapter 7, it's even from Course 2, so the default code here is probably not what
+you want to play with. You can play with
+something like print play! , and run that. It runs the code, and then
+your output comes here. Now there are three files, which is later, Chapter 7
+and later, that you can use. These are the sample files that we use throughout a lot of the assignments in the
+book, and away you go. You can do whatever
+you want here. It's not being graded, there's no grade being
+sent back to Coursera, and so away you go. If you're writing Python on
+your laptop or your computer, you're way better to just
+learn how to do Python there and then paste the code
+into the Autograders later. But if you have no
+access whatsoever, that's why we give you
+the Python Playground. Now the other thing
+that's cool about this is that this
+view student code, allows our teaching staff to
+take a look at your code. We don't allow you to paste
+code into the forums. What you can do is you can
+ask for help in the forums, and the teaching staff can go in and view the student code, type in your name or email, and then find the code
+that you last put in. You can put something in here
+and get some help on it. The teaching assistant
+can see your entire code, they can run your code, they can do all kinds of things, and so it's a great way to communicate with the
+teaching assistant. You leave your code
+in the Playground, you ask the teaching assistant, and then they go take a look at your code and
+give you some answers. When you're all done,
+you simply press "Done", and we're back to Week 2. But like I said, I really
+would personally prefer that you build the
+skills in running Python on your laptop
+as quick as possible. But if that's not
+practical for you, then that's why we have
+the Python Playground here in Courses 1 and 2.

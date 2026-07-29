@@ -1,0 +1,160 @@
+Hello, and welcome to Python for
+Everybody. My name's Charles Severance and
+I am your instructor. We named this Python for Everybody because
+we are dedicated to the notion that increasingly as our lives
+are surrounded by technology, that we want you to become a maker of technology,
+not just a consumer of technology. We want to change your
+perspective from this side of technology where you are looking at it,
+to the other side where you're back here. You are like a creator of the technology
+and you can create things. And it takes a long time and you may not
+want to be a professional programmer ever, you might just like read
+a little bit of data, but we believe that everybody should
+know basically how to program and how to get things done inside of
+a computer, just as much to just be a responsible participant in a modern,
+increasingly technically oriented society. Computers want to be helpful. They are programmed, they are designed,
+the hardware's designed. We'll talk about hardware
+in the next segment. But it's designed and wired, and
+when you apply electricity to it, it basically has one question, and
+that is what do you want to do next? And if you think about your phone and
+all the apps that you have on your phone, each app is like what to do next,
+what to do next. So, as a programmer,
+your job is to serve the user. The user has something they want to do. Maybe they want to zing a bird towards
+a pig or maybe they need to analyze some data, or maybe they want to do
+something like talk to their phone and you have to be a real
+advanced computer scientist. And so, as a user we just have so
+many wonderful programmers who have put so much software that make
+these phones intelligent. The hardware itself is
+not all that intelligent. And our job as programmers is to act as
+intermediaries between the hardware and the user to build something wonderful and
+beautiful. And so, you can kind of imagine
+that your job as a programmer is to intermediate between
+the hardware and the end user. And if you're a professional programmer
+and you're trying to sell your software, well, you're trying to imagine
+what the world might want. And you could imagine all
+these app stores, etc. And these are places that
+you can build software, and exchange that software with
+other folks, and help people out. And like I said,
+we are trying to flip you from one side of this device to the other side
+of this device, where you are the maker. And you can think of this as
+a tool to manage your calendar, or drive your car and
+read a map, or whatever. But when you look at it
+from the other side, when you look at it from being
+a programmer, you use things like compilers and interpreters and programming
+languages and networks, etc. And we actually have tools that
+we are going to learn to use. Python is a tool that the programmers
+on the back side of this computer use to make new things for
+the front side of the computer. Now, what's your motivation
+to become a programmer? Well, the kind of gross motivation for professional programmers is to build
+something for everyone else to use. Like I worked on this open
+source software called Sakai, which millions of people use around
+the world, teaching and learning. It's very rewarding for me. I feel really good about that. You might build a guest book for
+a website. But that's generally not the first
+thing that you're going to do with your programming skills. You might get some data. You might be an accountant. Or you might be a lawyer. Or you might be a librarian. And somebody's got some data and
+you can't get a report out of this data, it's something you're
+really curious about. Somebody says can you knock out
+a little piece of Python code to count up the number of times
+that this happens on Saturday, but then it also happens again on Monday. Tell us how many times that happens. And so you write 40 lines of code and it
+comes out and tells us what that data is. And that's really useful. The key difference between writing
+a program for someone else and writing a program kind of for yourself to consume
+or just a few other people is the rigor. You don't have to be such a professional just to write code that
+you can use yourself. If it works and it gets you
+the data you want, then job done. If you want to become
+a professional programmer, then you kind of have to study how to
+be more precise and more engineering. But we're not going to worry about
+that in this beginning set of courses. We just want you to learn the mechanics
+and the language of programming. And so we kind of want to take you,
+like I said, from being a user to being a programmer. And as a programmer, you start thinking
+of yourself as living inside the computer. So you're a consumer out here. You're clicking on buttons and stuff. And so as a programmer, you're going to
+write code and that code is going to use data, networks, and CPUs, and memory, and
+then do something for the user. So we're trying to change your perspective
+and sort of pull you into the computer. Well, what are you doing in that computer? What's code?
+What's software? What's a program? Well, a program is like a sequence
+of stored instructions. And the idea is that the computer itself at the
+lowest level in the hardware is just not that smart. But it has a lot of flexibility in that
+if we give it the right instructions, it can do amazing things. If we give it right instructions to
+listen to voice, digitize the voice, and make sense of the voice, then you can write
+a program that can "hear". The computer doesn't hear,
+the program hears. The computer makes it so that it can run
+all the calculations that seems to make it hear, but a human being or
+actually thousands of human beings made it possible so
+that you could talk to your phone. And so you can think of, at the far end
+of this, when you're building something really brilliant like the ability for
+a computer to listen to you, you are taking you, and all your
+creativity, and all the research that you've done and you're building something
+really amazing and put it in the computer. But it is still a stored series of
+instructions that runs step by step, and someone figured out every single
+little step that has to happen. And so once we figured this out, we write the instructions carefully and
+then we give it to somebody. Here is a program that
+does voice recognition. And if you're interested in it,
+I say it's wonderfully creative. As a professional programmer,
+I have loved my life. I have loved the kinds of things that
+I do, that I build things for people. And I make them happy, and
+then I sort of feed off of that and then I build something else. But ultimately it's just
+a set of instructions. If you're like,
+what's in a set of instructions? Well, here we go. Here is a program for a human being. Now I may be showing my age a little bit,
+but this is a YouTube video. Hopefully, it's not taken down
+by copyright or whatever. On this song called the Macarena. And so, the Macarena is an algorithm or
+a series of steps that hopefully you, five years ago or many years ago
+you would got to the bar and you'd watched all these
+people doing these things. Putting their hands up and putting their
+stuff around, and wiggle, wiggle, wiggle, and turning around, right? And you're sitting there,
+and you're like okay, what's the sequence of
+instructions that you're doing? As a matter of fact,
+there's a looping thing. As long as the music plays,
+you put your left hand out, you put your right hand out. You flip your left hand. Flip your left hand, flip your right hand. I forgot all about it. But, here's something I want you to do. I want you to look at this slide. Now, I'm going to be quiet for a minute. I want you to look at this slide,
+pause the video if necessary. This, there are three
+bugs in this program. It looks right, but there are three bugs. So I'm going to stop for a second. So hopefully you paused, if you had to. But now I'm going to come back and
+I will show you what the bugs are. And here are the three bugs. Now if you didn't find them,
+even if you looked closely, you have learned something
+about human beings and that is that we human beings
+operate in an error-filled world. There are typographical errors,
+people say things incorrectly. And we as people just fix them as we're
+perceiving them, as we understand them. But even as you read this,
+you might not have seen these mistakes, because your brain just fixed them because
+we just fix errors in our environment. It's what we do. Computers aren't like that,
+they are not like that. Although voice recognition,
+after a while, that software does learn how to filter out errors, but
+that was really hard to write, okay? Computers do not understand how to filter
+out errors, but with enough instruction, you can kind of get them
+to filter out errors, okay? And that's why search
+engines kind of work, they're, it's sort of a soft intelligence,
+but it was really hard to build. But when we start talking
+about writing programs, whether it's writing programs
+to do search engines or writing programs to do voice recognition,
+those programs have to be perfect. They make the tiniest text
+contextual or typographical error. those programs simply do not work. And so, here we go. So here we say right ham
+to the back of the head. What? Where was there ham in this? So you got this ham in your hand, and
+you went, hit in the back of your head. You may not notice this, but the computer is literally going to say,
+syntax error, I quit, right? And so, syntax error is the moment
+where the computer says to itself, I don't know what to do. And the same thing is true here. I gotta hit somebody,
+what are you talking about? And so the computer is going to
+be completely lost by this. You might look at this and you might
+just fix it and compensate for it. So that's sort of a little set of
+programming, programs for people. So that's the code that's right. So, let's talk a little bit
+about programs in Python. Like I said, it's a set of instructions.
+So I'm want to put up some text here and I want you to count the number
+of each word in this text and then tell me what's the most common word
+is and how many times this word occurs. Here we go. Count, just count, concentrate,
+concentrate, concentrate, concentrate, and part of
+the interesting thing here is not so much whether you can count those words or
+not, but how your mind is actually reacting to
+the problem that I just placed you in. You're probably like, ooh,
+this is just not good. I'm so good, I can drive a car, I can
+play baseball, I can catch something. I can sing a song. And yet to be focused on counting these
+words seems really, really annoying. It turns out this is one of those things,
+text analysis, is one of those things that computers are really good at and
+we humans are really bad at. So it's really great to delegate
+this problem to a computer, if you know the language of the computer
+and you can talk to the computer. And so,
+I don't expect you to look at this code. We're going to spend many weeks looking
+at all the basics of this thing, but this is a program. This is a set of instructions, it's got
+two, six, about 11, 12 lines of code. And in it, we have instructed the computer
+to read through a bunch of text, count the words, and
+tell us what the most common word is. And so if we run this program,
+and we give it a file of words, it'll say the most common word is
+"to" and there's 16. That clown.txt that I just asked you,
+"the" is the most common word, and there are seven of those. And so, this is a, this is basically an outline of a program,
+that, I mean, it is a program that gets
+solves this problem that we will learn about. So, don't try to learn this right away. Up next, we're going to talk about
+the hardware architecture and what goes on inside the computer that you're going to
+make use of as you become a programmer.

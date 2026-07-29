@@ -1,0 +1,41 @@
+Congratulations. You're halfway there. So I had to break this course
+into two courses, mostly because if I made this course like
+14 or 15 weeks long, you'd drop out and then
+you'd be all bummed. So we have this moment
+in the middle where if you need to take
+a break, you're fine. It's like in a video game where you're going through and then you pass a point and then when you
+have a problem after that, you come back to that point. This is one of those points. So if you have problems
+going forward, you don't have to come all
+the way back and do this. What we've covered so far is
+what we call control flow. It's like programs do this, then they do this, then
+they have an if statement, and then they have a loop
+and they go round and round, and then they do
+this other thing and they read some stuff
+and they do some stuff. The whole thing, that's a sequence, it's
+steps, control-flow. What the program is
+going to do next, and then what's it's
+going to do next, and what's it's going to do next. So that's what we talked. We talked assignments,
+we talked if statements and for statements
+and those kinds of things. We've learned how Python navigates through
+your program and finds its way through the various steps that
+you've asked it to do. But that's only half a
+programming. The next thing that
+you're going to learn is about variables and how you can put four in a variable and you can add two to it and then
+it becomes six. But there's much more
+that variables can do and we call this data structures. That's what we
+computer scientists call this as data structures. It turns out, in your program, it may not seem like it, but we can solve problems
+in a way far more easily with
+clever data structures than with clever control flow. Control flow is obvious and
+data structures are subtle. So by making
+clever data structures, your control flow is simplified.
+If that makes any sense. Of course, you
+haven't done it yet. So that's why data
+structures is important. That's why you
+shouldn't stop now, that's why you're
+halfway through. But again, if you need to
+take a little time off, you can take a break
+but come back and finish the next class
+data structures, because the two
+pieces, algorithms, control flow and
+data structures are the two pieces of programming that give you the whole picture. So hope to see you
+in the next class.

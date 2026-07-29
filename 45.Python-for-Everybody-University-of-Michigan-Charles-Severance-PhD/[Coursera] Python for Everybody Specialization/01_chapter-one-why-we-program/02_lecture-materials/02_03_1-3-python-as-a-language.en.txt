@@ -1,0 +1,86 @@
+[SOUND] So now we're going to talk
+about Python as a programming language. You probably noticed that
+I'm wearing a sorting hat. The reason I'm wearing a sorting hat
+is that where I work at the University of Michigan School of Information, we
+are in a building called the North Quad. And you can look it up on Google and
+find a picture of it if you like. And I think it's designed
+to be like Hogwarts. It's got a little center,
+it's got this outside bit, it's got a really cool cafeteria that
+looks like owls might fly through it. And so we moved to this a few years
+back when I started teaching Python. And I was teaching my very,
+very first class in this building, which we've sort of lovingly called
+Quadwarts, because it's North Quad and we thought it was kind of like Hogwarts. And so, I'm joking, and
+I wore my robes to class, and I said welcome to Quadwarts,
+and you have to wear your robes every time to class,
+and I was being funny. And I said okay, it's our first class,
+we're teaching Python, and let's do a sorting ceremony. I didn't have the sorting hat back then,
+so I have a sorting hat now. And so, that's cool. And I'm like,
+I think I'm going to be in Gryffindor. And they told me, the students said
+that I couldn't be in Gryffindor. And I'm like,
+why can't I be in Gryffindor? Everybody wants to be in Gryffindor. And they told me that
+I was teaching Python. Python is like a programming
+language that's based on a snake. And even worse, my name's Charles
+Severance, and I'm like Severus Snape. And so they basically told me
+that I had to be in Slytherin. And so since then, I've bought many
+Slytherin items, I got Slytherin wands, when I graduate,
+you'll see my Slytherin wand. I got a sorting hat, so you'll see me
+drinking tea throughout the class, from my Slytherin cup and so I guess
+I'm just doomed to be in Slytherin. I don't know if that means I'm a good guy
+or a bad guy, or a good guy that seems like a bad guy or bad guy that turns
+out to be a, right, it's a lot of book. So, the whole thing about being in
+Slytherin is that you can talk to snakes because you can talk this weird
+language that others don't understand. Python's like that. Python's a language that
+most don't understand. You, of course,
+will begin to understand it. It's a weird language, it's strange,
+it's not easily understood by others. We call ourselves Pythonistas. And Guido van Rossum, over 20 years ago,
+invented this Python language that we have grown to know and
+love, and has become so important. And while I'm going through
+all this like snake stuff, it turns out that that is not at
+all why Python was named Python. Python was not named for a snake even though we use
+the snake motif all the time. It turns out that what Python was named
+for was Monty Python's Flying Circus. And the reason was is that Guido was
+trying to capture an air of play. Most programming languages in the 80s
+when Python started were very, very serious, and very complex and you had
+to be really serious to figure them out, a lot of math geniuses. And Guido thought, I could probably
+write a programming language that wouldn't be that hard,
+would be fun actually, would be enjoyable to use, but
+let's not make it bad. Let's not make it weak,
+let's make it both powerful and enjoyable. And so that's why Python turns
+out to be such a perfect language to use as your first programming language,
+is that it's designed to be your first programming language but
+it's also powerful. So many times you build a first
+programming language that's weak. And not capable of doing a lot of stuff. But Python has this wonderful,
+easy to learn and powerful and useful. And so there we are. Welcome to being a Pythonista. Now. As you learn Python, remember, you're talking to a snake and this is
+a language that you don't already know. You are going to make lots of mistakes. And the computer is going to seem
+to judge your mistakes harshly. You will learn the word
+"syntax error" a lot. And, if you're like me, I think back to
+the first time that I was programming. I was typing stuff on cards, and
+you'd bring your card deck up and you'd hand it to the computer. And you'd read it through the computer. And then the computer would come back and
+say syntax error. And sometimes it took several hours to
+get back the results of your program. You're going to get to do it in seconds,
+but in the old days when I was young, it took hours sometimes. And then all you get back
+is a syntax error and when I first started programming, I grew
+to kind of hate the creature that lived inside the computer because I
+thought that the creature didn't like me. I thought the creature was
+value judging my programs. I mean, I would write this thing and I
+think it's perfect and I would hand it in. And the computer would say, syntax error. And I'm like, huh? What's up, syntax error. And then I would like, okay, I'll make
+my program better and here you go. And it would say syntax error again. And the thing that you're going
+to have to learn is that, syntax error doesn't mean that
+Python thinks you're bad. It is not a judgement of your
+ability as a programmer, it is not a judgement of your
+potential to be a programmer. Syntax error means Python is lost. You are learning Python's language
+because Python can't learn your language. You're smarter than Python. We can teach you. You can learn, but Python can't. And so when it says syntax error, even
+though you feel like it's a rejection, syntax error simply means
+that Python is lost. It just doesn't have really friendly
+words when it says it's lost, it just goes syntax error, which
+literally is exactly what's happening. Your syntax is not something
+that Python understands. So just understand as you go through
+the next couple of weeks that you will be frustrated. It's not because you're a bad person, it's not because you're never
+going to figure it out. You will figure it out and
+you will get it. And you have to sort of trust us as
+we go through the first few weeks and learn the basics. And then as we connect
+the basics together, then this thing will
+make a lot more sense. I remember when I was first learning to
+program, I would be like, lost, lost, lost, lost, lost, oh wow, I love this. And I expect that many of you will go
+through that exact same feeling so you have to trust us. So up next, we're going to actually talk
+about the Python programming language.

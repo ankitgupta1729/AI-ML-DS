@@ -1,0 +1,30 @@
+Hello, and
+I would like to talk to you about how to use the snipping tool
+to do a screen capture. There are other ways to do this, but the
+easiest way is the built in screen tool, and I'm doing this on Windows 8. The snipping tool exists on earlier
+versions Windows as well, and so the gestures and the UI might look a
+little different but it is about the same. You find the snipping tool. So, I'm going to hit the Windows icon, and I'm going to type S-N, and
+it brings up the Snipping Tool. And so, here I go. And, it's giving me this
+option to say Snipping Tool. And, I like to say,
+I'm going to do a new Window Snip. An now,
+it's kind of graying out the screen and following me around with
+this little red line. And I clicked on this and
+it has made a copy of that window. Now this Snipping Tool is just
+Snipping Tool, that window still exists. This is now, didn't want to do that. This is now just a drawing tool that's. So, and so here you are. We could save this, but
+the other thing you can do and this is in the more recent snipping
+tools is you can make changes. So let's say for example that you
+didn't want to show your name, and your name was in this path. And so I will just go and scribble my name out,
+like with this little scribbling tool. Pretty sweet? So, I scribbled my name out. I just happened to have my name in it,
+so I just didn't want to put it in. So now, I'm going to do File > Save as. And, of course, find somewhere,
+I'm going to put this on my Desktop, and I'm going to call it notepad.png. Now, you don't have to put
+a suffix of .png or .jpg. But it's good if you're
+moving files between systems. So, put the suffixes on. Windows would know this was a PNG file,
+but .png is a way to nicely tell other systems, when you're moving it around,
+that it's a PNG file. Or, if you send it as an email,
+or whatever. So, I save it, I'm saving it on
+my desktop, and there we go. So it's hiding the .png, but I can look
+to make sure the png is really there. And so there it is, it's a .png. And so there's a file and
+away we go, okay? So there's the snipping tool. If I close this window and
+I click on Notepad, [SOUND] you will see that it's
+got the little scribbling thing. Thank you for that, okay? So, there you go. That's how to do a real
+simple snipping tool.

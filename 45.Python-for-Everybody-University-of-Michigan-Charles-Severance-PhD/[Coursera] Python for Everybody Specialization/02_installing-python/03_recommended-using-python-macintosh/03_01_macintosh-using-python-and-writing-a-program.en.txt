@@ -1,0 +1,81 @@
+Box and I type terminal, and this terminal came up. Pwd is a print
+working directory. This is effectively the same
+user interface as Linux, and most servers are
+done with Linux. Our goal is to install a Python. The first thing to do is to check to see if
+you've already gotten stalled because you can type
+the command python dash, dash version and see
+that we have Python 2.7. Now if you actually
+just say Python, you'll go into the
+shell and you'll get some really bad warnings
+because Python 2, as of the recording
+of this moment is actually out of support. If you ever get into this
+triple Chevron prompt, you just say quit, close paren, and that
+will get you out of it. Because macOS used Python, let me do a clear here. Because Python is used inside macOS and
+they use Python 2, we tend to have to
+install our own copy of Python and it will
+show up as Python 3. Now if you just type
+Python 3 minus, minus version and you
+already have a python, then don't bother installing it. I don't want to install the developer tools so I'm just going to say
+Cancel right here. It might be part of that, but I just rather install the official Python
+distribution. We're going to go to python.org and click on ''Downloads''. It knows, it's already figured
+out that on my Mac so I'm going to download Python 3.11. You just download the
+latest one, you'll be fine. That download is now completed. Going to open it up and click on it and we're going to go
+continue, continue, continue. I agree. Now it's installing. It's showing me a folder
+with Python in it. I'm going to click ''Close''
+my downloads and so it seems to be installed. We'll go ahead and move the
+installer to the trash. Then I'm going to come over
+here and I'm going to start python 3 minus, minus version. Let's close this and
+open terminal again. Python 3 minus, minus version. There we go. You
+notice I had to close my terminal and open
+it again because this shell needed to see the new software so
+you can do that. You won't have to do that again. There's a command you
+can type that might fix that by just say rehash. That says, look, those doesn't even have it so I'm wrong there. But eventually you wanted to see Python 3 minus, minus version. Away we go so you have
+Python installed. The next problem you need is you need a programmer editor. You don't want to use TextEdit. Mac comes with this
+thing called TextEdit, don't use this because it
+saves in a weird format called RTF so don't use
+TextEdit, just don't use it. You've got to find a
+programmer editor. If we take a look at
+Python for everybody, we have this page
+called editors. Now the best editor depends, you may already have an editor. If you have an editor, keep it. We have a couple of
+recommendations, brackets, which is a super
+simple one VS Code, which is really nice, but the installation
+can be a little tricky. For Beginners, I'm just
+going to recommend brackets. But if you have one, you like one you like Sublime, over the years that we've
+been teaching this course, there's just been so many editors that
+have come and gone. I probably should put a
+little thing on here that says all the editors that
+we don't use anymore, or all the recommended
+editors that we don't use. Brackets io is for now, I like it, it's open
+source, it's free, it looks to me like
+it's going to stay free and open source and
+it works on Windows, Mac, and Linux and
+so I like that, so I'm going to download that. We're going to open it. Just click on here, open it. Here is the bracket
+GitHub, which is nice. I'm just copying it from the brackets code into my
+application folder and the applications is
+where on the Mac you put things that
+are going to be run. Now I'm going to
+just close this. I've got a couple of
+things on my desktop here. That's the brackets mount point. Now to run brackets, I'm going to go up to
+my search and type brackets and click brackets. I'll go ahead and
+hide this page. Yes, it's wanting to make sure I'm not installing
+some bad stuff. Here we have brackets. It's a nice simple
+editor and it starts up. I'm going to close this window and I am going
+to create a new file. I'm going to say print "hello world" then I'm going
+to save this file. One thing that you're
+going to have to keep track of is where you're at. Users admin, this desktop
+is in user's admin desktop, so I'm going to change
+directory into desktop, pwd print working directory so you see in user's admin desktop. I'm going to make a
+directory mkdir py4e. Then I'm going to change
+into that directory. Like I said, it's
+a good thing for you to learn all these things. Now I'm in the folder py4e. If I look on my desktop, I've got this folder py4e that currently has
+nothing in it. This terminal and this
+folder are the same thing. Now I'm going to File, Save As and I'm going to
+go into my desktop and go into py4e and I'm going to call this file hello.py and
+I'm going to save it. Now at this point it knows
+it as Python file and brackets knows what Python
+syntax highlighting is, so that's quite nice. If I look in py4e, I see there is a file. If I look in it in terminal, and I say ls minus l, I see that final as well. To run that file, I
+say python3, hello.py. With that, I have created
+my first Python program, I've installed a text editor, I've installed Python and
+created my first program. I hope that you
+found this useful. See you in the rest
+of the course.

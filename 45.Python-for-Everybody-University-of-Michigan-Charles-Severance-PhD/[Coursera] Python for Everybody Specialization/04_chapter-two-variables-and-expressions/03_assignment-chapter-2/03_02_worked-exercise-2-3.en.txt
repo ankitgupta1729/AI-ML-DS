@@ -1,0 +1,84 @@
+Hello, and welcome to Python for
+Everybody, my name's Charles Severance. In this short video, I will be
+explaining how to run exercise 2.3 where we prompt for some hours,
+prompt for some rates, and multiply them together, and
+print them out with a little pay message. And so, this is 2.3,
+some of you will immediately want to go to the autograder, and sort
+of do your homework in the autograder. I really rather you didn't do that, unless
+of course you're doing this on an iPad, or an Android, or something where
+you can't install Python, but you have to realize that the autograder
+isn't forever. You can only go so far with the autograder, and eventually,
+you have to write a real Python program. So, I'll eventually show you
+how to run this autograder, but I'm going to instead show you
+how to run it in the terminal. So, I'm first going to go into my
+Python for Everybody folder, and I'm going to make a new folder,
+command Shift+N is what I just did there, ex_02_03, for Exercise 3, so
+there's exercise 3. And I'm also going to go into Atom, which is my
+text editor, and see I have that folder. And so, I'm going to make a new file, and I will say print,
+I'll just say PY4E, oops, PY4E, and then I will say File,
+Save As, and I want to make sure it's in here,
+and it's going to be ex_02. I don't like putting spaces in file names,
+some operating systems can't handle them, that's why I'm using underscores here, so I would avoid using spaces in file names. So as soon as I give that a PY4E,
+as soon as I give it a python suffix I'm there, and
+so it shows up there in my desktop, and now I'm going to run the terminal
+program, so that I can get there. So, cd Desktop/ cd py4e/
+That's the folder on my desktop, If I do an ls I see a couple folders and
+a file, you can say ls -l and see a little more detail that these are folders, these
+two are folders, and this one's a file. So change directory cd ex_02_03, and so now I'm in that folder,
+and if I do an ls -l, I see that file. I can also do an ls
+without the -l, and see the file. And now I say
+python3 ex_02_03.py, and it runs. And you'll see me,
+no matter how many times you watch me, you'll see that the first thing that I do,
+is get to the point where I know I'm in the right directory, and
+I can run a little hello program, before I start coding.
+I just don't like being crazy, right? So now, I'm going to go back and take a look at my assignment, Enter Hours,
+you've got a prompt for hours, ask for a number, Enter Rate, prompt for
+rate, and then calculate Pay. So, there's a couple of input statements
+here, xh is my variable I'm going to choose, later I'll choose more
+effective variables, but for now I'm going to make them silly,
+Enter Hours, colon, space. And then I'm going to copy, and
+paste and call this xr for rate. When you're doing this, you need to be very careful to, and so now I'm going to calculate xp times, which is xh * xr, and I'll say print Pay. I don't need to put a space because this
+comma effectively creates a space, xp. And then I want to save that, and I'm
+going to switch to my terminal program, clear my screen in my terminal program,
+and I'm going type up arrow, because I already typed
+python3 ex_02_03.py. So my hours, I'll just start with
+something really simple that I can calculate in my head, 10 and 5. Whoops, can't multiply
+sequence of non-int of, by sequence of non-int of type str. Here we have a traceback, and again I encourage you to realize
+that these tracebacks are not personal attacks by Python on you,
+even though they might be frustrating. And so the way to parse this
+is start by saying line 3, something's wrong at line 3, it's
+pretty good at knowing what line it is, or it's either that line or
+the line above it, and it's something about multiplying.
+What it's really saying is I'm confused, I have to stop because I
+cannot understand your instructions. So, the problem here of course
+is that this is of type string. And so you can't multiply
+a string times a string. Okay, and so we can convert this
+using a float, float, so that's a function call now, we're passing the
+string xh in, and the value we get back is the floating point version of that,
+and then, we call float for this as well. And so now I'll save that,
+always remember to save. I'm going to run it, and so
+I'm going to run it my hours of 10, and my rate of 10, and it's 100, and so
+that looks pretty good, okay? So let's go ahead and
+try to run this in the autograder, and this is my idea, is you'll take this and
+you'll copy it, and you'll go back to the autograder now,
+and just paste this in, okay? And so it says use 35 hours,
+and rate of 2.75, so let's check the code 35 hours, OK,
+75, no 2.75. And so it's running, and
+it's running, and it works, and of course, now I've got my grade. So this idea where you work here to
+get your assignment done correctly, and then you run it in the autograder,
+is the way I intend for you to do it, but
+again if you can't do it that way, it's a great way to get started to just
+write your code it the autograder. You can change your code in
+the autograder, and then run it again. Of course, this is going to fail,
+35, and 2.75. And of course you get a mismatch, and
+now it's angry at you, and the mismatch here, of course, is because
+I print Howdy Pay and Pay, and it's real picky about it, and
+you think I've got the 96.25 right. Well, it doesn't really care so
+much about that. So, let me go ahead and fix this, and
+run it so we leave on a successful note 35 hours, and
+2.75 is the rate per hour, kind of a lower rate per hour,
+and we're getting successful. And of course that means that you
+now have a grade on assignment 2.3, look at that, I got a grade on
+assignment 2.3, unless of course, you're running these in some
+other environment, okay? Thank you so much, and
+I hope that this has been useful to you.

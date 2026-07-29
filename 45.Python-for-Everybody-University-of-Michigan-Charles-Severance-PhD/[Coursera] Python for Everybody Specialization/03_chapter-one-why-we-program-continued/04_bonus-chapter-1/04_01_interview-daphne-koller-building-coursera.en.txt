@@ -1,0 +1,161 @@
+[MUSIC] Our company's mission is to
+educate the world. We believe that education is the great equalizer and that many of
+the world's problems could be made a lot better if more people
+had access to education, and that includes problems like unemployment,
+like hunger, even extremism, and if you educate
+people you open doors for them, to make life better for themselves, for their families,
+and for the communities. For me this project started about four
+years ago when a group of us who had been award-winning faculty were
+invited by John Bravman who was then the Vice Provost for undergraduate
+education at Stanford and he invited us to talk about how to open up more room in the curriculum for a meaningful engagement
+between faculty and students. And there were a bunch of us in the room
+and ideas were thrown around. Nothing particularly gelled. And then two months later I
+happened to be at a Google Faculty Summit, listening
+to a talk about YouTube. And all of a sudden it came to me that
+instead of lecturing in the classroom, the same lecture that I'd been
+giving for fifteen years, telling the same jokes
+at the same time, maybe we could take that, and preserve it,
+and in fact make it available to students in a much more engaging format that has more interaction than you get
+in a classroom. So I went to, back to John Bravman and he
+got very enthusiastic and he took me to see President John Hennessey
+of Stanford, who also was very excited and in fact supported this project with a
+generous seed grant in order to try and build up the technology as well as
+the pedagogy for making this happen. And so we piloted this in my class
+and developed some of the ideas that ended up making their way into
+Coursera, including the short video chunks, the integration of
+assessments into the video stream, the significant
+number of autograded assessments that
+allow the students to test their knowledge of the material. And, and so that was part of the project. And then in parallel to that,
+my colleague and co-founder Andrew Ng was actually working on a
+different trajectory, which is let's teach the world, and ended up
+developing pieces of the design and technology and pedagogy independently
+in the context of this other project. And at some point we realized that the
+projects were remarkably well aligned because the same ideas, the same
+designs, the same contents could be used for both improving the quality of
+the instruction for our on-campus students and for offering a meaningful course experience
+for the world. And so that realization culminated
+in the fall of 2011 with the three large Stanford classes that Stanford opened to the world,
+the machine learning class, the database class, and the AI class. And each of those classes
+had an enrollment of 100,000 students or more,
+which was just a completely mind-blowing
+experience because no one expected that to have this
+level of uptake. And so in the fall, after we
+saw that this was happening, we realized that we
+needed to do something with this. We needed to build up on this success and do something even bigger
+and more impactful. And it seemed clear that in
+order to let this have as, the largest impact that
+it could possibly have in terms of teaching all these people
+around the world who would never have access to this
+kind of high-quality education, we needed to make this available not just
+to Stanford, but to a number of top institutions who could offer their
+great content to all of these people. And so that's when we decided to
+spin this out of Stanford and make this, build up this platform that
+would provide this great experience for students as well as a good
+experience for faculty to effectively offer these large online
+classes that they could open to the world. >> But were you preparing for the fall of 2011 for like  a year, or,
+or did you just? >> No. It was kind of of a bit of a
+last-minute decision to try out these classes
+in this format. And I don't think anyone anticipated the
+extent to which this would take off and have this huge impact, and
+uptake in the world. >> So, really you kind of were laying down
+a lot of the early code in the fall. >> Yeah. >> [LAUGH] >> So, what happened was in
+I think August is when the decision was made, and we
+realized that the platforms that we had been using inside Stanford
+were just not up to the task of being available, robustly, to
+hundreds of thousands of students. Or even tens of thousands, which is what we
+thought we would have at that point. And so we started to build up
+a platform from scratch using a group of graduate students and
+three undergraduates, just unbelievably talented individuals, who ended up also
+being the core group that would form the engineering team of
+Coursera down the line. One of the things that we tried to build into this project from the
+very beginning are opportunities for interaction of the students
+with the material, as well as interaction of the students
+with their peers. And there's different ways
+in which that happens. In terms of interaction with
+the material, we do a lot of active exercises where
+the system basically checks the student's work so that the
+student is told whether he or she are actually getting the
+material or not. And it's important that those
+tests, those, those assessments, if you will,
+are deep and meaningful. And on the other hand, they also need to
+be graded at scale, because when you have a hundred thousand students
+you can't have a TA or an instructor in the loop
+manually checking papers. And so we have all sorts of different
+things that we can check at scale. You know, multiple choice is the obvious one, but one can also check
+numerical answers. One can check, check math. One can autograde programming
+assignments, and by programming assignments that just don't mean
+just code for computer sciences. An Excel spreadsheet is a programming
+assignment in effect too, and you can now grade a financial model or a
+marketing model as well. But none of those are the kinds of
+solutions that would allow us to support all of the classes that we would like, specifically when you want
+classes that require something that's more critical
+thinking where a student would need to write down
+some argument for one thing versus another
+or discuss the arguments or the causal chain
+behind some historical event, or do a, a detailed analysis of a
+legal case or something. You cannot do that using
+autograding right now. Maybe if, maybe down the line, artificial
+intelligence will solve that problem for us, but I'm not counting on it
+in the near future. And so how do you do that? And that's where, again, the social
+component of the platform, which is the other big piece of it,
+has come to our help because we ended up putting
+in place a peer-grading pipeline where students can robustly and
+reproducibly grade each other's work. And it turns out that not only that
+is an effective way of grading at scale, it's also a valuable learning experience for the students,
+and studies have not, not by us, but by educational
+researchers, have shown that peer rating teaches the students
+something, as well as provides a scalable solution
+to grading. One of the things that we try
+to build in is an opportunity for students to interact
+with each other in meaningful ways. And have one student help each other
+through the hard bits and have the students work together to achieve
+a better outcome for everyone. And so, for example, we had a question
+and answer forum where students really were the primary ones responsible for answering
+each other's questions. And there was a real community built up around that where students felt
+incredibly motivated to help each other and answer
+each other's questions to the point that in the fall quarter of 2011, the median response time
+for a question posted on the forum was 22 minutes, which is not a level of service that I, as an instructor, have ever
+offered my students. But because there was such a broad worldwide community of students
+all working together, there was, even if you were
+doing something at 3 o'clock in the morning,
+chances are that somewhere around the world,
+there would be somebody who was awake and thinking about
+the same problem. And so that social community was really an essential part, I think, of
+the student's experience. And critical to the engagement
+and retention of students in the, in the course. >> I just imagine these people
+living in Zurich getting together in a coffee shop and as a study group. So what, what were some of your
+experiences, or others' experiences
+on study groups? >> So it turned out that study groups
+were something that we hadn't built into the platform originally,
+it's something that we will do soon. But it grew organically. So people
+basically, without even being suggested to do that, ended up constructing
+study groups on the Q&A forums. So they said that, we have a study group
+in London, who wants to join us? We have an, a, a study group of, of Arab
+speakers or Hispanics or different types of groupings depending on, you know, geography or language or, or
+sometimes other things. We have, in one class, a global study group, which is specifically
+people who are looking to connect to people who are not part
+of their local culture and geography. And so this was really a fun thing for the
+students and some of them met physically, those that had geographical proximity, and
+others just communicated in the virtual space, but this organic growth
+was just such a powerful thing for students that we really quickly
+realized that we needed to build this into the platform. >> You probably are so busy that
+you don't have any time to think too far in the future, but
+I'm going to just sort of see. Where, what's your dream? >> Our dream is that anyone
+around the world will have an Internet connection, maybe via
+mobile device, which seems to be the way to go in most developing
+countries right now because of the way the infrastructure is
+developed, or not developed until now. And that people will be able to
+learn the things that they care about. And
+some of these will be things that are pragmatic
+and will help them get a better job and make
+more money so they can support their families.
+And some of them will be just ways to expand one's
+understanding and one's imagination by learning amazing things that
+you didn't know about because I think it's unfortunate
+that for most of us learning ends when we finish high school
+or when we finish college and that's the last time we learn anything. And
+wouldn't it be really cool if we had access to a life-long learning experience
+that, where you could come and say, I think this is a really cool topic
+and I'd like to learn more about that. And you would have access to a really
+amazing course taught by the top scholar in
+his or her field that could teach that. [MUSIC]

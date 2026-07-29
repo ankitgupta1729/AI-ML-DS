@@ -1,0 +1,41 @@
+[MUSIC] Hello and welcome to Python for everybody. Today we're going to install
+Python on a Windows system and install a simple text editor and
+run a simple program. We're going to go to python.org and
+we're going to go into downloads and we're going to download Python for
+Windows. So now the download is completed. So we're going to do the installation. Now, we need to be an administrator
+account on this Windows to do this. So we just finished the install. And so I'm going to test to make
+sure that we've got it done. So I'm going to go into the command prompt
+and check to see if Python is installed. I'm going to say py-- version
+because Python would hook us back up to that app store. So now we have Python. You type py will go in the interpreter. Print hello world. And then quit. Open print close, print. Okay, so we get Python installed. So that's good. So we can close that. Now, we're going to go
+on to our text editors. We have a number of different editors. You can use any editor that you like. You shouldn't use Word,
+you shouldn't use Notepad. So we recommend the Brackets. If you have something like this code
+installed and it's working for you, great, keep on going. So there's other ones that you can use but
+we're going to focus on Brackets. So Brackets is simple. It's open source. It runs on MAC, Windows, and PC. So we're just going to
+download Brackets here. Let's go ahead and install Brackets. We'll just take the typical. So we're done with that. So let's go ahead and finish. So let's just open Brackets up. Well, Let's go ahead and hide this. So there's Brackets. So I'll just close all this stuff. Of course that. So I'm going to create a file,
+file, new, and I'm going to make this a Python,
+file, print. Hello, world, of course,
+the first program. And now I'm going to save the file,
+file, save. Now I'm going to go onto my desktop and
+I'm going to create a new folder. I'm going to call this folder py4e. You'll notice it also shows up
+on my visual desktop as py4e. And then I'm going to go into
+that folder and name my file, Hello.py and
+now that I've called it hello.py with that suffix it actually
+does syntax highlighting. So that's kind of nice. So if I go and
+I take a look at this folder, I will see that there is
+a file called hello.py. And if I'm here, in the command
+you're in a working directory. So I'm on the py free user. So I'm in the working director users py4e. If you're ever wondering
+where you're at and it's not showing the prompt
+you can type cd all by itself. If I do a dir here, you'll see that I've got a number of
+files including a folder called desktop. So I did CDDES tab to get to desktop,
+and then I do a dir here and you see that I've got
+one folder named py4e. Yeah, okay, and my account name
+is py4e and my folder is py4e. So, sorry, if you're confused by that. So I can do a dir inside the py4e. But you see I'm in the account py4e,
+it's desktop and then the folder py4e, and
+I gotta file, hello.py. So I can type here py
+hello.py to run Python and it will, and it will say hello world. And so that's pretty much
+just kind of getting started. Like I said you can use
+any editor that you like. And we're just recommending
+that you start with Brackets. So there we go. I hope that you found this a quick and useful instruction on
+how to install Python. How to install a simple editor
+in the form of Brackets. And then how to run your
+first Python program. [MUSIC]

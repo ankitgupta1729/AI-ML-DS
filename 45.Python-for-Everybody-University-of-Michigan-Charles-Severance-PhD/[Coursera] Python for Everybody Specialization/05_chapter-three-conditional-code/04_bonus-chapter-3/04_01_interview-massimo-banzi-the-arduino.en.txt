@@ -1,0 +1,136 @@
+[MUSIC] [MUSIC] [MUSIC] When you're doing production design
+there is this idea that you need to be able to
+build prototypes. Because one of the, in a way,
+important elements of that discipline is being able to test the
+things you do with people. So, you know, you want to make a website,
+you make the prototype, a mockup of the website, you try it with
+people, you see how they react. And the same thing with physical devices, but physicals means you need to
+learn about electronics. So we had to create different classes
+that would basically make electronics approachable to people that
+don't have a background in electronics. They next to zero software
+development background. So, what we did when I started
+teaching is that I started to experiment with the tools that
+were available on the market. [COUGH] And then I realized
+there were a number of shortcomings, like, every, designers
+mostly like to use Macs. Mac haven't had serial ports for ages. They all have USB ports. And still, you know, there are
+professionals that have their development tools that
+are released now in 2013 they still only have serial ports, which,
+it's really weird, because I haven't seen a serial port on,
+on a laptop for a long time. And on desktops, sometimes don't
+even have them anymore. So we had to make something that would run
+on a Mac, that would be easier to use, that would be cheaper than what was available on the market back then
+which, you know. And also we had this programming language
+we sort of inherited from the MIT called Processing, which was used to teach about
+programming to artists and designers. So we thought, well, you know,
+why don't we try to make that run on a microcontroller, so that
+was based on Java. Microcontrollers tend to, they don't
+like Java very, very much. They prefer languages, it's easier to work
+with languages like C++ or C. So we did some experiments,
+then one student of mine did a thesis on the [UNKNOWN]. So different projects sort of
+followed and then we ended up with the first
+version of Arduino which, based on the work that this student
+Hernando Barragan did on a project called Wiring, we
+re-implemented it from scratch. So we reused the APIs but we rewrote the
+whole thing to be completely open source, because we also wanted
+something that would be easy for people to reproduce,
+to build upon. So we wanted to remove the barriers, and
+one of the things that we did is also that, since at the time we haven't got, in
+a way, a clue how we were going to manufacture,
+we didn't want to set up like a classic manufacturing
+company, or go to a venture capitalist or something
+because obviously there was, back then nobody would have
+even talked to us. So we thought, you know, let's release the
+hardware as open source so that people can build it if they want to. And they started to make, we just started
+to make the PCBs of the sort of two-hole version and, and so we, we would just
+give them away to people as a gift. So, just take this PCB, assemble one. And some people started to assemble it.
+So they went on the website, they got the instructions,
+they started to write. That's to, to download the code,
+to solder the, the boards. And so we got some feedback and we started
+to build up a little bit of an audience. And, and, you know, that's, that's
+how we started. >> So, so, talk a little bit about the the transition from people coming in to
+the four-week class and spending the first three days soldering to the, to the sort of scaled-up
+manufacture. >> [LAUGH]. >> I mean, what happened? How, how did you get pushed? What triggered the >> Well, we started to do
+introductory workshops for people outside of the school. I originally started this project with a
+friend of mine called Avit Quartinas who teaches in Sweden, and the two of us
+both had similar issues with our students. We wanted to, you know,
+there was a bunch of input that we gathered and so we started to make the
+first of the two-hole versions. Then we met an engineer that was
+living and working in Ivrea that had experience in
+manufacturing stuff. He was actually helping me a lot when, whenever the school wanted to manufacture
+something with electronics. I would ask this, Gianluca Martino
+is his name, I would ask Gianluca to help me do that. So I said, well, you know, can we
+manufacture 200 of these pre-made? That we can just, you know,
+sell to people? And then me and David managed
+to convince both Ivrea and the school in Marma to
+buy 50 each. So 100 were sold and then we said, you know,
+let's see if we can sell the other 100. You know, who cares? >> What, on a website or something? >> Well, we started to actually sell them
+like this, like in this, by hand, by sort of really like saying okay, I'm going to run a workshop
+in this place, I need 20 boards and we would just sell them to
+people at the moment. The platform was unknown, it was not really proven, we were
+at the beginning. Luckily we did some public
+demonstrations of how you can do with this,
+and people understood. So some people in different communities
+started to put out the word that there was this Arduino thing
+that was very promising. So we got people. We organized a
+workshop at the end of 2005 in London, which was the first workshop where really
+we put an ad and people paid and came. I think there were a number of events
+that lined up that created, kind of fueled, this kind
+of viral aspect. So, obviously, first of all, we had a
+friend that was teaching these kind of topics in the U.S.
+at NYU in a school called ITP. And he had a much bigger
+number of students. He had something like 120 students. And so, we met him one summer
+in Italy, doing a work, a project together and we
+showed him Arduino, he started to play with it, he thought, okay, I like this. We can go
+somewhere with this thing. So he brought back a few prototypes, we
+shipped him a few more boards. And he started to use it with some of the
+second-year students. And then at some point in 2006, I think, the
+platform started to work properly. You could do good projects with it. And so the first-year students they saw
+what the second-year students were doing and they said well you know we
+want that Arduino ourselves. So I would say that generated, that kind of
+gave us 120 power users. People who make beautiful projects
+and designers of these features, that tend to take their projects and document
+them very nicely put them online because
+it's their portfolio. Well with Arduino the idea is that you
+download a file, you plug the board, okay back in the days you had
+to install a few drivers. But then, you know, in the space of a hour
+or something you were working. >> You got a blinking LED. >> Yeah, the blinking LED was
+the hello world. The blinking LED is the hello world
+of physical computing. So yeah, I think this viral aspect also
+coupled with the fact that we asked SparkFun Electronics,
+their online store was again beginning to become
+very successful. So we asked Nathan to carry Arduino, you know, and he sort of graciously
+accepted to do that. And so we, he kind of fueled our
+growth in the U.S. Then me and David Cuartielles spent
+many, a number of years traveling around the world, but mostly in
+Europe at the beginning, doing workshops. And we, you know, sometimes for free. You know, just going somewhere and, you
+know, sleeping in a >> Couch
+>> Whatever we could sleep. Yeah, and then run workshops and that obviously kind of fueled
+that kind of aspect. But then it was a lot of people making
+projects, documenting them, putting them online and then sharing information about how they
+built the product. >> Where do you think this thing is
+going to go and what, what, what are your, some of your dreams of how it
+could sort of change our world >> [LAUGH]
+>> in powerful ways?. >> Well, in a way I think there's a
+wider, wider discussion about empowering people to be
+creative with technology. So because obviously nowadays
+the world that's around us is made a lot of digital technology. And there is an, there is a trend that I'm
+not particularly happy with where people just buy devices and they
+just use the devices, but they are not aware of how you program, how you design,
+you build things with the device. So, you know, for me the iPad sometimes is
+the TV set of the 21st Century, you know. Obviously at home I have an iPad
+and I use it for a TV, because you're browsing the Web, you're watching TV, you're maybe
+listening to music. Yeah, you can create with the iPad with
+certain applications, but it's not something's that kind of makes you
+want to program the device to do more. And, and I think it's important,
+especially for kids to, for them to understand that the world we live in,
+now especially if you look at this room, this is a building that was
+made, designed by human beings, built by human beings, every single bit was
+designed and built by a human being. So clearly, if you know how to design and build things, you can affect the world
+that's around you. If you are not able to participate in this,
+in the world of creation in the digital space, you're left out. Somebody else is going to
+design your world. At some point, you know, if there's no
+innovation, if there is no sort of renovation, in a way, inside the
+marketplace, then one company decides that that's the way you do a
+certain thing, and that becomes the only answer to a certain question and
+nobody starts to debate that. Or, you know in a way I think it's
+important to be masters of the technology. [SOUND] [MUSIC]

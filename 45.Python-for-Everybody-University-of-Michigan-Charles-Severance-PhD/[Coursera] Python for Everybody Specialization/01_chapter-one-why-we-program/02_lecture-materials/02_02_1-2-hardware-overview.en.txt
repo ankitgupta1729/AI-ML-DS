@@ -1,0 +1,143 @@
+Welcome back. Now, we're going to talk a little
+bit about hardware architecture. You might ask yourself sort of
+why all these terms, and words, and central processing unit, what I
+want from this section is I just want to define a few terms, so that I can
+use them in the rest of the course. That's really it. I want you to have some sense of
+the basic block diagram of things. Now in the old days, I'm going to show
+you three generations of hardware. I'm going to show you really old
+hardware from the 60s and 70s. I'm going to show you sort of medium old
+hardware from the 90s and early 2000s. And then, I'm going to show
+you sort of super brand new hardware that sort of this
+is a Raspberry Pi and it's the kind of highly integrated hardware
+that goes into things like the cellphone. So I'll kind of be going back and forth between three complete
+generations of hardware. But the picture and the concepts that I
+want you to understand are these terms. Central processing unit,
+main memory, secondary memory unit, and input/output devices. So we'll start with
+input/output devices. They are the way that this computer
+accesses the outside world. So things like the mouse, the keyboard,
+right, I got a keyboard here. Keyboard. Screen. All these things. I don't want to mess
+up the keyboard there. And so these are the input/output devices. There is a little, that's okay just mess
+up a little bit, no problem at all. Output devices, screens, and that's sort of how the humans in
+the outside world interact. Software, the main inside the computer,
+we have the central processing unit, and the main memory, and
+then the secondary memory. And so it's probably easier for
+me to take the, neither the oldest nor the newest, to give you a sense
+of what is going on here. And so, if you had a desktop and maybe you
+still have one of these junky old desktops at home, they are the ones that are big
+and they make noise when they start up, they have in them a number
+of different parts and the closest thing that a computer
+has to intelligence is this. Central processing unit,
+CPU is what we call them. And if you look at the back side of
+this CPU it is actually a circuit. It's a highly sophisticated circuit
+with millions of transistors on it, and you've probably heard that,
+millions of transistors. It runs maybe three billion
+instructions per second. What does that mean? Well that means that an instruction
+is a set of electrical pulses, maybe 32 little wires or 64 little wires. And at three billion times a second,
+this is programmed to ask what's next. And it pulls what's next in
+these little electric wires. Well, where does it get
+the answer to what's next? It gets the answer to what's next out
+of the memory. And so your program, when you write a program, let me
+draw this, when you write a program, you create a file on the secondary memory,
+like a Python file, and then at some point that is loaded into the main memory,
+translated, and then your program is here. And then when the CPU says what next,
+your program feeds its first instruction. And then when that's done,
+the CPU says what's next? It feeds the second instruction,
+third instruction, fourth instruction. It's called the fetch-execute cycle. And these two parts, the CPU and
+the main memory, are what participate. And the main memory is
+where you kind of live. Somewhere in there, a little tiny
+version of yourself is in there answering the questions
+that this is asking. Now you might say how smart is this,
+it's not really very smart at all. It's a really fast hand calculator with lots of
+storage is the best way to think about it. And going back to the 60s and the 70s, this is a piece of hardware from
+a computer that was the size of a room with probably 20 refrigerators,
+all with modules that make this up. And in here, well you probably
+can't see it, you've got resistors, transistors, and
+capacitors, and then wires. The wires are all printed on this printed
+circuit board, otherwise known as PCB. And so, the closest thing this has to
+intelligence are these transistors. And at their simplest, what they can do is they can sort of
+make really simple yes/no decisions. And then they also can be used,
+if you hook them together the right way, to store a little bit of information. And so, when we say there
+are millions of transistors packed into this little
+tiny square right here. It's kind of pretty. I mean, if you look at it, it's sort of,
+it looks almost like a jewel, it's so pretty. And each one of those is a real
+tiny photo-imprinted transistor and so there are millions of this. And so the difference between 1960 and today is this part gets smaller and
+smaller and smaller to the point where literally thousands of these things
+are all squeezed in to that little square. And coming back to sort of the mid-grade
+one, so this one here is the motherboard. This part here is the motherboard because
+it's the mother of all boards and it connects everything together. All these components plug in and
+that's how they are connected together and there's a whole bunch of wires that
+go back and forth on this and so this is how your program in a sense is
+transported from the memory to the CPU. And so, this motherboard connects them. Another thing that's connected to
+the motherboard is secondary storage. Now, the reason we have to have
+secondary memory or secondary storage is this is designed to be really fast,
+the main memory is super fast. And what happens is when
+the computer turns off, your program is erased from here. And so I originally said that
+you write your program, and you put a file in here, a .py file, and this is the same place that your Word
+files are, and your PowerPoints are. And then, the .py file is kind of loaded
+and translated into the main memory. And then when the computer shuts off,
+all this data goes away. Secondary memory is permanent. This does not get shut off. And so, in the old days,
+this old-day stuff, we used to store our programs and
+our files on our hard drive. And you may even have a computer at home where there's a actual physical spinning
+platter of magnetic media and a little head that goes in and
+out to read and write the data. And so it actually records
+magnetically when you put a file in, it records it and then when the power's
+off the magnetic recording stays here. And so these things,
+physical disk drives, are kind of going, becoming extinct, because all the data
+is in little USB sticks like this, and that's a perfectly good
+version of secondary memory. But at least for us,
+we can look at these beautiful antique mechanical gadgets that we used to store
+data magnetically when the power goes off. Now, this one here is pretty broken. [LAUGH] And it's pretty in bad shape, so it's probably not really
+storing much of anything. So in a summary of this picture, the thing I really want you to get out of
+this picture is a series of definitions. The Central Processing Unit
+is very simple, it's the closest thing
+computers have to brains, but it wants to answer the question what to
+do next, but we have to feed, through memory. the answers, which is your programs.
+And then we have input devices, output devices, the main memory, and then the larger permanent
+storage in the secondary memory. So, where you live inside of a computer
+is basically in the main memory. When you write a program, you type it in
+the computer, you outside the computer are typing on your keyboard, and
+you're typing Python commands into a file. Like if x less than 3, print, right? And then, that gets loaded into the
+main memory, and so you,
+this is a creative version of yourself. It's your instructions that
+are going to be run and that program ends up in the main memory,
+and then it's run. So, this is sort of where you
+live inside the computer. Think of it that way. You're living in main memory when
+your program is actually executing. Now, it turns out that
+the instructions that this central processor uses
+are a series of zeroes and ones. And when I said like 32 zeroes and
+ones, or 64 zeroes and ones, simultaneously are fed into this for
+each of the instructions. We use a language called machine language. And I would love some day to
+teach you machine language, but we don't have time right now, and you,
+that is more moving towards being a computer scientist when you start
+learning machine language, but basically we don't have to worry
+about that too much, we write Python. And we write in Python and then something effectively translates
+it into machine language and then machine language is the thing that
+runs and runs and runs and runs and so. Someday you might take a look for that,
+but that's more of a computer science thing and
+the software that does this translation, which is either called a compiler or
+an interpreter, we can talk more about that when you
+become more of a computer scientist. But for now, we're going to worry
+about how to write this code and the rest of this sort is going to fall
+by the wayside as we go forward. So, I got a couple of videos here. This one video,
+hopefully the YouTube URL is still good, if not we'll try to find another way
+to get you linked to a good copy of it. But it, basically, these, as I said,
+there are millions of transistors in one of these things, and there's a lot
+of electricity going through these things. And when your computer
+heats up on your lap, it's this little part here
+that's working really hard. Its doing things three billion times a second. So someone has made a video,
+not a very good video, but it's from a long time ago,
+where you take the cooling part off and you watch what happens to these CPUs when
+they're doing all this work three billion times a second using all this electricity
+and they're not properly cooled. Another cool video that we have
+is a video of hard drives and how they actually spin in reality. This one is totally messed up because
+I've been beating on it for years and playing with it, using it in all my
+classes for years, so it's in really bad shape. But this video shows you how that works
+and how it actually spins in reality. And you'll hear noises that if
+you have or had a desktop computer, you'll kind of recognize the noise, and
+then you'll have an idea of what's going on inside that computer as that
+secondary storage is moving around. And like I said, secondary storage is
+becoming less and less relevant as we move to solid-state storage, like the kind
+of storage that's in a USB stick. So up next, we're going to talk
+about how we write that Python. I talked a little about the hardware now,
+and now we're going to get
+started writing some Python.

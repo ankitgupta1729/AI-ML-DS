@@ -1,0 +1,91 @@
+[MUSIC] >> Piazza's an online question-and-answer
+platform that I built out of my own inspiration, based on my
+experiences from my undergrad. So, I did my undergrad when a very few
+women in computer science in India. Top engineering school, IIT. And I had actually studied in an all-girls
+high school till college, did not know how to speak to boys, was told,
+never allowed to speak to boys. So when I went to college,
+I didn't know how to speak to boys, and all my
+classmates were boys. Studied by myself, felt very isolated. And really felt a frustration
+at doing assignments by myself and trying to study for exams
+by myself. And I came to America to do my masters in computer science at
+Maryland College Park. Came out to Bay Area, California,
+worked as a software engineer at Oracle, at Facebook,
+at Cosmix. And when I went to Stanford Business School
+for my MBA, I realized today with technology, actually laptops
+and high-speed Internet, everywhere, many students end up sitting by
+themselves in their dorm rooms. And that feeling of isolation is actually pretty common among many
+young students today. So really, Piazza's meant to simulate the
+sort of real face-to-face discussion that I witnessed in my undergrad, but could not
+partake in, because too shy. >> Did you start working on it when you
+were working on your master's degree? >> My MBA, yes. I you know, it, midway through my first year, I took an entrepreneurship
+class at Stanford. And the one thing that entrepreneurs here
+in Silicon Valley that who came to speak in our class, the one thing they said is think about an idea you're
+passionate about. And for me that idea was how can
+I help students, particularly women studying kind of
+science and engineering subjects, feel less isolated. So that summer between first and
+second year of business school I moved in with my brother
+and his family, worked out of their garage,
+built the first prototype of Piazza. I had not done any web development
+until then. So I picked up a book on Ruby on Rails. Had never written a line of HTML or CSS,
+because all I knew was kind of serve, server
+technology, C, C++. I knew how to use GDB, and so I picked up a book on Rails, and learnt it all
+and built a site in ten days, and launched it to one class
+that fall of 2009. That grew to three classes in
+January of 2010, and about ten classes at Stanford in 2010 Fall. That suddenly grew to 65 classes
+in Spring of 2011, and many of the professors,
+I did not even know. So that was indicating to me that, you
+know, something was working. And students were liking it, and
+professors were liking it. So suddenly I contacted professors at
+Berkeley, and MIT, and Princeton, and Harvard, and within a month, we had over 20,000 students at these
+five schools using Piazza. >> And were you still sort of
+doing this with you as the main developer, with 20,000 accounts [LAUGH] and you as the main developer? And like were you using a credit card to
+paying for a server or two? >> It's just, it's barely maybe $50 to
+$100 a month to host or not even so I did find one developer who
+had a daytime job. to pay his bills and, you know, his
+family's bills, and he had some server space, so we just hosted on
+whatever server space he had. And it was at this point that we went
+ahead and raised a seed round of, you know, a little over a
+million dollars with Sequoia Capitol. >> Do you kind of have any philosophy of
+the right way to approach being an entrepreneur, and what
+sort of what, what's your sort of >> Yeah, I definitely lean towards
+the slow. I truly believe in creating value first,
+not getting caught up in numbers, In fact, February of 2010 it turned out
+that the founder of TechCrunch was seated next to me
+on a plane, and when he did ask me, you know, I'd love to
+write an article about you, my first kind of knee-jerk
+reaction was no, because I knew that would bring lots of
+people to want to use Piazza. Piazza was very, very in its nascent stages of product
+development, you know. And it was a good call, I think,
+because that whole year of 2010 I didn't care about numbers, I didn't care about how many students or how
+many professors. All I cared about was I had a
+hand full of professors and students that I could sit with and
+learn and watch and observe. Today I believe that I have
+very deep empathy. And, you know I think it's really
+important to build a product that adds value, that comes from
+often just staying very small, because you can isolate the
+types of users you want whose use cases matches the sort of
+use cases you built a product for. >> You became a mom in the middle
+of that whole story. >> Mmm hmm >> Talk a little bit about about how that all works
+>>Sure >> And came together. >> Yeah, so about five months ago
+I had a baby son, Arjun, and I'm very fortunate that I live with my husband's parents, we all
+live together and they, you know his parents understand
+that they really, I need their support to be able to run a company while being a mother. And both
+are very important, I want to be a mother, I want to raise children and bring them, you know, just want to raise them.
+At the same time. I really believe in the company
+that I've built and the impact it's making on students
+and teachers and continue to, continue to do what I have been doing. So with their support, I would say
+it's been actually pretty easy. One thing I really like to do is actually
+be in another place, by myself, so whether that's working out, or
+whether that's going on a long walk, that allows me to pull myself away from
+the weeds either for Piazza or for my son. There's a dish that's the Stanford dish,
+right behind Stanford. I hear, I hear Steve Jobs used to go there
+and a couple other great people who I derive a lot of inspiration
+from, that they go there a lot. So I like to walk there
+a few times a week. I found that that very first
+summer in 2009 when I had to build a prototype and find the first
+few professors to use Piazza. I remember I used to walk the dish five times a week, and I would
+only work four to six hours, or maybe eight hours, but it
+was never, and I had a successful product by
+the end of the summer. And I had a class using Piazza and
+I know the dish, walking the dish, brought me focus and that allowed to
+be very productive with my time [MUSIC]

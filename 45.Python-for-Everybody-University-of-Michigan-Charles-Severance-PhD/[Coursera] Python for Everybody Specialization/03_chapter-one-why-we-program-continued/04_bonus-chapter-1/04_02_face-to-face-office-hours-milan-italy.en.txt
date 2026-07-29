@@ -1,0 +1,37 @@
+[MUSIC] When I'm writing an operating system,
+I'm saying, oh here's this problem I've gotta solve, and here's these
+specifications in performance. I'm thinking like a computer scientist. But when I'm writing a Python program, it's like looking through a mailing list
+for certain kind of mail messages, and then matching those mailing
+message up with something else. Or it's seeing who the most
+prolific poster in your forum is. What you are really doing is,
+you are slowly but surely putting yourself into that program. We're in Milan, Italy with one of
+the largest office hours ever. And I'd like to do our
+standard introduction so that you can see everybody. So give us your name and say hi,
+or say something about the course. >> [CROSSTALK] Hi, Malcolm,
+I just really like the course. I don't have anything to say. >> Okay. >> I am Luca, and I am here for [INAUDIBLE] sometimes. >> Okay. >> Hi, I'm Evar. I like the teacher and
+I really love the course. >> Great, thank you. >> Hi, I'm Sebastian, and
+I attended the Internet History course. >> Great. >> Hi, this is Anarita, learning Python
+and getting excited about the course. >> Yeah. >> Ciao, I'm Barbara,
+and I like your course. Thank you, Dr. Chuck. >> Thank you, Barbara. >> [LAUGH]
+>> Hi, I'm Alberto. I just want to learn programming. >> Okay. >> Hi, I'm Andrea,
+I took Internet History. And when I read that Dr. Chuck was coming,
+I started screaming, oh, Dr. Chuck is coming, in the office. >> [LAUGH]
+>> No one understood, but anyway. >> Okay.
+>> Hi, I'm David,
+it's my first course on Coursera. And I wish everybody good luck,
+and stay focused on your goals. >> And now we meet the famous
+community teaching assistant Mauro. Yay!
+>> [APPLAUSE] >> Yeah! So Mauro, say hi,
+whatever you want to say. >> Oh, and yes,
+we finally succeed in bringing Dr. Chuck here in Italy and
+we have a very big, oh! >> [LAUGH]
+>> [CROSSTALK] We have a very big group [INAUDIBLE]. >> So after that brief interruption
+by the construction crew, we'll go back to talking to Mauro,
+our intrepid community teaching assistant. >> I am out here. Finally, we succeed in bringing Dr.
+Chuck in Italy. Very successful Office Hour here. A lot of people are both from Programming
+for Everybody and Internet History. I am very happy,
+very happy about our people. Thank you. >> Okay, so we missed one person. Do you want to say hi? >> [INAUDIBLE] Hi, my name is Zura and I am-
+>> She is my wife. [CROSSTALK] She didn't take any courses. >> You didn't take any courses, okay. But you will.
+>> I will, yes. >> Of course you will. >> [LAUGH]
+>> You have to. Okay so, let's see. Now, let me get a nice group picture. And let's give Mauro a nice round
+of applause, thanking him for how awesome he is for doing what he does. >> Thank you, Mauro! >> [APPLAUSE] >> [MUSIC]

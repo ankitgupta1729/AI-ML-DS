@@ -1,0 +1,10 @@
+[MUSIC] I'm Guido van Rossum. I created the Python language. I have worked on Python for 25 years and I have worked with a large group of
+others of course in the Python community. I'm very excited to see
+you all in this class. And I'm very proud that you're
+using my language to learn. Python is just the first step you're
+setting on the path to programming. There are many exciting things
+to learn in programming. Many that you can learn using Python, many
+that you can learn using other things. And you won't be alone. There will be millions of people
+who have gone before you or, or who are learning Python
+at the same time as you. And you, you can help each other,
+and you can learn together. [MUSIC]

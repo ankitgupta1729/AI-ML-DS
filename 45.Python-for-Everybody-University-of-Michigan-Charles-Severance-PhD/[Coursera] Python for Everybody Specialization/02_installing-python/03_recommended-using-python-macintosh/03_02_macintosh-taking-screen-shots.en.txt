@@ -1,0 +1,39 @@
+Hello, and welcome to the podcast on
+taking screenshots on the Macintosh. Nicely, the Macintosh has
+a very simple tool built in. We go into Macintosh hard drives,
+we go to Applications, and then we search down for Preview. Preview, right here. So Preview.
+And I'll close this now. So we've got Preview. Preview's the application that was
+originally built to view PDFs on the Macintosh. But it also has a whole series
+of screen capture capabilities. And I like to keep Preview
+in my dock all the time. So I come down here on the Preview icon. And it's already in my dock. If I said remove from dock, and
+then I would say keep in dock. It was already there, as soon as I start
+Preview, I always keep it in the dock. But all the things I need to
+use all the time in the dock. And so, let's take a screenshot. I'll just sort of start a jEdit program. And I'll say take me as a screenshot. Whatever. Doesn't matter. Just this is the window that
+I want to take a picture of. This window right here. So I go to Preview, and I say File. This is in the most logical place. Begin to grab a rectangular
+selection in which you'll be allowed to draw with your cursor or a window or
+the whole screen when timed. 90% of the time, what you really
+want to do is take a window. You can say grab window, it tells you
+you can grab, go over different windows, I can click here, I can click there,
+I can click there. And I just want to capture this windows. So click, I go like that. Now, here is a little weird. This is now on image, okay? And so,
+you can't click on this stuff, okay? That's that. So what you need to do. I'm going to close
+the original real window now. This is my J Edit,
+I'm going to Cmd+Q get rid of J Edit. And I do not want to save that file. So now, I'm in Preview. See, I'm in Preview here. And so, I've got this as an image. Now, the one thing it does is it
+always saves it to your desktop. So which gets to be sort of
+painful after a while. It gives them these long names called
+Snapshot that has the date, and stores it in this format capped Tip. So I prefer to switch it
+to a non-Apple format. So I want to do a Save As. And I'm going to save this as a JPEG. And I give it a better
+name called first image. And it'll be a JPEG, and
+I'm going to store it right on my desktop. So now, here we have first image, okay? And I can click on that and
+take a look at it. I'll close this. Click on it. Interestingly, it just
+comes back up in preview. So that's pretty much it. This would be the file you would
+upload if your job was to do this. I'll show you a couple other tricks I like
+to make my images a little bit better. Preview has a simple tool for cropping. And the way you crop something is you say, you draw a rectangle here on the image,
+and then you say Tools > Crop. And now, I've gotten rid of all the rest
+of that image except that which I want. And I'll say save this as,
+I want to save it as a JPEG tiny. And so, I now have two images, I got
+that first image and this tiny image. And there it is. I'll use Apple+W to quickly close it. And so, the one thing is is you just,
+after a while, these snapshots fill up on your desk,
+and so just keep cleaning them off. And if you were uploading
+to hand in a screenshot or whatever, this would be
+the filet that you upload. So that's pretty much all there is. Use the preview command to take
+screenshots with the grab. And typically, it's grab window, okay? Thanks.
