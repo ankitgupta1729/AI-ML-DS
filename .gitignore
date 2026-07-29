@@ -22,3 +22,6 @@ node_modules/
 .next/
 *.db
 *.db-journal
+
+# Video exceeding GitHub 100MB file limit
+46.Udemy-RAG-Fine_Tuning-LLM/*.mp4
