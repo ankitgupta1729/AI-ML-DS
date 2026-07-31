@@ -19,7 +19,7 @@ Notebooks, course notes, hands-on projects, production-grade pipelines, agentic 
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/ankitgupta1729/AI-ML-DS?style=flat-square&color=f5c518"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/ankitgupta1729/AI-ML-DS?style=flat-square&color=blue"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS"><img alt="Repo size" src="https://img.shields.io/github/repo-size/ankitgupta1729/AI-ML-DS?style=flat-square&color=success"></a>
-  <a href="#-usage--attribution"><img alt="Modules" src="https://img.shields.io/badge/modules-46-purple?style=flat-square"></a>
+  <a href="#-usage--attribution"><img alt="Modules" src="https://img.shields.io/badge/modules-50-purple?style=flat-square"></a>
 </p>
 
 </div>
@@ -58,6 +58,20 @@ It is organised as ~45 numbered, self-contained modules. Each folder stands on i
 | [`05.Code`](05.Code) | Reference implementations for GenAI and AI agents |
 | [`13.Decorators`](13.Decorators) | A deep dive into Python decorators |
 | [`45.Python-for-Everybody-...`](45.Python-for-Everybody-University-of-Michigan-Charles-Severance-PhD) | Coursework — Python for Everybody (Univ. of Michigan) |
+
+</details>
+
+<details open>
+<summary><b>🎓 Andrew Ng — Machine Learning Specialization</b></summary>
+
+Full lecture notes with figures for all three courses of the DeepLearning.AI / Stanford specialization.
+
+| Module | What's inside |
+| --- | --- |
+| [`47.Coursera-Andrew-Ng-Machine-Learning`](47.Coursera-Andrew-Ng-Machine-Learning) | Course 1 — Supervised ML: regression, classification, gradient descent |
+| [`49.Coursera-Andrew-Ng-Advanced-Machine-Learning`](49.Coursera-Andrew-Ng-Advanced-Machine-Learning) | Course 2 — Neural networks, decision trees, practical ML system design |
+| [`48.Coursera-Andrew-Ng-unsupervised-...`](48.Coursera-Andrew-Ng-unsupervised-learning-recommenders-reinforcement-learning) | Course 3 — Clustering, anomaly detection, recommenders, reinforcement learning |
+| [`50-Andrew-Ng-Course-Material`](50-Andrew-Ng-Course-Material) | 17 upstream community repos (labs, solutions, notes) tracked as **git submodules** — see [Clone the repository](#clone-the-repository) |
 
 </details>
 
@@ -140,9 +154,14 @@ It is organised as ~45 numbered, self-contained modules. Each folder stands on i
 ### Clone the repository
 
 ```bash
-git clone https://github.com/ankitgupta1729/AI-ML-DS.git
+git clone --recursive https://github.com/ankitgupta1729/AI-ML-DS.git
 cd AI-ML-DS
 ```
+
+> [`50-Andrew-Ng-Course-Material`](50-Andrew-Ng-Course-Material) tracks 17 upstream course
+> repositories as git submodules, so `--recursive` is what fills those folders. Already cloned
+> without it? Run `git submodule update --init --recursive`. To skip them entirely, clone
+> normally and leave them empty — nothing else in the repo depends on them.
 
 ### Set up the base environment
 
