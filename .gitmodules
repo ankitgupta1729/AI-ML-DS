@@ -1,0 +1,51 @@
+[submodule "50-Andrew-Ng-Course-Material/Andrew-NG-Notes"]
+	path = 50-Andrew-Ng-Course-Material/Andrew-NG-Notes
+	url = https://github.com/ashishpatel26/Andrew-NG-Notes.git
+[submodule "50-Andrew-Ng-Course-Material/Coursera-Machine-Learning-Specialization"]
+	path = 50-Andrew-Ng-Course-Material/Coursera-Machine-Learning-Specialization
+	url = https://github.com/VuBacktracking/Coursera-Machine-Learning-Specialization.git
+[submodule "50-Andrew-Ng-Course-Material/Deep-Learning-AndrewNg-DeepLearning.AI"]
+	path = 50-Andrew-Ng-Course-Material/Deep-Learning-AndrewNg-DeepLearning.AI
+	url = https://github.com/azminewasi/Deep-Learning-AndrewNg-DeepLearning.AI.git
+[submodule "50-Andrew-Ng-Course-Material/Deep-Learning-Specialization-Coursera"]
+	path = 50-Andrew-Ng-Course-Material/Deep-Learning-Specialization-Coursera
+	url = https://github.com/abdur75648/Deep-Learning-Specialization-Coursera.git
+[submodule "50-Andrew-Ng-Course-Material/ML-assignments-coursera-andrew-ng-python"]
+	path = 50-Andrew-Ng-Course-Material/ML-assignments-coursera-andrew-ng-python
+	url = https://github.com/thenomaniqbal/ML-assignments-coursera-andrew-ng-python.git
+[submodule "50-Andrew-Ng-Course-Material/Machine-Learning-AndrewNg-DeepLearning.AI"]
+	path = 50-Andrew-Ng-Course-Material/Machine-Learning-AndrewNg-DeepLearning.AI
+	url = https://github.com/azminewasi/Machine-Learning-AndrewNg-DeepLearning.AI.git
+[submodule "50-Andrew-Ng-Course-Material/Machine-Learning-AndrewNg-SOLUTIONS"]
+	path = 50-Andrew-Ng-Course-Material/Machine-Learning-AndrewNg-SOLUTIONS
+	url = https://github.com/ElenaStamatelou/Machine-Learning-AndrewNg-SOLUTIONS.git
+[submodule "50-Andrew-Ng-Course-Material/Machine-Learning-Labs"]
+	path = 50-Andrew-Ng-Course-Material/Machine-Learning-Labs
+	url = https://github.com/EslamAsHhraf/Machine-Learning-Labs.git
+[submodule "50-Andrew-Ng-Course-Material/Machine-Learning-Specialization-Coursera"]
+	path = 50-Andrew-Ng-Course-Material/Machine-Learning-Specialization-Coursera
+	url = https://github.com/greyhatguy007/Machine-Learning-Specialization-Coursera.git
+[submodule "50-Andrew-Ng-Course-Material/Machine-Learning-Specialization"]
+	path = 50-Andrew-Ng-Course-Material/Machine-Learning-Specialization
+	url = https://github.com/A-sad-ali/Machine-Learning-Specialization.git
+[submodule "50-Andrew-Ng-Course-Material/MachineLearningAndrewNG"]
+	path = 50-Andrew-Ng-Course-Material/MachineLearningAndrewNG
+	url = https://github.com/greyhatguy007/MachineLearningAndrewNG.git
+[submodule "50-Andrew-Ng-Course-Material/coursera-ml-py-sj"]
+	path = 50-Andrew-Ng-Course-Material/coursera-ml-py-sj
+	url = https://github.com/nsoojin/coursera-ml-py-sj.git
+[submodule "50-Andrew-Ng-Course-Material/coursera-ml-py"]
+	path = 50-Andrew-Ng-Course-Material/coursera-ml-py
+	url = https://github.com/nsoojin/coursera-ml-py.git
+[submodule "50-Andrew-Ng-Course-Material/coursera-ml"]
+	path = 50-Andrew-Ng-Course-Material/coursera-ml
+	url = https://github.com/Zhenye-Na/coursera-ml.git
+[submodule "50-Andrew-Ng-Course-Material/machine-learning-andrew-ng"]
+	path = 50-Andrew-Ng-Course-Material/machine-learning-andrew-ng
+	url = https://github.com/susilvaalmeida/machine-learning-andrew-ng.git
+[submodule "50-Andrew-Ng-Course-Material/machine-learning-complete-guide"]
+	path = 50-Andrew-Ng-Course-Material/machine-learning-complete-guide
+	url = https://github.com/Vishal-sys-code/machine-learning-complete-guide.git
+[submodule "50-Andrew-Ng-Course-Material/machine-learning-stanford-coursera"]
+	path = 50-Andrew-Ng-Course-Material/machine-learning-stanford-coursera
+	url = https://github.com/FMCalisto/machine-learning-stanford-coursera.git
