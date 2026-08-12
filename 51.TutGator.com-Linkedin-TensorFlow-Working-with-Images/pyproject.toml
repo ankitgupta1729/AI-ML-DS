@@ -5,8 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11,<3.14"
 dependencies = [
-    "ipykernel>=7.3.0",
+    "ipykernel<7",
     "matplotlib>=3.11.1",
     "numpy>=2.4.6",
+    "pydot>=4.0.1",
+    "setuptools<81",
     "tensorflow>=2.21.0",
+    "tensorflow-hub>=0.14.0",
 ]

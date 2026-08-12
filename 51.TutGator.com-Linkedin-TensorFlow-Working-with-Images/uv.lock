@@ -16,15 +16,21 @@ dependencies = [
     { name = "matplotlib" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "numpy", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "pydot" },
+    { name = "setuptools" },
     { name = "tensorflow" },
+    { name = "tensorflow-hub" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "ipykernel", specifier = ">=7.3.0" },
+    { name = "ipykernel", specifier = "<7" },
     { name = "matplotlib", specifier = ">=3.11.1" },
     { name = "numpy", specifier = ">=2.4.6" },
+    { name = "pydot", specifier = ">=4.0.1" },
+    { name = "setuptools", specifier = "<81" },
     { name = "tensorflow", specifier = ">=2.21.0" },
+    { name = "tensorflow-hub", specifier = ">=0.14.0" },
 ]
 
 [[package]]
@@ -433,7 +439,7 @@ wheels = [
 
 [[package]]
 name = "ipykernel"
-version = "7.3.0"
+version = "6.31.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "appnope", marker = "sys_platform == 'darwin'" },
@@ -443,16 +449,16 @@ dependencies = [
     { name = "jupyter-client" },
     { name = "jupyter-core" },
     { name = "matplotlib-inline" },
-    { name = "nest-asyncio2" },
+    { name = "nest-asyncio" },
     { name = "packaging" },
     { name = "psutil" },
     { name = "pyzmq" },
     { name = "tornado" },
     { name = "traitlets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3d/c4/e4a38f579de4225a561305666f7541cdabb30075def2aa1ac17bd73c1fb5/ipykernel-7.3.0.tar.gz", hash = "sha256:9acaaaf97d16355166e4085afe9d225bfbdf2b7ef520f9df3be8f2b248275e09", size = 184899, upload-time = "2026-06-10T08:41:25.481Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a5/1d/d5ba6edbfe6fae4c3105bca3a9c889563cc752c7f2de45e333164c7f4846/ipykernel-6.31.0.tar.gz", hash = "sha256:2372ce8bc1ff4f34e58cafed3a0feb2194b91fc7cad0fc72e79e47b45ee9e8f6", size = 167493, upload-time = "2025-10-20T11:42:39.948Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3d/02/77b271f5dc58bfbc0b577c877b2365d1ffea2afe66a80c13f2312820348c/ipykernel-7.3.0-py3-none-any.whl", hash = "sha256:897eb64da762549ef610698fca5e9675195ec6ac8ec7f19d81ce1ca20c876057", size = 120583, upload-time = "2026-06-10T08:41:23.648Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/d8/502954a4ec0efcf264f99b65b41c3c54e65a647d9f0d6f62cd02227d242c/ipykernel-6.31.0-py3-none-any.whl", hash = "sha256:abe5386f6ced727a70e0eb0cf1da801fa7c5fa6ff82147747d5a0406cd8c94af", size = 117003, upload-time = "2025-10-20T11:42:37.502Z" },
 ]
 
 [[package]]
@@ -770,12 +776,12 @@ wheels = [
 ]
 
 [[package]]
-name = "nest-asyncio2"
-version = "1.7.2"
+name = "nest-asyncio"
+version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b4/73/731debf26e27e0a0323d7bda270dc2f634b398e38f040a09da1f4351d0aa/nest_asyncio2-1.7.2.tar.gz", hash = "sha256:1921d70b92cc4612c374928d081552efb59b83d91b2b789d935c665fa01729a8", size = 14743, upload-time = "2026-02-13T00:34:04.386Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/83/f8/51569ac65d696c8ecbee95938f89d4abf00f47d58d48f6fbabfe8f0baefe/nest_asyncio-1.6.0.tar.gz", hash = "sha256:6f172d5449aca15afd6c646851f4e31e02c598d553a667e38cafa997cfec55fe", size = 7418, upload-time = "2024-01-21T14:25:19.227Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c5/3c/3179b85b0e1c3659f0369940200cd6d0fa900e6cefcc7ea0bc6dd0e29ffb/nest_asyncio2-1.7.2-py3-none-any.whl", hash = "sha256:f5dfa702f3f81f6a03857e9a19e2ba578c0946a4ad417b4c50a24d7ba641fe01", size = 7843, upload-time = "2026-02-13T00:34:02.691Z" },
+    { url = "https://files.pythonhosted.org/packages/a0/c4/c2971a3ba4c6103a3d10c4b0f24f461ddc027f0f09763220cf35ca1401b3/nest_asyncio-1.6.0-py3-none-any.whl", hash = "sha256:87af6efd6b5e897c81050477ef65c62e2b2f35d51703cae01aff2905b1852e1c", size = 5195, upload-time = "2024-01-21T14:25:17.223Z" },
 ]
 
 [[package]]
@@ -1104,6 +1110,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pydot"
+version = "4.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyparsing" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/50/35/b17cb89ff865484c6a20ef46bf9d95a5f07328292578de0b295f4a6beec2/pydot-4.0.1.tar.gz", hash = "sha256:c2148f681c4a33e08bf0e26a9e5f8e4099a82e0e2a068098f32ce86577364ad5", size = 162594, upload-time = "2025-06-17T20:09:56.454Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/32/a7125fb28c4261a627f999d5fb4afff25b523800faed2c30979949d6facd/pydot-4.0.1-py3-none-any.whl", hash = "sha256:869c0efadd2708c0be1f916eb669f3d664ca684bc57ffb7ecc08e70d5e93fee6", size = 37087, upload-time = "2025-06-17T20:09:55.25Z" },
+]
+
+[[package]]
 name = "pygments"
 version = "2.20.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1211,11 +1229,11 @@ wheels = [
 
 [[package]]
 name = "setuptools"
-version = "84.0.0"
+version = "80.10.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/6d/44/f5da03a8ef95d369145c5bb53050e7877c9f3d312e128605fd9504829143/setuptools-84.0.0.tar.gz", hash = "sha256:f4695c21257f0d9b537ec2692c941d02ee143b7cc1276941349a546573b2ef73", size = 1168449, upload-time = "2026-08-08T18:27:58.365Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/95/faf61eb8363f26aa7e1d762267a8d602a1b26d4f3a1e758e92cb3cb8b054/setuptools-80.10.2.tar.gz", hash = "sha256:8b0e9d10c784bf7d262c4e5ec5d4ec94127ce206e8738f29a437945fbc219b70", size = 1200343, upload-time = "2026-01-25T22:38:17.252Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl", hash = "sha256:51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670", size = 818216, upload-time = "2026-08-08T18:27:56.719Z" },
+    { url = "https://files.pythonhosted.org/packages/94/b8/f1f62a5e3c0ad2ff1d189590bfa4c46b4f3b6e49cef6f26c6ee4e575394d/setuptools-80.10.2-py3-none-any.whl", hash = "sha256:95b30ddfb717250edb492926c92b5221f7ef3fbcc2b07579bcd4a27da21d0173", size = 1064234, upload-time = "2026-01-25T22:38:15.216Z" },
 ]
 
 [[package]]
@@ -1284,12 +1302,38 @@ wheels = [
 ]
 
 [[package]]
+name = "tensorflow-hub"
+version = "0.16.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "numpy", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "protobuf" },
+    { name = "tf-keras" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/50/00dba77925bf2a0a1e45d7bcf8a69a1d2534fb4bb277d9010bd148d2235e/tensorflow_hub-0.16.1-py2.py3-none-any.whl", hash = "sha256:e10c184b3d08daeafada11ffea2dd46781725b6bef01fad1f74d6634ad05311f", size = 30771, upload-time = "2024-01-30T14:49:07.005Z" },
+]
+
+[[package]]
 name = "termcolor"
 version = "3.3.0"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/46/79/cf31d7a93a8fdc6aa0fbb665be84426a8c5a557d9240b6239e9e11e35fc5/termcolor-3.3.0.tar.gz", hash = "sha256:348871ca648ec6a9a983a13ab626c0acce02f515b9e1983332b17af7979521c5", size = 14434, upload-time = "2025-12-29T12:55:21.882Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/33/d1/8bb87d21e9aeb323cc03034f5eaf2c8f69841e40e4853c2627edf8111ed3/termcolor-3.3.0-py3-none-any.whl", hash = "sha256:cf642efadaf0a8ebbbf4bc7a31cec2f9b5f21a9f726f4ccbb08192c9c26f43a5", size = 7734, upload-time = "2025-12-29T12:55:20.718Z" },
+]
+
+[[package]]
+name = "tf-keras"
+version = "2.21.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tensorflow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/76/80/b005b59f9ccdbabc1b6cd07ca1126cbd4d902288438f0c00072f91a43c6f/tf_keras-2.21.0.tar.gz", hash = "sha256:f9af0f2546cd5532de0fae7a481f34a1ca2253737d4cd1000f6b713dc733f770", size = 1255377, upload-time = "2026-03-18T22:12:02.103Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c5/d2/5220e3b93444f1c57c092ab5eb2c30cdc762a6e412234750f2d6a85b3769/tf_keras-2.21.0-py3-none-any.whl", hash = "sha256:f858bf3d97f892304e7fbcf5eb0942ed91674e27204f940a85de8c93cf07fe62", size = 1694939, upload-time = "2026-03-18T22:12:00.662Z" },
 ]
 
 [[package]]

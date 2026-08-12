@@ -9,16 +9,6 @@
      "python.terminal.activateEnvInCurrentTerminal": false,
      "codescene.enableAutoRefactor": false,
      "codescene.enableReviewCodeLenses": false,
-     "python-envs.defaultEnvManager": "ms-python.python:venv",
-     "python-envs.defaultPackageManager": "ms-python.python:pip",
      "jupyter.venvFolders": [".venv"],
-     "python.venvPath": "${workspaceFolder}",
-     "jupyter.kernels.excludePythonEnvironments": [
-          "/Users/ankit/.local/bin/python3.15",
-          "/Users/ankit/.local/bin/python",
-          "/Users/ankit/.local/share/uv/python/cpython-3.15.0b3-macos-aarch64-none/bin/python3",
-          "/Users/ankit/.local/share/uv/python/cpython-3.15-macos-aarch64-none/bin/python3",
-          "/Users/ankit/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/bin/python3",
-          "/Users/ankit/.local/share/uv/python/cpython-3.14-macos-aarch64-none/bin/python3"
-     ]
+     "python.venvPath": "${workspaceFolder}"
 }
