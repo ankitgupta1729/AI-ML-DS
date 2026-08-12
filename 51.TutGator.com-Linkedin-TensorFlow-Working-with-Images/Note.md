@@ -126,4 +126,8 @@ Considerations during model training:
 
 Tensorflow's solution to these questions is callback functions. We'll be looking at 3 of the most used classes which are ModelCheckpoint, EarlyStopping and TensorBoard.
 
-11.  
+11.  ModelCheckpoint allows you to save your model regularly throughout the training process. So, this is usually at the end of each training epoch. The model weights and biases are finalized and saved as a weight file. 
+
+Use ModelCheckpoint to save the model only if it is improved from the previous epochs. So, the last saved model is going to be the best. 
+
+Check the notebook `7.ipynb` for the code.
