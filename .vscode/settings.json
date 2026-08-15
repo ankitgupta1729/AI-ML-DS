@@ -9,6 +9,148 @@
      "python.terminal.activateEnvInCurrentTerminal": false,
      "codescene.enableAutoRefactor": false,
      "codescene.enableReviewCodeLenses": false,
-     "jupyter.venvFolders": [".venv"],
-     "python.venvPath": "${workspaceFolder}"
+     // Per-project .venv folders in SUBFOLDERS of this repo are not discoverable
+     // by the Python extension (it only scans workspace-folder roots, and
+     // python.venvPath expects a folder whose immediate children are venvs).
+     // Register them as global Jupyter kernelspecs instead: run `uvkernel`
+     // inside the project folder once, then pick it from
+     // "Select Another Kernel... -> Jupyter Kernel...".
+
+     // --- Keep the editor and the Windsurf indexer off generated trees. ---
+     // This workspace has ~160k files but only ~14k are source. Watching and
+     // indexing the rest is what makes autocomplete die after a few minutes.
+     // Note: files.exclude is deliberately NOT set, so nothing disappears
+     // from the Explorer - these only affect watching, search and indexing.
+     "files.watcherExclude": {
+          "**/.venv/**": true,
+          "**/venv/**": true,
+          "**/node_modules/**": true,
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true,
+          "**/__pycache__/**": true,
+          "**/.next/**": true,
+          "**/.ipynb_checkpoints/**": true,
+          "**/site-packages/**": true
+     },
+     "search.exclude": {
+          "**/.venv": true,
+          "**/venv": true,
+          "**/node_modules": true,
+          "**/__pycache__": true,
+          "**/.next": true,
+          "**/.ipynb_checkpoints": true
+     },
+     "search.followSymlinks": false,
+     // Default is 5000; the source-only tree is ~14k files.
+     "codeium.searchMaxWorkspaceFileCount": 20000,
+
+     // --- AI ghost text vs the IntelliSense drop-down ---
+     // VS Code hides inline (AI) suggestions while the suggest widget is open.
+     // Typing an identifier like "impo" opens the drop-down, which silently
+     // swallowed the Windsurf ghost text even though it was generated fine.
+     // suppressSuggestions: true = when AI ghost text is available, hide the
+     // drop-down instead of the other way round.
+     "editor.inlineSuggest.enabled": true,
+     "editor.inlineSuggest.suppressSuggestions": true,
+     "editor.suggest.preview": true,
+     // Two providers active (Windsurf + Continue/Ollama). Keep the "1 of 2"
+     // toolbar visible so you can switch: Ctrl+Alt+] / Ctrl+Alt+[.
+     "editor.inlineSuggest.showToolbar": "always",
+     "editor.inlineSuggest.triggerCommandOnProviderChange": true,
+     // Keep ghost text visible when focus shifts (helps in notebook cells).
+     "editor.inlineSuggest.keepOnBlur": true,
+     // Small delay lets the faster providers answer before rendering.
+     "editor.inlineSuggest.minShowDelay": 0,
+     // Same behaviour in every cell type and file type. VS Code applies
+     // editor.inlineSuggest.enabled globally, but a few languages ship
+     // their own defaults, so these overrides make it explicit everywhere.
+     "[python]": {
+          "editor.inlineSuggest.enabled": true,
+          "editor.inlineSuggest.suppressSuggestions": true
+     },
+     "[markdown]": {
+          "editor.inlineSuggest.enabled": true,
+          "editor.inlineSuggest.suppressSuggestions": true,
+          "editor.quickSuggestions": {
+               "other": "inline",
+               "comments": "off",
+               "strings": "off"
+          }
+     },
+     "[plaintext]": {
+          "editor.inlineSuggest.enabled": true
+     },
+     "[json]": {
+          "editor.inlineSuggest.enabled": true
+     },
+     "[jsonc]": {
+          "editor.inlineSuggest.enabled": true
+     },
+     "[yaml]": {
+          "editor.inlineSuggest.enabled": true
+     },
+     "[shellscript]": {
+          "editor.inlineSuggest.enabled": true
+     },
+
+     // ================================================================
+     // ONE AI autocomplete provider: Windsurf (Codeium).
+     //
+     // VS Code renders only ONE inline suggestion at a time. Six AI
+     // extensions were racing for that slot, so the winner changed from
+     // session to session - that is why autocomplete "worked, then
+     // stopped, then worked again after a restart".
+     //
+     // Below: Windsurf ON, every other AI autocomplete OFF. Their chat
+     // and agent panels are untouched and still usable.
+     // ================================================================
+
+     // --- KEEP: Windsurf / Codeium ---
+     "codeium.enableConfig": {
+          "*": true,
+          "plaintext": true,
+          "markdown": true,
+          "python": true,
+          "jupyter": true
+     },
+     "codeium.enableCodeLens": true,
+     "codeium.enableInComments": true,
+     // Supercomplete = Windsurf's multi-line / next-edit prediction.
+     "codeium.disableSupercomplete": false,
+     "codeium.disableTabJump": false,
+
+     // --- OFF: GitHub Copilot inline completions ---
+     // Copilot is built into VS Code 1.133 (copilot-chat v0.61.0) and cannot be
+     // uninstalled, so it is disabled per-language instead. Copilot Chat is
+     // unaffected and still available from the sidebar.
+     "github.copilot.enable": {
+          "*": false,
+          "plaintext": false,
+          "markdown": false,
+          "python": false,
+          "jupyter": false,
+          "scminput": false
+     },
+     "github.copilot.nextEditSuggestions.enabled": false,
+
+     // --- ON: Continue autocomplete via local Ollama (qwen2.5-coder:7b) ---
+     // Model set in ~/.continue/config.json -> tabAutocompleteModel.
+     // This makes Continue a SECOND inline provider alongside Windsurf;
+     // use Ctrl+Alt+] to switch between their suggestions.
+     "continue.enableTabAutocomplete": true,
+     "continue.enableNextEdit": false,
+     "continue.showInlineTip": false,
+     "continue.pauseTabAutocompleteOnBattery": false,
+
+     // --- ON: Kilo Code autocomplete with Codestral ---
+     // Codestral and Mercury are the two models Continue's docs rank as the
+     // best available for autocomplete, and Kilo is the only extension here
+     // that can run them. Requires a Kilo/Mistral account with credits.
+     // If "kilo" + the namespaced model does not authenticate, switch the
+     // provider to "mistral" and the model to "codestral-2508" (bare name)
+     // with a Mistral API key, in Kilo's own settings panel.
+     "kilo-code.new.autocomplete.provider": "kilo",
+     "kilo-code.new.autocomplete.model": "mistralai/codestral-2508",
+     "kilo-code.new.autocomplete.enableAutoTrigger": true,
+     "kilo-code.new.autocomplete.enableChatAutocomplete": false
 }

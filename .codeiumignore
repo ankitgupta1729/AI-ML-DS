@@ -1,0 +1,44 @@
+# Keep the Windsurf indexer away from generated/vendored trees.
+# This workspace holds ~160k files; only ~14k are actual source. Indexing the
+# rest makes the language server grow until autocomplete stops responding.
+
+# Python virtual environments (~80k files)
+.venv/
+**/.venv/
+venv/
+**/venv/
+env/
+**/env/
+**/site-packages/
+
+# Node dependencies and build output (~58k files)
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+dist/
+build/
+
+# Caches and compiled artifacts
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+.cache/
+.uv/
+
+# Large binary/data files that carry no useful context
+*.pdf
+*.mp4
+*.zip
+*.tar.gz
+*.h5
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.db
+*.sqlite
+*.parquet

@@ -1,0 +1,23 @@
+[project]
+name = "packt-tf-images"
+version = "0.1.0"
+description = "TensorFlow Deep Learning Solutions for Images (Packt, Will Ballard) — GPU-enabled on Apple Silicon via Metal"
+# Upper bound is required: tensorflow-metal only ships wheels for CPython 3.9-3.12.
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "graphviz>=0.21",
+    "h5py>=3.16.0",
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.3",
+    "matplotlib>=3.11.1",
+    "networkx>=3.6.1",
+    "pandas>=3.0.5",
+    "pydot>=4.0.1",
+    "scikeras>=0.13.0",
+    "scikit-learn>=1.9.0",
+    "tensorflow==2.19.1",
+    "tensorflow-metal==1.2.0",
+    "torch>=2.13.0",
+    "torchaudio>=2.11.0",
+    "torchvision>=0.28.0",
+]
