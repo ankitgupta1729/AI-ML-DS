@@ -25,3 +25,7 @@ node_modules/
 
 # Video exceeding GitHub 100MB file limit
 46.Udemy-RAG-Fine_Tuning-LLM/*.mp4
+
+# Cloned third-party repos (each has its own .git; would become broken gitlinks)
+50.Andrew-Ng-Course-Material/
+52.Packt-Tensorflow-Deep-Learning-Solutions-for-Images-Will-Ballard/kerasvideo-server/
