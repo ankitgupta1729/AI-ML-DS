@@ -10,6 +10,7 @@ Notebooks, course notes, hands-on projects, production-grade pipelines, agentic 
   <img alt="Python" src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white">
   <img alt="Jupyter" src="https://img.shields.io/badge/Jupyter-Notebooks-F37626?style=for-the-badge&logo=jupyter&logoColor=white">
   <img alt="PySpark" src="https://img.shields.io/badge/Apache%20Spark-PySpark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white">
+  <img alt="TensorFlow" src="https://img.shields.io/badge/TensorFlow-Keras-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white">
   <img alt="LangChain" src="https://img.shields.io/badge/LangChain-LangGraph-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white">
   <img alt="Docker" src="https://img.shields.io/badge/Docker-Containers-2496ED?style=for-the-badge&logo=docker&logoColor=white">
   <img alt="Go" src="https://img.shields.io/badge/Go-Programming-00ADD8?style=for-the-badge&logo=go&logoColor=white">
@@ -19,7 +20,7 @@ Notebooks, course notes, hands-on projects, production-grade pipelines, agentic 
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/ankitgupta1729/AI-ML-DS?style=flat-square&color=f5c518"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/ankitgupta1729/AI-ML-DS?style=flat-square&color=blue"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS"><img alt="Repo size" src="https://img.shields.io/github/repo-size/ankitgupta1729/AI-ML-DS?style=flat-square&color=success"></a>
-  <a href="#-usage--attribution"><img alt="Modules" src="https://img.shields.io/badge/modules-50-purple?style=flat-square"></a>
+  <a href="#-usage--attribution"><img alt="Modules" src="https://img.shields.io/badge/modules-53-purple?style=flat-square"></a>
 </p>
 
 </div>
@@ -30,7 +31,7 @@ Notebooks, course notes, hands-on projects, production-grade pipelines, agentic 
 
 This repository is a **single, curated home for everything I learn and build across the AI/ML/Data stack** — from the mathematical foundations of machine learning to shipping LLM-powered agents in production.
 
-It is organised as ~45 numbered, self-contained modules. Each folder stands on its own: pick a topic, open it, and start running code. Nothing here depends on anything else, so you can dip in anywhere.
+It is organised as 53 numbered, self-contained modules. Each folder stands on its own: pick a topic, open it, and start running code. Nothing here depends on anything else, so you can dip in anywhere.
 
 **Who it's for**
 
@@ -39,6 +40,7 @@ It is organised as ~45 numbered, self-contained modules. Each folder stands on i
 | 🎓 Learning ML/DS from scratch | [`01.Python`](01.Python), [`03.SQL`](03.SQL), [`04.Theory`](04.Theory) |
 | 🤖 Building with LLMs & agents | [`23.LangChain`](23.LangChain), [`26.LangGraph`](26.LangGraph), [`05.Code`](05.Code) |
 | 🏗️ Taking models to production | [`35.Deploying-Machine-Learning-Models-in-Production`](35.Deploying-Machine-Learning-Models-in-Production), [`39.mlflow`](39.mlflow) |
+| 🖼️ Working on computer vision | [`51.Linkedin-TensorFlow-Working-with-Images`](51.Linkedin-TensorFlow-Working-with-Images), [`53.Convolutional-Neural-Networks-with-TensorFlow-in-Python`](53.Convolutional-Neural-Networks-with-TensorFlow-in-Python) |
 | 💼 Preparing for interviews | [`06.Interview-Preparation`](06.Interview-Preparation), [`04.Theory`](04.Theory) |
 | 🛠️ Looking for handy scripts | [`18.Utilities`](18.Utilities) |
 
@@ -69,9 +71,31 @@ Full lecture notes with figures for all three courses of the DeepLearning.AI / S
 | Module | What's inside |
 | --- | --- |
 | [`47.Coursera-Andrew-Ng-Machine-Learning`](47.Coursera-Andrew-Ng-Machine-Learning) | Course 1 — Supervised ML: regression, classification, gradient descent |
-| [`49.Coursera-Andrew-Ng-Advanced-Machine-Learning`](49.Coursera-Andrew-Ng-Advanced-Machine-Learning) | Course 2 — Neural networks, decision trees, practical ML system design |
-| [`48.Coursera-Andrew-Ng-unsupervised-...`](48.Coursera-Andrew-Ng-unsupervised-learning-recommenders-reinforcement-learning) | Course 3 — Clustering, anomaly detection, recommenders, reinforcement learning |
-| [`50-Andrew-Ng-Course-Material`](50-Andrew-Ng-Course-Material) | 17 upstream community repos (labs, solutions, notes) tracked as **git submodules** — see [Clone the repository](#clone-the-repository) |
+| [`48.Coursera-Andrew-Ng-Advanced-Machine-Learning`](48.Coursera-Andrew-Ng-Advanced-Machine-Learning) | Course 2 — Neural networks, decision trees, practical ML system design |
+| [`49.Coursera-Andrew-Ng-unsupervised-...`](49.Coursera-Andrew-Ng-unsupervised-learning-recommenders-reinforcement-learning) | Course 3 — Clustering, anomaly detection, recommenders, reinforcement learning |
+| `50.Andrew-Ng-Course-Material` | 17 upstream community repos (labs, solutions, notes) kept as **local clones only** — not tracked here, see [Course material not in this repo](#course-material-not-in-this-repo) |
+
+</details>
+
+<details open>
+<summary><b>🖼️ Deep Learning for Images — TensorFlow & CNNs</b></summary>
+
+Hands-on computer vision: convolutional architectures, transfer learning, and the TensorBoard
+workflow for inspecting what a network actually learned.
+
+| Module | What's inside |
+| --- | --- |
+| [`51.Linkedin-TensorFlow-Working-with-Images`](51.Linkedin-TensorFlow-Working-with-Images) | Image pipelines in TensorFlow — loading, augmentation, CIFAR-10 training with checkpointing |
+| [`52.Packt-Tensorflow-Deep-Learning-Solutions-for-Images-...`](52.Packt-Tensorflow-Deep-Learning-Solutions-for-Images-Will-Ballard) | Packt course (Will Ballard) — practical deep-learning recipes for image problems |
+| [`53.Convolutional-Neural-Networks-with-TensorFlow-in-Python`](53.Convolutional-Neural-Networks-with-TensorFlow-in-Python) | CNNs end to end — convolutions, pooling, regularisation, hyperparameter tuning with the HParams dashboard, confusion matrices and TensorBoard run logs |
+
+> [!TIP]
+> Modules 51 and 53 ship their TensorBoard run logs. Point TensorBoard at them to replay the
+> training curves without retraining anything:
+>
+> ```bash
+> tensorboard --logdir 53.Convolutional-Neural-Networks-with-TensorFlow-in-Python/logs
+> ```
 
 </details>
 
@@ -154,14 +178,23 @@ Full lecture notes with figures for all three courses of the DeepLearning.AI / S
 ### Clone the repository
 
 ```bash
-git clone --recursive https://github.com/ankitgupta1729/AI-ML-DS.git
+git clone https://github.com/ankitgupta1729/AI-ML-DS.git
 cd AI-ML-DS
 ```
 
-> [`50-Andrew-Ng-Course-Material`](50-Andrew-Ng-Course-Material) tracks 17 upstream course
-> repositories as git submodules, so `--recursive` is what fills those folders. Already cloned
-> without it? Run `git submodule update --init --recursive`. To skip them entirely, clone
-> normally and leave them empty — nothing else in the repo depends on them.
+#### Course material not in this repo
+
+`50.Andrew-Ng-Course-Material` is **not** part of this repository. It is a local folder holding 17
+upstream community repos (labs, solutions and notes for the Andrew Ng specializations), each with
+its own `.git`. Committing them would only produce broken pointers, so they are git-ignored.
+Nothing else in the repo depends on them — clone whichever you want yourself, for example:
+
+```bash
+mkdir -p 50.Andrew-Ng-Course-Material && cd 50.Andrew-Ng-Course-Material
+git clone https://github.com/greyhatguy007/Machine-Learning-Specialization-Coursera.git
+```
+
+The same applies to `52.Packt-.../kerasvideo-server`, which is the upstream course repo for that module.
 
 ### Set up the base environment
 
