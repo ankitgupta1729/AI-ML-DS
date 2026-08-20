@@ -25,20 +25,42 @@
           "**/.venv/**": true,
           "**/venv/**": true,
           "**/node_modules/**": true,
+          "**/.git/logs/**": true,
+          "**/.git/worktrees/**": true,
           "**/.git/objects/**": true,
           "**/.git/subtree-cache/**": true,
           "**/__pycache__/**": true,
           "**/.next/**": true,
           "**/.ipynb_checkpoints/**": true,
-          "**/site-packages/**": true
+          "**/site-packages/**": true,
+          "**/mlruns/**": true,
+          "**/artifacts/**": true,
+          "**/logs/**": true,
+          "**/data/**": true,
+          "**/output/**": true,
+          "**/outputs/**": true,
+          "**/build/**": true,
+          "**/dist/**": true,
+          "**/.cache/**": true
      },
      "search.exclude": {
           "**/.venv": true,
           "**/venv": true,
           "**/node_modules": true,
+          "**/.git/logs": true,
+          "**/.git/worktrees": true,
           "**/__pycache__": true,
           "**/.next": true,
-          "**/.ipynb_checkpoints": true
+          "**/.ipynb_checkpoints": true,
+          "**/mlruns": true,
+          "**/artifacts": true,
+          "**/logs": true,
+          "**/data": true,
+          "**/output": true,
+          "**/outputs": true,
+          "**/build": true,
+          "**/dist": true,
+          "**/.cache": true
      },
      "search.followSymlinks": false,
      // Default is 5000; the source-only tree is ~14k files.
@@ -53,8 +75,9 @@
      "editor.inlineSuggest.enabled": true,
      "editor.inlineSuggest.suppressSuggestions": true,
      "editor.suggest.preview": true,
-     // Two providers active (Windsurf + Continue/Ollama). Keep the "1 of 2"
-     // toolbar visible so you can switch: Ctrl+Alt+] / Ctrl+Alt+[.
+     // Keep the inline suggestion toolbar visible so you can tell which
+     // provider answered. We still keep the UI consistent even with one
+     // active provider.
      "editor.inlineSuggest.showToolbar": "always",
      "editor.inlineSuggest.triggerCommandOnProviderChange": true,
      // Keep ghost text visible when focus shifts (helps in notebook cells).
@@ -133,16 +156,16 @@
      },
      "github.copilot.nextEditSuggestions.enabled": false,
 
-     // --- ON: Continue autocomplete via local Ollama (qwen2.5-coder:7b) ---
+     // --- OFF: Continue autocomplete via local Ollama (qwen2.5-coder:7b) ---
      // Model set in ~/.continue/config.json -> tabAutocompleteModel.
      // This makes Continue a SECOND inline provider alongside Windsurf;
      // use Ctrl+Alt+] to switch between their suggestions.
-     "continue.enableTabAutocomplete": true,
+     "continue.enableTabAutocomplete": false,
      "continue.enableNextEdit": false,
      "continue.showInlineTip": false,
      "continue.pauseTabAutocompleteOnBattery": false,
 
-     // --- ON: Kilo Code autocomplete with Codestral ---
+     // --- OFF: Kilo Code autocomplete with Codestral ---
      // Codestral and Mercury are the two models Continue's docs rank as the
      // best available for autocomplete, and Kilo is the only extension here
      // that can run them. Requires a Kilo/Mistral account with credits.

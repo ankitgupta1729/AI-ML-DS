@@ -1,0 +1,12 @@
+
+022 6.CNN-MNIST-example
+https://www.dropbox.com/sh/8v3zjtkij8k4sil/AAD97g3h_EryfvKeEn2qG1Gfa?dl=0
+
+023 6.3.CNN-MNIST-example-Preprocessing
+https://www.dropbox.com/s/wumhp6b55j4tknm/6.3.%20CNN%20-%20MNIST%20example%20-%20Preprocessing.ipynb?dl=0
+
+024 6.4.CNN-MNIST-example-Training-the-model
+https://www.dropbox.com/s/pi9tsd6ayhug8m9/6.4.%20CNN%20-%20MNIST%20example%20-%20Training%20the%20model.ipynb?dl=0
+
+025 6.CNN-MNIST-example-Full-code
+https://www.dropbox.com/s/eckc8zpgdh8jjen/6.%20CNN%20-%20MNIST%20example%20-%20Full%20code.ipynb?dl=0

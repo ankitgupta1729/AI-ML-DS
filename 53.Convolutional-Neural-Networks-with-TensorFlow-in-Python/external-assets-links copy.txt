@@ -1,0 +1,12 @@
+
+026 7.Tensorboard
+https://www.dropbox.com/sh/kcos05fkpkbzpmq/AAAODCDEPFzWHyKYU7o28VFna?dl=0
+
+026 7.1.Tensorboard-on-the-MNIST-example
+https://www.dropbox.com/s/ar1w6celi107jpu/7.1.%20CNN%20-%20MNIST%20example%20with%20Tensorboard.ipynb?dl=0
+
+027 7.2.Confusion-matrix
+https://www.dropbox.com/s/wsole97bum235xn/7.2.%20CNN%20-%20MNIST%20-%20Confusion%20Matrix.ipynb?dl=0
+
+028 7.3.Hyperparameter-tuning
+https://www.dropbox.com/s/j4vsnk68fsrib3e/7.3.%20CNN%20-%20MNIST%20-%20Hyperparameters%20tuning.ipynb?dl=0
