@@ -3,15 +3,20 @@ name = "53-convolutional-neural-networks-with-tensorflow-in-python"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+# Pinned to 3.12: Apple's tensorflow-metal (1.2.0, the newest release) ships
+# wheels only up to cp312, so Python 3.13 cannot use the GPU at all.
+requires-python = ">=3.12,<3.13"
 dependencies = [
+    "tensorflow==2.18.*",         # newest TF the Metal plugin supports
+    "tensorflow-metal==1.2.0",    # Apple GPU (Metal) backend
+    "tensorflow-datasets==4.9.7", # 4.9.10 needs protobuf>=6.31, TF 2.18 pins 5.29
+    "tensorflow-metadata==1.16.1",
+    "tensorboard>=2.18,<2.19",
+    "setuptools<81",              # tensorboard 2.18 still imports pkg_resources
     "importlib-resources>=7.1.0",
     "ipykernel>=7.3.0",
-    "matplotlib>=3.11.1",
-    "numpy>=2.5.2",
-    "pandas>=3.0.5",
-    "tensorflow>=2.21.0",
-    "tensorflow-datasets>=4.9.10",
-    "tensorboard>=2.13.0",
+    "matplotlib>=3.9",
+    "numpy>=1.26,<2.2",
+    "pandas>=2.2",
     "scikit-learn>=1.3.0",
 ]

@@ -1,0 +1,33 @@
+
+035 All-project-resources
+https://www.dropbox.com/sh/k1aknhckc32jp20/AADhxaY-cMPLnicIEC8kauZja?dl=0
+
+036 Converting-images-to-tensors
+https://www.dropbox.com/sh/mun3oybbf78j0r0/AAAj9_SvWtmaBJHfXqCF85QEa?dl=0
+
+038 Primary-classification-task
+https://www.dropbox.com/sh/j1wq7803vsio03a/AABFdTitEpeGoKUxaqIP0ACva?dl=0
+
+042 Trousers-and-Jeans
+https://www.dropbox.com/sh/51yqx13gt8dinwh/AAAapvf9ImvveWXSElnI6PbVa?dl=0
+
+042 Trousers-and-Jeans-All
+https://www.dropbox.com/sh/u2oxiefegd0wyd9/AAA0vQT2hzIqOzPW7mGZJ91Sa?dl=0
+
+043 Trousers-and-Jeans-Gender
+https://www.dropbox.com/s/z99g000e1kcuqbh/Trousers%20%26%20Jeans%20-%20Gender%20-%20Model%201.ipynb?dl=0
+
+044 Comparing-Trousers-Jeans-techniques
+https://www.dropbox.com/s/rvfsgeuqebeh2j2/Comparing%20Trousers%20%26%20Jeans%20techniques.ipynb?dl=0
+
+045 L2-regularization
+https://www.dropbox.com/sh/2m9uip0ys25s5h9/AAChD2yMgjJxCDBvO16iOPKta?dl=0
+
+045 Dropout
+https://www.dropbox.com/sh/m3sovuo6xafn5lv/AAD9KE_rsCk0lQzBH1jYA69ia?dl=0
+
+045 Accuracy-distribution
+https://www.dropbox.com/sh/xgwartcqmrfk590/AACcTxfLtot_36e34rKy_QxJa?dl=0
+
+046 Data-augmentation-Shoes-All
+https://www.dropbox.com/sh/igwe5y6vpnw4cbr/AAAVfVjTPoXOPagJBAmE4eMka?dl=0
