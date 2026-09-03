@@ -29,3 +29,11 @@ node_modules/
 # Cloned third-party repos (each has its own .git; would become broken gitlinks)
 50.Andrew-Ng-Course-Material/
 52.Packt-Tensorflow-Deep-Learning-Solutions-for-Images-Will-Ballard/kerasvideo-server/
+
+# Large binaries kept out of git (exceed or approach GitHub's 100MB file limit)
+*.weights
+*.mp4
+*.avi
+54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_train.csv
+54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_test.csv
+54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/openimagesv6/open-images-v6/validation/labels/detections.csv

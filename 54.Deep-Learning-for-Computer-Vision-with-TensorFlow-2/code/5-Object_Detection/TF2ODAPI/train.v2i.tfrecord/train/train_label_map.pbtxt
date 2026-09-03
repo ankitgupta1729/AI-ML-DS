@@ -1,0 +1,10 @@
+item {
+    name: "Stop-sign",
+    id: 1,
+    display_name: "Stop-sign"
+}
+item {
+    name: "Traffic-light",
+    id: 2,
+    display_name: "Traffic-light"
+}

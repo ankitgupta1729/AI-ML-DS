@@ -1,0 +1,9 @@
+embeddings {
+  tensor_name: "fmnist_embedding:0"
+  metadata_path: "/content/gdrive/MyDrive/Colab/CV-TF1.X-2.X/data/Embeddings/metadata.tsv"
+  sprite {
+    image_path: "/content/gdrive/MyDrive/Colab/CV-TF1.X-2.X/data/Embeddings/sprite.png"
+    single_image_dim: 28
+    single_image_dim: 28
+  }
+}

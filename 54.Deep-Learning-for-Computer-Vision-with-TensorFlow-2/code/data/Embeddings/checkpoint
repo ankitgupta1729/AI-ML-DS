@@ -1,0 +1,2 @@
+model_checkpoint_path: "/content/gdrive/MyDrive/Colab/CV-TF1.X-2.X/data/Embeddings/model.ckpt"
+all_model_checkpoint_paths: "/content/gdrive/MyDrive/Colab/CV-TF1.X-2.X/data/Embeddings/model.ckpt"

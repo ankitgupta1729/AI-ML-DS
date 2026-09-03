@@ -1,0 +1,48 @@
+[project]
+name = "deep-learning-for-computer-vision-with-tensorflow-2"
+version = "0.1.0"
+description = "Deep Learning for Computer Vision with TensorFlow 2 — GPU-enabled on Apple Silicon via Metal"
+readme = "Note.md"
+# Upper bound is required: tensorflow-metal only ships wheels for CPython 3.9-3.12,
+# so Python 3.13+ would silently fall back to CPU.
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+    # --- TensorFlow + Apple GPU ---
+    "tensorflow==2.19.1",
+    "tensorflow-metal==1.2.0 ; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "tensorboard>=2.19,<2.20",
+    "setuptools<81",              # tensorboard still imports pkg_resources
+
+    # --- course "LIBRARY REQUIREMENTS" slide ---
+    "opencv-python>=4.10",
+    "pillow>=10.4",
+    "tqdm>=4.66",
+    "lxml>=5.3",
+    "jupyter>=1.1",
+    "jupyterlab>=4.2",
+    "matplotlib>=3.9",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "h5py>=3.11",
+    "cython>=3.0",
+    "beautifulsoup4>=4.12",
+    "requests>=2.32",
+
+    # --- also imported by the notebooks in code/ ---
+    "ipykernel>=6.29",            # registers the venv as a Jupyter kernel
+    "numpy>=1.26,<2.2",           # TF 2.19 upper bound
+    "scipy>=1.14",
+    "scikit-image>=0.24",
+    "plotly>=5.24",
+    "selenium>=4.25",             # code/4-ImageDataSets/Image Web Scraping Selenium.ipynb
+    "webdriver-manager>=4.0",
+    "fiftyone>=1.0",              # code/4-ImageDataSets/FiftyOne_OpenImagesV6.ipynb
+    "protobuf>=5.28,<6",          # TF 2.19 constraint; keeps ODAPI protos usable
+    "six>=1.16",
+    "selenium",
+    "pillow",
+    "requests", 
+    "webdriver-manager",
+    "fiftyone",
+]
