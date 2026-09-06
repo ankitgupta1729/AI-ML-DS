@@ -1,0 +1,12 @@
+miami.mp4
+==========
+Source : "Street traffic.webm" from Wikimedia Commons
+URL    : https://commons.wikimedia.org/wiki/File:Street_traffic.webm
+Author : https://www.youtube.com/user/Editor
+Licence: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
+Changes: transcoded VP8/WebM -> H.264/MP4, scaled 1920x1080 -> 1280x720, audio removed.
+
+NOTE: this is NOT the clip the Udemy course calls "Miami.mp4". That file is the
+instructor's own and is not published anywhere; there is no canonical
+"miami.mp4" in the darknet/YOLO ecosystem. This is a freely licensed street
+traffic scene standing in for it, so the notebook's miami.mp4 example runs.

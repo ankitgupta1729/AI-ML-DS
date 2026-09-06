@@ -37,3 +37,6 @@ node_modules/
 54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_train.csv
 54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_test.csv
 54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/openimagesv6/open-images-v6/validation/labels/detections.csv
+
+# TensorFlow checkpoint/saved_model weight shards (~108MB each, over GitHub's 100MB limit)
+*.data-00000-of-00001

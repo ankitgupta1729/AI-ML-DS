@@ -1,0 +1,26 @@
+<annotation>
+	<folder>car</folder>
+	<filename>000001.jpg</filename>
+	<path>D:\Anaconda36\py36\DL-CV-TF-Keras\5-Creating_datasets\images\images\car\000001.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>900</width>
+		<height>596</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>car</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>87</xmin>
+			<ymin>188</ymin>
+			<xmax>803</xmax>
+			<ymax>488</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -45,4 +45,15 @@ dependencies = [
     "requests", 
     "webdriver-manager",
     "fiftyone",
+    "Cython",
+    "pandas",
+    "tf-slim",
+    "lvis",
+
+    # --- TF2 Object Detection API (15.Tensorflow-Object-Detection-API.ipynb) ---
+    "tf-keras==2.19.0",           # ODAPI is Keras-2 code; TF_USE_LEGACY_KERAS=1 routes tf.keras here
+    "grpcio-tools==1.71.0",       # bundles protoc 29.x, matching the protobuf 5.29 runtime TF 2.19 pins
+    "tensorflow-io>=0.37",        # imported by object_detection/meta_architectures/deepmac_meta_arch.py
+    "pycocotools>=2.0.8",         # COCO metrics
+    "contextlib2>=21.6",
 ]

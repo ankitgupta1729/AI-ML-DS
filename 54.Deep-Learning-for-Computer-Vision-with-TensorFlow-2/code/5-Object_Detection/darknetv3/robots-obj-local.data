@@ -1,0 +1,5 @@
+classes = 2
+train = /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/5-Object_Detection/darknetv3/train-local.txt
+valid = /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/5-Object_Detection/darknetv3/test-local.txt
+names = /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/5-Object_Detection/darknetv3/robots-obj.names
+backup = /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/5-Object_Detection/darknetv3/backup

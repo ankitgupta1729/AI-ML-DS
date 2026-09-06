@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>000198.jpg</filename>
+	<path>D:\Anaconda36\py36\darkflow\train\images\000198.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>458</width>
+		<height>458</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>r2d2</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>182</xmin>
+			<ymin>113</ymin>
+			<xmax>349</xmax>
+			<ymax>328</ymax>
+		</bndbox>
+	</object>
+</annotation>

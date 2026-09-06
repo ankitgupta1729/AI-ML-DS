@@ -1,0 +1,122 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1788675843.772472 1199677 pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+I0000 00:00:1788675843.772546 1199677 pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/models/research/object_detection/model_lib_v2.py:563: StrategyBase.experimental_distribute_datasets_from_function (from tensorflow.python.distribute.distribute_lib) is deprecated and will be removed in a future version.
+Instructions for updating:
+rename to distribute_datasets_from_function
+[09/06 11:54:03] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/models/research/object_detection/model_lib_v2.py:563: StrategyBase.experimental_distribute_datasets_from_function (from tensorflow.python.distribute.distribute_lib) is deprecated and will be removed in a future version.
+Instructions for updating:
+rename to distribute_datasets_from_function
+WARNING:tensorflow:num_readers has been reduced to 1 to match input file shards.
+[09/06 11:54:03] tensorflow WARNING: num_readers has been reduced to 1 to match input file shards.
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/models/research/object_detection/builders/dataset_builder.py:100: parallel_interleave (from tensorflow.python.data.experimental.ops.interleave_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.interleave(map_func, cycle_length, block_length, num_parallel_calls=tf.data.AUTOTUNE)` instead. If sloppy execution is desired, use `tf.data.Options.deterministic`.
+[09/06 11:54:03] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/models/research/object_detection/builders/dataset_builder.py:100: parallel_interleave (from tensorflow.python.data.experimental.ops.interleave_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.interleave(map_func, cycle_length, block_length, num_parallel_calls=tf.data.AUTOTUNE)` instead. If sloppy execution is desired, use `tf.data.Options.deterministic`.
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/models/research/object_detection/builders/dataset_builder.py:235: DatasetV1.map_with_legacy_function (from tensorflow.python.data.ops.dataset_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.map()
+[09/06 11:54:03] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/models/research/object_detection/builders/dataset_builder.py:235: DatasetV1.map_with_legacy_function (from tensorflow.python.data.ops.dataset_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.map()
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: sparse_to_dense (from tensorflow.python.ops.sparse_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Create a `tf.sparse.SparseTensor` and use `tf.sparse.to_dense` instead.
+[09/06 11:54:05] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: sparse_to_dense (from tensorflow.python.ops.sparse_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Create a `tf.sparse.SparseTensor` and use `tf.sparse.to_dense` instead.
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.cast` instead.
+[09/06 11:54:06] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.cast` instead.
+/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tf_keras/src/backend.py:452: UserWarning: `tf.keras.backend.set_learning_phase` is deprecated and will be removed after 2020-10-11. To update it, simply pass a True/False value to the `training` argument of the `__call__` method of your layer or model.
+  warnings.warn(
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: calling crop_and_resize_v1 (from tensorflow.python.ops.image_ops_impl) with box_ind is deprecated and will be removed in a future version.
+Instructions for updating:
+box_ind is deprecated, use box_indices instead
+[09/06 11:54:10] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: calling crop_and_resize_v1 (from tensorflow.python.ops.image_ops_impl) with box_ind is deprecated and will be removed in a future version.
+Instructions for updating:
+box_ind is deprecated, use box_indices instead
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/autograph/impl/api.py:460: Tensor.experimental_ref (from tensorflow.python.framework.tensor) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use ref() instead.
+[09/06 11:54:10] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/autograph/impl/api.py:460: Tensor.experimental_ref (from tensorflow.python.framework.tensor) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use ref() instead.
+WARNING:tensorflow:From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+[09/06 11:54:12] tensorflow WARNING: From /Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tensorflow/python/util/dispatch.py:1260: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+/Users/ankit/Workspace/Projects/ankit-github/AI-ML-DS/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/.venv/lib/python3.12/site-packages/tf_keras/src/backend.py:452: UserWarning: `tf.keras.backend.set_learning_phase` is deprecated and will be removed after 2020-10-11. To update it, simply pass a True/False value to the `training` argument of the `__call__` method of your layer or model.
+  warnings.warn(
+2026-09-06 12:18:18.926 Python[5920:1199764] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-13231262‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.933 Python[5920:1199762] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-3579563961‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.951 Python[5920:1199760] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-188790072‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.963 Python[5920:1199763] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-637891397‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.972 Python[5920:1199759] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-1681257462‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.979 Python[5920:1199758] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-683768021‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.986 Python[5920:1199756] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-3796761786‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:18.992 Python[5920:1199765] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_18-3106788807‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:19.017 Python[5920:1199762] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_19-1835771570‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:19.023 Python[5920:1199756] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_19-2221082105‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:19.028 Python[5920:1199765] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_19-1009699956‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:19.042 Python[5920:1199759] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_19-3399692085‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:19.125 Python[5920:1199763] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_19-1012005315‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:23.343 Python[5920:1199758] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_23-1971549876‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:23.372 Python[5920:1199759] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_23-1123069333‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:23.385 Python[5920:1199765] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_23-4212943772‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:23.396 Python[5920:1199760] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_23-3335923910‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:23.432 Python[5920:1199764] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_23-62180426‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.417 Python[5920:1199765] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-1337301939‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.427 Python[5920:1199758] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-1170729160‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.439 Python[5920:1199757] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-2865057354‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.453 Python[5920:1199756] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-3010349884‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.480 Python[5920:1199758] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-3399047532‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.491 Python[5920:1199756] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-2408702535‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.502 Python[5920:1199765] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-78076064‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.512 Python[5920:1199757] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-155540770‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+2026-09-06 12:18:25.557 Python[5920:1199762] Error creating directory 
+ The volume ‚ÄúMacintosh HD‚Äù is out of space. You can‚Äôt save the file ‚Äúmpsgraph-5920-2026-09-06_12_18_25-2661574094‚Äù because the volume ‚ÄúMacintosh HD‚Äù is out of space.
+TRAIN_DONE_SECONDS 2878.2
