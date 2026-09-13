@@ -1,0 +1,15 @@
+# NOTE: use `tensorflow`, not `tensorflow-cpu` -- tensorflow-cpu ships no
+# aarch64 wheels, so it cannot install in a linux/arm64 image on Apple Silicon.
+# On non-x86 platforms this wheel is CPU-only anyway. It pulls in Keras 3.
+tensorflow==2.20.0
+
+# connexion 2.x is the last line that serves a Swagger 2.0 spec (models.yaml)
+# on top of Flask; it caps flask<2.3 and werkzeug<2.3, pinned here explicitly
+# so the resolver cannot drift into an incompatible pair.
+connexion[swagger-ui]==2.14.2
+flask==2.2.5
+werkzeug==2.2.3
+
+Pillow>=11,<13
+numpy>=1.26,<2.3
+h5py>=3.11
