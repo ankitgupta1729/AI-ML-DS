@@ -1,5 +1,10 @@
 .venv/
 /AI-ML-DS/
+
+# Downloaded dataset caches (re-downloaded by notebook code; exceed GitHub's file size limit)
+55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/cifar-10-python.tar.gz
+55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/cifar-10-batches-py/
+55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/FashionMNIST/
 20.LlamaIndex/llamaindex-helloworld/.env
 __pycache__/
 *.pyc

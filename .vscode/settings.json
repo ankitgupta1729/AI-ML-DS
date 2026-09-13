@@ -175,5 +175,6 @@
      "kilo-code.new.autocomplete.provider": "kilo",
      "kilo-code.new.autocomplete.model": "mistralai/codestral-2508",
      "kilo-code.new.autocomplete.enableAutoTrigger": true,
-     "kilo-code.new.autocomplete.enableChatAutocomplete": false
+     "kilo-code.new.autocomplete.enableChatAutocomplete": false,
+     "git.ignoreLimitWarning": true
 }
