@@ -199,7 +199,7 @@ The same applies to `52.Packt-.../kerasvideo-server`, which is the upstream cour
 ### Set up the base environment
 
 <table>
-<tr><th>Using <code>pip</code></th><th>Using <code>pipenv</code></th><th>Using <code>uv</code> (fastest)</th></tr>
+<tr><th>Using <code>pip</code></th><th>Using <code>pipenv</code></th><th>Using <code>uv</code> (recommended)</th></tr>
 <tr valign="top">
 <td>
 
@@ -223,15 +223,38 @@ pipenv shell
 <td>
 
 ```bash
-pip install uv
-uv venv
-source .venv/bin/activate
-uv pip install -r requirements.txt
+brew install uv
+uv sync
 ```
 
 </td>
 </tr>
 </table>
+
+All base dependencies are pinned in [`pyproject.toml`](pyproject.toml) (and mirrored in `requirements.txt` for the `pip`/`pipenv` paths). `uv sync` reads `pyproject.toml`, creates a project-local virtual environment named **`AI-ML-DS/`**, and installs everything into it — that folder is git-ignored and never pushed; only `pyproject.toml`, `uv.lock` and `.python-version` (which pins Python `3.12`) are tracked so anyone can reproduce the exact same environment.
+
+#### Optional: auto-activate the environment with `direnv`
+
+By default you still need `source AI-ML-DS/bin/activate` (or `uv run <cmd>`) to use the venv in a shell. To have it activate automatically the moment you `cd` into the repo (or any subfolder), install [direnv](https://direnv.net/) once:
+
+```bash
+brew install direnv
+```
+
+Hook it into your shell (add to `~/.zshrc` or `~/.bashrc`, then open a new terminal):
+
+```bash
+eval "$(direnv hook zsh)"   # or: eval "$(direnv hook bash)"
+```
+
+The repo already ships a tracked [`.envrc`](.envrc) that points `uv` and your shell at the `AI-ML-DS/` venv. The first time you enter the repo, approve it once:
+
+```bash
+cd AI-ML-DS
+direnv allow .
+```
+
+From then on, every `cd` into the repo (or a subfolder) auto-activates the `AI-ML-DS` venv — no manual `source` or `uv run` needed — and `uv sync` will always target that same folder instead of creating a stray `.venv`.
 
 ### Launch the notebooks
 

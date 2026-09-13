@@ -1,4 +1,5 @@
 .venv/
+/AI-ML-DS/
 20.LlamaIndex/llamaindex-helloworld/.env
 __pycache__/
 *.pyc
