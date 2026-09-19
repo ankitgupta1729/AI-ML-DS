@@ -149,10 +149,10 @@
      "github.copilot.enable": {
           "*": false,
           "plaintext": false,
-          "markdown": false,
+          "markdown": true,
+          "scminput": false,
           "python": false,
-          "jupyter": false,
-          "scminput": false
+          "jupyter": false
      },
      "github.copilot.nextEditSuggestions.enabled": false,
 
