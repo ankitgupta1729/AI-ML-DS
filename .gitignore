@@ -42,3 +42,7 @@ node_modules/
 
 # TensorFlow checkpoint/saved_model weight shards (~108MB each, over GitHub's 100MB limit)
 *.data-00000-of-00001
+
+# MovieLens dataset archive and its extracted CSVs (ratings.csv ~533MB, genome-scores.csv ~323MB — over GitHub's 100MB limit; already compressed)
+55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m.zip
+55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m/
