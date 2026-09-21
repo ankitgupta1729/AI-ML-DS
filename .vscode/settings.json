@@ -16,7 +16,7 @@
      // inside the project folder once, then pick it from
      // "Select Another Kernel... -> Jupyter Kernel...".
 
-     // --- Keep the editor and the Windsurf indexer off generated trees. ---
+     // --- Keep the editor's indexer off generated trees. ---
      // This workspace has ~160k files but only ~14k are source. Watching and
      // indexing the rest is what makes autocomplete die after a few minutes.
      // Note: files.exclude is deliberately NOT set, so nothing disappears
@@ -63,8 +63,6 @@
           "**/.cache": true
      },
      "search.followSymlinks": false,
-     // Default is 5000; the source-only tree is ~14k files.
-     "codeium.searchMaxWorkspaceFileCount": 20000,
 
      // --- AI ghost text vs the IntelliSense drop-down ---
      // VS Code hides inline (AI) suggestions while the suggest widget is open.
@@ -95,10 +93,12 @@
           "editor.inlineSuggest.enabled": true,
           "editor.inlineSuggest.suppressSuggestions": true,
           "editor.quickSuggestions": {
-               "other": "inline",
-               "comments": "off",
-               "strings": "off"
-          }
+               "other": "on",
+               "comments": "on",
+               "strings": "on"
+          },
+          "editor.wordBasedSuggestions": "allDocuments",
+          "editor.suggest.showWords": true
      },
      "[plaintext]": {
           "editor.inlineSuggest.enabled": true
@@ -117,64 +117,36 @@
      },
 
      // ================================================================
-     // ONE AI autocomplete provider: Windsurf (Codeium).
+     // ONE AI autocomplete provider: Supermaven.
      //
-     // VS Code renders only ONE inline suggestion at a time. Six AI
-     // extensions were racing for that slot, so the winner changed from
-     // session to session - that is why autocomplete "worked, then
-     // stopped, then worked again after a restart".
-     //
-     // Below: Windsurf ON, every other AI autocomplete OFF. Their chat
-     // and agent panels are untouched and still usable.
+     // 2026-09-21: settled on Supermaven as the sole inline-completion
+     // provider (purpose-built for autocomplete, generous free tier after
+     // its 14-day Pro trial auto-downgrades). Every competing provider's
+     // model/data was removed:
+     //   - Windsurf/Codeium: extension uninstalled, ~/.codeium deleted
+     //     (was dead anyway — Cognition folded it into Devin, no login).
+     //   - Continue + Ollama: qwen2.5-coder:3b removed from Ollama,
+     //     ~/.continue/config.yaml emptied. Extension left installed in
+     //     case a local fallback is needed later.
+     //   - Kilo Code's Codestral autocomplete: never actually set up
+     //     (needed paid Mistral credits) — config removed as unused.
+     //   - GitHub Copilot: left OFF; its free-plan completions quota is
+     //     exhausted until 2026-10-01 anyway. Chat still works elsewhere.
      // ================================================================
 
-     // --- KEEP: Windsurf / Codeium ---
-     "codeium.enableConfig": {
-          "*": true,
-          "plaintext": true,
-          "markdown": true,
-          "python": true,
-          "jupyter": true
-     },
-     "codeium.enableCodeLens": true,
-     "codeium.enableInComments": true,
-     // Supercomplete = Windsurf's multi-line / next-edit prediction.
-     "codeium.disableSupercomplete": false,
-     "codeium.disableTabJump": false,
+     "supermaven.enable": true,
 
-     // --- OFF: GitHub Copilot inline completions ---
-     // Copilot is built into VS Code 1.133 (copilot-chat v0.61.0) and cannot be
-     // uninstalled, so it is disabled per-language instead. Copilot Chat is
-     // unaffected and still available from the sidebar.
-     "github.copilot.enable": {
-          "*": false,
-          "plaintext": false,
-          "markdown": true,
-          "scminput": false,
-          "python": false,
-          "jupyter": false
-     },
-     "github.copilot.nextEditSuggestions.enabled": false,
-
-     // --- OFF: Continue autocomplete via local Ollama (qwen2.5-coder:7b) ---
-     // Model set in ~/.continue/config.json -> tabAutocompleteModel.
-     // This makes Continue a SECOND inline provider alongside Windsurf;
-     // use Ctrl+Alt+] to switch between their suggestions.
      "continue.enableTabAutocomplete": false,
      "continue.enableNextEdit": false,
      "continue.showInlineTip": false,
-     "continue.pauseTabAutocompleteOnBattery": false,
 
-     // --- OFF: Kilo Code autocomplete with Codestral ---
-     // Codestral and Mercury are the two models Continue's docs rank as the
-     // best available for autocomplete, and Kilo is the only extension here
-     // that can run them. Requires a Kilo/Mistral account with credits.
-     // If "kilo" + the namespaced model does not authenticate, switch the
-     // provider to "mistral" and the model to "codestral-2508" (bare name)
-     // with a Mistral API key, in Kilo's own settings panel.
-     "kilo-code.new.autocomplete.provider": "kilo",
-     "kilo-code.new.autocomplete.model": "mistralai/codestral-2508",
-     "kilo-code.new.autocomplete.enableAutoTrigger": true,
-     "kilo-code.new.autocomplete.enableChatAutocomplete": false,
+     "github.copilot.enable": {
+          "*": false,
+          "plaintext": false,
+          "markdown": false,
+          "scminput": false
+     },
+     "github.copilot.nextEditSuggestions.enabled": false,
+
      "git.ignoreLimitWarning": true
 }
