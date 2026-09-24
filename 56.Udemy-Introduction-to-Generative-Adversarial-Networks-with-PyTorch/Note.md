@@ -322,6 +322,8 @@ We shall get our hands dirty and implement our first GAN. Thank you and see you 
 
 7.  
 
+See the notebook `4.Implementation-of-GAN-Training-Methodology.ipynb` for the code.
+
 [119.png](./images/119.png)
 [120.png](./images/120.png)
 [121.png](./images/121.png)
@@ -431,6 +433,8 @@ Thank you and see you in the next lecture.
 -- Implement Vanilla GAN on MNIST Dataset to Generate Digits
 ============================================================
 
+See the notebook `4.Implementation-of-GAN-Training-Methodology.ipynb` for the code.
+
 Hello and welcome to a new lecture. In this lecture we're going to continue the implementation of the base GAN model and apply the training methodology. Let's get started in the previous lecture we ended by designing the model for the generator and the model for the discriminator and we applied the maxout activation function and the other details of the model designs so we continue by importing torchvision which contains the data set. Next we define the flattening transform which is a transformer to convert the two dimensional images to one dimensional flat vector and then we import to the images data set from torchvision and apply the transformers in the following order.
 
 First we convert to tensor using torchvision.transforms.ToTensor which converts the intensity from the range 0 to 255 down to 0 to 1 and returns a byte tensor. And then we apply a flatten transform next we define a global variable the batch size I set it to 32. You can play around with the value in order to fine tune the hyperparameters and then will define a data loader which uses the data train from the torchvision dataset we have defined above and is given the batch size and we don't forget that we set shuffle to True and we set the number of workers I set it to 4 continue to 2 or 1 as you like.
@@ -485,8 +489,16 @@ Thank you and see you in Section 3. Stay tuned.
 
 9.  
 
+[119.png](./images/119.png)
+[120.png](./images/120.png)
+[121.png](./images/121.png)
+[122.png](./images/122.png)
+[123.png](./images/123.png)
+
 -- [Coding Exercise] GAN Evaluation Metrics Inception Score
 ===========================================================
+
+See the notebook `5.GAN-Evaluation-Metrics-Inception-Score.ipynb` for the code.
 
 Hello and welcome to a new coding exercise. And this exercise we're going to learn a new evaluation metric for GAN models which is named the Inception score. Let's get started the Inception score takes its name after the inception architecture proposed by Google in the year 2014. One of the pioneering architectures and convolutional neural networks that performed a high score on the ImageNet classification problem. The ImageNet has thousand classes and the network is designed so that it has thousand output neurons for each label of the classes in the data set.
 
@@ -530,8 +542,15 @@ Thank you and see you in the next lecture.
 
 10.    
 
+[124.png](./images/124.png)
+[125.png](./images/125.png)
+[126.png](./images/126.png)
+
+
 [Coding Exercise] GAN Evaluation Metrics FID Score
 ======================================================
+
+See the notebook `6.GAN-Evaluation-Metrics-FID-Score.ipynb` for the code.
 
 Hello and welcome. And this coding exercise. We continue our discussion of generative adversarial networks and the evaluation techniques and metrics and this exercise to use the Fréchet Inception Distance or FID score. Let's get started Fréchet distance is a distance metric that is best fit for curves and polygons and it is perfect for pattern matching and shape matching it doesn't require the two curves to be identical it allows them to be within a given approximation range from each other.
 
@@ -581,5 +600,378 @@ Thought that was inspiring thank you and see you in the next lecture.
 
 11.   
 
+[127.png](./images/127.png)
+[128.png](./images/128.png)
+[129.png](./images/129.png)
+[130.png](./images/130.png)
+[131.png](./images/131.png)
+[132.png](./images/132.png)
+[133.png](./images/133.png)
+[134.png](./images/134.png)
+[135.png](./images/135.png)
+[136.png](./images/136.png)
 
+-- Introduction to Conditional GANs
+===================================
+
+Hello and welcome to section 3 generate specific digits with conditional GAN. In this section you will learn and implement a conditional GAN and the Wasserstein GAN. Let's get started. In the first lecture you will understand the basic concept behind conditional GAN let's pick it up from where we ended in Section 2. The basic GAN model produced only images of the same digit. In this case it was number one. It turns out that this is a very common problem in GANs.
+
+It goes by the name mode collapse the generator tricks the discriminator by generating the same image that was classified as real. In this way we don't obtain the desired outputs as planned however as a reminder using the base GAN model you can generate much better results by fine tuning the hyperparameters. I was interested in illustrating the problem of mode collapse and I wanted to highlight the concepts behind GANs and conditional GANs for the sake of completeness.
+
+Let's first introduce conditional probability since it is essential for understanding conditional GANs from probability theory. We know that conditional probability is the probability that an event A happens. Given the fact that event B has happened it is best to visualize that using Venn diagrams as on the screen right now. In this example the probability of the event A given B 1 is point 1 since event A is a superset of event B one the probability of the event A given B 2 is point twelve divided by point sixteen which is the intersection of both events A and B 2 and divided by the probability of B two.
+
+In this case the point twelve plus point 0 4 which is point sixteen Lastly, the probability of event A given B 3 is zero since there is no intersection in the basic GANs which are implemented in Section 2. We know that a GAN is based on two models the generator and the discriminator. The generator is given random noise drawn from a known distribution then g the generator learns a mapping to produce samples drawn from the training set distribution on the other hand the discriminator is given a sample either from the training set denoted as X or generated by the generator and is denoted as G of Z.
+
+Then it decides whether it is real or fake. Now let's see how the conditional GAN tweaks this paradigm in order to produce images from different categories highlighted in blue color is the difference between the conditional GAN and the basic GAN. You introduce a condition denoted as Y the generator is given both random noise as before and a condition it is in the case of MNIST the class label. Between 0 and 9 then the noise is concatenated with the condition and is passed through the model.
+
+The model learns the mapping as before and outputs a sample drawn from the conditional distribution X given Y. The same applies to the discriminator which is given the condition Y and outputs a decision D of X given y the idea is very intuitive and works like a charm as an exercise for you you can try passing the condition Y only to the generator and see if it still works the min-max game can now be reformulated similar to basic GANs by adding the condition Y for both the generator and the discriminator.
+
+The discriminator loss on real images becomes the expected of log of D of X given Y and the loss on the generated images becomes the expected of log of 1 minus D of G of Z given y in the next section. I will show you a more sophisticated loss function to yield superior results now that we understand what a conditional GAN is. And before we head to the implementation I would like to give you another conceptual hint so that you can go smoothly through the paper in the reading assignment.
+
+The modality of a probability distribution describes whether the distribution is a composite of other primitive distributions. In this example the red line represents a probability distribution that is composed of two Gaussian distributions with different means and variance in case of two basic underlying distributions. This is called the bimodal distribution. In the case of more underlying distributions It is called multimodal distribution. Remember that it is not limited only to normal distribution.
+
+Now the question for you is whether MNIST and CIFAR-10 datasets have a unimodal or multimodal distribution. Think about it and share your answers together let's implement the conditional GAN in the next lecture.
+
+12.   
+
+[137.png](./images/137.png)
+
+See the notebook `7.Implement-Conditional-GAN-on-MNIST-dataset.ipynb` for the code.
+
+-- Implement Conditional GAN on MNIST Dataset
+=============================================
+
+Hello and welcome to a new lecture. In this lecture we will implement the conditional GAN on MNIST dataset. Let's get started we started by opening the Jupyter notebook file available in the course material for Section 3 lecture 2. In the beginning we import to the required libraries torch, numpy and matplotlib. And don't forget the inline directive for matplotlib so that the images will be displayed inside the Jupyter notebook.
+
+Instead of giving an error next we use PyTorch to check for CUDA and GPU; if CUDA is available we'll use a device on cuda. Otherwise we assign the device CPU to the device variable. Next we define two global variables. The first is noise dimension, the dimension of the noise that will be given to the generator which is one dimensional array of hundred elements. The other global variable is label underscore dimension which is the number of labels available in the M this set which is 10 classes for the 10 digits from 0 to 9 next.
+
+We designed the generator model we use the same design we have used in Section 2 with a few changes. We define a class generator that inherits from torch.nn.Module inside the constructor def __init__ we trigger the parent constructor using the method super and then we define the sequential layers of the network. The first linear layer will take the input features to be of dimensions noise_dimension plus the label_dimension.
+
+Since we concatenate together the noise vector and the label condition then we apply ReLU activation and dropout regularization we add more fully connected layers which consists of linear, ReLU and dropout and then add the final output layer we add the sigmoid activation to output between 0 and 1. Unlike Section 2 and the forward method which used to take only the self and the batch parameters we add one more parameter for the conditions. So now we have the forward self come batch command labels where labels are the conditions so that the generator will tune its output according to the label input inside the forward method.
+
+First we reshape the batch input to be two dimensional array of batch size and the negative one for the remaining dimensions. Then we concatenate together the inputs which is the noise and the labels which is the conditions along with the first dimension by passing dim equals 1. Now our input is ready. We best the input to the network by using self.fcn and pass ret which is the inputs and we return to the output as the return of the forward method.
+
+The output in this case will be the generated images next we design the discriminator model again. The discriminator class is defined like what we have done in Section 2 with a few changes and the first sequential linear layer of the discriminator model. We change the shape of the input to be in_features equals 784 which are the dimensions of the MNIST dataset images twenty eight by twenty eight. And then we add as a concatenated layer the label dimension which is the condition the discriminator is designed as fully connected layers each one of them has a linear layer maxout activation and drop out regularization we continue by adding a few more fully connected layers.
+
+And finally at the final output layer we add sigmoid activation to force the output to be squashed in the range 0 and 1 0 for fake and 1 for real samples similar to the generator we add the labels as a parameter to the forward method of the discriminator and concatenated together with the input images and finally best the concatenated images and the conditions to the network and return the output which is a label is a 0 or 1 now that we have designed our models.
+
+We fetch the dataset of MNIST digits we use torchvision data sets and apply the flatten transform which it converts the two dimensional image to one dimensional vector then we use a data loader from torch.utils with a batch size of 64 and shuffle equals True we create instance objects of the generator end the discriminator classes and convert them to the device, CPU or CUDA then we define the optimizer algorithm for the networks for both the discriminator and the generator to be stochastic gradient descent or torch.optim.SGD; we pass the parameters of the models and we set the learning rate the initial learning rate to be point or 1 and we set the momentum of 0 point 5 commented here is a dampening which is a feature in PyTorch that allows you to decay the momentum with the epochs by a factor.
+
+This is a multiplicative factor that gets multiplied by the momentum I have commented it out since it didn't produce the required results but I would encourage you to try it out and see how the behavior is changed. It is also a good tool in your tool set so that you can know when to use it as a result of using dampening the momentum of the optimizer will be decayed or decreased as the epochs progressed towards the end of the training. This is a desired feature that is instructed in the original papers of conditional GANs and basic GANs by Ian Goodfellow.
+
+Then we defined the loss function torch.nn.BCELoss, the binary cross entropy loss and other recommended feature is learning rate decay which I dedicate a bonus section to it at the end of this video lecture. I have also commented it out since it is implemented differently in PyTorch from what is desired. But here I give you an idea about what is possible using the APIs of PyTorch. Here we can define a scheduler for learning rate that decays the learning rate by a certain step at each epoch.
+
+The first parameter is the optimizer. In this case the discriminator and the generator optimizers so that it can control the learning rate upon them. The step size is the second parameter and it decides how the learning rate will be changed either each epoch or each other epoch or every three epochs or every ten epochs and so on and then Gamma is the factor by which the learning rate will decay. This is a multiplicative factor. That is it gets multiplied by the original learning rate.
+
+So for example here point ninety nine will multiply the original learning rate by 0.99 and return the output as the new learning rate. Finally the last parameter is last_epoch which I set it to negative 1. This is the default and this instructs their scheduler to use the initial learning rate at the first epoch. PyTorch APIs provide variations of learning rate decay. One of the variations is the lambda learning rate which allows you to define your own class or your own method that will tune the learning rate as the training progress in this case have defined the class.
+
+the decay learning rate class with the constructor that stores the initial learning rate and the step size to reduce the learning rate at every two steps are three steps and so on. And then I defined the method call that gets triggered whenever the decay learning rate class is invoked and next we define an if condition. If epoch modulus self.step_size equals equal zero then the learning rate will be decayed by a multiplicative factor of point 1. This allows us to get sort of multi-step learning rate which is also actually a defined method in the PyTorch APIs.
+
+But I wanted to show you how to apply your own customized learning rate decay method. And then we create two objects for learning rate scheduler for both the discriminator and the generator and pass the lambda learning rate to be the decay learning rate class we have just created and we set the initial learning rate similar to the one we have set on the optimizer and the step size to be a hundred. Again I have commented this part out as it didn't produce the required results but I insist on showing you how to use this kind of functionality in your model design and the exercise and in the bonus section at the end of this lecture I will show you a more mature example of the learning rate decay next we define a visualization method that will help us visualize the output of the generator at every epoch.
+
+This is essential as we know from Section 2. There is no objective method of evaluating the output of the generator unless we visualize and inspect the images generated by the generator manually. So we define a method visualize_gan. And this method will use matplotlib subplots to present ten images for the ten digits and each cell of these subplots will have the image and the title which is torch.argmax of the labels of the index of this image at the end of the method the plot will be saved as a figure in the target directory the labels of the MNIST dataset are numerical for each label of the digits.
+
+That's why we need to encode them as one-hot encoding a vector of zeros and a one only in the place of the target label. In Section 1 I have showed you one way to do one-hot encoding and this section I show you another way of doing one-hot encoding and use it for preprocessing the data or the target labels so defined the method encode_one_hot which takes a label as a parameter and then it creates a torch float tensor of the target shape labels, the shape at zero which is usually the batch size along the first dimension and then the second dimension will be the label dimension which is 10 elements.
+
+Since we have 10 labels and this dataset this float tensor will be initialized to be all zeros by using the method ret.zero_ and then using another method from PyTorch which is named scatter scatter will replace only the zeros. at the indices defined by the labels. For example if the first sample has the label three then three is the index and that will be used to be replaced from 0 to 1 and that will indicate one-hot encoding for the vector 3.
+
+We do that by passing the dimension along which these replacement will happen. dim equals one, that is the second dimension and then we pass the indices labels.view of negative one comma one. And finally the value to be replaced which is 1 so comma value equals 1. And then we return the output which would be the one-hot encoding of the batch and the target values. Now we are ready to train our GAN model. So we create the real labels as ones and the fake labels as zeros.
+
+And then we create a fix it nice dimension test underscore Z which is the noise that we will be given to the generator and we will use a fixed noise so that we can visualize the output of the generator on a consistent sample. At this moment I would like you to pause the video and think a little about the way we initialize this test_Z and think why it is different from the one we have used in Section 2. Now that your back. I hope that you have found it.
+
+Here you can see that we multiply the random numbers returned from torch.randn by 2 and subtract 1 from them. What effect does this have. So let's take for example randn returns the value 0 so 2 multiplied by zero. That will be zero and then subtract one that will give us the value of negative 1. On the other end imagine torch.randn returns the value 1 so 2 multiplied by 1 is 2 and subtract 1. That will give us 1 or plus 1.
+
+So in this case we have obtained Gaussian random noise with mean zero and standard deviation negative 1 and plus 1. You can play around with these values I have set them this way so that I can show you you can control even the distribution that is going to be given to the generator. If you remember that as an exercise in Section 2 there was a hint to use a uniform distribution and see how the changes are going to be on the generator outputs. Then we create the conditions test_Y which is the conditions that will be passed to the generator and the discriminator.
+
+Along with this batch we set the number of epochs to be 256 which is a very low number. At the end of this video lecture I show you the same example which I run for four thousand sixty nine epochs on Google Colab. Then we define the number of steps which is the length of the train loader divided by the batch size. Note here the double slash for integer division then we define the directory where the images generated will be saved for further inspection and create the directory.
+
+If it doesn't already exist next we define four arrays to log the loss and log the learning rate then we define a for loop for the number of epochs we have defined above. Then we initialize the counters and the loss to 0 then we loop over the data set and we train the discriminator for 4 steps more than the generator we convert the images to the device and then we one-hot encode the labels and convert them to the device. We do that twice once for real images and other for fake images where we get fake conditions at random which are also one-hot encoded and then we get fake images bypassing the noise to the generator and passing the output to the device we reset the gradients of the discriminator by using discriminator_optimizer.zero_grad and then best the real images and the real conditions to the discriminator receive the output as the real_outputs and then best the fake images and the fake conditions to the discriminator and save the output as fake outputs.
+
+Remember that we should never mix the real and the fake images when training the discriminator some papers were published that have tried to do this and it didn't work out. Then we evaluate the loss on the real outputs and the real labels and evaluate the loss on the fake outputs and the fake labels. This way you have obtained the D of X and the D of G of Z. Then we apply the backward to calculate the gradients and use the optimizer to update the weights.
+
+Finally we increase the discriminator counter, d_counter. Plus equals 1 and then we calculate the loss as D of X plus D of G of Z .item so that we can get the floating point value inside the PyTorch tensor afterwards. We train the generator again we generate the noise to be Gaussian random noise with zero mean and plus and minus 1 deviation and convert it to the device and then we generate random numbers for one-hot encoding as labels or conditions we reset the gradients of the generator by using generator.zero_grad and best the noise and the conditions to the generator and to the discriminator and we get the outputs.
+
+We calculate the loss using criterion of outputs comma real labels. Notice here that we flip the labels for the generator so that we are trying here to maximize the probability that the generator will generate images that don't get recognized by the discriminator as fake having calculated the loss we apply the backward to calculate the gradients and use generator_optimizer.step to update the weights. Here is also commented the learning rate decay but if we have applied the learning rate decay as defined above then we would need to apply discriminator_scheduler.step and generator_scheduler.step so that this will count as a step in the learning rate.
+
+The K counter after performing this step the learning rate will be reduced by the factor that we have assigned above. Then we increment the counter for the generator and we increment the generator loss by using that item the next snippet is responsible for doing some bookkeeping and logging so every ten epochs we print the line with the number of the epoch and the generator loss and the discriminator loss. We divide here by the counter to get the average and then if we have used the scheduler like above we can use scheduler.get_lr so that we can visualize the learning rate that we have obtained after applying the decay method.
+
+Finally every five epochs we visualize the results of the generator by passing the fixed noise and the fixed conditions to the generator and visualizing the output we visualize the output once again at the end of the training. Since we are not sure that the visualization method got invoked every five epochs and that included the last epoch so we perform that as a safeguard. At the end of the training now we visualize the loss function as reported in the loss function arrays for the discriminator and the generator using matplotlib the blue curve represents discriminator loss which is almost zero for most of the time.
+
+That means that the discriminator outperforms the generator the generator loss started to be very low while the discriminator was still learning and then it increased after the discriminator got stronger by epoch number 50 and number seventy five the generator loss has decreased and the generator started to learn some useful information and fine-tune its outputs. Here we visualized the outputs we have obtained after 512 epochs using the PyTorch utility for visualization make grid you can see here that the first cell is almost 1.
+
+The second is 2, the third is around 3. The first two are not really four but then we have got 7 9 7 9 and then 7 again and 8 so I have allowed the model to train further for 4000 epochs on Google Colab and you can see here the results which is much better. You can see the first is 0 1 2 3 4 5 6 7 8 9 which is very clear very vivid. Excellent results. You can actually obtain much better results if you are allowed to train further and fine-tune the hyperparameters change the learning rate apply the learning rate decay apply momentum dampening find out which tricks you can apply to obtain even better results as a hint you can even apply a median filter to remove the noise after the generated images have been output so at the end of the notebook you find the link to the Google Colab notebook for reference so this is a bonus section in which I dedicated to learning rate decay.
+
+So the learning rate decay formula as can be seen is alpha at time t will equal one divided by one plus alpha or the initial alpha, alpha at time zero multiplied by a decay factor the decay factor I used here 0.01 which is actually a hyperparameter that you have to apply grid search or cross validation to find the optimal value for this decay factor so I design a simple PyTorch model with two neurons as input and one output neuron and sigmoid activation.
+
+This will learn the XOR function, which is a non-linear function. Remember the X or problem 0 x 0 0 0 0 x or 1 is 1 1 x or 1 is 0. And so on so I defined the dataset as X for the training data and y for the labels then I create an object of the model and create the optimizer Then I create an object of the model and create the stochastic gradient descent optimizer so I defined here a lambda learning rate which applies the formula above 1 over 1 plus e which is the epoch number multiplied by 0 point or 1 then I use binary cross entropy for the loss.
+
+Finally I train the model for 10000 epochs. You can see here how the idea is very clear. We reset the gradients, we calculate the loss. I calculate the gradients and then update the weights and decay the learning rate using scheduler step. We use an array to log the learning rate value using scheduler.get_lr so finally we visualize the learning rate as the number of epochs increases so we can see here the blue curve represents the learning rate as the number of epochs progresses towards the end.
+
+You can see here it takes this sort of inverse exponential form as it decays sort of rapidly in the beginning and then slowly as the training progresses and that model is about to converge to its final output in the coding assignment at the end of this section I would ask you to apply the same conditional models on Fashion-MNIST. And here is a hint so you can use Fashion-MNIST from torchvision which is available as a data set and you can save it in another directory dot slash data slash Fashion-MNIST and you can apply the same flat and transform in the coding challenge or the coding assignment as well.
+
+I would ask you to go very wild and apply the decay learning rate at your own imagination and see what works and what doesn't work. Here is an idea which actually didn't work very much. Here's an idea which actually didn't work very much as I have expected. Even though the results are really clear and really vivid I will show you at the end of this notebook. But what I mean is that the decay rate was very slow which means it tends almost to a flat learning rate.
+
+However it is interesting to see that you can control the epochs and you can control different decay rate for different range of epochs. For example here for the first two hundred epochs I don't change the learning rate for the second 200 I change it by a bigger factor. So note here that in the denominator, if the denominator is large then the overall decay factor is small. So if the epoch is less than 400 then I use a large denominator by applying one plus E multiplied by point 1 and that will decay the learning rate slowly and then I decay it further by decreasing the denominator.
+
+And here again I use lambda learning rate and apply it on the discriminator and the generator optimizers and as a hint for you when using the fashion in this data set. Here are the categories or the conditions or the class labels for t shirt trouser pullover dress and so on fashion. This is a more challenging dataset compared to MNIST. It was designed to challenge models further and see how they can attain further accuracy. What I have found during the training of MNIST and Fashion-MNIST again that Fashion-MNIST was much faster to converge even faster than MNIST which is contrary to what is believed when applying the classification problem because in classification question MNIST is more challenging than MNIST but for GANs I found it less challenging and much easier to converge so you can see here again.
+
+The loss function that orange curve is the loss for the generator and the blue curve is the loss for the discriminator. So we can hear see again the same pattern. The discriminator loss is almost zero and the generator loss starts to be very high and then drops down and and converges around 6 or so here to obtain a visualization of the learning rate. And as I've told you the method I have applied above did not really produce the actual learning rate decay that we have seen in the previous notebook.
+
+But here it shows you the importance of visualization. Whenever you are working as a data scientist or a machine learning engineer or deep learning engineer it's important to visualize every step of your work so by visualizing the learning rate decay. Here we can see that it is almost a flat learning rate the decay was very insignificant. What we can see how it works and this tool can be applied to other problems and even to other assignments so here we can see samples of the visualized results of the generator and you can see here you can easily recognize the t shirt to the trouser the pullover the dress and as we progress through the training you can see the results are getting much better and more recognizable and actually very similar to the ones available in the Fashion-MNIST dataset that was trained on.
+
+So now before we conclude this lecture there is a question that I would like to discuss with you. For example in this image we can see that the label at the top. Let's zoom in to see it clearer the title at the top of every image of generated sample. It gives the class or the condition that was used to generate this image. For example this one it looks more like a shirt but it has the label ankle boot. Why is the model confusing the labels. This is something I would like you to think about clearly because it happened also with MNIST dataset and it happened even further with fashion.
+
+This dataset where the conditions are mixed up with the generated images. So for example if I give the condition of a dress I get a trouser. If I give as a condition of a bag I get a shirt and so on. This is a question we are going to answer in Section 4. I would like you to think about it in this lecture and come up with answers and share it in the discussion forum and this lecture we have successfully implemented the conditional GANs and played around with learning rate decay and we have demonstrated the performance of conditional GANs on the MNIST dataset and fashion MNIST dataset in the next lecture.
+
+We see the workings of Wasserstein loss and how we would design a WGAN. Thank you and see you in the next lecture.
+
+13.    
+
+[138.png](./images/138.png)
+[139.png](./images/139.png)
+[140.png](./images/140.png)
+[141.png](./images/141.png)
+[142.png](./images/142.png)
+[143.png](./images/143.png)
+[144.png](./images/144.png)
+[145.png](./images/145.png)
+[146.png](./images/146.png)
+[147.png](./images/147.png)
+[148.png](./images/148.png)
+[149.png](./images/149.png)
+[150.png](./images/150.png)
+[151.png](./images/151.png)
+[152.png](./images/152.png)
+[153.png](./images/153.png)
+[154.png](./images/154.png)
+[155.png](./images/155.png)
+[156.png](./images/156.png)
+
+
+-- Working of Wasserstein Loss Function
+=======================================
+
+Hello and welcome to the third lecture of section 3 working of Wasserstein loss function in this lecture. You will learn of the motivation and the inner workings of WGAN remember from Section 2 that the goal of generative models is to learn a mapping between two probability distributions. In this case the model distribution and the data distribution the approach which I will demonstrate in this lecture is inspired by this simple idea again from Section 2 coding exercise.
+
+We have seen how the generator mode can shift towards one mode and ignore the rest. This is once again a motivation behind WGANs the graph on the screen right now demonstrates another problem very common in GANs which is vanishing gradients. The red curve is a perfect example of gradients disappearing or diluting after very few epochs. Very few to the point that it can even happen at the first epoch. Why is vanishing gradient a bad thing. Think about it for a second.
+
+The gradient flow is essential for weight updates. If the model is not receiving significant gradient values during the back propagation then the learning will not take place. Hence it is essential to visualize and understand the gradient flow as part of the model design. The greenish blue curve on the other hand shows how the gradient looks like when using WGAN approach in Section 1. I have discussed Cauchy-Schwarz divergence and even implemented it in the coding exercise.
+
+There is a complete family of metrics that are based on the idea of calculating the distance between two probability distributions. These metrics go by the name f-divergence in the next slides. I shall emphasize a few characteristics that make one of them better than the other for generative modelling in general and for GANs in particular I leave it however to the interested reader to look at the mathematical formulas and proofs in the original paper which is referenced at the end of this section and by the way it is in the reading assignment.
+
+You know from elementary calculus classes that the first derivative corresponds to the slope of the tangent. However the derivative can be discontinuous at some points. This is the last thing we want when applying gradient descent on the left the gradient of Wasserstein distance is very steep and continuous on the right side. The derivative of the Jensen-Shannon is not as steep that is it is saturated and is disconnected. It must be clear by now that Wasserstein distance has a very desired derivative characteristics so we know that f-divergence is a distance metric telling us how close the model distribution is to the real data distribution.
+
+So what is the concept of topology strengths informally a weaker topology makes it easier for distributions to converge since convergence is the ultimate goal of learning a weaker topology means that the number of sequences converging to be close to each other is more than the number of sequences in case of a stronger topology that is under a weaker distance metric. There is a higher probability of making the model distribution converge to the real data distribution.
+
+The WGAN paper demonstrates a very concrete mathematical proof for such a concept. Moreover it compares to the different f-divergence metrics to each other in that aspect Wasserstein distance which is also called Earth Mover's distance has the weakest topology. That's why it is a perfect choice for GAN training. You may ask why it is called Earth Mover's. It is an intuitive naming that signifies the minimum amount of earth that should be moved from P model towards P data so that both of them become identical.
+
+Since it is an analogy of moving one region of earth towards the other region and that's why it is named Earth Mover's the objective function for WGAN can now be formulated using the Wasserstein distance denoted as f subscript W. So the loss for the discriminator now becomes f subscript W of D of X and the loss for the generator becomes f subscript w of D of G of Z. Now the question is how to calculate f subscript w it turns out that is an intractable problem for which there is no polynomial time solution in order to solve it.
+
+Let's introduce the concept of Lipschitz inequality Lipschitz inequality states that under the assumption of continuity of a function the variable x can be replaced with the x value. The function of the variable x can be replaced with the x variable itself. So the idea here is that using the Lipschitz inequality we can replace f subscript w with the values passed to the function Lipschitz inequality is helpful to obtain an approximation for the loss function in WGAN.
+
+So given that Wasserstein distance is in itself an optimization problem that can be solved using a minimization function it becomes an objective that is the model must learn along its training process. I shall materialize this idea in the coding exercise another question that you have part of its answer by now is why the gradients don't vanish anymore when using WGAN the part of the answer that you already know is that Wasserstein distance is continuous and its derivative is defined everywhere.
+
+However another reason is because how the target for fake and real data is defined. I'm talking here about the output of the discriminator and the basic GAN we had sharp outputs either 0 for fake or 1 for real samples. The output here in WGAN undergoes two main changes the first the change that the fake is assigned the value of negative 1 and the real is assigned the value of positive 1. The second the change is that the loss is not based on log loss anymore which doesn't give a useful signal when a sample is misclassified.
+
+That is it only tells the model that a fake sample is classified as real or the opposite. In other words only true or false output. However in WGAN the objective function gives the model an indicator of the distance or how far it is from generating real samples. This is exactly the reason why the gradients carry more information now that the model can use to update its weights here we've got the optimal hyperparameters that the authors of WGAN paper have used for the MNIST dataset.
+
+The learning rate was set to 0 point 0 0 0 5 which guarantees a steady minimization without jumping back and forth. Also they have moved away from momentum-based optimizers and used the RMSProp optimizer. But why. Because they found out that a momentum-based optimizer causes WGAN to be highly unstable a problem that is solved by using RMSProp. Also the batch size is set to 64 samples per mini-batch and because the mode collapse, a problem has been properly addressed by the Wasserstein metric then the discriminator can be trained for five times or more till optimality without saturating the generator.
+
+Another precaution that must be taken into consideration is that the weights must be clamped in the range negative 0.01 and the positive 0 point 0 1. But the question is why. It turns out that clamping is the way to enforce the Lipschitz inequality constraint the actual values to use are again a hyperparameter that must be fine tuned the values here are the ones suggested in the WGAN paper one more major change to enforce the output of the discriminator to be a metric in the range between negative 1 and positive 1 is to use a linear activation function that simply outputs the same value as the input and instead of using a sigmoid function that forces its output to be either 0 or 1 finally for the sake of completeness I will give you a brief idea of how RMSProp works.
+
+The main difference is that the gradient is calculated is a weighted average of previous mini-batches. For example if the gradient is calculated nine times as the value of two and only the tenth time is calculated as the value of twenty then we don't want the weights to be updated with a very high value. That's why we assign a higher weight to the average gradient which is point nine. In this case and then add the gradient for the current mini batch with lower weight which is 20 in this case it is one of the most popular optimizers and yet was not officially published.
+
+Interested readers should look it up in Geoffrey Hinton's online lecture. In this lecture we have covered WGAN in a deep amount of detail. Next we shall implement it in the coming lecture. Thank you and see you in the next lecture.
+
+14.    
+
+[157.png](./images/157.png)
+[158.png](./images/158.png)
+[159.png](./images/159.png)
+[160.png](./images/160.png)
+[161.png](./images/161.png)
+[162.png](./images/162.png)
+[163.png](./images/163.png)
+[164.png](./images/164.png)
+[165.png](./images/165.png)
+[166.png](./images/166.png)
+[167.png](./images/167.png)
+[168.png](./images/168.png)
+[169.png](./images/169.png)
+[170.png](./images/170.png)
+[171.png](./images/171.png)
+[172.png](./images/172.png)
+[173.png](./images/173.png)
+[174.png](./images/174.png)
+[175.png](./images/175.png)
+[176.png](./images/176.png)
+[177.png](./images/177.png)
+[178.png](./images/178.png)
+[179.png](./images/179.png)
+[180.png](./images/180.png)
+[181.png](./images/181.png)
+[182.png](./images/182.png)
+[183.png](./images/183.png)
+[184.png](./images/184.png)
+[185.png](./images/185.png)
+[186.png](./images/186.png)
+[187.png](./images/187.png)
+[188.png](./images/188.png)
+[189.png](./images/189.png)
+[190.png](./images/190.png)                               
+[191.png](./images/191.png)
+
+See the notebook `8.Implement-Wasserstein-Loss-Function.ipynb` for the code.
+
+-- Implement Wasserstein Loss Function
+======================================
+
+Hello and welcome to a new lecture. In this lecture we are going to implement. the Wasserstein loss function. Let's get started we start by opening the Jupyter notebook file for lecture four available in the course material in the first block we install tensor board visualization tool which is part of the TensorFlow package however it's compatible with PyTorch and the latest release as a dependency you may need to install the Future package as well we import the regular libraries torch and matplotlib.
+
+And don't forget the matplotlib inline directive. And then we import the tensorboard, we can import it as follows from torch.utils.tensorboard import SummaryWriter which is the object that we are going to use to write to the TensorBoard logging. We create a new instance of SummaryWriter and call it tb_writer and just to say something like hello world we do tb_writer.add_text and then the text for the text WGAN the actual text in it and then the epoch zero just like previous lectures we continue torch.cuda.is_available and then save the device, whether it is CPU or GPU.
+
+And then the noise dimension which is hundred next we design our generator model the same way like we did in previous lectures using fully connected layers with ReLU activation and dropout afterwards we designed the discriminator model and this one will be quite different from the ones we have done in previous lectures. Let's see in detail what will change. So we defined the class Discriminator, inherits from torch.nn.Module inside the constructor.
+
+def __init__ of self and then we invoke the superclass of the parent class with super(Discriminator, self).__init__(). That will trigger the constructor on the parent class and then we define the forward network which is torch.nn.Sequential was started by fully connected layer linear layer and then the maxout activation another linear layer, maxout, linear and then note a difference here. We don't have the sigmoid function at the output layer anymore so the last layer of the sequential is the linear layer which stands for linear activation with one neuron or one output neuron inside the forward method.
+
+We change the flow a little we reshape the batch input to be the batch with size and negative one for remaining dimensions and then we pass the inputs through the forward network. We take the outputs and notice here the difference is that we take outputs the mean along the first dimension dimension zero. So here the forward method will return a single value. Remember that when we do the training for the discriminator we don't mix the batches the mini batches of the real and the fake data.
+
+That means whenever we have a mini batch it is either real data or fake data. It is never a mix. So when we take the means it gives us an indicator of the general output that is given for real or fake data. So for example if we annotate the real data as plus 1 and the fake as negative 1. So we get the mean on the mini-batch of real data. If it is somewhere between 0 and plus 1. So we have got a reasonable loss. And on the other hand if it is between zero and negative one that is a reasonable loss for fake data.
+
+Otherwise then the loss would be very high. And the model will be instructed through the backward pass to update its weights to change this behavior and then in the forward method of the discriminator after getting the mean of the output we change the output to be a scalar value of one dimension and return it using output.view of one. Next we load the MNIST dataset like before with the flatten transform and define a data loader with shuffle equal True and the batch size equals sixty four so as we have discussed the in the slides we use RMSProp as an optimizer for the discriminator and the generator.
+
+So we create an instance of the generator and discriminator classes and named them generator and discriminator. Then we create optimizer an instance for each one of them using torch.optim.RMSprop and remember that we set the momentum to zero as instructed in the paper and then we set the learning rate to 0.00005 which is also hyper parameter that is advised by the authors of the paper so here we come to the fun part of these WGAN off the air.
+
+Move or distance. So we set a boolean variable is_EMD, or Earth Mover's distance so that we can switch between the f-divergence of Kullback-Leibler divergence and the Earth Mover's distance and we'll see how I use this boolean value during the training to fine tune the flow of the program. So the idea here is that we can run two experiments. The first experiment is_EMD equals True so that we use Earth Mover's distance and we'll see how the flow changes with that boolean change and the other experiment is where we use is_EMD equal False.
+
+And in this case the criterion method or the loss function will be the Kullback-Leibler divergence. And again see how the flow changes and accuracy is affected in this lecture. I will show you the results for the first experiment in which is_EMD equal True. And I encourage you to set the variable to false and run the notebook and see the results yourself on your machine. Next we move to the GAN training. We defined the real labels to be plus one and the fake labels to be negative one and then we create a test set of random values which is drawn from normal distribution.
+
+We have the batch size to be 25 so that we can draw 25 samples and see how the generator has synthesized the output for this experiment I trained for 1024 epochs. I encourage you to increase the number and try something like 10000 epochs to get a much better and fine grained accuracy. However I find 1024 a reasonable value to display and illustrate the concepts behind WGANs in experimental results. I have seen people getting much more fine-tuned accuracy and much better synthesized images using much higher number of epochs close to 10000 20000 and so on.
+
+Then we define a variable the number of steps which is the length of the train loader divided by batch size. And here we use integer division so we loop for the number of epochs and then we loop for the number of steps that is. We loop for all the mini batches available in the dataset and then we loop for the number of steps for training the discriminator which is a hyperparameter and instructed by the authors of the paper to be the value 5. Again you can feel free to play around with these numbers so like previous lecture we have the real images and convert them to the device.
+
+Either CPU or GPU, and then we have the fake images which are the result of passing the noise through the generator and obtaining the output. Let's highlight the next step which is the one of the characteristics of WGANs. We said that we clamp the parameters or the weights to be in the range negative 0.01 and 0.01. We said that this is very important for the Lipschitz inequality to hold true. And so that the discriminator model will learn the loss function on its own and update its weights.
+
+So the weight clipping. You can think of it as a condition to ensure the continuity of the function so that the Lipschitz inequality is valid and the rest of the WGAN proof is valid. In this case. So how do we clip the parameters we loop for p in discriminator parameters. That's for every learnable parameter in the network. Apparently the weights and then we say p.data.clamp that is, p.data would be the tensor of the parameter. So for example if we have a weight then that tensor of that weight would be the inner product of two hidden layers and then we clamp that that will bring it into the range negative point 0 1 and positive 0.01 using min max scalar.
+
+Next we reset the gradients of the discriminator model so that we can compute new gradients for this mini batch. We best the real images through the discriminator and get the real outputs and we pass the fake images through the discriminator and we get the fake outputs so here, if is_EMD. That is, if using Earth Mover's distance. So how do we actually perform that Wasserstein GAN. We do that by saying real_outputs.backward of real labels and fake_outputs.backward of fake labels I elaborate more on how this works but let's continue and see the rest of the code and then I will elaborate in a bonus section how this is different from what we have done in the previous lectures and why it actually works this way.
+
+So for logging purposes the discriminator underscore loss is a variable to hold. The loss of the discriminator which is the real outputs negative or minus the fake outputs. Again think about it this way if the real outputs are always plus 1 and the fake outputs are always negative 1 so that will return a plus 1 negative 1 which is zero in the ideal case and will return another value otherwise in the second experiment which I encourage you to try out when you use the Kullback-Leibler divergence.
+
+So in this case is underscore M.D. will be equal to False and so the flow of the program will be directed to the else condition in which we apply the criterion just like we did in the previous lectures and we backward. The loss of both the discriminator on real data and the discriminator on synthesized or generated data and the loss again will be D of X plus D of G of Z. Here it gets more interesting as we use the tensor board for summary writing so I'm trying to demonstrate here different methods on the tensor boards writer.
+
+So the first one is add_scalar, the first parameter discriminator slash gradients is a tagging that will hold the gradients at the final layer of the discriminator. We say that discriminator.fcn which is the forward network we have defined as sequential of index negative 1. That would be the last layer of that the sequential layer that with that would be the parameter we are interested to update or the learnable parameter. dot grad to be the actual value of the gradient.
+
+dot grad to be the actual value of the gradient but then the gradient can be either positive or negative. We are only interested to see whether there is a useful gradient flow in the network. So we get the absolute value of the gradient using .abs and then we get the mean value since this is the tensor connecting the last neuron to the previous hidden layer which is 48 neurons we get the average of these values. I would encourage you to also look at the norm, either L1 norm or L2 norm and see whether it can be interpreted or observed in a different way.
+
+The next method I would like to highlight is the TensorBoard writer add_graph that will actually report the model design so they can visualize the different layers of your model. In this case I call add_graph discriminator and pass the input parameters so that tensor board can actually use this data and give some nice annotations on the model. I've done it twice. This is redundant just for demonstration that you can use any one of them.
+
+The method add_graph takes two parameters the model to be visualized and then the input data. In this case we use the first parameter discriminator the second parameter real_images and for the second case I use the fake_images. Just a redundancy to demonstrate the different functionality of this method. Finally we apply the backward pass and update the weights using discriminator_optimizer.step. So we train the discriminator for five epochs or five steps.
+
+That's five steps more than the generator. And then we get the loss function of the discriminator for these different five steps and divide it by five so that it is averaged and log it using the method tb_writer.add_scalar with the tag discriminator slash loss the last parameter is epoch so that tensor board will keep track of the number and display the progression of the loss throughout the training epochs. Next we train the generator for only one step by using the vector of random noise we reset the gradients of the generator using generator.zero_grad and then we pass the noise through the generator and the synthesized output through the discriminator and we get the variable outputs.
+
+Again if we are using Earth Mover's distance or WGAN we say outputs.backward. But here we flip the label and instead of passing fake on the score labels we pass real_labels. Next we report the scalar value of the generator loss and since we have applied label flipping we multiply the outputs .item by minus one so that we can locate the additional rate of loss last parameter is the epoch number. Otherwise if we are applying Kullback-Leibler divergence we apply the loss backward as usual in the previous lectures and again report the loss, we report the mean value of the gradient at the last layer.
+
+Just like what we did in the discriminator but note here that the last layer is the sigmoid. So we take one step backward and visualize or log the layer before the sigmoid which is a linear layer and then we add the graph for the generator and pass the input as a sample input for annotation, the Z vector next we apply generator_optimizer.step so that the learning rate will be multiplied by the gradients and we get the updated weights so and instead of manually visualizing the output of the generator I will use tensor board the Visualize method every 10 epochs.
+
+So if epoch modulus ten equals zero then generated equals generator of test_set .detach().view negative 1 so generated equals generator of the set .detach().cpu().view negative one comma one comma 28 by twenty eight which simply passes the noise to the generator and then converts it from the GPU to the CPU and reshapes the output to be an image of twenty eight by twenty eight and one grayscale channel.
+
+We passed that generated output to torchvision.utils.make_grid to visualize it in five rows. Since we are using 25 samples in this random set and with the padding of 10 pixels and pad value of one that is white color and we get a grid tensor object and instead of saving that file or displaying it we use tb_writer.add_image which actually logs the image to the dashboard and we give it the tag generator slash outputs and we pass the grid as the value to be logged.
+
+And finally the epochs so that we can keep track of the progress of the generator output that will train the model and that after training you can use the last epoch or the last model that was trained after the last epoch to visualize the results once again like what we have done in the previous lectures using torchvision.utils.make_grid and then transpose the outputs so that we can get the channels at the last dimension and the width and height at the first and second dimensions.
+
+We use matplotlib to show the image and here we have got the results. Of course we can do much better if we increase the number of epochs. If we fine tune the learning rate as per the design of our model if we increase the capacity of either their generator or the discriminator. These are all hyperparameters you can play with. I'm basically focusing in this lecture on displaying the mechanism of the WGANs and also give you some idea of the visualization that you can do using tensor board and PyTorch together since it is actually misconception that tensor board is only for TensorFlow.
+
+Well you can see here that it also works mostly with PyTorch. The results here display digits without the problem we have talked about earlier which is mode collapse. We can see variations of images from different classes. The first image can be interpreted as two or seven and then we have got the five or six somewhere between 4 and 1 8 and 0. And as we go through the rows and columns we can see the values can be interpreted as digits the 3 8 1 9 and down there we can see some of them are 5 or 9 6 3 2 and so on.
+
+So that's much better than the mode collapse a problem that we have encountered in previous sections and in the next section when we used deep convolutional GANs I'll show you how we can get a much more better results that are very fine tuned and very well synthesized in a very realistic way. However this is still a success especially that we are using only fully connected layers dense layers. We are not yet using convolution or transpose convolution at all.
+
+And remember you can still improve that by increasing the number of epochs to ten thousand or so on again. If you don't have a GPU you will find a copy of this notebook available on Google Colab so you can play with CPU and even GPU and you can also reference the original source code of this WGAN. Paper published by the authors on GitHub now as a final step. I owe you an explanation why we use the output backward instead of loss.backward when we applied the WGAN training methodology so in this discussion I'll be talking more about the back propagation algorithm.
+
+The derivatives and the chain rule to make this idea much clearer so we know that the weight update is performed as follows. We have the weight Omega or W at time T plus 1 which is actually the weight at the previous time step or the previous epoch but with a fraction of the gradient of their loss with respect to the weight this is written formally as alpha multiplied by the partial derivative of the loss with respect to the weight D of L of theta divided by D of W.
+
+So the question now how do we calculate the partial derivative of the loss with respect to the weight. It turns out we use the chain rule. So D of L of theta. with respect to D of W equals D of L of theta with respect to D of output from the network and then this is again multiplied by D of output partial derivative of output divided by D of W. So the derivative of the loss function can be different based on the type of loss function we are using whether using root mean squared error or using Euclidean distance or using log loss and so on in case of linear function which is the case in this WGAN model we have a product w x plus B where W is the weight X is the input and B is the bias.
+
+So the derivative of the linear function partial derivative of output divided with respect to derivative of weight will be equal to the derivative of W X plus B. With respect to D of w you can see here from elementary calculus that the derivative of W X plus B with respect to W will become x. So this is something we know. Still it doesn't really answer the question why we didn't use loss.backward and used output.backward. This would become very clear when we talk about the PyTorch autograd mechanism which we have talked about in Section 1 in decent amount of details but I will be recalling that section here.
+
+We can observe here that in previous sections we used loss.backward. But in this time we used output that backwards by remember that the signature of the backward takes as a parameter the gradient. So it is essentially the same as saying loss.backward but loss.backward will be done twice: take the gradient of the loss, take the gradient and pass it to the backward and this will give us the chain rule when we say the partial derivative of the loss with respect to the weight.
+
+So from Lipschitz inequality we have discussed in the slides we say that F of X minus f x2 is less than or equal to X1 minus x2. That is in the case of continuity. The value passed to the function can replace the actual function. So here and instead of calculating the partial derivative of the loss with respect to the output we simply passed minus one in case of fake samples and plus 1 in case of real samples. And this according to the mathematical proof in the WGAN paper and the Lipschitz inequality is equivalent and encourages the model to change its behavior towards outputting values in the positive range 0 to plus 1 for real samples and in the negative range 0 to negative 1 for a fake samples and it encourages it along with the weight clipping we applied on the model parameters or the model weights to learn the weights that will actually do that calculation and the approximation of the loss function which is in this case not a boolean value telling us whether a sample is only real or fake but it is actually a distance telling us.
+
+How far is the sample from the real sample or from the fake samples and so on. So now before we conclude this section let's see the kind of visualization we have got from using the tensor board dashboard. I will open a new terminal and type the command tensorboard --logdir and then the log directory is dot slash runs which is a default logging directory that will give us a link, a URL, that we can open in the browser and we should see something similar to this or different depending on how many times you run the algorithm and training the model and different trials you have tried.
+
+So at the top of TensorBoard we have got four tabs. One for scalars since we use the method add_scalar one for images since we use the method add_image and one for graphs from add_graph and one for text from add_text. You have got four curves or four graphs one for the loss and the other for the gradient and one for the discriminator and the other for the generator so we can observe here that the gradients are not saturated as we are getting quite high values for the gradient and they are changing with time and they can be actually consistent with the curve that we have sketched in a previous lecture when we explained the vanishing gradient problem and that we should use log D of G of Z instead of log 1 minus D of G of Z.
+
+So that's consistent over here we can see here that the loss of the discriminator is rather increasing which is a sign that the discriminator is getting fooled by the generator and it cannot really tell the real from the fake samples with time on the other hand the loss of the generator is kind of oscillating. This is not a very good sign and I encourage you to play around with the hyperparameters to make a generator loss more stable and instead of oscillating in that way.
+
+And as a observation from different GAN papers and different GAN practitioners the generator loss cannot be stabilized by a known method since a stable generator loss will mean mode collapse and an oscillating generator loss will be very desirable property since it means that it is improving itself and shifting from mode to the other in order to find ways to trick the discriminator to believe that its output is actually real output rather than a synthesized or generated image.
+
+However I mean here by trying to fine tune the hyperparameters to find the weights so that the overall direction of the generator loss is in the downward direction and instead of the upward direction so if we go to the images tab we can find here we've got a scroll bar and it displays the actual output of the generator along each epoch and if we scroll along the scroll bar we can see the different epochs and the different outputs. So for example at this time at epoch 1020 here we've got something at epoch 530 and we can visualize that progression of the generator as it moves throughout the training and we can see and observe whether a divergence from the overall direction has occurred to our generator and return and fine tune the parameters accordingly.
+
+If we move to graphs then we find the generator graph if we double click on that for forward network then we can see a very detailed model design of the linear dropout of the model. Finally you can inspect the text tab to see whether the sentence we have printed has happened here. Usually it should be printed here but for some reason that cell was not executed or still loading. But now you have an idea how TensorBoard can be very useful in visualizing the performance of your network so that was it for the WGAN and the TensorBoard visualization.
+
+The Earth Mover's distance and so on. So let me give you some ideas of some things and experiments that you can try on your own to test your understanding of the concept. So I would recommend that you try to merge the conditional GAN model along with the Wasserstein GAN model and see how you can direct the output of the generator to be of a specific label. As we have discussed in the first part of this section the conditional GAN models in the second bar the WGAN models.
+
+So you should be able to do that with smoothness using the sample code we have got in the tutorials in the notebook. You can also try to train the model on Fashion-MNIST and it should be much easier than the MNIST dataset. Actually one of the things that I would like you to play around with so that your mind is prepared for the next section is to use convolutional layers and see how much you have to change your code in order to obtain fine results and we will discuss in Section 4 convolutional and transpose convolutional layers and how to do deep convolutional GANs another idea that you might find appealing is to play around with learning rate decay.
+
+You can try exponential learning rate decay you can try multi-step learning rate you can try step learning rate there are a lot of variations in the PyTorch API for learning rate decay that you can experiment with. Finally try to visualize the gradients and instead of using the mean try the L1 norm, the L2 norm and try to visualize. the histogram of the gradients using add_histogram of the tensor board API s for the reading assignment. You can read the paper of the conditional GANs and the paper for WGANs for more inspiration and for reference to the mathematical proofs that we may have overlooked in order to simplify the ideas and illustrate the concept without too much mathematical jargon. Congratulations.
+
+You have made it through Section 3. That was a lot of things to learn and a lot of concepts in the next section. We get more interesting ideas about deep convolutional GANs and try with RGB color images and see much better results. Thank you and see you in the next section.
+
+15.    
+
+-- [Coding Exercise] Gradient Penalty Wasserstein GAN - GP-WGAN
+===============================================================
+
+Hello and welcome to a new lecture and this coding exercise. We are going to learn and implement the gradient penalty Wasserstein GAN or GP-WGAN. Let's get started. So we remember from the Wasserstein GAN the Earth Mover's distance. It required as a mathematical prerequisite to relax the restriction on the Lipschitz inequality and as a simplification and approximation of this Lipschitz inequality constraint we had to use weight clipping when we had the weights clipped in the range Alpha and negative alpha or the opposite negative Alpha and Alpha.
+
+It turns out that the optimization of the hyperparameter alpha is very critical and it determines actually the shape and the smoothness of the gradients in the network. So if we choose a very small Alpha we are still prone to vanishing gradients problem and if we choose a larger value for Alpha we are prone to exploding gradients. Moreover if we don't use batch norm these problems tend to be more magnified or appear usually in the case when batch norm regularization is not used.
+
+Also at times enforcing this inequality affected the performance of the model and it couldn't learn the non-linear manifolds of the data set and it couldn't express the relations and complex relations between the inputs and outputs. Remember that the weight clipping is also known as a type of regularization and remember that when you study regularization in machine learning and deep learning regularization is a form of reducing the capacity of the model.
+
+That means the model will not overfit on the data set but if we go very far with regularization we tend to reduce the capacity of the model in a way that prevents it from learning non-linear and complex manifolds. That means it would not be able to generate realistic images and it will not be able in the case of the discriminator to tell the real and the fake images from each other. This is undesirable effect even though Wasserstein GAN is still a breakthrough in the area of generative adversarial networks and it has produced superior results to other methods.
+
+But remember the problem of stabilizing the training of generative adversarial networks is an open question an open area of research. That's why in this lecture we introduce the concept of gradient penalty for stabilizing the training of the generative adversarial networks so the benefits we are expecting from applying gradient penalty as an additive loss term in the loss function. And notice how here we can combine multiple factors in the loss function a concept that we illustrate more on in the lecture where we work with multiple loss functions but for the sake of this exercise we can see you have got two terms the original GAN loss where we have the discriminator output on the real images and the discriminator output on the fake images and combining them together and that is they generated by the adversarial network loss as in the very first section of this lecture.
+
+The second section and so on and then we have a lambda factor this lambda is a weighting factor usually is set to 10 as advised by the authors of the paper and then we have a new term this new term is a gradient penalty here we are trying to analyze the value of the gradients by restricting it from getting very far from the value one it can be proven mathematically that in order for the Lipschitz inequality to hold the norm of the gradient must not be very far from the value one hence we have here the value one and the L2 norm of the gradient of the discriminator output on the generated images and we subtract the L2 norm of the gradient minus the value one which is the ideal value for the norm of the gradient and then we square it so that it gives us a kind of squared error and then we add this as an additive term to the loss function as a direct result of this kind of modification to the loss function we expected that the training of the GAN model will be more stable and we will be sure to a certain point that the training will converge to a global minimum also the side effect will be able to use the gradient penalty WGAN on more complex models and deeper models such as ResNet recurrent neural networks and so on and finally the ultimate objective of this modification is that the network will have a higher capacity without overfitting and this will enable the network to learn non-linear complex manifold.
+
+We apply the gradient penalty by having a real image and the fake image and combining them together by a factor alpha and one minus alpha or T and one minus T where T is a random number between 0 and 1. You can see here that the new X, X hat, equals t multiplied by X tilde or the generated image from the generator plus 1 minus t, which is the opposite value for if T is point three then one minus t will be 0.7. It is kind of random weighting to the real and generated images and then we multiply 1 minus t by the original image and this will give us an interpolated composition of the image and the generated image and this will be used in order to test the discriminator.
+
+And also if you read the paper you will notice that sometimes the discriminator is referred to as the critic because this idea of gradient penalty and Wasserstein GAN in general is very similar to an idea and deep reinforcement learning of value function where the model is not actually outputting a binary value is a 0 or 1 but it is outputting a value from a function mapping. This function is a function that maps the inputs to a value in reinforcement learning.
+
+So instead of having a binary classification for the output either real or fake we are having the output as a distance between the real and the fake images because the Wasserstein GAN is all about the Earth Mover's distance. We are trying to approximate two probability distributions by finding the minimum distance between them or by trying to approximate the generated image probability distribution to be as close as possible to the original dataset distribution.
+
+So that simply that mathematical reformulation of the gradient penalty GAN, all we have to do is to have a new additive term by a lambda factor and combining the generated image and the real image with t and one minus t factors. This will become very clear as we implement it in the coding exercise. It is also advisable by the authors of the paper not to use the batch norm regularization anymore in the discriminator or the critic. In this case because it actually has a side effect of having a correlation between the samples in the mini batch because remember the batch norm is actually finding the mean and the standard deviation of the pixel values in the mini batch and then trying to learn a new mean and the new standard deviation so that the Mini batch along each hidden layer will have this kind of unified mean and standard deviation and because this is applied through gradient descent the mean and standard deviation are learnable parameters of the batch norm, beta and gamma in PyTorch and many other deep learning platforms.
+
+This is not a desirable effect for Wasserstein GAN as it has the side effect of destabilizing the training. So be aware of this hint as you are implementing the code so you shall find that the coding exercise in the notebook file with the title. Section 3 lecture 5 GP-WGAN we start by checking for the GPU support then we define the global hyperparameters to be used during the training such at the learning rate the batch size, the discriminator number of steps.
+
+And so on then we define the generator and the discriminator in a very similar way to the previous lectures. No more changes, however note here at the end of the discriminator class. We are using the sigmoid activation function since unlike the Wasserstein GAN here we are not only learning a function but we are actually applying a binary cross entropy to the output to the image and you can remove the binary cross entropy and let the network learn the function and see how the output changes.
+
+Ideally I would vote for not using the activation sigmoid in here because as I have just said in the theory part the whole point of Wasserstein GAN is to learn a function mapping and not only a binary classification. So I would vote if you are implementing this exercise that you remove the sigmoid activation function from the output of the discriminator and see how it works with you. Next we load the data set the MNIST dataset with the flatten transform to transform the image to a 1D flat vector just like we did in previous lectures.
+
+Here we use the Adam optimizer for both the generator and the discriminator with its suggested learning rate and beta 1 and beta 2 values. As hyperparameters suggested by the authors of the paper and they are defined above in the hyperparameters of global variables here the actual fun begins where we are using the gradient penalty loss as an input to the function. We have the real images and the generated images and along the way you find that I have a very well documented line by line code for this section so you can follow it along.
+
+If you are following along on your screen and doing the exercise on your own let's go through the code and see what it does in the beginning of the function. I have X which is equal to torch.squeeze of X along dimension one that is simply to remove an extra dimension found in the original images because they are flattened in two shapes of one column and then under this column we have seven hundred eighty four or 28 by 28 pixels and in order to match the shape of the original images and the shape of the generated images.
+
+I had to drop that dimension. It doesn't affect the values of the pixels. And then here I generate a random Alpha which it takes of the shape of the batch size and I give it excellent shape so that it can be edited and multiplied to the original images. X and generated images y without any change to the shape of these original vectors and then interpolate both of them X and Y using alpha and one minus alpha. Afterwards I use the autograd Variable so that I can have a variable which requires_grad so that I can have a variable which requires_grad.
+
+That means it can have and calculate the gradients in the graph on that variable and I apply that to the interpolated variable and I use it. Var underscore interpolated next I pass this combination of the original and the generated images as var interpolated through the discriminator and I get the outputs and then I use another method from the autograd.grad which actually calculates the gradients. And here it has many parameters. I give it the outputs which is the output from the discriminator.
+
+I give it the inputs which are the combination of generated and real images and then I give it a placeholder for the gradients which is tensor of ones and then I pass some more parameters to retain and create the graph. I set them as true and only inputs as false so that it calculates the gradient along the whole path. And then I use the square brackets of zero so that I can get the gradients of the inputs. And this way it will be accumulated along the full path of the network or the discriminator network.
+
+Next I can easily apply gradients.norm I apply the L2 norm along the first dimension and I get the mean norm and at the next line I use gradient Norm minus one which is actually the target ideal value for the gradient. The value 1 and I square it as stress as the X2 that's a square and I return the gradient penalty afterwards I will use the binary cross entropy criterion for the ordinary training of the network as as generated by the adversarial network and proceed with the training by having real and fake labels.
+
+I have an iterator. I have number of epochs and I iterate for the number of epochs, I iterate for the K steps for the discriminator. I have some real images and I have some fake images. I passed them through the discriminator. Get the real outputs and the fake outputs and then calculate the binary cross entropy loss on the real outputs versus the real labels and the fake outputs versus the fake labels and then I combined them both gan_loss equals D of G of Z minus D of X which is actually the same formula in the slides before.
+
+Note here that in the previous sections we use the addition D of G of Z plus D of X but in the gradient penalty WGAN we do a subtraction and then I calculate the gradient penalty using the real and the fake images. I combined them using the lambda value and as regularly I do, the loss backward, optimizer step, I log the loss and then divide by the number of steps to get the average loss and then I divide by the number of steps to get the average. Afterwards I'll do the same for the generator except that I will not have the real values as a parameter in the loss function of the GAN let's scroll through to it you can see here again this is merely the criterion the binary cross entropy will be applied on the output from the fake images which is supposed to be real labels and added by the lambda value again to the gradient penalty and green and fake images of light backwards step and log the loss and it goes on.
+
+I have trained it only for 10 epochs because I was merely interested in demonstrating the mechanism by which the gradient penalty WGAN works. I'll suggest that you'll fine-tune the hyperparameters and train for longer epochs and see how fine the results are. After you go through the coding exercise and implement it on your own and fine tune it you might find that the performance is not really superior to WGAN or in future sections when we apply DC-GANs and progressive growing GANs.
+
+However the promise that gradient penalty holds in its folds is that it stabilizes the training. It helps us to achieve a convergence to the global minima of the loss function. That means regardless of the value it scores on the benchmark in terms of the quality of the generated images. But it gives us a promise a potential that the training is more stable which is actually an inherent problem in GANs in general. So don't be disappointed by the results.
+
+This technique can be and potential for an open question in the area of GANs how to stabilize the training I have added here the reference to the original paper so they can reference it and also don't forget to reference the blogs published by Jonathan here. I have a reference to these blogs in the future sections and it addresses these ideas in nice details and with a lot of illustrations. I'll be looking forward to seeing the results you have obtained using gradient penalty WGANs in the forums of this course.
+
+Thank you and see you in the next section.
+
+16.    
 
