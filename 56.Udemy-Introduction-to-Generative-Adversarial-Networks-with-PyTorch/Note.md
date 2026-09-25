@@ -968,14 +968,635 @@ Thank you and see you in the next section.
 [179.png](./images/179.png)
 [180.png](./images/180.png)
 [181.png](./images/181.png)
+
+
+-- Introduction to DC-GANs
+==========================
+
+Hello and welcome to Section 4 where the fun begins in this section you are going to get your hands on DC-GANs and auxiliary GANs. Let's get started in the first lecture I shall focus on understanding the concepts behind deep convolutional GANs or DC-GANs convolution filters is a concept that has its origins in the signal processing digital image processing and it carried on to be the cornerstone of the modern deep learning revolution. The convolution filter is slid over every pixel of the source image and product is calculated to find out the new pixel value in that location.
+
+The values in the filter are initialized with random values and then the optimal values are learned along with the network parameters by back propagation. Unlike digital image processing where one designs the values of the filter on his own to perform a specific task such as blurring an image or extracting edges in convolutional networks we allow the network to design its own filters. It starts to learn useful features such as edges corners and shapes the opposite operation of convolution is the transpose convolution.
+
+The process is reversed and the resulting matrix is larger than the original one for every pixel of the input. The filter is applied to produce a region equal to the size of the filter usually convolutions are followed by a max pooling layer to perform dimensionality reduction. For example a max pooling of two by two results in shrinking every four pixels to only one pixel. The value of the new pixel is the maximum value in the original two by two region again.
+
+The max pooling has an inverse operation which goes sometimes by the name max unpooling. The model has however to record the locations of the max values so that it can fill them back. That is while doing Max pooling the location of the max value is preserved. Then when applying max unpooling that location is filled and the others are set to zero. There is a variation of this approach which fills all the pixels with the same value. Why do we choose max pooling over average pooling.
+
+Why do we hard code this operation. Can we let the network learn how to downsample and upsample on its own. This turns out to be a better solution that allows GANs to converge faster. One of the parameters of a convolutional layer is a stride or the step. If we slide the window one pixel at a time then this is called a convolution of stride equals one. On the other hand if the window is slid two pixels at a time along the horizontal and the vertical directions.
+
+This is called the convolution with a stride equals two or more commonly strided convolution. It turns out that this technique allows GANs to learn better downsampling and upsampling filters. The resulting images this way are going to have fewer artifacts. The same applies to convolution and transpose convolution in basic GANs. We have used a sigmoid activation at the output layer to squash the values between 0 and 1 and deep convolutional GANs.
+
+It is recommended to use tanh activation. This will result in values squashed between negative 1 and plus 1. It was found empirically that this produces more appealing results however we should not forget to scale the values of the training images to be in the same range that is instead of zero to one. It should be also between negative 1 and plus 1. This equation does exactly that. You can verify that by substituting 255 for X and calculate the new x value and again substitute the value 0 for x and calculate once again in the Deep Learning textbook by Yoshua Bengio.
+
+There is a dedicated section to representation learning. It is one of the interesting concepts of deep learning. So let's take for example AlexNet. Architecture in which the network consists of convolutional blocks followed by fully connected layers. The convolutional blocks function as feature extractors learning interesting patterns such as shapes edges and corners The convolutional blocks also learn these patterns while preserving the hierarchical topology of features.
+
+For example if the network is trained on cropped human faces then it will learn that the eyes and the nose will be located inside a face. And so on the output of the convolutional block is called a feature map or a vector representation of the input. For example in AlexNet the first dense layer of 4096 neurons will be a valid representation for ImageNet dataset samples the same idea extends to autoencoders where the output of the encoder serves as a compressed version of the input.
+
+It turns out that the output of the discriminator in the DC-GAN architecture serves the same purpose. That is the discriminator can learn useful features from unlabeled data sets in an unsupervised learning. This is quite useful in cases where there are not many labelled samples available for training in a paper published by Mikolov on learning feature vectors or word embeddings for natural language processing. It was found that interesting arithmetic like addition and subtraction applied on the resulting vectors.
+
+One example which is actually a very famous one. The word man can be subtracted from the word King and then added to the word woman to give the result of a queen that is of course a vector addition and subtraction on the learned representation. So the question now is this applicable to GANs. In fact it holds true for the representation learned by the discriminator of a DC-GAN. The authors have averaged the vector representations of 3 sample images in three categories.
+
+The first category was a man with glasses. The second man without glasses. The third, a woman without glasses, then perform the vector maths and voila here you get a woman with glasses. You may ask why there are nine images of the lady with glasses. The center one is a direct result of the operation. The rest of them were produced after adding noise to the vector representations to test the robustness of the algorithm. This is a very common technique to test the model's robustness by simply adding Gaussian noise to the inputs and observe the results.
+
+The authors have also performed other experiments to visualize the learned convolutional filters remove some neurons from the generators etc. It was also found that the vector representation can be used to change the pose or the emotion on the resulting image. For example the subtract smiling faces from angry faces and then add the difference to an angry face. To make it smile so a question for you now is whether you can apply transfer learning using a GAN.
+
+Think about it and share the answers together on the course forums and the next lecture you shall get your hands dirty and implement DC-GAN. See you in the next lecture.
+
+17.    
+
 [182.png](./images/182.png)
 [183.png](./images/183.png)
 [184.png](./images/184.png)
+
+See the notebook `10.Implement-DC-GAN-on-UC-Birds-Dataset.ipynb` for the code.
+
+-- Implement DC-GAN on UC Birds Dataset
+=======================================
+
+Hello and welcome. In this lecture you will implement a DC-GAN on birds dataset. Let's get started. Let's first review the general guidelines which are recommended by the authors of the paper. These guidelines tend to be true for convolutional GANs. In general you'll find them written on every tech blog on the topic. The first recommendation and instead of using max pooling or average pooling you should instead allow the network to learn its optimal downsampling and upsampling weights.
+
+This is achieved using strided convolutions as we have discussed in the previous lecture. You should also use ReLU activation for the generator and Leaky ReLU for the discriminator. This is an experimental finding. It's also recommended to use batch normalization over mini-batches which does a good job on gradient flow. Finally you shouldn't use any fully connected layers in the process. Here you go. The actual values for the hyperparameters the weights are initialized with random values from a Gaussian distribution with zero mean and 0 point or two standard deviation.
+
+The batch size is set to 128. The slope of the Leaky ReLU in the negative region is set to 0.2 Adam optimizer is used with learning rate of 0 point 0 0 0 2 and the beta 1 coefficient of 0 point 5. Let's go straight to coding. We begin by opening the associated notebook from the course materials for Section 4 lecture 2. Then we import the torch and check for cuda. Otherwise we use the regular CPU in this exercise. I use the bird data set which is around 12000 images of birds falling in two hundred categories I shall use wget to download the dataset and shutil to unzip the tarball file.
+
+It helps to automate the process for running the notebook and Google Colab. The dataset. Comes with meta files for class labels and bounding boxes. I shall use matplotlib to visualize a couple of images so here we go is one example. And here is another example and here you go with the third example and as you can notice the bounding boxes don't fully cover the bird body. I was going to use the bounding boxes as a baseline to crop the images but apparently this is not the best approach for GANs.
+
+Instead let's first train the model on full images. I would encourage you to try cropping and share the results here I delete the file objects to free the memory for training. It is also a best practice to visualize the frequency of the labels. That is how many training samples are available for each category and this bar chart we can see that there is a category imbalance in the data set. That's why I'll stick only with the categories that have got the full or the maximum number of images and these ones will have 60 images per category.
+
+I can simply use numpy.max to find the maximum number of images per category which is 60 so at this point we've got two options. The first is to use the data train loader to resize the image on the run as it is loading. But this has the downside that it will resize the image every time it is loaded for training. That is if we have got thousand epochs the image will be resized a thousand times. So instead I decided to resize the image on disk and store them on the hard disk and load them only once.
+
+Now it's time to import the data and squash the range to minus 1 and plus 1. First we create a squash function to convert images from the range 0 to 1 to the range negative 1 and plus 1. The __call__ method is triggered on the input batch then we compose the preprocessing pipeline. So here I commented out the line that is responsible for resizing the image to 64 by 64. As you can see I've already resized the images on the disk.
+
+I would also encourage you to play around with different values for resizing and the preprocessing pipeline. I use the method to tensor which we have used in previous lectures. This method squashes the image from 0 to 255 down to 0 to 1. Then I apply this squash transform to squash it further to the range. Negative 1 up to plus 1 then I create the train loader with the batch size I set batch size to 128 and I set shuffle to true then the number of steps is the number of images divided by the mini batch size.
+
+So now I visualize a mini batch to inspect the preprocessing I use torchvision.utils.make_grid. But notice here that the normalized flag is set to True. This will fix the range again for visual inspection but notice here that the normalized flag is set to true. This will fix the range again for visual inspection. Now here is how our data set looks like it is ready now to go through our training pipeline. Next we set a few global variables of 4 dimensions. The variable nc equals 3 is the number of RGB channels in our color image.
+
+the variable nz is the noise vector length ngf is the number of feature maps for the generator. It is convenient to divide the convolutional features in terms of a base line value so that you can easily fine tune the convolutional network then you get the optimal value for this variable. The same applies for the discriminator. And here we use ndf to do exactly the same this coding exercise is benchmarked upon an open source tutorial on the PyTorch documentation. The generator class inherits from torch.nn.Module then it has transposed convolution blocks each of them has a transpose convolution layer a batch norm and a ReLU activation notice here how at the first layer the variable ngf is multiplied by eight.
+
+Then at the next layer it is multiplied by four and the value decreases from layer to layer as follows At the output layer. I have tanh activation function. Here is the point where the output image reaches its final size of three by 64 by 64. The forward method passes the mini batch input through the network and output image is returned. Next we design the discriminator the discriminator inherits from torch.nn module and has convolutional blocks of convolutional layer followed by a batch norm and a Leaky ReLU activation the last layer is a sigmoid activation that squashes the output between 0 and 1 in the forward method I use the view method to reshape the output from 4 dimensions down to two dimensions.
+
+That's because convolution results in a four dimension feature map of batch size by number of channels by width by height as per the authors directly applying the batch norm to all layers resulted in sample oscillation and model instability. This was avoided by not applying batch norm to the generator output layer and the discriminator input layer next the weights are initialized with random values drawn from Gaussian distribution with zero mean and one standard deviation for the batch norm layers.
+
+The mean is set to be one these values are based on experimental trial and error and fine tuned to produce the best results. You can always try other values on your own next we create the models and apply the initialization method using the apply method available on the nn.Module API. Now I create the Adam optimizer for both the generator and discriminator. Here I. Initialize the objective function and named criterion and create a fixed noise for visualization.
+
+Then I create a matrix of ones for real labels and another matrix of zeros for fake labels. Next I define a method for training the discriminator. I found it better to separate the module for training the discriminator into a method and the same for the generator so that you can better visualize the nested loops in the training pipeline. There are no major differences between the training of the discriminator in this exercise and the ones we have discussed in previous sections and here I do the same once again for training the generator over here I initialize TensorBoard for loss and results visualization it is always the best practice to use the check points.
+
+So I load the checkpoint if it exists for the module for the generator for the discriminator and also for the optimizer for both of them. Since the learning rate is changed in the Adam optimizer so we need to keep track of these changes and load them as a check points as well. So here is the actual training I iterate for the number of epochs. And then I iterate for the number of steps and then I train the discriminator for K steps. In this case I set K equal to four.
+
+And I train the generator for one step. Only the if condition if epoch modulus hundred equals zero allows us to log the lost values and visualize the results every hundred epochs. Note here how the loss is divided by four to obtain the mean loss over the K steps then the loss and the generated images using the fixed noise are logged to TensorBoard for visualization and down here I saved the checkpoint every hundred epochs so that I can resume the training I don't have to start over every time the machine is restarted or reset so I have trained the model for 4000 epochs and now we are ready to visualize the results here you can see that the model is trying to generate the wings the beaks, the body of the bird and it is also trying very hard to visualize the background and similar to the images in the data set the background it is a sky a tree or even the surface of the sea you can see here that some examples are better than the others, and if you allow the model to train further you will get even better results and in future videos you will learn a further technique to get even better results based on other techniques described in research papers.
+
+So now it's time to inspect the results in TensorBoard. I run TensorBoard by running the command tensorboard --logdir ./runs after you open TensorBoard you'll find two tabs, one for scalars and the other for images by inspecting the discriminator loss we find that it started with a high value and then it started to decrease afterwards it stabilized at a certain value. On the contrary when we inspect the loss for the generator we find that it started low and then it started to increase.
+
+This indicates that it was doing a good job at the beginning in fooling the discriminator but afterwards it struggled in a mode collapse, a problem. Again, mode collapse is inherent to all GAN models unless you solve the problem using a clever technique but it will stick along with your training and you will find it very annoying. Most of the time but you have to be able to diagnose it using the loss curves if we navigate to the images tab we find the visualization which is done every hundred epochs you can see here that some results are better in the intermediate epochs than the last ones and it is normal.
+
+So usually what you do is that you save the model each hundred epochs and then subjectively decide which model is best. Or you can even use Inception score. That's a technique we have discussed in previous lectures to decide the best model and save that model checkpoint. You can resume training using different hyperparameters from that point. Or you can even use that model in production. In the next video I shall discuss auxiliary GANs thank you and see you in the next lecture.
+
+18.    
+
 [185.png](./images/185.png)
 [186.png](./images/186.png)
 [187.png](./images/187.png)
 [188.png](./images/188.png)
 [189.png](./images/189.png)
-[190.png](./images/190.png)                               
+[190.png](./images/190.png)
 [191.png](./images/191.png)
+[192.png](./images/192.png)
+[193.png](./images/193.png)
+[194.png](./images/194.png)
+[195.png](./images/195.png)
+[196.png](./images/196.png)
+[197.png](./images/197.png)
+[198.png](./images/198.png)
+[199.png](./images/199.png)
+
+
+-- Working of Multi-way Loss Function
+=====================================
+
+Hello and welcome. And this lecture you will learn about the basics of auxiliary GANs or AC-GANs. Let's get started in section three. We ended up with a model that generates images but with the wrong class label even though you could solve this issue by fine tuning the hyperparameters of the model. I will use this example to demonstrate the workings of AC-GANs and multi-way loss functions AC-GANs addressed the following issues which are inherent in GAN models.
+
+The first is the generation of appealing high resolution images. The second is the generation of different samples for the same label and instead of mode collapse to generate the same image for a specific class Let's dive deeper in the next slides recall the conditional GAN architecture from Section 3. We passed the condition label to both the generator and discriminator since we didn't use convolutional layers back then we simply concatenated the condition to the input auxiliary classifier GANs or AC-GAN.
+
+On the contrary encourages the discriminator to reconstruct the label. This led to a major improvement in the image quality and diversity. So now the discriminator should produce two outputs the first one is whether a sample is fake or real and the second one is the sample classification it is worth mentioning here that this reconstruction technique should apply to other metadata such as bounding boxes. It is still valid to pass the condition label to the generator in order to produce relevant samples.
+
+In this case the discriminator will still need to reconstruct the label along with the fake or real result. I have doubted whether the information will leak between the generator and the discriminator. However the reason that the discriminator does not cheat and copy the label from the generator could be that that serial training makes one of them fixed at a time. I haven't found any clear answer to this question and it may still be a topic for research and investigation let's look inside the discriminator box and explore some nifty details.
+
+The image is first passed through a convolutional block which functions as a feature extractor. Remember from lecture 1 when we talked about the latent space or in other words the vector representation of images then the result is passed through a fully connected layer that performs the classification task and reconstructs the label. It could also perform a regression task and reconstruct the bounding boxes or even both of them. This is called multitask learning.
+
+It is also possible to use a pre trained model. i.e. transfer learning to reconstruct the metadata. This is done by passing the input image through two different paths. The first one is responsible for determining whether the sample is real or fake. The second path reconstructs the label let's discuss the loss function for AC-GANs the basic GAN loss which we have discussed in previous sections is reformulated for convenience. However it is essentially the same L of S stands for the source loss that is whether the image is real or fake L of C on the other hand stands for the class loss.
+
+That is whether the label is reconstructed correctly so the discriminator now tries to maximize the sum of both losses. That is it does its best to find out whether the sample is real or fake and at the same time reconstruct the label on the other hand. The generator is trying to minimize the probability that it gets caught as fake. We know that the number of categories in MNIST and CIFAR-10 datasets are ten. We also know that the ImageNet dataset has 1000 categories could one GAN model be able to learn all 1000 categories or fewer categories or more categories.
+
+The authors of AC-GANs have trained 10 categories per model and trained 100 such models to learn on the 1000 categories of ImageNet dataset. Another question may arise whether there were any preferences which categories to train together on the same model. However it was found empirically from the experimental results that it didn't affect the result recall from section two our discussion of the evaluation techniques for generative models and how this is an open research question.
+
+the Inception score was one of the evaluation techniques that works by passing the generated images through an inception network that is trained on ImageNet and then calculates the Kullback-Leibler divergence. This has two downsides. The first is that the network trained on ImageNet does not necessarily perform well on other datasets. The second is that it is not straightforward to interpret the Kullback-Leibler divergence for individual classes especially for conditional GANs.
+
+The authors have proposed a variation of the Inception score that is easier to interpret for individual classes at a very high level of detail generated images are downsampled using bilinear interpolation and then fed through the inception network and the classification accuracy is reported. This method has two advantages. The first is that figures are easier to interpret and the second is that this metric serves as a measure of the quality of the produced high resolution images.
+
+It was found that Downsampling removes the important details from the image. This means that the high resolution was not the result of a trivial bilinear interpolation of small size images but it means that the network has learned to produce details in the high resolution case on its own. Another issue that one often encounters when training GANs is that the model can learn only one sample for each category and then memorize it to fool the discriminator that is named mode collapse on the class level.
+
+The authors contributed another method to evaluate the diversity of the generated images. The idea is built on a modified SSIM image similarity score the multi-scale SSIM is robust to variations in scale. It applies a series of denoising filters and downsampling. Image similarity scores such as SSIM, PSNR and image hashing are a very useful tool that I have used in some business cases in my career.
+
+It could help you as well. The question is however how did the authors use MS-SSIM score. MS-SSIM score falls in the range from 0 to 1. Zero means minimum similarity while 1 means maximum similarity. So they calculated the mean MS-SSIM score for images which are generated using the same condition label. The majority of the categories had a low mean MS-SSIM score that means high diversity for generated outputs. This is a metric that you could use to evaluate the diversity of images generated by your model.
+
+In the next lecture you shall implement the auxiliary GANs on the Birds dataset. Thank you and see you in the next lecture.
+
+19.     
+
+[200.png](./images/200.png)
+[201.png](./images/201.png)
+
+
+See the notebook `11.Implement-multi-way-loss-with-Auxiliary-GAN-on-UC-Birds-Dataset.ipynb` for the code.
+
+-- Implement multi-way loss with Auxiliary-GAN on UC Birds Dataset
+==================================================================
+
+Hello and welcome. And this lecture you will implement the auxiliary GAN by passing the condition to the generator and modifying the loss function as per the last lecture. Let's get started let's open the notebook file for Section 4 lecture 4 which is available in the course material everything should go the same way as we did in lecture 2 but I will highlight the changes so in the snippet where we defined the global noise dimensions so in the snippet where we defined the global dimensions I add one more variable nl that holds the number of categories in the dataset which I set it to 10.
+
+This value is advised by the authors of the auxiliary GAN paper since they have found that a certain model is better suited to be trained on 10 categories and instead of more and then they divided the thousand categories in ImageNet dataset among a hundred models and trained each one of them on only 10 categories and this exercise I will do exactly the same next. I will change the generator design so that we can allow to pass the condition the number of channels in the first convolution layer.
+
+will be changed to be nz plus nl which is the noise vector plus the condition vector then everything should go the same way like before in the forward method. I allow it to accept both the noise vector and the condition as parameter then both vectors are concatenated together using the PyTorch unsqueeze method the concatenated vector is changed from two dimensions to four dimensions. This is done by adding more dimensions along axis two and axis three.
+
+The input is passed to the network and the generated image is returned. Now I will change the model design for the discriminator to add two outputs, one for the classifier and the other for the discriminator. That is whether the sample is real or fake and to which category the sample belongs so I will split the sequential model just before the last output layer and add another sequential block for a classifier that consists of a linear layer and a softmax activation then I add another block which is exactly the same like previous lectures where I have the sigmoid activation which acts as a validation whether the image is real or fake and the forward method the input image is passed through the main network.
+
+The resulting features are a four dimensional vector. I pass it through to the discriminator which is the last block for verification whether it is real or fake. Then I reshape the features into two dimensions using the view method and finally pass it to the classifier at the end of the method. I will return the two outputs everything in the coding exercise continues to be the same like Section 4 lecture 2 and here at the categorical cross entropy section I shall define two loss functions one for binary fake or real output as before the second one is categorical cross entropy for the classifier the method is defined by the name C2, which takes both the model outputs and the target labels.
+
+Since we have applied one-hot encoding to the labels I need to convert that back to one value. I will use the method max which is triggered to get the max index and instead of the one-hot encoded vector. Finally both the outputs and the true values are passed to the cross entropy loss. Here I define the one-hot encoding method as previous section and create fixed conditions for testing along with the fixed noise now when it comes to training the discriminator I make a few more changes.
+
+First the method is passed both images and labels then both are converted to the cuda device then fake conditions and fake images are created. Then fake conditions and fake images are created I reset the optimizer by using zero grad method then both real images and fake images are passed to the discriminator and we get the results in four variables real_valid, real_class, fake_valid and fake_class then I shall apply the formula exactly the same way I explained in the slides I pass the real valid and real labels to the binary cross entropy loss which is named C1 and pass the fake valid and fake labels to the binary cross entropy loss which is named C1 together they are summed and the sum is named L_s which stands for loss of source either fake or real.
+
+The second part of the loss formula is the loss of the classifier I trigger the categorical cross entropy loss which is named the C2 and pass it real_class, real conditions, fake_class and fake conditions and the return value is summed together to be L_c. Next I sum L_s and L_c together and this becomes the discriminator loss. I apply the backward to calculate the gradients and then apply the optimizer step to update the weights according to the learning rate.
+
+Finally for logging purpose I return the loss. In case of the generator I pass only the labels to the train. G In case of the generator I pass only the labels to the train G method then I calculate the loss by summing L_s an L_c values but hold on, shouldn't we subtract instead of summation. Well it works since we have flipped the labels. This does exactly the same as the subtraction and I would like you to try the same exercise by replacing L_c plus L_s with L_c minus L_s and see what difference it makes again here.
+
+I initialize tensor board for logging and visualization and over here I restore any check points if they exist so that I can resume the training from previous checkpoints and instead of starting it all over. Next I shall train the network by iterating over the epochs, i.e. iterating over the dataset steps and iterating over the discriminator training for K steps and over the generator for only one step at this exercise. I use the k equals 1 and I encourage you to play with other values like 2 3 4 and 5 then I use TensorBoard for logging as previous lecture every hundred epochs then I save the check point to resume the training from there so I left the model to be trained for 1400 epochs and now we are ready to visualize the results and here again we can see a variety of conditions in the generated images different backgrounds.
+
+The generator is trying to depict the same scene in which the bird exists either on a tree on a sea surface in the clouds in the sky and then it depicts the body parts of the bird either the tail the body the head, the beak and so on as an interesting experiment. Let's pass the same noise vector to the generator but with changing the condition hypothetically I should get the same images style and the same theme but for different birds. That is I'm using the same noise but different conditions.
+
+And since I'm training on 10 categories I will be passing the values from zero to nine as the conditions to the generator for the same noise. However here. What we get is the same image repeated 10 times what we expect is to get the same background. Same theme same style but different birds. But this doesn't happen. This is again a reported issue reported by the authors of the auxiliary GAN papers. It is an open research question. In a nutshell the problem is that the generator learns to ignore the conditions it focuses only on the noise regardless of the conditions given to the generator.
+
+The noise will dominate. I would encourage you to read more about this problem try to come up with solutions and if you find one go ahead and publish it in a paper and you will nail it for sure. Now let's go ahead to tensor board to see the visualizations reported so if we open TensorBoard we can see the same pattern for the discriminator and the generator loss. We can visualize the min-max game the adversarial game whenever the generator catches up with the discriminator the discriminator improves and finds out more about the fake and the synthesized images and the loss for the generator increases and they go like this in cycles.
+
+Ideally what you should get is a discriminator loss decreasing with the epochs and the generator loss decreasing with the epochs but whenever you get these kind of spikes in the loss it is an indicator of mode collapse. It is an indicator that you are not getting the right equilibria. The Nash equilibria of the training. Finding the perfect graphs for the loss for the GANs is a very challenging task and that's why as we have discussed in Section 1 The methods for evaluating the GANs training are still evolving but at least you know there is a problem when you see such spikes again.
+
+If we go to the tab for images we can visualize the images that were resulted by the generator in the intermediate epochs and you can scroll backward and forward to find the optimal ones and use the model. that epoch that produced the best result. Remember that the model tends to diverge after some epochs. So the last epoch is not necessarily the best one now that we are almost done with Section 4. Let's review the coding challenge. I encourage you to implement the auxiliary GAN with Wasserstein loss.
+
+Try to apply the GANs that you have learned in this section on the CIFAR-10 dataset or flowers data set. It would be great if you could get hints on by applying the inception score and play around with latent representations and here you are the reference to the original papers. For those who are interested in learning more and reading from the original sources congratulations on completing section 4 in Section 5 I shall introduce progressive GANs. Stay tuned and see you in the next section.
+
+Thank you.
+
+20.    
+
+[202.png](./images/202.png)
+[203.png](./images/203.png)
+[204.png](./images/204.png)
+[205.png](./images/205.png)
+[206.png](./images/206.png)
+[207.png](./images/207.png)
+[208.png](./images/208.png)
+[209.png](./images/209.png)
+[210.png](./images/210.png)
+[211.png](./images/211.png)
+[212.png](./images/212.png)
+[213.png](./images/213.png)
+
+
+
+-- Introduction to Progressive GANs
+===================================
+
+Hello and welcome to a new section in this section we explore the workings of progressive GANs in the first lecture. I shall lay the foundation of progressive GANs. Let's get started. Similar to the different variations of GANs which we have explored in previous sections. The motivation behind the progressive growing of GANs is the same. This method aims at solving mode collapse, a problem and increase the diversity of synthesized images. However generating high resolution images is the primary focus of this method.
+
+The question is why. GANs are not that good. When it comes to high resolution images it turns out the answer is fairly simple. At a high resolution the discriminator finds it very easy if not trivial to tell the fake from real samples. This behavior hurts the gradient flow in the network and the discriminator dominates the generator. And that's where the adversarial game is broken. The progressive growing of GANs method is based on the idea of incrementally adding more layers to both the generator and the discriminator as the training progresses.
+
+In the first epoch the generator and the discriminator both work at four by four resolution at the second epoch they both work on 8 by 8 images. It keeps on progressing till it arrives at 1024 by 1024 images. The rationale is that this method gives the generator a chance to learn the high level structure of the image and slowly learn to add fine details with time. This is a very intuitive idea and yet very powerful and as a side effect the training converges faster since most of the training time is spent dealing with lower resolutions which is relatively of lower computational cost in order to fully understand how the layers are grown.
+
+Let's review a few building blocks first the Inception module is the basis for a complete family of deep learning models Inception modules excel in both image classification and object detection tasks. There are many variations of Inception networks at the core of an inception module is the usage of one by one convolution the one by one convolution functions as a feature reduction mechanism which reduces the number of channels of the input as a result.
+
+This leads to reduction in number of operations and increases training speed. I'm not very sure whether the name Inception network was taken from the inception movie. It makes sense however because the movie involves the idea of a dream inside a dream which is similar to the inception network, a network inside the network. It's a good movie to watch by the way. The second building block is the residual block. One of the pioneering Deep Learning Networks for computer vision is the ResNet. ResNets use residual blocks to solve the problem of vanishing gradients in very deep neural networks. Residual networks work by switching a layer on or off allowing the gradients to pass unchanged backwards ResNets are used in many research papers especially GAN papers that I have read. So now let's answer the question of how the layers are added to the network in training time. If the layers are added suddenly then the performance changes we need to add the layers slowly with a smooth transition.
+
+In this graph on the screen right now the left side represents a model which handles 16 by 16 resolution in order to increase it to 32 by 32. Another convolution block is added. However it is treated as a residual block that is there are two paths, the network can skip this block the same way a residual block works in ResNet. There is a parameter Alpha that functions as a factor deciding how much the new layer should contribute to the network. The weight alpha falls in the range of zero to 1 and as a result the factor 1 minus alpha decides the weight of the original network.
+
+Another consideration to take here is how do we feed the real images to the discriminator during the alpha transition. The answer is simple the same alpha value is used to mix the lower resolution and the high resolution versions of the real image. So in this example we downsample the real image twice, once to 16 by 16. And the second time to 32 by 32 then merge and add them together according to the alpha weight. Remember that original real images are available before training at the target resolution which is 1024 in this case the progressive GAN encourages diversity by appending a non-learnable layer at the end of the discriminator.
+
+The diversity layer calculates the standard deviation for each pixel over every mini batch the standard deviation serves as an indicator to help the discriminator decide whether a sample is real or fake. For example if the image deviates too much from these statistics then it is fake. The authors of this paper have tested other statistical measures as well. They found that standard deviation was the only successful measure for such a task. The weights are initialized using a random distribution with zero mean and standard deviation of value 1.
+
+The weights are normalized as training progresses by dividing over a factor C C is calculated based on the square root of the number of inputs to a layer. This ensures a dynamic learning rate adjustment based on the value of the gradient. That's why it prevents some weights from getting stuck and encourages them to adjust faster. This is inspired by Xavier initialization and adaptive learning from RMSProp and the Adam optimizer the authors have also used a variation of batch normalization that better serves the task.
+
+This normalization was used after each convolutional block of the generator in the formula, N stands for the number of feature maps the variable a stands for the old value and b stands for the normalized value. In simple words this divides the pixel value by the square root of the sum of the pixel value over all samples in the mini-batch X and Y are the pixel indices in this case and in the next lecture you will implement the progressive GAN on human faces.
+
+Thank you and see you in the next lecture.
+
+21.  
+
+[214.png](./images/214.png)
+[215.png](./images/215.png)
+[216.png](./images/216.png)
+[217.png](./images/217.png)
+[218.png](./images/218.png)
+[219.png](./images/219.png)
+
+See the notebook `12.Implement-Progressive-GANs-on-Celebs-Dataset.ipynb` for the code.
+
+-- Implement Progressive GANs on Celebs Dataset
+===============================================
+
+Hello and welcome to a new lecture. In this lecture you will implement progressive growing of GANs. This is the most challenging lecture in our course. So grab a cup of coffee and let's get started based on our discussion of the theory behind the progressive growing of GANs in the previous lecture. I came up with this task breakdown the code below is organized under these main headlines. The first item is the pixel-wise normalization which I implemented as a custom PyTorch layer.
+
+Next I address the weights normalization method which is proposed by the authors of the paper. Third on the list is how to actually implement a growing model. Then number four is another custom layer that is appended at the tail of the discriminator to calculate the pixel-wise standard deviation over a mini batch. Finally I implement a method to resize the images as the growing level of the model either four by four or eight by eight etc.. The code is based on the benchmarks referenced here but I implemented it in my own way and my own style so that I can highlight and visualize functionalities for illustrative purposes.
+
+Finally I would recommend that you watch this lecture twice and spend some time playing with the notebook to wrap your head around it over here. I start by creating a global variable named Max levels which indicates how many times I grow the network in order to handle resolutions either four or eight or 16 or thirty two and the up to 256. Feel free to change this value and share the results with me. Let us begin by exploring the data set. Here you can find the reference to download the dataset.
+
+Make sure that you have downloaded the code and unzip it inside the directory named celeba located at the root of the notebook files I use the image folder API to load the data and compose the processing transformations. The faces are already detected, cropped and aligned but I only need to apply resize and center crop to make all images 64 by 64 in width and height then I create a data loader and calculate the number of steps next. I use matplotlib to visualize a mini batch of images all the images contain human faces of celebrities.
+
+Here you can view a mini batch of the dataset here the fun begins. We start by a custom layer for pixel wise normalization. The title of this section in the original paper is pixel wise feature vector normalization in generator. And here is the equation. So again we divide every pixel value by the square root of the mean of squared pixels in the same location across the mini-batch the class PixelNorm layer inherits from nn.Module and implements the constructor and the forward method you can notice here there is a term which is added at the end of the equation.
+
+The term 1e-8 is a factor recommended by the authors of the paper to stabilize the value the next few blocks demonstrate the output shape of various operations which are used to calculate the pixel wise Norm. This way you can understand why we use dimension parameter equals 1 and set the keepdim parameter to True the real interpretation of pixel-wise norm is best understood by visualizing the original signal and then normalize the signal.
+
+That's why I create a random tensor and then pass it to the pixel-wise norm layer then plot the output before and after normalization as you can see here the original signal is in the blue color and has many spikes which cause the model to exhibit instability. The orange curve on the other hand is a trimmed and regularized version of it. I can't stress enough how visualization is a key skill for you as a data scientist under the title equalized learning rate is again another regularization formula to help stabilize training further the weights of the network are multiplied by a factor C which is based on a variable n which is the number of inputs connected to a neuron it is implemented as a torch.nn.Module and uses the method numel which calculates the number of elements in any PyTorch operations.
+
+You can see I highlight the method numel, you can reference it in the original documentation of PyTorch as a reminder. Here you go a visual form which we discussed in the previous lecture to help you build a visual map of the process of growing layers. I can break the task down to three steps in the first step I design a network that handles the image at Resolution for example 16 by 16. Then I add more layers to the model to handle resolution 32 by 32 which is double the value of 16 by 16.
+
+But in order to make the transition smooth we need to implement the alpha transition between the two resolutions. The Alpha transition acts merely like a weighted average where we have one minus alpha of the previous resolution plus alpha of the new resolution and as alpha grows the weight of the previous resolution decreases and the weight of the new resolution increases. This is the basic idea upon which the lengthy code below is based to make our code more generic.
+
+I create a method to return a sequential module of a basic convolutional block for the generator it uses transpose convolution and ReLU activation then I do the same for the discriminator but instead I use convolution layers with Leaky ReLU notice here how the batch norm is always between the convolution layer and activation function. Note here how the batch norm layer is always between the convolution layer and the activation function.
+
+This is always the case for both the generator and the discriminator also notice how the pixel norm layer is after the activation. There is actually a tricky interview question that usually asks where to place the batch norm layer in your model. So be aware of such tricks I use the same global variables from Section 4 for DC-GAN. However notice here the recommended value for both ngf and ndf is much smaller. I have reduced it to quickly debug the code.
+
+Now I create a generator class that inherits from torch.nn.Module I trigger the constructor of the parent using the method super. Then I create two module lists. The question now is what is torch.nn.ModuleList as it's a new data structure available in the PyTorch API. In previous lectures I have used torch.nn.Sequential and this one however I shall use torch.nn.ModuleList. It's a list of torch.nn modules, and it's a data structure that is friendly with modules operations.
+
+That is we can initialize the object with list of modules and append the modules on the fly to the list. This is useful for the backward path of the back propagation. This will come in handy especially that I am interested in growing the network at later apex the blocks variable holds the internal convolutional blocks of the module to_rgb holds the output layer for every resolution to convert to the number of channels from whatever value resulting from the intermediate blocks to three channels for RGB. And by the way.
+
+Have you ever thought about using other color spaces other than RGB for images. For example HSV. Think about it and share the answers together then I create a convolutional blocks to map the noise vector to ngf by forty eight channels. This one is always executed regardless of the resolution of the target. Image. So now we need to create convolutional blocks and add to_rgb output blocks and index them by the target resolution in our module list.
+
+Here I implement a for loop over the number of resolutions supported and for every resolution I create. both a convolutional block and a to_rgb block the number of input and output channels can be formulated in a generic way by multiplying ngf by two power i for input and two power i minus one for output. However for simplicity and in order to visualize it you can print that resolution and trace it by replacing i with values 5 4 3 2 on one and track the outputs.
+
+Think of it as a sketching exercise you can do it using a paper and pencil. The idea is quite simple. If the target resolution is four by four then we use fewer layers. Otherwise we use one more layer as the resolution increases. I will visualize this concept in a nice way below so in previous sections we have created a custom function to initialize weights. And this one I demonstrate that it is also possible to initialize weights inside the module structure using the self the module the method the method should put an end to it.
+
+Timing in normal method is used to initialize weights. This is the PyTorch implementation of initializers which are a modification of the Xavier initializer the forward method now should accept two parameters one for the input mini batch and the other for the level of the growing of the model. Indices starting by 1 for 4 by 4, up to 5 for 64 by 64 and six for 128 by 128. Finally seven for 256 by 256 for a smooth transitions.
+
+The level is a float decimal number that could take many values between integers such as two point one or three point four etc.. Let's use the decimal value as the value for the Alpha transition where alpha equals level minus the integer value of the level. For testing I set Alpha transition to false. However feel free to enable it by setting alpha to True and make the required modifications to the output function of the generator and instead of tanh don't use any activation function at the output.
+
+Just use linear activation output instead of tanh at the end of the generator so the alpha equals level minus the integer value of the level. Then we round the level up and use the max levels as an upper bound. Then we pass the inputs through the first convolutional block using self.blocks of 0 and assign the return feature map to a variable named the feature map then implement a loop depending on the target resolution indicated by the level variable at each iteration pass the feature map to the convolutional blocks at that level so remember when I told you to break the task down to three steps.
+
+Let's skip the alpha transition for now and assume that we are done. And next we pass the output feature map to self.to_rgb of level minus 1 since they are zero indexed but the level in our case it starts from 1. So this is the simple straightforward case. However assume that we are in the middle of an alpha transition and check for that by the if condition if the current level is greater than 1 and if the iterator is at the next to last convolutional block and if alpha is not zero then we need to resample the output to pass it to the to_rgb layer.
+
+For example if the current level is 16 by 16 so I use the 8 by 8 image for the alpha blending. So if the alpha transition is true let's multiply the main output by Alpha and sum it to the previous output multiplied by one minus alpha as a final notice on this snippet I have implemented my own convolutional design and set my own parameters. However in the original paper it is recommended to use upsampling in order to double the size of the output from the previous layer.
+
+I have commented it out since it wasn't very necessary in this case. I keep it as a guide for you if you want to change the parameters later. Now for the discriminator we use the same tricks but in the opposite direction for the sake of brevity let's head directly to the pixel-wise standard deviation layer at the end of the discriminator in order to implement the standard deviation of a mini batch layer. I use torch.std, a method which is used to calculate the standard deviation over the mini-batch of the feature map variable.
+
+Notice here how dim equals zero. Ensure that the standard deviation is calculated for every pixel over the whole mini batch. Then I concatenate the standard deviation to the feature map. But notice here I use the method unsqueeze to insert that dimension and then expand_as to shape it similar to the feature map. Otherwise the torch.cat method will throw an exception. Finally the valid either fake or real output is returned as a single value.
+
+Now let's test this code works before we make it even more complicated and try to create the model. I use another visualization library which is torchviz. My goal here is to show you as many visualization tools as possible so they can have many tools in your tool box. I need to create a discriminator object. Net D and then pass it a tensor filled with zeros just as a placeholder and set the dimensions of this tensor to be four by four which stands for a four by four image and set the level to one and then visualize it using the make_dot method.
+
+Notice here that a graph that is printed in the backward path for calculating gradients of the back propagation and not the actual network itself. Well it's as I said a tool in order to visualize the size of the network. The main idea here is that at resolution 4 by 4 the network is at its smallest size. Now let's see is another tensor of zeros. But this time we set the size to 64 by 64 and we need to set the level to 5 and inspect the graph. And while our network has grown to its maximum size this is actually the main concept behind the growing layers of GANs the network is small when the resolution is small.
+
+The network is large with more layers when the image and the target resolution is higher next I do the same for the generator and make the same observation and it becomes clear that our networks shrink and grow progressively as desired Is that enough. No it is not enough. Let's verify that the output of the discriminator is always a single binary value either real or fake and also verify that the output image resolution of the generator at each level is the required resolution.
+
+For example if level equals 1 the output is almost four by four by three for RGB channels and so on. But more importantly the output at intermediate Alpha transitions it should be also set correctly. That's why I implement a for loop with the step point two between 1 and 6. Exclusive or the max levels. Then I create a mini-batch of random noise then verify the output shape of the generator again is the expected output shape at each level and let's see how I'm using a formula to make it generic as the level progresses the desired output shape is also calculated using that formula and I throw errors in case of mismatches between the required resolution and that output predicted resolution.
+
+Here you can see how the output shape progresses at every level from four by four up to 256 by 256 and I am confident that my code is syntactically correct and I can train it without surprises. This is another concept that I'd like you to always do at work which is unit testing always test the small few lines of code separately and automate the test. Otherwise the code grows in complexity and you get lost later on when you try to debug it. Now the next blocks of code do exactly what we have been learning from Section 1 up to this point.
+
+We convert models to GPU create optimizer and create the loss function and use the fixed noise for visual inspection. So I will head directly to the two main ideas remaining in our agenda. First how we decide the level value during the alpha transition and then how to down sample the images for lower resolutions. Now I define a method to update the level as the training proceeds between epochs and steps. The method update level takes in the number of current epoch The current step the total number of epochs and the total number of steps.
+
+And also Max levels. It simply scales the value down between 0 and 1 and then it scales it up between 1 and max levels. And finally it returns the result by using a min-max scaler as you can see here the highlighted digit 4. I set it manually to start between 4 and Max resolution. And this way I avoid the very low resolutions 4 by 4, 8 by 8 and sixteen by 16. Since I found them very unnecessary during the training. This of course contradicts the original paper which suggests that you should start with four by four resolution but because of the power of the GPU device I'm having and of course to the one you would be having wouldn't be very powerful more than that.
+
+So unlike the authors of the paper who work at NVIDIA, the house of GPUs in the whole world. We use a limited GPU power so I started directly by the resolution 32 by 32. And if you'd like to change that and experiment you can change the value 4 down to 1 and that would bring it back to the scale 1 to max levels but at the moment I set it between 4 and max levels. So again based on the concept of unit testing I'd like to test this snippet of code.
+
+That's why I print the level at different random values that cover the range. Assuming total epochs 50 and total steps 20 it is easy to see that we get nice distribution of values and it's most alpha transitions and decimal points as one. It is easy to see that we get nice distribution of values and most alpha transitions as decimal points as well. Now I define another method downsample_minibatch to resize the original real image according to the current level.
+
+Here I use adaptive average pooling which is a PyTorch method that applies average pooling which is exactly the same effect as down sampling the image. Feel free to use the non-adaptive version as well while you're trying to fine tune the hyperparameters. Now let's visualize the downsample method to make sure it works. So I started by resizing the image to resolution four by four and here we can see the results at the resolution four by four. I do the same again but for a resolution 16 by 16.
+
+And here we can see the results at that very same resolution. Now it is very easy and straightforward to train the network and expect the results. In reality the authors of the paper used a very powerful GPU for many days to train the model. So this leads us to the practices I share with you next. I have come up with the conjoined triangles of artificial intelligence the conjoined triangles of AI explain the foundations of applying Deep Learning in real life do not accept a project if one of these elements is missing.
+
+Otherwise you may run into troubles fulfilling your commitments. The first pillar is the availability of enough annotated data. The second is the availability of powerful computing hardware either in the cloud or on the premises then if there is a public model or research paper addressing a similar problem you are ready to work. Otherwise make sure to explain to the stakeholders that you will have to invent your own design which is a trial and error process.
+
+They should be aware of that and either accept or reject it. Finally you need to make sure that you can successfully deploy your model to target environment either web, mobile or even an embedded system. This is tricky since some custom layers and even built in layers are not interoperable in different environments. Be aware of this trap early on and do not ignore it while you fine-tune the hyperparameters of your model and training. It is also tricky to decide the size of the optimal dataset but you have to empirically measure the loss or whatever metric you are using against the dataset size in order to determine whether you have enough data or not and now let's head back to train our network.
+
+We use the tensor board to visualize the intermediate results by initializing an object of the class SummaryWriter exactly the same way we did in previous sections. And then we use the check points to load the state dictionary of the torch module for both the optimizer and the network itself so that we don't have to start the training over and over from the beginning. We can start from the best model we have got so far. Then I loop over the number of epochs, to loop over the dataset and then we train the discriminator for key steps.
+
+Here I set K to one which I found to be optimal and then train the generator. And finally every ten epochs we print the results in terms of the loss of generator and the loss of the discriminator and the current level. And we save the model, the state of the model and the State of the optimizer. And then I use the fixed noise to visualize an image of a mini-batch of the generated images by the generator at this step and use that to write it to TensorBoard so the idea I have used here is that I have trained starting from level 4 for 32 by 32 resolution and incrementally use the alpha transition up to 256 by 256 resolution.
+
+Here is an example of the result I got at the end the resolution at the target resolution of 256 by 256. It is very clear that this model is undertrained and we need to train it further while we can see here the shadows of a human face. And it was not very far and we will inspect now the intermediate results using the tensor board image gallery and see how far the model has got whether it has converged or diverged with the training and use that to fine tune the learning rate hyperparameters.
+
+So now in order to use TensorBoard, type the command tensorboard --logdir=./runs and hit enter then I use the link to open in your browser window for the TensorBoard dashboard so hear from a previous run since I have trained this model using checkpoints over three different runs. That's why the images are logged under three different tabs so I start here at the first steps. It wasn't clear what is happening then I'll click the arrow button on the keyboard to see the next steps I can see here it is converging to something very close to a human face quite realistic by the low resolution 32 by 32.
+
+And further it diverges and converges back again. You can see here that the results are much better and quite realistic. But then when it shifts to the next resolution 64 by 64 the results has diverged again. That's why I trained this for another epoch and let's inspect that in the next run. So here is the next run that started by 32 by 32. The one afterwards which is more about 64 by 64. You can see that at a higher resolution Max resolution. It has diverged again and that's why I need to be trained further as the transition function, the update level function which shifts the scale between 1 and Max resolution or the max resolution that gives less weight to the higher resolution.
+
+And that's why we can play around with these values to let it train more on higher resolutions or the last resolution bar again as we have seen in the notebook. Over here but again as we have seen in the notebook in the previous slide it has a very approximately got very close to the desired output of a human face from the CelebA dataset for illustrative purposes. This is enough and now let's review another concept with a WGAN-GP. This is an improved loss function for training the GANs.
+
+It builds on the Wasserstein GANs which we have discussed in previous sections but uses that gradient penalty which allows us to stabilize the training even further so remember from the WGANs lecture that I have implemented weight clipping to stabilize the model training in the paper of progressive growing of GANs. Another technique was used which is called a gradient penalty. It penalises the norm of the gradient of the weights of the discriminator with respect to the inputs.
+
+I encourage you to read more about this technique using the reference displayed on the screen right now. So let's recap what we have learned in this lecture and also highlight some of the points that we have skipped. First we have used transpose convolution in contradiction to using convolution or block with average pooling or average unpooling, max pooling and max unpooling. This concept we have discussed in a previous section. However the authors of the original progressive growing of GANs paper have used convolutional block without transpose convolution.
+
+This is very unclear why they did that. Maybe they wanted the transitions between different resolutions to be done using static upsampling and downsampling techniques. Otherwise the transposed convolution will learn the weights for a certain resolution four by four for example and then when it shifts to eight by eight it has to unlearn these weights again. So this is quite an important point to be aware of when implementing growing of GANs.
+
+It is done using convolutional block but I have done it with transpose convolutions to see how different the results would be then we implemented the pixel wise normalization and we have implemented the mini batch standard deviation layer however we implemented on 32 by 32 resolution and apply the progressive growing of the network and finally applied Alpha transitions. So now that we are done with the progressive growing of GANs I would like to highlight some of the amazing applications of GANs in game scene rendering.
+
+As you know games rely on powerful graphic cards to render textures lighting motion and camera. It is very challenging to maintain temporal and spatial relations in rendering videos but which is good news for you. In this article it announced how NVIDIA is tackling the problem using GANs so the future of videogames will change based on the techniques you have learned in this course of GANs. Another very promising area of research is AutoML where the computer decides the optimal model design the optimal hyperparameters and it can lead to amazing results when applied to GANs. So in the next lecture I will share with you more tips, tricks and hints for training GANs.
+
+Thank you and see you in the next lecture.
+
+22.    
+
+[220.png](./images/220.png)
+[221.png](./images/221.png)
+[222.png](./images/222.png)
+[223.png](./images/223.png)
+[224.png](./images/224.png)
+[225.png](./images/225.png)
+[226.png](./images/226.png)
+[227.png](./images/227.png)
+[228.png](./images/228.png)
+[229.png](./images/229.png)
+[230.png](./images/230.png)
+[231.png](./images/231.png)
+[232.png](./images/232.png)
+
+
+-- Hints, Tips, and Tricks for GAN Training
+===========================================
+
+Hello and welcome to lecture 3 and this lecture I shall introduce a few tips and tricks for improving GANs performance the first and the most obvious hyper parameter to fine tune is the learning rate. A low learning rate performs much better than a higher one. Even a decaying learning rate is helpful. Most of the time setting a high value for learning rate can cause your model to jump in the parameter space and deviate from the global minimum in the previous sections you have worked with different optimizer algorithms.
+
+I would always try stochastic gradient descent or SGD to begin with and follow a different path. If the results are not okay I would also begin with the hyperparameters recommended by a paper. Then I use the paper settings as a baseline and form my own configurations from there. Most of the time a slight change in the settings can result in a model divergence the number of steps discriminator is trained more then the generator the number of steps the discriminator is trained more than the generator tends to make a difference in the results and of course in the Nash equilibria of the adversarial game I would start with one step and only if the discriminator is getting fooled then I would either increase the number of training steps or add more layers to the discriminator to increase its capacity.
+
+Be aware that the best model is not necessarily the last one. For example if you are training the network for 4K epochs it is not necessary that the best model is the one that you ended up with. That's why I use visualization and manual inspection of the results to determine the best subjective quality. It is always a good idea to use the checkpoints to save your work and intermediate models as well. You can always get back to this model and change its parameters and retain it from the checkpoint to avoid divergence one of the common problems with GANs is that the generator may rewind and start generating bad samples that were rejected at earlier epochs.
+
+As a result the training just springs back and forth between the same generated samples without real progress. One of the techniques used by GAN practitioners is to save a few random samples from earlier epochs then feed these samples to the discriminator at later epochs. This tends to solve the problem if the discriminator is too powerful for the generator and only marks its output as fake one of the ways to make the job a bit more challenging for the discriminator is to add a Gaussian random noise to the real images to confuse the discriminator.
+
+You can use a different latent distribution to generate the noise vector the noise vector could be drawn from any distribution and not necessarily a gaussian normal. It could be a uniform distribution for example. You could also try a different mean and variance for Gaussian normal just as I did in Section 3. It could help sometimes to use ones for fake and zeroes for real samples. That is we are flipping the labels and instead of one for real and zero for fake I have demonstrated the gradient saturation problem in an earlier section.
+
+One of the ideas to encourage useful gradient flow is to use a different value for real labels and instead of using ones for real labels you could use point ninety nine. That's an example. It turns out that designing the right objective function for the given dataset and learning task in one of the essential if not the most important steps a lot of innovation goes into designing a meaningful objective function speaking of objective functions. Here are three objective functions to play around with.
+
+Remember that the more you read and implement the better you get. Here you can find the reference to the original paper of the progressive GAN. The second item is an online blog on medium by Jonathan who that I consider one of the most comprehensive blogs on GANs congratulations on completing Section 5. Thank you and see you in the next section.
+
+23.    
+
+[233.png](./images/233.png)
+[234.png](./images/234.png)
+[235.png](./images/235.png)
+[236.png](./images/236.png)
+[237.png](./images/237.png)
+[238.png](./images/238.png)
+[239.png](./images/239.png)
+[240.png](./images/240.png)
+[241.png](./images/241.png)
+[242.png](./images/242.png)
+[243.png](./images/243.png)
+[244.png](./images/244.png)
+
+
+--  Introduction to U-NET Architecture
+=====================================
+
+Hello and welcome to the last section of our course. And this section I shall walk you through more advanced GAN methods. The first lecture lays the foundation by exploring the U-Net deep learning model the U-Net architecture is designed to leverage supervised learning in situations where there are few annotated training samples. This is a common case in Biomedical Imaging applications and for many small and medium businesses as well. The second motivation is decreasing inference time that is increasing inference speed or in other words the time it takes to segment an image image segmentation is pixel wise classification.
+
+Imagine that you have to label every pixel of an image previous attempts to use the sliding window segmentation. However this was very demanding in terms of computational complexity. There are many modern image segmentation object detection methods. However U-Net is the base for the GAN methods which we will discuss in the next lectures. However U-Net is the base for the GAN methods which we will discuss in the next lectures semantic segmentation was achieved using fully convolutional networks.
+
+Just one year before the publication of the U-Net paper. In this architecture only fully convolutional layers were used. The number of operations is reduced dramatically. This is achieved by reducing the number of filters at each layer then increasing it again towards the target resolution and then next slides. We shall discover the special contributions that make U-Net different from FCN this chart makes it very intuitive why it is named U-Net. The network resembles the Latin character U U-Net is an extension of FCN that is modified to be trained on fewer images and yield faster results and inference time as can be seen from the architecture diagram.
+
+There are two parts of the network. The first part is named the contracting part. It is an intuitive naming since its job is to shrink the features towards a bottleneck. Then the second part is the expanding part. This is the part that expands the image towards a high resolution target. It is also the part that feeds contextual information to higher levels. the U-Net architecture is not symmetric. There are more filters in the expanding part than in the contracting part.
+
+This is intentional to allow the network to learn more contextual details. There are three more distinct differences from FCN. The first is that the expanding path does not use max unpooling but it allows the network to learn its own up sampling. This should remind you of strided transpose convolution which I have discussed in section four the second. The difference is that the corresponding features maps from the contracting path is concatenated to the feature maps given to the convolutional block on the same level.
+
+The second difference is that the corresponding feature maps from the contracting path are concatenated to the feature map which are given to the convolutional block on the same level. This provides more contextual details to the expanding path. It also functions as a skip connection similar to residual blocks. The third distinction is the use of cropping over the feature maps which assists the tiling strategy employed to handle border pixels. I elaborate more on the overlap tiling strategy in the next slide.
+
+One major contribution in U-Net over FCN is the overlap tiling strategy the motivation behind this technique is twofold. The first reason is to increase precision on image boundaries. The borders of the image lack contextual information. This is solved by extrapolating the area around the border. Extrapolation is the opposite of interpolation in interpolation you infer a value having both previous and next values in extrapolation you infer a value having only previous values or vice versa.
+
+The second reason why this technique is useful is that image segmentation is limited by the GPU memory by using overlapped tiling strategy arbitrary enlarged images can be fitted into GPU memory and get processed with high precision the concatenation between feature maps of layers on the same level is best described as a skip connection it is visualized here with right pointing arrows. Skip connections are synonymous to residual blocks in a sense one of the Essential Techniques for generating more training data is the use of image augmentation.
+
+It works by applying transformations to the original image. Example transformations are translation, flipping, rotation, skewing and normalization as a result the trained model becomes robust to scale. Translation and orientation variations. However in image segmentation applying such transformations requires more labour to annotate the new images. This is not the case in U-Net. U-Net tends to learn the image topology without the need of changing the annotated images one of the challenges in image segmentation is the separation of adjacent objects of the same category.
+
+That is when two objects are in physical contact and belonging to the same category. One of the concepts that I have emphasized throughout the course is the importance of loss functions. Again in this case it proves useful. The authors of U-Net have customized their own version of the segmentation loss function in order to encourage the model to separate adjacent same class objects. The equation on the screen is a weighting function for pixels that takes the distance between adjacent objects into consideration and also accounts for the pixel frequency.
+
+The categorical cross entropy is then calculated as the weighted loss based on the weights assigned by this formula. Weights are initialized by random values drawn from Gaussian normal distribution which has unit variance. The unit variance is encouraged by the square root of 2 over N, where N is the number of incoming connections to a node It is however tricky to decide the number of incoming connections when working with convolutional networks.
+
+In this case it is the size of the previous convolutional kernel multiplied by the number of channels. For example a two by two kernel with 16 channels yields four by sixteen outgoing connections which are the multiplication of two by two by 16 now that we have laid down the foundations in the next lecture. I shall discuss the workings of two popular GAN architectures namely Pix2Pix and CycleGAN. Thank you and see you in the next lecture.
+
+24.    
+
+[245.png](./images/245.png)
+[246.png](./images/246.png)
+[247.png](./images/247.png)
+[248.png](./images/248.png)
+[249.png](./images/249.png)
+[250.png](./images/250.png)
+[251.png](./images/251.png)
+[252.png](./images/252.png)
+[253.png](./images/253.png)
+[254.png](./images/254.png)
+[255.png](./images/255.png)
+[256.png](./images/256.png)
+[257.png](./images/257.png)
+[258.png](./images/258.png)
+[259.png](./images/259.png)
+[260.png](./images/260.png)
+[261.png](./images/261.png)
+[262.png](./images/262.png)
+[263.png](./images/263.png)
+[264.png](./images/264.png)
+[265.png](./images/265.png)
+
+
+-- Working of Pix2Pix GAN and CycleGAN
+======================================
+
+Hello and welcome to a new lecture. In this lecture I shall discuss both Pix2Pix GAN and CycleGANs. Let's get started this lecture consists of two parts. The first part is about Pix2Pix GANs. And in computer vision images translation represents a group of problems where one wants to transfer an image from one domain to the other. It could be a hand-drawn sketch that we want to convert to a professional painting. It could be an elevation view outline that we want to convert to a map.
+
+It could be a black and white photo that we want to convert or colour. The list goes on. One of the main innovative contributions of Pix2Pix GANs is that the method can be used for any kind of such image translations. It depends on the image pairs that you are using in the training set Pix2Pix GANs are inspired by conditional GANs. Recall that we have discussed the conditional GANs in Section 3 and instead of passing a label condition to both the generator and the discriminator in Pix2Pix GAN we pass an input image.
+
+This input image is the source image for the translation. It could be a sketch a black white image or an outline The generator design is based on the U-Net architecture and the discriminator is based on PatchGAN architecture. One major distinction here is the absence of latent noise vector z. How does it work then? For a while this may seem unintuitive since of the basic idea of GANs is to use a latent noise vector. The authors of this paper and previous other papers as well have confirmed that the model simply ignores the noise in the presence of a condition.
+
+That's one of the issues which conditional GANs suffer from. In the absence of noise. The model tends to produce deterministic outputs. That is, for every input it gives it the same output image. The noise helps the model randomize and diversify its outputs. That's why the authors have provided the noise in the form of dropout layers in the generator. By switching connections off at random. This trick works instead of feeding explicit random noise. However this trick is subject to further investigation and research the discriminator in books to base again is based on a PatchGAN architecture.
+
+However what does that mean. In previous sections the discriminator was given the whole image and decided whether it is real or fake In PatchGAN the image is divided into N by N patches and then the discriminator works on each patch and decides whether it is real or fake. Then the overall result is averaged for all patches. This has two advantages. The first is that the discriminator has fewer parameters and is lightweight. The second is that the pixels are treated as a Markov random field with independence assumption.
+
+This formulation encourages the model to learn the finer details related to texture and style the loss function in Pix2Pix GAN is a weighted mixture of conditional GAN loss and L1 loss. The conditional GAN loss is based on the conditional probability as explained in Section 3. The authors have also favored the L1 loss over L2 loss since L2 loss is known for the blurriness in GANs. It is found that L1 loss makes images less blurry and to make these fancy terms less fancy L2 loss is simply the Euclidean distance L1 loss is simply the difference.
+
+The conditional GAN loss is responsible for telling whether the image is real or fake and is also responsible for telling whether the image belongs to the correct category. So what role is L1 loss playing. It is a distance metric between generated images and original real images. This helps the model approximate its outputs to be as realistic as possible. The lambda factor is a weighting factor to decide the importance of the second term of the loss function.
+
+I'm talking here about the Greek letter lambda which looks like an inverse y letter. So for example the Pix2Pix GAN has the capability to convert edges to objects. In this example the network learns to map human drawn sketches to photorealistic objects the potentials of Pix2Pix GANs are endless. In this sense again remember it is conditional GAN with a U-Net generator and a PatchGAN discriminator. Very intuitive and super powerful let's talk about one of the interesting open questions that that the Pix2Pix GAN authors left unanswered.
+
+The authors have observed that the generator model tends to ignore the noise vector which is given as an input. The Z vector, remember, is responsible for encouraging randomness in the outputs. Even though they have used dropout layers as a substitute. Still haven't realized the output diversity desired. This is an open question for further research and investigation in the second part of this lecture. We shall explore another novel GAN architecture namely CycleGAN at the heart of CycleGANs lies the motivation of unsupervised learning.
+
+What if we don't have image pairs for every situation. Can the networks still learn without using image pairs. This is a serious issue. For example if you are learning to do age regression or age progression like the FaceApp does then you don't necessarily have image of the same person in every age group to train your model on CycleGANs address learning without having image pairs for training. For example if an artist paints a natural scene using his own imagination his own style and his own brush strokes.
+
+Then if you as an observer see another natural scene then you can imagine how it looks like if painted by the same artist. This is the intuition behind CycleGANs. if we have unpaired images from different domains without direct mapping between them then a CycleGAN model should still be able to translate images between these two domains Strict paired translation. In the ideal case where we have image pairs for every source and destination image however in unpaired image translation We have source images and we have a set of target images that don't necessarily correspond to any of the source images.
+
+However we want to design a model that captures the inherent characteristics of the target images and projects them when given a source. Image from elementary school math. We know that a function is a mapping from the domain A to the co-domain B In an injective function we map every element from domain A to one and only one element from domain b a surjective function however ensures that for every source element there is a target element that is the co-domain elements are completely covered a bijective function is both injective and surjective.
+
+How is this relevant to CycleGANs. It turns out when training a GAN on unpaired images we have a mode collapse, a problem where all source images map to a single relevant target image. This is expected since there are no constraints on the mapping. So apparently we need an objective function that maps every source image to one and only one target image and makes maximum usage of available target images and covers all of them so given that X is the source image and y is the target image then the generator should learn a mapping from X to Y namely G of X.
+
+So far we are still getting the most collapsed problem. So how about a reversal. What if the model can learn a reverse mapping from y back to x. Let's name the reverse mapping f of Y this serves as the bijective function constraint. We need to translate the image forward and backward to reconstruct the original image. This also implies that we now have to train two generator models one for G and the other for F this is intuition. As you may have noticed throughout the course Deep Learning is more about intuitive ideas that means we have two generators and subsequently two discriminators. The first GAN. Again it's for mapping from source to target domain.
+
+The second GAN is for mapping from the target domain back to the source domain. And this leads us to the recurring question what the loss function should be so in addition to the GAN min max objective function we need to enforce an objective function constraint. We need the function to ensure the following transition from X to G of X to F of G of X. And finally back to X. The same for y. This leads us to the formulation of the cycle consistency loss the cycle consistency loss can be written as the L1 norm between the source image and the generated target image yet to make it cyclic we sum to that the L1 norm between the target image and the reconstructed target image.
+
+This form of cyclic loss is necessary and sufficient to ensure the bijective constraint and the reconstruction path the complete objective function is now the sum of the GAN loss function for both G and F and the cycle consistency loss as well. The Greek letter lambda is a weighting factor to decide the importance of the second term of the loss function as the authors of the paper. Here is an example of the working of the cycle loss function in the next lecture.
+
+Let's cut to the chase and introduce the apex of our course by discussing the Vid2Vid GAN. Thank you and see you in the next lecture.
+
+25.   
+
+See the notebook `13.Hands-on-Pix2Pix-GAN.ipynb` for the code.
+
+-- [Coding Exercise] Hands-on Pix2Pix GAN
+=========================================
+
+Hello and welcome to a new coding exercise. And this coding exercise we are going to implement Pix2Pix GAN. Let's get started. We shall start by defining the device either to use the CPU or the GPU and then we keep our global hyperparameters in one place so that we can optimize them along the way such as the learning rate and the number of training steps for the discriminator. Next we download the dataset from Berkeley.edu. Afterwards.
+
+We unzip the tar file on the disk. We define directories to be the directory name for each of the training validation and testing sets. Here it gets interesting. We have to define our own dataset. class, such as the way it is implemented by PyTorch for dataset classes like image folder class and in this way we need to implement two functions the getitem function and the len function. This is necessary because the data set has two images stitched together in one file.
+
+We have to split them to two files and retain one as the source and the other as a target. Images you'll find that we are doing this here on line 24 where we split the width of the image over two and then we divide the 1 image into two images one for the real image and the other for the source image then with image. This will become clear as we visualize the images. Next we define the data loaders for both training validation testing sets then we visualize a couple of images from the data set after we have applied a custom data set loader here you can see the source image which is a segmentation that has one color for each object of the target image and then on the right side you have the target image which is the facade of the building.
+
+This is the one that we are going to generate similar to this one and since both of them were stitched in one file we had to apply a custom dataset class that will load the images split them by the width into two one for input as the condition and the other for output and the target image. Next we design the model we build the convolutional blocks as reusable functions that define convolutional blocks. And here we use strided convolution and we use a condition if batch norm so that we can control sometimes we need a batch norm in the layer, some other times we don't we do the same for transpose convolution with the strides as well but this time we use dropout. Batch norm is used all the way in both cases but sometimes we use dropout, sometimes we don't next we defined the generator class which is an implementation of the U-Net architecture.
+
+Except that the original U-Net architecture had Max pooling layers. But in GANs we are not going to use max pooling because we know that it is better to use strided convolution from previous sections. And here you have some guidelines on the outputs dimensions of each layer so that you can follow along and be consistent with the design of this notebook. We do two blocks, one for the downsampling path and the other for the upsampling path I remember that we have to apply skip connections we define the last layer which outputs the actual image we are using tanh activation, or hyperbolic tangent function, that would be between minus 1 and plus 1.
+
+In the forward method we define a list named skips and we append each output from the downsampling path we reverse the order and remove the first one and then when we are applying the upsampling path we concatenate both the outputs from each layer of the upsampling path to the output of that downsampling path which is named the skip. So here you can see torch.cat which applies concatenation to both the outputs from an upsampling layer and the outputs from a downsampling layer together and concatenate them along the first dimension which is the channel dimension in PyTorch and then we pass the outputs through the last convolutional layer current transposed convolution and then each hyperbolic tangent (tanh) activation return the result which is an actual image next to redefine the discriminator which is not very peculiar except that it is a PatchGAN, that means that every portion of that input image has one element in the output tensor that corresponds to whether this patch is either fake or real.
+
+The remaining of this notebook is consistent with everything that we have learned throughout the course. We defined the optimizer the models and the loss functions. We pay close attention to the loss function because the Pix2Pix has a multi-loss function that I will explain in the next slides so for the discriminator we use the same binary cross entropy loss for both the real images and the fake images. However for the generator for the generator we use mean absolute error loss together with the binary cross entropy loss to the binary cross entropy loss will determine whether the input image is real or fake and the mean absolute error loss will determine how far is the generated image from the target image.
+
+And this way we can enforce the model to output images that are very close very realistic as possible to the target images and then we combine them both of them using the addition and we add a lambda factor that's a priority, a weight factor so that this factor will determine the importance of the mean absolute error loss in the equation. Finally we use tensor board and we use the checkpoints similar to the previous sections we loop over the number of epochs and over the dataset the number of steps and we do four K steps training the discriminator and only one step training the generator and every ten epochs we save the loss values for both the generator and the discriminator and checkpoint and save the optimizer and the network states we do also visualize a couple of images on fixed inputs given to the generator.
+
+And here we can see because of the lack of GPUs I have trained it only for 10 epochs and usually you would need a GPU with more than 16 gigabytes to train this model because it has millions of parameters to be trained, millions of weights. So this was not possible at this stage I would suggest that you implement your own version of Pix2Pix from scratch and use any reference or material that you find useful along the way and share the results with us.
+
+Thank you and see you in the next lecture.
+
+26.   
+
+See the notebook `14.Hands-on-CycleGAN.ipynb` for the code.
+
+-- [Coding Exercise] Hands-on CycleGAN
+======================================
+
+Hello and welcome to a coding exercise in this exercise. We're going to implement CycleGAN. Let's get started our benchmark on the code that we have developed in the Pix2Pix GAN exercise. And I would only change the loss function and I will make no changes to the dataset loader. Let's see how it works so I'd be using the same data set. For the dataset. I will add one more parameter, category, and this parameter will be either 0 or 1. If the parameter is 0 we return the input image and otherwise if the parameter is 1 we return the target image because CycleGAN is built on the idea of unpaired image translation.
+
+That means we don't have pairs anymore of X and Y or source and target. But we have images lying in one domain and other images lying in the other domain that we want to transfer the images to. So here we have this concept of unpaired images. That's why I have changed in the dataset class to accommodate this concept so you can see here this condition inside get item method itself. If category equals zero we return the input image, otherwise we return the real image or the target image and hence each image is unpaired from the other image we can easily apply the random horizontal flip with probability 50 percent or point five.
+
+Unlike the other exercise in Pix2Pix GAN when we had to forgo this part of the processing because it wasn't easy or straightforward to flip both the source and the target images at the same time then I will create a train set for the input image and another set for the target image. but with the category with value 1 subsequently I will try to implement two data loaders for both the input domain and the target domain. So here you go. A few samples from the data set from the target domain and you can see that this is only the facades dataset without the segmentation.
+
+If we use the other data loader for the input domain we will get the segmentation images for simplicity. I will keep the model design the same exactly the same like we did in the Pix2Pix exercise. I will only change the fact that the discriminator takes two images as input. I will give it only one image of the input to the discriminator and hence I will reduce the number of channels from 6 down to 3. But everything will remain the same just for the sake of simplicity.
+
+But in every situation I would suggest that you implement ResNets or residual blocks for both the generator and the discriminator as advised by the authors of the paper. In this exercise I am more interested in demonstrating how to implement the cyclic loss function and how to get your hands around it. That's why I'm focused in this exercise on implementing the cyclic loss for the CycleGAN so that we can appreciate the complexity of these models and the requirements of their RAM or memory and their GPU requirements.
+
+Here you can see that we are creating 4 models and instead of only 2 that means double that number of parameters double the number of weights that need to be learned in the process. So we are creating a discriminator that discriminates in the input domain. Another discriminator named D_Y that discriminates the target domain. A generator that converts the image from the input domain to the target domain. Another generator that transforms the image from the target domain back to the input domain and subsequently will create four optimizers for each one of them, and now let's start with the focus of this exercise which is the objective or the loss function.
+
+The cycle loss function. I will create the lambda variable assigning the value ten, unlike the value 100 in the previous exercise. Again this is a recommendation by the authors of the paper and then I'll create a variable for the binary cross entropy loss another one for the mean absolute error. I will see subsequently how I'm going to use both of them to create the real labels all ones fake labels all zeros. Remember that as a hint from a previous session you can switch the values ones and zeros for real and fake labels in order to improve the stability of the.
+
+GAN training. Try it and see whether it improves it or actually degrades it because it depends on the situation at hand. Now when we moved to training the discriminator we have X the input domain, Y the target domain. Then we pass x and y to both net G and net F and then we get G of X and f y. And if you notice here I'm sticking to the annotation used in the mathematical formulation of the loss function so that it's easy for you to trace down the coding implementation and find out that it is a straightforward mapping from the mathematical equation to the coding and then zero_grad optimizer and I'll pass the X to the net D X and I'll pass the F of Y then net D of X again.
+
+Remember that when we are doing net G of X that's equivalent to getting a Y back but this Y is a little bit shifted from the original target y. And again if we do net F of Y that's equivalent to getting an x back but again shifted from the original x value. So again we are trying to train the net D of X discriminator to recognize the X images or their equivalent by training it on X as the real value and F of Y as a fake value and encouraging the model to learn to discriminate.
+
+Both cases whether valid or invalid. I would do the same again for discriminator Y and then I would have the binary cross entropy loss for the real outputs versus the real labels and the binary cross entropy loss for the fake outputs versus the fake labels. I will sum them together and since we have four terms I will divide by four or I will just do point two five of the whole value. That's equivalent to averaging the loss. I will apply it backward and then optimize.
+
+I will apply an optimizer step for both optimizer of D_X and optimizer of D_Y. That's simply for the computer except of training on you on this computer. In this exercise we are training two discriminators, and aside from that nothing has changed except the formula where we sum all the values together and divide by four. It gets more interesting when we try to train the generator so we have X and Y as input and target domain images. We pass them to net G and net F and get the output G of X and F of Y and then we pay them again backwards through the net.
+
+If an energy so that we can get the backward values. So for example if we have passed X through net G we get Y. If we pass G of X through net F we get X back again and the same for Y. So this is kind of cyclic forward and backward both in the networks because we have two discriminators, two generators then we zero_grad the generators G and F and then we pass the values but only the generated ones through the discriminator and encourage the generator to maximize the probability that its output is determined as real labels.
+
+Hence we are using binary cross entropy between the fake outputs generated outputs from the network and the real labels which is essentially a tensor of ones. We do that for the discriminator X we do that for the discriminator Y but then we apply two kinds of losses the identity loss and cyclic loss simply we are trying to make it so that the output of either generator is not differentiated or cannot be distinguished from the original images. So we are trying to advise the model that whatever images it is going to output or generate it should be very close as close as possible to the original images either in the input or the target domain.
+
+We do that by simply applying the mean absolute error loss which calculates the difference the absolute difference between the input images and the generated images between the target images and the generated images. We call that identity loss and then we apply it again. the mean absolute error loss between the cycled images: we apply X through the generator we get Y we take Y applied through the backwards generator we get X again. So we tried to make sure that the X we have just obtained is very close very similar to the original x.
+
+We have just passed into the input the same for y and that we call the cyclic loss. We divide by two or multiply by half so that we can get the mean of the sum of two values and that will constitute the identity loss and the cyclic loss of the general objective function of CycleGAN so next what we need to do is sum all the values we have got from the discriminator loss for discriminator X and the loss for discriminator Y and then we multiply lambda by the mean absolute error loss or the identity loss.
+
+And again sum with lambda multiplied by the cyclic loss that would give us the total loss. We apply backward and we optimize for the generator G and F by applying optimizer_G.step, optimizer_F.step. That's pretty much it. You can find some tweaks for this kind of formula you can find different implementation of it. Just let me know if you have any minor tweaks or suggestions to modify this formula but in a general sense and a high level sense of implementation that's how it goes about CycleGAN.
+
+Aside from the cyclic loss you need to apply residual blocks, ResNets and instead of using the U-Net architecture which I have borrowed from the Pix2Pix implementation but is still valid once you have a powerful enough GPU you can implement the CycleGAN in a reasonable way and get reasonable results. But with the limited resources of graphical processing units, GPUs, and limited resources of the memory RAM it is not possible to go beyond this implementation much and can.
+
+I don't have much control to tweak it over but I suggest that you can use something like Paperspace or Google Cloud or Amazon Cloud to train the model, but that would be very costly otherwise it is just sufficient to follow the guidelines in this implementation and you will get a feeling of how the CycleGAN works. Next I will apply the same for loop iterations over the epochs over the number of steps and I will train that discriminator for key steps and then alternating the generator, report the loss for each of them as you can see from here.
+
+I've run it only for 10 epochs. I don't have hardware powerful enough to accommodate training four models, large models, of millions of training weights and parameters but that's pretty much how it works. Thank you and see you in the next lecture.
+
+27.   
+
+[266.png](./images/266.png)
+[267.png](./images/267.png)
+[268.png](./images/268.png)
+[269.png](./images/269.png)
+[270.png](./images/270.png)
+[271.png](./images/271.png)
+[272.png](./images/272.png)
+[273.png](./images/273.png)
+[274.png](./images/274.png)
+[275.png](./images/275.png)
+[276.png](./images/276.png)
+[277.png](./images/277.png)
+[278.png](./images/278.png)
+
+
+-- Working of Vid2Vid GAN
+=========================
+
+Hello and welcome to this lecture on Vid2Vid GAN and previous lectures you have learned about image to image translation. with both Pix2Pix GANs and CycleGANs when we extend this model to video synthesis we start facing major issues which are inherent only to videos. The first is the spatio-temporal coherence problem. This describes how the videos maintain the locations of the objects at the sequential time frames models working with videos should be able to learn the dynamics of objects and their motion relative to each other.
+
+The second is the resulting resolution the Vid2Vid GAN scored high on generating 2K resolution for 30 seconds long videos. Further we have to generate photorealistic videos in order to do that. Teams should be working on texture lighting camera animations characters and scene geometry. Besides that we still need a powerful graphic card to do the scene rendering. This is an overkill and dilutes the value video synthesis brings to scientific and entertainment applications.
+
+GANs address these issues with careful design of generators and discriminators and the choice of a meaningful objective function again objective functions demonstrate how important they are to model performance let us begin with the given input and the expected output from the Vid2Vid GAN. In this example the model is given a segmented sequence with labels. These labels could be trees road buildings or cars. Then the model generates realistic street views.
+
+We can see that the model does quite well by generating various styles with a sense of randomness in the second example. The model is given a talking head the preprocessing extracts the edges and face landmarks. Then the model generates a different face maintaining the lips motion and facial emotions again based on latent noise the generated faces meet an adequate amount of diversity for the same input. Conditions in this example the input video is pre processed to model the pose of the person then the generator produces different bodies with the same pose in the last example.
+
+The model is given a frame sequence then its job is to predict the next frame. There could be many other applications for video to video synthesis and these applications could be in other areas related to science commerce and entertainment industry Vid2Vid GAN is based on an idea from a previous paper. The coarse-to-fine GAN is a composite of two generator networks G1 and G2 G1 is trained to generate low resolution images. Having arrived at a satisfactory result then the G2 network is appended and is trained on high resolution images.
+
+The last feature map from the G1 network and the first feature map from the G2 network are summed together and fed together to the rest of the G2 network. The Vid2Vid GAN makes use of two discriminators. The first discriminator is a regular image GAN discriminator. It outputs whether an image pair is real or fake. Remember we are breaking the video into a sequence of frames and then applying image translation from source to target the second discriminator is the one that incorporates temporal and spatial coherence.
+
+It uses displacement information which is extracted with a method called optical flow. So what is optical flow. It is a well-established technique from digital image processing given a sequence of images a video. Then it can calculate both magnitude and direction for moving objects in order to achieve that. It solves the gradient equation over a local neighborhood of the pixel. It is also based on the assumption that moving objects do not tend to change intensity as in this example.
+
+We can observe the motion of the circular object at time t equals one up to time t equals five so this leads us to the holy grail of every GAN model. The objective function the objective function here consists of three terms L1 stands for the image pair translation loss, it is a regular GAN loss L2 stands for the video sequence temporal and spatial coherence loss which is again a standard GAN loss of K images the loss term L of W is the optical flow loss note here again that the Greek letter lambda stands for a weight factor for these loss terms So how does the network learn to calculate the optical flow it is a two term sum over count i.e.
+
+average of two terms for a given sequence of image frames the first term is the L1 norm of the ground truth and the estimated optical flow the second term is the displacement of a pixel between subsequent image frames as a bonus topic you may be interested in learning more about DVD-GAN which is a breakthrough new method for video synthesis published by Google DeepMind very recently during the publishing of our course in the next lecture I shall walk you through the source code for Vid2Vid GAN thank you and see you in the next lecture.
+
+
+28.   
+
+[279.png](./images/279.png)
+[280.png](./images/280.png)
+[281.png](./images/281.png)
+[282.png](./images/282.png)
+[283.png](./images/283.png)
+[284.png](./images/284.png)
+[285.png](./images/285.png)
+[286.png](./images/286.png)
+[287.png](./images/287.png)
+[288.png](./images/288.png)
+
+https://github.com/nvidia/vid2vid
+
+-- Diving Deeper into Vid2Vid GAN using YouTube Dance Video Dataset
+====================================================================
+
+Hello and welcome to a new lecture. In this lecture I shall introduce the FlowNet2 architecture, OpenPose, DensePose and the course completion project. Let's get started. Even though the source code for Vid2Vid GAN is open source but it is licensed under the Creative Commons. BY-NC-SA license this doesn't allow us to use the original source code in this course material. I would recommend that you find the source code using the link displayed on the screen on github.
+
+You have learned many basic building blocks that allow you to easily comprehend the method and its implementation in order to aid you in understanding the Vid2Vid GAN. I will introduce the FlowNet2 architecture. This is an essential component in Vid2Vid GAN which calculates the optical flow between video frames. Remember how the optical flow is included in the objective function to ensure spatio-temporal coherence. The network is an improvement over earlier versions.
+
+It takes a pair of images, then warps the images, then calculates the brightness difference and then passes them through multiple upsampling convolutions until it arrives to a fusion network that merges the results and amplifies the boundaries of moving objects the results obtained from FlowNet2 are heat maps which represent optical flow in terms of magnitude and direction for every pixel. FlowNet2 is apparently superior to previous architectures.
+
+Now let's talk about another building block that you should encounter in the Vid2Vid GAN. Remember from previous lecture that Vid2Vid GAN is applicable to YouTube dance dataset dance videos are randomly sampled from YouTube and then downloaded then the videos are given to a specialized model to estimate the human pose in Vid2Vid GAN, or source code, it is mentioned that you can use either OpenPose or DensePose. OpenPose estimates in real time.
+
+The body the hands the feet and the head pose then the resulting pose dataset is given to the Vid2Vid GAN for generation. On the other hand it is also possible to use DensePose which is published by Facebook Research. It goes even further to estimate the pose in 3D coordinates for every pixel of the human body. And here we go with the last coding assignment. In this course the approach I have followed in this course is to organize the course around basic building blocks modular concepts that you can stack together in whatever order you think is right for your application.
+
+So I am confident that you will find every GAN architecture in existence no matter how complex it is to be built around the same building blocks that you have mastered in this course in order to test your understanding of GANs. I propose the following completion project but first let's define age regression and age progression age regression is when you try to generate a human face. Given an image of an older face on the other hand age progression is when you try to generate a human face given an image of a younger face so I would like you to implement an application either desktop web or mobile or even on a Raspberry Pi or a notebook.
+
+That is when given a human face generates either a younger or an older image of the same person as a hint for you. You may use Age-GAN and read more about identity preservation in human face generation and here you go with the first page of the reading assignment for this section and here you are a few more resources which is the second page of the reading assignment for this section and if you're still interested in learning more. Here you go with the third page of the reading assignment for this section.
+
+Thank you. See you in the next lecture.
+
+29.  
+
+[289.png](./images/289.png)
+[290.png](./images/290.png)
+[291.png](./images/291.png)
+
+-- Conclusion, Next Steps, and Future Directions
+=================================================
+
+Hello and welcome to the last review of our course. In this video I will share with you a few tips hoping that it may help you in your future career path. Festina lente is a Latin expression which means to be both fast and slow at the same time. Learning is a long process. It takes patience sweat and long nights. It pays off when you reach your goals. You should accept how slow the learning process is but you should always be in a hurry to make it faster.
+
+This is a contradiction but in the paradox lies the value you learn by doing 70 percent of your knowledge comes from education courses training and so on. 20 percent comes from your hands on experience on projects hobby projects school projects and real life projects. However without this 20 percent your 70 percent is worthless. So be willing to invest 80 percent of your time and effort into getting your hands dirty and learn by doing the other 10 percent comes from discussions.
+
+Meetups, conferences and webinars so don't miss out on that and also don't over invest in such events. I see people who spend 100 percent of their time in such events be objective and to the point always set clear life goals. Think of the problem and work your way through backward to the solution be entrepreneurial solve problems build solutions and who knows maybe you are the next unicorn. It is not only about learning knowledge and experience we tend to miss out completely on a very essential factor of the success equation.
+
+So be creative be innovative and invent things. If you spend the next five years only reading papers and implementing them there is not much value in that. The papers always come with open source code but always ask yourself what is missing. How it could become better. How is it applicable to other problems. Be curious challenges competitions and contests tend to be the right way to go. Always Compete in online and offline challenges. Kaggle is one example but there are many more artificial intelligence challenges so go on and take part. At the end of this course.
+
+I hope I have managed to help you understand GANs and give you some ideas to boost your future. I also hope that you have enjoyed the course. I wish you all the best and see you in future courses.
 
