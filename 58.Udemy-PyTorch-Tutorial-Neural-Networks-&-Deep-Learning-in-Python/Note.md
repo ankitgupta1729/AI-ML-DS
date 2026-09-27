@@ -1,21 +1,23 @@
+### 1. Introduction To the Course - Welcome to the PyTorch Primer
+
 1. Welcome to PyTorch--- [ FreeCourseWeb.com ] ---
 ==================================================
 
-[1.png](./images/1.png)
-[2.png](./images/2.png)
-[3.png](./images/3.png)
-[4.png](./images/4.png)
-[5.png](./images/5.png)
-[6.png](./images/6.png)
-[7.png](./images/7.png)
-[8.png](./images/8.png)
-[9.png](./images/9.png)
-[10.png](./images/10.png)
-[11.png](./images/11.png)
-[12.png](./images/12.png)
-[13.png](./images/13.png)
-[14.png](./images/14.png)
-[15.png](./images/15.png)
+![1.png](./images/1.png)
+![2.png](./images/2.png)
+![3.png](./images/3.png)
+![4.png](./images/4.png)
+![5.png](./images/5.png)
+![6.png](./images/6.png)
+![7.png](./images/7.png)
+![8.png](./images/8.png)
+![9.png](./images/9.png)
+![10.png](./images/10.png)
+![11.png](./images/11.png)
+![12.png](./images/12.png)
+![13.png](./images/13.png)
+![14.png](./images/14.png)
+![15.png](./images/15.png)
 
 
 001 Introduction.en
@@ -37,16 +39,16 @@ Enrolling in this course doesn't just grant you access to the course itself, but
 3. Get Started With the Python Data Science Environment Anaconda--- [ FreeCourseWeb.com ] ---
 =============================================================================================
 
-[16.png](./images/16.png)
-[17.png](./images/17.png)
-[18.png](./images/18.png)
-[19.png](./images/19.png)
-[20.png](./images/20.png)
-[21.png](./images/21.png)
-[22.png](./images/22.png)
-[23.png](./images/23.png)
-[24.png](./images/24.png)
-[25.png](./images/25.png)
+![16.png](./images/16.png)
+![17.png](./images/17.png)
+![18.png](./images/18.png)
+![19.png](./images/19.png)
+![20.png](./images/20.png)
+![21.png](./images/21.png)
+![22.png](./images/22.png)
+![23.png](./images/23.png)
+![24.png](./images/24.png)
+![25.png](./images/25.png)
 
 
 Welcome to this lecture on the Python data science tool that we are going to use. And before I start, just to quickly reiterate: Python is a general-purpose programming language, and it has been used for a wide variety of roles, ranging from programming to web development to scientific computations and data science. It is the data science capabilities of Python that we are going to focus on in this course, and for data science, several Python packages have been developed and are used, and we will be using them in this course.
@@ -81,14 +83,14 @@ So basically, by now you should have Anaconda loaded on your system, and before 
 4. Anaconda for Mac Users--- [ FreeCourseWeb.com ] ---
 ======================================================
 
-[26.png](./images/26.png)
-[27.png](./images/27.png)
-[28.png](./images/28.png)
-[29.png](./images/29.png)
-[30.png](./images/30.png)
-[31.png](./images/31.png)
-[32.png](./images/32.png)
-[33.png](./images/33.png)
+![26.png](./images/26.png)
+![27.png](./images/27.png)
+![28.png](./images/28.png)
+![29.png](./images/29.png)
+![30.png](./images/30.png)
+![31.png](./images/31.png)
+![32.png](./images/32.png)
+![33.png](./images/33.png)
      
 
 OK, before we discuss what IPython is all about, I'm going to just provide a couple of quick tips on installation for Mac users, because this course is going to be exclusively demonstrated on a Windows system. But obviously, if you have a Mac and you're able to execute these steps on your own operating system, then you should be able to carry on and carry out the other processing tasks in this course on your Mac system without any problems. So here goes. As I mentioned in the previous lecture, we go to the Anaconda website, continuum.io/downloads, and you can download Anaconda for your own operating system, which is the Apple system, and please select a version which sits with your version of the Mac, and 64-bit.
@@ -104,22 +106,18 @@ So it's just a question of going into the terminal and firing up Anaconda, or, y
 5. The iPython Environment--- [ FreeCourseWeb.com ] ---
 =======================================================
 
-[34.png](./images/34.png)
-[35.png](./images/35.png)
-[36.png](./images/36.png)
-[37.png](./images/37.png)
-[38.png](./images/38.png)
-[39.png](./images/39.png)
-[40.png](./images/40.png)
-[41.png](./images/41.png)
-[42.png](./images/42.png)
-[43.png](./images/43.png)
-[44.png](./images/44.png)
-[45.png](./images/45.png)
-[46.png](./images/46.png)
-[47.png](./images/47.png)
-[48.png](./images/48.png)
-[49.png](./images/49.png)  
+![34.png](./images/34.png)
+![35.png](./images/35.png)
+![36.png](./images/36.png)
+![37.png](./images/37.png)
+![38.png](./images/38.png)
+![39.png](./images/39.png)
+![40.png](./images/40.png)
+![41.png](./images/41.png)
+![42.png](./images/42.png)
+![43.png](./images/43.png)
+![44.png](./images/44.png)
+
 
 In this lecture I'm going to provide you with an introduction to the Python data science environment. And if you recall, we are going to work with the Python distribution Anaconda to carry out our data science tasks, and in the previous lecture I talked you through how you can install Anaconda on your own system. And if you've done that by now... and if you recall, I recommended that you follow the default steps recommended by the installer. So in my case I did the same, and my copy of Anaconda,
 
@@ -173,6 +171,27 @@ You should feel comfortable with that interface, and now you also know a bit abo
 6. Why PyTorch--- [ FreeCourseWeb.com ] ---
 ===========================================
 
+![45.png](./images/45.png)
+![46.png](./images/46.png)
+![47.png](./images/47.png)
+![48.png](./images/48.png)
+![49.png](./images/49.png)
+![50.png](./images/50.png)
+![51.png](./images/51.png)
+![52.png](./images/52.png)
+![53.png](./images/53.png)
+![54.png](./images/54.png)
+![55.png](./images/55.png)
+![56.png](./images/56.png)
+![57.png](./images/57.png)
+![58.png](./images/58.png)
+![59.png](./images/59.png)
+![60.png](./images/60.png)
+![61.png](./images/61.png)
+![62.png](./images/62.png)
+![63.png](./images/63.png)
+
+
 So now I'm going to cover why we should use PyTorch to carry out deep learning. And indeed you are in this course, and you must be... I mean, I assume that you are keen to learn PyTorch and implement deep learning models with PyTorch. But really, just before we move on to installing PyTorch on our systems, I think we are just quickly going to go over why we should even consider PyTorch in the first place. Just a second. So this is PyTorch, and this is the logo of PyTorch.
 
 Maybe you've encountered this before. Now, PyTorch is a Python-based machine learning package, and obviously this is a Python-centric course, and by now you must have installed Python, and you must be having Python Anaconda, and you must be having the Jupyter notebooks running on your system, and in case you can't get your Jupyter notebooks running, then I suggest you step back and actually get them running first. But it is based on Torch, and Torch is an open-source machine learning package, and this uses the power of graphics processing units, and PyTorch is a preferred deep learning research platform, and it has two main features.
@@ -198,14 +217,30 @@ and it has been used in a number of research domains. We may not touch upon all 
 7. Install PyTorch--- [ FreeCourseWeb.com ] ---
 ===============================================
 
+![64.png](./images/64.png)
+![65.png](./images/65.png)
+![66.png](./images/66.png)
+![67.png](./images/67.png)
+![68.png](./images/68.png)
+![69.png](./images/69.png)
+![70.png](./images/70.png)
+![71.png](./images/71.png)
+![72.png](./images/72.png)
+     
+
 By now I hope, whatever system you're working on, you have Anaconda installed and things are up and running. I'm going to talk you through installing PyTorch. Remember, in this course we are mainly going to work with PyTorch. So I'm going to talk you through installing PyTorch on Windows 10, and the same procedure has to be followed on Mac. So once I finish this PowerPoint, I'll just briefly talk you through how I installed PyTorch on my Mac computer.
 
 But let's just focus on these steps. So the first thing you have to do is to install Anaconda, and you can always find the installation instructions on the website. And it is advisable that you install Anaconda with Python 3.6 and not 2.7. Then you can navigate to the Anaconda Prompt, like so: if you're on a Windows computer, you go to the Start menu, Anaconda3 (64-bit), and then you can navigate to the Anaconda Prompt. So if you are working on a Windows computer, then you're going to have an Anaconda Prompt like so, and you can navigate to this one, and then you can install PyTorch from the Anaconda Prompt. And on Mac, if you have a Mac, we'll be doing the same thing, but using the terminal. Now, you can add an environment.
 
 And this is strictly optional, and I haven't done so, but in case you want to keep your packages and things like that separate, then yes, you have the option of adding an environment, and then you can just say conda create --name test, so you can create an environment by the name test, and then you have to activate it by saying conda activate test. And again, if you want to remove it, then you can remove it. So basically this is the environment that we have created, conda activate test, and this is more important on Windows than on Mac, but there you are. Now, the most important thing is that you have to run this command: conda install pytorch -c pytorch, and this is what is going to install PyTorch on your system, in a separate environment or not. And then you can run pip install torchvision once that is installed correctly. And then, to install PyTorch with Anaconda on Mac, again you can install Anaconda, make sure you install 3.6 and not 2.7; on Launchpad, click the terminal icon, and then you can run this command: conda install pytorch torchvision -c soumith, like so. And this should quite easily install the whole of PyTorch on your Mac operating system, and once that is done, you are set to use PyTorch, whether you have Windows or Mac.
 
+
 9. Further Installation Instructions for Mac--- [ FreeCourseWeb.com ] ---
 =========================================================================
+
+![73.png](./images/73.png)
+![74.png](./images/74.png)
+
 
 Now, this may sound a bit counterintuitive to you, but in case you run into problems installing PyTorch on your Mac using the previously described methods, then what you can do is try to use something like this: conda install pytorch -c pytorch. This is exactly what we did for the Windows installation, so you can try that, and once you've done that, you're going to get all of these, and then you're going to get this one: proceed, yes or no? And once you proceed with that, then that part of the installation will be completed.
 
@@ -213,6 +248,21 @@ And obviously we are not quite done yet. And after that, what you need to do is.
 
 10. Working With CoLabs--- [ FreeCourseWeb.com ] ---
 ====================================================
+
+![75.png](./images/75.png)
+![76.png](./images/76.png)
+![77.png](./images/77.png)
+![78.png](./images/78.png)
+![79.png](./images/79.png)
+![80.png](./images/80.png)
+![81.png](./images/81.png)
+![82.png](./images/82.png)
+![83.png](./images/83.png)
+![84.png](./images/84.png)
+![85.png](./images/85.png)
+![86.png](./images/86.png)
+![87.png](./images/87.png)
+
 
 Now I'm going to introduce you to an online, cloud-based system for running your Jupyter notebooks. I've discovered, if you just go to Google and type in Colaboratory, this particular Colaboratory framework. I think it's pretty good if you want to run your Jupyter notebooks straight from your browser, and this does come in handy for people who work with Google Chromebooks and things like that. So now I'm going to introduce you to Colaboratory, and once you type this in, you can just click on the main menu.
 
@@ -232,8 +282,16 @@ import io. I create another variable, df2 = pd.read_csv(...). This I can just ty
 
 And once you do that, then you can use this Colab notebook the way you would use your own Jupyter notebook.
 
+### 2. Introduction to Python Data Science Packages (Other Than PyTorch)
+
 1. Python Packages for Data Science--- [ FreeCourseWeb.com ] ---
 ================================================================
+
+![88.png](./images/88.png) 
+![89.png](./images/89.png)
+![90.png](./images/90.png)
+![91.png](./images/91.png)
+![92.png](./images/92.png)
 
 Python data science packages used in the course. I'll just talk you through some of the most common Python data science packages that we are going to use in this course. You should have most of these installed with your copy of Anaconda, and some of these we are going to install later. But the upshot is that, essentially, if you have all of these Python data science packages installed, and you can check whether they're installed or not, then you should be able to carry out some of the most common statistical, visualization and machine learning tasks easily. So the basic Python data science packages are: NumPy,
 
@@ -250,6 +308,11 @@ So all the best, and hang in tight.
 2. Introduction to Numpy--- [ FreeCourseWeb.com ] ---
 =====================================================
 
+See the notebook [here](./code_and_data/section2/lecture13_createNumpy.ipynb).
+
+![93.png](./images/93.png)
+![94.png](./images/94.png)
+
 In this very brief lecture, I will provide you with a very brief introduction to NumPy, which is an important and a rather basic package for Python-based data science. And essentially, let us just look at the Wikipedia page of NumPy. NumPy stands for Numerical Python, and what it does is, as opposed to the conventional Python data structures, it has a lot of support for multidimensional arrays and matrices, and allows for implementing high-level mathematical functions on matrices and arrays. And matrices and arrays are, in a manner of speaking, a building block for data science, and the key thing about NumPy is that it provides us with an array, and that's a fast and efficient way of storing homogeneous data.
 
 And this can be either rank 1 or rank 2, you know, one-dimensional or multidimensional, and there's a plethora of mathematical functions out there that we can implement on the arrays. But first I'm going to look at the importation conventions. Now that we are working with Jupyter, in the Anaconda system, all of these packages, things like NumPy and pandas, come installed, but we have to import them before we can use them. So when I say import numpy as np, it is going to import the NumPy package as np.
@@ -264,6 +327,7 @@ So essentially, now you can go right ahead, import numpy as np, and we will get 
 
 3. Create Numpy Arrays--- [ FreeCourseWeb.com ] ---
 ===================================================
+
 
 In this lecture, I'm going to provide you with a very brief introduction to NumPy arrays and what we can do with them, and to begin with, how we go about creating NumPy arrays. We are going to work in this particular notebook called numpy intro, and that has already been provided to you. I suggest you type out all the code as I type along. The more practical applications of NumPy are going to follow further on in the course.
 
@@ -281,6 +345,11 @@ So as you can see, in this case the diagonal is one, but the other values are ze
 
 4. Numpy Operations--- [ FreeCourseWeb.com ] ---
 ================================================
+
+See the notebook [here](./code_and_data/section2/lecture14_op.ipynb).
+
+![95.png](./images/95.png)
+
 
 In this lecture I'm going to introduce you to some of the most common and basic NumPy operations that there are. And essentially we are going to use these operations throughout the course in one form or the other. If you're rank new to Python and things like NumPy, these may sound a bit complicated to you, but I would still suggest that you run the code, and preferably run it as I demonstrate on the screen. And as we go along through the different topics, we are going to revisit these concepts in one form or the other.
 
@@ -325,6 +394,9 @@ And now we are going to move on to the next lecture.
 5. Numpy for Basic Vector Arithmetric--- [ FreeCourseWeb.com ] ---
 ==================================================================
 
+See the notebook [here](./code_and_data/section2/lecture15_arith.ipynb).
+
+
 OK, now in this lecture I'm going to introduce you to a bit of vector arithmetic. And I've already created the NumPy arrays x and y using np.array, and that is because I imported numpy as np, and you can do the same. And we will start by creating very simple vectors. And if you remember, these are the rank one vectors that we had created in the previous lectures. And essentially we perform the basic vector arithmetic on these.
 
 So the simplest vector arithmetic operation that we can perform is an addition operation, and I have specified x plus y, and this is how it works out. So this is my first vector, x, and my vector y. And now the addition is done element by element, like so. So the value at this location, a1, will be added to the value at this location, b1, and so on. The same goes for subtraction. And as you can see, this is the result I get: 3, 5, 7. 1 plus 2 is 3, 2 plus 3 is 5, 3 plus 4 is 7.
@@ -339,6 +411,9 @@ So we don't see the decimals, but essentially these are some of the most common 
 
 6. Numpy for Basic Matrix Arithmetic--- [ FreeCourseWeb.com ] ---
 =================================================================
+
+See the notebook [here](./code_and_data/section2/lecture16_matrix.ipynb).
+  
 
 OK, now over to matrix arithmetic. I've imported numpy as np, and I have two variables here, x and y, and I have created a matrix using np.matrix. And now this might seem different from what we had been doing in the previous lecture, and indeed this is different. Instead of creating an ndarray, I have created a matrix, of the matrix class. And if you see in the next line, it is numpy.matrixlib.defmatrix.matrix, and this is not an ndarray.
 
@@ -359,6 +434,13 @@ And then we actually take the inverse by specifying inv(a), and we get the inver
 7. PyTorch Basics What Is a Tensor--- [ FreeCourseWeb.com ] ---
 ===============================================================
 
+
+![96.png](./images/96.png)
+![97.png](./images/97.png)
+![98.png](./images/98.png)
+![99.png](./images/99.png)
+
+
 Now in this lecture I'm very briefly going to introduce you to an entity, a variable type, that we are going to work with a lot during this course, and that's called a tensor. Now, we worked with NumPy and NumPy arrays, and you already have a basic foundation for working with tensors, because NumPy arrays and tensors are really quite similar. So tensors are a generalization of vectors and matrices, and you can understand a tensor as a multidimensional array. So for example, a vector, which is one-dimensional, and we worked with those, is a first-order tensor, and so on.
 
 And in this case I'm not too much interested in the physics definition of tensors, or the mathematical one, but for the purpose of PyTorch, we are provided with a data structure called a tensor, and that's very similar to NumPy's ndarray. But in this case the tensor can actually use the resources of a GPU to speed up the matrix computations. We won't work with a GPU, but in case that's something you are interested in exploring, then these tensors will come in very handy to work quickly.
@@ -371,6 +453,8 @@ So as you can see, a tensor is a generalization of the concept of vectors and ma
 
 8. Explore PyTorch Tensors and Numpy Arrays--- [ FreeCourseWeb.com ] ---
 ========================================================================
+
+See the notebook [here](./code_and_data/section2/lecture17_tensor_array.ipynb).     
 
 So now I'm just going to expand on the things that we discussed in the previous lecture, and in the previous lecture you were introduced to tensors, what they are and how they compare with NumPy. And now in this lecture we are just going to look at what NumPy arrays are and what torch tensors are, and how they're linked with each other. So this is a very brief lecture to get you comfortable with tensors. So you can import numpy as np and import torch.
 
@@ -387,6 +471,9 @@ So that's what it's doing: tensor to NumPy. And essentially they look pretty sim
 9. Some Basic PyTorch Tensor Operations--- [ FreeCourseWeb.com ] ---
 ====================================================================
 
+See the notebook [here](./code_and_data/section2/lecture18_tensor_operations.ipynb).   
+
+
 So now I'm going to quickly go over a couple of tensor operations. We did something similar with NumPy, and the logic is the same as we covered in the previous lecture. It's just that in this lecture we'll have a quick look at some of the mathematical operations that we can perform with tensors, and they're the same as what we do with arrays. So you can import numpy as np and import torch. Now we are going to create a ones tensor by calling the function torch.ones, and as you can see, it has created a four-by-four tensor.
 
 So now I can resize it and flatten it, so I have everything in one line, by calling the function .view. OK: tensor.view(16).shape, tensor.view(16), and as you can see, I get one straight line of tensor. So I no longer have it as a four by four, and indeed I can even do it for an uneven matrix. So here I'll have to specify something like 12, because four into three is 12. So there. And we run it, and this is what we get: torch.Size, tensor.
@@ -397,8 +484,13 @@ So this is an element-wise addition. We can carry out subtraction. Again, I said
 
 So these are some of the basic mathematical operations that we can implement on tensors. They're not very important, because this lecture is just to give you a feel of how we would implement some basic mathematical operations on tensors, as we would with NumPy.
 
+### 3. Other Python Data Science Packages For Dealing With Data
+
 1. Read in CSV data--- [ FreeCourseWeb.com ] ---
 ================================================
+
+See the notebook [here](./code_and_data/section3/lecture20_readcsv.ipynb).
+
 
 In this lecture I'm going to show you how you can read in a CSV file in Anaconda, and CSV is a flat file format. It stands for comma-separated values, and this is one of the most common ways of reading in data in Python. Indeed, most of the external data that we read in this course will be stored in the CSV form. And this is what ordinary comma-separated value files look like. So you take an Excel file, put in your data, and store it as .csv, and you get all your data.
 
@@ -421,6 +513,8 @@ So essentially this is how we read in .txt and .csv files, and it is imperative 
 2. Read in Excel data--- [ FreeCourseWeb.com ] ---
 ==================================================
 
+See the notebook [here](./code_and_data/section3/lecture21_excel.ipynb).
+
 In this lecture I'm going to show you how we can read in Excel files using the pandas package. And I've already imported pandas as pd. The Excel file that I want to work with is the Boston1.xlsx file, which is present in my present working directory, and it is advisable that you store your Excel files in your given working directories as well. Now, the one distinct advantage that Excel files offer us over CSV and other flat-format files is that we can have more than one sheet in a given xlsx file.
 
 In this case, in our Boston1.xlsx file, which is the data relating to Boston house prices in the US, we just have one sheet, but there's always the scope of having more than one sheet in a given Excel file. And now let us just see how we are going to read in this Excel file and display the data. I have created a variable called file, and in that I have provided the file name, Boston1.xlsx, along with the complete path. So my file is stored in a given directory, which also happens to be my working directory, and which is stored on my F drive, so it is F drive, double slash, [unclear], double slash, course 6, and so on, all the way to Boston1.xlsx. This is enclosed within double quotes, and obviously, for your own operating systems and computers, you will have to work out which schema of slashes works for you. And one way of doing it is to import os and then put in os.getcwd(), the way I did. So the function .getcwd() comes from the package os, and that tells us which working directory we are in, and that also shows the kind of slashes that are being used, and I used the same in my file variable, the only difference being that I even put in the name of the xlsx file. And in order to load the spreadsheet, I called the ExcelFile function in the next line.
@@ -431,6 +525,8 @@ Now let me even try to have a Sheet2, and let us see what happens then. I've cop
 
 3. Basic Data Exploration With Pandas--- [ FreeCourseWeb.com ] ---
 ==================================================================
+
+See the notebook [here](./code_and_data/section3/lecture22_pandas_preprop.ipynb)
 
 Now I'm going to look at carrying out basic preprocessing of the data we read in, using pandas. And frankly, this is something you should be familiar with, because, as I mentioned in the course outline, it would be useful for the students to have some kind of Python data science experience. But in case you do not have any Python data science experience, I'm just going to briefly run you through some common Python preprocessing techniques and methods which you are likely to encounter when you work with your own data.
 
@@ -460,6 +556,8 @@ And this tells me that G6 is the most common value. So now I'm going to fill the
 
 1. Ordinary Least Squares (OLS) Regression- Theory--- [ FreeCourseWeb.com ] ---
 ===============================================================================
+
+![100.png](./images/100.png)
 
 In this lecture I will introduce you to the theory of linear regression. Linear regression is used for modeling the quantitative dependency between variables. So we examine if there's any dependency between a given response variable y and the predictor, or explanatory, variable or variables x. Linear regression can help answer the question of if and how a change in x influences a change in y. And when I speak about linear regression, I'm just referring to models in which we have one y and one x, and when we have several x's, more than one x, then that is known as multiple linear regression, and essentially the same rationale applies to multiple linear regression as well.
 

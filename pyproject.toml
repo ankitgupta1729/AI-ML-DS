@@ -149,4 +149,5 @@ dependencies = [
     "wrapt==2.3.0",
     "imageio",
     "seaborn",
+    "xlrd >= 2.0.1",
 ]
