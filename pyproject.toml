@@ -148,4 +148,5 @@ dependencies = [
     "wheel==0.48.0",
     "wrapt==2.3.0",
     "imageio",
+    "seaborn",
 ]
