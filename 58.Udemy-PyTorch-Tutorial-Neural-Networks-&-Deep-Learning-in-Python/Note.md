@@ -528,6 +528,7 @@ Now let me even try to have a Sheet2, and let us see what happens then. I've cop
 
 See the notebook [here](./code_and_data/section3/lecture22_pandas_preprop.ipynb)
 
+
 Now I'm going to look at carrying out basic preprocessing of the data we read in, using pandas. And frankly, this is something you should be familiar with, because, as I mentioned in the course outline, it would be useful for the students to have some kind of Python data science experience. But in case you do not have any Python data science experience, I'm just going to briefly run you through some common Python preprocessing techniques and methods which you are likely to encounter when you work with your own data.
 
 And by now you should be able to read in CSV files and Excel files using pandas. And with this lecture you'll be able to carry out the basic preprocessing you need before you carry out any kind of machine learning or data science analysis. So you can import pandas as pd and numpy as np. We're going to work with this file called Titanic_[unclear].csv. I'm going to call the function pd.read_csv,
@@ -553,6 +554,8 @@ So I'm just going to say t3['Age'].fillna(t3['Age'].median()), because that's th
 And anyway, I can still run it. So anyway, we have Cabin with NaN values, and the Cabin values were qualitative. So in order to carry out data imputation here, we can count the qualitative variable: t3['Cabin'].value_counts(). And it's actually going to count which categories have what quantity. Now we can compute the mode, and the mode means we'll identify the most common value: cabin_mode. I created a variable, cabin_mode = t3['Cabin'].value_counts().index[0].
 
 And this tells me that G6 is the most common value. So now I'm going to fill the missing values with the mode, which is the most common cabin value: t3['Cabin'].fillna(cabin_mode, inplace=True). All the NaNs will be replaced by G6. Now we have Age with 177, because of the new dataset, but anyway, for Cabin we have 0 missing values, because all missing values have been replaced by G6. And basically these are some of the most common data preprocessing tasks you have to undertake with most datasets before we move on to more advanced topics relating to actually doing something with the data.
+
+### 4. Basic Statistical Analysis With PyTorch
 
 1. Ordinary Least Squares (OLS) Regression- Theory--- [ FreeCourseWeb.com ] ---
 ===============================================================================
