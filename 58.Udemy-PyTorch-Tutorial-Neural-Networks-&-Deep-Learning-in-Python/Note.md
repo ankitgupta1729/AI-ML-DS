@@ -561,6 +561,16 @@ And this tells me that G6 is the most common value. So now I'm going to fill the
 ===============================================================================
 
 ![100.png](./images/100.png)
+![101.png](./images/101.png)
+![102.png](./images/102.png)
+![103.png](./images/103.png)
+![104.png](./images/104.png)
+![105.png](./images/105.png)
+![106.png](./images/106.png)
+![107.png](./images/107.png)
+![108.png](./images/108.png)
+![109.png](./images/109.png)
+
 
 In this lecture I will introduce you to the theory of linear regression. Linear regression is used for modeling the quantitative dependency between variables. So we examine if there's any dependency between a given response variable y and the predictor, or explanatory, variable or variables x. Linear regression can help answer the question of if and how a change in x influences a change in y. And when I speak about linear regression, I'm just referring to models in which we have one y and one x, and when we have several x's, more than one x, then that is known as multiple linear regression, and essentially the same rationale applies to multiple linear regression as well.
 
@@ -590,6 +600,9 @@ Now we will carry on and actually implement a linear regression in R, and then c
 
 2. OLS Linear Regression-Without PyTorch--- [ FreeCourseWeb.com ] ---
 =====================================================================
+
+See the notebook [here](./code_and_data/section4/Lecture24_Implement_OLS.ipynb).
+       
 
 So now we are actually going to start implementing linear regression using Python, and I would suggest that you import and read in all these packages: pandas as pd, numpy as np, scipy.stats, seaborn as sns. This is especially important, as we are going to use the inbuilt Iris dataset of this particular package. And the special thing is that I want you to get comfortable with carrying out statistical analysis, and subsequently machine learning, on a pandas DataFrame, because essentially that is what you have to do in real life, as opposed to working with inbuilt datasets which are not present in the DataFrame format, because working with those datasets will not equip you for handling pandas DataFrame types of data.
 
@@ -626,6 +639,49 @@ So I just fitted the first linear regression model by saying linear_model.Linear
 3. OLS Linear Regression From First Principles-Theory--- [ FreeCourseWeb.com ] ---
 ==================================================================================
 
+![110.png](./images/110.png)
+![111.png](./images/111.png)
+![112.png](./images/112.png)
+![113.png](./images/113.png)
+![114.png](./images/114.png)
+![115.png](./images/115.png)
+![116.png](./images/116.png)
+![117.png](./images/117.png)
+![118.png](./images/118.png)
+![119.png](./images/119.png)
+![120.png](./images/120.png)
+![121.png](./images/121.png)
+![122.png](./images/122.png)
+![123.png](./images/123.png)
+![124.png](./images/124.png)
+![125.png](./images/125.png)
+![126.png](./images/126.png)
+![127.png](./images/127.png)
+![128.png](./images/128.png)
+![129.png](./images/129.png)
+![130.png](./images/130.png)
+![131.png](./images/131.png)
+![132.png](./images/132.png)
+![133.png](./images/133.png)
+![134.png](./images/134.png)
+![135.png](./images/135.png)
+![136.png](./images/136.png)
+![137.png](./images/137.png)
+![138.png](./images/138.png)
+![139.png](./images/139.png)
+![140.png](./images/140.png)
+![141.png](./images/141.png)
+![142.png](./images/142.png)
+![143.png](./images/143.png)
+![144.png](./images/144.png)
+![145.png](./images/145.png)
+![146.png](./images/146.png)
+![147.png](./images/147.png)
+![148.png](./images/148.png)
+![149.png](./images/149.png)
+![150.png](./images/150.png)
+ 
+
 So now in this lecture I'm going to introduce you to something known as gradient descent for linear regression. And essentially we are going to... let me just get back to my starting position. And essentially I'm going to introduce you to the idea of carrying out linear regression from first principles, and that is important because in doing so I'm going to introduce you to some terms that we are going to encounter a fair bit throughout this course.
 
 So as you know, and as we discovered before, regression is useful when we want to explore the relationship between numerical input features and the target values, and the target values are usually the predicted variables, and the input features are usually the predictors; the target values are the response variables. And essentially with this we can get continuous-value output for unknown data. And suppose we have a dataset of house price and the size of the house: what regression can do is actually help establish a relationship between the size of the house, which is my predictor, and the response variable, y.
@@ -661,6 +717,7 @@ So these are the things that we are going to encounter a fair bit throughout thi
 4. OLS Linear Regression From First Principles-Without PyTorch--- [ FreeCourseWeb.com ] ---
 ===========================================================================================
 
+
 So now that you know what OLS regression is, we are going to work with toy data to begin with, and we are going to work through a simple linear regression problem in which we will have one response variable and one predictor variable. And we can import numpy as np, matplotlib.pyplot as plt. First we will create a dummy dataset: from sklearn import datasets as skds. So we are going to create X and y by using the function skds.make_regression, with n_samples 200, n_features one, because essentially we want one target variable and one predictor variable, and n_targets one. We add noise, and now we will reshape the NumPy array to have two dimensions, like so, and we can plot the figure.
 
 This is strictly not necessary, but I'll just show you. So these are the x and y values, and it is quite a linear fit. So I assume I should get a strong linear regression model out of this, but we will see. The first thing: we will split the data into training and testing datasets, and remember, we will be doing this a lot, especially when we work with machine learning: from sklearn.model_selection import train_test_split. X_train, X_test, y_train, y_test = train_test_split(
@@ -680,6 +737,8 @@ Now we will define the optimizer function. This is the learning rate, and optimi
 5. OLS Linear Regression From First Principles-With PyTorch--- [ FreeCourseWeb.com ] ---
 ========================================================================================
 
+See the notebook [here](./code_and_data/section4/Lecture27_pytorch_test1.ipynb).
+
 So now we are going to learn to implement ordinary least squares regression from first principles with PyTorch. And I'm going to give you a very basic, basically a toy, example, to just show you how we can set up ordinary least squares regression in PyTorch from first principles. So now you can import torch, import torch.optim as optim, torch.nn as nn, and then numpy as np, and matplotlib.pyplot as plt. Now the input size is going to be one, output size one, because essentially we are going to just have one x variable and one y variable, and obviously we are more likely to have more x variables with real data.
 
 But this is a toy example. Now num_epochs, which is the number of epochs, we are going to set to 10,000, and the learning rate will be 0.001. So now we are going to create a training and a test dataset, x_train and y_train, and we are going to create a NumPy kind of dataset: x for the predictor, and y for the response variable. I create a variable, model = nn.Linear. So from here, nn, I call the function Linear, for ordinary least squares regression, with input_size, output_size, which refer to the size of the predictors and the response variable, which is one and one in this case. I'm going to define the loss function in terms of mean squared error.
@@ -692,6 +751,8 @@ And now we are going to plot x_train versus y_train, which are our original data
 
 6. More OLS With PyTorch--- [ FreeCourseWeb.com ] ---
 =====================================================
+
+See the notebook [here](./code_and_data/section4/Lecture28_ols_cat.ipynb).
 
 In the last lecture I quickly took you through a toy example in which we implemented ordinary least squares regression using PyTorch. And now we are going to implement ordinary least squares regression with real data, and by real data I mean the kind of data you have in CSV files, because the chances are, if you work with a regression problem, your data are more likely to be presented to you as a CSV rather than a NumPy array. And obviously in the last lecture I just quickly took you through the different steps.
 
@@ -720,6 +781,19 @@ And the purpose of this lecture is actually to introduce you to some of the most
 7. Generalised Linear Models (GLMs)-Theory--- [ FreeCourseWeb.com ] ---
 =======================================================================
 
+![151.png](./images/151.png)
+![152.png](./images/152.png)
+![153.png](./images/153.png)
+![154.png](./images/154.png)
+![155.png](./images/155.png)
+![156.png](./images/156.png)
+![157.png](./images/157.png)
+![158.png](./images/158.png)
+![159.png](./images/159.png)
+![160.png](./images/160.png)
+![161.png](./images/161.png)
+
+
 In this lecture I will introduce you to generalized linear models, and in the next couple of lectures we will actually learn to implement them in R. And so far you've been dealing with regression models where we assume the error distribution, or the error structure, to be normally distributed, and if not, we tried to make it normal. But there are some situations in which we have to accept that we are going to have a non-normal error structure to begin with.
 
 And that is when GLMs come into play. So we use GLMs in situations when the residuals are neither normally distributed nor can we make them normal, and in fact it is not even advisable to attempt to make them normal, because the kinds of issues we are trying to address with GLMs, and the kind of data we are trying to analyze, do not lend themselves to conventional linear regression modeling. GLMs are used in situations when we have data such as biological data and [unclear] that are typically not normal.
@@ -736,6 +810,9 @@ Gaussian, and when we have Gaussian error structures we just carry out ordinary 
 
 8. Logistic Regression-Without PyTorch--- [ FreeCourseWeb.com ] ---
 ===================================================================
+
+![162.png](./images/162.png)
+![163.png](./images/163.png)
 
 In this lecture I will introduce you to logistic regression, which is one of the most widely used applications of GLMs, so much so that many people end up using the terms logistic regression and GLM interchangeably. Logistic regression is carried out in situations when our response variable y is categorical. So when we have binary categorical variables, like yes or no, success or failure, 0 and 1, and the predictors are numerical. The null hypothesis is that the probability value of the nominal variable, or response variable, is not associated with the value of the measurement variable.
 
@@ -754,6 +831,8 @@ And when you have this sigmoidal kind of distribution in the data, then it's a g
 9. Logistic Regression-With PyTorch--- [ FreeCourseWeb.com ] ---
 ================================================================
 
+See the notebook [here](./code_and_data/section4/lecture31_py1.ipynb).
+
 Now in this lecture I'm going to introduce you to carrying out logistic regression using PyTorch, and we are going to work with an inbuilt dataset called MNIST. So now, if you have installed PyTorch correctly, you should be able to import torch; from torch.autograd import Variable; import torchvision.transforms as transforms; import torchvision.datasets as dsets. And this is where you get the built-in datasets from. Now we are going to load the inbuilt dataset MNIST, so I've got two variables, train_dataset and test_dataset.
 
 dsets: that's where my inbuilt datasets are: dsets.MNIST(root='./data', train=True, ...). I have an argument called transform; this is equal to transforms.ToTensor(), and download=True, which means I want to download these data. And transforms.ToTensor() is going to convert my data into tensors. So when we use inbuilt data, we are going to need to convert them to tensors, and we do something similar with the test dataset, like so, and all of these have now been downloaded for me.
@@ -768,8 +847,25 @@ so for each epoch, for i, (images, labels) in enumerate(train_loader): images = 
 
 and in this case on an inbuilt dataset.
 
+### 5. Introduction to Artificial Neural Networks (ANN)
+
 1. Introduction to ANN--- [ FreeCourseWeb.com ] ---
 ===================================================
+
+![164.png](./images/164.png)
+![165.png](./images/165.png)
+![166.png](./images/166.png)
+![167.png](./images/167.png)
+![168.png](./images/168.png)
+![169.png](./images/169.png)
+![170.png](./images/170.png)
+![171.png](./images/171.png)
+![172.png](./images/172.png)
+![173.png](./images/173.png)
+![174.png](./images/174.png)
+![175.png](./images/175.png)
+![176.png](./images/176.png)
+
 
 In this lecture I will provide you with a brief introduction to both artificial neural networks and basic deep neural networks. But first I'm going to talk about the principles that underpin artificial neural networks, because the very same principles feed into deep neural networks. So this is the biological basis of neural networks. The human brain is composed of billions of nerve cells called neurons, and they're connected to thousands of other cells by something known as axons. Stimuli from the external environment, or inputs from sensory organs, and that could mean something that we see, or receiving an injury, are accepted by dendrites, right over here.
 
@@ -804,6 +900,9 @@ But in the next couple of lectures we are actually going to learn to implement s
 2. PyTorch ANN Syntax--- [ FreeCourseWeb.com ] ---
 ==================================================
 
+See the notebook [here](./code_and_data/section5/Lecture33_ann_syntax.ipynb)
+
+
 In this lecture I'm going to unpack the syntax of PyTorch a little bit more. And so far we have been working with things like ordinary least squares regression with PyTorch, logistic regression, artificial neural networks and so on. And what I'm going to cover are things that we have already encountered before, but now in this lecture I'm going to unpack them. So you can import torch, torch.optim as optim. Now, this is the key thing; you must have encountered it a few times, and you must be wondering what this is about: import torch.nn as nn.
 
 And now, this module, torch.nn, is the cornerstone of designing neural networks in PyTorch, and indeed it came into play when we were working with things like linear regression as well. But after this point, this is something that you'll encounter a lot, and this particular class can implement anything from a simple artificial neural network, which we encountered, all the way to deep neural networks, to convolutional neural networks, which will come further on in the course. Everything revolves around this package. The nn.Module class has two methods that we have to override, and we have already encountered those methods, but now we'll just unpack them a bit more.
@@ -818,6 +917,17 @@ These are just basic initialization parameters that we end up using. And in the 
 
 3. What Are Activation Functions Theory--- [ FreeCourseWeb.com ] ---
 ====================================================================
+
+![177.png](./images/177.png)
+![178.png](./images/178.png)
+![179.png](./images/179.png)
+![180.png](./images/180.png)
+![181.png](./images/181.png)
+![182.png](./images/182.png)
+![183.png](./images/183.png)
+![184.png](./images/184.png)
+![185.png](./images/185.png)
+
 
 In this course, you have heard me mention activation functions a few times. Now we are going to briefly see what activation functions are and their role in neural networks. And specifically, I will introduce you to some of the most common activation functions that are usually used, so the terms that we use in this course are not unfamiliar to you. I'm not going to introduce any of the mathematics behind these activation functions, because you really don't need the mathematics when you are using the different activation functions.
 
@@ -839,6 +949,58 @@ and not for output layers, and this is something that you are going to encounter
 
 4. More on Backpropagation--- [ FreeCourseWeb.com ] ---
 =======================================================
+
+![186.png](./images/186.png)
+![187.png](./images/187.png)
+![188.png](./images/188.png)
+![189.png](./images/189.png)
+![190.png](./images/190.png)
+![191.png](./images/191.png)
+![192.png](./images/192.png)
+![193.png](./images/193.png)
+![194.png](./images/194.png)
+![195.png](./images/195.png)
+![196.png](./images/196.png)
+![197.png](./images/197.png)
+![198.png](./images/198.png)
+![199.png](./images/199.png)
+![200.png](./images/200.png)
+![201.png](./images/201.png)
+![202.png](./images/202.png)
+![203.png](./images/203.png)
+![204.png](./images/204.png)
+![205.png](./images/205.png)
+![206.png](./images/206.png)
+![207.png](./images/207.png)
+![208.png](./images/208.png)
+![209.png](./images/209.png)
+![210.png](./images/210.png)
+![211.png](./images/211.png)
+![212.png](./images/212.png)
+![213.png](./images/213.png)
+![214.png](./images/214.png)
+![215.png](./images/215.png)
+![216.png](./images/216.png)
+![217.png](./images/217.png)
+![218.png](./images/218.png)
+![219.png](./images/219.png)
+![220.png](./images/220.png)
+![221.png](./images/221.png)
+![222.png](./images/222.png)
+![223.png](./images/223.png)
+![224.png](./images/224.png)
+![225.png](./images/225.png)
+![226.png](./images/226.png)
+![227.png](./images/227.png)
+![228.png](./images/228.png)
+![229.png](./images/229.png)
+![230.png](./images/230.png)
+![231.png](./images/231.png)
+![232.png](./images/232.png)
+![233.png](./images/233.png)
+![234.png](./images/234.png)
+![235.png](./images/235.png)
+
 
 In this lecture I'm going to talk a bit more about the backpropagation algorithm and neural networks. And by now you're already aware that backpropagation is something that we end up using whether we work with a single-hidden-layer artificial neural network or a deep neural network with multiple hidden layers. You've already seen how backpropagation was, in a way, being implemented to compute the error, and this is an iterative process. But I'm going to unpack the theory a bit more in this lecture.
 
@@ -865,7 +1027,9 @@ And this is true for all hidden layers, since we don't compute an error term for
 and when you work with the common Python, or even R, deep learning data science packages.
 
 5. Bringing Them Together--- [ FreeCourseWeb.com ] ---
-======================================================
+=====================================================
+
+See thr notebook [here](./code_and_data/section5/Lecture36_PutTogether1.ipynb)
 
 In this lecture I'm going to create dummy code, and then essentially the idea is to let you see how the different parts of implementing an artificial neural network, or a deep learning neural network, come together, especially within a PyTorch framework. So we can import torch. Now I'm going to provide an input layer comprising a given number of neurons, a hidden layer, so we are just putting together a very simple artificial neural network and we just have one hidden layer, and the output, which is just going to be one. And now we are going to initialize the parameters, and eventually we'll have to define... because remember, with PyTorch everything is underpinned by tensors, so we define tensors for each parameter of each layer.
 
@@ -892,6 +1056,8 @@ And these are the steps that we can implement through the different deep learnin
 6. Setting Up ANN Analysis With PyTorch--- [ FreeCourseWeb.com ] ---
 ====================================================================
 
+See the notebook [here](./code_and_data/section5/Lecture37_ann_pyt1.ipynb)
+
 So now in this lecture I'm just going to show you how to set up an artificial neural network problem using PyTorch, and this is a very basic example. And before we move on to other things, I'm going to use this lecture as a way of introducing you to some of the concepts that we have spoken about previously, and some of the concepts that we are going to cover further on in this course. So you can import pandas as pd, numpy as np; iris = pd.read_csv(
 
 "Iris.csv"). These are the data. So we have the data for the sepal length, petal length, and we have three iris species. The first thing we can do is to replace factors with numbers. So it doesn't matter what the nature of your artificial neural network problem is: if you're working with artificial neural networks, or even DNNs, then the categories that you are trying to classify need to be numbers. So, you know, something like Iris-setosa won't work.
@@ -915,6 +1081,8 @@ So this is basically how we set up a very basic artificial neural network, and i
 7. DNN Analysis with PyTorch--- [ FreeCourseWeb.com ] ---
 =========================================================
 
+See the notebook [here](./code_and_data/section5/Lecture38_DNN_iris.ipynb).
+
 In this lecture I'm going to move ahead, and we are going to work with deep neural networks, and these are the data, the Iris dataset. You can see the data here. I'm going to import the data: iris = pd.read_csv("Iris.csv"), and these are the data. So we have the three different species, and they're categorized, and there are four quantitative predictor variables, and we have 150 rows and six columns, and this is what iris.shape tells us, the rows and columns.
 
 Now, I don't need the Id column; it's really not useful for me. So the first thing we can do is to remove the Id column: iris.drop("Id"). So this is the column name that I want to drop; axis is equal to 1, so we are going to drop the column, like so; inplace=True. We specify inplace=True especially when we are removing just one column. And we can see how many data points we have for each class: print(iris["Species"].value_counts()), and as you can see, each species has 50 observations, and these are things that I covered earlier on.
@@ -929,7 +1097,7 @@ y = np.array(y).astype(int), because 0, 1, 2 are all integers, and that's what w
 
 now we are going to have a very simple deep neural network with two hidden layers and one output layer. So the architecture is going to be: the input layer is going to comprise four neurons, because we have four inputs, and the first hidden layer will have 27 neurons, and you can decide on any number you like; we could easily make it 25. The second hidden layer will have nine neurons, and the output layer is going to comprise three neurons, because it's three classes that we have, three categories that we are trying to classify. And then, for evaluating the loss during backpropagation, we'll use a negative log likelihood loss, and it is useful to train a classification problem with a number of classes, and we are going to use SGD for gradient descent optimization to update the weights.
 
-So basically this is how we are going to work. model: I'm going to create a variable, model = nn.Sequential, and nn comes from here, because this is how I'm going to define my neural network, and then nn.Linear(4, 27), because we have four predictors and twenty-seven neurons in the first hidden layer; pass it to the activation function, ReLU (you already know what activation functions are): nn.ReLU(); nn.Linear again: these are the hidden layers' neurons in each of the layers, 27 for the first hidden layer, nine for the second one; again pass it into the activation function, ReLU; and then nn.Linear(9, 3), and you have 3 output classes; and then nn.LogSoftmax(dim=1). And this is the criterion for evaluating the loss: nn.NLLLoss(); and the optimizer: optim.SGD(
+So basically this is how we are going to work. model: I'm going to create a variable, model = nn.Sequential, and nn comes from here, because this is how I'm going to define my neural network, and then nn.Linear(4, 27), because we have four predictors and twenty-seven neurons in the first hidden layer; pass it to the activation function, ReLU (you already know what activation functions are): nn.ReLU(); nn.Linear again: these are the hidden layers' neurons in each of the layers, 27 for the first hidden layer, nine for the second one; again pass it into the activation function, ReLU; and then nn.Linear(9, 3), and you have 3 output classes; and then nn.LogSoftmax(dim=1). And this is the criterion for evaluating the loss: nn.NLLLoss(); and the optimizer: optim.SGD().
 
 model.parameters(), and the learning rate of 0.03; you can change it to 0.01. And this is what our model looks like. We are going to define a predict function, in which we are going to feed in the model and the inputs, and it's going to predict an output for us: output = model(inputs); return output.data.numpy().argmax(axis=1). And then we are going to make torch tensors with the data and use those for training.
 
@@ -945,6 +1113,8 @@ It's unlikely that you'll get a hundred percent accuracy on your testing dataset
 
 8. More DNNs--- [ FreeCourseWeb.com ] ---
 =========================================
+
+See the notebook [here](./code_and_data/section5/Lecture39_small_iris_dataset.ipynb)
 
 So now I'm going to continue with deep neural networks, and I'm going to show you another way of implementing deep neural networks. import numpy as np, import pandas as pd, and you can import all of these torch packages, including from torch.utils.data import TensorDataset, DataLoader. And this represents another way of reading in actual CSV data, and I'm going to touch upon that further on in this lecture. So we can import the data like so. I store my iris data in the variable dataset. Id,
 
@@ -975,6 +1145,8 @@ And if we want all of these, then we can do: from sklearn.metrics import classif
 9. DNNs For Identifying Credit Card Fraud--- [ FreeCourseWeb.com ] ---
 ======================================================================
 
+See the notebook [here](./code_and_data/section5/Lecture40_DeepNN_Creditcard_dataset.ipynb).
+
 So far we have been working with the Iris dataset, and that's fine and dandy, and now you can implement both artificial neural networks and deep neural networks on the Iris dataset, and essentially you can follow the same scheme on any other machine learning classification type of problem. Now I'm going to move on to the credit card case study. And essentially this is a bigger dataset, and we will try to identify if a credit card fraud has occurred or not, based on a couple of variables, and we have a lot more variables in this situation.
 
 So you can import all of these packages: import numpy as np, pandas as pd, and so on. And you can read in the data, creditcard.csv, and store it in the variable df. And since it's a CSV, I read it in with pd.read_csv. These are the predictors: Time, when the transaction took place, V1, V2, V3 and so on, all the way to Class, and Class is my predictor variable, which stands for whether that transaction was a fraud transaction or not.
@@ -1004,6 +1176,13 @@ So we have a high level of precision, a high level of accuracy, F1, and essentia
 10. An Explanation of Accuracy Metrics--- [ FreeCourseWeb.com ] ---
 ===================================================================
 
+![236.png](./images/236.png)
+![237.png](./images/237.png)
+![238.png](./images/238.png)
+![239.png](./images/239.png)
+![240.png](./images/240.png)
+
+
 So I'm going to talk a bit more about confusion matrices and some of the measures of accuracy that we derive in the case of binary classification. And just keep in mind that in a lot of cases, a lot of these measures, and we are going to discuss them, only apply to binary classification problems. However, the confusion matrix that you're seeing over here will apply to multiclass classification problems as well. But anyway, let us just go through what these mean. TP stands for true positives, and these are the cases when the actual class of the data point was one.
 
 So say we were trying to distinguish between 1 and 0. So the actual data point was 1, and it was also predicted as 1. So the true value was actually predicted as true, and then it becomes a true positive. The true negatives: a data point that was zero, or false, was also predicted as false. So basically zero was predicted as zero, and that becomes the true negative here. Then we have false positives. These are cases when the actual class was zero, but it was predicted as one.
@@ -1018,8 +1197,16 @@ So basically it tells us how good or how bad our algorithm is at identifying the
 
 It is a measure of how well the classifier performed as compared to how well it could have performed simply by chance. So we want higher values of Cohen's kappa, because that's telling us that the classifier is actually quite good, and it's not giving chance predictions. Then we also have positive and negative predictive values, and these are the proportions of positive and negative results in our classification.
 
+### 6. Neural Networks on Images
+
 1. What Are Images--- [ FreeCourseWeb.com ] ---
 ===============================================
+
+![241.png](./images/241.png)
+![242.png](./images/242.png)
+![243.png](./images/243.png)
+![244.png](./images/244.png)
+
 
 OK, now, before we move on, I'm just going to talk you through something very basic: what is an image? And you must be thinking this question is a no-brainer. In front of you is an image, and as you can see, it's a color image of a cat. So we can just see the image. This is a cat. It's got greenish eyes. It's a tabby cat, and it's sitting on a sofa. So at an instinctive level we all know what an image is. That is not the point. Now, the thing is that when we work with image processing, it is important that we know the scientific aspects of an image.
 
@@ -1033,6 +1220,9 @@ Now, this is another pixel, and its values are going to vary from 0 to 255, and 
 
 2. Read in Images in Python--- [ FreeCourseWeb.com ] ---
 ========================================================
+
+See the notebook [here](./code_and_data/section6/Lecture43_Python_img_readin.ipynb)
+
 
 So now that you know what images are, and hopefully you've read in all the packages, or you've been able to install all the packages that we need, I'm just going to move on to discussing and showing some ways of reading in different images. And you can import numpy as np, the PIL library, skimage and so on. And now I'm going to just show you a very simple way of reading in an image. I'm going to call the function Image, and this comes from the package PIL, because here I say from PIL import Image, with a capital I: Image.open. And I'll just take you to that particular folder, so you know what I'm talking about. So now I have a .jpg image, this image, and a couple of different images, and these are the ones I'll try to read. So I navigate to the folder which contains my images, and I specify the name of the image, which is IMG_4781.jpg. I want to just print some details about it: img.width, height, mode and format. So this is an RGB
 
@@ -1055,6 +1245,8 @@ So these are some of the most common ways of reading in different images using t
 3. Basic Image Conversions--- [ FreeCourseWeb.com ] ---
 =======================================================
 
+See the notebook [here](./code_and_data/section6/Lecture44_Basic%20Conversions.ipynb)
+
 So now we are going to continue on from the previous lecture, and we are going to look at some basic image conversions that we can carry out. What I'm going to cover right now are things that we are going to revisit in more detail as the course progresses, but this is just a very basic warm-up of the things that we can do with images. So you know how to read in images, and you can import numpy as np and all of these packages, like so. Now, the first thing I'm going to do is to read in an image and convert it to a different form, because, you know, different forms of images have different qualities, and there are different ways of seeing those images,
 
 and so on. So I create a variable, im. I call the function Image from PIL, .open, and I specify the image name, .jpg, and it is going to read the image into an Image object, which is from the PIL package. And I can create a NumPy ndarray from the Image object: again, im = np.array(im); plt.imshow(im). And essentially this is what my image looks like. And if I wanted, I could even read in the image like this, by using the function imread, which would produce a similar result.
@@ -1065,6 +1257,25 @@ This is my original image, im, and this is my grayscale image, img_g. Now, anoth
 
 4. Why AI and Deep Learning--- [ FreeCourseWeb.com ] ---
 ========================================================
+
+![245.png](./images/245.png)
+![246.png](./images/246.png)
+![247.png](./images/247.png)
+![248.png](./images/248.png)
+![249.png](./images/249.png)
+![250.png](./images/250.png)
+![251.png](./images/251.png)
+![252.png](./images/252.png)
+![253.png](./images/253.png)
+![254.png](./images/254.png)
+![255.png](./images/255.png)
+![256.png](./images/256.png)
+![257.png](./images/257.png)
+![258.png](./images/258.png)
+![259.png](./images/259.png)
+![260.png](./images/260.png)
+![261.png](./images/261.png)
+![262.png](./images/262.png)
 
 OK, now we are going to get started. But first I'm going to introduce you to a term that has been used quite commonly over the past couple of years, and this particular term has become popular and lost its popularity now and then over the course of the past few decades. And that word has a very particular ring to it, and that is artificial intelligence. Now, the term artificial intelligence itself conjures up a lot of images in one's mind, including images of computers taking over the world.
 
@@ -1095,6 +1306,10 @@ Auburn, Harvard University, Oxford, Minnesota and Uber AI Labs have resulted in 
 5. Artificial Neural Networks (ANN) For Image Classification--- [ FreeCourseWeb.com ] ---
 =========================================================================================
 
+![263.png](./images/263.png)
+
+See the notebook [here](./code_and_data/section6/Lecture45_ANN-fruit.ipynb)
+
 So now that you know how to read image data into Python and the Anaconda environment, we are going to learn to implement and classify images using artificial neural networks. And we are going to follow a very simple architecture. We are going to feed in 30,000 neurons, and that, you'll realize, is the size of the images that we feed in. The hidden layer is going to have 128 neurons, and indeed you can go with any number of neurons, and the output is going to comprise the different classes the images represent.
 
 So I'm going to just get cracking: import torch, import numpy as np, matplotlib.pyplot as plt, from torch.autograd import Variable. And the first thing we are going to do is to load the dataset and transform it into tensors. So even when we work with neural networks and with imagery data, we still have to convert our images into tensors. So: from torchvision import datasets, transforms. And this is my folder. I have a folder called fruits-360, where my images are.
@@ -1122,6 +1337,8 @@ Now we should test our model on the testing dataset: dataiter = iter(test_loader
 6. Deep Neural Networks (DNN) For Image Classification--- [ FreeCourseWeb.com ] ---
 ===================================================================================
 
+See the notebook [here](./code_and_data/section6/Lecture46_DNN-fruit.ipynb)
+
 So now we are going to continue working with the previous fruits dataset, and instead of having a single-hidden-layer artificial neural network, now I'm going to use two hidden layers and implement a deep neural network. And before we continue, I'll just add a disclaimer, a warning: this deep neural network takes a very long time to train. So if you want to run this code, it's going to take a lot of time. So anyway, we'll start: import torch, import numpy as np, import matplotlib.pyplot as plt, from torch.autograd
 
 import Variable, and so on. Now we are going to run the same steps as before. I'm not going to describe these steps in a lot of detail, because you should have done them by now. The first thing we do is data loading and preprocessing. So we are going to load the dataset, the fruits-360 images, and transform them into tensors: from torchvision import datasets, transforms. This is the dataset: datasets.ImageFolder. We point to the training folder, and then we transform, calling the function transforms.Compose(transforms.ToTensor()).
@@ -1138,8 +1355,26 @@ So over 50 epochs: this was the loss in epoch 1, and by the time we got to the f
 
 So it's the same code as before, but we just have one more hidden layer, which we defined over here. So if you work with image data, you can try to do it with the same code, but obviously have one more hidden layer, and we pass it through one more activation function in the same way.
 
+### 7. Introduction to Artificial Intelligence (AI) and Deep Learning
+
 1. What is CNN--- [ FreeCourseWeb.com ] ---
 ===========================================
+
+![264.png](./images/264.png)
+![265.png](./images/265.png)
+![266.png](./images/266.png)
+![267.png](./images/267.png)
+![268.png](./images/268.png)
+![269.png](./images/269.png)
+![270.png](./images/270.png)
+![271.png](./images/271.png)
+![272.png](./images/272.png)
+![273.png](./images/273.png)
+![274.png](./images/274.png)
+![275.png](./images/275.png)
+![276.png](./images/276.png)
+![277.png](./images/277.png)
+
 
 So at long last we come to a section that a lot of you must have been waiting for, and that is the section on convolutional neural networks, or, as in some places, ConvNets, basically CNNs, which are deep learning for images. So just remember: convolutional neural networks, CNNs, are a set of techniques that we only use for carrying out the classification of imagery data. So this is not something we would use for a regression problem, for instance.
 
@@ -1182,6 +1417,28 @@ And now we are going to actually learn to implement these using MXNet.
 2. Implement CNN on Imagery Data--- [ FreeCourseWeb.com ] ---
 =============================================================
 
+See the notebook [here](./code_and_data/section7/Lecture49_CNN_Model.ipynb).
+
+![278.png](./images/278.png)
+![279.png](./images/279.png)
+![280.png](./images/280.png)
+![281.png](./images/281.png)
+![282.png](./images/282.png)
+![283.png](./images/283.png)
+![284.png](./images/284.png)
+![285.png](./images/285.png)
+![286.png](./images/286.png)
+![287.png](./images/287.png)
+![288.png](./images/288.png)
+![289.png](./images/289.png)
+![290.png](./images/290.png)
+![291.png](./images/291.png)
+![292.png](./images/292.png)
+![293.png](./images/293.png)
+![294.png](./images/294.png)
+![295.png](./images/295.png)
+
+
 Now we are going to continue to work with the previous imagery dataset, and that involves classifying the fruit images. And now we are going to work with convolutional neural networks, and you can read in all of these packages: import torch, numpy as np and so on. I'm going to carry out the same steps as before, loading the dataset and transforming it to tensors, and nothing's changed, so I'm not going to discuss these data in any more detail in this chunk.
 
 As you know, we split the dataset into training and testing, so we have 6,517 for training and this many for testing. We have 15 classes to classify, and these are the kinds of images we are working with. Now we'll try to implement a convolutional neural network, and this is the architecture of my neural network. So I have the input layer, which is an RGB image, therefore we have three, and the pixel size is a hundred by hundred, and we are going to feed this into a convolutional layer of these particular dimensions, and then we feed it through a ReLU.
@@ -1204,6 +1461,8 @@ So we are going to use the test_loader, and again use Variable(data), Variable(t
 
 3. Implement CNN Using a Pre-Trained Model--- [ FreeCourseWeb.com ] ---
 =======================================================================
+
+See the notebook [here](./code_and_data/section7/Lecture52_CNN_Model(Resnet-34).ipynb)
 
 OK, now I'm going to implement a transfer learning model on the previous data that we worked with, and those previous data pertained to the fruit images that we have been working with. And I'm going to work with the ResNet-34 model. And it's a huge model. I'm not even going to begin to start explaining this one, because covering the theory behind this is beyond the scope of this course, and essentially what you do need to know is that it's one of the most popular models.
 

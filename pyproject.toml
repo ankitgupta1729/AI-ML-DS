@@ -150,4 +150,7 @@ dependencies = [
     "imageio",
     "seaborn",
     "xlrd >= 2.0.1",
+    "statsmodels",
+    "scikit-image",
+    "opencv-python",
 ]
