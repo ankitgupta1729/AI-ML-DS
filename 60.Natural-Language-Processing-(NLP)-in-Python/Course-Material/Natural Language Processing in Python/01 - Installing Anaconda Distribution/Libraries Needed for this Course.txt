@@ -1,0 +1,12 @@
+-> nltk
+-> pandas
+-> bs4
+-> wikipedia
+-> tweepy
+-> numpy
+-> scikitlearn
+-> seaborn
+-> tensorflow
+-> keras
+-> gensim
+-> spacy
