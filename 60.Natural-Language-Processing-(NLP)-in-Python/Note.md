@@ -105,6 +105,20 @@ This will enable you to proceed with the course without waiting for my response,
 
 ![18.png](./Images/18.png)
 ![19.png](./Images/19.png)
+![20.png](./Images/20.png)
+![21.png](./Images/21.png)
+![22.png](./Images/22.png)
+![23.png](./Images/23.png)
+![24.png](./Images/24.png)
+![25.png](./Images/25.png)
+![26.png](./Images/26.png)
+![27.png](./Images/27.png)
+![28.png](./Images/28.png)
+![29.png](./Images/29.png)
+![30.png](./Images/30.png)
+![31.png](./Images/31.png)
+![32.png](./Images/32.png)
+
 
 002 Installing the Anaconda Distribution.en
 ===========================================
@@ -145,6 +159,10 @@ But let's learn all about that in the next lecture.
 
 3.   
 
+![33.png](./Images/33.png)
+![34.png](./Images/34.png)
+
+
 003 3 Alternatives to Setup your Environment.en
 ===============================================
 
@@ -157,6 +175,13 @@ And finally, if any of those solutions doesn't work for you, try the command lin
 So, again, pay attention to the next lecture because it will be important in setting up the environment so that we can start working on Python in this course and we start to learn the exciting new things that await us.
 
 4.   
+
+![35.png](./Images/35.png)
+![36.png](./Images/36.png)
+![37.png](./Images/37.png)
+![38.png](./Images/38.png)
+![39.png](./Images/39.png)
+
 
 004 [1] - Creating an Environment and Installing Libraries via Anaconda.en
 ==========================================================================
@@ -181,6 +206,15 @@ If you go here to not installed, we don't have a library only called Wikipedia. 
 
 5.   
 
+![40.png](./Images/40.png)
+![41.png](./Images/41.png)
+![42.png](./Images/42.png)
+![43.png](./Images/43.png)
+![44.png](./Images/44.png)
+![45.png](./Images/45.png)
+![46.png](./Images/46.png)
+
+
 005 [2] - Creating an Environment by Importing the YML File.en
 ==============================================================
 
@@ -195,6 +229,15 @@ So in the environment where I program the course and the results would be the sa
 As we were launching notebooks, as we have learned here, going into home, launching here or even activating this environment, using the conda activate command on the command line.
 
 6.  
+
+![47.png](./Images/47.png)
+![48.png](./Images/48.png)
+![49.png](./Images/49.png)
+![50.png](./Images/50.png)
+![51.png](./Images/51.png)
+![52.png](./Images/52.png)
+![53.png](./Images/53.png)
+
 
 006 Launching a Jupyter Notebook via Anaconda Navigator.en
 ==========================================================
@@ -219,6 +262,14 @@ This will also be cool. Of course you don't need to, but it's also cool that you
 
 7.  
 
+![54.png](./Images/54.png)
+![55.png](./Images/55.png)
+![56.png](./Images/56.png)
+![57.png](./Images/57.png)
+![58.png](./Images/58.png)
+![59.png](./Images/59.png)
+
+
 007 [3] - Creating an Environment via Conda.en
 ==============================================
 
@@ -238,6 +289,12 @@ We'll just have to wait a bit and then we'll have this environment accessible ju
 
 8.   
 
+![60.png](./Images/60.png)
+![61.png](./Images/61.png)
+![62.png](./Images/62.png)
+![63.png](./Images/63.png)
+
+
 008 Installing Libraries via Conda.en
 =====================================
 
@@ -252,6 +309,11 @@ Now let's see collecting package metadata. And if you check the result, there's 
 Now, what you can do is also here you can run python, and then you can, for example, import wikipedia here. And this will lead to no error, although I'm in the command line, I'm I'm writing Python because I'm in Python interpreter not on the command line. So although it's the same window, it's not the same thing when tried to import blah blah. And this will give me ModuleNotFoundError because of course this library is not installed and it doesn't exist in my environment.
 
 9.  
+
+![64.png](./Images/64.png)
+![65.png](./Images/65.png)
+![66.png](./Images/66.png)
+
 
 009 Launching a Jupyter Notebook via Conda.en
 =============================================
@@ -268,6 +330,17 @@ So to test that your environment is really working, test using the next lecture 
 
 10.   
 
+![67.png](./Images/67.png)
+![68.png](./Images/68.png)
+![69.png](./Images/69.png)
+![70.png](./Images/70.png)
+![71.png](./Images/71.png)
+![72.png](./Images/72.png)
+![73.png](./Images/73.png)
+![74.png](./Images/74.png)
+![75.png](./Images/75.png)
+
+
 010 Testing if your environment is OK.en
 ========================================
 
@@ -283,7 +356,7 @@ It really doesn't matter how you do it as long as you don't have this in any oth
 
 If you prefer, you can launch via the commands that I've shown you. Now, really important: make sure that in "Applications on" you have the environment Select the real environment that you want to test where you've put your library. So I'm going for NLP_course_conda. Now what I will do is launch my Jupyter notebook and I'll wait for my browser to pop up so that we can validate if we are really working on the environment that we want. OK, so the notebooks opened and now what I'm going to do is to go here to New and I'll open a Python
 
-3. Why am I opening a Python 3? because I came through the navigator as I came through the Navigator. I will open the Python 3 because here supposedly I'll be working on my environment. This may depend on some configurations on your system or past Python versions that you have or have, so it might not be like that. Hence we also have here the Conda environment that we have created via the command line, if needed. But now let's go for Python 3, and this Python 3 should be located on the environment that I'm working right now.
+Why am I opening a Python 3? because I came through the navigator as I came through the Navigator. I will open the Python 3 because here supposedly I'll be working on my environment. This may depend on some configurations on your system or past Python versions that you have or have, so it might not be like that. Hence we also have here the Conda environment that we have created via the command line, if needed. But now let's go for Python 3, and this Python 3 should be located on the environment that I'm working right now.
 
 NLP_course_conda. And let's see if that's true or not. And how can we validate if that's true or not? Well, we import the library that we have just installed, in this case the Dropbox Library. So if this command doesn't give a result ModuleNotFoundError, we are successfully working on this environment. Let's run this one. So as we run import Dropbox, you see that Python doesn't throw an error means that this library is install in my environment.
 
@@ -299,7 +372,9 @@ Specifically, if all those options don't work, then feel free to drop me a messa
 
 If not, then I'll be here to help you so that you can proceed and go forward with the course, working on your environment and loading all the libraries that will need that. We can learn then all the concepts in this course.
 
-11.  
+11.   
+
+https://stackoverflow.com/questions/44597662/conda-command-is-not-recognized-on-windows-10
 
 011 Summary on Environment Setup.en
 ===================================
@@ -316,8 +391,15 @@ OK, so I think we've covered mostly everything, you know, how to launch notebook
 
 So if you know Python, just skip the section on it entirely, except that tutorial lecture that you'll see near the end of the section and then we'll enter our NLP journey on learning a lot of things about strings and characters doing a lot of exciting stuff. So I hope to see you there and I'll see you in the next section.
 
+### 03 Python Basics Mini-Course
 
 1.   
+
+![76.png](./Images/76.png)
+![77.png](./Images/77.png)
+![78.png](./Images/78.png)
+![79.png](./Images/79.png)
+![80.png](./Images/80.png)
 
 001 [Slides] - Python Data Types and Libraries.en
 =================================================
@@ -354,6 +436,16 @@ And I have to import the module to be able to access this function in my environ
 
 
 2.  
+
+![81.png](./Images/81.png)
+![82.png](./Images/82.png)
+![83.png](./Images/83.png)
+![84.png](./Images/84.png)
+![85.png](./Images/85.png)
+![86.png](./Images/86.png)
+![87.png](./Images/87.png)
+![88.png](./Images/88.png)
+
 
 002 [Slides] - Objects and Control Flow.en
 ==========================================
@@ -398,6 +490,12 @@ So I'm evaluating my function from the start and then I'm doing if my_var is equ
 003 [Slides] - Functions, Pandas and Numpy.en
 =============================================
 
+![89.png](./Images/89.png)
+![90.png](./Images/90.png)
+![91.png](./Images/91.png)
+![92.png](./Images/92.png)
+
+
 OK, another thing that will approach throughout this section is Python functions, which are super important because they enable you to reuse your code and not repeat stuff based on parameters and arguments. What I mean by this, for example, imagine you would want to develop a function that would take a name from someone and would print hello and the name of the person. Well, you can do this using this def keyword that enables you to define a function in Python here and defining the say_hi function that takes a name as an argument.
 
 And then I'll print hello plus name. And here the name will be variable. In this case I don't have to repeat hello and several names, for example. Ten thousand lines of code. If I have ten thousand people to greet I can do it with this function. say_hi, because I've defined it here. Notice that when I do say_hi and call it with John inside, my function will output. Hello John. If you put any other name in here passed as a string, you'll get that hello plus that name that you have put in here.
@@ -413,6 +511,9 @@ Don't get too confused about this because we'll have the opportunity to work wit
 So at the end of the section, you will also have exercises to practice and also to manipulate Python objects back and forth so that you are comfortable on proceeding with this natural language processing course.
 
 4.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/01%20-%20Jupyter%20Notebook%20Overview.ipynb).
+
 
 004 Jupyter Notebook Overview.en
 ================================
@@ -440,6 +541,8 @@ If I print, I don't have that Out because this is an explicit print statement. N
 But what I really advise you is that you code along through the lectures, using your own notebooks and trying to get to the same results or at least to get the intuition behind my code. So let's continue, because this course will enable us then to take a look at the general features of Python programming and we'll learn them here inside Jupyter Notebooks, because, as you can see, our notebook is then interpreting Python code.
 
 5.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/01%20-%20Jupyter%20Notebook%20Overview.ipynb).
 
 005 Python Integers, Floats and Strings.en
 ==========================================
@@ -470,6 +573,8 @@ This depends on the construction of the function. So what's important is that yo
 
 6.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/02%20-%20Python%20Basic%20Elements.ipynb)
+
 006 Python Libraries.en
 =======================
 
@@ -488,6 +593,9 @@ How do I know which kinds of functions and objects do these libraries have you'l
 And this is super common throughout open source. So it's a really good skill to have this question of knowing how to search in the documentation of libraries so that you can know how to read which elements, which arguments can pass to functions inside these libraries. OK, that's it. We've explored here a really quick example of a library. Next, we are going to see more python elements such as lists, which are really an example of the python element that we can use.
 
 7.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/02%20-%20Python%20Basic%20Elements.ipynb)
+
 
 007 Python Lists and Sets.en
 ============================
@@ -512,6 +620,9 @@ This is exactly the same as if I would save this set under my_set and then passi
 
 8.   
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/02%20-%20Python%20Basic%20Elements.ipynb)
+
+
 008 Python Dictionaries and Tuples.en
 =====================================
 
@@ -530,6 +641,9 @@ But even so, tuples also exist. They map values in pairs like this, probably sim
 So tuples are then disparate elements that you sometimes might see. And if you extract items from a dictionary, let us review that again. They will come in tuple format. So this is a tuple format that we see here, Jan, tuple with one, Feb, tuple with two, and so on. OK, so these are also two common elements. Let's continue forward with our quick study on Python, and our overview on these types of objects.
 
 9.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/03%20-%20Python%20Control%20Flow.ipynb).
+
 
 009 Python Control Flow.en
 ==========================
@@ -576,6 +690,9 @@ But this will help you get familiar with these concepts and not basically get lo
 
 10.   
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/04%20-%20Functions.ipynb).
+
+
 010 Python Functions.en
 =======================
 
@@ -603,7 +720,10 @@ We are going to develop some functions throughout the course and I hope that thi
 
 OK, so this was our overview and functions. You also have the opportunity of training this concept during the exercises, but let's go forward and finish this python quick course with two libraries that are super important, pandas and NumPy, which are one of the most important libraries when it comes to working with data.
 
-11.  
+11.    
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/05%20-%20Numpy%20and%20Pandas.ipynb)
+
 
 011 Numpy Overview.en
 =====================
@@ -634,6 +754,8 @@ You can go to two dimensions that doesn't exist in the concept of a list. And he
 
 12.   
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/02%20-%20Python%20Quick%20Course/05%20-%20Numpy%20and%20Pandas.ipynb)
+
 012 Pandas Overview.en
 ======================
 
@@ -659,6 +781,14 @@ And also you can train the python language in notebook environment before you pr
 
 13.  
 
+![93.png](./Images/93.png)
+![94.png](./Images/94.png)
+![95.png](./Images/95.png)
+![96.png](./Images/96.png)
+![97.png](./Images/97.png)
+![98.png](./Images/98.png)
+
+
 013 Tutorial - How to Complete the Exercises.en
 ===============================================
 
@@ -683,6 +813,7 @@ Just really have a go with every notebook of exercises, because that's the way t
 
 14.   
 
+
 014 Python Quick Course - Exercises.en
 ======================================
 
@@ -694,7 +825,36 @@ It's not expected that you'll leave this quick course as an expert, but it shoul
 
 Now, have a go at the exercises and train your python using these questions that I've prepared for you.
 
+
+##### Useful links
+
+019 Python-Math-Library
+https://docs.python.org/3/library/math.html
+
+024 Numpy-Cheat-Sheet
+https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Numpy_Python_Cheat_Sheet.pdf
+
+024 Numpy-Documentation
+https://numpy.org/doc/
+
+025 Pandas-Cheat-Sheet
+https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf
+
+025 Python-Pandas-Documentation
+https://pandas.pydata.org/docs/
+
+### 04 Basic Text Processing
+
 1.  
+
+![99.png](./Images/99.png)
+![100.png](./Images/100.png)
+![101.png](./Images/101.png)
+![102.png](./Images/102.png)
+![103.png](./Images/103.png)
+![104.png](./Images/104.png)
+    
+
 
 001 [Slides] - Basic Text Processing.en
 =======================================
@@ -726,6 +886,9 @@ For example, a list into a single sentence will use both of these methods a lot 
 And you have the find method that finds you a specific character will go through all of these methods in more detail throughout this section. And this was a small introduction to manipulating strings. I didn't want to dwell too much on these examples here. What's important is that you go for the practical part and understand how to work around with strings in Python, because this element is indeed the raw material for natural language processing.
 
 2.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/1%20-%20Python%20Strings.ipynb)
+
 
 002 Manipulating Text Objects.en
 ================================
@@ -772,6 +935,9 @@ Hence the computer does not understand in its core. What's the meaning of some s
 
 3.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/1%20-%20Python%20Strings.ipynb)
+
+
 003 Combining Strings.en
 ========================
 
@@ -790,6 +956,9 @@ Now, notice something, that is how these mathematical operators with strings are
 Let's move forward with our character or string studying in Python.
 
 4.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/1%20-%20Python%20Strings.ipynb)
+
 
 004 Iterating Strings and Format Method.en
 ==========================================
@@ -818,6 +987,8 @@ OK, let's continue then with our NLP journey.
 
 5.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/1%20-%20Python%20Strings.ipynb)
+
 005 Testing if String is in Sentence.en
 =======================================
 
@@ -832,6 +1003,8 @@ But there's a thing that we can use around here, for example, using the method l
 I'll see you in the next lecture.
 
 6.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/1%20-%20Python%20Strings.ipynb)
 
 006 Escaping Characters.en
 ==========================
@@ -862,6 +1035,8 @@ So this is something that happens sometimes in NLP, particularly when we work wi
 
 7.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/2%20-%20Python%20String%20Methods.ipynb).
+
 007 Sentence Length, Conversions and Casing Methods.en
 ======================================================
 
@@ -886,6 +1061,8 @@ So as an example, if we try to multiply this num_conversion times num_conversion
 We can, of course, override this behavior, converting it back to integer. And now we have the calculation on our output. OK, the next lecture, we are going to continue with string methods.
 
 8.   
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/2%20-%20Python%20String%20Methods.ipynb).
 
 008 Is Alpha, Strip and Split.en
 ================================
@@ -912,6 +1089,8 @@ So the position zero has the word Lisbon and the position one as the word is and
 
 9.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/2%20-%20Python%20String%20Methods.ipynb).
+
 009 Join and Capitalize.en
 ==========================
 
@@ -926,6 +1105,8 @@ For example, if I use a comma, .join, and then this is my sentence passed as a s
 OK, the next method that we will learn is super simple, and it's called the capitalize method. And this method, as you might have guessed, capitalizes a specific letter on a sentence or capitalizes the first letter of the sentence putting that letter in uppercase. So if I have. This is my sentence and I apply .capitalize(), I'll have the returning string, this is my sentence. But in this case, this is the first of my letter is in upper case.
 
 10.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/03%20-%20Basic%20Text%20Processing/2%20-%20Python%20String%20Methods.ipynb).
 
 010 Replace, Count and Find.en
 ==============================
@@ -962,8 +1143,25 @@ Hello, everyone, and welcome to this working with strings exercises, so here we 
 
 And in exercise, four will also continue with our methods and also try some conversions. OK, so have a go at the exercises and if you are having trouble, check the accompanying solutions file that I've prepared for you and I'll see you in the next section.
 
+#### Useful links
+
+033 Python-Escape-Characters-Summary
+https://www.w3schools.com/python/gloss_python_escape_characters.asp
+
+### 05 Exploring NLTK (Natural Language Toolkit)
 
 1.  
+
+![105.png](./Images/105.png)
+![106.png](./Images/106.png)
+![107.png](./Images/107.png)
+![108.png](./Images/108.png)
+![109.png](./Images/109.png)
+![110.png](./Images/110.png)
+![111.png](./Images/111.png)
+![112.png](./Images/112.png)
+![113.png](./Images/113.png)
+![114.png](./Images/114.png)
 
 001 [Slides] - NLTK Intro and Tokenizers.en
 ===========================================
