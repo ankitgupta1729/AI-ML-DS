@@ -1156,12 +1156,7 @@ https://www.w3schools.com/python/gloss_python_escape_characters.asp
 ![106.png](./Images/106.png)
 ![107.png](./Images/107.png)
 ![108.png](./Images/108.png)
-![109.png](./Images/109.png)
-![110.png](./Images/110.png)
-![111.png](./Images/111.png)
-![112.png](./Images/112.png)
-![113.png](./Images/113.png)
-![114.png](./Images/114.png)
+
 
 001 [Slides] - NLTK Intro and Tokenizers.en
 ===========================================
@@ -1190,6 +1185,10 @@ And then we have the default Treebank tokenizer, which is the one that we will u
 
 2.  
 
+![109.png](./Images/109.png)
+![110.png](./Images/110.png)
+
+
 002 [Slides] - Text Normalization Techniques.en
 ===============================================
 
@@ -1208,6 +1207,18 @@ Another technique that's commonly used for normalization is lemmatization. But l
 Of course, the lemmatization, or the lemmatized version, is be, so three different conjugations of the verb would have exactly or be considered the same verb. Now how does exactly lemmatization do this? Well, it needs to have a part of speech tag that will speak about next. We'll get there in a minute. But the positive: it also reduces your vocabulary, saves some space. On the downside, you lose information and it needs parts of speech. So you need to give the function of that word in that specific text.
 
 3.  
+
+![111.png](./Images/111.png)
+![112.png](./Images/112.png)
+![113.png](./Images/113.png)
+![114.png](./Images/114.png)
+![115.png](./Images/115.png)
+![116.png](./Images/116.png)
+![117.png](./Images/117.png)
+![118.png](./Images/118.png)
+![119.png](./Images/119.png)
+![120.png](./Images/120.png)
+
 
 003 [Slides] - Part-of-Speech Tag and N-Grams.en
 ================================================
@@ -1260,6 +1271,11 @@ So what's the impact of doing or not doing stemming? What's the impact of doing 
 
 4.   
 
+https://www.nltk.org/
+https://www.nltk.org/api/nltk.tokenize.punkt.html
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/01%20-%20Sentence%20and%20Word%20Tokenizer.ipynb)
+
 004 Natural Language Toolkit Introduction and Sentence Tokenizer.en
 ===================================================================
 
@@ -1299,6 +1315,9 @@ Let's continue forward with more examples of this library that's really powerful
 
 5.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/01%20-%20Sentence%20and%20Word%20Tokenizer.ipynb)
+
+
 005 Word Tokenizer.en
 =====================
 
@@ -1335,6 +1354,8 @@ And then we have, for example, the number that's tied together. This is also int
 Next, we are going to use these tokenizers on a specific exercise, which is counting the number of numbers in a specific sentence. For example, this is an exercise that might give you how factual or how much data we consider the fact that having numbers in the text is considered data. And in that way, you may be able to extract, for example, in a specific text which sentences contain more data than others. So let's continue forward with our study on natural language processing.
 
 6.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/01%20-%20Sentence%20and%20Word%20Tokenizer.ipynb)
 
 006 Tokenizer Application and Cleaning Tokens.en
 ================================================
@@ -1376,6 +1397,8 @@ It's a good way to understand that escaping characters may interfere with this i
 We are going then to count the digits of our tokens so that we have here an example of a tokenizer application, a simple one that we can do when we divide our sentences into words.
 
 7.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/01%20-%20Sentence%20and%20Word%20Tokenizer.ipynb)
 
 007 Counting Frequency of Digits in Sentence.en
 ===============================================
@@ -1432,6 +1455,8 @@ Of course, we'll have more of stuff coming in subsequent sections. But I hope yo
 
 8.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/01%20-%20Sentence%20and%20Word%20Tokenizer.ipynb)
+
 008 FreqDist NLTK Function.en
 =============================
 
@@ -1458,6 +1483,8 @@ Again, we are revisiting this concept a lot of times throughout the course, beca
 Those are the words that characterize also these texts by the distribution. So the most common words really say something about the text itself, and that's super interesting. OK, so we'll stop here. And next, we are going to take a look into a really important concept in NLP, which is the concept of stemming and lemmatization. But we'll deal with that in the next lecture and we'll continue with our study on this very natural language toolkit.
 
 9.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/02%20-%20Text%20Normalization%20-%20Stemming%20and%20Lemmatization.ipynb)
 
 009 Porter, Snowball and Lancaster Stemmers.en
 ==============================================
@@ -1508,6 +1535,8 @@ Just important that you know that you are losing information and that you are ab
 
 10.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/02%20-%20Text%20Normalization%20-%20Stemming%20and%20Lemmatization.ipynb)
+
 010 Stemming Sentences.en
 =========================
 
@@ -1543,6 +1572,8 @@ But we'll see that in the next lecture. So let's continue forward with our NLTK 
 
 11.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/02%20-%20Text%20Normalization%20-%20Stemming%20and%20Lemmatization.ipynb)
+
 011 WordNet Lemmatizer.en
 =========================
 
@@ -1577,6 +1608,10 @@ But this is the first time that we are also going to introduce a new concept in 
 But luckily we can do that automatically. OK, so that's it for this lecture. I hope this was explicit. The difference between lemmatization and stemming. And let's continue forward with our case study.
 
 12.  
+
+https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/03%20-%20POS%20Tagging.ipynb).
 
 012 Part-of-Speech (POS) Tagging.en
 ===================================
@@ -1621,7 +1656,9 @@ In this case, these POS tags from the Penn Treebank, or from the Penn Treebank s
 
 For example, how many nouns has my text, how many verbs, how many adverbs? And that can be used for innumerous applications such as, for example, in text classification, using that as a feature for text classification or for other usages. They are also interesting for other NLP applications, such as Named Entity Recognition, which enables you to recognize some entities throughout your text. So that's also another usage for these POS tags. OK, now that we've explored this concept, we are going to continue with our study and let's go forward training our own first model in the next couple of lectures.
 
-13.  
+13.   
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/03%20-%20POS%20Tagging.ipynb).
 
 013 Training a POS Tagger from Scratch - Accessing Tagged Data from Brown Corpus.en
 ===================================================================================
@@ -1657,6 +1694,8 @@ Even so, there are some tags that don't match. For example, [unclear] doesn't ex
 I'll use the reviews and let me check here, reviews the results. So we have new text right here. And if we go for the length, let's see how many sentences we have in this corpus. So almost two thousand, which is fewer than the four thousand that we had or the four thousand and sixty something that we had in the news category in the Brown corpus Let's just run these news, because we'll use the news as we have more data.
 
 14.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/03%20-%20POS%20Tagging.ipynb).
 
 014 Training a POS Tagger from Scratch - Unigram Tagger.en
 ==========================================================
@@ -1702,6 +1741,8 @@ OK, so for example, we have here, BEM, let's see. Actually, the other print was 
 So they weren't available in our training dataset. We couldn't do a good tagging on this one. And but we could for the sentence. I am going to the market because probably the sentence is more related to our training set.
 
 15.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/03%20-%20POS%20Tagging.ipynb).
 
 015 Training a POS Tagger from Scratch - Bigram Tagger.en
 =========================================================
@@ -1750,6 +1791,9 @@ So next, we are going to check some things that we can do with the POS tagger, n
 
 16.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/03%20-%20POS%20Tagging.ipynb).
+
+
 016 Plotting the Frequency of Tags in a Sentence.en
 ===================================================
 
@@ -1778,6 +1822,8 @@ So NNS is a noun, common, plural: undergraduates. So these are plural nouns, and
 What is the role of these part of speech tagging. OK, so we are almost at the end of exploring natural language toolkit. Next lecture. Let's take a look at lemmatization and see how we can pick up some information that comes from a POS tagger to better lemmatize a sentence.
 
 17.   
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/03%20-%20POS%20Tagging.ipynb).
 
 017 Lemmatization and POS Tagging.en
 ====================================
@@ -1823,6 +1869,8 @@ And then we end up with this final sentence that is a bit reduced and it gives a
 OK, so we are almost at the end of natural language toolkit library. We'll have just a couple of lectures and then we'll jump to another section in this NLP course.
 
 18.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/04%20-%20Stop%20Words%20and%20N-Grams.ipynb).
 
 018 Stop Words.en
 =================
@@ -1885,6 +1933,8 @@ There are some cases in the future where we will remove them, and this is an imp
 
 19.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/04%20-%20Exploring%20NLTK/04%20-%20Stop%20Words%20and%20N-Grams.ipynb).
+
 019 N-Grams.en
 ==============
 
@@ -1918,6 +1968,8 @@ So don't worry, go for it for the exercises and I'll see you in the next section
 
 20.  
 
+
+
 020 Natural Language Toolkit - Exercises.en
 ===========================================
 
@@ -1925,7 +1977,29 @@ Hi, everyone, and welcome to the NLTK exercises, you have several exercises that
 
 In the third exercise, we are going to train our own POS tagger, That will apply to our sentence in later questions. OK, so these exercises will help you to consolidate the knowledge on the Natural Language Toolkit Library. And after completing this, you will be ready to apply NLTK in your NLP pipeline.
 
+#### Useful links
+
+
+042 Natural-Language-Toolkit-Library
+https://www.nltk.org/
+
+042 Punkt-Sentence-Tokenizer
+https://www.nltk.org/_modules/nltk/tokenize/punkt.html
+
+043 Treebank-Word-Tokenize
+https://www.nltk.org/_modules/nltk/tokenize/treebank.html
+
+047 Porter-Stemmer-Documentation
+https://www.nltk.org/_modules/nltk/stem/porter.html
+
+050 Perceptron-POS-Tagging-Blog-Post
+https://explosion.ai/blog/part-of-speech-pos-tagger-in-python
+
+### 06 Reading Text Data into Python
+
 1.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/01%20-%20Reading%20Data%20from%20CSV%20and%20TXT%20Files.ipynb)
 
 001 Read Data from a CSV File - Using Pandas.en
 ===============================================
@@ -1964,6 +2038,8 @@ So for in your case, you need to put here the path where you have this file, it'
 
 2.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/01%20-%20Reading%20Data%20from%20CSV%20and%20TXT%20Files.ipynb)
+
 002 Read Data from a CSV File - Using Python CSV.en
 ===================================================
 
@@ -1986,6 +2062,9 @@ So we don't rely on the pandas library to load it. In either way, in this case, 
 So I'll see you there in the next session where we will learn to load text files.
 
 3.  
+
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/01%20-%20Reading%20Data%20from%20CSV%20and%20TXT%20Files.ipynb)
 
 003 Read Data from a TXT File.en
 ================================
@@ -2013,6 +2092,8 @@ We've already talked about that also. OK, so we've read two different file types
 So it's also important that we understand these concepts as a whole because we will probably load a lot of files throughout your life working in Python. OK, so that's it for reading text files and I'll see you in the next lecture.
 
 4.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/02%20-%20Scraping%20Data%20from%20the%20Web.ipynb)
 
 004 Scraping a Web Page using Requests and BeautifulSoup - Wikipedia Example.en
 ===============================================================================
@@ -2064,6 +2145,8 @@ Then we have Winston, which is the main character in this book, 1984 in numbers,
 OK, this was our first experiment with extracting data from the web. Next, we are going to continue with more experiments and not only extracting things from this anchor, or from this tag, the HTML tag, but also to explore how we can extract something by class. As an example, this class here and also by these IDs, for example, that we have here. And we'll learn how to do that with, again, a combination of requests and Beautiful Soup.
 
 5.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/02%20-%20Scraping%20Data%20from%20the%20Web.ipynb)
 
 005 Scraping a Web Page using Requests and BeautifulSoup - Yahoo Finance Example.en
 ===================================================================================
@@ -2122,6 +2205,8 @@ OK, so let's move on and check another example where we'll try to scrape a websi
 
 6.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/02%20-%20Scraping%20Data%20from%20the%20Web.ipynb)
+
 006 Scraping a Web Page - Errors in Request.en
 ==============================================
 
@@ -2140,6 +2225,8 @@ So even if the data is here, when we visit this website via browser, so we type 
 And like LinkedIn, there are multiple websites out there that will block you when you try to use requests to access that data.
 
 7.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/06%20-%20Importing%20Text%20Data%20to%20Python/02%20-%20Scraping%20Data%20from%20the%20Web.ipynb)
 
 007 Scraping a Web Page using Specific Libraries.en
 ===================================================
@@ -2167,7 +2254,26 @@ The second exercise is focused on retrieving data from the web. We are going to 
 
 OK, so have a go at the exercises. Remember, if you are having trouble, you have the accompanying solutions in the same folder, in the course directory.
 
+[Check the notebooks for the 2 excersise notebooks]
+
+#### Useful links
+
+
+059 Disaster-Tweets-Source-Code
+https://www.kaggle.com/c/nlp-getting-started
+
+061 Paper-where-the-data-is-based-on
+https://www.cs.cornell.edu/home/llee/omsa/omsa.pdf
+
+062 1984-Wikipedia-Page
+https://en.wikipedia.org/wiki/Nineteen_Eighty-Four
+
+
+### 07 Word Vectors Intuition
+
 1.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
 001 Introduction to Word Vectors.en
 ===================================
@@ -2183,6 +2289,8 @@ So you have an extremely complex human brain and we can visualize this relations
 So take your time to understand them. Don't rush through the materials. And don't worry if you can't pick the examples that I'm going to show you at the first glance, because this will definitely take time. OK, so let's start first with our studying on how we can represent words as numbers.
 
 2.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
 002 Binary Word Vectors.en
 ==========================
@@ -2214,6 +2322,8 @@ So cherry is a fruit and carry is a verb to carry, for example, that represents 
 So this representation of zeros and ones should make them similar to each other. And this is really important. They should be similar, this representation of zeros and ones. So their vector should be similar for us to consider that they would be similar words. We'll see how we can approximate vectors in the future. But get this concept in your mind, which is how am I going to create a vector? So how am I going to think of a vector that can represent the context of this word and how this word appears as substitutes as, for example, pear and cherry, that's what we are going to do here in this section.
 
 3.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
 003 Word Co-Occurence Matrices.en
 =================================
@@ -2247,6 +2357,8 @@ So in this case, we have 15 words in our examples. I'm just going to use a NumPy
 is the a word. So we have here the examples that we want. I'm going to call this word_cooccurrences. OK, cool. Now, let's cut this lecture here, and when we return, we will develop or fill these elements inside our matrix and it will be a bit tough because we'll do multiple for loop so that we can go step by step, that we can do our matrix, in this case, incrementing for each sentence that we have on our examples.
 
 4.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
 004 Filling Co-Occurence Matrix.en
 ==================================
@@ -2319,6 +2431,8 @@ Let me return here to our nine. So nine on the co-occurrence with the a, and zer
 
 6.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
+
 006 Similarity between Words - Cosine.en
 ========================================
 
@@ -2362,6 +2476,8 @@ So now what we are going to do is to calculate this cosine similarity for the en
 
 7.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
+
 007 Word Similarities from Co-Occurence Matrix.en
 =================================================
 
@@ -2400,8 +2516,17 @@ Hi, everyone, and welcome again to the exercises. OK, so in this word vectors in
 
 And this exercise will revolve around that concept where you will build your first word vector.
 
+#### Useful links
+
+072 Cosine-Similarity-Explanation-and-Formula
+https://en.wikipedia.org/wiki/Cosine_similarity
+
+### 08 Continuous Bag of Words Implementation and Word2Vec
+
 
 1.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/01%20-%20Training%20a%20Continuous%20Bag%20of%20Words%20Embedding%20Model.ipynb)
 
 001 Continuous Bag of Words Model (CBOW) Introduction.en
 ========================================================
@@ -2440,6 +2565,8 @@ OK, so I think that's it for this lecture. Next, we are going to continue to dev
 
 2.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/01%20-%20Training%20a%20Continuous%20Bag%20of%20Words%20Embedding%20Model.ipynb)
+
 002 CBOW - Creating Vocab and Binary Word Arrays.en
 ===================================================
 
@@ -2470,6 +2597,8 @@ Let's see one zero until the end. That represents the word because this one repr
 So because is represented by this array, I is represented by this, library by this array, and so on. And now we need to create two things. Let me do a break here, because next we are going to speak about training a model using a target, a lot of times called supervised learning. So we are going to use some features in this case. The features will be the context of the word, and the target will be the word that we want to predict in this case, the word that belongs here in the context.
 
 3.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/01%20-%20Training%20a%20Continuous%20Bag%20of%20Words%20Embedding%20Model.ipynb)
 
 003 CBOW - Building Features and Target Variable.en
 ===================================================
@@ -2509,6 +2638,8 @@ should be I went somewhere or I went to someplace. In this case, it makes sense 
 So instead of thinking linguistically and semantically as we do, a computer thinks logically and mathematically, but the inference is the same, although, of course with the difference of how humans think and how computers think. OK, so now let's move forward and let's understand how we can train our model and make the computer assign the correct weights to this vector so that it understands that as soon as it sees something, it should predict, for example, this word vector.
 
 4.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/01%20-%20Training%20a%20Continuous%20Bag%20of%20Words%20Embedding%20Model.ipynb)
 
 004 CBOW - Accuracy of Random Model and Training Process.en
 ===========================================================
@@ -2567,6 +2698,8 @@ So the explainability of your results is more difficult. Now that we scratched t
 
 5.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/01%20-%20Training%20a%20Continuous%20Bag%20of%20Words%20Embedding%20Model.ipynb)
+
 005 CBOW - Training the Neural Network.en
 =========================================
 
@@ -2620,6 +2753,11 @@ It's something that's really cool because this was discovered in 2013. So it's s
 
 6.  
 
+![121.png](./Images/121.png)
+![122.png](./Images/122.png)
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/01%20-%20Training%20a%20Continuous%20Bag%20of%20Words%20Embedding%20Model.ipynb)
+
 006 CBOW - Obtaining Word Vectors (Embeddings).en
 =================================================
 
@@ -2648,6 +2786,8 @@ OK, we've done a lot during this section. Don't worry if you are feeling a bit l
 Run the code by yourself. And I think that also regarding this part of the embeddings and training models, it will be a bit more explicit when we finally visualize our word similarities in the next lecture. And it will be easier to understand this concept of grabbing weights from the hidden layers of the neural network and how these weights represent the embeddings of the words.
 
 7.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/02%20-%20CBOW%20on%20a%20Larger%20Text.ipynb)
 
 007 Pre-Processing Wikipedia Data for CBOW Model.en
 ===================================================

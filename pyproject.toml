@@ -153,4 +153,6 @@ dependencies = [
     "statsmodels",
     "scikit-image",
     "opencv-python",
+    "nltk",
+    "wikipedia",
 ]
