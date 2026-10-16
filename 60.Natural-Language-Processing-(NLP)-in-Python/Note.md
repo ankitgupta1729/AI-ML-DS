@@ -2822,6 +2822,8 @@ We have four thousand eight hundred and twenty one single words. In this case. T
 
 8.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/02%20-%20CBOW%20on%20a%20Larger%20Text.ipynb)
+
 008 Building Features and Target for Wikipedia Data.en
 ======================================================
 
@@ -2865,6 +2867,8 @@ So to run this and now we have our y and our X. It should take a bit. But we hav
 
 9.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/02%20-%20CBOW%20on%20a%20Larger%20Text.ipynb)
+
 009 Fitting Neural Network on Wikipedia Data.en
 ===============================================
 
@@ -2898,6 +2902,8 @@ So this will be done inside the training process. OK, let us then run this neura
 
 10.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/02%20-%20CBOW%20on%20a%20Larger%20Text.ipynb)
+
 010 Performance of the Neural Network.en
 ========================================
 
@@ -2924,6 +2930,8 @@ Even so, it's important that you understand this concept between training and te
 And then we can finally compute word similarities, to compute similar words between word embeddings that we have extracted from Wikipedia text.
 
 11.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/02%20-%20CBOW%20on%20a%20Larger%20Text.ipynb)
 
 011 Predicting a Word Given a Context.en
 ========================================
@@ -2953,6 +2961,8 @@ So this model is finding the correct word given the context for this specific ex
 And it is. So that's also interesting because we are really being able to find what's the predicted word, given the context. So we've seen that our model has a good accuracy. So at least eighty six percent of accuracy on the test set is really good.
 
 12.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/02%20-%20CBOW%20on%20a%20Larger%20Text.ipynb)
 
 012 Retrieving Word Embeddings and Word Similarities.en
 =======================================================
@@ -3002,6 +3012,11 @@ It's important that you understand the concept of why. We need to have these wor
 We first use the training process. We understood it deeply because it's an important concept in NLP. In the next lecture, we're going to pick up some pre-trained word vectors using this Gensim library that already has some pre trained model ready for us to use. And we'll use that in the context of visualizing word vectors and how we can visualize this in a two dimensional space.
 
 13.  
+
+https://code.google.com/archive/p/word2vec/
+https://radimrehurek.com/gensim/models/keyedvectors.html
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/03%20-%20Pre-Trained%20Gensim%20Word%20Vectors.ipynb)
 
 013 Word2Vec.en
 ===============
@@ -3056,6 +3071,8 @@ OK, so next we are going to do a really cool trick, which is doing some calculat
 
 14.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/03%20-%20Pre-Trained%20Gensim%20Word%20Vectors.ipynb)
+
 014 Word2Vec - Operations with Vectors.en
 =========================================
 
@@ -3090,6 +3107,8 @@ But it's also interesting to see for example, from Ronaldo we subtract football 
 OK, there are also another argument that I would like to add here. I'll use car, for example, which is the topn, so that we only retrieve, for example, top three. We can retrieve the top three most similar words to car, in this case, vehicle, cars and SUV. We'll see in the next lecture how we can visualize these word embeddings for each word and get them some context of how we can cluster these words together for multiple applications.
 
 15.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/07%20-%20Word2Vec%20and%20Neural%20Networks%20Word%20Vectors/03%20-%20Pre-Trained%20Gensim%20Word%20Vectors.ipynb)
 
 015 Word2Vec - Word Clustering.en
 =================================
@@ -3147,7 +3166,37 @@ This doesn't guarantee that you achieve the same results because of operating sy
 
 So have a go at these exercises, because this is really the exciting part of these word vectors where you are going to train your first model and also train your first instance of word vectors.
 
+#### Useful links
+
+
+075 CBOW-Word-Vectors-Original-Paper
+https://arxiv.org/pdf/1301.3781.pdf
+
+079 A-cool-intituition-on-Neural-Networks
+https://www.kdnuggets.com/2019/02/neural-networks-intuition.html
+
+081 Europe-Wikipedia-Page
+https://en.wikipedia.org/wiki/Europe
+
+081 Africa-Wikipedia-Page
+https://en.wikipedia.org/wiki/Africa
+
+081 American-Wikipedia-Page
+https://en.wikipedia.org/wiki/America
+
+084 Accuracy-of-a-Model-Intuition
+https://developers.google.com/machine-learning/crash-course/classification/accuracy
+
+087 Gensim-Library
+https://radimrehurek.com/gensim/models/word2vec.html
+
+## 09 Text Representation
+
 1.  
+
+https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/08%20-%20Text%20Representation/01%20-%20Text%20Representation.ipynb)
 
 001 Binary Vectorizer.en
 ========================
@@ -3214,6 +3263,8 @@ For example, min_df here on the fit_transform of the CountVectorizer, or the num
 
 2.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/08%20-%20Text%20Representation/01%20-%20Text%20Representation.ipynb)
+
 002 Count Vectorizer.en
 =======================
 
@@ -3234,6 +3285,10 @@ OK, but these two approaches never really seem to take into account the fact tha
 And it is commonly called TF-IDF. You'll probably hear this a lot during your life in NLP or working with NLP, and we'll check that concept in the next lecture.
 
 3.  
+
+https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/08%20-%20Text%20Representation/01%20-%20Text%20Representation.ipynb)
 
 003 TF-IDF.en
 =============
@@ -3279,7 +3334,17 @@ Hi, everyone, and welcome to this text representation exercises, so as you have 
 
 So the term frequency inverse document frequency that we have learned in the last section, we will construct our TF-IDF score on our own, and then we will also train a TfidfVectorizer object that we have learned in the past lecture. So have a go at these exercises and I hope that these exercises will give you a good grasp on the text representation and how we can represent the text as numeric data that we can use further for other algorithms.
 
+#### Useful Links
+
+
+093 TF-IDF-Extra-Documentation-and-Intuition
+https://en.wikipedia.org/wiki/Tf%E2%80%93idf
+
+## 10 Text Classification
+
 1.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 001 Intro to Text Classification.en
 ===================================
@@ -3299,6 +3364,8 @@ And we are going to use that data to train our model. Remember, every time someo
 OK, let's go forward for this lecture. We are going to need a lot of libraries going to import them as we are going so that you are visually referring to the libraries that we need.
 
 2.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 002 Loading Positive and Negative Movie Reviews.en
 ==================================================
@@ -3331,6 +3398,8 @@ So I'll see in the next lecture where we will prepare our text and also get more
 
 3.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
+
 003 Pre-Processing Text for Text Classification.en
 ==================================================
 
@@ -3359,6 +3428,8 @@ OK, so we preprocessed our text by removing the stop words, doing some tokenizat
 How can we classify automatically what characterizes a positive or the negative review? I'll leave that as food for thought for the next lecture. So let's continue forward with this NLP course.
 
 4.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 004 Log Ratio Intuition and Word Influence.en
 =============================================
@@ -3423,6 +3494,8 @@ And these words let me return here, will then give the model more emphasis for t
 
 5.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
+
 005 Stemming and Vectorizing the Reviews.en
 ===========================================
 
@@ -3474,6 +3547,8 @@ So let's see that in the next lecture. And we are going then to develop our intu
 
 6.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
+
 006 Logistic Regression Intuition and Training Process.en
 =========================================================
 
@@ -3502,6 +3577,8 @@ On your example, of course, for the six thousand dimension example, I don't thin
 OK, let's go forward and try to get more intuition around this playing with the data, because that's certainly a better way for us to learn these concepts than having me dwell too much on logistic regression and classification models.
 
 7.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 007 Sigmoid Function and One Feature Prediction.en
 ==================================================
@@ -3533,6 +3610,8 @@ now 1.2 for the reviews that have the word worst, we are only using one feature.
 As we have seen, the word worst is more assigned to negative reviews, and that will be reflected when we check the accuracy of our model.
 
 8.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 008 Gradient Descent Intuition by Adjusting Weights.en
 ======================================================
@@ -3573,6 +3652,8 @@ So adding these variable added information to our model. And this is extremely i
 
 9.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
+
 009 Train and Test Split.en
 ===========================
 
@@ -3593,6 +3674,8 @@ This is the format for this and this is the format for appending. In that case. 
 OK, so here y and now these elements should have one thousand nine hundred elements. That's correct. And y_train. That's also correct.
 
 10.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 010 Fitting and Evaluating Model.en
 ===================================
@@ -3615,6 +3698,8 @@ It may have some other parameters that contribute to that. But overfit is one of
 
 11.  
 
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
+
 011 Model Regularization.en
 ===========================
 
@@ -3629,6 +3714,8 @@ As you can see, this algorithm now scores 88 percent on the training data. Well,
 So when you have a big difference between the training and the test set, again, it's normally some yellow flag or at least an orange flag that you should look at before putting your model into production. Although the test set accuracy is less when you regularize normally with the delta between the train and test set accuracy being lower, that would mean that your model should be a bit more stable, at least theoretically. OK, that's it. This was our training of the model.
 
 12.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 012 Obtaining the Weights_Coefficients of Regression.en
 =======================================================
@@ -3653,6 +3740,8 @@ OK, I'll see you in the next. Let's put our classification model to the test.
 
 
 13.  
+
+See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/09%20-%20Text%20Classification/01%20-%20Building%20a%20Sentiment%20Analysis%20Classification%20Model.ipynb)
 
 013 Predicting New Sentences Sentiment.en
 =========================================

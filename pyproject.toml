@@ -155,4 +155,6 @@ dependencies = [
     "opencv-python",
     "nltk",
     "wikipedia",
+    "gensim",
+    "spacy"
 ]
