@@ -3782,6 +3782,8 @@ So try it on your own with your own sentences to see how the model that you've b
 
 So this is extremely important. Hope you have enjoyed this section. It was extremely interesting to see these examples of how we train a model, how we can build a text classification algorithm. And we are not only stuck in positive or negative examples for targets, we can build the same model for spam classifiers, for categorization of text and for many other usages. And text classification is one of the widely used examples throughout the industry to really get some power out of text data.
 
+## Thank you!
+
 1.  
 
 001 Thank you!.en
