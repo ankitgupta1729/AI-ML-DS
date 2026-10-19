@@ -156,5 +156,6 @@ dependencies = [
     "nltk",
     "wikipedia",
     "gensim",
-    "spacy"
+    "spacy",
+    "transformers",
 ]
