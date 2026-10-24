@@ -1,6 +1,7 @@
 # Jupyter kernels & virtual environments
 
-This repo is one VS Code workspace holding ~50 project folders, several of which
+This repo is one VS Code workspace holding ~60 module folders (grouped into
+category folders such as `deep-learning/`), several of which
 have their own `uv`-managed `.venv`. That layout breaks the usual kernel
 discovery, so the setup below is deliberate. Read this before "fixing" it.
 
@@ -8,7 +9,7 @@ discovery, so the setup below is deliberate. Read this before "fixing" it.
 
 VS Code's Python extension only auto-discovers a `.venv` that sits in a
 **workspace-folder root**. Here the workspace root is the repo, and the venvs are
-one level down (`52-Packt-.../.venv`), so they never appear under
+two levels down (`deep-learning/52.Packt-.../.venv`), so they never appear under
 *Select Another Kernel… → Python Environments…*.
 
 Two settings look like they should fix this. Neither does:
@@ -29,9 +30,9 @@ every folder and every workspace, and to JupyterLab / `nbconvert` / `papermill`
 as well — not just VS Code.
 
 ```
-packt-tf-images   -> 52-Packt-.../.venv        Python 3.12.13, TF 2.19.1 + Metal GPU
-tf-images         -> 51.TutGator.../.venv      Python 3.13.14
-python3           -> /opt/anaconda3/bin/python Python 3.13.5   (global fallback)
+packt-tf-images   -> deep-learning/52.Packt-.../.venv                 Python 3.12.13, TF 2.19.1 + Metal GPU
+tf-images         -> deep-learning/51.Linkedin-TensorFlow-.../.venv  Python 3.13.14
+python3           -> /opt/anaconda3/bin/python                       Python 3.13.5   (global fallback)
 ```
 
 `uvkernel` (at `~/.local/bin/uvkernel`) manages these:
@@ -39,7 +40,8 @@ python3           -> /opt/anaconda3/bin/python Python 3.13.5   (global fallback)
 ```bash
 uvkernel                    # register ./.venv as a global kernel
 uvkernel --pin              # write that kernel into every .ipynb of the project
-uvkernel --all <repo-root>  # do both for every <root>/*/.venv
+uvkernel --all <folder>     # do both for every <folder>/*/.venv
+                            #   (run it per category, e.g. `uvkernel --all deep-learning`)
 uvkernel --list             # what is registered
 uvkernel --prune            # drop kernels whose python no longer exists
 ```
@@ -66,7 +68,7 @@ persists it to the same field and auto-selection works from then on.
 - `~/.local/share/jupyter/kernels/python3` also defines `python3`. The canonical
   user dir on macOS is `~/Library/Jupyter/kernels` (`jupyter --paths`), so the
   spec is mirrored there; both point at Anaconda base.
-- `ipykernel` 7.x is in use in `52-Packt-...`; it warns about unencrypted TCP
+- `ipykernel` 7.x is in use in `deep-learning/52.Packt-...`; it warns about unencrypted TCP
   transport on kernel start. Harmless for local work.
 - Prerelease interpreters (3.14/3.15) are hidden from the picker via
   `jupyter.kernels.excludePythonEnvironments` in user settings — most ML wheels

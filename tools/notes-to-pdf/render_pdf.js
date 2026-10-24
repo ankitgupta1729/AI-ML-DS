@@ -14,7 +14,7 @@ const fs = require('fs');
       await Promise.all([...document.images].map(i => i.decode().catch(() => null)));
     });
     await page.pdf({ path: job.pdf, preferCSSPageSize: true, printBackground: true,
-                     outline: true, tagged: true, timeout: 0 });
+                     outline: false, tagged: true, timeout: 0 });  // bookmarks are added by build.py
     await page.close();
     console.log('pdf', job.pdf);
   }

@@ -35,7 +35,9 @@ The repository uses multiple dependency management systems depending on the modu
 
 ### Revision PDFs
 - **Rebuild**: `python tools/notes-to-pdf/build.py [module-number …]` (needs Tesseract, Node + Playwright; see `tools/notes-to-pdf/README.md`).
+- **Verify**: `python tools/notes-to-pdf/build.py --verify` checks every generated PDF.
 - **Register a new course**: add an entry to `tools/notes-to-pdf/catalog.json`.
+- **Docs checks**: `python tools/check_links.py` and `ruff check --config tools/ruff.toml tools/` (both run in CI).
 - Never edit files in `pdf/` by hand, and never rewrite course `.md` notes to suit the PDF builder — the builder reads them as they are.
 
 ## Coding Style & Naming Conventions

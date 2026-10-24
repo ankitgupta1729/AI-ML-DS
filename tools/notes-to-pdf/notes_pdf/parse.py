@@ -148,7 +148,7 @@ def parse(md_path: str) -> list[Block]:
                 i += 1
             code = "\n".join(body)
             # an empty ``` ``` pair is noise, not content
-            if any(l.strip() for l in body[1:-1]):
+            if any(line.strip() for line in body[1:-1]):
                 blocks.append(Block("code", text=code))
             continue
         im = IMG_LINE.match(line)

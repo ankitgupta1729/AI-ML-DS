@@ -37,7 +37,8 @@ basically called lecture lectures course courses section slide slides week again
 thanks thank let's i'm you're we're it's that's there's don't can't doesn't isn't i've you'll we'll
 going want gonna wanna couldn't here's what's let's okay alright cover covered next previous going
 learn learned learning's simply different important specific certain actual
-zero one two three four five six seven eight nine ten hundred thousand point dot minus plus equals
+zero one two three four five six seven eight nine ten eleven twelve twenty thirty forty fifty
+hundred thousand million first second third point dot minus plus equals
 times comma colon bracket brackets parenthesis parentheses underscore quote quotes line lines box
 someone something everyone everything somebody anybody coming come comes came idea ideas case cases
 step steps long short big small high low
@@ -92,10 +93,10 @@ def keyphrase_titles(sections: list[str], top: int = 2) -> list[str]:
         scored = []
         for g, tf in grams.items():
             k = g.count(" ") + 1
-            if tf < (2 if k > 1 else 3):
+            if tf < (2 if k > 1 else 4):
                 continue
             idf = math.log((1 + n_docs) / (1 + df[g])) + 1
-            scored.append((tf * idf * (1.0, 1.9, 2.3)[k - 1], g))
+            scored.append((tf * idf * (0.8, 2.0, 2.4)[k - 1], g))
         scored.sort(reverse=True)
         picked: list[str] = []
         best = scored[0][0] if scored else 0
@@ -129,16 +130,41 @@ SENTENCE_START = set("if to have so and but now this that these let we you it th
                      "here there what how values just make is are".split())
 
 
+DANGLING = SMALL | set("a an the that this these those which who whose its their his her our your is are was "
+                       "were be been can will would should has have had also than then when where while "
+                       "because so very more most such it they we you i".split())
+
+
 def heading_like(title: str) -> bool:
     """Slide lines that read as headings rather than sentence fragments."""
     ws = title.split()
-    if not (1 < len(ws) <= 8) or "," in title or title.endswith((":", "?")) and len(ws) > 6:
+    if not (1 < len(ws) <= 7) or "," in title or ". " in title or (title.endswith("?") and len(ws) > 6):
         return False
     if ws[0].lower() in SENTENCE_START or title.rstrip().endswith(":"):
         return False
-    if any(len(w.strip("()[],.:;?!")) == 1 and w.lower() not in ("a",) for w in ws):
-        return False
+    if ws[-1].lower().strip(".:;!?") in DANGLING:
+        return False  # "Reduces the", "A Technique That": cut-off sentences
+    if re.match(r"^\d+(\.\d+)+", title):
+        return False  # "1.2. Downloading ..." is a step, not a title
+    for w in ws:
+        core = w.strip("()[],.:;?!'\"")
+        if len(core) == 1 and core.lower() != "a":
+            return False
+        if core[:1].islower() and any(c.isupper() for c in core[1:]):
+            return False  # OCR case noise like "iS"
     return True
+
+
+PROSE = re.compile(r"\b(is|are|was|were|has|have|uses|use|means|takes|gives|helps|allows|makes)\s+"
+                   r"(a|an|the|very|two|three|many|some|it|this|that|to|not|been|used)\b", re.I)
+
+
+def tidy_slide_title(title: str) -> str:
+    """'ELU (Exponential Linear Units): This function …' -> 'ELU (Exponential Linear Units)'."""
+    head, sep, tail = title.partition(":")
+    if sep and tail.split() and tail.split()[0].lower() in SENTENCE_START | DANGLING:
+        return head.strip()
+    return title
 
 
 def slide_title(ocr: dict, vocab: set[str]) -> str:
@@ -151,14 +177,14 @@ def slide_title(ocr: dict, vocab: set[str]) -> str:
         if not (2 <= len(ws) <= 9):
             continue
         lw = [w.lower() for w in ws]
-        if any(a == b for a, b in zip(lw, lw[1:])) or line.count("(") != line.count(")"):
+        if any(a == b for a, b in zip(lw, lw[1:], strict=False)) or line.count("(") != line.count(")"):
             continue
         letters = sum(c.isalpha() or c == " " for c in line)
         if letters / max(1, len(line)) < 0.85:
             continue
-        known = sum(1 for w, lo in zip(ws, lw)
+        known = sum(1 for w, lo in zip(ws, lw, strict=True)
                     if lo in vocab or lo in COMMON or (w.isupper() and len(w) <= 5))
-        real = sum(1 for w, lo in zip(ws, lw) if (lo in vocab or lo in COMMON) and not w.isupper())
+        real = sum(1 for w, lo in zip(ws, lw, strict=True) if (lo in vocab or lo in COMMON) and not w.isupper())
         if known / len(lw) < 0.7 or real < 2:
             continue
         if sum(1 for w in lw if w in sub) / len(lw) > 0.5:
@@ -180,7 +206,7 @@ def annotate(blocks: list[Block], ocr_of) -> None:
     sections.append((start, len(blocks)))
     texts = [" ".join(b.text for b in blocks[s:e] if b.kind in ("para", "other")) for s, e in sections]
     phrases = keyphrase_titles(texts)
-    for n_sec, ((s, e), text, phrase) in enumerate(zip(sections, texts, phrases)):
+    for n_sec, ((s, e), text, phrase) in enumerate(zip(sections, texts, phrases, strict=True)):
         vocab = set(words(text)) | {w for b in blocks[s:e] if b.kind == "heading" for w in words(b.text)}
         marker = blocks[s] if blocks[s].kind == "heading" and blocks[s].hkind == "marker" else None
         found = []
@@ -188,11 +214,13 @@ def annotate(blocks: list[Block], ocr_of) -> None:
             if b.kind == "img" and b.src:
                 t = slide_title(ocr_of(b.src), vocab)
                 if t:
-                    b.extra["title"] = title_case(t)
+                    b.extra["title"] = title_case(tidy_slide_title(t))
                     found.append(b.extra["title"])
         if marker is None or marker.extra.get("title"):
             continue
-        found = [t for t in found if heading_like(t)]
+        counts = Counter(found)
+        # a line on a single slide is often body text: hold it to a stricter standard
+        found = [t for t in found if heading_like(t) and (counts[t] > 1 or not PROSE.search(t))]
         if found:
             # the title most slides of the lecture share; ties go to the earliest
             counts = Counter(found)
@@ -201,6 +229,10 @@ def annotate(blocks: list[Block], ocr_of) -> None:
             opening = " ".join(sentences(text)[:2]).lower()
             intro = n_sec <= 1 and re.search(r"\bwelcome to\b", opening)
             marker.extra["title"] = f"Welcome — {phrase}" if intro else phrase
+        elif text.strip():
+            first = sentences(text)[0] if sentences(text) else text
+            ws = first.split()
+            marker.extra["title"] = first if len(ws) <= 9 else " ".join(ws[:8]).rstrip(",;:") + "…"
 
 
 def tidy_headings(blocks: list[Block]) -> list[Block]:
@@ -221,6 +253,13 @@ def tidy_headings(blocks: list[Block]) -> list[Block]:
         if b.kind == "heading":
             seen_heading = True
         out.append(b)
+    # "## Course Title" written where lecture "1." belongs (markers then start at 2)
+    markers = [b for b in out if b.kind == "heading" and b.hkind == "marker"]
+    first_head = next((b for b in out if b.kind == "heading"), None)
+    if (markers and markers[0].num == "2" and first_head is not None and first_head.hkind.startswith("atx")
+            and sum(1 for b in out if b.kind == "heading" and b.hkind == first_head.hkind) == 1):
+        first_head.extra["title"] = first_head.text.strip()
+        first_head.hkind, first_head.num = "marker", "1"
     h1 = [b for b in out if b.kind == "heading" and b.hkind == "atx1"]
     if heads and len(h1) == 1 and next(b for b in out if b.kind == "heading") is h1[0]:
         h1[0].extra["doctitle"] = True
@@ -245,7 +284,7 @@ def tidy_headings(blocks: list[Block]) -> list[Block]:
                     parts.append(nb.text)
             return " ".join(parts)
         texts = [section_text(i) for i in empty]
-        for i, text, phrase in zip(empty, texts, keyphrase_titles(texts, top=1)):
+        for i, text, phrase in zip(empty, texts, keyphrase_titles(texts, top=1), strict=True):
             first = sentences(text)[0] if sentences(text) else ""
             ws = first.split()
             out[i].extra["bare"] = phrase or (first if len(ws) <= 9 else " ".join(ws[:8]).rstrip(",;:") + "…")

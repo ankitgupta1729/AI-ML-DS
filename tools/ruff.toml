@@ -1,0 +1,10 @@
+# Lint settings for the repository tooling (course notebooks are not linted).
+line-length = 120
+target-version = "py310"
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E731"]  # small lambdas are used as callbacks
+
+[lint.isort]
+known-first-party = ["notes_pdf"]

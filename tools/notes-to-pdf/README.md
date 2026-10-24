@@ -27,7 +27,10 @@ the tool never writes to them.
    captioned with their slide titles. The text of the notes is never changed.
 4. **Renders** a styled HTML document — cover, contents with page numbers,
    section openers, figures, highlighted code — and prints it with headless
-   Chromium (Playwright). A second pass fills in the real page numbers.
+   Chromium (Playwright). A second pass fills in the real page numbers, then
+   the PDF gets nested bookmarks ("Lecture 12 · Gradient Descent"), document
+   metadata (title, author, subject, keywords) and opens with the bookmark
+   panel shown.
 5. **Splits** very large courses into volumes of at most ~45 MB (GitHub warns above 50 MB), so every file
    stays well under GitHub's 100 MB limit.
 
@@ -48,6 +51,7 @@ pip install -r tools/notes-to-pdf/requirements.txt
 python tools/notes-to-pdf/build.py --list      # what will be built
 python tools/notes-to-pdf/build.py             # build everything
 python tools/notes-to-pdf/build.py 47 55       # only modules 47 and 55
+python tools/notes-to-pdf/build.py --verify     # check every generated PDF
 ```
 
 OCR text for every screenshot ships in `ocr-cache.json.gz`, so a fresh clone
@@ -68,6 +72,8 @@ Add an entry to [`catalog.json`](catalog.json):
 
 `module` is the folder name (the tool finds it inside any category folder);
 `sources` (a list of `{path, title}`) combines several notes into one PDF.
+Repository docs use `"path"` (relative to the repo root) and `"out_dir"`
+instead of `module`/`source` — that is how `docs/AGENTS.pdf` is built.
 
 ## Layout
 

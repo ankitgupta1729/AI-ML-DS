@@ -1,4 +1,6 @@
 {
+  "repository": "github.com/ankitgupta1729/AI-ML-DS",
+  "author": "Ankit Gupta",
   "categories": {
     "foundations": {"label": "Foundations", "accent": "#0e7490"},
     "data":        {"label": "Data Engineering", "accent": "#0369a1"},
@@ -10,6 +12,10 @@
     "tools":       {"label": "Developer Tools", "accent": "#475569"}
   },
   "notes": [
+    {"path": "AGENTS.md", "out_dir": "docs", "category": "tools", "file": "AGENTS",
+     "title": "Repository Guidelines", "short": "Repository Guidelines", "provider": "AI-ML-DS",
+     "subtitle": "Structure, environments, revision PDFs and contribution conventions"},
+
     {"module": "02.PySpark", "source": "Notes1.md", "category": "data", "file": "PySpark-Notes-Part-1",
      "title": "PySpark — Part 1", "short": "PySpark · Part 1", "provider": "YouTube",
      "subtitle": "Spark stack, RDDs, DataFrames and the core PySpark API"},

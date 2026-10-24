@@ -183,7 +183,7 @@ def realign(blocks: list[Block], ocr_of) -> tuple[list[Block], dict]:
 
 def _emit(unit: _Unit, where: list[int]) -> list[Block]:
     before: dict[int, list[Block]] = defaultdict(list)
-    for im, k in zip(unit.images, where):
+    for im, k in zip(unit.images, where, strict=True):
         before[k].append(im)
     res: list[Block] = []
     pending: list[str] = []

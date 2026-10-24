@@ -21,7 +21,7 @@ Course notes, revision PDFs, notebooks, hands-on projects, production-grade pipe
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/ankitgupta1729/AI-ML-DS?style=flat-square&color=f5c518"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/ankitgupta1729/AI-ML-DS?style=flat-square&color=blue"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS"><img alt="Repo size" src="https://img.shields.io/github/repo-size/ankitgupta1729/AI-ML-DS?style=flat-square&color=success"></a>
-  <a href="#-revision-pdfs"><img alt="Revision PDFs" src="https://img.shields.io/badge/revision%20PDFs-48%20courses-purple?style=flat-square"></a>
+  <a href="#-revision-pdfs"><img alt="Revision PDFs" src="https://img.shields.io/badge/revision%20PDFs-49%20courses-purple?style=flat-square"></a>
 </p>
 
 </div>
@@ -150,7 +150,7 @@ Convolutional architectures, transfer learning, GANs, and the TensorBoard workfl
 
 | Module | What's inside |
 | --- | --- |
-| [`60.Natural-Language-Processing-(NLP)-in-Python`](nlp/60.Natural-Language-Processing-(NLP)-in-Python) | Text preprocessing, vectorisation, classic and neural NLP |
+| [`60.Natural-Language-Processing-(NLP)-in-Python`](nlp/60.Natural-Language-Processing-%28NLP%29-in-Python) | Text preprocessing, vectorisation, classic and neural NLP |
 | [`61.…-Transformers-for-Natural-Language-Processing`](nlp/61.GetFreeCourses.Co-Udemy-Data-Science-Transformers-for-Natural-Language-Processing) | Attention, BERT, GPT and Hugging Face pipelines |
 
 </details>
@@ -201,7 +201,7 @@ Convolutional architectures, transfer learning, GANs, and the TensorBoard workfl
 | [`10.Git`](dev-tools/10.Git) | Git workflows and recipes |
 | [`11.Docker`](dev-tools/11.Docker) | Containerising data & ML applications |
 | [`12.Debugger`](dev-tools/12.Debugger) | Debugging Python effectively |
-| [`15.uv_demo`](dev-tools/15.uv_demo) · [`37`](dev-tools/37.Youtube-UV-A-Faster-All-in-One-Package-Manager-to-Replace-Pip-and-Venv) · [`38`](dev-tools/38.Stop-Using-Pip-This-New-Tool-is-100x-Faster-\(UV-Tutorial\)) | `uv` — the fast Python package manager |
+| [`15.uv_demo`](dev-tools/15.uv_demo) · [`37`](dev-tools/37.Youtube-UV-A-Faster-All-in-One-Package-Manager-to-Replace-Pip-and-Venv) · [`38`](dev-tools/38.Stop-Using-Pip-This-New-Tool-is-100x-Faster-%28UV-Tutorial%29) | `uv` — the fast Python package manager |
 | [`21.pipenv-course`](dev-tools/21.pipenv-course) | Environment management with Pipenv |
 | [`19.Go`](programming-languages/19.Go) · [`41`](programming-languages/41.YouTube-Go-Programming-Full-Course-Tech-with-Tim) · [`42`](programming-languages/42.Learn-Go-With-This-ONE-Project-Tech-with-Tim) | Go programming — course + project work |
 
@@ -240,6 +240,94 @@ screenshot placed **right next to the sentence it illustrates**.
 > [`tools/notes-to-pdf`](tools/notes-to-pdf) for the details and to rebuild.
 
 <!-- pdf-index:start -->
+#### Foundations
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| Python Decorators | Python deep dive | [PDF](foundations/13.Decorators/pdf/Python-Decorators-Notes.pdf) | 6 |
+| Python for Everybody | Coursera · University of Michigan · Dr. Charles Severance | [PDF](foundations/45.Python-for-Everybody-University-of-Michigan-Charles-Severance-PhD/pdf/Python-for-Everybody-Notes.pdf) | 2 |
+
+#### Data Engineering
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| PySpark — Part 1 | YouTube | [PDF](data-engineering/02.PySpark/pdf/PySpark-Notes-Part-1.pdf) | 25 |
+| PySpark — Part 2 | YouTube · Intellipaat | [PDF](data-engineering/02.PySpark/pdf/PySpark-Notes-Part-2.pdf) | 23 |
+| Databricks Lakehouse Fundamentals | Databricks Academy | [PDF](data-engineering/14.Databricks/pdf/Databricks-Fundamentals-Notes.pdf) | 11 |
+
+#### Machine Learning
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| AI Nanodegree | Udacity | [PDF](machine-learning/33.AI-Nano-Degree/pdf/AI-Nanodegree-Notes.pdf) | 5 |
+| Supervised Machine Learning: Regression and Classification | Coursera · DeepLearning.AI & Stanford Online · Andrew Ng | [PDF](machine-learning/47.Coursera-Andrew-Ng-Machine-Learning/pdf/Supervised-Machine-Learning-Andrew-Ng-Notes.pdf) | 414 |
+| Advanced Learning Algorithms | Coursera · DeepLearning.AI & Stanford Online · Andrew Ng | [Vol. 1](machine-learning/48.Coursera-Andrew-Ng-Advanced-Machine-Learning/pdf/Advanced-Learning-Algorithms-Andrew-Ng-Notes-Vol1.pdf) · [Vol. 2](machine-learning/48.Coursera-Andrew-Ng-Advanced-Machine-Learning/pdf/Advanced-Learning-Algorithms-Andrew-Ng-Notes-Vol2.pdf) | 558 |
+| Unsupervised Learning, Recommenders, Reinforcement Learning | Coursera · DeepLearning.AI & Stanford Online · Andrew Ng | [PDF](machine-learning/49.Coursera-Andrew-Ng-unsupervised-learning-recommenders-reinforcement-learning/pdf/Unsupervised-Learning-Recommenders-RL-Andrew-Ng-Notes.pdf) | 443 |
+
+#### Deep Learning
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| TensorFlow: Working with Images | LinkedIn Learning | [PDF](deep-learning/51.Linkedin-TensorFlow-Working-with-Images/pdf/TensorFlow-Working-with-Images-Notes.pdf) | 9 |
+| TensorFlow Deep Learning Solutions for Images | Packt · Will Ballard | [PDF](deep-learning/52.Packt-Tensorflow-Deep-Learning-Solutions-for-Images-Will-Ballard/pdf/TensorFlow-Deep-Learning-Solutions-for-Images-Notes.pdf) | 8 |
+| Convolutional Neural Networks with TensorFlow in Python | Udemy | [Vol. 1](deep-learning/53.Convolutional-Neural-Networks-with-TensorFlow-in-Python/pdf/CNNs-with-TensorFlow-Notes-Vol1.pdf) · [Vol. 2](deep-learning/53.Convolutional-Neural-Networks-with-TensorFlow-in-Python/pdf/CNNs-with-TensorFlow-Notes-Vol2.pdf) | 571 |
+| Deep Learning for Computer Vision with TensorFlow 2 | Udemy | [Vol. 1](deep-learning/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/pdf/Deep-Learning-for-Computer-Vision-TF2-Notes-Vol1.pdf) · [Vol. 2](deep-learning/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/pdf/Deep-Learning-for-Computer-Vision-TF2-Notes-Vol2.pdf) | 492 |
+| PyTorch: Deep Learning and Artificial Intelligence | Udemy · The Lazy Programmer | [Vol. 1](deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/pdf/PyTorch-Deep-Learning-and-AI-Notes-Vol1.pdf) · [Vol. 2](deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/pdf/PyTorch-Deep-Learning-and-AI-Notes-Vol2.pdf) · [Vol. 3](deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/pdf/PyTorch-Deep-Learning-and-AI-Notes-Vol3.pdf) | 1273 |
+| Introduction to Generative Adversarial Networks with PyTorch | Udemy | [PDF](deep-learning/56.Udemy-Introduction-to-Generative-Adversarial-Networks-with-PyTorch/pdf/GANs-with-PyTorch-Notes.pdf) | 323 |
+| Convolutional Neural Networks with PyTorch | Udemy | [PDF](deep-learning/57.Convolutional-Neural-Networks-with-Pytorch/pdf/CNNs-with-PyTorch-Notes.pdf) | 129 |
+| PyTorch: Neural Networks & Deep Learning in Python | Udemy | [PDF](deep-learning/58.Udemy-PyTorch-Tutorial-Neural-Networks-%26-Deep-Learning-in-Python/pdf/PyTorch-Neural-Networks-and-Deep-Learning-Notes.pdf) | 274 |
+| Modern Deep Convolutional Neural Networks with PyTorch | Udemy | [PDF](deep-learning/59.Modern-Deep-Convolutional-Neural-Networks-with-PyTorch/pdf/Modern-Deep-CNNs-with-PyTorch-Notes.pdf) | 141 |
+
+#### Natural Language Processing
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| Natural Language Processing in Python | Udemy | [PDF](nlp/60.Natural-Language-Processing-%28NLP%29-in-Python/pdf/NLP-in-Python-Notes.pdf) | 302 |
+| Data Science: Transformers for Natural Language Processing | Udemy · The Lazy Programmer | [PDF](nlp/61.GetFreeCourses.Co-Udemy-Data-Science-Transformers-for-Natural-Language-Processing/pdf/Transformers-for-NLP-Notes.pdf) | 625 |
+
+#### Generative AI & Agents
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| Generative AI with Large Language Models | Coursera · DeepLearning.AI & AWS | [PDF](foundations/04.Theory/2.GenAI/Coursera/pdf/Generative-AI-with-LLMs-Coursera-Notes.pdf) | 17 |
+| Generative AI & LLMs — Part 1 | Databricks Academy | [PDF](foundations/04.Theory/2.GenAI/Databricks/Notes-1/pdf/GenAI-Databricks-Notes-1.pdf) | 42 |
+| Generative AI & LLMs — Part 2 | Databricks Academy | [PDF](foundations/04.Theory/2.GenAI/Databricks/Notes-2/pdf/GenAI-Databricks-Notes-2.pdf) | 33 |
+| Generative AI & LLMs — Part 3 | Databricks Academy | [PDF](foundations/04.Theory/2.GenAI/Databricks/Notes-3/pdf/GenAI-Databricks-Notes-3.pdf) | 39 |
+| LlamaIndex & Retrieval-Augmented Generation | Udemy | [PDF](generative-ai/20.LlamaIndex/pdf/LlamaIndex-Notes.pdf) | 15 |
+| LLM Fine-Tuning | Pierian Training | [PDF](generative-ai/22.LLM_Fine_Tuning/pdf/LLM-Fine-Tuning-Notes.pdf) | 7 |
+| LangChain | Course notes | [PDF](generative-ai/23.LangChain/pdf/LangChain-Notes.pdf) | 12 |
+| Level Up LLM Applications with LangChain | LinkedIn Learning | [PDF](generative-ai/24.LangChain2/pdf/LangChain-LLM-Applications-Notes.pdf) | 23 |
+| Claude Code Deep Dive | Workshops & tutorials | [PDF](generative-ai/25.Claude-Code-Deep-Dive/pdf/Claude-Code-Deep-Dive-Notes.pdf) | 20 |
+| LangGraph Fundamentals | Course notes | [PDF](generative-ai/26.LangGraph/1.langgraphdemo/pdf/LangGraph-Notes.pdf) | 9 |
+| Agentic AI: Deliver a Chatbot POC with LangGraph | Course notes | [PDF](generative-ai/27.Agentic-AI-Deliver-a-successful-chatbot-POC-with-LangGraph/pdf/Agentic-AI-Chatbot-POC-with-LangGraph-Notes.pdf) | 38 |
+| Scalable AI Chatbot with Memory | Course notes | [PDF](generative-ai/28.Building-Scalable-AI-Chatbot-with-Memory-using-LangChain-and-Streamlit/pdf/Scalable-AI-Chatbot-with-Memory-Notes.pdf) | 4 |
+| Build Your AI Agent with LangGraph | Course notes | [PDF](generative-ai/29.Build-Your-AI-Agent-with-LangGraph/pdf/Build-Your-AI-Agent-with-LangGraph-Notes.pdf) | 9 |
+| GenAI, Agentic AI & Prompt Engineering | Course notes | [PDF](generative-ai/30.GenAI-AgenticAI-PromptEngineering-ChatGPT/Notes/pdf/GenAI-AgenticAI-Prompt-Engineering-Notes.pdf) | 6 |
+| Generative AI for Everyone | Coursera · DeepLearning.AI · Andrew Ng | [PDF](generative-ai/32.Generative-AI-for-Everyone/pdf/Generative-AI-for-Everyone-Notes.pdf) | 4 |
+| Build a Language-Learning AI Agent | Course notes | [PDF](generative-ai/40.AI-Agent-Course-Build-a-Language%E2%80%91Learning-Agent-with-OpenAI-LangGraph-Ollama-MCP/pdf/Language-Learning-AI-Agent-Notes.pdf) | 16 |
+| RAG & Fine-Tuning for LLMs | Udemy | [PDF](generative-ai/46.Udemy-RAG-Fine_Tuning-LLM/pdf/RAG-and-Fine-Tuning-LLM-Notes.pdf) | 4 |
+
+#### MLOps & Cloud
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| CI/CD Pipelines for Data & ML | Course notes | [PDF](mlops/31.CICD-Pipeline/pdf/CICD-Pipeline-Notes.pdf) | 7 |
+| Fundamentals of Google Cloud | Udemy | [PDF](mlops/34.Fundamentals-of-Google-Cloud-Udemy/pdf/Google-Cloud-Fundamentals-Notes.pdf) | 60 |
+| Deploying Machine Learning Models in Production | Coursera · DeepLearning.AI | [PDF](mlops/35.Deploying-Machine-Learning-Models-in-Production/pdf/Deploying-ML-Models-in-Production-Notes.pdf) | 123 |
+| Introduction to Machine Learning in Production | Coursera · DeepLearning.AI · Andrew Ng | [PDF](mlops/36.Introduction-to-Machine-Learning-in-Production-DeepLearningAI/pdf/Introduction-to-ML-in-Production-Notes.pdf) | 235 |
+| MLflow | Course notes | [PDF](mlops/39.mlflow/pdf/MLflow-Notes.pdf) | 3 |
+| Machine Learning Data Lifecycle in Production | Coursera · DeepLearning.AI | [PDF](mlops/43.Machine-Learning-Engineering-for-Production-MLOps-and-Specialization/pdf/ML-Data-Lifecycle-in-Production-Notes.pdf) | 322 |
+| Machine Learning Modeling Pipelines in Production | Coursera · DeepLearning.AI | [PDF](mlops/44.Machine-learning-modeling-pipelines-in-production/pdf/ML-Modeling-Pipelines-in-Production-Notes.pdf) | 412 |
+
+#### Developer Tools
+
+| Course | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| Go — An Introduction | YouTube | [PDF](programming-languages/19.Go/pdf/Go-Introduction-Notes.pdf) | 4 |
+| Pipenv Crash Course | YouTube | [PDF](dev-tools/21.pipenv-course/pdf/Pipenv-Notes.pdf) | 6 |
+| uv — A Faster All-in-One Package Manager | YouTube | [PDF](dev-tools/37.Youtube-UV-A-Faster-All-in-One-Package-Manager-to-Replace-Pip-and-Venv/pdf/UV-Package-Manager-Notes.pdf) | 3 |
+| Stop Using Pip — The uv Tutorial | YouTube | [PDF](dev-tools/38.Stop-Using-Pip-This-New-Tool-is-100x-Faster-%28UV-Tutorial%29/pdf/UV-Tutorial-Notes.pdf) | 2 |
+| Go Programming — Full Course | YouTube · Tech With Tim | [PDF](programming-languages/41.YouTube-Go-Programming-Full-Course-Tech-with-Tim/pdf/Go-Programming-Full-Course-Notes.pdf) | 5 |
 <!-- pdf-index:end -->
 
 ---

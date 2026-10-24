@@ -19,14 +19,14 @@ import sys
 import tempfile
 import urllib.parse
 
-from pypdf import PdfReader
+from pypdf import PdfReader, PdfWriter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 
 from notes_pdf import images, ocr  # noqa: E402
-from notes_pdf.align import realign, is_transcript_doc  # noqa: E402
+from notes_pdf.align import is_transcript_doc, realign  # noqa: E402
 from notes_pdf.parse import Block, parse  # noqa: E402
 from notes_pdf.render import Renderer  # noqa: E402
 from notes_pdf.titles import annotate, tidy_headings  # noqa: E402
@@ -58,7 +58,17 @@ def load_catalog() -> list[dict]:
     mods = find_modules()
     jobs = []
     for entry in cat["notes"]:
-        module = entry["module"]
+        module = entry.get("module", "")
+        if "path" in entry:  # a repository doc rather than course notes
+            src = os.path.join(ROOT, entry["path"])
+            meta = dict(cat["categories"][entry["category"]])
+            meta.update({k: v for k, v in entry.items() if k not in ("path", "out_dir")})
+            meta.update(category=cat["categories"][entry["category"]]["label"], category_key=entry["category"],
+                        repository=cat.get("repository", ""), author=cat.get("author", ""), module=module,
+                        src=src, sources=[{"path": src}], module_dir=os.path.dirname(src),
+                        out_dir=os.path.join(ROOT, entry["out_dir"]), doc=True)
+            jobs.append(meta)
+            continue
         if module not in mods:
             print(f"! module not found: {module}", file=sys.stderr)
             continue
@@ -75,6 +85,8 @@ def load_catalog() -> list[dict]:
         meta["sources"] = sources
         meta["category"] = cat["categories"][entry["category"]]["label"]
         meta["category_key"] = entry["category"]
+        meta["repository"] = cat.get("repository", "")
+        meta["author"] = cat.get("author", "")
         meta["src"] = src
         meta["module"] = module
         meta["module_dir"] = mods[module]
@@ -136,6 +148,42 @@ def page_map(pdf: str) -> tuple[dict[str, int], int]:
     return out, len(r.pages)
 
 
+def finish_pdf(path: str, toc: list[tuple[int, str, str, str]], meta: dict) -> None:
+    """Add bookmarks (from our own heading list) and document metadata."""
+    reader = PdfReader(path)
+    pages = {}
+    for name, dest in (reader.named_destinations or {}).items():
+        try:
+            pages[name.lstrip("/")] = reader.get_destination_page_number(dest)
+        except Exception:
+            pass
+    writer = PdfWriter(clone_from=reader)
+    if len(reader.pages) > 1:
+        writer.add_outline_item("Contents", 1)
+    parents: dict[int, object] = {}
+    for level, hid, label, title in toc:
+        if hid not in pages or level > 3:
+            continue
+        text = f"{label} · {title}" if label and title else (title or label)
+        parent = next((parents[lv] for lv in range(level - 1, 0, -1) if lv in parents), None)
+        parents[level] = writer.add_outline_item(text, pages[hid], parent=parent)
+        for deeper in [lv for lv in parents if lv > level]:
+            del parents[deeper]
+    title = meta["title"] + (f" — Volume {meta['volume']} of {meta['volumes']}" if meta.get("volume") else "")
+    writer.add_metadata({
+        "/Title": title,
+        "/Author": meta.get("author", ""),
+        "/Subject": meta.get("subtitle", ""),
+        "/Keywords": ", ".join(k for k in (meta.get("category"), meta.get("provider"), "revision notes") if k),
+        "/Creator": "AI-ML-DS tools/notes-to-pdf",
+    })
+    writer.page_mode = "/UseOutlines"
+    tmp = path + ".tmp"
+    with open(tmp, "wb") as f:
+        writer.write(f)
+    os.replace(tmp, path)
+
+
 def build(meta: dict, work: str, img_cache: str) -> list[str]:
     src = meta["src"]
     blocks = []
@@ -195,6 +243,7 @@ def build(meta: dict, work: str, img_cache: str) -> list[str]:
         with open(h2, "w", encoding="utf-8") as f:
             f.write(r.document(body, pages_of, total))
         render([(h2, final)])
+        finish_pdf(final, r.toc, vmeta)
         os.remove(p1)
         mb = os.path.getsize(final) / 1e6
         print(f"  -> {os.path.relpath(final, ROOT)}  ({total} pages, {mb:.1f} MB)")
@@ -228,10 +277,11 @@ def update_readme(jobs: list[dict]) -> None:
         order = list(json.load(f)["categories"])
     lines = []
     for cat in order:
-        rows = [j for j in jobs if j["category_key"] == cat and pdfs_of(j)]
+        rows = [j for j in jobs if j["category_key"] == cat and pdfs_of(j) and not j.get("doc")]
         if not rows:
             continue
-        lines += ["", f"#### {rows[0]['category']}", "", "| Course | Source | PDF | Pages |", "| --- | --- | --- | ---: |"]
+        lines += ["", f"#### {rows[0]['category']}", "",
+                  "| Course | Source | PDF | Pages |", "| --- | --- | --- | ---: |"]
         for j in rows:
             files = pdfs_of(j)
             pages = sum(len(PdfReader(p).pages) for p in files)
@@ -243,7 +293,43 @@ def update_readme(jobs: list[dict]) -> None:
     text = text[:text.index(start) + len(start)] + "\n" + block + "\n" + text[text.index(end):]
     with open(readme, "w", encoding="utf-8") as f:
         f.write(text)
-    print(f"README.md index updated ({sum(1 for j in jobs if pdfs_of(j))} courses)")
+    print(f"README.md index updated ({sum(1 for j in jobs if pdfs_of(j) and not j.get('doc'))} courses)")
+
+
+def verify(jobs: list[dict]) -> int:
+    """Check every generated PDF; returns the number of problems found."""
+    problems = 0
+    for j in jobs:
+        files = pdfs_of(j)
+        if not files:
+            print(f"✗ {j['file']}: no PDF built")
+            problems += 1
+            continue
+        for path in files:
+            name = os.path.relpath(path, ROOT)
+            issues = []
+            size = os.path.getsize(path)
+            if size >= 50 * 1000 * 1000:
+                issues.append(f"{size / 1e6:.1f} MB (GitHub warns at 50 MB)")
+            r = PdfReader(path)
+            if len(r.pages) < 2:
+                issues.append("fewer than 2 pages")
+            if not r.outline:
+                issues.append("no bookmarks")
+            if not (r.metadata or {}).get("/Title"):
+                issues.append("no title metadata")
+            if len(r.pages) > 1 and re.search(r"\b000\b", r.pages[1].extract_text() or ""):
+                issues.append("contents page numbers not filled in")
+            fonts = set()
+            for page in r.pages[:3]:
+                for f in ((page.get("/Resources") or {}).get("/Font") or {}).values():
+                    fonts.add(f.get_object().get("/Subtype"))
+            if "/Type3" in fonts:
+                issues.append("Type 3 fonts embedded")
+            print(("✗ " if issues else "✓ ") + name + (": " + "; ".join(issues) if issues else ""))
+            problems += bool(issues)
+    print(f"{problems} problem(s)")
+    return problems
 
 
 def main() -> None:
@@ -251,15 +337,19 @@ def main() -> None:
     ap.add_argument("only", nargs="*", help="module numbers or folder names to build")
     ap.add_argument("--list", action="store_true", help="list catalog entries and exit")
     ap.add_argument("--readme", action="store_true", help="only refresh the PDF index in README.md")
+    ap.add_argument("--verify", action="store_true", help="check the generated PDFs and exit")
     ap.add_argument("--work", default=os.path.join(HERE, ".cache", "work"))
     ap.add_argument("--images", default=os.path.join(HERE, ".cache", "images"))
     args = ap.parse_args()
     jobs = load_catalog()
     if args.only:
-        jobs = [j for j in jobs if any(j["module"] == o or j["module"].split(".")[0] == o.zfill(2) for o in args.only)]
+        jobs = [j for j in jobs if any(j["module"] == o or j["module"].split(".")[0] == o.zfill(2)
+                                       or j["file"] == o for o in args.only)]
     if args.readme:
         update_readme(load_catalog())
         return
+    if args.verify:
+        sys.exit(1 if verify(load_catalog()) else 0)
     if args.list:
         for j in jobs:
             print(f"{os.path.relpath(j['src'], ROOT)}  ->  {j['file']}.pdf")

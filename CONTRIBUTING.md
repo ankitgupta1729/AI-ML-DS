@@ -44,7 +44,8 @@ category, e.g. `deep-learning/62.My-New-Course/`. Inside a module:
 After adding or editing course notes, rebuild their PDF:
 
 ```bash
-python tools/notes-to-pdf/build.py 62
+python tools/notes-to-pdf/build.py 62        # rebuild module 62's PDF(s)
+python tools/notes-to-pdf/build.py --verify  # check every generated PDF
 ```
 
 New courses need one entry in `tools/notes-to-pdf/catalog.json`; see
@@ -59,6 +60,15 @@ New courses need one entry in `tools/notes-to-pdf/catalog.json`; see
   download again belong in `.gitignore`, not in the repo.
 - **Environments** — prefer a module-local `pyproject.toml`/`Pipfile` when a
   module needs its own dependencies.
+
+## Checks
+
+CI runs these on every pull request; run them locally before pushing:
+
+```bash
+ruff check --config tools/ruff.toml tools/   # lint the repository tooling
+python tools/check_links.py                  # every link in the docs resolves
+```
 
 ## Pull requests
 

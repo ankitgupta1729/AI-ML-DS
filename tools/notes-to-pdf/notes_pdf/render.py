@@ -13,7 +13,8 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import TextLexer, get_lexer_by_name, guess_lexer
 
 from .align import sentences
-from .parse import FENCE, INLINE_IMG, Block, resolve_path
+from .parse import INLINE_IMG, Block, resolve_path
+from .titles import title_case
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.path.join(os.path.dirname(HERE), "fonts")
@@ -125,6 +126,8 @@ class Renderer:
             label, title = "", clean_heading(b.text)
         if b.extra.get("doctitle") or (not title and not label):
             return ""
+        if title.isupper() and len(title.split()) >= 3:  # "WHY MODEL MONITORING MATTERS"
+            title = title_case(title.lower())
         title = title[:1].upper() + title[1:]
         if level == 1:
             self.sec_no += 1
@@ -139,14 +142,15 @@ class Renderer:
             m = re.match(r"^(\d{1,3})[.)]?\s+(\S.*)$", title) if b.hkind not in ("marker", "numtitle") else None
             if m:  # "02 Installing Anaconda" -> kicker 02, title "Installing Anaconda"
                 num, title = m.group(1), m.group(2)
-                self.toc[-1] = (level, hid, label, title)
+                self.toc[-1] = (level, hid, label or f"Section {num}", title)
             kicker = {"numtitle": "Topic", "part": "Part",
                       "marker": "Lecture" if transcript else "Section"}.get(b.hkind, "Section")
-            inner = f'<span class="kicker">{kicker} <b>{html.escape(num)}</b></span>'
+            inner = f'<span class="kicker">{kicker} <b>{html.escape(num)}</b></span> '
             if b.hkind == "marker":
-                inner += f'<span class="title">{html.escape(title) if title else "&#8203;"}</span>'
+                shown = html.escape(title) if title else "&#8203;"
+                inner += f'<span class="sep"> · </span><span class="title">{shown}</span>'
             else:
-                inner += f'<span class="title">{self.inline(title)}</span>'
+                inner += f'<span class="sep"> · </span><span class="title">{self.inline(title)}</span>'
         else:
             text = f"{label} · {title}" if label and title else (title or label)
             inner = self.inline(text)
@@ -176,7 +180,10 @@ class Renderer:
 
     def paragraph(self, b: Block) -> str:
         text = b.text
-        sents = sentences(text) if (b.extra.get("transcript") or len(text) > 900) else None
+        # only flowing prose is re-paragraphed; anything with line structure (lists, tables,
+        # line-by-line notes) keeps its layout
+        flowing = b.extra.get("transcript") or "\n" not in text.strip()
+        sents = sentences(text) if flowing and (b.extra.get("transcript") or len(text) > 900) else None
         if sents and len(text) > 700:
             chunks, cur, size = [], [], 0
             for s in sents:
@@ -268,13 +275,13 @@ class Renderer:
     <span class="brand">AI · ML · DS &nbsp;/&nbsp; Revision Notes</span></div>
   <div class="cover-main">
     <div class="provider">{html.escape(m.get('provider', ''))}</div>
-    <h1>{html.escape(m['title'])}</h1>
+    <div class="cover-title" role="heading" aria-level="1">{html.escape(m['title'])}</div>
     <p class="subtitle">{html.escape(m.get('subtitle', ''))}</p>
     {vol}
   </div>
   <div class="cover-foot">
     <div class="stats">{''.join(stats)}</div>
-    <div class="meta">Compiled {date}<br>github.com/ankitgupta1729/AI-ML-DS</div>
+    <div class="meta">Compiled {date}<br>{html.escape(m.get('repository', ''))}</div>
   </div>
 </section>"""
 
