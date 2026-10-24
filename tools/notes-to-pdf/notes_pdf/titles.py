@@ -159,8 +159,15 @@ PROSE = re.compile(r"\b(is|are|was|were|has|have|uses|use|means|takes|gives|help
                    r"(a|an|the|very|two|three|many|some|it|this|that|to|not|been|used)\b", re.I)
 
 
+# characters OCR confuses on slides (capital I read as l, ² as ’, ...)
+OCR_FIXES = [(re.compile(r"\bAl\b"), "AI"), (re.compile(r"\bAUtoML\b"), "AutoML"),
+             (re.compile(r"\bMnist\b"), "MNIST"), (re.compile(r"\bL[’'`]\s"), "L2 ")]
+
+
 def tidy_slide_title(title: str) -> str:
     """'ELU (Exponential Linear Units): This function …' -> 'ELU (Exponential Linear Units)'."""
+    for rx, fixed in OCR_FIXES:
+        title = rx.sub(fixed, title)
     head, sep, tail = title.partition(":")
     if sep and tail.split() and tail.split()[0].lower() in SENTENCE_START | DANGLING:
         return head.strip()
@@ -286,6 +293,8 @@ def tidy_headings(blocks: list[Block]) -> list[Block]:
         texts = [section_text(i) for i in empty]
         for i, text, phrase in zip(empty, texts, keyphrase_titles(texts, top=1), strict=True):
             first = sentences(text)[0] if sentences(text) else ""
+            if re.search(r"[=(){}\[\]]|^\s*(def|import|from|python)\b", first, re.I):
+                first = ""  # a code line makes a poor title; leave just the number
             ws = first.split()
             out[i].extra["bare"] = phrase or (first if len(ws) <= 9 else " ".join(ws[:8]).rstrip(",;:") + "…")
     return out

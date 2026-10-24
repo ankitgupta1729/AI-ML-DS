@@ -8,7 +8,7 @@ For more info, visit `www.python.org`
 
 4. You can't other than letters and numbers in variable names. Like `var.12` is illegal but `var_12` is legal. `_spam` is fine but `#spam` and `23spam` are illegal.
 
-5. mnomonics variable means we choose the variable names that make sense and are easy to remember and understandable by humans.
+5. mnemonic variable means we choose the variable names that make sense and are easy to remember and understandable by humans.
 
 6. We need remainder operator `%` to put output in a certain range, for example, playing cards or dice to get a number between 1 to 6.
 

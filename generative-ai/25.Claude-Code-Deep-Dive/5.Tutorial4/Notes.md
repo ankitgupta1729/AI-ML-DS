@@ -26,7 +26,7 @@ In Claude Terminal,
 
 Using `Shift+Tab`, you can toggle with different modes.
 
-8. Using `ESC+ESC` means if you press escape key 2 times then you clear all the text/commands from the claude terminal. If you have to go previous text then you have to press Up Arrow key. Simliarly, if you have to go next text then you have to press Down Arrow key. And you cycle it in this way.
+8. Using `ESC+ESC` means if you press escape key 2 times then you clear all the text/commands from the claude terminal. If you have to go previous text then you have to press Up Arrow key. Similarly, if you have to go next text then you have to press Down Arrow key. And you cycle it in this way.
 
 9. If you have to line break or go to new line then you have to press `Alt/Option + Enter/Return`.
 
@@ -38,7 +38,7 @@ Using `Shift+Tab`, you can toggle with different modes.
 
 13. For larger projects, you can instruct claude to create a git repo after connecting with your account in github and you can see in github also. 
 
-14. When you put `/exit` and starts the claude again then you lost all the previous history because a new session starts. So, you have to use claude.md file and memory. So, to have a persistant memory, you have to use `/init` command first and then `claude.md` will be created automatically and it is having all the information based on your codebase and the analysis.
+14. When you put `/exit` and starts the claude again then you lost all the previous history because a new session starts. So, you have to use claude.md file and memory. So, to have a persistent memory, you have to use `/init` command first and then `claude.md` will be created automatically and it is having all the information based on your codebase and the analysis.
 
 Now, again when you put `/exit` and ask like `What do you know about this project?` then you will get the information from the claude.md file.  
 

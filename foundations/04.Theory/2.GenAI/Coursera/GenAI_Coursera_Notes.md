@@ -444,7 +444,7 @@
     training is: Distribute large datasets across multiple GPUs and process these batches of data in parallel.
     A popular implementation of this model replication technique is:  PyTorch's distributed data parallel (DDP).
 
-    DDP copies your data onto each GPU using dataloader and sends baches of data to each GPU in parallel.
+    DDP copies your data onto each GPU using dataloader and sends batches of data to each GPU in parallel.
     Each dataset is processed (forward and backprop) in parallel and then synchronization step combines the
     result of each GPU (synchronizing gradients) which in turn updates the model on each GPUs which is always
     identical across chips. This implementation allows parallel computation across all GPUs that results in
@@ -475,7 +475,7 @@
     but increases the communication volume between GPUs.
 
     when model size (no. of parameters) is high then teraflops/gpu value is high for full sharding.
-    1 treaflops = 1 trillion floating point operations.
+    1 teraflops = 1 trillion floating point operations.
 
 41.  Scaling laws and compute-optimal models:
 
@@ -483,7 +483,7 @@
     minimizing the loss when predicting tokens.
 
     Two options you have to achieve better performance are increasing the size of the dataset on which you
-    trined the model and increasing the parameters in your model. In theory, you could scale either of both of
+    trained the model and increasing the parameters in your model. In theory, you could scale either of both of
     these quantities to improve performance. However, another issue to take into consideration is your
     compute budget which includes factors like the number of GPUs you have access to and the time you have
     available for training models.

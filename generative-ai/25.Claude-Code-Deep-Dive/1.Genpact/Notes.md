@@ -1,7 +1,7 @@
 1. Layered Cake:
 
-A. Infrastructure - GPU - Nvidia (5090 chips etc.), Google (TPUs), Apple (MLX), AWS (Infernia-G)
-B. Models - OpenAI, Anthropic, Google, Cohere, Mistral, Grok(X.AI), Llama(Meta) Chinese Models - Deepseek, Moonshot, Bydu, Alibaba, Open Source/Open weight Models(HuggingFace), Qwen etc.
+A. Infrastructure - GPU - Nvidia (5090 chips etc.), Google (TPUs), Apple (MLX), AWS (Inferentia)
+B. Models - OpenAI, Anthropic, Google, Cohere, Mistral, Grok(X.AI), Llama(Meta) Chinese Models - Deepseek, Moonshot, Baidu, Alibaba, Open Source/Open weight Models(HuggingFace), Qwen etc.
 
 - We will use Anthropic - 1. Opus (High, Medium, Low)- It has high intelligence but takes time  2. Sonnet - It is between Opus and Haiku and best for daily task and 3. Haiku - It is lowest tier model etc.
 
@@ -58,7 +58,7 @@ It means we collect all the context for the model. We tell the model how to do s
 
 When you are working on some plan or task then go with `opus` and for some coding use `sonnet`. It has something like 5 hours window for tokens as per different subscription plans.
 
-You can select `High Effort` and `Max Effort` for complex maths problem or complexr coding problem. 
+You can select `High Effort` and `Max Effort` for complex maths problem or complex coding problem. 
 
 `Medium Effort` is generally used for planning.
 

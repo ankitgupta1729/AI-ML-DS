@@ -20,7 +20,7 @@ Once you get the answer, you will get one html file and open it side by side in 
 
 You can go to Settings and then Capabilities and you can browse skills and create new skills also. 
 
-For example, you can create a skill by first give access claude to a skill as `slack-gif-creater` from settings--> capabilities --> browse skills --> slack-gif-creater and then going to claude chat and write:
+For example, you can create a skill by first give access claude to a skill as `slack-gif-creater` from settings--> capabilities --> browse skills --> slack-gif-creator and then going to claude chat and write:
 
 `generate an animated gif of drinking coffee for slack`
 

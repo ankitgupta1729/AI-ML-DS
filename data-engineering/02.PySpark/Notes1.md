@@ -34,10 +34,10 @@ It divides the live input data streams into batches.
 
 For instance, logs being generated from an application server or live tweets from Twitter can be processed in near real time using Spark Streaming APIs.
 
-## 5. Spark MLLib provides in-built libraries to implement ML algorithms like classification, regression, clustering, collaborative filtering.
+## 5. Spark MLlib provides in-built libraries to implement ML algorithms like classification, regression, clustering, collaborative filtering.
 
 
-Spark MLLib also provides various techniques for data preprocessing.
+Spark MLlib also provides various techniques for data preprocessing.
 
 ## 6. GraphX is a library for manipulating graphs. It provides analysis and graph computation for big data.
 
@@ -49,7 +49,7 @@ GraphX can be used for the disaster detection system, page ranking, financial fr
 ## 7. Programming Languages for spark: Python, Scala, R, Java
 
 
-Libraries: Spark SQL, MLLib, GraphX, Streaming
+Libraries: Spark SQL, MLlib, GraphX, Streaming
 
 Engine: Spark Core
 
@@ -264,7 +264,7 @@ We can perform transformations and actions on RDDs.
 ## 27. RDD Workflow:
 
 
-- A. Many RDDs are clubed into a single RDD.
+- A. Many RDDs are clubbed into a single RDD.
 - B. RDDs are arrays or structured data and this structured data is converted 
    into DAG (Directed Acyclic Graph) so that data can be flow from
    one node to another in structured manner. This is the work of
@@ -296,7 +296,7 @@ parallel processing.
 
 
 Spark RDDs have various capabilities to handle huge volumes of data by processing them 
-parallely over multiple logical partitions. We can create an RDD, anytime, but Spark RDDs 
+in parallel over multiple logical partitions. We can create an RDD, anytime, but Spark RDDs 
 are executed only when they are needed (lazy evaluation).
 
 ## 30.
@@ -312,7 +312,7 @@ Spark RDDs are useful for distributed computing i.e. processing data over multip
 
 RDDs are partitioned (split into logical partitions) and distributed across nodes in a cluster. 
 
-- C. Location Stickness:
+- C. Location Stickiness:
 
 RDDs can define their placement preference (the location) to compute partitions.
 
@@ -1097,7 +1097,7 @@ for word in wordcount.collect():
 ## 75.
 
 
-RDD Partioning:
+RDD Partitioning:
 
 - A partition is a logical chunk of a large distributed dataset
 
@@ -1126,7 +1126,7 @@ RDD Partitioning Types:
 - B. Range Partitioning
 
 Hash Partitioning is a partitioning is a partitioning technique where a hash key is used to distribute elements 
-evenly acrosss different partitions.
+evenly across different partitions.
 
 Some Spark RDDs have keys that follow a particular order; for such RDDs, range partitioning is an efficient 
 partitioning technique. 
@@ -1134,6 +1134,6 @@ partitioning technique.
 - In the range partitioning method, tuples having keys within the same range will appear on the same machine
 Keys in a RangePrtitioner are partitioned based on the set of sorted range of keys and ordering of keys.
 
-- Custominzing partitioning is possible only on paired RDDs.
+- Customizing partitioning is possible only on paired RDDs.
 
 ---

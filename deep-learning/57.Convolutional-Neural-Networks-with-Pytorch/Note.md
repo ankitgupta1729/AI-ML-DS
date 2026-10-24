@@ -941,7 +941,7 @@ OK, so that is a really good behavior, and it is what we want when we are traini
 
 21.   
 
-008 Analize model on test dataset and metrics.en
+008 Analyze model on test dataset and metrics.en
 ================================================
 
 So in this video, we're going to start to work with the test data. OK, so if you remember, the idea of the test data is not to update the parameters; it is just to get metrics on your model, or to compare your model with other models. OK, um, so in this example, we're going to get metrics in order to get an overview of our model. OK, so the first thing that we're going to do is to add a comment here, "Analyze test dataset". Uh, excuse me: "Analyze on test data and get metrics".

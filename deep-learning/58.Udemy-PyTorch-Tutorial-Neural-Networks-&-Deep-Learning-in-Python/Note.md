@@ -391,7 +391,7 @@ So this is my array a, which is one, two, three, four. So we have the same numbe
 
 And now we are going to move on to the next lecture.
 
-5. Numpy for Basic Vector Arithmetric--- [ FreeCourseWeb.com ] ---
+5. Numpy for Basic Vector Arithmetic--- [ FreeCourseWeb.com ] ---
 ==================================================================
 
 See the notebook [here](./code_and_data/section2/lecture15_arith.ipynb).

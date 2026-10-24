@@ -32,7 +32,7 @@ Now, go to azure portal databricks where `test-hello-world.ipynb` file is there.
 
 Now, again go to azure devops site where readme file was there and clone the URL and put in as git repo url where we click on `Create` and then selected `Repo`.
 
-Don't use PAT. Use MSFT ENTRA (https://claude.ai/share/4b7e9efc-1d33-4b22-bf60-17bbbef24257). Now, it will be refled in `Repos` folder. Rename `Databricks%20CICD%20Tutorial` to `DatabricksCICDTutorial`.
+Don't use PAT. Use MSFT ENTRA (https://claude.ai/share/4b7e9efc-1d33-4b22-bf60-17bbbef24257). Now, it will be reflected in `Repos` folder. Rename `Databricks%20CICD%20Tutorial` to `DatabricksCICDTutorial`.
 
 6. Now, we have to protect the `main` branch. But before that move `test-hello-world.ipynb` notebook to `DatabricksCICDTutorial` folder.
 
@@ -87,7 +87,7 @@ Now, to build logic in yaml file, first locally clone the azure devops repo main
 
 Also, create a new branch in vscode by clicking on main in bottom left corner and create a new branch as `feature/ci-pipeline`. 
 
-9. Now, go to `cicd-pipelines.yml` file, it is the master file for CI/CD Pipleline. In this file,
+9. Now, go to `cicd-pipelines.yml` file, it is the master file for CI/CD Pipeline. In this file,
 
 - trigger is a property and main is its value. It means this yaml file will be triggered when there will be changes in main branch.
 
@@ -109,7 +109,7 @@ and save the variables group.
 
 In azure devops, under pipelines, there is an option of `Environments`, click on it and create a new environment for dev as `dev-environment-databricks-cicd` with `None` as resource. And now update the dev-environment-name with value as `dev-environment-databricks-cicd` in Library tab.
 
-Now, service connection is set so that CI/CD pipeline can use azure resources. For a particular resource group, there is access conttrol(IAM) option is there, so click on it and you will see the information.
+Now, service connection is set so that CI/CD pipeline can use azure resources. For a particular resource group, there is access control(IAM) option is there, so click on it and you will see the information.
 
 On azure devops portal, click on project settings (in bottom left corner), click on `service connections`. Now, select `Azure Resource Manager` and click on `Next` and then give the name of service connect as `dev-service-connection` and 
 save it. It will create a new service principal which will allow access for azure devops to azure resources.
@@ -175,7 +175,7 @@ Now, create a new pull request from `feature/cd-pipeline` branch to `main` branc
 
 After that pipeline will automatically triggered and we can see in the pipelines tab and build will be having 2 stages.
 
-13. On Azure devops portal, there is an option of `Approval and checks` and it is used between dev and prod pipeline. When dev got succedeed and then we need some high level approval like tech lead and then we need to deploy the changes to prod environment. 
+13. On Azure devops portal, there is an option of `Approval and checks` and it is used between dev and prod pipeline. When dev got succeeded and then we need some high level approval like tech lead and then we need to deploy the changes to prod environment. 
 
 For this, on azure devops portal, go to prod environment in pipelines tab and then go to `Approval and checks` and select `Approval`  from + symbol. Then add the mail id of a person from which you need approval and then a mail will be triggered to that person and in this way prod environment will be protected.
 

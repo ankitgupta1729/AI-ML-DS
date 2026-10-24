@@ -20,13 +20,13 @@ Using this we can see the model's capability.
 
 - 1B parameters model: we can use it for pattern matching and basic knowledge of the world. For example: Restaurant reviews sentiment classification etc.
 - 10B Parameters model: These models have greater world knowledge and can follow basic instructions. For example: Food order chatbot.
-- 100B+ parameters model: These models have rich world knowledge and comples reasoning. For example: to look for a brainstorming partner.
+- 100B+ parameters model: These models have rich world knowledge and complex reasoning. For example: to look for a brainstorming partner.
 
 6. Closed or Open Source Models:
 
 - Closed Source: These models are accessible via cloud programming interface. It is easy to use in applications. It contains more large/powerful models. Also, these are relatively inexpensive.
 
-- Open Source: Here, we have full control over these models, we don't have to worry if company retire or depricate these models. We can these models on our pc, on-prem etc. Also, we have full control over data privacy/access. 
+- Open Source: Here, we have full control over these models, we don't have to worry if company retire or deprecate these models. We can these models on our pc, on-prem etc. Also, we have full control over data privacy/access. 
 
 7. AGI (Artificial General Intelligence):
 

@@ -1,4 +1,4 @@
-1. A Model, in general, is somethang that simulates or represents something. For example, a weather model is something that simulates the weather. It predicts the weather means it keeps track of how the weather has been so far means it checks the pattern in past and tells what it likelt to be in the future.   
+1. A Model, in general, is something that simulates or represents something. For example, a weather model is something that simulates the weather. It predicts the weather means it keeps track of how the weather has been so far means it checks the pattern in past and tells what it likely to be in the future.   
 
 A language model does the similar thing. A language model does modeling the language. A language model captures and simulates what the language is.
 
@@ -133,7 +133,7 @@ Given a sequence of tokens $x_1,x_2,...,x_t$, predict the most likely next token
 
 Transformer solves this problem using embeddings, word positions and ENTIRE text to generate the next word/token.
 
-Transformer compare words parallelly and predict the next word.
+Transformer compare words in parallel and predict the next word.
 
 Example:
 

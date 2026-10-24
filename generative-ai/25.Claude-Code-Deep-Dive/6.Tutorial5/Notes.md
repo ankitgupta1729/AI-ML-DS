@@ -1,4 +1,4 @@
-1. To resume the conversation, you can use `/resume`. Supoose, you ask in the claude terminal as `hi, how are you` and then you kill the terminal and again you open the claude terminal and put the command as `/resume` to see previous conversation.
+1. To resume the conversation, you can use `/resume`. Suppose, you ask in the claude terminal as `hi, how are you` and then you kill the terminal and again you open the claude terminal and put the command as `/resume` to see previous conversation.
 
 2. You can see the release notes using `/release-notes`.
 

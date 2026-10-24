@@ -8,7 +8,7 @@
 
 3. LangChain was launched in October 2022 as an open source project by Haris and Chase. It is framework tailored to developing applications leveraging large language models (LLMs). It provides python and javascript libraries serving as a central hub for large language models (LLM) development. It is integrated with the external data sources like Pinecone, Chromadb and also it is integrated with various workflows. 
 
-4. It is launched in October 2022 and became the fastest growing open source project on github (https://github.com/langchain-ai/langchain). By June 2023, it is playing a vital role in popularizing Generative AI alongside release of OpenAI's ChatGPT. LangChain supports various LLM use cases like grom chatbot to intelligent search and summarization services. 
+4. It is launched in October 2022 and became the fastest growing open source project on github (https://github.com/langchain-ai/langchain). By June 2023, it is playing a vital role in popularizing Generative AI alongside release of OpenAI's ChatGPT. LangChain supports various LLM use cases like from chatbot to intelligent search and summarization services. 
 
 5. How to Generate Text using an LLM:
 
@@ -216,7 +216,7 @@ db = Chroma(
 )
 ```
 
-22. to run the code in `db_init.py`, install libraries using `pipenv install chromadb sentence_transformers` and then run the file to initialize the database, loaded the documents, splitted the text, created embeddings and stored everything in the database. After that run the code in `rag.py`
+22. to run the code in `db_init.py`, install libraries using `pipenv install chromadb sentence_transformers` and then run the file to initialize the database, loaded the documents, split the text, created embeddings and stored everything in the database. After that run the code in `rag.py`
 
 23. For agents and tools, go to kaggle, create a new notebook and run the code in `agents.ipynb` file but upload the model file on kaggle as described in `agents.ipynb` file first.
 

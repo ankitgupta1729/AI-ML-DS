@@ -40,7 +40,7 @@ And finally, with AI, like we mentioned earlier, every organization dreams of be
 
 8. In 2020, we introduced the world's first and only Lakehouse platform in the cloud, combining the best of data warehouses and data lakes in an open and unified platform for data and AI workloads.
 
-And in 2021, our founders, alomg with individuals from UC Berkeley and Stanford University, coined the term data Lakehouse architecture pioneered by Databricks. The Lakehouse architecture took the worls by storm, and as of today, 74% of global CIOs have reported they utilize the Lakehouse in their data estate.
+And in 2021, our founders, along with individuals from UC Berkeley and Stanford University, coined the term data Lakehouse architecture pioneered by Databricks. The Lakehouse architecture took the world by storm, and as of today, 74% of global CIOs have reported they utilize the Lakehouse in their data estate.
 
 9. The Data Lakehouse is an open, unified foundation for all your data.
 
@@ -94,13 +94,13 @@ A data lake is an unstructured or semi-structured data repository that allows fo
 
 Data links are designed to ingest and store all types of data, structured data like in a data warehouse but also semi-structured or unstructured data, which is critical for today's machine learning and advanced analytics use cases and data can be stored without any predefined schema. 
 
-Data lakes are often used to consolidate all of an organizations's data into a single central location. 
+Data lakes are often used to consolidate all of an organization's data into a single central location. 
 
 In a data lake, data is in all stages of the refinement process that it can be in stored in. 
 
 That means there's raw data that can be ingested and stored right alongside with an organization's structured data sources like database tables as well as intermediate data tables generated in the process of refining that raw data. 
 
-However, a data lake has a few drawbacks. First, they are difficult to set up for users, more familiar with data warehouse technology. Second, since data can be stored in all stages of its refinefent process, it's often un-validated and dirty or not usable for BI. If setup incorrectly, it will be too lax of a design and a data lake could become more of a data swamp of large amount of dirty data in unverified and uncontrolled groups making some governance and security issues. 
+However, a data lake has a few drawbacks. First, they are difficult to set up for users, more familiar with data warehouse technology. Second, since data can be stored in all stages of its refinement process, it's often un-validated and dirty or not usable for BI. If setup incorrectly, it will be too lax of a design and a data lake could become more of a data swamp of large amount of dirty data in unverified and uncontrolled groups making some governance and security issues. 
 
 #### Strengths of Data Lakes:
 
@@ -190,7 +190,7 @@ And the last feature in lake flow is jobs. Lakeflow jobs allows you to orchestra
 
 Once you have all your data in, now you need to make use of that data through analysis and business intelligence.
 
-For data warehousing analytics, Databricks offer databricks sql. Databricks SQL is a collection of tools for BI and data analytics. On the surface, it supports the use of ANSI SQL through a full featured SQL editing environment within the platform. However, under the cover, Databricks SQL has been optimized specifically for SQL workloads and production environments offering world-class price performance. Paired wih a unified storage layer, Databricks SQL provides you with the support for both batch and streaming workloads for many enterprise level use cases in data analytics and BI. With alerts and schedules, you are able to keep track of how your queries are performing and automatically refresh results as needed. The best part of this, it is all available in a single platform, keeping your data and users across teams together to avoid working in silos. And with AI integrated directly into the platform, users can get answers quicker through the use of natural language queries. 
+For data warehousing analytics, Databricks offer databricks sql. Databricks SQL is a collection of tools for BI and data analytics. On the surface, it supports the use of ANSI SQL through a full featured SQL editing environment within the platform. However, under the cover, Databricks SQL has been optimized specifically for SQL workloads and production environments offering world-class price performance. Paired with a unified storage layer, Databricks SQL provides you with the support for both batch and streaming workloads for many enterprise level use cases in data analytics and BI. With alerts and schedules, you are able to keep track of how your queries are performing and automatically refresh results as needed. The best part of this, it is all available in a single platform, keeping your data and users across teams together to avoid working in silos. And with AI integrated directly into the platform, users can get answers quicker through the use of natural language queries. 
 
 21. Complete data warehousing capabilities:
 

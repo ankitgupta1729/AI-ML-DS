@@ -1,6 +1,6 @@
 1. First clone the repos from `https://github.com/mosh-hamedani/expense-tracker-starter` and `https://github.com/mosh-hamedani/helpdesk`. I will fix the bugs, refactor the code and add new features.
 
-2. Claude code is an agentic coding tool. Basically, it is a coding agent. A coding agent can access to tools like write,read, bash, git etc. on itts own and do actions.
+2. Claude code is an agentic coding tool. Basically, it is a coding agent. A coding agent can access to tools like write,read, bash, git etc. on its own and do actions.
 
 Other coding agent are github co-pilot, windsurf, cursor etc. 
 

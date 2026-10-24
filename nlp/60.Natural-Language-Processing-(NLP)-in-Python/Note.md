@@ -1781,7 +1781,7 @@ So there you go. This is the first sentence we are going to each element that ha
 
 Of course, I'm talking about the unigram model. And then let me look at another word that might be here. For example, for example, the word thanks. Let's see how it is classified on our corpus. So as you can see, we have one, two, three, four, five NNS and one NNS-HL. That means that when we classify our word, we will most certainly classify that as NNS. You can also test that on your own and see different words in this corpus, this whole corpus, to see how your word will be classified.
 
-Again, downside of this unigram probabilistic model that we are using does not generalize for unsign words. For example, I bet that Twitter is a word that's not on the Brown corpus. So as it's not in the Brown corpus, [unclear]. If we pass Twitter to our unigram model, it will come out as none. And this is relevant because Twitter is a relevant word today, given the world that we are right now and the Brown corpus is from the 60s or 70s. I'm not sure of the decade, but it's a corpus that wasn't available, particularly this text.
+Again, downside of this unigram probabilistic model that we are using does not generalize for unseen words. For example, I bet that Twitter is a word that's not on the Brown corpus. So as it's not in the Brown corpus, [unclear]. If we pass Twitter to our unigram model, it will come out as none. And this is relevant because Twitter is a relevant word today, given the world that we are right now and the Brown corpus is from the 60s or 70s. I'm not sure of the decade, but it's a corpus that wasn't available, particularly this text.
 
 The news is not up to the text regarding today's language. So this is extremely relevant. It's a downside also of the unigram taggers. But what I wanted to understand is how we train the model. Then we've seen how we train our unigram probabilistic and bigram probabilistic model and the concept of evaluating our model on unseen data. Second, important concept of this class, the question of bigrams and trigrams. So this comes up a lot of times during NLP, for example.
 
@@ -2254,7 +2254,7 @@ The second exercise is focused on retrieving data from the web. We are going to 
 
 OK, so have a go at the exercises. Remember, if you are having trouble, you have the accompanying solutions in the same folder, in the course directory.
 
-[Check the notebooks for the 2 excersise notebooks]
+[Check the notebooks for the 2 exercise notebooks]
 
 #### Useful links
 
@@ -2325,7 +2325,7 @@ So this representation of zeros and ones should make them similar to each other.
 
 See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
-003 Word Co-Occurence Matrices.en
+003 Word Co-Occurrence Matrices.en
 =================================
 
 So a really important concept in natural language processing is that you can represent the word by its company, so you can represent the word based on the words that are around that word. Because imagine we have here in this one, he bought a banana. So bought, banana. And then we have, for example, bought a pear. So these neighbors are similar: a pear, or bought a, and also we have here bought a banana again. And for example, imagine this carry. The carry is surrounded by they and by cherry. Ate is surrounded by they and a banana. Ate is surrounded by they and a pear.
@@ -2360,7 +2360,7 @@ is the a word. So we have here the examples that we want. I'm going to call this
 
 See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
-004 Filling Co-Occurence Matrix.en
+004 Filling Co-Occurrence Matrix.en
 ==================================
 
 Hello again, and I hope you're ready. This code will be something that will probably make us navigate throughout several dimensions. Don't worry, what's important is that you understand how we are going to fill these elements in this matrix right here. Remember that this will be the co-occurrence matrix in this case that we have here, for our real examples of our sentences. OK, so what I'm going to do is first define the number of neighbors that we want to see.
@@ -2478,7 +2478,7 @@ So now what we are going to do is to calculate this cosine similarity for the en
 
 See the notebook [here](./Course-Material/Natural%20Language%20Processing%20in%20Python/05%20-%20Word%20Vectors/01%20-%20Word%20Similarities%20and%20Vector%20Representation.ipynb)
 
-007 Word Similarities from Co-Occurence Matrix.en
+007 Word Similarities from Co-Occurrence Matrix.en
 =================================================
 
 Hello, everyone, and welcome again on this lecture on word vectors. Based on our co-occurrence matrices, we are going to extract the most similar words using cosine distance. So I'm going to write here a heading, finding similar words using cosine. OK, so checking our word_cooccurrences again, remember that we have this. So ate has the word a on its neighbor of one, the one meaning the word before and after, about seven times, and the word banana about nine times and so on.
@@ -2676,7 +2676,7 @@ In our case, to better predict the target word, because of all the landscape tha
 
 It depends on the way that the algorithm assigns weights, and it depends on how the algorithm is able to assign these weights to each variable and produce a function, because that's what most algorithms do that will enable the algorithm to understand what is the outcome for a specific set of X or a specific set of features. In this case, imagine that this weight is a random weight for one of the columns of our context vector returning here. So the columns of our context vector and that you have all the possibilities of the weight of that vector throughout the space of that of that weight.
 
-So you can multiply that by one, by two by four, by ten by one hundred. You have a huge number of possibilities. Luckly, algorithms can find that minimum, in this case, the minimum of the error. And this cost is normally what you would call error. So in our case, what's interesting to us is that we want the minimum error and maximum accuracy. So we want to find the point where the optimization of those weights brings the maximum accuracy. So we have the correct predicted word given its context.
+So you can multiply that by one, by two by four, by ten by one hundred. You have a huge number of possibilities. Luckily, algorithms can find that minimum, in this case, the minimum of the error. And this cost is normally what you would call error. So in our case, what's interesting to us is that we want the minimum error and maximum accuracy. So we want to find the point where the optimization of those weights brings the maximum accuracy. So we have the correct predicted word given its context.
 
 And this is how most algorithms will learn. We are going to use one that probably you have heard a lot, which is called neural networks. The neural networks are an advanced model or mainly a model that enables you to solve a problem that's non-linear, which is something that more simple algorithms don't do. For example, let's see a simple algorithm that draws a line in this case, a simple line that is used to predict something but linearly. So there you go.
 

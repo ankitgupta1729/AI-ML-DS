@@ -85,7 +85,7 @@ Using reducers, we can override messages.
 
 Run the script as `python3 4.reducers/reducer_demo.py` and see the output with `add` function is working as reducer and will add the discount.
 
-For messgaes state, run the script as `python3 4.reducers/reducers_messagesstate_demo.py` and see the output.
+For messages state, run the script as `python3 4.reducers/reducers_messagesstate_demo.py` and see the output.
 
 14. Tool Calling:
 
@@ -106,7 +106,7 @@ HITL is a pattern where an AI agent pauses its execution to seek human validatio
 HITL can be applied for various use cases like:
 
 A. Accept/Reject:
-   - Report to stakehoders: Before the report sent out, it is reviewed by someone in middle and it can be whether accepted or rejected. If it is accepted then the report is sent out by agent and if it is rejected then it will be summarizing again by agent.
+   - Report to stakeholders: Before the report sent out, it is reviewed by someone in middle and it can be whether accepted or rejected. If it is accepted then the report is sent out by agent and if it is rejected then it will be summarizing again by agent.
   
 B. Review Tool Calls:
 

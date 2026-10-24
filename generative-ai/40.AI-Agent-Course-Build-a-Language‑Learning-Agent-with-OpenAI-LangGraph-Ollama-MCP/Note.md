@@ -25,7 +25,7 @@ We use zipf's law to find rare words and use wordfreq library to find rare words
 6. ReAct agent basics:
    
    
-Here, we use English, Spanish and German laguages for ReAct agent. Here we start to build language learning agent. Here, we build the langgraph react agent. Here we build the basic agent which take the prompt and return the list of random words. 
+Here, we use English, Spanish and German languages for ReAct agent. Here we start to build language learning agent. Here, we build the langgraph react agent. Here we build the basic agent which take the prompt and return the list of random words. 
 
 7. What actually is an AI agent ?
 
@@ -57,7 +57,7 @@ There are multiple different types of user requests coming in and agent can esta
 
 It is also possible to build much more structured agents. 
 
-Finally when you need an agent to do something really complex, you can consider building a multi-agent application. This allows you to build multiple smaller agents focused on more speciific tasks and orchestrate them using a controlling agent. 
+Finally when you need an agent to do something really complex, you can consider building a multi-agent application. This allows you to build multiple smaller agents focused on more specific tasks and orchestrate them using a controlling agent. 
 
 ![5.png](./images/5.png)
 
@@ -119,7 +119,7 @@ However, there is no guarantee that the conclusion it comes to are correct at th
 
 11.  
 
-Stage 2: Reasoning Reinfocement Learning(RL):
+Stage 2: Reasoning Reinforcement Learning(RL):
 
 So, our fine-tuned model is: given a fresh set of problems and it generates multiple reasoning paths for each one. Some correct, some wrong like "who sits in the middle?" question, it can answer Alice. And these answers are used to train a separate reward model, which is able to predict things like the correctness, the logical consistency and the clarity of an answer. 
 

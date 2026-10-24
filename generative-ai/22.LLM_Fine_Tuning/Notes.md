@@ -38,7 +38,7 @@ Instead of having to re-train the billions of parameters in the large GPT models
 
 OpenAI then just needs to save those extra weights, allowing you to access your own pre-trained models.
 
-- From auser perspective, the fine-tuning process requires two things:
+- From a user perspective, the fine-tuning process requires two things:
     - A base model
     - A training dataset for fine-tuning:
         - Known inputs

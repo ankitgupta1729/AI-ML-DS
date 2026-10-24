@@ -361,7 +361,7 @@ Follow the doc `https://docs.streamlit.io/deploy/streamlit-community-cloud/deplo
 - Now go to Advanced Settings and put `OPENAI_API_KEY="..."`
 - Save and then deploy and run `https://my-chat-application.streamlit.app/` and ask questions like `what are the opening hours?` or `what is the return policy?` and `what was my first question?` (to test chat history).  
 
-21. Handle Multiple Retrievers (mulyiple vectorstores) by using query analysis technique to use which vectorstore to use.:
+21. Handle Multiple Retrievers (multiple vectorstores) by using query analysis technique to use which vectorstore to use.:
 
 Here we have large documents with multiple resources.
 
@@ -466,7 +466,7 @@ Now, go back and connect with cluster `ClusterLangChain` by clicking on `Connect
 
 Put the username and password and create a database user and then select a connection method and select `Python` as driver and version as `3.12 or later` and then copy the connection string and put it as secrets in your project `Project3` and update .env file.
 
-In .env, update opanai key, mongodb connection string and DB_NAME=elearning and COLLECTION_NAME=mongodb-training. 
+In .env, update OpenAI key, mongodb connection string and DB_NAME=elearning and COLLECTION_NAME=mongodb-training. 
 
 In MongoDB site, you can change the database password by going to `Database Access` tab and make sure built-in role should be `atlas admin`.    
 
@@ -548,7 +548,7 @@ When we create our own agent, we need to provide a list of tools that it can use
 - description(str)
 - args_schema(Pydantic BaseModel)
 
-We also need docstrings for tool decorator(@tool). So, decorator use the function's docstring as the tool's description. It MUST bee provided otherwise we get an error. Language model looks for this information/description to understand its purpose and use of a particular tool.
+We also need docstrings for tool decorator(@tool). So, decorator use the function's docstring as the tool's description. It MUST be provided otherwise we get an error. Language model looks for this information/description to understand its purpose and use of a particular tool.
 
 Now, run `python3 agent.py` and get the output as:
 
@@ -889,5 +889,5 @@ Now, select git provider as github and add your repo there.
 
 Now, put the start command as `uvicorn main:app --host 0.0.0.0` and then go to Environment variables and put all the things from .env as key-value pair like `OPENAI_API_KEY` as variable name and put its value..
 
-At the end, click on `Deploy Web Service` and at the end after build successful, check the URL displyed on the page by apending `docs` at the end i.e. `https://rag-rest-webservice.onrender.com/docs` with `joke` endpoint and topic as `python developers`.
+At the end, click on `Deploy Web Service` and at the end after build successful, check the URL displayed on the page by appending `docs` at the end i.e. `https://rag-rest-webservice.onrender.com/docs` with `joke` endpoint and topic as `python developers`.
 

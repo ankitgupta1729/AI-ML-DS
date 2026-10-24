@@ -1,4 +1,4 @@
-1. Claude Code is an Agentic Coding tool which is created by Anthropic. Other coding tools include Co-Pilot, Cursor, Winsurf etc. 
+1. Claude Code is an Agentic Coding tool which is created by Anthropic. Other coding tools include Co-Pilot, Cursor, Windsurf etc. 
 
 2. First install the claude code on your system using `curl -fsSL https://claude.ai/install.sh | bash`. Now, Go to `Tutorial1` and type `claude` in vscode terminal. Before that take the subscription plan from `https://claude.com/pricing`
 
@@ -8,7 +8,7 @@
 
 5. type `can you switch to a new branch called claude-edits`, so claude will switch to a new branch because claude has knowledge about the git branches. It can run bash commands also. It can do stage and commit as well and resolve conflicts as well in git after merging. You can check changed branches in VS Code.
 
-6. Put some github code in current local folder. Now, it's a good idea to run `\init` command initially for `claude.md`, so calude code scans entire codebase of current folder and summarize and store into claude.md file. 
+6. Put some github code in current local folder. Now, it's a good idea to run `\init` command initially for `claude.md`, so claude code scans entire codebase of current folder and summarize and store into claude.md file. 
 
 7. You can change the project structure in claude.md, for example, you can add a folder as `hooks` and then claude will understand it and then for your project, you can type, `can you create a hook to store user's theme preference in, when they toogle the theme on site? Store the value in local storage for next time. Don't use the hook anywhere yet.`
 
@@ -38,7 +38,7 @@ If you press ESC twice then it rewind to a previous point in the session.
 
 Claude Code can do planning and thinking. Planning and Thinking both are different things. Thinking is what claude code to do when you ask claude code to think about a solution before writing the code and Planning is to make a plan for how to add intensive features and ask you to approve it.
 
-Type `Shift+Tab` to switch between plan mode and accept edit mode. Now, in the plan mode, you can write something as `Can you make a custom component for an Avatar (no pic, only initial) and find any places in the project where it can replace Avatar-like templates` and type Enter. You can put instructions in claude.md and put an attachement in claude code terminal.
+Type `Shift+Tab` to switch between plan mode and accept edit mode. Now, in the plan mode, you can write something as `Can you make a custom component for an Avatar (no pic, only initial) and find any places in the project where it can replace Avatar-like templates` and type Enter. You can put instructions in claude.md and put an attachment in claude code terminal.
 
 Thinking mode is good when claude code works on more complex logic. It takes more tokens. For example, `Implement a comment system into the application, where users can authenticate and then comment on blog posts. Think hard about this implementation, including the database schema, authentication services, moderation and real-time updates.`. Here, in this example, "Think" will trigger the thinking mode and in claude code terminal, use planning mode also to know, it thinks. So, "Think" word in the prompt enables the thinking mode here. Also, Put task in chunks and then guide model for each small task. 
 
@@ -56,13 +56,13 @@ So, you can think MCP servers as to plugin claude code or any other client and c
 
 For example, `Supabase MCP Server` have tools like `list_tables()`, `deploy_edge_function()`, `execute_sql()` etc. So, if I install `Supbase MCP Server`the claude code will have access to all these tools.
 
-Another MCP server is `Playwright MCP` which provides browser automation capability using Playwright. This server enables LLMs to interact with web pages through structured accessibility snapshots, bypasssing the need for screenshots or visually-tuned models.
+Another MCP server is `Playwright MCP` which provides browser automation capability using Playwright. This server enables LLMs to interact with web pages through structured accessibility snapshots, bypassing the need for screenshots or visually-tuned models.
 
 First run some commands on mac to add mcp servers then in claude code terminal type `/mcp` for list of mcp servers.
 
 17. Subagents:
 
-Each subagent can be `isolated` and configured to work on particular tasks. We can make subagents who can wrok as `Unit Tester`  or `Security Auditor` or `Code Reviewer` or `UX Reviewer` etc. Each of these sub-agents are independent to each other and have their own system prompts and tools and context window. 
+Each subagent can be `isolated` and configured to work on particular tasks. We can make subagents who can work as `Unit Tester`  or `Security Auditor` or `Code Reviewer` or `UX Reviewer` etc. Each of these sub-agents are independent to each other and have their own system prompts and tools and context window. 
 
 Claude Code can delegate tasks to subagents. Each subagent has specialized expertise which we can fine-tune in a specific area through detailed system prompt. Since each subagent has the isolated context window, it keeps context cleaned and focused leading to better results. It also reduce context overload in the main session.
 
@@ -70,6 +70,6 @@ In claude code terminal, type `/agent` for list of agents. Now, create a new age
 
 For example, you can describe as `Expert UI and UX engineer who reviews the UI & UX of React components in a browser using Playwright, take screenshots and then offers feedback on how to improve the component in terms of visual design, user experience and accessibility.` and hit enter. Claude code will create this new agent.
 
-You can see the newly created agent in agents folder inside .claude folder with the markdown file. You can edit this mardown file also if you want.
+You can see the newly created agent in agents folder inside .claude folder with the markdown file. You can edit this markdown file also if you want.
 
 18. For github code and its review, you can use `/install-github-app` and then choose the current or different directory and then install and authorize claude on github. Now, create a long-lived token. Now, create and merge pull request. Now, create an issue in github repo and put comment like `@claude can you fix it` the claude will fix it. 

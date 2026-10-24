@@ -10,7 +10,7 @@ Source: https://www.youtube.com/watch?v=V-lI7AmusGs
 ### Go Usecases:
 6. Go is used for cloud and network services  
 7. It is good for command line interfaces  
-8. It is good for backednd web development (creating APIs, authentication services etc)  
+8. It is good for backend web development (creating APIs, authentication services etc)  
 9. It is good for automation and devOps.  
 10. It is good for utilities and standalone tools.  
 

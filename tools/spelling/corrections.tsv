@@ -1,0 +1,275 @@
+# Reviewed spelling and technical-term corrections for the course notes.
+#
+# Every row was checked by hand against its context. Columns (tab separated):
+#   scope    module numbers the fix applies to ("*" = all course notes, "53,54" = only those)
+#   find     text to replace; matched case-insensitively on whole words
+#   replace  replacement; kept as written, except that a capitalised match gets a
+#            capitalised replacement when the replacement starts in lowercase
+#   note     why (speech-to-text mishearing, typo, ...)
+#
+# Only prose is touched: fenced code, inline `code`, URLs and link targets are left alone.
+# Apply with: python tools/spelling/apply.py  (use --check to preview without writing)
+#
+# scope	find	replace	note
+# ---- speech-to-text mishearings of tools and libraries ----
+53	Tenzer flow to intenser flow data sets	TensorFlow and TensorFlow Datasets	ASR
+53	intenser flow	in TensorFlow	ASR
+*	Tenzer board	TensorBoard	ASR
+*	Tenzer flow	TensorFlow	ASR
+53	Tensas board	TensorBoard	ASR
+*	tensor board	TensorBoard	ASR
+*	tensor flow	TensorFlow	ASR
+53	Tenzer	TensorFlow	ASR (remaining uses mean the library)
+*	Jupiter	Jupyter	ASR
+*	Anakonda	Anaconda	ASR
+*	Akonda	Anaconda	ASR
+*	Google Collaboratory	Google Colaboratory	misspelling
+*	Google Collab	Google Colab	misspelling
+*	pie torch	PyTorch	ASR
+*	Kiraz	Keras	ASR
+*	Queyras	Keras	ASR
+53	Tiara's	Keras	ASR
+53	Hera's	Keras	ASR
+54	tf.carus	tf.keras	ASR
+53	math plot Leyb	Matplotlib	ASR
+53	math plot, Leyb dot plot	matplotlib dot pyplot	ASR
+53	Math plot lib	Matplotlib	ASR
+54	maplolip	Matplotlib	ASR
+54	my plotlib	matplotlib	ASR
+53	numpty	NumPy	ASR
+53	numpad package	NumPy package	ASR
+53	convert it to an umpire	convert it to a NumPy array	ASR
+53	a no by extension	a NumPy extension	ASR
+53	multiple Dampier's	multiple NumPy arrays	ASR
+53	NPC format	NPZ format	ASR
+53	ENPI	NP	ASR (np)
+53	Asira	asarray	ASR
+53	as Arae	asarray	ASR
+53	Escalon, Lern	scikit-learn	ASR
+53	Escalon	scikit-learn	ASR
+53	Essakane learn	scikit-learn	ASR
+53	I o ed tools	io, itertools	ASR
+53	Ed Tools	itertools	ASR
+53	itour tools	itertools	ASR
+54	Linus	Linux	ASR
+54	Subline Text	Sublime Text	ASR
+54	Boxel 51	Voxel51	ASR
+54	create regbox	Create RectBox	ASR (labelImg button)
+34	Minicube	Minikube	ASR
+34	Intelli sense	IntelliSense	ASR
+34	pub subqueue	Pub/Sub queue	ASR
+35	Cafe,TensorFlow	Caffe, TensorFlow	framework name
+53	h prem's	hparams	ASR (tensorboard.plugins.hparams)
+53	H. Perram tuning	HParam tuning	ASR (logs/hparam_tuning)
+53	Dot Skemp	Dot skip	ASR (dataset.skip)
+53	Dot Bache	Dot batch	ASR (dataset.batch)
+53	Dot Streiff time	Dot strftime	ASR
+53	Restor best weights	restore best weights	ASR
+53	restore Bestway	restore best weights	ASR
+53	Carlebach	callback	ASR
+53	Let's run the Selmo	Let's run the cell	ASR
+53	let's Kodet	let's code it	ASR
+54	Verbows	Verbose	ASR
+# ---- speech-to-text mishearings of ML terms, datasets and models ----
+53	Emmis	MNIST	ASR
+53	amnesty data set	MNIST data set	ASR
+53	feminised data set	MNIST data set	ASR
+53	amnesties	MNIST	ASR
+53	Éminence data set	MNIST data set	ASR
+53	Imust code	MNIST code	ASR
+53	Brackett's	brackets	ASR
+54	minutes data set	MNIST data set	ASR
+53	Col's	kernels	ASR
+*	Colonel's	kernel's	ASR
+*	colonel	kernel	ASR
+53	Tensas	tensors	ASR
+53	Anan's	ANNs	ASR
+53	Epic's	epochs	ASR
+53	conveyers	conv layers	ASR
+53	conveyer	conv layer	ASR
+53	puling	pooling	ASR
+53	Spar's categorical	sparse categorical	ASR
+53	wait Dekay	weight decay	ASR
+53	weight Waitiki	weight decay	ASR
+53	Waitaki	weight decay	ASR
+53	Dekay	decay	ASR
+53	Lamda	Lambda	misspelling
+53	Lambda Times Hetta	Lambda times theta	ASR
+53	Regularisation Technik	Regularisation technique	ASR
+53	Reginette	ResNet	ASR
+53	Illest VRC	ILSVRC	ASR
+53	illest Vassy	ILSVRC	ASR
+53	last Vassy contest	last ILSVRC contest	ASR
+53	edition of VRC	edition of ILSVRC	ASR
+53	in VRC and Kocho	in ILSVRC and COCO	ASR
+53	Jebus	GPUs	ASR
+53	Felter	Filter	ASR
+53	Xeros	zeros	ASR
+53	size k biem	size k by m	ASR
+53	only Ninth's	only ninths	ASR
+53	map of ARC's	map of arcs	ASR
+53	arms propre	RMSprop	ASR
+53	Confusion Matrixx	Confusion Matrix	typo
+53	CNN Nete	CNN net	ASR
+53	wolfs	wolves	misspelling
+53	rigourously	rigorously	misspelling
+53	compatability	compatibility	misspelling
+53	auxillary	auxiliary	misspelling
+53	pervious	previous	typo
+54	reloop	ReLU	ASR
+54	relook	ReLU	ASR
+54	eloop	ELU	ASR
+54	illoop	ELU	ASR
+54	flowat	float	ASR
+54	confnets	ConvNets	ASR
+54	confnet	ConvNet	ASR
+54	COFnet	ConvNet	ASR
+54	inshow	imshow	ASR
+54	intshow	imshow	ASR
+54	curacies	accuracies	ASR
+54	curacy metric	accuracy metric	ASR
+54	accuracy invalidation	accuracy in validation	ASR
+54	loss invalidation	loss in validation	ASR
+54	sebdo code	pseudo code	ASR
+54	prescaling	Rescaling	ASR (preprocessing.Rescaling)
+54	TenseNet	DenseNet	ASR
+54	bflood16	bfloat16	ASR
+54	FAS-RCNN	Fast R-CNN	ASR
+54	Krzyzewski	Krizhevsky	ASR
+54	Shengang	Shenggan	ASR (BCCD repo author)
+54	Chengan repo	Shenggan repo	ASR
+54	C-Tripio	C-3PO	ASR
+54	catmix	CutMix	ASR
+54	correctifies	corrects	ASR
+54	disbalance	imbalance	wrong word
+54	unclockwise	anticlockwise	wrong word
+54	criterias	criteria	misspelling
+59	can volitional narrow networks	convolutional neural networks	ASR
+59	called volitional part	called convolutional part	ASR
+59	multilayer person runs	multilayer perceptrons	ASR
+59	multilayered precept one	multilayer perceptron	ASR
+59	deploring library	deep learning library	ASR
+59	best analyzation layers	batch normalization layers	ASR
+48	unregulated Rised	unregularized	ASR
+48	from_logists	from_logits	ASR
+48	for_logist regression	for logistic regression	ASR
+48	three output neurals	three output neurons	ASR
+48	funct tion	function	ASR
+48	electoral cardia graham	electrocardiogram	ASR
+48	matmal	matmul	ASR
+48	caveal	caveat	ASR
+48	Rummelhardt	Rumelhart	name
+48	prouduct	product	typo
+48	ensamble	ensemble	misspelling
+49	cluster centralism	cluster centroids	ASR
+49	datas coordinates	data's coordinates	typo
+49	this datas	this data	typo
+49	anamoly	anomaly	misspelling
+49	ctually	actually	typo
+49	Branskill	Brunskill	name (Emma Brunskill)
+49	Majko Physics Engine	MuJoCo Physics Engine	name
+49	Andreesen	Andreessen	name
+36	Maroney	Moroney	name (Laurence Moroney)
+36	Adam Cotes	Adam Coates	name
+36	Pranav Ross Baker	Pranav Rajpurkar	name
+36	inconsistence labeling	inconsistent labeling	wrong word
+36	a way, consistence with	a way consistent with	wrong word
+36	lebeling	labeling	typo
+35	there is containerism	there is containerization	wrong word
+35	in aquariable data store	in a queryable data store	ASR
+35,43	anonymous sized	anonymized	ASR
+35	the GDP are no longer applies	the GDPR no longer applies	ASR
+43	GDP our compliance	GDPR compliance	ASR
+35	chache	cache	typo
+35	Infrastracture	Infrastructure	misspelling
+35	reployed	redeployed	typo
+43	precompeting	precomputing	ASR
+44	casine activation vector	concept activation vector	ASR
+44	similarity sworder	similarity sorter	ASR
+44	Colonel explainer	Kernel explainer	ASR (SHAP KernelExplainer)
+44	rentalss	rentals	typo
+44	Shapp, which is short for shapely	SHAP, which is short for Shapley	ASR
+57	Analize	Analyze	misspelling
+58	Arithmetric	Arithmetic	misspelling
+60	excersise	exercise	misspelling
+60	Luckly	Luckily	misspelling
+60	unsign words	unseen words	ASR
+60	Co-Occurence	Co-Occurrence	misspelling
+*	Alex Net	AlexNet	model name
+*	Google Net	GoogLeNet	model name
+*	image net	ImageNet	dataset name
+*	open CV	OpenCV	library name
+# ---- typos in hand-written notes ----
+02	clubed	clubbed	typo
+02	Partioning	Partitioning	typo
+02	acrosss	across	typo
+02	Custominzing	Customizing	typo
+02	architecure	architecture	typo
+02	apllications	applications	typo
+02	apllication	application	typo
+02	entiny	entity	typo
+02	aseembled	assembled	typo
+02	assembeled	assembled	typo
+02	stoppping	stopping	typo
+02	readibility	readability	typo
+02	persisiting	persisting	typo
+02	Location Stickness	Location Stickiness	typo
+02	sefaultdict	defaultdict	typo
+02	old keyl	old key	typo
+02	parallely	in parallel	nonstandard word
+02	MLLib	MLlib	library name
+04	baches of data	batches of data	typo
+04	treaflops	teraflops	typo
+04	trined the model	trained the model	typo
+04	analysis ofr text	analysis for text	typo
+04	Databrics	Databricks	typo
+14	alomg	along	typo
+14	the worls by storm	the world by storm	typo
+14	organizations's	organization's	typo
+14	refinefent	refinement	typo
+14	wih	with	typo
+19	backednd	backend	typo
+22	auser	a user	typo
+23	grom chatbot	from chatbot	typo
+24	mulyiple	multiple	typo
+24	opanai key	OpenAI key	typo
+24	displyed	displayed	typo
+24	apending	appending	typo
+24	MUST bee provided	MUST be provided	typo
+25	complexr	complex	typo
+25	Winsurf	Windsurf	typo
+25	calude	claude	typo
+25	attachement	attachment	typo
+25	bypasssing	bypassing	typo
+25	wrok	work	typo
+25	mardown	markdown	typo
+25	slack-gif-creater	slack-gif-creator	typo (skill name)
+25	Simliarly	Similarly	typo
+25	persistant	persistent	typo
+25	Supoose	Suppose	typo
+25	itts own	its own	typo
+25	Bydu	Baidu	typo
+25	Infernia-G	Inferentia	typo (AWS Inferentia)
+26	messgaes	messages	typo
+26	stakehoders	stakeholders	typo
+29	somethang	something	typo
+29	likelt	likely	typo
+29	parallelly	in parallel	nonstandard word
+31	refled	reflected	typo
+31	Pipleline	Pipeline	typo
+31	conttrol	control	typo
+31	succedeed	succeeded	typo
+32	comples	complex	typo
+32	depricate	deprecate	typo
+34	cloud sheel	Cloud Shell	typo
+34	plae	place	typo
+34	GCVMs	GCE VMs	typo
+35	parallelly	in parallel	nonstandard word
+40	laguages	languages	typo
+40	speciific	specific	typo
+40	Reinfocement	Reinforcement	typo
+45	mnomonics	mnemonic	typo
+47	suport	support	typo
+04	softwares	software	grammar (uncountable)
+23	splitted	split	grammar
+54	splitted	split	grammar

@@ -65,7 +65,7 @@ AI-ML-DS/
 ├── projects/               Standalone utilities and side projects
 ├── resources/              Reference books and links
 ├── docs/                   Repository-level guides (Jupyter kernels, GPU setup)
-├── tools/                  Repository tooling (revision-PDF builder, layout migration)
+├── tools/                  Repository tooling (revision-PDF builder, spelling fixes, layout migration)
 ├── pyproject.toml · uv.lock · requirements.txt · Pipfile
 └── README.md · CONTRIBUTING.md · AGENTS.md
 ```

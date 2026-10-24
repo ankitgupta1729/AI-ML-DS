@@ -46,7 +46,7 @@ These models take the large datasets such as images,text and sound etc. as input
 
 - Advancements in hardware (GPUs, TPUs)
 - Access to cloud computing platforms
-- Open-source softwares, Hugging Face, TensorFlow, PyTorch etc.
+- Open-source software, Hugging Face, TensorFlow, PyTorch etc.
 
 **(iii) Innovative DL Models**
 
@@ -277,7 +277,7 @@ We can create a domain specific model from scratch on your own data or data whic
 
 Typically, a foundation model is initially trained on a large dataset and then you take a foundation model and train it on a smaller dataset, enabling it to improve its predicting capabilities based on your specific use case.
 
-*For example,* we take a foundation model and re-train it on question,answers pairs using supervised training on smaller labelled datasets to make **task-specific fine-tuned models**. Similarly we can also do for sentiment analysis ofr text documents with +/- as labels and Named entity recognition for text with person/location/organization as labels.
+*For example,* we take a foundation model and re-train it on question,answers pairs using supervised training on smaller labelled datasets to make **task-specific fine-tuned models**. Similarly we can also do for sentiment analysis for text documents with +/- as labels and Named entity recognition for text with person/location/organization as labels.
 
 Instead of task-specific fine-tuned models, we can also make **Domain-specific fine-tuned models for domain adaptation**.
 *For example,* for science domain, we use scientific papers, for finance domain, we use financial docs, for legal domain, we use legal docs etc with supervised learning on smaller labelled datasets.
@@ -286,7 +286,7 @@ Instead of task-specific fine-tuned models, we can also make **Domain-specific f
 
 ## 13.
 
-Dolly started the trend to open models with a commercially friendly license before that Facebook LLama and Stanford Alpaca was used for non-commercial purpose. For commercial use, Databrics Dolly, Mosaic MPT, TII Falcon, Meta Llama 2, Mistral AI, xAI Grok-1, Databricks DBRX etc are used.
+Dolly started the trend to open models with a commercially friendly license before that Facebook LLama and Stanford Alpaca was used for non-commercial purpose. For commercial use, Databricks Dolly, Mosaic MPT, TII Falcon, Meta Llama 2, Mistral AI, xAI Grok-1, Databricks DBRX etc are used.
 
 ---
 

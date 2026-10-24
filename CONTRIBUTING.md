@@ -51,6 +51,13 @@ python tools/notes-to-pdf/build.py --verify  # check every generated PDF
 New courses need one entry in `tools/notes-to-pdf/catalog.json`; see
 [`tools/notes-to-pdf/README.md`](tools/notes-to-pdf/README.md).
 
+## Spelling fixes
+
+Corrections to the course notes (typos, misheard technical terms in transcripts) are
+recorded in [`tools/spelling/corrections.tsv`](tools/spelling/corrections.tsv) and applied with
+`python tools/spelling/apply.py` — see [`tools/spelling/README.md`](tools/spelling/README.md).
+Add a row there rather than editing a transcript by hand, so the fix is reviewed and repeatable.
+
 ## Conventions
 
 - **Commits** — short and descriptive (`Add <topic> notes`, `Fix typo in LangGraph notes`).

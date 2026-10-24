@@ -17,7 +17,7 @@ Material is grouped into domain folders; each holds numbered, self-contained mod
 - **`career/`**: `06`–`08`, `16`
 - **`projects/18.Utilities`**: helper scripts such as `images_to_pdf.py` and `send-mail.py`, chatbots, a website
 - **`resources/`**: reference books and links; **`docs/`**: repository-level guides
-- **`tools/`**: repository tooling — `notes-to-pdf/` (revision-PDF builder) and `migrate-local-layout.sh`
+- **`tools/`**: repository tooling — `notes-to-pdf/` (revision-PDF builder), `spelling/` (reviewed spelling and technical-term corrections for the notes) and `migrate-local-layout.sh`
 
 Inside a course module: `Note.md` (source notes), `images/` (screenshots), `pdf/` (generated revision PDFs), plus notebooks and code.
 
@@ -38,6 +38,7 @@ The repository uses multiple dependency management systems depending on the modu
 - **Verify**: `python tools/notes-to-pdf/build.py --verify` checks every generated PDF.
 - **Register a new course**: add an entry to `tools/notes-to-pdf/catalog.json`.
 - **Docs checks**: `python tools/check_links.py` and `ruff check --config tools/ruff.toml tools/` (both run in CI).
+- **Spelling**: fixes to course notes go into `tools/spelling/corrections.tsv` (reviewed, scoped per module) and are applied with `python tools/spelling/apply.py`.
 - Never edit files in `pdf/` by hand, and never rewrite course `.md` notes to suit the PDF builder — the builder reads them as they are.
 
 ## Coding Style & Naming Conventions

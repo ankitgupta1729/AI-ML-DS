@@ -42,9 +42,9 @@ It contains the basic functionalities of Spark, including task scheduling (like 
 
 ---
 
-> (11) Spark MLLib provides in-built libraries to implement ML algorithms like classification, regression, clustering, collaborative filtering
+> (11) Spark MLlib provides in-built libraries to implement ML algorithms like classification, regression, clustering, collaborative filtering
 
-> (12) Spark MLLib also provides various techniques for data preprocessing
+> (12) Spark MLlib also provides various techniques for data preprocessing
 
 ---
 
@@ -58,7 +58,7 @@ It contains the basic functionalities of Spark, including task scheduling (like 
 
 > (16) Programming Languages for spark: Python, Scala, R, Java
 
-Libraries: Spark SQL, MLLib, GraphX, Streaming
+Libraries: Spark SQL, MLlib, GraphX, Streaming
 
 Engine: Spark Core
 
@@ -74,7 +74,7 @@ every single program.
 
 This driver program is connected with "Cluster Management" tools which is required to pull data from various nodes.
 
-Now this Cluster Manager is connected with "Worker Node" which are the endpoint of our spark architecure where data
+Now this Cluster Manager is connected with "Worker Node" which are the endpoint of our spark architecture where data
 transformed into information where we getting the task done. It is having "Executor" for Cache and Task in various working nodes.
 
 > (18) Apache Spark provides a well-defined layered architecture.
@@ -115,9 +115,9 @@ spark job
 
 Spark preconfigured for YARN and it does not require any additional configuration to run.
 
-YARN controls the resource management, scheduling, and security when we run Spark apllications on it
+YARN controls the resource management, scheduling, and security when we run Spark applications on it
 
-It is possible to run an apllication in any mode, whether it is cluster mode (many nodes) or client mode(one single entiny).
+It is possible to run an application in any mode, whether it is cluster mode (many nodes) or client mode(one single entity).
 
 Cluster Deployment Mode:
 
@@ -195,7 +195,7 @@ Both SBT and Maven have assembly plugins
 
 When creating assembly jars, list Spark and Hadoop as provided dependencies
 
-Once we have an aseembled jar, we can call the bin/spark-submit script while passing our jar
+Once we have an assembled jar, we can call the bin/spark-submit script while passing our jar
 
 The spark-submit script is used to launch application on the cluster
 
@@ -245,7 +245,7 @@ findspark.init()
 from pyspark.sql import SparkSession
 spark=SparkSession.builder.master("local[*]").getOrCreate()
 
-# stoppping the session
+# stopping the session
 spark.stop()
 
 # installing Pyspark
@@ -304,10 +304,10 @@ We can perform transformations and actions on RDDs.
 
 > (52) RDD Workflow:
 
-- A. Many RDDs are clubed into a single RDD.
+- A. Many RDDs are clubbed into a single RDD.
 - B. RDDs are arrays or structured data and this structured data is converted into DAG(Directed acyclic graph)
    so that data can be flow from one node to another in structured manner. This is the work of DAGScheduler.
-- C. Once DAGScheduler finished its job where it assembeled, ordered and stored it. Now, it passed it into Cluster Manger.
+- C. Once DAGScheduler finished its job where it assembled, ordered and stored it. Now, it passed it into Cluster Manger.
    and it pulls the data from all places and each operation is considered a task which is done by Task Scheduler and it 
    passed the task to Executor
 - D. Executor gives the required output. 
@@ -329,7 +329,7 @@ Besides spark, most of the data processing frameworks are less efficient to perf
 
 > (54) How do RDDs solve the problem ?
 
-- -- Spark RDDs have various capabilities to handle huge volumes of data by processing them parallely over 
+- -- Spark RDDs have various capabilities to handle huge volumes of data by processing them in parallel over 
 multiple logical partitions. We can create an RDD, anytime, but Spark RDDs are executed only when they are needed
 (lazy evaluation)
 
@@ -372,7 +372,7 @@ RDDs can process data in parallel
 
 - F. Typed:
 
-RDD records have types e.g. Int, Long, etc gives better data readibility to check long type data etc.
+RDD records have types e.g. Int, Long, etc gives better data readability to check long type data etc.
 
 > (56) Creating RDDs in PySpark:
 
@@ -418,7 +418,7 @@ results in recomputing the RDD
 
 - -- In this case, the node that computes the RDD stores its partitions
 
-- -- If a node has data persisiting on it fails, Spark will recompute the lost partitions of the data when required
+- -- If a node has data persisting on it fails, Spark will recompute the lost partitions of the data when required
 
 - -- RDDs comes with a method called unpersist() that lets us manually remove them from the cache
 
@@ -811,7 +811,7 @@ union() --> returns an RDD containing elements of 2 RDDs; duplicates are not rem
 a=sc.parallelize([1,2,3,4,5,6,7,8,2,3,3,3,1,1,1])
 a.countByValue()
 
-o/p: sefaultdict(int, {1:4,2:3,3:4,4:2,5:1,6:1,7:1,8:1})
+o/p: defaultdict(int, {1:4,2:3,3:4,4:2,5:1,6:1,7:1,8:1})
 
 > (95) toDebugString:
 
@@ -849,7 +849,7 @@ Functions  --> Purpose  --> Example --> Result
 reduceByKey(func) --> Combines values with the same key --> rdd.reduceByKey(add) --> [(1,2),(3,10)]
 groupByKey()  ==> Groups values with the same key --> rdd.groupByKey()  --> {(1,[2]),(3,[4,6])}
 mapValues(func) --> Applies a function to each value of a paired RDD without changing the key --> rdd.mapValues(lambda x: x+1) --> {(1,3),(3,5),(3,7)}
-flatMapValues(func) --> applies a function that returns an iterator to each value of a paired RDD and for each element returned, produces a key-value entry with the old keyl often used for --> rdd.flatMapValues(lambda x: range(x,5)) --> {(1,2),(1,3),(1,4),(1,5),(3,4),(3,5)}
+flatMapValues(func) --> applies a function that returns an iterator to each value of a paired RDD and for each element returned, produces a key-value entry with the old key often used for --> rdd.flatMapValues(lambda x: range(x,5)) --> {(1,2),(1,3),(1,4),(1,5),(3,4),(3,5)}
 keys() --> Returns an RDD of just the keys --> rdd.keys() --> {1,3,3}
 sortByKey() --> Between an RDD sorted by the key --> rdd.sortByKey() --> {(1,2),(3,4),(3,6)}
 subtractByKey() --> Removes elements with the key present in the other RDD --> rdd.subtractByKey(other) ==> {(1,2)}
@@ -882,7 +882,7 @@ wordcount = words.map(lambda x: (x,1)).reduceByKey(lambda x,y:x+y).map(lambda x:
 for word in wordcount.collect():
 	print(word)
 
-> (101) RDD Partioning:
+> (101) RDD Partitioning:
 
 - -- A partition is a logical chunk of a large distributed dataset
 
@@ -905,10 +905,10 @@ for word in wordcount.collect():
 - A. Hash Partitioning
 - B. Range Partitioning
 
-Hash Partitioning is a partitioning is a partitioning technique where a hash key is used to distribute elements evenly acrosss different partitions.
+Hash Partitioning is a partitioning is a partitioning technique where a hash key is used to distribute elements evenly across different partitions.
 
 Some Spark RDDs have keys that follow a particular order; for such RDDs, range partitioning is an efficient partitioning technique/
 In the range partitioning method, tuples having keys within the same range will appear on the same machine
 Keys in a RangePrtitioner are partitioned based on the set of sorted range of keys and ordering of keys.
 
-- -- Custominzing partitioning is possible only on paired RDDs.
+- -- Customizing partitioning is possible only on paired RDDs.
