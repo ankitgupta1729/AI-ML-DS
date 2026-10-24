@@ -733,25 +733,8 @@ This will generate multiple possible continuations of your text, so you might wa
 6. Text Generation in Python
 ============================
 
-![243.png](./images/243.png)
-![244.png](./images/244.png)
-![245.png](./images/245.png)
-![246.png](./images/246.png)
-![247.png](./images/247.png)
-![248.png](./images/248.png)
-![249.png](./images/249.png)
-![250.png](./images/250.png)
-![251.png](./images/251.png)
-![252.png](./images/252.png)
-![253.png](./images/253.png)
-![254.png](./images/254.png)
-![255.png](./images/255.png)
-![256.png](./images/256.png)
-![257.png](./images/257.png)
-![258.png](./images/258.png)
-![259.png](./images/259.png)
-![260.png](./images/260.png)
-![261.png](./images/261.png)
+See the notebook [here](./2.Pipeline-Text-Generation.ipynb).
+
 
 So in this lecture we will be looking at the notebook to do text generation and code for this lecture. I think it would be instructive to do poetry generation, as we have done in the past, to contrast these results from what you may have seen before. They should also help you understand what the model has learned and how that will affect what it will produce. So to begin, we're going to download a text file containing Robert Frost poems. The next step is to install Transformers, as we normally do.
 
@@ -795,6 +778,32 @@ So there's definitely a connection between all of the tokens in this document. A
 
 7. Masked Language Modeling (Article Spinner)
 =============================================
+
+![243.png](./images/243.png)
+![244.png](./images/244.png)
+![245.png](./images/245.png)
+![246.png](./images/246.png)
+![247.png](./images/247.png)
+![248.png](./images/248.png)
+![249.png](./images/249.png)
+![250.png](./images/250.png)
+![251.png](./images/251.png)
+![252.png](./images/252.png)
+![253.png](./images/253.png)
+![254.png](./images/254.png)
+![255.png](./images/255.png)
+![256.png](./images/256.png)
+![257.png](./images/257.png)
+![258.png](./images/258.png)
+![259.png](./images/259.png)
+![260.png](./images/260.png)
+![261.png](./images/261.png)
+![262.png](./images/262.png)
+![263.png](./images/263.png)
+![264.png](./images/264.png)
+![265.png](./images/265.png)
+![266.png](./images/266.png)
+
 
 In this lecture, we'll be looking at another task very closely related to the previous one on generating text. To recap, the previous lecture looked at an auto regressive language model, also known as a causal language model. This is because our model learns a distribution of tokens conditioned on the past. So we want to predict X of T plus one given X of T, X of T minus one and so forth. Importantly, this only goes in one direction, which is forward.
 
@@ -841,6 +850,8 @@ As you recall, that was auto regressive. So that was auto regressive and this is
 8. Masked Language Modeling (Article Spinner) in Python
 =======================================================
 
+See the notebook [here](./3.Pipeline-Masked-Language-Modeling.ipynb).
+
 So in this lecture, we will look at some code to demonstrate how to use the masked language model in Hugging Face. To begin, we're going to download the BBC News dataset. The next step is to install Transformers, as we normally do. The next step is to import everything we need for this notebook. The next step is to load in our data using pd.read_csv. The next step is to call the FDA ahead to remind ourselves what our data frame looks like. As you can see, this dataset consists of two columns, which are the labels and the text.
 
 Thus this is a supervised data set, but for this notebook we won't be making use of the labels. The next step is to print out the unique set of labels to see what exists. As you can see, we have a set of five labels for various categories of news. The next step is to choose one of the labels which we want to make use of in the script. I've chosen business since this seems like it would have good articles to spin. The next step is to filter out any rows which do not match or label, and to grab just the column containing the text.
@@ -868,6 +879,22 @@ So this is your exercise for this lecture. Your job is to write a function that 
 9. Named Entity Recognition (NER)
 =================================
 
+![267.png](./images/267.png)
+![268.png](./images/268.png)
+![269.png](./images/269.png)
+![270.png](./images/270.png)
+![271.png](./images/271.png)
+![272.png](./images/272.png)
+![273.png](./images/273.png)
+![274.png](./images/274.png)
+![275.png](./images/275.png)
+![276.png](./images/276.png)
+![277.png](./images/277.png)
+![278.png](./images/278.png)
+![279.png](./images/279.png)
+![280.png](./images/280.png)
+
+
 So in this lecture we are going to look at how to do named entity recognition, also known as NER with transformers. So what is NER? Well, basically the idea is you have a document and you want to identify all the people, places and companies in that document. This data might be used as a preprocessing step in a larger piece of code. So, for example, if I see Apple, I would mark that as a company. If I see Steve Jobs. I would mark that as a person. And if I see California, I would mark that as a place.
 
 In any case, suppose you have some use for it. How does this actually work? Well, it turns out that NER is essentially exactly the same as parts of speech tagging, which you already know how to do. As you recall, that was a many-to-many task where we assign each word to a tag and we do the same thing with NER. So every place has the tag LOC. Every person has the tag PER. And every company has the tag ORG. Now, one challenging aspect of NER is that some entities span multiple tokens.
@@ -886,6 +913,8 @@ And finally, note that the result includes the start and end position of the ent
 
 10. Named Entity Recognition (NER) in Python
 ============================================
+
+See the notebook [here](./4.Pipeline_NER.ipynb).
 
 So in this lecture we'll be looking at how to do named entity recognition with Transformers. We'll begin by installing Transformers. The next step is to import pipeline as we normally do. The next step is to create an NER pipeline. Note that if passed in an argument for aggregation strategy, which is set to simple. The next step is to import pickle, since we'll need this to load in our data set. The next step is to download our dataset called CoNLL 2003, which is currently the most popular NER dataset.
 
@@ -916,6 +945,16 @@ As you can see, we get over 95%, which is pretty good as usual. F1 is a bit less
 11. Text Summarization
 ======================
 
+![281.png](./images/281.png)
+![282.png](./images/282.png)
+![283.png](./images/283.png)
+![284.png](./images/284.png)
+![285.png](./images/285.png)
+![286.png](./images/286.png)
+![287.png](./images/287.png)
+![288.png](./images/288.png)
+
+
 So in this lecture we will do a brief introduction to text summarization and how to accomplish this task with Transformers. Now, as always, we're going to answer the question Why is this practical? And I hope that this is another one of those tasks where the answer is very obvious. So why should we summarize text? Well, notice how we already do this all the time. For example, when you read a scientific paper, it always comes with an abstract, and abstract is a summary of that paper.
 
 So you don't need to read the whole paper if you just want to understand the basic idea. You can get away with just reading the abstract and then read the paper in full. If you want more details. Professional documents also have a similar concept, although instead of calling it an abstract, it's sometimes called an executive summary. So clearly this is a useful concept in the real world. Since we do this already, even without the help of computers and obviously we can extend this concept to our own lives.
@@ -939,6 +978,8 @@ The output will be a list containing one or more dictionaries, each of which con
 12. Text Summarization in Python
 ================================
 
+See the notebook [here](./5.Pipeline-Summarization.ipynb)
+
 So in this lecture, we'll be looking at how to do text summarization with transformers. We'll begin by downloading our dataset, which is the BBC news dataset. This contains nice, long articles that would be good candidates for the summarization task. The next step will be to install the Transformers library. Once again. The next step will be to import everything we need for this notebook. The next step is to read in our data using pd.read_csv. The next step is to call df.head to remind ourselves what this data looks like.
 
 So it's a two column dataframe containing both text and the corresponding label. Note that for this lecture we will only be interested in the text. The next step is to pick an article at random. Note that for this first example, well, choose an article from the business class. Also, note that we set the random seed to 42 so that you can replicate these results. The next step is to define a text wrapping function that will be convenient since the text is so long that it will go off the page.
@@ -961,6 +1002,18 @@ It seems that our summariser decided to split that sentence into two. Notice tha
 
 13. Neural Machine Translation
 ==============================
+
+![289.png](./images/289.png)
+![290.png](./images/290.png)
+![291.png](./images/291.png)
+![292.png](./images/292.png)
+![293.png](./images/293.png)
+![294.png](./images/294.png)
+![295.png](./images/295.png)
+![296.png](./images/296.png)
+![297.png](./images/297.png)
+![298.png](./images/298.png)
+![299.png](./images/299.png)
 
 So in this lecture we will be discussing the next task in this section, which is on machine translation. As with many of our other tasks, I'm sure this needs no introduction, and most, if not all students will already be aware of the applications. But just in case, let's briefly go over why this is a useful task. Firstly, to be clear, machine translation is a task where we convert phrases from one language into another language, for example, from English to French or Spanish to Portuguese.
 
@@ -986,6 +1039,8 @@ So for each of the n-grams we find in the prediction, we're asking, can we also 
 
 14. Neural Machine Translation in Python
 ========================================
+
+See the notebook [here](./6.Pipeline-Translation.ipynb).
 
 So in this lecture we'll be looking at how to do language translation with Transformers. Now we already know how to translate text, which is just one line of code. So that's not very interesting in this lecture. What we're going to do is we're going to download a whole data set and see how well this model performs on that data set. This will give us a sense for how well the model is doing. Even if you're like me and you don't know Spanish. We'll begin by downloading a data set for English to Spanish text.
 
@@ -1016,6 +1071,17 @@ If we looked at the attention plot, we would probably see that this first token 
 15. Question Answering
 ======================
 
+![300.png](./images/300.png)
+![301.png](./images/301.png)
+![302.png](./images/302.png)
+![303.png](./images/303.png)
+![304.png](./images/304.png)
+![305.png](./images/305.png)
+![306.png](./images/306.png)
+![307.png](./images/307.png)
+![308.png](./images/308.png)
+
+
 So in this lecture we will be discussing the next task in this section, which is on question answering. Now, question answering is a pretty broad task, so it helps to think of all the different flavors that may exist. In a general sense, our ultimate goal is to really have a system that can answer any question. For example, if this were possible, you can imagine that in a I could replace a doctor or a teacher in some instances. In this ideal scenario, the system would have some database of knowledge, or perhaps that knowledge could be stored in neural network weights.
 
 When the user asks the question, the neural network would simply understand the question related to its stored knowledge and provide the appropriate answer, whatever that may be. Now we're going to end up making a number of simplifications to this ideal scenario in practice. Note that some systems such as Apple's Siri already do this to some extent. For example, you can ask Siri for the weather and it will tell you the weather. You can even ask Siri for nutritional facts like how much caffeine is in coffee.
@@ -1045,6 +1111,8 @@ We also have start and end keys, which are indices into the context where the an
 16. Question Answering in Python
 ================================
 
+See the notebook [here](./7.Pipeline-Question-Answering.ipynb)
+
 So in this lecture we will be looking at a demo that shows us how to do question answering in code. One interesting fact about this demo is that there is no data set. We are simply going to make up our own questions and observe that this pre-trained model works quite well. So let's begin by installing Transformers, as we normally do. The next step is to input the pipeline function as we normally do. The next step is to create a pipeline by calling the pipeline function passing in the spring and question answering.
 
 The next step is to define a context. And the question. The context is. Today I went to the store to purchase a carton of milk. The question is, what did I buy? Now I phrased my question this way on purpose in the context I use the word purchase, but in the question I used the word buy. What I would like our model to do is to understand that both of these words mean the same thing. So let's run our model on this question. And as you can see, the model correctly identifies that a carton of milk is the answer.
@@ -1065,6 +1133,14 @@ Of course, it's not possible to answer this question from the existing context, 
 
 17. Zero-Shot Classification
 ============================
+
+![309.png](./images/309.png)
+![310.png](./images/310.png)
+![311.png](./images/311.png)
+![312.png](./images/312.png)
+![313.png](./images/313.png)
+![314.png](./images/314.png)
+![315.png](./images/315.png)
 
 So in this lecture, we will be discussing another new and interesting application called zero-shot Classification. This is one of those fancy new terms of the deep learning era. So let's consider what this means. As you know, regular classification is where you train a model based on a labeled dataset. The labels are discrete categories, and each input sample is assigned at one of these labels. For example, we might train an image classifier to differentiate between people with masks and people without masks.
 
@@ -1090,6 +1166,8 @@ This is because the model prediction is negative and this score is the highest.
 
 18. Zero-Shot Classification in Python
 ======================================
+
+See the notebook [here](./8.Pipeline-Zero-Shot-Classification.ipynb).
 
 So in this lecture we will look at the code to do zero shot classification. For this notebook, we'll be using the BBC News dataset. So let's download the CSV. The next step is to install Transformers, as we normally do. The next step is to import everything we need for this script. The next step is to instantiate a model by calling the pipeline function. Note that we are using the GPU since this will be much too slow for the CPU. You are encouraged to give that a try just to see how long it will take.
 
@@ -1138,6 +1216,17 @@ What you should find is that the results are pretty surprising, so please try it
 19. Beginner's Corner Section Summary
 =====================================
 
+![316.png](./images/316.png)
+![317.png](./images/317.png)
+![318.png](./images/318.png)
+![319.png](./images/319.png)
+![320.png](./images/320.png)
+![321.png](./images/321.png)
+![322.png](./images/322.png)
+![323.png](./images/323.png)
+![324.png](./images/324.png)
+
+
 So now that you've seen plenty of examples of how transformers can be used, it's now time to close off this section. This lecture will recap each of the applications we looked at, and we'll also review the sort of big picture of why they are relevant for this course. So we began by looking at sentiment analysis, which is a simple to understand task, but also non-trivial in some ways. As you recall, simple models that use bag of words can obtain pretty good performance, but they fail to account for relationships between words due to the fact that order is not taken into account.
 
 For example, seeing this show was interesting versus this show was not interesting has opposite meanings. We know that not interesting has negative sentiment, but a bag of words model might only know that interesting is positive and the word not does not negate its polarity. With transformers, this negation can be taken into account. The next task we looked at was how to convert documents into vectors or embeddings. This is similar to what we do with images where we pre-trained a neural network and then we take the embedding vector from the second last layer.
@@ -1169,10 +1258,19 @@ Let me know. Finally, there is a big text box for any comment you want to write.
 
 Tell me exactly what lecture and exactly what time stamp you're referring to. If you want to refer to a question on the Q&A, include a link. Be very specific and give me concrete examples so that I know exactly how to act on the information you've given me. Thanks for listening and I'll see you in the next lecture.
 
-### 
+### 4. Fine-Tuning (Intermediate)
 
 1. Fine-Tuning Section Introduction
 ===================================
+
+![325.png](./images/325.png)
+![326.png](./images/326.png)
+![327.png](./images/327.png)
+![328.png](./images/328.png)
+![329.png](./images/329.png)
+![330.png](./images/330.png)
+![331.png](./images/331.png)
+
 
 So in this lecture we will be introducing the next section of the course, which is all about how to fine tune a Transformer model. So let's think about why this is different from the previous section of the course. The previous section of the course was easy because it only involved using models that someone else has trained. We were just using those models in inference mode, also known as predictor mode. The code was very simple because the library we're using provides a nice universal interface for different types of models.
 
@@ -1192,6 +1290,27 @@ To end this section. We'll do one more example, which will teach you a bit more 
 
 2. Text Preprocessing and Tokenization Review
 =============================================
+
+![332.png](./images/332.png)
+![333.png](./images/333.png)
+![334.png](./images/334.png)
+![335.png](./images/335.png)
+![336.png](./images/336.png)
+![337.png](./images/337.png)
+![338.png](./images/338.png)
+![339.png](./images/339.png)
+![340.png](./images/340.png)
+![341.png](./images/341.png)
+![342.png](./images/342.png)
+![343.png](./images/343.png)
+![344.png](./images/344.png)
+![345.png](./images/345.png)
+![346.png](./images/346.png)
+![347.png](./images/347.png)
+![348.png](./images/348.png)
+![349.png](./images/349.png)
+![350.png](./images/350.png)
+
 
 So in this lecture we are going to review how to preprocess text for use in a neural network. We'll begin by enumerating all the steps that need to be done, and then we'll dig a little deeper into each step and the reasons why they are needed. So the steps are as follows Given a document which is represented as a string of text, we always begin by tokenizing the text. Note that there isn't just one way to do this. This can be as simple as calling string that split, splitting the documents into words, splitting the documents into characters, or as we'll see in this course, splitting the documents into sub words.
 
@@ -1243,6 +1362,38 @@ So if you cut off any words, you won't have predictions for those words. Similar
 
 3. Models and Tokenizers
 ========================
+
+![351.png](./images/351.png)
+![352.png](./images/352.png)
+![353.png](./images/353.png)
+![354.png](./images/354.png)
+![355.png](./images/355.png)
+![356.png](./images/356.png)
+![357.png](./images/357.png)
+![358.png](./images/358.png)
+![359.png](./images/359.png)
+![360.png](./images/360.png)
+![361.png](./images/361.png)
+![362.png](./images/362.png)
+![363.png](./images/363.png)
+![364.png](./images/364.png)
+![365.png](./images/365.png)
+![366.png](./images/366.png)
+![367.png](./images/367.png)
+![368.png](./images/368.png)
+![369.png](./images/369.png)
+![370.png](./images/370.png)
+![371.png](./images/371.png)
+![372.png](./images/372.png)
+![373.png](./images/373.png)
+![374.png](./images/374.png)
+![375.png](./images/375.png)
+![376.png](./images/376.png)
+![377.png](./images/377.png)
+![378.png](./images/378.png)
+![379.png](./images/379.png)
+![380.png](./images/380.png)
+
 
 So in this lecture we will begin looking at concepts specific to the Hugging Face library, specifically what components make up the pipeline and how that's related to the text preprocessing steps we just discussed. Essentially, we can picture the pipeline as containing three distinct steps. The first step is the text preprocessing. This takes in raw text and converts it into a numerical format that can be handled by a neural network. The second step is the model.
 
@@ -1301,6 +1452,8 @@ There is one key called logits, and to access the logits you can use the dot not
 4. Models and Tokenizers in Python
 ==================================
 
+See the notebook [here](./9.Models_and_Tokenizers.ipynb).
+
 So in this lecture we are going to do a little demo to show you models and tokenizers in action. We'll begin by installing Transformers as we normally do. So the next step is to import the AutoTokenizer class. The next step is to define our desired checkpoint, which for this lecture will be bert-base-cased. We'll also create our tokenizer by calling the method from_pretrained and passing in our checkpoint. The next step is to simply print out our tokenizing objects.
 
 So as you can see, we get an object of type PreTrainedTokenizerFast. Note that some useful information gets printed along with this, including the name vocab size. Maximum sequence length is fast, which tells us whether or not the tokenize has been optimized for performance. Which side the pattern goes on, which side we truncate from, and finally, how special tokens are represented in the string format. The next step is to test our tokenizer with a simple string which says Hello World.
@@ -1340,6 +1493,21 @@ Of course, we don't want them to influence our prediction. The next step is to d
 5. Transfer Learning & Fine-Tuning (pt 1)
 =========================================
 
+![381.png](./images/381.png)
+![382.png](./images/382.png)
+![383.png](./images/383.png)
+![384.png](./images/384.png)
+![385.png](./images/385.png)
+![386.png](./images/386.png)
+![387.png](./images/387.png)
+![388.png](./images/388.png)
+![389.png](./images/389.png)
+![390.png](./images/390.png)
+![391.png](./images/391.png)
+![392.png](./images/392.png)
+![393.png](./images/393.png)
+
+
 So in this lecture, we will be discussing another important concept related to transformers known as transfer learning. Now it's important to recognize that transfer learning is not related to the architecture of transformers, nor is it a concept that is specific to Transformers. In fact, transfer learning is a general machine learning technique that's been applied to Transformers. One way to think of this is transfer. Learning is what makes Transformers useful and practical for practitioners in this field.
 
 Without transfer learning, the cost to train a transformer network would simply be too great. So transfer learning is what allows us to make building intelligent networks faster and cheaper so as to be practical for everyday use. Okay. So what is transfer learning all about? The best way to understand this is through its history. In particular, transfer learning comes from the field of computer vision. So as you know, one of the remarkable results we have observes from training CNNs is that each layer seems to learn progressively more complex feature transformations of the input.
@@ -1374,6 +1542,28 @@ This is unlike tabular data, which is typically curated by a human. We might unn
 
 6. Transfer Learning & Fine-Tuning (pt 2)
 =========================================
+
+![394.png](./images/394.png)
+![395.png](./images/395.png)
+![396.png](./images/396.png)
+![397.png](./images/397.png)
+![398.png](./images/398.png)
+![399.png](./images/399.png)
+![400.png](./images/400.png)
+![401.png](./images/401.png)
+![402.png](./images/402.png)
+![403.png](./images/403.png)
+![404.png](./images/404.png)
+![405.png](./images/405.png)
+![406.png](./images/406.png)
+![407.png](./images/407.png)
+![408.png](./images/408.png)
+![409.png](./images/409.png)
+![410.png](./images/410.png)
+![411.png](./images/411.png)
+![412.png](./images/412.png)
+![413.png](./images/413.png)
+
 
 So in this lecture we are going to continue our discussion on transfer, learning and fine tuning. The previous lecture we discussed transfer learning and how it's been applied to the field of computer vision and how it might be applied to NLP. But there's another aspect to transfer learning known as Fine Tuning. Now there's a bit of confusion around the difference between these terms, and I hope that this lecture will clear up any potential confusion you might have.
 
@@ -1418,6 +1608,22 @@ And you must go against the rules of thumb.
 7. Transfer Learning & Fine-Tuning (pt 3)
 =========================================
 
+![414.png](./images/414.png)
+![415.png](./images/415.png)
+![416.png](./images/416.png)
+![417.png](./images/417.png)
+![418.png](./images/418.png)
+![419.png](./images/419.png)
+![420.png](./images/420.png)
+![421.png](./images/421.png)
+![422.png](./images/422.png)
+![423.png](./images/423.png)
+![424.png](./images/424.png)
+![425.png](./images/425.png)
+![426.png](./images/426.png)
+![427.png](./images/427.png)
+
+
 So with computer vision, the way we pre-trained our neural networks is by classifying images. Recall that this is supervised learning because it requires us to provide label data for each image. We must also specify which class that image belongs to. The question is what kind of task should we use for text? Well, it turns out that supervised learning is not an ideal choice. Firstly, we'd have to consider what we would use as labels. We'd have to make sure that these labels made sense and actually helps the neural network learn the structure of language.
 
 But this is actually not necessary for classifying documents. For example, it's easy to tell whether a document is about biology or physics simply by looking at the kinds of words in the documents. There is no need to learn the structure of language. In other words, merely classifying documents as a pre-training task might not help the neural network learn the structure of language as well as we would like. Secondly, with so much text available on the Internet, it would be difficult and costly to consistently and correctly label every piece of text as an example of why this would be undesirable.
@@ -1456,6 +1662,30 @@ We depend on companies like Google, Meta and OpenAI to open source these weights
 
 8. Fine-Tuning Sentiment Analysis and the GLUE Benchmark
 ========================================================
+
+![428.png](./images/428.png)
+![429.png](./images/429.png)
+![430.png](./images/430.png)
+![431.png](./images/431.png)
+![432.png](./images/432.png)
+![433.png](./images/433.png)
+![434.png](./images/434.png)
+![435.png](./images/435.png)
+![436.png](./images/436.png)
+![437.png](./images/437.png)
+![438.png](./images/438.png)
+![439.png](./images/439.png)
+![440.png](./images/440.png)
+![441.png](./images/441.png)
+![442.png](./images/442.png)
+![443.png](./images/443.png)
+![444.png](./images/444.png)
+![445.png](./images/445.png)
+![446.png](./images/446.png)
+![447.png](./images/447.png)
+![448.png](./images/448.png)
+![449.png](./images/449.png)
+
 
 So at this point, we know about tokenizer and we know about models. We even know about how to take a pre-trained model, chop off its head and add a new one for text classification. What we do not yet know is how to actually fine tune this model on a data set. So that's what we'll be discussing in this lecture for this code preparation lecture. We'll begin by discussing how data sets are represented in the Hugging Face suite of packages. Well, then look at the trainer objects and the trainer arguments objects which allows us to specify a few training parameters.
 
@@ -1503,6 +1733,8 @@ The model argument should be set to the path where we saved our model, and from 
 
 9. Fine-Tuning Sentiment Analysis in Python
 ===========================================
+
+See the notebook [here](./10.Fine-Tuning-Sentiment-Analysis.ipynb).
 
 So in this lecture we will be looking at the code to implement fine tuning for sentiment analysis. We'll begin by installing not just the Transformers library, but the Datasets library as well. The next step is to import the load_dataset function as well as numpy. The next step is just a comment, noting that you could also try running the script with the Amazon polarity dataset, which is another dataset for sentiment analysis. However, this data set is larger and would take more computation.
 
@@ -1557,6 +1789,9 @@ We're going to run the same code from earlier to get all of the model parameters
 10. Fine-Tuning Transformers with Custom Dataset
 ================================================
 
+See the notebook [here](./11.Fine-Tuning-Sentiment-Analysis-Custom-Dataset.ipynb)
+
+
 So in this lecture we will be looking at how to do text classification on your own custom dataset. The previous lecture looked at how to use data sets built into the Hugging Face platform. But this lecture will look at how you can do the same thing for any dataset, which is much more powerful. Let's begin by installing the transformers and data sets libraries as we did before. The next step will be to download our dataset, which is a dataset of airline tweets.
 
 Again, this is a sentiment analysis dataset. The next step is to import the various libraries and library methods will be using in this script. The next step is to load in our data using pd.read_csv. The next step is to call the head method to remind ourselves what this dataset looks like. So you recall that we're interested in the columns, airline sentiment and text. So this is the airline sentiment, which is the label. And here we have the text, which is the tweet.
@@ -1600,6 +1835,9 @@ The Fine Tune model or the pre-trained model?
 11. Hugging Face AutoConfig
 ===========================
 
+See the notebook [here](./11.Fine-Tuning-Sentiment-Analysis-Custom-Dataset+Label.ipynb)
+
+
 So in this lecture, we'll be investigating something that came up earlier, which is why the fine tune model outputs only generic label names. As you recall in the previous lecture, we solved this in kind of a hacky way, which was to modify the config file after calling the save method. If you're a programmer, this might make you recoil in horror. Luckily, there is a slightly better way. Unfortunately, what you would hope existed doesn't actually exist.
 
 Specifically, it would be nice if you could just pass in specific label names into the from_pretrained method, just as you can specify the number of labels. This would be ideal and in my opinion makes the most sense. But unfortunately, this currently isn't possible. However, there is a way to achieve a similar effect, which is what we'll look at in this lecture in particular. Hugging face also has config objects. We'll pass in this config object into the from_pretrained.
@@ -1618,6 +1856,17 @@ So at this point we fine tune our model, saved it and loaded it back in as a pip
 
 12. Fine-Tuning with Multiple Inputs (Textual Entailment)
 =========================================================
+
+![450.png](./images/450.png)
+![451.png](./images/451.png)
+![452.png](./images/452.png)
+![453.png](./images/453.png)
+![454.png](./images/454.png)
+![455.png](./images/455.png)
+![456.png](./images/456.png)
+![457.png](./images/457.png)
+![458.png](./images/458.png)
+
 
 So in this lecture, we are going to look at another example of text classification, which is slightly more complicated. In this example, we are going to build a text classifier where the input consists of not just one but two sentences. This is very practical and we can think of examples where we might want to have a model that knows how to process multiple input sentences at the same time. One example is answering multiple choice questions as input. We might want to pass in the question along with all the possible answers, and we want our model to select the right answer.
 
@@ -1648,6 +1897,8 @@ As an exercise. Since this is quite simple. You might want to complete the follo
 13. Fine-Tuning Transformers with Multiple Inputs in Python
 ===========================================================
 
+See the notebook [here](./12.Fine-Tuning-RTE.ipynb).
+
 So in this lecture, we'll be looking at how to do fine tuning for text classification when we have more than one input sentence. We'll begin by installing transformers and data sets, as we normally do. The next step is to import load_dataset as well as numpy. The next step is to load in our dataset, which is the RTE dataset. This is part of the GLUE benchmark. Like the earlier example on sentiment analysis. Note that I've pasted a description of the dataset here which explains that the data has been processed to be for binary classification.
 
 Other options are possible, for example, having three classes where the third class is neutral, meaning that the two sentences neither entail nor contradict. The next step is to print out the data set object. We got back to see what it contains. So as you can see, we have train, validation and test sets. Each data set object contains two sentence columns along with the label and index. The next step is to check out the features attributes. So as you can see, this tells us that we have two classes where the first classes entailment and the second is not_entailment.
@@ -1669,6 +1920,12 @@ Consider if this were a real world project, which model you would prefer to use?
 14. Fine-Tuning Section Summary
 ===============================
 
+![459.png](./images/459.png)
+![460.png](./images/460.png)
+![461.png](./images/461.png)
+![462.png](./images/462.png)
+
+
 So in this lecture, we will be summarizing everything we learned in this section. This section was all about fine tuning a pre-trained transformer so that you can get better performance on your own data sets or even create models for different tasks. This section focused on the task of text classification, which is a simple but very common use case of NLP. It's also a good introduction to what goes on behind the scenes when you use a pipeline. In particular, we looked at the model and the tokenizer.
 
 Although this does require more coding, this is a necessary step if we want to train transformers and not just use them. We started this section with an optional review of two important concepts text, preprocessing and fine tuning. Additionally, we also reviewed Transfer Learning, which is sometimes associated with fine tuning but doesn't have to be. Text preprocessing involves many steps, although we encapsulate them in a single class called a tokenizer.
@@ -1681,10 +1938,19 @@ This also introduced us to the GLUE benchmark, which is itself an important conc
 
 The third task we looked at was also of practical importance and introduced a new concept. In particular, it showed us how to train a model where we have not just one input sentence but two. For this example, we looked at the textual entailment task, which is another task in the GLUE benchmark.
 
-###
+### 5. Named Entity Recognition (NER) and POS Tagging (Intermediate)
 
 1. Token Classification Section Introduction
 ============================================
+
+![463.png](./images/463.png)
+![464.png](./images/464.png)
+![465.png](./images/465.png)
+![466.png](./images/466.png)
+![467.png](./images/467.png)
+![468.png](./images/468.png)
+![469.png](./images/469.png)
+
 
 So in this lecture we will be introducing the next section of this course, which will be a slightly more advanced version of what you just learned. In the previous section, we looked at how to classify whole documents. This meant that each document belonged to a class, and we wanted to predict what that class was. This section is different, but it extends what we previously did. In particular, this section covers how to create models that make predictions on a per token basis.
 
@@ -1715,6 +1981,14 @@ It's more of an exercise in reading documentation and gluing stuff together. At 
 2. Data & Tokenizer (Code Preparation)
 ======================================
 
+![470.png](./images/470.png)
+![471.png](./images/471.png)
+![472.png](./images/472.png)
+![473.png](./images/473.png)
+![474.png](./images/474.png)
+![475.png](./images/475.png)
+![476.png](./images/476.png)
+
 So in this lecture, our main goal will be to discuss what our data looks like and how we will process it. We'll begin by discussing what our data will look like on a conceptual level. As you know, we'll be looking at the named entity recognition task. So our data will be in the form of input sentences and target tags. Here's an example. Our input sentence is Bill Gates was the CEO of Microsoft in Seattle, Washington. Our target tags are beeper hyper 000.
 
 Be org oh block and b look. Note that in this instance, we are treating Seattle in Washington as two distinct place entities. Although whether or not you really want to do that would be up to you and you would label your data set how you like. So our dataset will be a whole bunch of these sentence and tag sequence pairs. Now, if you need a review of how NER labels work, like what do the B, the I and the O mean, please check out the beginner's corner section of this course.
@@ -1735,6 +2009,8 @@ For the coming example, we'll continue using the DistilBERT checkpoints, which y
 
 3. Data & Tokenizer (Code)
 ==========================
+
+See the notebook [here](13.NER.ipynb).
 
 So in this lecture we will be looking at the code to load up and play around with our data set as well as set up the tokenizer object. Note that because this is such a long notebook, we'll be going through it in parts. So first you'll learn a few new concepts. Then we'll go through parts of the notebook relevant to that concept. Then we'll go on to the next concept and so forth. So we'll begin by installing transformers and data sets, as we normally do.
 
@@ -1762,6 +2038,18 @@ Importantly, because words may be split up into multiple sub words, the input se
 
 4. Target Alignment (Code Preparation)
 ======================================
+
+![477.png](./images/477.png)
+![478.png](./images/478.png)
+![479.png](./images/479.png)
+![480.png](./images/480.png)
+![481.png](./images/481.png)
+![482.png](./images/482.png)
+![483.png](./images/483.png)
+![484.png](./images/484.png)
+![485.png](./images/485.png)
+![486.png](./images/486.png)
+
 
 So in this lecture, we are going to tackle one of the tricky issues with token classification, which is that after we tokenize our data into sub words, the tokens will no longer align with the targets. In fact, we've already seen how this can happen. In the previous lecture, the word lamb got split into two sub words, but in our dataset we would only be provided with one target for the whole word. This lecture is all about how we are going to fix this issue.
 
@@ -1802,6 +2090,12 @@ The details of this will be left until the actual notebook, but please try to fi
 5. Create Tokenized Dataset (Code Preparation)
 ==============================================
 
+![487.png](./images/487.png)
+![488.png](./images/488.png)
+![489.png](./images/489.png)
+![490.png](./images/490.png)
+![491.png](./images/491.png)
+
 Okay. So after we've written our method for aligning targets, there is still more work to be done. In particular, recall that in the previous section, after creating the tokenizer, we wrapped it in another function to add the truncation step. From there we called the map function on our data sets to apply the tokenizer to every sample in batches. However, we weren't able to do that step previously because our targets were not yet aligned with the inputs.
 
 Now we have a function that can do this, so we are ready to move on to this step. As you recall, our data set objects for BERT should have several columns. Specifically, they are input IDs, attention mask, token type IDs and labels. Token type IDs will be present for BERT, but not the DistilBERT. But you don't have to worry about that since the tokenizer will populate those fields for us. We've seen that the data set objects we loaded in currently have the columns, tokens, POS tags, NER tags and chunk tags.
@@ -1818,6 +2112,8 @@ In this case, there is an extra argument called remove columns that we can use. 
 
 6. Target Alignment (Code)
 ==========================
+
+See the notebook [here](13.NER.ipynb).
 
 So in this lecture we will be looking at the code to do label alignment, which is a continuation of the same notebook we previously saw. We'll begin by reviewing our sample sentence. It states EU rejects German call to boycott British lamb. Importantly, the word lamb has been split up into two sub words. Our goal is to expand the targets so that the same target will apply to both sub words. The next step is to check out the word IDs for a sentence. So as you can see, the second last word ID, which is seven repeats twice as expected.
 
@@ -1854,6 +2150,14 @@ So the next step is to just print out the result. So as you can see, we now have
 7. Data Collator (Code Preparation)
 ===================================
 
+![492.png](./images/492.png)
+![493.png](./images/493.png)
+![494.png](./images/494.png)
+![495.png](./images/495.png)
+![496.png](./images/496.png)
+![497.png](./images/497.png)
+
+
 So in this lecture we will be discussing the concept of the data collator, which we avoided discussing earlier in the course. To understand the role of the data collator Consider our lesson on text preprocessing. As you recall, there were several required steps before we could pass our tokenized input into the model. Specifically, we had to pad the tokens, truncate the tokens, and finally convert them into PyTorch tensors. But you've seen that when we use our tokenize function, we don't do most of these steps.
 
 This begs the question when do these other steps happen? Furthermore, I mentioned earlier that when we pad our tokens, we don't want to pad everything to be the same size relative to the whole data set, since the longest sequence may be much longer than everything else. As such, we would rather do padding on a per batch basis. The answer is that all of this is done by the data collator. So instead of the tokenizer doing the padding and conversion into torch tensors,
@@ -1871,6 +2175,8 @@ We create an object by passing in our tokenizer. Then later, when we create our 
 8. Data Collator (Code)
 =======================
 
+See the notebook [here](13.NER.ipynb).
+
 So in this very short lecture, we are going to continue our notebook and look at the steps to create and use the data collator. We'll begin by importing the class DataCollatorForTokenClassification. We'll also create an object passing in the tokenizer that we created above. Now, although we will not normally have to use the data collator manually, it might be nice to see how it works. As you recall, our data set object is quite flexible in the way it can be indexed.
 
 One method, if we want to grab multiple samples at once, is to use a range index. So for instance, if I want to grab at the first two samples, I can index it using zero colon two. As you can see, this returns a dictionary of lists of lists. This is opposed to a list of dictionaries where each dictionary is a separate sample. That should remind you of the JSON we created earlier. Instead, we just get one dictionary which holds all the samples. Unfortunately for some reason, this is not a format that the data collator can work with.
@@ -1883,6 +2189,19 @@ Since our second sentence is much longer than the first. This makes sense becaus
 
 9. Metrics (Code Preparation)
 =============================
+
+![498.png](./images/498.png)
+![499.png](./images/499.png)
+![500.png](./images/500.png)
+![501.png](./images/501.png)
+![502.png](./images/502.png)
+![503.png](./images/503.png)
+![504.png](./images/504.png)
+![505.png](./images/505.png)
+![506.png](./images/506.png)
+![507.png](./images/507.png)
+![508.png](./images/508.png)
+
 
 So in this lecture we will look at how to compute metrics for token classification tasks. The main issue, which is the reason why we need to discuss this, is because computing metrics isn't as straightforward as it is when you only have a single target per sample. For instance, consider accuracy. When we compute accuracy, we count up the number of samples whose target we guessed correctly and divide that by the total number of samples. But what if there are multiple targets per sample as there are now?
 
@@ -1911,6 +2230,8 @@ But this time we need to loop through the predictions and the true labels in cor
 10. Metrics (Code)
 ==================
 
+See the notebook [here](13.NER.ipynb).
+
 So in this lecture, we will be looking at how to evaluate our model, which is different from the previous notebooks, since our targets are now sequences of class labels. As mentioned, we'll need to first install the library seqeval. The next step is to import the load metric function and then call it passing in the string seqeval. The next step is to test the metric by calling metric.compute. We'll begin by simply trying to pass in a single sequence of label IDs.
 
 Okay. So as expected, it fails. As you recall, this metric assumes that we are working with batches of sequences and therefore we cannot just pass in a single list. We should instead pass in a list of lists. The next step is to try metric compute again, but this time passing in a list of lists. Note that the values are the same as what we tried above. Okay. So this time it seems we get a bunch of warnings. Basically, they're telling us that the labels we passed in are not proper tags.
@@ -1930,6 +2251,12 @@ So at this point we've done all the groundwork to load in our data, set, tokeniz
 11. Model and Trainer (Code Preparation)
 ========================================
 
+![509.png](./images/509.png)
+![510.png](./images/510.png)
+![511.png](./images/511.png)
+![512.png](./images/512.png)
+
+
 So in this lecture, we will be moving on to the final step of our notebook, which is to load up a model from a checkpoint and fine tune it on our dataset relative to the previous parts of this section. This will be quite brief as before will be instantiating an auto model, but in the previous section we use the class auto model for sequence classification, which is not appropriate for the current task. In this section we'll be using the class auto model for token classification, which is built specifically for our current task. As before, we'll pass in a checkpoint such as BERT or DistilBERT.
 
 I've also shown you an alternative way of specifying the labels, since, as you recall, if you don't do this, they'll just come out to be label zero, label one and so forth. Specifically, we're going to pass in the arguments id2label and label2id. Note that these can be built using a list of label names which we saved earlier in the notebook. So this is an alternative method of specifying the label names instead of using a whole auto config object or modifying the config file directly.
@@ -1941,6 +2268,8 @@ After we've saved the model, we can load it up using a pipeline. Specifically, t
 12. Model and Trainer (Code)
 ============================
 
+See the notebook [here](13.NER.ipynb).
+
 So in this lecture, we'll be continuing our notebook in order to load up the model. Fine tune it, save it, and then test it out as a pipeline. So we'll begin by creating the id2label and label2id dictionaries. As you recall, our label names variable is a list which already stores a mapping from id2label. The next step is to import the class auto model for token classification, which is the type of model we need for the current task. We then call from_pretrained passing in our checkpoint to get a pre-trained model.
 
 Note that we also pass in id2label and label2id so that our model uses our specified label names. The next step is to import the training arguments class and then to create an object of this type. Since the arguments are the same as the previous section, there's not much to discuss. Note that we've also used weight decay, which you may have seen if you've studied deep learning with me in the past. The next step is to import the trainer class and to create an object of this type.
@@ -1951,6 +2280,15 @@ For this type of task, the correct string to pass in is token classification and
 
 13. POS Tagging & Custom Datasets (Exercise Prompt)
 ===================================================
+
+![513.png](./images/513.png)
+![514.png](./images/514.png)
+![515.png](./images/515.png)
+![516.png](./images/516.png)
+![517.png](./images/517.png)
+![518.png](./images/518.png)
+![519.png](./images/519.png)
+
 
 So in this lecture, we are going to discuss a practical question, which will also become your next exercise for this course. In particular, the question is how can we do token classification with a custom data set? For the purpose of this lecture, we'll consider the task of parts of speech tagging, which is similar to NER, but simpler since it does not require the IOB format. The main issue is this in the previous section where we looked at predicting a single label for a whole document we used CSVs when we wanted to provide our own custom dataset.
 
@@ -1972,6 +2310,8 @@ Whereas IOB is quite specific. Fourth tip because the targets are not in IOB for
 
 14. POS Tagging & Custom Datasets (Solution)
 ============================================
+
+See the notebook [here](./14.POS-Tagger.ipynb).
 
 So in this lecture we will be looking at the solution to the previous exercise, which was to implement parts of speech tagging using a custom dataset. We'll begin by installing transformers and data sets, as we normally do. The next step is to import NLTK as well as the Brown module. The next step is to download the necessary data we need for this data set. The next step is to load in our corpus using brown.tagged_sents, specifying that we want to use the universal tagset.
 
@@ -2024,6 +2364,10 @@ Gates is a noun, which is also correct. Was is a verb, which is correct. There i
 15. Token Classification Section Summary
 ========================================
 
+![520.png](./images/520.png)
+![521.png](./images/521.png)
+
+
 So in this lecture, we will be summarizing everything we learned in this section. In this section, we extended what we learned in the previous section by learning how to not just predict a single label for a whole document, but to predict a label for every token in the document. As you saw, this has several important applications in NLP, including NER, parts of speech tagging and chunking. This section builds off what we learned in the previous section.
 
 So many of the steps remain the same. We learned how to load up a Hugging Face dataset, how to apply tokenized to the dataset, how to download and fine tune a pre-trained model, and how to save it and reload it as a convenient pipeline object. This section added a few new steps, including the data collator and target realignment. We noted that, theoretically speaking, some of these things could have been done automatically by the library, but currently that is not the case.
@@ -2032,10 +2376,13 @@ This section required us to write some of our own algorithms, which is okay sinc
 
 It's a kind of many-to-many task, but there are other kinds of many-to-many tasks where this is not the case. For example, machine translation where the input and the target can have different numbers of words as you'll soon find out. This requires a whole new type of model, and so this will be discussed later in the course.
 
-###
+### 6. Seq2Seq and Neural Machine Translation (Intermediate)
 
 1. Translation Section Introduction
 ===================================
+
+![522.png](./images/522.png)
+![523.png](./images/523.png)
 
 So in this lecture we will be introducing the next section of this course, which is on how to fine tune a transformer for neural machine translation. This is a continuation of the part of this course that focuses on how to fine tune transformers to improve performance. So let's talk about this section from a bird's eye point of view and why it's similar, but also different from the previous section of the course. In one sense, translation is very similar to what we just did with NER in parts of speech.
 
