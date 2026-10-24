@@ -2,11 +2,11 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/15.uv_demo/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/18.Utilities/E.GATE-CS-DA-Chatbot/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/27.Agentic-AI-Deliver-a-successful-chatbot-POC-with-LangGraph/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/28.Building-Scalable-AI-Chatbot-with-Memory-using-LangChain-and-Streamlit/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/40.AI-Agent-Course-Build-a-Language‑Learning-Agent-with-OpenAI-LangGraph-Ollama-MCP/language-learning-agent/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/dev-tools/15.uv_demo/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/projects/18.Utilities/E.GATE-CS-DA-Chatbot/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/generative-ai/27.Agentic-AI-Deliver-a-successful-chatbot-POC-with-LangGraph/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/generative-ai/28.Building-Scalable-AI-Chatbot-with-Memory-using-LangChain-and-Streamlit/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/generative-ai/40.AI-Agent-Course-Build-a-Language‑Learning-Agent-with-OpenAI-LangGraph-Ollama-MCP/language-learning-agent/.venv" />
     </content>
     <orderEntry type="jdk" jdkName="Pipenv (AI-ML-DS)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

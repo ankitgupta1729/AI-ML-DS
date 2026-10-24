@@ -2,10 +2,10 @@
 /AI-ML-DS/
 
 # Downloaded dataset caches (re-downloaded by notebook code; exceed GitHub's file size limit)
-55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/cifar-10-python.tar.gz
-55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/cifar-10-batches-py/
-55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/FashionMNIST/
-20.LlamaIndex/llamaindex-helloworld/.env
+deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/cifar-10-python.tar.gz
+deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/cifar-10-batches-py/
+deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/FashionMNIST/
+generative-ai/20.LlamaIndex/llamaindex-helloworld/.env
 __pycache__/
 *.pyc
 .env
@@ -13,15 +13,15 @@ __pycache__/
 storage/
 __pycache__/
 .env
-4.Theory/Notes/*.pdf
-24.LangChain2/Project/env/
-0.Resources/PDFs/Behind Gen AI_ NLP, LLM and ChatGPT by Et Tu Code.pdf
+foundations/04.Theory/Notes/*.pdf
+generative-ai/24.LangChain2/Project/env/
+resources/PDFs/Behind Gen AI_ NLP, LLM and ChatGPT by Et Tu Code.pdf
 .DS_Store
 .claude/settings.json
 # Large PDF files - exceeding GitHub size limit
-0.Resources/PDFs/AI-ML-DS/book1*.pdf
-0.Resources/PDFs/AI-ML-DS/*Large*.pdf
-0.Resources/PDFs/AI-ML-DS/Probabilistic*Advanced*.pdf
+resources/PDFs/AI-ML-DS/book1*.pdf
+resources/PDFs/AI-ML-DS/*Large*.pdf
+resources/PDFs/AI-ML-DS/Probabilistic*Advanced*.pdf
 demo-web/screenshots/
 # Node / Next.js artifacts and local dev databases
 node_modules/
@@ -30,19 +30,22 @@ node_modules/
 *.db-journal
 
 # Video exceeding GitHub 100MB file limit
-46.Udemy-RAG-Fine_Tuning-LLM/*.mp4
+generative-ai/46.Udemy-RAG-Fine_Tuning-LLM/*.mp4
 
 # Large binaries kept out of git (exceed or approach GitHub's 100MB file limit)
 *.weights
 *.mp4
 *.avi
-54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_train.csv
-54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_test.csv
-54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/openimagesv6/open-images-v6/validation/labels/detections.csv
+deep-learning/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_train.csv
+deep-learning/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/code/data/FMNIST/fashion-mnist_test.csv
+deep-learning/54.Deep-Learning-for-Computer-Vision-with-TensorFlow-2/openimagesv6/open-images-v6/validation/labels/detections.csv
 
 # TensorFlow checkpoint/saved_model weight shards (~108MB each, over GitHub's 100MB limit)
 *.data-00000-of-00001
 
 # MovieLens dataset archive and its extracted CSVs (ratings.csv ~533MB, genome-scores.csv ~323MB — over GitHub's 100MB limit; already compressed)
-55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m.zip
-55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m/
+deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m.zip
+deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m/
+
+# notes-to-pdf build caches (OCR text, resized screenshots, intermediate HTML)
+tools/notes-to-pdf/.cache/

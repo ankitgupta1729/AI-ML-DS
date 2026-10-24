@@ -1,0 +1,16 @@
+# Binary assets: never diff or normalise line endings
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ttf   binary
+*.zip   binary
+*.gz    binary
+
+# Generated revision PDFs (built by tools/notes-to-pdf) collapse in GitHub diffs
+**/pdf/*.pdf linguist-generated=true
+
+# Third-party course material and books should not skew the language stats
+machine-learning/50.Andrew-Ng-Course-Material/** linguist-vendored
+resources/** linguist-documentation

@@ -1,0 +1,8 @@
+{
+  "name": "notes-to-pdf",
+  "private": true,
+  "description": "Chromium print backend for tools/notes-to-pdf",
+  "dependencies": {
+    "playwright": "^1.45.0"
+  }
+}
