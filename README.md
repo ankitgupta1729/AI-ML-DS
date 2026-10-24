@@ -276,7 +276,7 @@ screenshot placed **right next to the sentence it illustrates**.
 | Introduction to Generative Adversarial Networks with PyTorch | Udemy | [PDF](deep-learning/56.Udemy-Introduction-to-Generative-Adversarial-Networks-with-PyTorch/pdf/GANs-with-PyTorch-Notes.pdf) | 323 |
 | Convolutional Neural Networks with PyTorch | Udemy | [PDF](deep-learning/57.Convolutional-Neural-Networks-with-Pytorch/pdf/CNNs-with-PyTorch-Notes.pdf) | 129 |
 | PyTorch: Neural Networks & Deep Learning in Python | Udemy | [PDF](deep-learning/58.Udemy-PyTorch-Tutorial-Neural-Networks-%26-Deep-Learning-in-Python/pdf/PyTorch-Neural-Networks-and-Deep-Learning-Notes.pdf) | 274 |
-| Modern Deep Convolutional Neural Networks with PyTorch | Udemy | [PDF](deep-learning/59.Modern-Deep-Convolutional-Neural-Networks-with-PyTorch/pdf/Modern-Deep-CNNs-with-PyTorch-Notes.pdf) | 141 |
+| Modern Deep Convolutional Neural Networks with PyTorch | Udemy | [PDF](deep-learning/59.Modern-Deep-Convolutional-Neural-Networks-with-PyTorch/pdf/Modern-Deep-CNNs-with-PyTorch-Notes.pdf) | 154 |
 
 #### Natural Language Processing
 
@@ -312,7 +312,7 @@ screenshot placed **right next to the sentence it illustrates**.
 | Course | Source | PDF | Pages |
 | --- | --- | --- | ---: |
 | CI/CD Pipelines for Data & ML | Course notes | [PDF](mlops/31.CICD-Pipeline/pdf/CICD-Pipeline-Notes.pdf) | 7 |
-| Fundamentals of Google Cloud | Udemy | [PDF](mlops/34.Fundamentals-of-Google-Cloud-Udemy/pdf/Google-Cloud-Fundamentals-Notes.pdf) | 60 |
+| Fundamentals of Google Cloud | Udemy | [PDF](mlops/34.Fundamentals-of-Google-Cloud-Udemy/pdf/Google-Cloud-Fundamentals-Notes.pdf) | 61 |
 | Deploying Machine Learning Models in Production | Coursera · DeepLearning.AI | [PDF](mlops/35.Deploying-Machine-Learning-Models-in-Production/pdf/Deploying-ML-Models-in-Production-Notes.pdf) | 123 |
 | Introduction to Machine Learning in Production | Coursera · DeepLearning.AI · Andrew Ng | [PDF](mlops/36.Introduction-to-Machine-Learning-in-Production-DeepLearningAI/pdf/Introduction-to-ML-in-Production-Notes.pdf) | 235 |
 | MLflow | Course notes | [PDF](mlops/39.mlflow/pdf/MLflow-Notes.pdf) | 3 |
