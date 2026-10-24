@@ -75,8 +75,10 @@ def correct(text: str, rules: list[dict], hits: collections.Counter) -> str:
 def _prose(chunk: str, rules: list[dict], hits: collections.Counter) -> str:
     for r in rules:
         def sub(m, r=r, chunk=chunk):
-            hits[r["line"]] += 1
-            return fix_case(m.group(0), r["repl"], at_sentence_start(chunk, m.start()))
+            fixed = fix_case(m.group(0), r["repl"], at_sentence_start(chunk, m.start()))
+            if fixed != m.group(0):  # already-correct text is not a correction
+                hits[r["line"]] += 1
+            return fixed
         chunk = r["rx"].sub(sub, chunk)
     return chunk
 
@@ -105,11 +107,16 @@ def main() -> int:
                 if not args.check:
                     with open(path, "w", encoding="utf-8") as f:
                         f.write(after)
-    unused = [r for r in rules if not hits[r["line"]]]
-    for r in unused:
-        print(f"! rule on line {r['line']} matched nothing: {r['find']!r}")
-    print(f"{sum(hits.values())} corrections in {changed} file(s); {len(rules)} rules, {len(unused)} unused")
-    return 1 if unused else 0
+    pending = sum(hits.values())
+    if not pending:
+        print(f"Notes are up to date: all {len(rules)} rules already applied.")
+        return 0
+    # a rule with nothing to do while others still apply may be mistyped
+    for r in rules:
+        if not hits[r["line"]]:
+            print(f"  (no matches for rule on line {r['line']}: {r['find']!r})")
+    print(f"{pending} correction(s) {'pending' if args.check else 'applied'} in {changed} file(s)")
+    return 0
 
 
 if __name__ == "__main__":

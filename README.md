@@ -252,7 +252,7 @@ screenshot placed **right next to the sentence it illustrates**.
 | Course | Source | PDF | Pages |
 | --- | --- | --- | ---: |
 | PySpark — Part 1 | YouTube | [PDF](data-engineering/02.PySpark/pdf/PySpark-Notes-Part-1.pdf) | 25 |
-| PySpark — Part 2 | YouTube · Intellipaat | [PDF](data-engineering/02.PySpark/pdf/PySpark-Notes-Part-2.pdf) | 23 |
+| PySpark — Part 2 | YouTube · Intellipaat | [PDF](data-engineering/02.PySpark/pdf/PySpark-Notes-Part-2.pdf) | 24 |
 | Databricks Lakehouse Fundamentals | Databricks Academy | [PDF](data-engineering/14.Databricks/pdf/Databricks-Fundamentals-Notes.pdf) | 11 |
 
 #### Machine Learning

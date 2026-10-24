@@ -29,8 +29,9 @@ How it stays safe:
   speech-to-text often capitalises misheard words mid-sentence.
 - Course-specific mishearings are scoped to their module, so a fix for one
   course never fires in another.
-- Running it again is a no-op; `--check` reports any rule that no longer
-  matches anything.
+- Running it again is a no-op: `--check` then reports "Notes are up to date".
+  When new rules are pending, it also lists rules that match nothing, which
+  usually means a typo in the rule.
 
 Scope is deliberately "clear errors only": misspellings and misheard
 terms. The wording and grammar of the transcripts are left as spoken.
