@@ -2383,6 +2383,10 @@ It's a kind of many-to-many task, but there are other kinds of many-to-many task
 
 ![522.png](./images/522.png)
 ![523.png](./images/523.png)
+![524.png](./images/524.png)
+![525.png](./images/525.png)
+![526.png](./images/526.png)
+
 
 So in this lecture we will be introducing the next section of this course, which is on how to fine tune a transformer for neural machine translation. This is a continuation of the part of this course that focuses on how to fine tune transformers to improve performance. So let's talk about this section from a bird's eye point of view and why it's similar, but also different from the previous section of the course. In one sense, translation is very similar to what we just did with NER in parts of speech.
 
@@ -2402,6 +2406,15 @@ So this will be just enough to understand why your model inputs look the way the
 
 2. Data & Tokenizer (Code Preparation)
 ======================================
+
+![527.png](./images/527.png)
+![528.png](./images/528.png)
+![529.png](./images/529.png)
+![530.png](./images/530.png)
+![531.png](./images/531.png)
+![532.png](./images/532.png)
+![533.png](./images/533.png)
+
 
 So in this lecture we will be looking at the data set will be using in the section along with how to apply the tokenizer to it. We'll be using a dataset called KDE4, which, like the other data sets we've seen that can be loaded in automatically by using the load_dataset function. This dataset has a ton of language pairs, so if you're interested in trying this code on a different language pair, I've left a link both in the notebook and extra_reading.txt, which lists the pairs in the following notebook.
 
@@ -2426,6 +2439,11 @@ With our new model, this won't be the case. Instead, the convention is that each
 3. Things Move Fast
 ===================
 
+![534.png](./images/534.png)
+![535.png](./images/535.png)
+![536.png](./images/536.png)
+
+
 So this is just a short lecture to remind all of you that this field moves fast. Things will change and break. This is to be expected. Case in point, in the translation lectures, you'll see that we use a context manager called as_target_tokenizer when we tokenize the translation text. This was the case while I was making this course. Today, as I am still in the midst of making this course, this is no longer the case. Literally, one minute this is working fine.
 
 And when I ran the same code a few minutes later, I was getting a warning telling me that this will change. So the new way of doing this is instead of using as_target_tokenizer you simply pass in your text using a special argument called text_target. In my opinion, this looks nicer since it's kind of weird that a variable you define inside the scope of a context can still be used outside of it. In any case, the following lecture is will use as_target_tokenizer, but you may need to update this when writing your own code.
@@ -2434,6 +2452,8 @@ And just remember, guys, when we are hiring for jobs, we don't care that you've 
 
 4. Data & Tokenizer (Code)
 ==========================
+
+See the notebook [here](./15.Translation.ipynb)
 
 So in this lecture we'll begin looking at the notebook where we will fine tune a translation model. We'll begin by installing transformers, datasets and SentencePiece. Note that SentencePiece is required for the tokenizer to work. The next step is to load up our data set, which is a data set with English and French language pairs. So as you can see, we have over 200,000 samples. Unfortunately, this many samples is way too much for this notebook to complete in any reasonable amount of time.
 
@@ -2455,6 +2475,30 @@ However, although we didn't get any errors, the result is suboptimal. The Englis
 
 5. Aside Seq2Seq Basics (Optional)
 ==================================
+
+![537.png](./images/537.png)
+![538.png](./images/538.png)
+![539.png](./images/539.png)
+![540.png](./images/540.png)
+![541.png](./images/541.png)
+![542.png](./images/542.png)
+![543.png](./images/543.png)
+![544.png](./images/544.png)
+![545.png](./images/545.png)
+![546.png](./images/546.png)
+![547.png](./images/547.png)
+![548.png](./images/548.png)
+![549.png](./images/549.png)
+![550.png](./images/550.png)
+![551.png](./images/551.png)
+![552.png](./images/552.png)
+![553.png](./images/553.png)
+![554.png](./images/554.png)
+![555.png](./images/555.png)
+![556.png](./images/556.png)
+![557.png](./images/557.png)
+![558.png](./images/558.png)
+
 
 So in this optional lecture, we are going to go off on a slight tangent and talk about how sequence to sequence models work. This will help give you a stronger footing for understanding why the API is the way it is in the notebook. Note that this section does not require any knowledge of transformers, but knowing about RNNs would be very useful. Effectively, anywhere you see an RNN block in this lecture, you can simply replace it with a transformer block.
 
@@ -2499,6 +2543,19 @@ This is when we want to use our model to translate arbitrary text. In this scena
 6. Model Inputs (Code Preparation)
 ==================================
 
+![559.png](./images/559.png)
+![560.png](./images/560.png)
+![561.png](./images/561.png)
+![562.png](./images/562.png)
+![563.png](./images/563.png)
+![564.png](./images/564.png)
+![565.png](./images/565.png)
+![566.png](./images/566.png)
+![567.png](./images/567.png)
+![568.png](./images/568.png)
+![569.png](./images/569.png)
+
+
 So now that we've discussed how to tokenize the inputs and targets, we are ready to think about how to prepare the data to be input into the model for training to understand the next step. Let's relate it back to what we did earlier in the course when we wanted to classify documents, we created a tokenize function that simply called the tokenizer with truncation. As you recall, this fills in the fields such as input, IDs, attention, mask and so forth.
 
 When we wanted to classify each token, we created a new function that not only called the tokenizer but also populated the labels field. As you recall, the labels field is where Hugging Face looks for the targets, and we had to realign the targets manually so that we could set this field properly. In this section, we have a similar situation. We need to populate fields for both the inputs and the labels. In fact, this section is a bit easier because we already know that the inputs and targets can have different sequence lengths.
@@ -2532,6 +2589,8 @@ the word "is" and as you can see, that is also the input at the next time step. 
 7. Model Inputs (Code)
 ======================
 
+See the notebook [here](./15.Translation.ipynb)
+
 So in this lecture, we will be continuing our notebook. We'll begin by drawing a histogram of the sequence lengths of the inputs and targets. The reason we want to do this is because we want to specify a maximum sequence length for truncation. To do this, we'll first grab the translation column of the train set. Then we'll use a list comprehension to collect the lengths of each English sentence. So as you can see, most of the samples in the train set fall in the shorter end.
 
 We would be justified in setting the maximum input length to be somewhere between 100 and 200. The next step is to draw a similar histogram, but for the targets instead of the inputs. So these are the French language sentences. So as you can see, the sequence lengths are pretty similar to the English sentences. So again, we would be justified in setting the maximum target length to be somewhere between 100 and 200. The next step is to write our tokenize function.
@@ -2555,6 +2614,16 @@ So as you can see, the decoder inputs really are just a shifted version of the t
 8. Translation Metrics (BLEU Score & BERT Score) (Code Preparation)
 ===================================================================
 
+![570.png](./images/570.png)
+![571.png](./images/571.png)
+![572.png](./images/572.png)
+![573.png](./images/573.png)
+![574.png](./images/574.png)
+![575.png](./images/575.png)
+![576.png](./images/576.png)
+![577.png](./images/577.png)
+
+
 So in this lecture, we are going to discuss the metrics that will be using in our notebook. Just as a brief review, let's remind ourselves why we need different metrics for the translation task. The main point is that little differences here and there are unlikely to change the meaning. For example, the cat chased the mouse and the cat ran after the mouse. Furthermore, different sentences can mean the same thing, and as such there can be more than one valid translation of an input.
 
 As such, the BLEU score looks at n-grams, which are subsequences of tokens. The BLEU score is then a weighted average of n-grams for different sizes of n. It also chooses the best score over each reference. The final BLEU score is a score between zero and 100, but is sometimes expressed to be between a zero and one. In the beginners corner of this course. We already looked at the BLEU score. But that was through NLTK. In this section, we'll continue to use the BLEU score, but we use a new library that claims to compute the BLEU score more consistently than other packages.
@@ -2571,6 +2640,8 @@ Note that it returns precision, recall and F1 individually for each prediction y
 
 9. Translation Metrics (BLEU Score & BERT Score) (Code)
 =======================================================
+
+See the notebook [here](./15.Translation.ipynb)
 
 So in this lecture, we will continue looking at our notebook. Moving on to metrics. We'll begin by installing two libraries which implement the metrics we need the BLEU score and the BERTScore. The next step is to import the load_metric function and then to load up our two metrics. The next step is to test our metrics on a few examples to demonstrate how they behave. In this course, we're using the BLEU metric because it's pretty standard, but we're also using the BERTScore metric since it overcomes drawbacks of the BLEU metric.
 
@@ -2591,6 +2662,20 @@ The next step is to then decode the labels into sentences as well. The next step
 10. Train & Evaluate (Code Preparation)
 =======================================
 
+![578.png](./images/578.png)
+![579.png](./images/579.png)
+![580.png](./images/580.png)
+![581.png](./images/581.png)
+![582.png](./images/582.png)
+![583.png](./images/583.png)
+![584.png](./images/584.png)
+![585.png](./images/585.png)
+![586.png](./images/586.png)
+![587.png](./images/587.png)
+![588.png](./images/588.png)
+![589.png](./images/589.png)
+
+
 So in this lecture, we'll be looking at how to do the final steps of our notebook, which will be to train and evaluate our model. Furthermore, we'll look at how to save the fine tune model and load it back in as a pipeline object. As you've seen in previous lectures, this basically involves creating a training arguments object, a trainer object, and then calling trainer.train. This section will follow the same process, but with a few crucial modifications.
 
 We'll begin by creating the training arguments object, which now comes from the Seq2SeqTrainingArguments class. As before, the first argument is simply the path to save the data we generate as we train. In this example, we're going to set evaluation strategy to no because as you see, this is quite a time consuming process. Instead, we'll evaluate the model once before training and once after training to observe that our metrics improved. Another argument worth looking at is predict_with_generate.
@@ -2610,6 +2695,8 @@ We'll do this once before training and once after training to see if our metrics
 11. Train & Evaluate (Code)
 ===========================
 
+See the notebook [here](./15.Translation.ipynb)
+
 So in this lecture, we will be looking at the next portion of our notebook where we train and evaluate our transformer. We'll begin by creating an object of type Seq2SeqTrainingArguments. Note that this is a special training arguments class which we haven't used before. Specially made for seq2seq. One seq2seq-specific argument we'll be using is predict_with_generate which has been set to true. As you recall, we need to set this to true so that during evaluation the model will be evaluated without using the true targets as input into the decoder.
 
 Instead, the decoder will generate the translation by itself in an auto regressive manner, just like a language model. In other words, it will generate one token at a time, and each token it generates will be fed back into the input for the next time step. Now, because even making predictions with a large model like this is so computationally intensive, we're going to set evaluation strategy to no. Instead, we'll run evaluation manually before and after training to check whether or not our model has improved.
@@ -2625,6 +2712,12 @@ Okay. So now the BERTScore is about 88% and the BLEU score has gone up to 43.4. 
 12. Translation Section Summary
 ===============================
 
+![590.png](./images/590.png)
+![591.png](./images/591.png)
+![592.png](./images/592.png)
+![593.png](./images/593.png)
+
+
 So in this lecture, we will be summarizing everything we learned in this section. This section focused on the task of neural machine translation, which is a kind of sequence to sequence task. Although the previous section looked at a task where our outputs and targets were sequences. This is different because the target sequence doesn't have the same length as the inputs. In the case of translation, each prediction does not correspond to each input. Unlike a task like NER. Computationally, this kind of task is quite a bit more difficult and even requires a whole new kind of model called seq2seq.
 
 This involves both an encoder block and a decoder block, whereas the previous models we looked at were only encoder blocks. This section follow the same usual steps of our fine tuning process in Hugging Face. We began by looking at the dataset and tokenizer. The tokenizer in this section was a bit different because not only did we have to tokenize the input, we also had to tokenize the target. We then looked at how to prepare the model inputs, including the data collator in this section.
@@ -2635,10 +2728,21 @@ Instead of trying to match exact tokens, it instead maps each token into a conte
 
 At this stage we are reaching and even surpassing the limits of the CoLab platform.
 
-###
+### 7. Question-Answering (Advanced) 
 
 1. Question-Answering Section Introduction
 ==========================================
+
+![594.png](./images/594.png)
+![595.png](./images/595.png)
+![596.png](./images/596.png)
+![597.png](./images/597.png)
+![598.png](./images/598.png)
+![599.png](./images/599.png)
+![600.png](./images/600.png)
+![601.png](./images/601.png)
+![602.png](./images/602.png)
+
 
 So in this lecture we will be introducing the next section of this course, which is all about a very interesting topic known as question answering. Specifically, we will look at how to fine tune a transformer for this task. As you recall, this is the task where we give the transformer a piece of text and ask it a question based on that text. Currently, the state of the art allows us to do extractive question answering, meaning that the correct answer is simply a substring of the given text.
 
@@ -2659,6 +2763,14 @@ To be honest with you, when I first encountered this code, I found it to be quit
 2. Exploring the Dataset (SQuAD)
 ================================
 
+![603.png](./images/603.png)
+![604.png](./images/604.png)
+![605.png](./images/605.png)
+![606.png](./images/606.png)
+![607.png](./images/607.png)
+![608.png](./images/608.png)
+
+
 So in this lecture we will discuss the SQuAD data set, which is the dataset we'll be using for this task. SQuAD simply stands for Stanford Question Answering Dataset. Now, as you already know, the task of question answering is still constrained in a few ways. We can't yet give a neural network a big database of knowledge and just ask it any question we want. Instead, we do what is called extractive question answering. What this means is that we're going to give the network a pair of texts, namely the question and the context which contains the answer to the question.
 
 In that way, the answer is always a substring of the context. Note also that because of this, the network never has to actually generate any text, so we don't require an encoder decoder setup. Now there are some details that will become important when you want to actually write the code. Firstly, let's look at how we will load in the data. As you can see, we just call the standard function load_dataset passing in the string squad. The data set comes with five columns which are ID title, context, question and answers.
@@ -2676,6 +2788,8 @@ Now, oddly, this data set is built such that for some questions, the exact same 
 3. Exploring the Dataset (SQuAD) in Python
 ==========================================
 
+See the notebook [here](./16.QA.ipynb).
+
 In this lecture, we will begin looking at our question answering notebook. As usual, we begin by installing transformers and data sets. The next step is to import the function load_dataset. We then call this function passing in the string squad. We'll call the result raw_datasets. So note that the data set already becomes split into two parts one for train and one for validation. The train set has about 88,000 samples, while the validation set has about 10,000.
 
 Note that each data set it comes with the columns ID title, context, question and answers. So far in this course, we haven't had much a need for the ID column, but in this section it will be crucial. On the other hand, we won't be using the title. Let's look at one of the titles anyway just to see what it is. As you can see, it says University of Notre Dame. Now let's look at the context for the same sample. As you can see, it's the same context I showed you in the previous lecture.
@@ -2692,6 +2806,20 @@ But in this case, we see that the answer_start index is the same in all three ca
 
 4. Using the Tokenizer
 ======================
+
+![609.png](./images/609.png)
+![610.png](./images/610.png)
+![611.png](./images/611.png)
+![612.png](./images/612.png)
+![613.png](./images/613.png)
+![614.png](./images/614.png)
+![615.png](./images/615.png)
+![616.png](./images/616.png)
+![617.png](./images/617.png)
+![618.png](./images/618.png)
+![619.png](./images/619.png)
+![620.png](./images/620.png)
+
 
 So in this lecture we will move on to the next step of our question answering notebook. Now, as you recall, typically after we load in the data, we apply the tokenizer to convert the text into a numerical format for the neural network. At a high level. That seems simple, but as you've seen many times already, the devil is in the details. Firstly, let's note that the checkpoint will be using for this notebook will be either BERT or DistilBERT. This might surprise you since question answering seems like a pretty complicated task.
 
@@ -2725,6 +2853,8 @@ That is what is the first character and what is the last. So hopefully that give
 
 5. Using the Tokenizer in Python
 ================================
+
+See the notebook [here](./16.QA.ipynb).
 
 So in this lecture, we will be continuing our notebook from earlier in the session. As you know, the next step will be to load up our tokenizer. In this notebook, we'll be using DistilBERT as our checkpoint, since it trains much faster than BERT. But if you're doing this at home by yourself, I would recommend trying BERT instead. [unclear] As usual we call AutoTokenizer.from_pretrained passing in the checkpoint. The next step is to test our tokenizer on a question and context pair.
 
@@ -2762,6 +2892,31 @@ Now you should note that not all of the inputs will be of this size. As an exerc
 
 6. Aligning the Targets
 =======================
+
+![621.png](./images/621.png)
+![622.png](./images/622.png)
+![623.png](./images/623.png)
+![624.png](./images/624.png)
+![625.png](./images/625.png)
+![626.png](./images/626.png)
+![627.png](./images/627.png)
+![628.png](./images/628.png)
+![629.png](./images/629.png)
+![630.png](./images/630.png)
+![631.png](./images/631.png)
+![632.png](./images/632.png)
+![633.png](./images/633.png)
+![634.png](./images/634.png)
+![635.png](./images/635.png)
+![636.png](./images/636.png)
+![637.png](./images/637.png)
+![638.png](./images/638.png)
+![639.png](./images/639.png)
+![640.png](./images/640.png)
+![641.png](./images/641.png)
+![642.png](./images/642.png)
+![643.png](./images/643.png)
+
 
 So in this lecture, we are going to continue on to the next step of our notebook. The next step is a very important step, and it will help us understand why we needed the information we retrieved from the tokenization. Since it will be required in order to get this job done, this lecture will start off with more preliminary, seemingly random steps. So it'll be good to just talk about what we are trying to accomplish. As you recall, we just learn how to expand our inputs into multiple context windows with some maximum size.
 
@@ -2816,6 +2971,8 @@ Recall that this is a list like the token type IDs, which contains zeros in the 
 7. Aligning the Targets in Python
 =================================
 
+See the notebook [here](./16.QA.ipynb).
+
 So in this lecture, we'll be continuing our notebook and putting together the pieces we discovered in the previous steps. The next sort of arbitrary step is to check out this function called sequence IDs. This takes in an argument which specifies which input we'd like to look at. As you recall, there are four since the context was split up into four parts. So as you can see, this gives us a list which is reminiscent of the token type IDs we saw earlier in the course.
 
 Importantly, we cannot use the token type IDs because they are not present in all models such as DistilBERT. To describe what we are seeing. This is a list that has the same length as the tokenized input. There are nones which corresponds with the special tokens like CLS and SEP. Zeros denote the tokens which are part of the question and ones denote the tokens which are part of the context. We'll be making use of this information later on in the notebook.
@@ -2869,6 +3026,25 @@ You might think this is impossible because our window size is 100 and our stride
 8. Applying the Tokenizer
 =========================
 
+![644.png](./images/644.png)
+![645.png](./images/645.png)
+![646.png](./images/646.png)
+![647.png](./images/647.png)
+![648.png](./images/648.png)
+![649.png](./images/649.png)
+![650.png](./images/650.png)
+![651.png](./images/651.png)
+![652.png](./images/652.png)
+![653.png](./images/653.png)
+![654.png](./images/654.png)
+![655.png](./images/655.png)
+![656.png](./images/656.png)
+![657.png](./images/657.png)
+![658.png](./images/658.png)
+![659.png](./images/659.png)
+![660.png](./images/660.png)
+
+
 So at this point, we have everything we need in order to create our tokenized function, which we will then apply to each sample in our data set using map to get the model inputs. As you recall, this is the next step if we follow the same pattern as the previous sections in the course. For this notebook, we will end up writing two separate functions to process the train and validation sets. The reason for this is when we evaluate our model, we're going to evaluate it based on the string version of the answers.
 
 But the string versions of the answers are already given in the data set, so there is no further processing to do. We'll see exactly how that works later on. So firstly, we'll be setting max length to 384 and stride to 128. You might be wondering why we would set max length to 384 if BERT can handle more tokens than this. The answer is that this is what Google used in their experiments. So we will follow what they did. Inside the tokenize function. We'll begin by noting that some questions in the data set are poorly formatted with leading and trailing whitespace.
@@ -2903,6 +3079,8 @@ As with the train set, once we finish defining the tokenized function for the va
 
 9. Applying the Tokenizer in Python
 ===================================
+
+See the notebook [here](./16.QA.ipynb).
 
 So at this point in our notebook, you may have realized we are still not yet done working with the tokenizer object. We've done some experiments to demonstrate what we want to do, but we have yet to apply it to all of the samples in our data sets. In this lecture, we are finally ready to define our tokenized functions and actually run them to process the data to prepare them for the model. We'll begin by demonstrating that some questions are formatted poorly and have leading or trailing whitespace.
 
@@ -2939,6 +3117,13 @@ Anywhere we find that the sequence ID is one, we keep the tuple, otherwise we re
 10. Question-Answering Metrics
 ==============================
 
+![661.png](./images/661.png)
+![662.png](./images/662.png)
+![663.png](./images/663.png)
+![664.png](./images/664.png)
+![665.png](./images/665.png)
+![666.png](./images/666.png)
+
 So in this lecture we will be looking at how to compute metrics for the question answering task as usual. Since this is a standard data set for NLP benchmarks, it should be expected that there is also an associated metric for this task. As you're pretty used to by now, we will load in the metric by calling load metric passing in the string squad. So what does this metric do? As you recall, I mentioned earlier in this section that the metric will be using does not involve any low level quantities like the position of the answer within the context.
 
 Instead, the metric uses the actual answers themselves in the form of strings. So if the answer is Albert Einstein, then our prediction should also be Albert Einstein in order to be considered correct. Of course, this begs the question how do we convert our model predictions back into strings? That will represent the answer. This remains to be seen. For now, we'll just focus on how to call metric compute and the results we will get back. In terms of the results we get back, metric compute will return two items, the exact match score and the F1 score.
@@ -2956,6 +3141,8 @@ that also won't work.
 11. Question-Answering Metrics in Python
 ========================================
 
+See the notebook [here](./16.QA.ipynb).
+
 So in this lecture we will be continuing our notebook and looking at the SQuAD metric. As usual, we'll begin by importing load metric. We then obtain our metric by calling load metric, passing in the string squad. The next step is to just see how this metric works. With some dummy predictions and targets for the predicted answers, we'll have Albert Einstein, physicist and general relativity. Make note of how these predictions are formatted. Each prediction is a dictionary and they all go in a list.
 
 Each dictionary contains two items. Each dictionary has not just the prediction text, but also a corresponding ID. This will allow the metric compute function to cross reference. Which predictions go with which answers. For the target answers. Note that this is also a list of dictionaries. However, these dictionaries contain different items. What they do have in common are the IDs. The new field is the answers field, which contains a nested dictionary inside this dictionary.
@@ -2966,6 +3153,44 @@ As you can see, I've just used 100 for every sample. Once we've made up our pred
 
 12. From Logits to Answers
 ==========================
+
+![667.png](./images/667.png)
+![668.png](./images/668.png)
+![669.png](./images/669.png)
+![670.png](./images/670.png)
+![671.png](./images/671.png)
+![672.png](./images/672.png)
+![673.png](./images/673.png)
+![674.png](./images/674.png)
+![675.png](./images/675.png)
+![676.png](./images/676.png)
+![677.png](./images/677.png)
+![678.png](./images/678.png)
+![679.png](./images/679.png)
+![680.png](./images/680.png)
+![681.png](./images/681.png)
+![682.png](./images/682.png)
+![683.png](./images/683.png)
+![684.png](./images/684.png)
+![685.png](./images/685.png)
+![686.png](./images/686.png)
+![687.png](./images/687.png)
+![688.png](./images/688.png)
+![689.png](./images/689.png)
+![690.png](./images/690.png)
+![691.png](./images/691.png)
+![692.png](./images/692.png)
+![693.png](./images/693.png)
+![694.png](./images/694.png)
+![695.png](./images/695.png)
+![696.png](./images/696.png)
+![697.png](./images/697.png)
+![698.png](./images/698.png)
+![699.png](./images/699.png)
+![700.png](./images/700.png)
+![701.png](./images/701.png)
+    
+
 
 So in this lecture, we are going to move on to a very important task. The task is to convert our model outputs back into a string answer so that we can call metric compute. And obviously this is not just so we can call metric compute, but so we can actually read the answers as well. It wouldn't make sense to have a question answering system but then not be able to read the answers. This is our second major task for this section, the first being how to process the model inputs.
 
@@ -3042,6 +3267,8 @@ And finally, once we have a list of predicted answers and a list of true answers
 13. From Logits to Answers in Python
 ====================================
 
+See the notebook [here](./16.QA.ipynb).
+
 So in this lecture, we will be continuing our notebook. As a reminder, our goal right now is to use metric compute. However, we can't use this until we are able to get the predicted answers into text format, since as you saw, that is the required input. Now, in order to develop our solution, we won't use the whole data set and we won't use our untrained model since we want to just see that it works. Instead, we'll take a small subsample of our validation set and we'll use a model already
 
 fine-tuned on the SQuAD data set. To begin, let's create a small validation set, which will just be the first 100 samples from our full validation data set. The next step is to define a trained checkpoint, which will be DistilBERT fine-tuned on SQuAD. As you recall, we'll also need to load in the corresponding tokenizer since these are checkpoint specific. We'll call this tokenizer2. Now, one issue with this is that we use the tokenizer variable as a global variable in some of the functions above.
@@ -3089,6 +3316,16 @@ The next step is to format the true answers as described above. We want a list o
 14. Computing Metrics
 =====================
 
+![702.png](./images/702.png)
+![703.png](./images/703.png)
+![704.png](./images/704.png)
+![705.png](./images/705.png)
+![706.png](./images/706.png)
+![707.png](./images/707.png)
+![708.png](./images/708.png)
+![709.png](./images/709.png)
+
+
 So now that we know how to actually convert our model predictions into actual answers such that we can call metric compute, we are now going to write our function for compute metrics. Now normally in this course, you've seen that we can pass compute metrics into the trainer object, at which point the function would be called at the end of each training epoch. In this section, that won't be the case. Instead, we'll be calling the compute metrics function manually after training is complete.
 
 Furthermore, we won't be following the usual API for compute metrics where the input is just a tuple of logits and labels. This would allow us to compute a validation loss, but in this case we'd prefer to look at the actual answers themselves. If you'd like to compute a validation loss based on the logits. You're welcome to do that as well as an exercise. So we'll begin by importing tqdm, which allows us to display a progress bar as our function loops through the data set.
@@ -3110,6 +3347,8 @@ Once we've completed the nested loop, we add our predicted answer to our list of
 15. Computing Metrics in Python
 ===============================
 
+See the notebook [here](./16.QA.ipynb).
+
 So this lecture will be pretty simple since all we're going to do is take what we did previously and put it into a function which we will call compute metrics. The important thing to remember is that this is not like the compute metrics functions that we wrote earlier in the course. We will not be passing this into the trainer and the arguments are different. We will only run this function manually after training is complete. We'll begin by importing tqdm, which will display a progress bar as the function runs.
 
 The next step is to define the compute metrics function as input. It takes in the start logits, end logits, the processed data set and the original data set. As you recall, the process data set is the one where the context has been split up into multiple windows. Inside the function. We begin by creating a mapping from sample ID to all the corresponding indices in the processed data set. This way, given any particular sample ID, we can find all the processed samples that belong to it.
@@ -3129,6 +3368,15 @@ Finally, we call metrics compute to return the metrics for this task. The next s
 16. Train and Evaluate
 ======================
 
+![710.png](./images/710.png)
+![711.png](./images/711.png)
+![712.png](./images/712.png)
+![713.png](./images/713.png)
+![714.png](./images/714.png)
+![715.png](./images/715.png)
+![716.png](./images/716.png)
+
+
 So at this point, we finally have all the pieces we need in order to conclude this notebook. All that's left to do is train and evaluate this model. As usual, we begin by loading up a pre-trained model, but we need to make sure that we use the correct type of model. In this case, we'll use the class AutoModelForQuestionAnswering. As usual, we get a warning that the model head has not been trained. The next step, as usual, is to create a training arguments object.
 
 None of these inputs should be particularly surprising at this point. Note that we use FP16 in order to speed up training. The next step is to create a trainer object. Again, none of these inputs should be particularly surprising at this point. After we create the trainer objects we call trainer.train to begin the training process. Note that the training process will take quite some time to complete. If you use BERT, this will take about two and a half hours on the full training set.
@@ -3141,6 +3389,8 @@ As you learned earlier in this course, we can then use this pipeline by passing 
 
 17. Train and Evaluate in Python
 ================================
+
+See the notebook [here](./16.QA.ipynb).
 
 So in this lecture we will continue our notebook with the train and evaluation steps. We'll begin by calling from_pretrained and passing in our model checkpoints. Recall that this is a model with randomly initialized weights of the head, which we are going to fine tune. The next step is to create our training arguments object. As you can see, evaluation strategy has been set to no since we will call compute metrics manually, we'll save it every epoch and we set FP16 to true to speed up the training process.
 
@@ -3159,6 +3409,12 @@ So as you can see, our model correctly answers that I purchased a carton of milk
 18. Question-Answering Section Summary
 ======================================
 
+![717.png](./images/717.png)
+![718.png](./images/718.png)
+![719.png](./images/719.png)
+![720.png](./images/720.png)
+![721.png](./images/721.png)
+
 So in this lecture, we will be summarizing everything we learned in this section. This section at a high level was relatively straightforward. We have a new task question answering, and we wanted to learn how to fine tune a model for this task. It involves all the usual steps, the tokenize, the metrics, trainer pipeline and so forth. What made it more challenging was all the manual coding we had to do in order to glue all the pieces together. As you saw, it was definitely not as straightforward as the earlier fine tuning examples in this course.
 
 So the first challenge we encountered was how to deal with long contacts. Although we could have extended the context window size, there would still be contexts that would have to be truncated. Furthermore, recall that transformers have quadratic time complexity. In other words, making the input length longer by some amount does not increase the processing time in proportion. Instead, it increases the time squared. As such smaller context, windows may be desirable.
@@ -3173,10 +3429,21 @@ Now, this always reminds me of a question I get sometimes, which is how do I act
 
 Of course, you may find data that already exists that you can make use of, but this would be the exception and not the rule. So as it stands, we still need human experts for this process.
 
-###
+### 8. Transformers and Attention Theory (Advanced)
 
 1. Theory Section Introduction
 ==============================
+
+![722.png](./images/722.png)
+![723.png](./images/723.png)
+![724.png](./images/724.png)
+![725.png](./images/725.png)
+![726.png](./images/726.png)
+![727.png](./images/727.png)
+![728.png](./images/728.png)
+![729.png](./images/729.png)
+
+
 
 So in this lecture we will be introducing the next section of this course, which is all about the theory behind Transformers. This section is where you will learn how Transformers actually work. To contrast this with the previous sections. Note that they were purely about how to use pre-existing libraries. Everything was done with just a few function calls. And thanks to this, we were able to accomplish a lot, even without knowing anything at all about how Transformers work.
 
@@ -3198,6 +3465,20 @@ And the next step, which should come as no surprise, is how to combine the encod
 
 2. Basic Self-Attention
 =======================
+
+![730.png](./images/730.png)
+![731.png](./images/731.png)
+![732.png](./images/732.png)
+![733.png](./images/733.png)
+![734.png](./images/734.png)
+![735.png](./images/735.png)
+![736.png](./images/736.png)
+![737.png](./images/737.png)
+![738.png](./images/738.png)
+![739.png](./images/739.png)
+![740.png](./images/740.png)
+![741.png](./images/741.png)
+
 
 So in this lecture we will begin discussing a basic form of self attention. The goal of this lecture is to gain an intuition for how attention works and then expand on this idea in the subsequent lectures. We'll begin this lecture by briefly reviewing how attention works in seq2seq. At this point, you may want to review the beginners corner in more detail. So the main thing we're trying to compute in RNNs with attention is the context vector.
 
@@ -3233,6 +3514,35 @@ We first compute the attention weights as previously described. Then the context
 
 3. Self-Attention & Scaled Dot-Product Attention
 ================================================
+
+![742.png](./images/742.png)
+![743.png](./images/743.png)
+![744.png](./images/744.png)
+![745.png](./images/745.png)
+![746.png](./images/746.png)
+![747.png](./images/747.png)
+![748.png](./images/748.png)
+![749.png](./images/749.png)
+![750.png](./images/750.png)
+![751.png](./images/751.png)
+![752.png](./images/752.png)
+![753.png](./images/753.png)
+![754.png](./images/754.png)
+![755.png](./images/755.png)
+![756.png](./images/756.png)
+![757.png](./images/757.png)
+![758.png](./images/758.png)
+![759.png](./images/759.png)
+![760.png](./images/760.png)
+![761.png](./images/761.png)
+![762.png](./images/762.png)
+![763.png](./images/763.png)
+![764.png](./images/764.png)
+![765.png](./images/765.png)
+![766.png](./images/766.png)
+![767.png](./images/767.png)
+![768.png](./images/768.png)
+
 
 So in this lecture we will continue our discussion of self attention by adding a few new components to the simple form of self attention we just described. So let's consider why we might want to do this. Recall that in the previous lecture we computed the attention weights based on the input of vectors themselves. This means that for fixed inputs, these attention weights would always be fixed. In other words, there are no learnable parameters. In this lecture we will introduce some learnable parameters which will make the self attention mechanism more flexible and tunable for various tasks.
 
@@ -3297,6 +3607,14 @@ What is the difference between self attention and scaled dot product attention? 
 4. Attention Efficiency
 =======================
 
+![769.png](./images/769.png)
+![770.png](./images/770.png)
+![771.png](./images/771.png)
+![772.png](./images/772.png)
+![773.png](./images/773.png)
+![774.png](./images/774.png)
+
+
 Now, although our previous computation looked at a specific query word at location i, it should be clear that we are going to do this for all values of i from one up to big t, so every word in the input sentence will pay attention to some other word, possibly itself in the same input sentence. Because of this, it should be clear that we have a t squared computation for each word in the sentence. We have to compute attention weights for every word in the sentence.
 
 That's a double for loop where both loops go from one up to Big T. As you know, t squared is quadratic in T, and if you plot the function t squared, hopefully you know that you will get a parabola. What you should recall is that parabolas grow fast. If our sequence length is t equals ten, then we have to compute 100 attention weights. If T equals 50, then we have to compute 2500 attention weights. If T equals 100, then we have to compute 10,000 attention weights.
@@ -3316,6 +3634,15 @@ These models require that all your inputs have the same dimension. Consider a re
 5. Attention Mask
 =================
 
+![775.png](./images/775.png)
+![776.png](./images/776.png)
+![777.png](./images/777.png)
+![778.png](./images/778.png)
+![779.png](./images/779.png)
+![780.png](./images/780.png)
+![781.png](./images/781.png)
+
+
 So in this lecture, we will be discussing one final addition to the self-attention mechanism, which is masking. You've already seen masking in this course since whenever we apply the tokenizer to a sentence, we always get back not just the token IDs but also the corresponding attention mask. Let's recall why we need the attention mask. There are two reasons. The second of which we'll understand in more detail later in the course. Reason number one is that, as you know, we need to pad our sequences so that each sequence in a single batch has the same sequence length based on the previous lectures.
 
 You know that we must do this so that we can perform self attention using matrix multiplication, which is much faster because it is vectorized. When we introduce these pad tokens, we do not want our model to pay any attention to them as they are not relevant for understanding the sentence. Reason number two is related to the decoder. As you recall, the decoder is auto regressive, meaning it only looks at past tokens in order to predict the next token.
@@ -3332,6 +3659,22 @@ Since the queries, keys and values are all computed from the same x matrix. Howe
 
 6. Multi-Head Attention
 =======================
+
+![782.png](./images/782.png)
+![783.png](./images/783.png)
+![784.png](./images/784.png)
+![785.png](./images/785.png)
+![786.png](./images/786.png)
+![787.png](./images/787.png)
+![788.png](./images/788.png)
+![789.png](./images/789.png)
+![790.png](./images/790.png)
+![791.png](./images/791.png)
+![792.png](./images/792.png)
+![793.png](./images/793.png)
+![794.png](./images/794.png)
+![795.png](./images/795.png)
+
 
 So in this lecture we will be continuing our discussion of the self attention mechanism. In particular, we're going to use the scaled dot product attention we previously discussed as a building block for a new block called Multi Head Attention. The best format for this lecture will be to start with how it works, followed by why it works. So how does multi head attention work currently? As it stands, our self attention mechanism only allows each token to pay attention to one thing using one set of attention weights.
 
@@ -3360,6 +3703,22 @@ In the bottom image, we can see that the attention is very localized, where the 
 7. Transformer Block
 ====================
 
+![796.png](./images/796.png)
+![797.png](./images/797.png)
+![798.png](./images/798.png)
+![799.png](./images/799.png)
+![800.png](./images/800.png)
+![801.png](./images/801.png)
+![802.png](./images/802.png)
+![803.png](./images/803.png)
+![804.png](./images/804.png)
+![805.png](./images/805.png)
+![806.png](./images/806.png)
+![807.png](./images/807.png)
+![808.png](./images/808.png)
+![809.png](./images/809.png)
+
+
 So in the previous lecture we learned how to use scaled dot-product attention as a building block for multi-head attention. In this lecture, we will take things to the next step. In particular, even the multi-head attention layer is just a building block of an even bigger building block. In this course, we'll refer to this block we're about to create as the transformer block. And it's the final block we need in order to build encoder models like BERT, decoder models like GPT, and a sequence to sequence models for each of these models, they really just take the transformer block and repeat it multiple times.
 
 So once you understand this lecture, you'll understand the exact building block we use to build these more complex models. The first thing we're going to add is a feedforward ANN. As you recall, our multi head attention layer really only consists of linear transformations. But we know that neural networks are nonlinear, which is why they are able to learn such rich representations of our data. One way we can accomplish this is by passing the output of multi-head attention through a feedforward ANN. In the Attention Is All You Need paper, they use an ANN with one hidden layer and a ReLU activation in the middle.
@@ -3386,6 +3745,21 @@ Personally, I think writing this out in pseudocode helps. On the first line we p
 
 8. Positional Encodings
 =======================
+
+![810.png](./images/810.png)
+![811.png](./images/811.png)
+![812.png](./images/812.png)
+![813.png](./images/813.png)
+![814.png](./images/814.png)
+![815.png](./images/815.png)
+![816.png](./images/816.png)
+![817.png](./images/817.png)
+![818.png](./images/818.png)
+![819.png](./images/819.png)
+![820.png](./images/820.png)
+![821.png](./images/821.png)
+![822.png](./images/822.png)
+
 
 So in this lecture, we'll be discussing one final component of the Transformer network. This is separate from the previous lectures. Since the previous lectures were all about the transformer block, whereas this lecture is about a separate component. This lecture is all about the positional encoding, which solves one issue. You may have noticed the issue is this. Consider what would happen if we randomly rearranged all the words in our input sentence. Intuitively, this should confuse our model, just as it would confuse us.
 
@@ -3416,6 +3790,31 @@ And as you can see in this case, even a two dimensional space.
 9. Encoder Architecture
 =======================
 
+![823.png](./images/823.png)
+![824.png](./images/824.png)
+![825.png](./images/825.png)
+![826.png](./images/826.png)
+![827.png](./images/827.png)
+![828.png](./images/828.png)
+![829.png](./images/829.png)
+![830.png](./images/830.png)
+![831.png](./images/831.png)
+![832.png](./images/832.png)
+![833.png](./images/833.png)
+![834.png](./images/834.png)
+![835.png](./images/835.png)
+![836.png](./images/836.png)
+![837.png](./images/837.png)
+![838.png](./images/838.png)
+![839.png](./images/839.png)
+![840.png](./images/840.png)
+![841.png](./images/841.png)
+![842.png](./images/842.png)
+![843.png](./images/843.png)
+![844.png](./images/844.png)
+![845.png](./images/845.png)
+
+
 So in this lecture, we will be looking at how to take everything you just learned about the different building blocks of a transformer and build an actual encoder. Now, don't be fooled by its name. Saying Encoder doesn't imply that we only have half of a model. As you recall, BERT is an example of an encoder only network, and it's one of the most popular transformers that exists. Encoder really just qualifies what tasks this type of neural network can be used for.
 
 Other types of architectures are used for other types of tasks. I also want to give you an analogy which should be helpful. If you've taken my deep learning courses in the past, in particular, think of how we learned about CNNs. This uses a similar format. When we learned about CNN's, we first learned about convolution in this course. We first learned about self attention. Then we learned about how to build the convolution layer which involved multiple convolutions stacked together.
@@ -3442,6 +3841,28 @@ Note that both TensorFlow and PyTorch contain a multi-head attention layers, but
 
 10. Decoder Architecture
 ========================
+
+![846.png](./images/846.png)
+![847.png](./images/847.png)
+![848.png](./images/848.png)
+![849.png](./images/849.png)
+![850.png](./images/850.png)
+![851.png](./images/851.png)
+![852.png](./images/852.png)
+![853.png](./images/853.png)
+![854.png](./images/854.png)
+![855.png](./images/855.png)
+![856.png](./images/856.png)
+![857.png](./images/857.png)
+![858.png](./images/858.png)
+![859.png](./images/859.png)
+![860.png](./images/860.png)
+![861.png](./images/861.png)
+![862.png](./images/862.png)
+![863.png](./images/863.png)
+![864.png](./images/864.png)
+![865.png](./images/865.png)
+
 
 So now that we've looked at how the encoder works, let's look at how the decoder works. The structure of this lecture will be a bit different from the encoder, since the key points are not really analogous to what we previously did. For this lecture, we'll begin with the main task of a decoder. Unlike the encoder, there is really only one task. The architecture is also pretty simple. In fact, it looks pretty much the same as the encoder for classifying text.
 
@@ -3484,6 +3905,24 @@ So at this point, you technically know everything you need to know in order to b
 11. Encoder-Decoder Architecture
 ================================
 
+![866.png](./images/866.png)
+![867.png](./images/867.png)
+![868.png](./images/868.png)
+![869.png](./images/869.png)
+![870.png](./images/870.png)
+![871.png](./images/871.png)
+![872.png](./images/872.png)
+![873.png](./images/873.png)
+![874.png](./images/874.png)
+![875.png](./images/875.png)
+![876.png](./images/876.png)
+![877.png](./images/877.png)
+![878.png](./images/878.png)
+![879.png](./images/879.png)
+![880.png](./images/880.png)
+![881.png](./images/881.png)
+
+
 So now that you understand both the encoder and the decoder in isolation, it's time to combine them into a full sequence to sequence transformer. Now, you technically already know most of the broad strokes. This is basically as far as most resources and books will go. You take the encoder, plug the output into the decoder, and simply put, you now have a transformer. But as with the decoder lecture, I want to go deeper than that, especially to discuss details that will actually help you implement this yourself.
 
 So at this point you've probably seen this diagram many times, but it's worth going over. As promised, a transformer is made up of an encoder connected to a decoder. The encoder and decoder transformer blocks are as shown. Notice how the decoder transformer block is not the same as the encoder transformer block. Specifically, it seems to have an extra multi head attention layer. Why is this? Well, if we look closely, we can see that the first multi head attention is of the kind we discussed in the decoder lecture.
@@ -3517,6 +3956,16 @@ So the decoder only has to predict the next output token. Knowing the ground tru
 12. BERT
 ========
 
+![882.png](./images/882.png)
+![883.png](./images/883.png)
+![884.png](./images/884.png)
+![885.png](./images/885.png)
+![886.png](./images/886.png)
+![887.png](./images/887.png)
+![888.png](./images/888.png)
+![889.png](./images/889.png)
+
+
 So in this lecture, we will be looking at some of the specifics of BERT. Note that you already know many of these details having been through the previous lectures in the course. We know that BERT stands for bidirectional encoder representations from Transformers. We know that BERT is an instance of the encoder transformer and we know how it is. Pre-trained And then fine tuned for specific tasks. This lecture is designed to summarize the key points you've already learned and to provide a few more interesting details.
 
 So let's begin by discussing the architecture of BERT. As you know, it's an encoder only transformer. We know what such a transformer looks like. We have the input tokens which are converted into embeddings. To this we add positional encoding. We then go through a series of transformer blocks which contain a multi-head attention and a few other bells and whistles. After these transformer blocks, we have prediction heads which are specified based on the task. To get into specifics.
@@ -3537,6 +3986,17 @@ So it appears that even the bidirectionality induced by the LSTM does not make u
 
 13. GPT
 =======
+
+![890.png](./images/890.png)
+![891.png](./images/891.png)
+![892.png](./images/892.png)
+![893.png](./images/893.png)
+![894.png](./images/894.png)
+![895.png](./images/895.png)
+![896.png](./images/896.png)
+![897.png](./images/897.png)
+![898.png](./images/898.png)
+
 
 So in this lecture we will be discussing the GPT series of models. As with the BERT lecture, we've already been exposed to many of the key points earlier in the course. However, unlike the BERT lecture, there are many details about the GPT series which are very different from what you have learned in the past, namely how we deal with downstream tasks after pre-training for example, like language translation. Now, before we begin this lecture, I want to remind you that this is just a summary.
 
@@ -3565,6 +4025,16 @@ the authors used the BooksCorpus data. As you recall, this was also used for BER
 14. GPT-2
 =========
 
+![899.png](./images/899.png)
+![900.png](./images/900.png)
+![901.png](./images/901.png)
+![902.png](./images/902.png)
+![903.png](./images/903.png)
+![904.png](./images/904.png)
+![905.png](./images/905.png)
+![906.png](./images/906.png)
+
+
 So now let's talk about GPT-2 on a surface level. GPT-2 makes some basic changes. It adds more data and more parameters. But you recall that when the GPT-2 first came out, it was big news. It was seen as so powerful that OpenAI was hesitant to release it to the public. For the first time ever, machine learning was able to generate long strings of very coherent text. Although this sounds almost commonplace today, it's important to keep in mind that this was simply not possible, even during the first few years of the existence of Transformers.
 
 But that's only one of the amazing things about GPT-2. The other amazing fact about GPT-2 is that when the authors measured the performance of GPT-2 on downstream tasks, they did not use any fine tuning. In fact, they did not have to update the model at all. That is to say, they only trained the model to predict the next word in a sentence and magically it was able to perform different tasks like machine translation and text summarization. Now it didn't reach state of the art performance, but the relevant fact is that the model was even able to do this at all.
@@ -3590,6 +4060,20 @@ And finally, and most importantly, GPT-2 does not use fine tuning. Instead, the 
 15. GPT-3
 =========
 
+![907.png](./images/907.png)
+![908.png](./images/908.png)
+![909.png](./images/909.png)
+![910.png](./images/910.png)
+![911.png](./images/911.png)
+![912.png](./images/912.png)
+![913.png](./images/913.png)
+![914.png](./images/914.png)
+![915.png](./images/915.png)
+![916.png](./images/916.png)
+![917.png](./images/917.png)
+![918.png](./images/918.png)
+
+
 Okay. So now let's move on to GPT-3. Basically, it's the same story, more data and more parameters. But whereas GPT-2 was about ten times larger than GPT-1, GPT-3 is over 100 times bigger than GPT-2. It has 175 billion parameters. It also doubles the context size, again, going from 1024 to 2048. In terms of data. You'll recall that the authors of GPT-2 considered using Common Crawl, but found that performance suffered due to quality issues.
 
 In this paper, the authors decided to use it anyway, but to filter it to improve its quality. In addition, they also used an expanded version of WebText called WebText2. They also add two book data sets and English Wikipedia. Now, this might not seem like much since listing out the number of parameters and the data sets that were used really do not portray the scale of this experiment. To give you some sense of this, the authors show a chart comparing the compute required to train several well known models.
@@ -3611,6 +4095,14 @@ Observe that few-shot learning in the largest GPT-3 model actually beats the exi
 16. Theory Section Summary
 ==========================
 
+![919.png](./images/919.png)
+![920.png](./images/920.png)
+![921.png](./images/921.png)
+![922.png](./images/922.png)
+![923.png](./images/923.png)
+![924.png](./images/924.png)
+
+
 So in this lecture we will summarize what we learned in this section of the course. This section was all about the theory behind attention and transformers about how they work and what makes them work so well. To that end, we discovered two key characteristics that make Transformers work well compared to previous deep learning technologies. Firstly, we use the new operation called Self Attention, which allows the neural network to model long range dependencies.
 
 This solves the problem of vanishing gradients that we see in RNNs. Secondly, we leverage massive amounts of data by using unsupervised pre-training. By doing this, we can use more data compared to what we would have if we only used a supervised data set. In this section, we learn how to build a transformer from the ground up using only basic operations like multiplication, a softmax and so forth. We learned about the basic scaled dot-product attention and how to combine these to get multi head attention.
@@ -3629,10 +4121,19 @@ One example of this is the Longformer, which we did not use in this course. As y
 
 And if you want to learn more about any of the models discussed in this section, check out the papers listed in extra_reading.txt.
 
-###
+### 9. Implement Transformers From Scratch (Advanced)
 
 1. Implementation Section Introduction
 ======================================
+
+![925.png](./images/925.png)
+![926.png](./images/926.png)
+![927.png](./images/927.png)
+![928.png](./images/928.png)
+![929.png](./images/929.png)
+![930.png](./images/930.png)
+![931.png](./images/931.png)
+
 
 So in this lecture, we will be introduced to the next section of the course, which is all about how to implement transformers from scratch. Now, sometimes students get confused about what from scratch really means. I once came across a blog article that stated it was going to implement Decision Trees from scratch. But then in the actual code they used scikit-learn. Now, since this is an advanced section of the course, I will assume that you are an advanced student.
 
@@ -3659,6 +4160,17 @@ Remember that these models take significant resources to train and the free vers
 2. Encoder Implementation Plan & Outline
 ========================================
 
+![932.png](./images/932.png)
+![933.png](./images/933.png)
+![934.png](./images/934.png)
+![935.png](./images/935.png)
+![936.png](./images/936.png)
+![937.png](./images/937.png)
+![938.png](./images/938.png)
+![939.png](./images/939.png)
+![940.png](./images/940.png)
+
+
 So in this lecture, we will be discussing a plan for how we will approach building the encoder transformer from scratch. Now, as you recall, PyTorch is very modular. In fact, there is a class which will be using called nn.Module. This can represent any size component from a simple activation function or a dense layer to an LSTM or transformer block. The key point being no matter how high up the hierarchy you go, everything is still just a module.
 
 To that end, let's discuss some of the modules we might need to build. Firstly, we're going to need a module for multi head attention. This is where all the math we learned in the theory section will reside. Now please note that although PyTorch does implement multi head attention and even the whole encoder and decoder layers, that is not what we want to use as that would kind of destroy the purpose of this exercise. Now as you know, multi head attention is just part of the transformer block.
@@ -3683,6 +4195,9 @@ this is easy because you can just call model fit, but in PyTorch you need to do 
 
 3. How to Implement Multihead Attention From Scratch
 ====================================================
+
+![941.png](./images/941.png)
+![942.png](./images/942.png)
 
 So in this lecture, we will be describing some of the key details behind the multi-head attention implementation in PyTorch. The reason we're doing this lecture is because it doesn't follow directly from the theory, as you might expect. I think the simplest way to do this will be to just show you what the code looks like and then to dissect it piece by piece. So I'm sure you're familiar with these imports. No need to explain these. So now we have the multi head attention class.
 
