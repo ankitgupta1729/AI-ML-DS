@@ -4196,8 +4196,7 @@ this is easy because you can just call model fit, but in PyTorch you need to do 
 3. How to Implement Multihead Attention From Scratch
 ====================================================
 
-![941.png](./images/941.png)
-![942.png](./images/942.png)
+See the notebook [here](./17.Encoder.ipynb).
 
 So in this lecture, we will be describing some of the key details behind the multi-head attention implementation in PyTorch. The reason we're doing this lecture is because it doesn't follow directly from the theory, as you might expect. I think the simplest way to do this will be to just show you what the code looks like and then to dissect it piece by piece. So I'm sure you're familiar with these imports. No need to explain these. So now we have the multi head attention class.
 
@@ -4242,6 +4241,8 @@ In other words, we get n by t by h times d k. Note that we also use contiguous. 
 4. How to Implement the Transformer Block From Scratch
 ======================================================
 
+See the notebook [here](./17.Encoder.ipynb).
+
 So in this lecture, we'll continue our notebook with the transformer block. This will be pretty simple since we covered the basics in the intro. So now all we have to do is create the layers we need and then apply those layers in the right order. So first we have the init method. This takes in d_k, d_model and n_heads, all of which you've seen. We also have dropout, so this will take in the dropout probability. Note that this will be a recurring theme in this section.
 
 Dropout will appear essentially everywhere, even though we didn't discuss it in the theory lectures. As you recall, dropout is used for regularization. In fact, there are even more places I could have added dropout. But I didn't want to make this too complicated. So inside the init method we begin by creating our two layer norms. The next step is to create a multi head attention layer, which we just wrote. Next we have the ANN. This has a hidden unit size of D model times four and a ReLU activation. In addition,
@@ -4252,6 +4253,8 @@ Finally, we add dropout and then we return the result.
 
 5. How to Implement Positional Encoding From Scratch
 ====================================================
+
+See the notebook [here](./17.Encoder.ipynb).
 
 So in this lecture, we will look at how to implement the positional encoding from scratch as before. This is a module, so we'll need the init method and the forward method. Note that this code has been adapted from one of the official PyTorch tutorials, except the dimensions have been transposed to be in the order that we're used to. That is N by T by D, where the batch size comes first and the time dimension comes second. In the PyTorch tutorials they tend to put the time dimension first.
 
@@ -4272,6 +4275,8 @@ So next we have the forward function. This takes in an input of size N by T by D
 6. How to Implement Transformer Encoder From Scratch
 ====================================================
 
+See the notebook [here](./17.Encoder.ipynb).
+
 So in this lecture, now that we have created all the building blocks we need, we can now build a full encoder. As usual, this amounts to filling in the init method. In the forward method. In the init method we take in the vocab size, maximum sequence length, d_k, d_model, number of attention heads, number of transformer blocks, number of classes at the output and dropout probability. Inside the init method. We create all the modules we need. We begin by creating our embedding which will convert our tokens into vectors.
 
 As usual, this has the shape vocab size by d_model. The next step is to create our positional encoding, which we just built. The next step is to create our transformer blocks. We'll also encapsulate these transformer blocks in an nn.Sequential. Finally, we create one last layer norm and one last linear layer, which will both be used after the final transformer block where the final layer has n_classes outputs, because that's how many classes we have to choose from.
@@ -4288,6 +4293,8 @@ Yes, this makes sense since we have a batch size of eight and five classes.
 
 7. Train and Evaluate Encoder From Scratch
 ==========================================
+
+See the notebook [here](./17.Encoder.ipynb).
 
 Okay, So in this lecture, we will actually use our encoder on a real data set. Now, technically, we could just load in any data set and use any tokenizer, for instance, like what we did in the PyTorch course. In fact, you could even use TensorFlow's tokenizer if you wanted, which is actually much nicer than what comes with PyTorch. However, since we know that Hugging Face uses more modern tokenization methods, we'll use this along with data sets package as well, which works nicely with PyTorch.
 
@@ -4324,6 +4331,8 @@ The next step is to do the same thing for the test set. And lastly, we print our
 8. How to Implement Causal Self-Attention From Scratch
 ======================================================
 
+See the notebook [here](./18.Decoder.ipynb).
+
 So in this lecture, we will be moving on to the decoder. As you'll see, most of this is surprisingly similar to the encoder with just a few minor changes. We'll begin with the same imports as the previous notebook. So the next step is to implement a new module which will call causal self attention. You'll notice that this is very similar to the multi head attention we previously implemented. The main difference is that we need a special mask so that each output can only pay attention to past tokens.
 
 So firstly, notice that the first few parts of this are exactly the same as the encoder. We still have the same inputs, except that we also take in max len, which is needed to build our causal mask. However, DK is the same and heads is the same and all the layers are the same. Remember that the architecture of causal self attention is exactly the same. We're really just adding a mask before we apply the softmax. So this part is the same. The layers are the same. The final layer is the same.
@@ -4343,6 +4352,8 @@ And next we have the positional encoding, which is also exactly the same.
 9. How to Implement a Transformer Decoder (GPT) From Scratch
 ============================================================
 
+See the notebook [here](./18.Decoder.ipynb).
+
 So in this lecture, we will continue looking at how to implement the transformer decoder. At this point we have all our component modules and all that is left is to build the decoder module itself. So first we have the init method. This takes in the vocab size, maximum sequence length, d_k, d_model, number of heads, number of transformer layers and dropout probability. Note that the number of classes is not needed because the number of classes at the output is just the vocab size.
 
 As you recall, the job of the decoder is to predict the next token in a sequence. So inside the init method, we create all of the modules we need. We begin with the embedding. Then we have the positional encoding. Then we have the transformer blocks. Then we have Layer Norm and then the final fully connected layer. Notice that this is pretty much the same as the encoder. And so next we have the forward method. This takes in some batch of input sequences called X and the corresponding pad mask.
@@ -4359,6 +4370,8 @@ The next step is to test our model again with our mask. So as you can see, the m
 
 10. How to Train a Causal Language Model From Scratch
 =====================================================
+
+See the notebook [here](./18.Decoder.ipynb).
 
 So the next step is to work on training a decoder as a causal language model. We'll begin by installing transformers and data sets, since we'll be using the Hugging Face tokenizers and datasets packages once again. The next step is to import AutoTokenizer and DataCollatorWithPadding. The next step is to define our checkpoints, which will again be distilbert-base-cased. We'll also create our tokenizer at this point. The next step is to import the load_dataset method.
 
@@ -4415,6 +4428,8 @@ And please note that the result will be different every time you run this. So on
 11. Implement a Seq2Seq Transformer From Scratch for Language Translation (pt 1)
 ================================================================================
 
+See the notebook [here](./19.Encoder-Decoder.ipynb).
+
 So in this lecture, we will move on to our next implementation, which is a full encoder decoder sequence to sequence transformer. At this point we've already built an encoder and we've already built a decoder. So now all we need to do is figure out how to put them together. So we begin with our usual imports. So the next step is to implement our multi-head attention class. Now you'll recognize that in the previous two notebooks we had slightly different versions of this class with the encoder.
 
 There was no need for a causal mask, but for the decoder there was always a causal mask. In this version, since we need it to handle both cases, we'll need an option to use a causal mask. So that's this option right here. And note that the default value is false. Now, if we look at the init method, you'll see that all of the layers we create are the same. And at the end we only create a causal mask if causal has been set to true. So next we have the forward method.
@@ -4453,6 +4468,8 @@ The next step is to look at some values in the output, which might be helpful if
 
 12. Implement a Seq2Seq Transformer From Scratch for Language Translation (pt 2)
 ================================================================================
+
+See the notebook [here](./19.Encoder-Decoder.ipynb).
 
 So in this lecture, we'll continue looking at our notebook where we will implement an encoder decoder transformer for translating language. At this point, we've already built our model and tested it on some dummy data. In this lecture we're going to download our actual data and train our model to produce useful translations. So we begin by downloading an English to Spanish dataset, which we originally used in my third NLP course. So hopefully this offers a nice point of comparison for those of you who took that course.
 
@@ -4496,6 +4513,8 @@ So the next step is to implement our training loop. Now, since this lecture has 
 
 13. Implement a Seq2Seq Transformer From Scratch for Language Translation (pt 3)
 ================================================================================
+
+See the notebook [here](./19.Encoder-Decoder.ipynb).
 
 So in this lecture, we will continue looking at our notebook for a sequence to sequence transformer. So we're just at the point where we are about to implement the train method as input into this method, we take in the model, criterion, optimizer, train loader, validation loader and number of epochs. Inside the function. We create empty arrays to store the loss at each epoch for both train and test. Next we enter a loop for each epoch. Inside the loop, we set the model to train mode.
 
@@ -4546,13 +4565,16 @@ In fact, we can just test it ourselves. So it seems to be correct.
 14. Implementation Section Summary
 ==================================
 
+![941.png](./images/941.png)
+![942.png](./images/942.png)
+
 So in this lecture, we will summarize what we learned in this section. This section was all about how to implement transformers from scratch. In this section we implemented multi-head attention, the positional encoding, and three different types of transformer models. Specifically, we learn how to implement an encoder, a decoder and an encoder decoder combined. We also learn how to train them on actual data sets and use them to make predictions which many resources are missing.
 
 What is interesting about this section is that we were able to build these models with only basic parts. For example, the linear layer dropout, residual connections and layer norm. In other words, all stuff that existed in 2016. So technically you could have built transformers using 2016 technology in 2016 had you only invented the attention mechanism. So I think that's a crucial point to keep in mind in order to do really cool things in machine learning.
 
 It's not just a matter of using a high level library and doing stuff people have already done. Instead, it requires us to think of new approaches and implement them ourselves using existing tools and not wait around for someone else to build the tools for us. You could have been the one to implement Transformers if you invented them first. So keep inventing, keep trying new things, and I'll see you in the next lecture.
 
-###
+### 11. Setting Up Your Environment FAQ
 
 1. Anaconda Environment Setup
 =============================
@@ -4646,7 +4668,7 @@ All right, so let's run our clone command again. Let's try the HTTPS version. Ok
 
 You want the CPU only version. Hopefully it just overwrites the other version without any trouble. So let's try the example again. Super. So now everything is working. Now, if you want, there is a text editor that I highly recommend. It's called Sublime Text. So you hit download. You go to Ubuntu 64 bit. You save this? And it will automatically be installed. All right, so now you have the exact same text editor that I use in my lectures. So you open a machine learning examples and this is all of our code.
 
-###
+### 12. Extra Help With Python Coding for Beginners FAQ
 
 1. How to Code by Yourself (part 1)
 ===================================
@@ -4748,7 +4770,7 @@ This by itself is a great learning tool because it allows you to ask yourself, W
 
 In many cases, it's not about waiting for someone to tell you some nice phrases that trick you into thinking you understand the intuition, but rather you should seek intuition by working through the theory and the implementation. And lastly, don't forget when it's time to code, you must code.
 
-###
+### 13. Effective Learning Strategies for Machine Learning FAQ
 
 1. How to Succeed in this Course (Long Version)
 ===============================================
@@ -4986,7 +5008,7 @@ All right. So I hope you found this lecture helpful. We saw that these courses a
 
 I hope that this lecture explained any nuances between what is a prerequisite and what is not. And I hope I did a good job of answering which order should you take these courses in and why?
 
-###
+### 14. Appendix  FAQ Finale
 
 1. What is the Appendix
 =======================
