@@ -24,6 +24,19 @@ The notebooks contain code used in every lecture and are organized in the same o
 
 2. Curriculum Overview English
 ===============================
+![1.png](./images/1.png)
+![2.png](./images/2.png)
+![3.png](./images/3.png)
+![4.png](./images/4.png)
+![5.png](./images/5.png)
+![6.png](./images/6.png)
+![7.png](./images/7.png)
+![8.png](./images/8.png)
+![9.png](./images/9.png)
+![10.png](./images/10.png)
+![11.png](./images/11.png)
+![12.png](./images/12.png)
+
 
 (upbeat music) -: Welcome back everyone, the Course Curriculum Lecture. Before we begin the course, let's build an understanding of our overall learning path. This lecture is just going to be a brief overview of the main topics and the structure of the curriculum of the course. That way you can understand the way the course is laid out and maybe you can jump to a particular section that interests you or understand the pathway from start to finish. So the overall course sections are Python text basics, NLP Python basics, part of speech tagging, text classification, semantics and sentiment analysis, topic modeling, and then some chatbots and advanced material that fall under the deep learning category.
 
@@ -40,6 +53,31 @@ And then we'll also talk about using deep learning to create your own chatbots. 
 
 3. Installation and Setup Lecture English
 ==========================================
+
+![13.png](./images/13.png)
+![14.png](./images/14.png)
+![15.png](./images/15.png)
+![16.png](./images/16.png)
+![17.png](./images/17.png)
+![18.png](./images/18.png)
+![19.png](./images/19.png)
+![20.png](./images/20.png)
+![21.png](./images/21.png)
+![22.png](./images/22.png)
+![23.png](./images/23.png)
+![24.png](./images/24.png)
+![25.png](./images/25.png)
+![26.png](./images/26.png)
+![27.png](./images/27.png)
+![28.png](./images/28.png)
+![29.png](./images/29.png)
+![30.png](./images/30.png)
+![31.png](./images/31.png)
+![32.png](./images/32.png)
+![33.png](./images/33.png)
+![34.png](./images/34.png)
+![36.png](./images/36.png)
+
 
 (upbeat music) -: Hello everyone and welcome to the course installation and setup lecture. In this lecture, we're going to do three main things, the first one is to show you how to download and install Anaconda. The second one is how to create a virtual environment using an environment file that we give you, and the third one is opening up the Jupyter Notebook System. As a quick note if you're an advanced user, and you're already familiar with some other development environment or IDE, please feel free to use it.
 
@@ -96,12 +134,23 @@ All right, if you have any questions, please search the Q&A forums in case someo
 5. Introduction to Python Text Basics English
 ==============================================
 
+![37.png](./images/37.png)
+![38.png](./images/38.png)
+![39.png](./images/39.png)
+
+
 (gentle music) -: Welcome everyone to the first section of the course where we're going to be talking about Python Text Basics. So the goals for this section is to understand how to open normal text and PDF files with just a few basic Python libraries, including built-in functionality where we have no external libraries. Then we'll learn some very basic regular expressions, being able to find patterns in text, and then we'll test your new skills with an assessment exercise.
 
 Again, this is really just to get you comfortable with reading in text files with just normal Python libraries. Let's get started. I'll see you at the next lecture.
 
 6. Working with Text Files with Python Part One English
 ========================================================
+
+![40.png](./images/40.png)
+![41.png](./images/41.png)
+![42.png](./images/42.png)
+
+See the notebook [here](./1.ipynb)
 
 (synth jingle) Instructor: Welcome back. In this lecture for part one of working with text files we're going to focus on some basic print formatting, specifically the f-string literal. We'll also discuss alignment options with f-string literals. Let's get started. All right, I'm going to begin by showing you how, before Python 3.6, you had to perform print formatting, and the way you would do this is if you had a variable, for example person is equal to Jose, and then you wanted to insert that variable into a string you were going to print out, the way you used to have to do it is by saying something like "My name is," and then you would have curly braces, and after the string you would say .format and then pass in the variable name you wanted to insert in place of the curly braces.
 
@@ -145,6 +194,9 @@ All right. So that concludes our discussion on print formatting. Coming up next,
 
 7. Working with Text Files with Python Part Two English
 ========================================================
+
+
+See the notebook [here](./2.ipynb).
 
 (soft music) Instructor: Welcome back to part two of working with text files with Python. What we're gonna do now is go over how to read and write basic text files with just the built-in capabilities of the standard Python library. Let's go ahead and get started. Okay, let's begin by actually creating a text file. The method I'm going to use is specific to Jupyter Notebooks and it's a magic command. You do percent sign, percent sign are known as magic commands that work with Jupyter Notebook.
 
@@ -221,6 +273,15 @@ All right, coming up next we're gonna learn how to work with PDF files. We'll se
 8. Working with PDFs English
 =============================
 
+![43.png](./images/43.png)
+![44.png](./images/44.png)
+![45.png](./images/45.png)
+![46.png](./images/46.png)
+![47.png](./images/47.png)
+![48.png](./images/48.png)
+
+See the notebook [here](./3.ipynb).
+
 (mysterious music) Instructor: Welcome back, everyone. In this lecture, we're going to discuss working with PDF files. Often, you may need to read in text data from a PDF file instead of a normal text file. We can use the PyPDF2 library to read in text data from a PDF file. There's one key thing to keep in mind though, not all PDFs have texts that can be easily extracted. Some PDFs are created through scanning. And instead of being exported from a text editor like Word, these sort of scanned PDFs are really more like image files.
 
 And that makes it much, much harder to actually extract text if you have a scanned PDF that usually requires specialized software. And you can try Googling different Python libraries for reading in those type of images. But a lot of times it's really hit and miss and much more dependent on the particular PDF file than the library itself. The PyPDF2 library that we'll be working with in this lecture won't be able to extract text from a scanned PDF image.
@@ -265,6 +326,17 @@ Run that, and now you'll see kind of this giant document of the Declaration of I
 
 9. Regular Expressions Part One English
 ========================================
+
+![49.png](./images/49.png)
+![50.png](./images/50.png)
+![51.png](./images/51.png)
+![52.png](./images/52.png)
+![53.png](./images/53.png)
+![54.png](./images/54.png)
+![55.png](./images/55.png)
+![56.png](./images/56.png)
+
+See the notebook [here](./4.ipynb)
 
 (funky tone) Narrator: Welcome everyone, to this lecture on regular expressions. Let's imagine that you needed to search a string for a term such as the string phone. Well, you can easily use the in operator keyword to do this. You could just say, is the string phone in this larger string? Such as is the phone here? And it will return back true with Python. Now, imagine you needed to find a telephone number such as four, zero, eight, dash, five, five five, dash, one, two, three, four.
 
@@ -329,6 +401,8 @@ And then starts with and ends with. We'll see you at the next lecture where we t
 10. Regular Expressions Part Two English
 =========================================
 
+See the notebook [here](./4.ipynb)
+
 (gentle music) -: Welcome back! In this lecture, we're going to continue where we left off and go over a couple of more regular expression techniques. Let's head over back to the notebook. Here we are in the same notebook we left off last time. Previously, we actually showed you how to reduce this pattern using regular expressions into this pattern with quantifiers. One other thing I wanna mention are the ability to actually grab separate groups. Currently, this entire phrase for the pattern is one solid group, but you can compile separate groups using parentheses.
 
 So, I can use parentheses to actually separate these groups in between the dashes. So I'm adding parentheses, and now when I search for this pattern inside of the original text, which was my telephone number. And if I actually say mymatch.group, that groups together everything, but I can actually call individual groups starting at index position one and that's going to grab the first set that was inside the parentheses. So if I say group one, it just grabs 888.
@@ -368,6 +442,8 @@ And the main one that we're looking for here was this plus one, which means just
 11. Python Text Basics Assessment Overview English
 ===================================================
 
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/00-Python-Text-Basics/03-Python-Text-Basics-Assessment.ipynb).
+
 (lighthearted music) Instructor: Welcome back everyone. In this lecture, we're gonna have an overview of your assessment for this section of the course. Let's go ahead and show you what is expected of you for the Python assessment by opening up the notebook. All right, so underneath the Python Text Basics folder, you should see a notebook called Python Text Basics Assessment, and you should see another one called Solutions, which we're going to go over in the very next lecture.
 
 If you open up Python Text Basics Assessment, you should see a couple of questions here. Essentially, your tasks are just lined up in bold below. So the first one is to print an F-string that displays NLP stands for Natural Language Processing. So maybe it's a little hard to tell from the font, but basically we have two variables, NLP and Natural Language Processing and use F-strings to print out this one single string. So that's just F-string literals.
@@ -380,6 +456,8 @@ So remember we showed you how to extract phone numbers? See if you can figure ou
 
 12. Python Text Basics Assessment Solutions English
 ====================================================
+
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/00-Python-Text-Basics/04-Python-Text-Basics-Assessment-Solutions.ipynb).
 
 (gentle music) -: Welcome back everyone. In this lecture we're going to go over the solutions for the Python Text Basics assessment. Let's get started. Okay, here we are at the Python Text Basics Assessment notebook. And if you come down, the first question was print an f-string that displays NLP stands for Natural Language Processing. So this one is pretty easy. We just need to say print and then put an f in front of a string and then we can insert the variables.
 
@@ -412,12 +490,39 @@ Okay, so I hope you found that useful. And now we're finished with Python text B
 13. Introduction to Natural Language Processing English
 ========================================================
 
+![57.png](./images/57.png)
+![58.png](./images/58.png)
+![59.png](./images/59.png)
+![60.png](./images/60.png)
+
+
 (calm music) -: Welcome everyone to this section on natural language processing, Python basics. The goals for this section are to set up spaCy and the language library that you need to download for spaCy, and we're gonna understand some basic NLP topics. That is tokenization, stemming, lemmatization, stop words, and also using spaCy for vocabulary matching. We're gonna have a few introductory lectures to discuss common libraries such as NLTK versus spaCy and why we're using both in this course, as well as a general discussion of what natural language processing is in general.
 
 All right, let's get started. I'll see you at the next lecture.
 
 14. Spacy Setup and Overview English
 =====================================
+
+![61.png](./images/61.png)
+![62.png](./images/62.png)
+![63.png](./images/63.png)
+![64.png](./images/64.png)
+![65.png](./images/65.png)
+![66.png](./images/66.png)
+![67.png](./images/67.png)
+![68.png](./images/68.png)
+![69.png](./images/69.png)
+![70.png](./images/70.png)
+![71.png](./images/71.png)
+![72.png](./images/72.png)
+![73.png](./images/73.png)
+![74.png](./images/74.png)
+![75.png](./images/75.png)
+![76.png](./images/76.png)
+![77.png](./images/77.png)
+![78.png](./images/78.png)
+![79.png](./images/79.png)
+
 
 [calm music] -: Welcome, everyone, to this lecture on setting up spaCy. Before we set up spaCy and download the language library, let's quickly discuss what spaCy actually is. spaCy is an open source natural language processing library for Python. It's designed to effectively handle NLP tasks with the most efficient implementation of common tasks and algorithms. That means, for many natural language processing tasks, spaCy only has one implemented method: choosing the most efficient algorithm currently available.
 
@@ -454,6 +559,19 @@ We'll see you at the next lecture.
 15. What is Natural Language Processing English
 ================================================
 
+![80.png](./images/80.png)
+![81.png](./images/81.png)
+![82.png](./images/82.png)
+![83.png](./images/83.png)
+![84.png](./images/84.png)
+![85.png](./images/85.png)
+![86.png](./images/86.png)
+![87.png](./images/87.png)
+![88.png](./images/88.png)
+![89.png](./images/89.png)
+
+
+
 (soft music) -: Welcome back, everyone. So far, we've learned how to work with text files with Python, do some things like regular expressions, as well as work with PDF files. But I wouldn't say that those processes that we've learned are really natural language processing. So what is NLP, or natural language processing? For a formal definition, according to Wikipedia, natural language processing, or NLP for short, is an area of computer science and artificial intelligence concerned of the interactions between computers and human that is natural languages, in particular, how to program computers to process and analyze large amounts of natural language data.
 
 Now, to put this in more simple terms, often when performing some sort of analysis, usually have lots of data that's numerical, and that's really convenient. Things like sales numbers, physical measurements, quantifiable categories. And computers are already very good at handling direct numerical information. However, what do we do with computers about actual natural language data, that is, text data? As humans, it's really easy for us to tell that there is a plethora of information inside of a text document, like a PDF file, an email, a book.
@@ -468,6 +586,15 @@ Here we're going to focus on fundamental ideas that all state-of-the-art techniq
 
 16. Spacy Basics English
 =========================
+
+![90.png](./images/90.png)
+![91.png](./images/91.png)
+![92.png](./images/92.png)
+![93.png](./images/93.png)
+![94.png](./images/94.png)
+
+See the notebook [here](./5.ipynb)
+
 
 (soft meditative music) -: Welcome back, everyone, to this lecture on spaCy Basics. There are a few key steps for working with spaCy that we're gonna cover in this lecture. The first step is loading the language library. Remember, you need to have installed the language library as shown in the spaCy Setup Lecture. Then, once we've loaded in that language library, we build a pipeline object. And from that pipeline object, we can use tokens, perform parts of speech tagging, and understand different token attributes.
 
@@ -544,6 +671,19 @@ Coming up next, we're gonna dive in in a lot more detail to each of these partic
 17. Tokenization Part One English
 ==================================
 
+![95.png](./images/95.png)
+![96.png](./images/96.png)
+![97.png](./images/97.png)
+![98.png](./images/98.png)
+![99.png](./images/99.png)
+![100.png](./images/100.png)
+![101.png](./images/101.png)
+![102.png](./images/102.png)
+![103.png](./images/103.png)
+![104.png](./images/104.png)
+
+See the notebook [here](./6.ipynb)
+
 (gentle music) -: Welcome to this lecture on tokenization. Tokenization is the process of breaking up the original raw text into component pieces otherwise known as tokens. This was the very first step that occurred when we created our document objects using the pipeline with spaCy. You can imagine that we have some original text and the very first step is to split on the white space. So from "We're moving to LA", we split on the white space. Then spaCy is smart enough to understand that it's going to separate prefix that is characters at the beginning.
 
 It's also going to separate exceptions. Those are concatenations. And it's also going to be able to separate a suffix. So those are characters towards the end. And then we can also realize that we have exceptions such as an exclamation point, and then we're done. So there's lots of steps involved but luckily spaCy's taken care of all of that for us. We have prefix, suffix, infix and exceptions. So again, notice that the tokens are just pieces of the original text.
@@ -599,6 +739,8 @@ Coming up next for part two we're gonna talk about visualizing with built in vis
 18. Tokenization Part Two English
 ==================================
 
+See the notebook [here](./6.ipynb)
+
 -: Welcome back. In the previous lecture I mentioned that we can actually visualize tokenization with the built-in displaCy that comes with spaCy. Let's go ahead and show you how it works by jumping back to the notebook where we left off last time. Okay, here we are at the notebook where we left off last time. What we're gonna do is say from spaCy import and we're gonna say 'displaCy', which is kind of just a funny pun on display. So 'displaCy' is the actual built-in visualizer.
 
 It's really cool and what's awesome is you can run it both inside the notebook if you're using Jupyter Notebook, or you can create a little server if you're running stuff outside of Jupyter using just a normal Python script. First, let's create a document that we wanna visualize. We'll say 'NLP' and then say 'Apple' is going to 'build a UK factory' for, and let's do '6 million'. Now that we have that document the next thing we're gonna call is displaCy.
@@ -625,6 +767,22 @@ You can check out all these different options. Okay, I hope you have fun, and I 
 
 19. Stemming English
 =====================
+
+![105.png](./images/105.png)
+![106.png](./images/106.png)
+![107.png](./images/107.png)
+![108.png](./images/108.png)
+![109.png](./images/109.png)
+![110.png](./images/110.png)
+![111.png](./images/111.png)
+![112.png](./images/112.png)
+![113.png](./images/113.png)
+![114.png](./images/114.png)
+![115.png](./images/115.png)
+![116.png](./images/116.png)
+
+
+See the notebook [here](./7.ipynb).
 
 -: Welcome everyone to this lecture on stemming. Often when searching texts for a certain keyword, it helps if the search returns variations of the word. For instance, searching for the term 'boat' might also return things like 'boats' and 'boating'. Here the stem 'boat' is going to be the stem for words like 'boat', 'boater', 'boating', and 'boats', which all are conveying the idea related to boat. Stemming is a somewhat crude method for cataloging related words.
 
@@ -663,6 +821,14 @@ Now, as I mentioned, spaCy didn't have stemming because it figures lemmatization
 20. Lemmatization English
 ==========================
 
+![117.png](./images/117.png)
+![118.png](./images/118.png)
+![119.png](./images/119.png)
+![120.png](./images/120.png)
+![121.png](./images/121.png)
+
+See the notebook [here](./8.ipynb)
+
 (bright ethereal music) -: Welcome back, everyone, to this lecture on lemmatization. In contrast to stemming, lemmatization looks beyond word reduction and considers a language's full vocabulary to apply a morphological analysis towards. The lemma of "was" is "be", and the lemma of "mice" is "mouse". So we're not just shortening words or cutting off the end of them. Instead, we're looking at the full context of the word. Furthermore, the lemma of "meeting" might be "meet" or "meeting", depending on its actual use in a sentence.
 
 Lemmatization is typically seen as much more informative than simple stemming, which is why the spaCy library has opted to only have lemmatization available instead of simple stemming. And again, lemmatization is going to look at the surrounding text to determine a given word's part of speech. It doesn't categorize words into just general phrases. In an upcoming lecture, we're gonna investigate word vectors and similarity in a lot more detail. But for right now, let's learn how to perform lemmatization with spaCy.
@@ -692,6 +858,13 @@ We'll see you there.
 21. Stop Words English
 =======================
 
+![122.png](./images/122.png)
+![123.png](./images/123.png)
+![124.png](./images/124.png)
+
+See the notebook [here](./9.ipynb)
+
+
 (peaceful music) -: Welcome back everyone to this lecture on stop words. Words like a and the appear so frequently in text that they really don't require tagging as thoroughly as unique nouns, verbs, and modifiers. We call these words stop words, and they can be filtered from the text to be processed. spaCy holds a built in list of some around 305 English stop words. So again, stop words just the really common words that don't really give you any additional information, and sometimes they can actually hurt your natural language processing.
 
 So a really common use case when you're working with the pipeline natural language processing is to remove stop words. So we're going to show you how to remove stop words with spaCy, and we'll also show you how to add in your own special stop words in case maybe you're dealing with a unique data set where you have an acronym that gets used too much and you want to add that as a stop word. So let's go ahead and show you how to do all that with spaCy.
@@ -712,6 +885,13 @@ It's gonna return back false. And that's really it. Now you should be able to ac
 
 22. Phrase Matching and Vocabulary Part One English
 ====================================================
+
+![125.png](./images/125.png)
+![126.png](./images/126.png)
+![127.png](./images/127.png)
+
+See the notebook [here](./10.ipynb)
+
 
 -: Welcome back to this lecture on vocabulary and matching with spaCy. So far we've seen how a body of text is divided into tokens and how individual tokens are parsed and tagged with parts of speech dependencies and lemmatization. In this lecture, we're going to identify and label specific phrases that match patterns we can define ourselves. We can think of this as a powerful version of regular expression where we actually take parts of speech into account for our pattern search.
 
@@ -770,6 +950,8 @@ And we also showed you how you can actually grab the raw text for the match itse
 23. Phrase Matching and Vocabulary Part Two English
 ====================================================
 
+See the notebook [here](./10.ipynb)
+
 (spacious music) Instructor: Welcome back to part two of the vocabulary and matching lecture. In this lecture, we're gonna go over phrase matching. Let's hop over to the notebook where we left off last time. Okay, here we are at the previous notebook. Now, in the previous lecture, we saw how we can use token patterns to perform rule based matching. An alternative and often more efficient method is to actually match on a terminology list. And in that case, we're going to use a phrase matcher in order to create a document object from a list of phrases and pass that into the matcher instead.
 
 Let me show you how that works. Previously, we said from spaCy, dot matcher, import matcher, but in this case we're gonna say import phrase matcher, and we'll create a matcher object from that. We'll say phrase matcher. And just like before, we pass in the vocab. And for this exercise, we're going to import a Wikipedia article on Reaganomics. So we have the source here in the actual link. If you scroll down here, you'll see a link to the Wikipedia article, but we actually saved it for you already in text files.
@@ -799,6 +981,8 @@ So again, you can mess around this start and end to grab parts of the actual tex
 24. NLP Basics Assessment Overview English
 ===========================================
 
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/01-NLP-Python-Basics/06-NLP-Basics-Assessment.ipynb)
+
 (bright ethereal music) Instructor: Welcome back, everyone. In this lecture, we're going to do a quick overview of the Natural Language Processing Basics Assessment Test. Let's open up the notebook and go over it. Okay, inside your NLP Python Basics folder, once you open up that folder, you should see an NLP Basics Assessment Notebook as well as an NLP Basics Assessment Solution Notebook. Right now, we're gonna do an overview of the assessment, and then in the next lecture, we'll code through the solutions.
 
 Let's quickly go over what you need to do for the assessment. So for this assessment, we're going to be using a short story called "An Occurrence at Owl Creek Bridge" by Ambrose Bierce from 1890. The story's in the public domain, and we already have a text object ready for you. So you're first gonna run the cell to perform the standard imports, and then you're gonna create a document object from this text file. And it's located here, /TextFiles/owlcreek.txt.
@@ -813,6 +997,8 @@ Then we want you to print the text surrounding each found match. So we want you 
 
 25. NLP Basics Assessment Solution English
 ===========================================
+
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/01-NLP-Python-Basics/07-NLP-Basics-Assessment-Solution.ipynb)
 
 (melodic music) -: Welcome back everyone. In this lecture, we're going to go over the solutions for the natural language processing basics assessment. Let's get started. Okay, here we are at the assessment notebook. The first thing we're going to do is run this top cell to perform our standard imports and then we're gonna create a document object through the Owl Creek dot text file. So we can say "with open" and then we're gonna search for it inside the text files folder.
 
@@ -845,12 +1031,30 @@ So that's what this is doing right here. So for sentence in doc sentences if tha
 26. Introduction to Section on POS and NER English
 ===================================================
 
+![128.png](./images/128.png)
+![129.png](./images/129.png)
+![130.png](./images/130.png)
+
+
 (gentle upbeat music) -: Welcome everyone to this section of the course on parts of speech. The goals for this section are to understand how to retrieve parts of speech tags using spaCy and also to understand how to use named entity recognition with spaCy. We'll talk about and review how to visualize parts of speech and named entity recognition, as well as show you how to perform sentence segmentation and add our own custom rules for sentence segmentation.
 
 Let's get started. I'll see you at the next lecture.
 
 27. Part of Speech Tagging English
 ===================================
+
+![131.png](./images/131.png)
+![132.png](./images/132.png)
+![133.png](./images/133.png)
+![134.png](./images/134.png)
+![135.png](./images/135.png)
+![136.png](./images/136.png)
+![137.png](./images/137.png)
+![138.png](./images/138.png)
+![139.png](./images/139.png)
+
+
+See the notebook [here](./11.ipynb)
 
 (instrumental music) Instructor: Welcome back to this lecture on parts of speech basics. So we've already seen a little bit of parts of speech in previous lectures, but let's go and take a deeper dive into POS or parts of speech and what that really means and how we can use spaCy to actually grab parts of speech tags. It's important to understand that most words themselves are actually rare in occurrence inside of the context of an entire document. And it's common for words that look completely different to mean almost the same thing.
 
@@ -915,6 +1119,13 @@ And we also have this table that kind of lines them up all nicely for us. Then a
 28. Visualizing Part of Speech English
 =======================================
 
+![140.png](./images/140.png)
+![141.png](./images/141.png)
+![142.png](./images/142.png)
+
+
+See the notebook [here](./11.ipynb)
+
 (bright ethereal music) -: Welcome back to this lecture on visualizing parts of speech. We just saw how to extract parts of speech tags from tokens and obtain information about those parts of speech tags. Let's quickly review how to visualize parts of speech structure with displaCy. We've already seen this before, so this is really just a review lecture. Let's head over to the notebook. To begin, you should import spacy and also load the spaCy English Language Dictionary.
 
 Then, what we're going to do is create our document. So let's go ahead and just say something like, "The quick brown fox jumped over the lazy dog". "Lazy dog". There we go. Now, in order to display, we need to say from spacy import displacy. And then off this displacy object, we can call render. We pass in the document we wanna display. And then we have to choose a style. And for visualizing parts of speech, probably the best style to choose is dep, which is going to display syntactic dependency, but also show you the part of speech tags.
@@ -939,6 +1150,14 @@ And we also saw how to visualize outside the notebook using serve. And again, th
 
 29. Named Entity Recognition Part One English
 ==============================================
+
+![143.png](./images/143.png)
+![144.png](./images/144.png)
+![145.png](./images/145.png)
+![146.png](./images/146.png)
+![147.png](./images/147.png)
+
+See the notebook [here](./12.ipynb)
 
 -: Welcome back to this lecture on Named Entity Recognition. Named Entity Recognition or NER for short seeks to locate and classify named entity mentions in unstructured text into pre-defined categories, such as the person names, organizations, locations, medical codes, time expressions, quantities, percentages, monetary values, et cetera. So lots of different types of entities that can be recognized here. And spaCy is gonna do this automatically for us.
 
@@ -975,6 +1194,13 @@ And again, here are all the NER tags that you can access. And if you ever want a
 30. Named Entity Recognition Part Two English
 ==============================================
 
+![148.png](./images/148.png)
+![149.png](./images/149.png)
+![150.png](./images/150.png)
+![151.png](./images/151.png)
+
+See the notebook [here](./12.ipynb)
+
 (intro music) -: Welcome to part two of Named Entity Recognition. We just saw how we can add a single term as our own named entity. For example, we saw how we could add the single term Tesla. But what if we have several terms to add as possible named entities? In this continued lecture we're gonna go over how to add in multiple phrases as NERs. For example, if we're working with a vacuum company with their own custom text for marketing purposes we might want to add both vacuum space cleaner and vacuum dash cleaner as a named entity, such as a product entity.
 
 Let's go ahead and jump to the Jupyter Notebook and show you how you can add multiple named entities. Okay, here I am at the Jupyter Notebook. We're gonna begin by creating a new document object and this new document object is actually gonna have two strings inside of it, just so we can show off multiple phrases. The first one will be our company created a brand new vacuum space cleaner. And then the second one, another string here all within the same function no need to separate with a comma, we'll say, this new vacuum dash cleaner is the best in show.
@@ -1010,6 +1236,9 @@ All right. That is it for this series of lectures on named entities. I hope you 
 31. Visualizing Named Entity Recognition English
 =================================================
 
+
+See the notebook [here](./12.ipynb)
+
 (calm music) -: Welcome back to this lecture on visualizing named-entity recognition. Let's review how to visualize NER with spaCy and displaCy. Let's head over to a Jupyter Notebook. Okay, here I am at a Jupyter Notebook and I've imported spaCy as well as loaded up the English library and I said, from spaCy import displaCy. Next what we're going to do is create a document that we actually want to visualize. We'll say NLP and here we're gonna say over the last quarter, Apple sold nearly 20,000 units, or let's say 20,000 iPods, for a profit of 6 million.
 
 Next, what we're gonna do is after we define that document, we'll call displaCy and we will render the doc and then style, say ENT for entity, and since I'm using Jupyter, I'm going to say Jupyter is true. And here you can see spaCy, to the best of its ability, is going to highlight and color the entities it finds. So it found the date entity, an organization, a money, iPods as product, cardinal for some sort of amount, nearly 20,000, and so on. So you can see already the power that displaCy has to highlight entities.
@@ -1038,6 +1267,12 @@ So in my case, it's at port 5,000. You copy and paste that and then you'll see t
 
 32. Sentence Segmentation English
 ==================================
+
+![152.png](./images/152.png)
+![153.png](./images/153.png)
+![154.png](./images/154.png)
+
+See the notebook [here](./13.ipynb).
 
 (opening sound) -: Welcome back to this lecture on sentence segmentation. In spaCy basics, we saw briefly how doc objects are divided into sentences. In this lecture, we're going to learn how sentence segmentation works and how to set our own segmentation rules to break up docs into sentences based off our own rules. Let's go ahead and check this out in a Jupyter Notebook. Okay, here I am at the Notebook and right now, I've imported spaCy. I've loaded up the English library set.
 
@@ -1098,6 +1333,8 @@ Hopefully now you realize that you can use the default sentence segmentation you
 33. Part Of Speech Assessment English
 ======================================
 
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/02-Parts-of-Speech-Tagging/05-POS-Assessment.ipynb).
+
 (lighthearted music) Instructor: Welcome, everyone. It's now time to test your skills. So we went over in this section of the course by going through an assessment. In this lecture, we'll have an overview of the assessment questions and in the next lecture, we'll go over the solutions. Let's get started by checking out the assessment notebook. Okay, here we have the assessment notebook. For this assessment, we're going to be using a short story, "The Tale of Peter Rabbit," from 1902.
 
 It's in the public domain, and here we have a cell that you can run for standard imports, such as spaCy, loading up the English library and importing to spaCy. First, we want you to create a doc file, or a doc object, from the file peterrabbit.txt. It's underneath the Text Files folder, then, for every token in the third sentence, print a token text, the part of speech tag, the fine-grained tag and the description of the fine-grained tag and see if you can format it nicely, so it looks something like this.
@@ -1108,8 +1345,10 @@ So keep in mind, this is not actually what it should look like. Instead, you sho
 
 And another challenge problem is to display the named entity visualization for the indexed1 list of sentences from the previous problem, and it should look something like this, a work of art, a person and then a date. Okay, best of luck on the assessment. We're gonna go over the solutions in the next lecture. We'll see you there.
 
-34. Part Of Speech Assessment Solutions English
+34.  Part Of Speech Assessment Solutions English
 ================================================
+
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/02-Parts-of-Speech-Tagging/06-POS-Assessment-Solutions.ipynb).
 
 (haunting music) -: Welcome back. In this lecture we're going to go over the solution for the parts of speech assessment. Let's head over to the notebook and walk through it. Okay, so here we are at the parts of speech assessment. Don't forget to run the top cell in order to import spaCy, load the English library, and then have the spaCy ready to go. Next we wanna create a Doc object from the file Peter Rabbit Dot txt. And we can do this by simply saying with open and then we'll say.
 
@@ -1144,12 +1383,51 @@ Feel free to post the Q and A forums if you have any questions. We'll see you at
 35. Introduction to Text Classification English
 ================================================
 
+![155.png](./images/155.png)
+![156.png](./images/156.png)
+![157.png](./images/157.png)
+![158.png](./images/158.png)
+
+
 (electronic music) -: Welcome everyone to this section on text classification. Our goals for this section are to first understand the machine learning basics and understand classification metrics since we're going to need to understand how we can actually evaluate our text classification models. After that, we'll learn how to do things like text feature extraction and we'll familiarize ourselves with scikit-learn and Python to perform text classification on real datasets.
 
 Keep in mind we're going to start off with quite a few quote-unquote theory lectures and that means we're not going to be coding anything until we have a solid understanding of machine learning, classification, and text feature extraction concepts. So you'll see quite a few lectures first that are only slides before we actually jump into the Python code. With that being said, let's get started.
 
 36. Machine Learning Overview English
 ======================================
+
+![159.png](./images/159.png)
+![160.png](./images/160.png)
+![161.png](./images/161.png)
+![162.png](./images/162.png)
+![163.png](./images/163.png)
+![164.png](./images/164.png)
+![165.png](./images/165.png)
+![166.png](./images/166.png)
+![167.png](./images/167.png)
+![168.png](./images/168.png)
+![169.png](./images/169.png)
+![170.png](./images/170.png)
+![171.png](./images/171.png)
+![172.png](./images/172.png)
+![173.png](./images/173.png)
+![174.png](./images/174.png)
+![175.png](./images/175.png)
+![176.png](./images/176.png)
+![177.png](./images/177.png)
+![178.png](./images/178.png)
+![179.png](./images/179.png)
+![180.png](./images/180.png)
+![181.png](./images/181.png)
+![182.png](./images/182.png)
+![183.png](./images/183.png)
+![184.png](./images/184.png)
+![185.png](./images/185.png)
+![186.png](./images/186.png)
+![187.png](./images/187.png)
+![188.png](./images/188.png)
+![189.png](./images/189.png)
+
 
 (intro music) -: Welcome back everyone to this lecture on an overview of machine learning. Before we dive into text classification, let's work on understanding the general machine learning process we're going to be using. The specific case of machine learning we're gonna be conducting in this particular section of the course is known as supervised learning. So we're gonna be focusing on that supervised learning process. Because different students have different backgrounds in math, we're going to be keeping the mathematics behind the machine learning algorithms on the lighter side.
 
@@ -1191,6 +1469,45 @@ So that's all that is those four terms mean. So again, we have those four compon
 
 37. Classification Metrics English
 ===================================
+
+![190.png](./images/190.png)
+![191.png](./images/191.png)
+![192.png](./images/192.png)
+![193.png](./images/193.png)
+![194.png](./images/194.png)
+![195.png](./images/195.png)
+![196.png](./images/196.png)
+![197.png](./images/197.png)
+![198.png](./images/198.png)
+![199.png](./images/199.png)
+![200.png](./images/200.png)
+![201.png](./images/201.png)
+![202.png](./images/202.png)
+![203.png](./images/203.png)
+![204.png](./images/204.png)
+![205.png](./images/205.png)
+![206.png](./images/206.png)
+![207.png](./images/207.png)
+![208.png](./images/208.png)
+![209.png](./images/209.png)
+![210.png](./images/210.png)
+![211.png](./images/211.png)
+![212.png](./images/212.png)
+![213.png](./images/213.png)
+![214.png](./images/214.png)
+![215.png](./images/215.png)
+![216.png](./images/216.png)
+![217.png](./images/217.png)
+![218.png](./images/218.png)
+![219.png](./images/219.png)
+![220.png](./images/220.png)
+![221.png](./images/221.png)
+![222.png](./images/222.png)
+![223.png](./images/223.png)
+![224.png](./images/224.png)
+![225.png](./images/225.png)
+
+
 
 (light music) -: Welcome back everyone to this lecture on "Classification Metrics." We just learned that after our machine learning process is complete, we use performance metrics to evaluate how well our model did. Remember, in that train test split step, we ended up running our train model on some test data and then evaluating its performance. In this lecture, we're actually going to discuss in more detail how we actually evaluate the performance of a model, and that comes in discussion with classification metrics.
 
@@ -1241,6 +1558,26 @@ So precision recall, as I keep mentioning, typically make more sense in the cont
 38. Confusion Matrix English
 =============================
 
+![226.png](./images/226.png)
+![227.png](./images/227.png)
+![228.png](./images/228.png)
+![229.png](./images/229.png)
+![230.png](./images/230.png)
+![231.png](./images/231.png)
+![232.png](./images/232.png)
+![233.png](./images/233.png)
+![234.png](./images/234.png)
+![235.png](./images/235.png)
+![236.png](./images/236.png)
+![237.png](./images/237.png)
+![238.png](./images/238.png)
+![239.png](./images/239.png)
+![240.png](./images/240.png)
+![241.png](./images/241.png)
+![242.png](./images/242.png)
+![243.png](./images/243.png)
+
+
 (gentle music) -: Welcome back everyone to this lecture on the confusion matrix. We mentioned the way to view various metrics of classification is called, the confusion matrix. Let's explore the basics of the confusion matrix to help us understand precision and recall better. In a classification problem during testing phase, you're going to have two main categories, the true condition and the predicted condition. For example, the true condition of a text message could be that it is spam.
 
 The predicted condition is, what your machine learning model predicted, such as predicting that that test message was spam. Keep in mind, it could have also predicted it did it incorrectly as ham. This means if you have two possible classes, you should have four separate groups at the end of testing. You have correctly classified to class one. So that means you had a message that was ham and you positively identified it as ham. There's also correctly classified to class two, so something was truly spam and then you correctly identified it as spam.
@@ -1284,6 +1621,26 @@ We'll see you at the next lecture.
 39. ScikitLearn Primer How to Use SciKitLearn English
 ======================================================
 
+![244.png](./images/244.png)
+![245.png](./images/245.png)
+![246.png](./images/246.png)
+![247.png](./images/247.png)
+![248.png](./images/248.png)
+![249.png](./images/249.png)
+![250.png](./images/250.png)
+![251.png](./images/251.png)
+![252.png](./images/252.png)
+![253.png](./images/253.png)
+![254.png](./images/254.png)
+![255.png](./images/255.png)
+![256.png](./images/256.png)
+![257.png](./images/257.png)
+![258.png](./images/258.png)
+![259.png](./images/259.png)
+![260.png](./images/260.png)
+![261.png](./images/261.png)
+
+
 Instructor: Welcome back everyone. In the next lecture we're going to be working with Python and the scikit-learn Library. Let's quickly give a quick preview of how the scikit-learn library works before we actually open up a notebook and get started with it. As I mentioned we're going to be using the scikit-learn package in order to do some machine learning in this course. It's the most popular machine learning package for Python and it has a lot of algorithms already built into it.
 
 If you aren't using our provided environment file you may need to install it using either conda install scikit-learn, or PIP Install scikit-learn. So go ahead and make sure you've installed it before you hit the next lecture. Let's quickly talk about the basic structure of how to use scikit-learn. First, a quick review of the machine learning process. Remember, we need to acquire our data, clean our data, split our data into a training set and testing set, test the model on the test set, and then we can go onto model deployment.
@@ -1306,6 +1663,8 @@ So we've already gone over the different classification metrics. Let's go ahead 
 
 40. ScikitLearn Primer Code Along Part One English
 ===================================================
+
+See the notebook [here](./14.ipynb)
 
 (tender music) Narrator: Welcome back. Let's go ahead and learn how to use Scikit-learn through this code along lecture. I'm gonna open up Jupyter Notebook now. All right, so to begin we're going to import NumPy as 'NP' and we're also going to be importing a library called Pandas. And Pandas is going to allow us to actually read in CSV files, which are comma separated value files and other file types like text files or tab separated files and so on. So we're gonna be using Pandas a little bit and we'll be showing you a quick look about a few various Pandas methods that are really useful in conjunction with Scikit-learn.
 
@@ -1368,6 +1727,8 @@ We'll see you there.
 41. ScikitLearn Primer Code Along Part Two English
 ===================================================
 
+See the notebook [here](./14.ipynb)
+
 (mellow music) Instructor: Welcome back. Here we are where we left off last time fitting our model to our X training and Y training data set. Let's go ahead and now learn how to test the accuracy of the model using the test data set. To do this, we're going to say from sklearn, import metrics. Then we're going to grab the features from the test data set. Remember that was X test. And we're going to predict on this. This is the exact same way we would predict on brand new data.
 
 We would simply call our trained model call.predict and we pass in new data that the model hasn't seen before. In this case, for evaluation, we're gonna pass in X test. Again, this is brand new data the model hasn't seen before. But lucky for us, we know the correct answers. The correct answers are Y test. So what we're gonna do is pass in X test, and we're gonna ask the model to predict on this test set, and then see what their predictions are. So now we have predictions that look like this, ham ham and et cetera, there's some spam in there, and we have the true values.
@@ -1405,6 +1766,28 @@ We'll see you there.
 42. Text Feature Extraction Overview English
 =============================================
 
+![262.png](./images/262.png)
+![263.png](./images/263.png)
+![264.png](./images/264.png)
+![265.png](./images/265.png)
+![266.png](./images/266.png)
+![267.png](./images/267.png)
+![268.png](./images/268.png)
+![269.png](./images/269.png)
+![270.png](./images/270.png)
+![271.png](./images/271.png)
+![272.png](./images/272.png)
+![273.png](./images/273.png)
+![274.png](./images/274.png)
+![275.png](./images/275.png)
+![276.png](./images/276.png)
+![277.png](./images/277.png)
+![278.png](./images/278.png)
+![279.png](./images/279.png)
+![280.png](./images/280.png)
+![281.png](./images/281.png)
+
+
 (soft meditative music) -: Welcome back, everyone, to this lecture on feature extraction from text. This is part one where we're going to be going over the basic theory of feature extraction. Most classic machine learning algorithms can't actually accept or take in raw text. Instead, we need to perform some sort of feature extraction from the raw text in order to pass numerical features to the machine learning algorithm. For example, we could count the occurrence of each word to map text to an actual number.
 
 Let's discuss count vectorization along with term frequency and inverse document frequency. So count vectorization looks like this. Let's imagine we had a list of messages. So here we have three messages. And this looks really similar to the data set we previously had. So right now everything is in raw text or a string in Python. What we can do is using Scikit-learn, we can perform count vectorization. And notice this syntax here looks really similar to the same way we created machine learning models of Scikit-learn.
@@ -1431,6 +1814,10 @@ Coming up next, we're going to explore how to perform these operations with Pyth
 
 43. Text Feature Extraction Code Along Implementations English
 ===============================================================
+
+Check the notebook [here](./Resources/UPDATED_NLP_COURSE/03-Text-Classification/01-Feature-Extraction-from-Text.ipynb)
+
+Check the notebook [here](./15.ipynb)
 
 (soft music) -: Welcome back everyone to feature extraction from text. In this lecture, we're going to be learning about a basic manual implementation of building out a vocabulary just to give you a little bit of more intuition behind building out a vocabulary across multiple documents. Then we'll learn how to use the scikit-learn library for vectorization, as well as how to build pipelines for natural language processing with scikit-learn. Let's open up the notebook and get started.
 
@@ -1485,6 +1872,8 @@ Next, what we wanna do is transform the counts to frequencies with TF-IDF. Then 
 44. Text Feature Extraction Code Along Part Two English
 ========================================================
 
+Check the notebook [here](./15.ipynb)
+
 (soft music) -: Welcome back everyone. We're gonna continue right where we left off last time by showing you how to use TFIDF with scikit-learn. Let's head back to the notebook. In the previous lecture we went ahead and performed Count Vectorization. As we discussed during the theory lecture we can actually use TFIDF or term frequency inverse document frequency in order to actually give words that are more important, more weight. One way to do this is by simply passing in our Count Vectorization into a TFIDF transformer.
 
 We can say from sk-learn.feature extraction .text import TFIDF transformer. We'll talk about TFIDF vectorizer object in just a second. First, let's create an instance of the TFIDF transformer. We'll say TFIDF transformer is equal to and here we'll call an instance of it and then we can simply take x_train_TFIDF and set it = the TFIDF transformer and then call Fit Transform on x_train counts, the result of the count vectorization. Now don't worry if you see a future warning show up that actually has to do with scikit-learn and they will update and fix that in a future release.
@@ -1525,6 +1914,8 @@ Coming up next, we're going to go through an entire code-along text classificati
 
 45. Text Classification Code Along Project English
 ===================================================
+
+Check the notebook [here](./16.ipynb)
 
 (gentle music) Instructor: Welcome back, everyone. This lecture on text classification. In this particular lecture, we're gonna go from start to finish for a full text classification code along project. We'll be working with a movie review data set and then being able to tell whether a movie review is positive or negative based off the text. Let's get started. Let's begin by checking out our data set. For this project, we're going to be using a movie review data set and we're gonna try to develop a classification model, just as we did with the spam collection data set.
 
@@ -1567,6 +1958,8 @@ Okay, so that's it for this text classification project. Coming up next, we're g
 46. Text Classification Assessment Overview English
 ====================================================
 
+Check the notebook [here](./Resources/UPDATED_NLP_COURSE/03-Text-Classification/03-Text-Classification-Assessment.ipynb)
+
 (lighthearted music) Instructor: Welcome back. To make sure you've understood all of the topics discussed. in this section of the course, we designed an assessment that mimics what we just did in the previous "Code Along" lecture. Let's go ahead and take a look at the Text Classification Assessment and in the next lecture, we'll go ahead and go through the solutions. Let's walk through the notebook. All right, here I am at the Text Classification Assessment notebook.
 
 So this is going to be really similar to the Code Along project. You're gonna perform your imports, load the dataset into Pandas's data frame. Just keep in mind, we're now working with moviereviews2.tsv. So it's a very similar dataset, and you're just gonna complete the tasks below. Performing imports, loading the dataset, checking for missing values, removing null values, taking looks at the label columns, using things like value counts, splitting the data into a training and test set, building a pipeline to vectorize the data, then train and fit the model, run predictions and analyze the results using a confusion matrix, a classification report and then printing out the overall accuracy.
@@ -1575,6 +1968,8 @@ All right, coming up next, we're gonna work through the solutions. I'll see you 
 
 47. Text Classification Assessment Solutions English
 =====================================================
+
+Check the notebook [here](./Resources/UPDATED_NLP_COURSE/03-Text-Classification/04-Text-Classification-Assessment-Solution.ipynb)
 
 (light hearted music) -: Let's go over the solutions for the text classification assessment project. Okay, here we have the text classification assessment. So let's follow along and complete the tasks. We're first going to import pandas as pd, and then say DF is equal to pd, read csv. And then inside the text files folder, we should be able to find movie reviews2.tsv. And remember, because it's a tsv, we want to indicate that it's a tab separated file. So after we run that, we can check the head of the data frame just to confirm that the data is correct.
 
@@ -1605,10 +2000,32 @@ Thanks, and we'll see you at the next section.
 48. Introduction to Semantics and Sentiment Analysis English
 =============================================================
 
+![282.png](./images/282.png)
+![283.png](./images/283.png)
+
+
 -: Welcome everyone to this section of the course on semantics and sentiment analysis. Our section goals are to understand semantic word vectors with spaCy and Python. Then we'll understand the general syntax for sentiment analysis as well as how to leverage sentiment analysis for text classification using the Vader sentiment analysis system along with NLTK. All right, let's get started. I'll see you in the next lecture.
 
 49. Overview of Semantics and Word Vectors English
 ===================================================
+
+![284.png](./images/284.png)
+![285.png](./images/285.png)
+![286.png](./images/286.png)
+![287.png](./images/287.png)
+![288.png](./images/288.png)
+![289.png](./images/289.png)
+![290.png](./images/290.png)
+![291.png](./images/291.png)
+![292.png](./images/292.png)
+![293.png](./images/293.png)
+![294.png](./images/294.png)
+![295.png](./images/295.png)
+![296.png](./images/296.png)
+![297.png](./images/297.png)
+![298.png](./images/298.png)
+![299.png](./images/299.png)
+
 
 Instructor: Welcome back, everyone. Let's now discuss semantics and word vectors. But first, in order to actually use spaCy's embedded word vectors, we must download the larger spaCy English models. Full details about the models and as well as how to install them can be found at the link right here, spacy.io/usage/models. Recall that when we first installed spaCy not only did we have to do an environmental install either using conda install or PIP install, but we also at the command line had to install the full English language models.
 
@@ -1640,6 +2057,8 @@ So we can understand that walking is to walk as swimming is to swim. So let's be
 
 50. Semantics and Word Vectors with Spacy English
 ==================================================
+
+See the notebook [here](./17.ipynb).
 
 -: Welcome back. Let's get started by learning and exploring word vectors that come already prepackaged for us with spaCy and Python. Please remember to watch the previous lecture in order to download the larger spaCy English language models that actually contain the word vectors. The smaller models do not contain the word vectors. Okay, let's jump to the Jupyter Notebook. Okay let's begin by importing spaCy and then we're going to load the large English or medium English download that we discussed in the previous lecture.
 
@@ -1704,6 +2123,20 @@ So you could later on add and subtract documents to find more similar documents 
 51. Sentiment Analysis Overview English
 ========================================
 
+![300.png](./images/300.png)
+![301.png](./images/301.png)
+![302.png](./images/302.png)
+![303.png](./images/303.png)
+![304.png](./images/304.png)
+![305.png](./images/305.png)
+![306.png](./images/306.png)
+![307.png](./images/307.png)
+![308.png](./images/308.png)
+![309.png](./images/309.png)
+![310.png](./images/310.png)
+![311.png](./images/311.png)
+
+
 (bright music) -: Welcome back, everyone. In this lecture, we're going to discuss the general idea behind VADER sentiment analysis with Python and NLTK. We've already explored text classification and using it to predict sentiment labels on pre-labeled movie reviews. That means someone has already read the review for us, and manually labeled it either positive or negative. But what happens if we don't already have those labels? Are there pre-constructed methods of attempting to discern sentiment, sentiment being whether you feel positive about the text or negative about the text or neutral, on raw unlabeled text?
 
 Is there a way we can take that raw text data and pass it through some sort of pre-built algorithm that will directly declare the sentiment for us without even needing any sort of pre-labeled training mechanisms? Well, luckily, one of the solutions is called VADER, which stands for Valence Aware Dictionary for sEntiment Reasoning. So the sentiment, the E is capitalized there 'cause that's where they get the E for VADER. And VADER is a model used for text sentiment analysis that is sensitive to both polarity, that is whether something is positive or negative, and intensity, that is the strength of the emotion.
@@ -1724,6 +2157,8 @@ So keep these two ideas in mind. This sentiment analysis from VADER is definitel
 
 52. Sentiment Analysis with NLTK English
 =========================================
+
+See the notebook [here](./18.ipynb)
 
 Narrator: Welcome back everyone. In this lecture we're going to show you how to use Vader Sentiment Analysis with Python and NLTK. Okay, let's begin by importing NLTK. And then what you need to do is download the Vader Lexicon and you only need to do this once. So we'll say NLTK download, and then pass in Vader_lexicon. Go ahead and run that and then if you've already downloaded it, it should be almost instantaneous. If not, it may take a little bit of time to download the data from the internet.
 
@@ -1774,6 +2209,8 @@ That's definitely not bad considering how simple the process is, but it's also n
 53. Sentiment Analysis Code Along Movie Review Project English
 ===============================================================
 
+See the notebook [here](./19.ipynb)
+
 -: Welcome back everyone. In this lecture, we're going to again take a look at the previous movie reviews data set that we've already explored using text classification techniques. Let's now apply sentiment analysis and see how that compares at discovering the labels. Let's open up a notebook and get started. Okay, let's begin by importing NumPy as NP and importing Pandas as PD and then what we're going to do is read in the CSV file and underneath the text files folder, depending on where you have it saved on your computer, there is the movies review dot TSV file.
 
 We're using movie reviews dot TSV, not movie reviews two, and then since this is tab separated, we need to indicate that by saying SEP, and then separator is back slash T. So we've already seen this data set, again we can check it out with head and we see we have labels and as well as the reviews, and we can also do a quick check to make sure there are no blank records. So what we can do here is say DF drop NA and then say in place is equal to true.
@@ -1803,6 +2240,8 @@ So keep that in mind whenever you're exploring sentiment analysis with your own 
 54. Sentiment Analysis Project Assessment English
 ==================================================
 
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/04-Semantics-and-Sentiment-Analysis/03-Sentiment-Analysis-Assessment.ipynb)
+
 Instructor: Welcome back. Let's have a quick overview of your Sentiment Analysis Assessment Project. I'm gonna open up the notebook and do a quick review. Okay, here I am at the notebook. We essentially just have two major tasks, with an extra challenge associated with each task. So the first task has to do with those actual word vectors we discussed at the very beginning of this section of the course, where we want you to perform vector arithmetic on your own words.
 
 So we want you to write code that evaluates vector arithmetic. Vector arithmetic is just adding and subtracting those particular word vectors, similar to what we did with "king" minus "man" plus "woman". And the goal is to come as close to an expected word as possible. And if you have really good arithmetic, you can feel free to share those success stories on the Q&A Forum. So essentially, at the end, what we want you to do is just follow along with these comments.
@@ -1819,6 +2258,8 @@ It does match up a lot with what we did in the lectures. But if you're stuck on 
 
 55. Sentiment Analysis Project Assessment Solutions English
 ============================================================
+
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/04-Semantics-and-Sentiment-Analysis/00-Semantics-and-Word-Vectors.ipynb)
 
 Instructor: Welcome back, everyone. In this lecture, we're going to go over the solutions for the Sentiment Analysis Assessment project. Let's get started. All right, let's begin with task one, performing vector arithmetic on our own words. We're gonna begin by importing spaCy and then loading up the spaCy language model. So spaCy.load, and then we're going to load in English core and you can either load in the large or medium. So I'm gonna load in the large.
 
@@ -1865,12 +2306,26 @@ I would encourage you to play around with these functions that you just created 
 56. Introduction to Topic Modeling Section English
 ===================================================
 
+![312.png](./images/312.png)
+![313.png](./images/313.png)
+![314.png](./images/314.png)
+
 (calm music) -: Welcome back to this section on topic modeling. So our goals for this section are first off to understand what topic modeling is and how it's actually a version of unsupervised machine learning. Then, we'll learn about Latent Dirichlet Allocation and implement LDA. Then we'll understand non-negative matrix factorization for topic modeling, and then later on show you how to implement NMF with scikit-learn. Afterwards, we'll learn how to apply both of these to a project dataset.
 
 Okay, let's get started by learning about topic modeling. I'll see you at the next lecture.
 
 57. Overview of Topic Modeling English
 =======================================
+
+![315.png](./images/315.png)
+![316.png](./images/316.png)
+![317.png](./images/317.png)
+![318.png](./images/318.png)
+![319.png](./images/319.png)
+![320.png](./images/320.png)
+![321.png](./images/321.png)
+![322.png](./images/322.png)
+
 
 (gentle chiming music) -: Welcome back. Let's quickly discuss an overview of what topic modeling is before we actually dive into the methods of topic modeling. So we're gonna learn about Latent Dirichlet allocation and non-negative matrix factorization. But first, let's understand a general topic of topic modeling. Topic modeling allows us to efficiently analyze large volumes of texts by clustering documents together into topics. A large amount of text data is actually unlabeled, meaning we won't be able to apply our previous supervised learning approaches because those machine learning models would actually depend on historical label data.
 
@@ -1882,6 +2337,37 @@ It's up to the user to identify what these topics actually represent. So again, 
 
 58. Latent Dirichlet Allocation Overview English
 =================================================
+
+![323.png](./images/323.png)
+![324.png](./images/324.png)
+![325.png](./images/325.png)
+![326.png](./images/326.png)
+![327.png](./images/327.png)
+![328.png](./images/328.png)
+![329.png](./images/329.png)
+![330.png](./images/330.png)
+![331.png](./images/331.png)
+![332.png](./images/332.png)
+![333.png](./images/333.png)
+![334.png](./images/334.png)
+![335.png](./images/335.png)
+![336.png](./images/336.png)
+![337.png](./images/337.png)
+![338.png](./images/338.png)
+![339.png](./images/339.png)
+![340.png](./images/340.png)
+![341.png](./images/341.png)
+![342.png](./images/342.png)
+![343.png](./images/343.png)
+![344.png](./images/344.png)
+![345.png](./images/345.png)
+![346.png](./images/346.png)
+![347.png](./images/347.png)
+![348.png](./images/348.png)
+![349.png](./images/349.png)
+![350.png](./images/350.png)
+![351.png](./images/351.png)
+
 
 (intro music) -: Welcome back everyone. In this lecture, we're going to give an explanatory overview of how LDA or Latent Dirichlet allocation for topic modeling works. Johann Dirichlet was a German mathematician in the 1800s who contributed widely to the field of modern mathematics. And there's a probability distribution named after him called the Dirichlet Distribution. And this is the distribution that is used later on in LDA. So Latent Dirichlet allocation is based off this probability distribution.
 
@@ -1928,6 +2414,8 @@ Okay, in the next lecture, we're gonna explore how to actually implement LDA wit
 59. Latent Dirichlet Allocation with Python Part One English
 =============================================================
 
+See the notebook [here](./20.ipynb)
+
 (sober music) -: Welcome back everyone. In this lecture we're going to show you how to actually perform latent dirichlet allocation with Python. Let's open up a new notebook and get started. As a quick note underneath the topic modeling folder you'll notice that there is an NPR.CSV. We're going to be using that NPR.CSV data file to actually load up some articles so make sure you actually locate it underneath the topic modeling folder. And if you wanna follow any of the code that we show during this lecture you can run it from the latent dirichlet allocation.
 
 I've gone ahead and created a new notebook in the same folder so I can easily access this NPR.CSV file. Let's go ahead and go to that untitled notebook now and the first thing we're going to do is actually load up that data. So we'll say import pandas as PD, and then check out what that data set actually holds by saying NPR is equal to pd.read_csv, and then NPR.CSV. So let's take a look at the head of this data frame so we can understand what this actually is.
@@ -1962,6 +2450,8 @@ So I'm gonna go ahead and hop forward in time until that's done fitting. Okay, w
 
 60. Latent Dirichlet Allocation with Python Part Two English
 =============================================================
+
+See the notebook [here](./20.ipynb)
 
 (gentle music) -: Welcome back to part two of Latent Dirichlet Allocation with Python. Let's continue where we left off in the previous lecture. All right, here we are at the notebook where we left off last time. We defined three steps the last time. We wanted to be able to grab the vocabulary of words, grab the topics, and then grab the highest probability words per topic. Let's begin by showing you how to grab the vocabulary of words. I'm just doing Alt+Enter to put some cells below this cell.
 
@@ -2020,6 +2510,24 @@ Okay, thanks, and I'll see you at the next lecture.
 61. Nonnegative Matrix Factorization Overview English
 ======================================================
 
+![352.png](./images/352.png)
+![353.png](./images/353.png)
+![354.png](./images/354.png)
+![355.png](./images/355.png)
+![356.png](./images/356.png)
+![357.png](./images/357.png)
+![358.png](./images/358.png)
+![359.png](./images/359.png)
+![360.png](./images/360.png)
+![361.png](./images/361.png)
+![362.png](./images/362.png)
+![363.png](./images/363.png)
+![364.png](./images/364.png)
+![365.png](./images/365.png)
+![366.png](./images/366.png)
+![367.png](./images/367.png)
+
+
 (calming music) -: Welcome back everyone. In this lecture we're going to discuss non-negative matrix factorization and how we can apply it to topic modeling. Non-negative matrix factorization is an unsupervised algorithm that simultaneously performs dimensionality reduction and clustering. We can use it in conjunction with TF-IDF to model topics across various documents. So let's discuss the general mathematics behind non-negative matrix factorization or NMF and then we'll show you how you can apply it with a document term matrix.
 
 So first, you're given a non-negative matrix A which is what we're going to be able to create using TF-IDF. And then we want to find a K dimension approximation in terms of two other non-negative factors, W and H. So you're gonna have some matrix A, which is N by M, some rows features and columns or objects. And we wanna perform factorization to essentially approximate A with the matrix multiplication of W and H, where we have N by K for W, and K by M for H.
@@ -2048,6 +2556,8 @@ So we're going to repeat our analysis of the NPR article data set and show you h
 
 62. Nonnegative Matrix Factorization with Python English
 =========================================================
+
+See the notebook [here](./21.ipynb)
 
 (chiming music) -: Welcome back, everyone. In this lecture, we're now going to show you how you can perform non-negative matrix factorization with Python. We're gonna work on the same NPR.CSV dataset, and you'll realize how easily it is to swap out LDA for NMF. Let's head over to a Jupyter notebook and get started. All right, I've created a brand new untitled notebook. It's located underneath my topic modeling folder, so I have easy access to the NPR.CSV file.
 
@@ -2094,6 +2604,8 @@ So coming up next, you're gonna have a project assessment working with a questio
 63. Topic Modeling Project Overview English
 ============================================
 
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/05-Topic-Modeling/02-LDA-NMF-Assessment-Project.ipynb)
+
 (gentle chiming music) -: Welcome back, everyone. In this lecture, we're gonna have a brief overview of the assessment for the topic modeling section. Let's go ahead and open up the topic modeling assessment project notebook. Okay, underneath the topic modeling folder, you should be able to find the assessment project notebook, as well as the assessment project solutions. I'm gonna overview the assessment project, and in the next lecture, we'll go over the solutions together.
 
 So the assessment project is a topic modeling assessment project. And for this category, you're going to be working with over 400,000 questions from Quora. Quora is a question and answer site where people can post questions, and then crowdsource from the community for answers. And what we're gonna do, is we're gonna act like these questions don't actually have any labeled category. And if you're looking for the questions, it's simply this Quora underscore questions dot CSV file.
@@ -2112,6 +2624,8 @@ I wouldn't expect you to manually name them all. But again, essentially at the e
 
 64. Topic Modeling Project Solutions English
 =============================================
+
+See the notebook [here](./Resources/UPDATED_NLP_COURSE/05-Topic-Modeling/03-LDA-NMF-Assessment-Project-Solutions.ipynb)
 
 (calming tone) -: Welcome back everyone. In this lecture, we're going to go through the solutions for the topic modeling assessment project. Let's head over to the notebook and get started. All right, here I am at the Topic Modeling Assessment Project Notebook. The first thing we're going to do is import pandas as pd and then read in that dataset for Quora. So pd.read, and it's a CSV file and it's called "Quora Questions". You should be able to tab auto complete this.
 
@@ -2140,12 +2654,43 @@ Okay, so that's it for this project. Hopefully you can see now it's pretty strai
 65. Introduction to Deep Learning for NLP English
 ==================================================
 
+![368.png](./images/368.png)
+![369.png](./images/369.png)
+![370.png](./images/370.png)
+
+
 (enlightening music) -: Welcome back everyone to this section of the course on Deep Learning for Natural Language Processing. Our goals for this section are to understand the basic overview of deep learning. Then, we'll move on to understanding specific types of neural networks, such as recurrent neural networks, or RNN, and LSTM, a long short-term memory unit, which is going to be useful when using it to generate text from source corpus. So later on in this section of the course, we're going to actually read in source material, such as the "Moby-Dick" novel and then use our neural networks to generate brand-new text in the same style as the original source corpus.
 
 Then, we'll also learn how to create Q&A chatbots with Python and recurrent neural networks. There's a lot to learn. So let's get started. I'll see you in the next lecture.
 
 66. The Basic Perceptron Model English
 =======================================
+
+![371.png](./images/371.png)
+![372.png](./images/372.png)
+![373.png](./images/373.png)
+![374.png](./images/374.png)
+![375.png](./images/375.png)
+![376.png](./images/376.png)
+![377.png](./images/377.png)
+![378.png](./images/378.png)
+![379.png](./images/379.png)
+![380.png](./images/380.png)
+![381.png](./images/381.png)
+![382.png](./images/382.png)
+![383.png](./images/383.png)
+![384.png](./images/384.png)
+![385.png](./images/385.png)
+![386.png](./images/386.png)
+![387.png](./images/387.png)
+![388.png](./images/388.png)
+![389.png](./images/389.png)
+![390.png](./images/390.png)
+![391.png](./images/391.png)
+![392.png](./images/392.png)
+![393.png](./images/393.png)
+![394.png](./images/394.png)
+
 
 (calming tone) Instructor: Welcome everyone to this lecture on an introduction to the perceptron. Before we launch straight into neural networks we need to understand the individual components first such as a single neuron. Artificial neural networks or ANNs actually have a basis in biology. So we're going to see how we can attempt to mimic biological neurons with an artificial neuron otherwise known as a perceptron. And then once we go through the process of how a simple perceptron works, we'll go ahead and show you how you can represent that mathematically.
 
@@ -2171,6 +2716,29 @@ Thanks, and I'll see you at the next lecture.
 
 67. Introduction to Neural Networks English
 ============================================
+
+![395.png](./images/395.png)
+![396.png](./images/396.png)
+![397.png](./images/397.png)
+![398.png](./images/398.png)
+![399.png](./images/399.png)
+![400.png](./images/400.png)
+![401.png](./images/401.png)
+![402.png](./images/402.png)
+![403.png](./images/403.png)
+![404.png](./images/404.png)
+![405.png](./images/405.png)
+![406.png](./images/406.png)
+![407.png](./images/407.png)
+![408.png](./images/408.png)
+![409.png](./images/409.png)
+![410.png](./images/410.png)
+![411.png](./images/411.png)
+![412.png](./images/412.png)
+![413.png](./images/413.png)
+![414.png](./images/414.png)
+![415.png](./images/415.png)
+
 
 (relaxing intro music) -: Welcome back everyone to an introduction to neural networks. We've seen how a single perceptron behaves. Now let's expand on this concept to get the idea of a neural network. Let's see how to connect many perceptrons together and then how to represent this mathematically. So what does a multiple perceptrons network actually look like? Well, essentially looks like this. Here we can see that we have various layers of single perceptrons connected to each other through their inputs and outputs.
 
@@ -2200,6 +2768,12 @@ So what we're gonna do now is move on to understanding how to actually implement
 
 68. Keras Basics Part One English
 ==================================
+
+![416.png](./images/416.png)
+![417.png](./images/417.png)
+![418.png](./images/418.png)
+
+See the notebook [here](./22.ipynb)
 
 -: Welcome back everyone to this lecture on Keras Basics. We're going to learn how to create a very simple neural network for classifying the famous Iris data set. The goal of this particular lecture is to just get you comfortable with the syntax with Keras. The Iris data set itself contains measurements of flower petals and sepals and has corresponding labels to one of three classes. That is one of three flower species. It's a really simple data set. It's super famous, has its own Wikipedia page.
 
@@ -2258,6 +2832,8 @@ We'll see you there.
 69. Keras Basics Part Two English
 ==================================
 
+See the notebook [here](./22.ipynb)
+
 (tranquil music) -: Now, the way we do that is we first need to scale our test data or new incoming data. Now, we've actually already done this. We have our scaled X test right here. But keep in mind, if you had fresh data, like you just went out and collected the information off a flower in the field, you would have to scale that data first because our model is only trained on the scaled versions of this sort of data. And then what we're going to do is if you actually take a look at model.predict just like you would for a scikit-learn model, you say model.predict, and then pass in that scale data.
 
 And then if you run this, you'll notice that it actually spits out probabilities by default when you call .predict. If you want the raw classes themselves, simply call predict_classes and it's going to predict the classes. Again, something that's important to note here is that it doesn't predict the one hot encoded version of the classes, it just reports back the index position, which is convenient in some senses, kind of inconvenient because the original Y test, we had to change it to be one hot coded.
@@ -2280,6 +2856,23 @@ I simply say model, and then I can call predict classes, predict function, predi
 
 70. Recurrent Neural Network Overview English
 ==============================================
+
+![419.png](./images/419.png)
+![420.png](./images/420.png)
+![421.png](./images/421.png)
+![422.png](./images/422.png)
+![423.png](./images/423.png)
+![424.png](./images/424.png)
+![425.png](./images/425.png)
+![426.png](./images/426.png)
+![427.png](./images/427.png)
+![428.png](./images/428.png)
+![429.png](./images/429.png)
+![430.png](./images/430.png)
+![431.png](./images/431.png)
+![432.png](./images/432.png)
+![433.png](./images/433.png)
+![434.png](./images/434.png)
 
 (gentle music) -: Hello, everyone. And welcome to the recurrent neural networks theory lecture. Here in this lecture, we're just gonna give you a brief overview of the theory behind a recurrent neural net. Recurrent neural networks are specifically designed to work with sequence data. So examples of sequence data are things like time series data, such as how many sales have happened over a previous time series or what the production has been over a previous time series.
 
@@ -2314,7 +2907,27 @@ So you could have a word such as "Hello" and then the sequence that gets generat
 So we're gonna learn how that works in the very next lecture. We'll see you there.
 
 71. LSTMs GRU and Text Generation English
-==========================================
+=========================================
+
+![435.png](./images/435.png)
+![436.png](./images/436.png)
+![437.png](./images/437.png)
+![438.png](./images/438.png)
+![439.png](./images/439.png)
+![440.png](./images/440.png)
+![441.png](./images/441.png)
+![442.png](./images/442.png)
+![443.png](./images/443.png)
+![444.png](./images/444.png)
+![445.png](./images/445.png)
+![446.png](./images/446.png)
+![447.png](./images/447.png)
+![448.png](./images/448.png)
+![449.png](./images/449.png)
+![450.png](./images/450.png)
+![451.png](./images/451.png)
+
+
 
 -: Welcome back everyone to this lecture on LSTM and GRU. So a common issue that recurrent neural networks face is that after a while, especially if you're training the network on a really large sequence, then the recurrent neural network is going to begin to forget those very first inputs. The later and later training batches of later inputs, things that come towards the end of the text document, that's gonna start kind of overriding the weights of the very beginning inputs of the beginning of the text.
 
@@ -2358,6 +2971,12 @@ And again, Keras has a lot of convenient built-in tools for this. And then we'll
 
 72. Text Generation with LSTMs with Keras and Python Part One English
 ======================================================================
+
+![452.png](./images/452.png)
+![453.png](./images/453.png)
+![454.png](./images/454.png)
+
+See the notebook [here](./23.ipynb)
 
 (soft music) -: Welcome back everyone to part one of Text Generation with Python and Keras. In part one, we're going to process the text clean the text, and then tokenize the text and create sequences with Keras pre-processing. Let's get started. Okay, let's begin by creating a simple function that can read in files, we'll call it read files. And when you give it a file path what it's going to do is simply return as a single string everything in that particular document.
 
@@ -2422,6 +3041,12 @@ So we already have our features here as well as our label and later on we'll be 
 73. Text Generation with LSTMs with Keras and Python Part Two English
 ======================================================================
 
+![455.png](./images/455.png)
+![456.png](./images/456.png)
+![457.png](./images/457.png)
+
+See the notebook [here](./23.ipynb)
+
 (theme music) -: Welcome everyone to part 2 of text generation with Python and Keras. So for this lecture, we're going to show you how to create the LSTM based model but before we do that, we want to split the data into features and labels. So we're going to have our X features which is the first N words of the sequence and then we'll have our Y label which is the very next word after that entire sequence. Once we've done that, we'll be able to fit the model on that feature data in order to predict the next word in the sequence.
 
 Okay, let's jump to the notebook. Okay, so here we are where we left off last time with these actual sequences in a matrix format. What I want to do is perform a train test split and the train test split is going to go ahead and separate these first columns as features and then this last column as the target we want to predict. So we're going to do a couple of things here. We'll say, from keras.utils import to_categorical and again, we're going to then take our sequences and grab everything but the last words.
@@ -2470,6 +3095,8 @@ All right, coming up next, we're going to show you how to generate new text. We'
 
 74. Text Generation with LSTMS with Keras Part Three English
 =============================================================
+
+See the notebook [here](./23.ipynb)
 
 (calm music) -: Welcome back everyone to part three of Text Generation of Python in Keras. In part three, we're going to learn how to generate new text based off of a seed input. Let's get started. All right, so we have a saved trained model and we've also saved our tokenizer. What's next is to actually generate new text. So what we're gonna do is we're going to create a function that generates new text for us based off a given model, tokenizer, sequence length, a seed text and then the number of words to be generated by the model.
 
@@ -2526,6 +3153,25 @@ Okay, thanks and we'll see you at the next lecture.
 75. Chat Bots Overview English
 ===============================
 
+https://arxiv.org/pdf/1503.08895.pdf
+
+![458.png](./images/458.png)
+![459.png](./images/459.png)
+![460.png](./images/460.png)
+![461.png](./images/461.png)
+![462.png](./images/462.png)
+![463.png](./images/463.png)
+![464.png](./images/464.png)
+![465.png](./images/465.png)
+![466.png](./images/466.png)
+![467.png](./images/467.png)
+![468.png](./images/468.png)
+![469.png](./images/469.png)
+![470.png](./images/470.png)
+![471.png](./images/471.png)
+![472.png](./images/472.png)
+
+
 -: Welcome everyone to a continued discussion on deep learning natural language processing. In this next series of lectures, we're going to be building out a question and answer bot. So we'll be implementing a chatbot that can answer questions based on a story given to the bot. This is going to be some pretty advanced state-of-the-art stuff. So we'll be using the bAbI dataset or bAbI dataset released by Facebook research and there's a link there or you can just Google search the term in order to figure out more about the data sets.
 
 We're using a particular subset of that dataset which has stories, questions, and answers. But there's actually lots of different versions with different types of questions. So the type of data we're gonna be working with has three main components. It has a story component. So for an example, we can have a simple story of Jane went to the store, Mike ran to the bedroom; And sometimes within the paper, they also refer to this as the sentences. So, we have a story and then we'll have a yes or no question.
@@ -2558,6 +3204,8 @@ So let's begin now exploring how we can build out this network with Python and K
 
 76. Creating Chat Bots with Python Part One English
 ====================================================
+
+See the notebook [here](./24.ipynb)
 
 (soft music) Instructor: Welcome back, everyone. In this lecture, we're going to begin working with our QnA bot with Python. For part one, we're going to load the data, explore the data format, and create a vocabulary. Let's get started. I'm going to open up a new notebook. All right. In my new notebook, I'm going to begin by importing pickle because we have a specialized file format for the data which is going to be a pickle file, essentially a compressed way of saving our data.
 
@@ -2599,8 +3247,10 @@ And then we built out a vocabulary using a set. And then checking the unions, we
 
 So next lecture, we'll explore using using Keras pre-processing for padding sequences and the tokenizer. I'll see you there.
 
-77. Creating Chat Bots with Python Part Two English
+77.  Creating Chat Bots with Python Part Two English
 ====================================================
+
+See the notebook [here](./24.ipynb)
 
 (tranquil music) -: Welcome back everyone to part two of our Q and A bot with Python. For part two, we're going to begin to understand the steps on how to vectorize this particular data set including vectorizing the questions and the stories as well as the answers. And then we'll learn how to create a function that vectorize the data for us. So we're gonna go through the steps in a bit more of a manual process, and then at the end we'll create a function that does it all for us.
 
@@ -2648,6 +3298,8 @@ So coming up next we'll begin actually creating the model with Keras layers. We'
 
 78. Creating Chat Bots with Python Part Three English
 ======================================================
+
+See the notebook [here](./24.ipynb)
 
 (light music) Instructor: Welcome back everyone to part three of our Q&A Bot with Python. As a quick note, make sure to read the paper before continuing on to this lecture. If you still haven't read the paper that we're working off of, it's really important that at this point in time you read it since it's going to be fundamental to understanding how the network and the encoders work. So, in this lecture, we're going to be building out the neural network, including input encoder M, input encoder C, the question-encoder, and then we'll complete the network.
 
@@ -2713,6 +3365,8 @@ So pretty exciting stuff coming up next. We'll go ahead and continue on in the n
 
 79. Creating Chat Bots with Python Part Four English
 =====================================================
+
+See the notebook [here](./24.ipynb)
 
 (Echoing Bells) -: Welcome back everyone to part four of our Q&A bot with Python. For part four, we're going to fit and train the network or at least show you how to fit and train the network. It takes quite a long time to train this network so we're going to show you how to train it but then we'll cancel the training and then just show you how to load the pre-trained model that we provide for you. Optionally, it's up to you if you want to train your own model on more epochs than what we did, we have a model that was trained on one hundred epochs, took a bit of time and we have that for you as an h5 file.
 

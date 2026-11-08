@@ -1,0 +1,8 @@
+{
+    "Numbered course image": {
+        "scope": "markdown",
+        "prefix": "imgnum",
+        "body": "![${1:126}.png](./images/${1}.png)$0",
+        "description": "Insert a numbered image; edit the number once to update both filenames."
+    }
+}

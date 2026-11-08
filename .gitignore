@@ -46,3 +46,7 @@ node_modules/
 # MovieLens dataset archive and its extracted CSVs (ratings.csv ~533MB, genome-scores.csv ~323MB — over GitHub's 100MB limit; already compressed)
 55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m.zip
 55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-Lazy-Programmer/ml-20m/
+
+# Pretrained word vectors (GoogleNews ~1.6GB, GloVe ~862MB — over GitHub's 100MB limit; already compressed)
+63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python/data/GoogleNews-vectors-negative300.bin.gz
+63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python/data/glove.6B.zip
