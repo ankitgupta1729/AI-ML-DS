@@ -427,6 +427,9 @@ And if you're TensorFlow set the trainable attribute of the word embedding varia
 
 ![111.png](./images/111.png)
 ![112.png](./images/112.png)
+![113.png](./images/113.png)
+![114.png](./images/114.png)
+![115.png](./images/115.png)
 
 Hey everyone and welcome back to this class. Natural Language Processing with Deep Learning in Python Part 6 in this section we are going to do a useful review of a lot of the concepts you're going to need to move forward to the later sections. Now even though I've noted in the course description that these things are required meaning that you should already know them. I thought it would be nice to just go over that quickly to put you in the right headspace for the later content.
 
@@ -442,6 +445,24 @@ This is not about working with a variety of data sets but rather with a variety 
 
 2. Bigrams and Language Models
 ==============================
+
+![116.png](./images/116.png)
+![117.png](./images/117.png)
+![118.png](./images/118.png)
+![119.png](./images/119.png)
+![120.png](./images/120.png)
+![121.png](./images/121.png)
+![122.png](./images/122.png)
+![123.png](./images/123.png)
+![124.png](./images/124.png)
+![125.png](./images/125.png)
+![126.png](./images/126.png)
+![127.png](./images/127.png)
+![128.png](./images/128.png)
+![129.png](./images/129.png)
+![130.png](./images/130.png)
+
+
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this review lecture we are going to do what is probably the simplest possible thing we can do in NLP that is to create a bigram language model. Now hopefully this terminology is not new to you but just in case it is let's review a language model is a model of the probabilities of sequences of words as you know in English we call the sequence of words a sentence.
 
@@ -490,6 +511,8 @@ We can just compare the log probabilities divided by the length of the sentence 
 3. Bigrams in Code
 ==================
 
+See the code [here](./machine_learning_examples/nlp_class2/markov.py)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture I'm going to walk you through my implementation of the previous bigram exercise in code. So this is something that I want everyone to get very used to. We're always going to start out with a high level theory discussion and then we're going to look at some equations that can be derived from that theory. Sometimes but not always. I'm going to explicitly give you an exercise to do but know that even if I don't explicitly tell you to write something in code you should always try.
 
 Because after we discuss theory we are always going to look at the code next. So when you see code you don't want it to be the first time you've seen it. You always want to make sure that you've tried to do it yourself first. So you have some context for what you're looking at. This way you get a sense for how you approach the problem compared to how I approach the problem and how you might approach the next problem differently. So we're always going to have this pattern we're going to go from theory to code.
@@ -537,6 +560,21 @@ This is what the Q&A is for so I hope you make good use of it.
 4. Neural Bigram Model
 ======================
 
+![131.png](./images/131.png)
+![132.png](./images/132.png)
+![133.png](./images/133.png)
+![134.png](./images/134.png)
+![135.png](./images/135.png)
+![136.png](./images/136.png)
+![137.png](./images/137.png)
+![138.png](./images/138.png)
+![139.png](./images/139.png)
+![140.png](./images/140.png)
+![141.png](./images/141.png)
+![142.png](./images/142.png)
+![143.png](./images/143.png)
+
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to continue our review of some basic concepts. In particular we're going to extend our bigram model a little bit to use a neural model rather than just counting up each word to get the bigram probabilities. You'll recall that our basic model of a neuron is logistic regression. So that's going to be the focus of this lecture.
 
 The first important thing we need to talk about is the fact that logistic regression works on numbers, not words. Our logit is going to take the form of W transpose X where X is an input vector containing numbers. In other words it can't contain any strings which is how a computer represents words. Try typing in cat times two in your Python console. You'll see that this doesn't make any sense. Well the trick is to think of words as categories. We know that the way we treat categories in deep learning is to use one-hot coding.
@@ -566,6 +604,8 @@ You can think of this as sort of the ideal version of W that our logistic regres
 5. Neural Bigram Model in Code
 ==============================
 
+See the code [here](./machine_learning_examples/nlp_class2/logistic.py)
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We are going to look at the code that uses logistic regression to find the bigram probabilities the relevant file in the course repo is logistic.py. So hopefully you had a chance to try to code this yourself first at the top we have all the same imports as before but now we're also importing get_bigram_probs from the markov file we wrote earlier.
 
 This is going to let us compare the bigram probabilities using counts with the probabilities we find with logistic regression. Next we enter the main section. Notice I'm limiting the vocabulary size to 2000 in this code. This is because we don't want to have to wait too long. After this we again get the vocab size the start and end index and the bigram probabilities matrix. After that we have some new stuff. So we start out by initializing a random weight matrix which is what we do for logistic regression.
@@ -588,6 +628,24 @@ And so these images should look similar. So let's run this and see what we get. 
 
 6. Neural Network Bigram Model
 ==============================
+
+![144.png](./images/144.png)
+![145.png](./images/145.png)
+![146.png](./images/146.png)
+![147.png](./images/147.png)
+![148.png](./images/148.png)
+![149.png](./images/149.png)
+![150.png](./images/150.png)
+![151.png](./images/151.png)
+![152.png](./images/152.png)
+![153.png](./images/153.png)
+![154.png](./images/154.png)
+![155.png](./images/155.png)
+![156.png](./images/156.png)
+![157.png](./images/157.png)
+![158.png](./images/158.png)
+![159.png](./images/159.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We are going to continue our example of building a bigram model using deep learning techniques. We just did this in logistic regression and we saw how the logistic regression weights are equivalent to the bigram probabilities we found just by counting in this example we're going to extend this idea by using a multilayer neural network instead of just logistic regression.
 
@@ -622,6 +680,8 @@ Please give this a try before you move on to the next lecture. Good luck.
 7. Neural Network Bigram Model in Code
 ======================================
 
+See the code [here](./machine_learning_examples/nlp_class2/neural_network.py)
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 and this lecture we're going to look at the solution to the previous exercise modeling the bigram probabilities using a neural network the relevant file in the course repo is neural_network.py. So hopefully you had a chance to try this yourself before watching this lecture. Most of this file is going to be the same as the logistic file which is why I recommended using that as starter code.
 
 So what we're going to do is just skip to the relevant parts. Since the rest you've seen before the first thing that changes is that we now have two weights, W1 and W2, given that we discussed this in a theory lecture. This is to be expected. Note that I've chosen D equals 100 but you are of course free to choose any other value you like for the learning rate. I've gone down to 10 to the minus 2 since 10 to the minus 1 seemed to be too large for this model.
@@ -636,6 +696,38 @@ the probability is higher.
 
 8. Improving Efficiency
 =======================
+
+![160.png](./images/160.png)
+![161.png](./images/161.png)
+![162.png](./images/162.png)
+![163.png](./images/163.png)
+![164.png](./images/164.png)
+![165.png](./images/165.png)
+![166.png](./images/166.png)
+![167.png](./images/167.png)
+![168.png](./images/168.png)
+![169.png](./images/169.png)
+![170.png](./images/170.png)
+![171.png](./images/171.png)
+![172.png](./images/172.png)
+![173.png](./images/173.png)
+![174.png](./images/174.png)
+![175.png](./images/175.png)
+![176.png](./images/176.png)
+![177.png](./images/177.png)
+![178.png](./images/178.png)
+![179.png](./images/179.png)
+![180.png](./images/180.png)
+![181.png](./images/181.png)
+![182.png](./images/182.png)
+![183.png](./images/183.png)
+![184.png](./images/184.png)
+![185.png](./images/185.png)
+![186.png](./images/186.png)
+![187.png](./images/187.png)
+![188.png](./images/188.png)
+![189.png](./images/189.png)
+
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in the previous lecture. We looked at how to make our model more efficient by limiting the number of parameters of the model. We saw that surprisingly we could make a neural network that trains faster than logistic regression because of the fact that creating a bottleneck allows us to reduce the number of parameters we have to update. In this lecture we're going to see how we can make this go even faster using some NumPy indexing.
 
@@ -686,6 +778,8 @@ You want to take neural_network.py which we just looked at and modify it so that
 9. Improving Efficiency in Code
 ===============================
 
+See the code [here](./machine_learning_examples/nlp_class2/neural_network2.py)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to look at the code for how to use the indexing trick in our bigram neural network the relevant file for this lecture is neural_network2.py. Hopefully you had a chance to try this out for yourself before watching this. Now as with the last code lecture the amount of code changes from the previous file neural_network.py are minimal.
 
 In fact I showed you most of the exact code in the theory lecture. So there isn't too much to discuss here but it's good to review. So let's scroll down to the relevant part. So the first part that changes is that we no longer need to one-hot encode the inputs and targets they just remain as 1D lists. Next. When we get the hidden values in predictions the thing that changes here is we index W1 with the inputs rather than multiplying. So this saves us a lot of computation.
@@ -703,6 +797,13 @@ And since we know that all machine learning interfaces are the same. We know tha
 10. Review Section Summary
 ==========================
 
+![190.png](./images/190.png)
+![191.png](./images/191.png)
+![192.png](./images/192.png)
+![193.png](./images/193.png)
+![194.png](./images/194.png)
+![195.png](./images/195.png)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to summarize everything we learn in this section. This section was all about reviewing useful techniques you'll need for the rest of the course importantly remember that nothing in this section should have been new to you and that if it was make sure that you are ready and willing to put in extra work to understand any missing background knowledge you may come across in this section we looked at language modeling using bigrams.
 
 We started out with the most obvious way of measuring these probabilities. Which was just to look at the relative frequencies of each word and pair of words. In other words just counting but because this is deep learning we want to use a neural model. So the first thing we did was translate the bigram model into a logistic regression model. We saw how the logistic regression weight Matrix could be related to the raw bigram probabilities. Next we extended this model to use a neural network instead of logistic regression.
@@ -719,6 +820,16 @@ Remember that whenever you see code it's not coming from nowhere. The code is a 
 
 1. Return of the Bigram
 =======================
+
+![196.png](./images/196.png)
+![197.png](./images/197.png)
+![198.png](./images/198.png)
+![199.png](./images/199.png)
+![200.png](./images/200.png)
+![201.png](./images/201.png)
+![202.png](./images/202.png)
+![203.png](./images/203.png)
+
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this section of the course. We are going to look at the word2vec algorithm. If you've been following along so far then you are in a great position to learn about word2vec. This is because everything we're going to do in this section is strongly dependent on the previous sections. In fact it's going to appear like we're only making an incremental improvement on what we've already done.
 
@@ -764,6 +875,18 @@ We're not going to do that just yet. You could try to derive the gradient for yo
 3. Skip-Gram
 ============
 
+![204.png](./images/204.png)
+![205.png](./images/205.png)
+![206.png](./images/206.png)
+![207.png](./images/207.png)
+![208.png](./images/208.png)
+![209.png](./images/209.png)
+![210.png](./images/210.png)
+![211.png](./images/211.png)
+![212.png](./images/212.png)
+![213.png](./images/213.png)
+
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning and Python Part 6 in this lecture. We're going to talk about yet another way to extend the bigram called the skip-gram. What you'll see is that the skip-gram is kind of the opposite of what we just learned about which was CBOW. Let's get right into the details so you see what I mean. So let's get back to our example sentence The quick brown fox jumps over the lazy dog.
 
 Recall that for CBOW we take "brown", "fox", "over", "the" as the input while we try to predict the middle word jumps with skip-gram we do the opposite. We instead take the word "jumps" as input and we try to predict all four words. Brown fox and over the. Now that probably doesn't make a whole lot of sense to you. So let me try to explain it in terms we already know about take our simple bigram model one training sample. This model would be the input jumps and the target over that makes sense because we do the softmax at the end and we try to predict one word with the skip-gram.
@@ -780,6 +903,15 @@ We won't because there is still one modification we need to make in order to mak
 
 4. Hierarchical Softmax
 =======================
+
+![214.png](./images/214.png)
+![215.png](./images/215.png)
+![216.png](./images/216.png)
+![217.png](./images/217.png)
+![218.png](./images/218.png)
+![219.png](./images/219.png)
+![220.png](./images/220.png)
+
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to talk about yet another modification we need to make in order to get our final word2vec model. And this is called hierarchical softmax. Let's talk a little bit about the motivation behind hierarchical softmax. In any language model where we're trying to predict a word then our output which we have to do a softmax over is going to have a very large dimensionality.
 
@@ -811,6 +943,34 @@ And so we can use a technique called Huffman coding which puts frequent words cl
 
 5. Negative Sampling
 ====================
+
+![221.png](./images/221.png)
+![222.png](./images/222.png)
+![223.png](./images/223.png)
+![224.png](./images/224.png)
+![225.png](./images/225.png)
+![226.png](./images/226.png)
+![227.png](./images/227.png)
+![228.png](./images/228.png)
+![229.png](./images/229.png)
+![230.png](./images/230.png)
+![231.png](./images/231.png)
+![232.png](./images/232.png)
+![233.png](./images/233.png)
+![234.png](./images/234.png)
+![235.png](./images/235.png)
+![236.png](./images/236.png)
+![237.png](./images/237.png)
+![238.png](./images/238.png)
+![239.png](./images/239.png)
+![240.png](./images/240.png)
+![241.png](./images/241.png)
+![242.png](./images/242.png)
+![243.png](./images/243.png)
+![244.png](./images/244.png)
+![245.png](./images/245.png)
+![246.png](./images/246.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 OK so hierarchical softmax is pretty complicated. So let's move on to the second method which is comparatively much simpler. This technique is called negative sampling. The basic idea is this. I talked about earlier how when we use the softmax basically every word is going to be a non-target over 99 percent of the time. So with softmax what we're saying is every word that's not the target is going to be considered wrong.
 
@@ -859,6 +1019,14 @@ First we looked at hierarchical softmax which turns a big matrix multiply into a
 6. Negative Sampling - Important Details
 ========================================
 
+![247.png](./images/247.png)
+![248.png](./images/248.png)
+![249.png](./images/249.png)
+![250.png](./images/250.png)
+![251.png](./images/251.png)
+![252.png](./images/252.png)
+![253.png](./images/253.png)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 at this point we're done discussing the mechanical aspects of negative sampling. But I'm sure you still have some burning questions. In fact these details are critical to the actual implementation. So let's look at what they are. The first obvious question is how many negative samples should you choose. The answer is normally people choose a number like five or 10 or even as high as 25.
 
 This is a hyper parameter so you should always optimize it to your particular dataset. The second question is how do you actually choose the negative samples you may have assumed that we would select them uniformly. But that's actually not the case. Instead we sample from a modified unigram distribution. But that probably sounds complicated. So let's explain what is a unigram distribution and why is it being modified. Firstly a unigram distribution is exactly what you would expect it to be.
@@ -880,6 +1048,11 @@ We'll look at even more implementation tricks not related to negative sampling t
 7. Why do I have 2 word embedding matrices and what do I do with them
 =====================================================================
 
+![254.png](./images/254.png)
+![255.png](./images/255.png)
+![256.png](./images/256.png)
+![257.png](./images/257.png)
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6. So we've talked a lot about the bigram neural network and the word2vec algorithm. But if you just think back to the basic idea here. All we want to do is find a V by D matrix that has good word vectors. If you look at the architecture of a biograph neural network you realize it has two of these. The first is V by D and the second is D by V. Of course if you just transpose the second matrix you get a V by D matrix.
 
 So really you have two V by D matrices here. Which one is the one we are interested in. In reality either of these could serve as our final word vector's. I'll show you what people tend to do. And you can try these out for yourself. So the first way is just to forget about the second Matrix entirely and just make the word embedding equal to the input-to-hidden weight. The second way is to concatenate the two weights together. So I can concatenate W1 and W2 transpose.
@@ -890,6 +1063,12 @@ Now I know somebody is eventually going to ask me. You know that's nice that the
 
 8. Word2Vec implementation tricks
 =================================
+
+![258.png](./images/258.png)
+![259.png](./images/259.png)
+![260.png](./images/260.png)
+![261.png](./images/261.png)
+
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to look at a few implementation tricks that can be useful when you're implementing word2vec. Note that we're not going to use all of these. But I think it's useful to discuss what they are so that you have some idea of the tuning researchers have done over time. Also I want you to realize that by this point you already understand word2vec. What we're about to discuss are just details.
 
@@ -910,6 +1089,12 @@ In other words using parallel processing. So for example if you have four thread
 9. Word2Vec implementation outline
 ==================================
 
+![262.png](./images/262.png)
+![263.png](./images/263.png)
+![264.png](./images/264.png)
+![265.png](./images/265.png)
+
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to do an outline of the word2vec code we are about to write. This outline is going to be the same for all of our implementations. So whether you're writing the code in pure NumPy or TensorFlow the same steps are going to be followed. So I think that at a high level you should have a pretty good idea of what we're going to do by now.
 
 It's the same as pretty much every machine learning scripts we write. Step number one is load in the data. Step Number 2 is build and train the model. Step number three is test the model. We already know what we need to do for step 1 and step 3 because we've done them in previous lectures for example to load in the data. What you want is to turn each sentence into a list of integer word indexes and also to return a word to index mapping in order to test the model.
@@ -928,6 +1113,7 @@ So that's your basic outline for the code. It's actually quite simple in princip
 
 10. Word2Vec in Code with Numpy
 ===============================
+
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. You're going to look at how to implement word2vec using only Python and NumPy. The relevant file in the course repo is word2vec.py. At the top we have all of our imports most of which we've seen already in this course. After that we have a function to remove punctuation. This is useful for the tokenization process which is what's coming next.
 
@@ -962,6 +1148,15 @@ Next we have a function called load_model which loads in the items that were sav
 11. Word2Vec Tensorflow Implementation Details
 ==============================================
 
+![266.png](./images/266.png)
+![267.png](./images/267.png)
+![268.png](./images/268.png)
+![269.png](./images/269.png)
+![270.png](./images/270.png)
+![271.png](./images/271.png)
+![272.png](./images/272.png)
+
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to outline the main changes we'll need to make in our existing word2vec script in order to implement word2vec in TensorFlow. The important thing to remember is that the main structure of the file is not going to change. Really the only thing that has to change is that we will no longer be using our sgd function and instead we'll be using TensorFlow's automatic differentiation capabilities.
 
 Of course this also means we need to build the model and the cost using TensorFlow, which looks a little bit different from NumPy. First. Let's talk about how to make predictions. We know that in NumPy and Theano we can just index an array like normal using square bracket notation. But in TensorFlow this is not how you do this. Instead we use a function appropriately called embedding_lookup. It takes in two arguments the first argument is a tensor that you want to look things up in and the second argument is a row or a list of rows that you want to look up.
@@ -979,6 +1174,8 @@ Of course you are welcome and encouraged to try these out at your leisure.
 12. Word2Vec Tensorflow in Code
 ===============================
 
+See the code [here](./machine_learning_examples/nlp_class2/word2vec_tf.py)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we are going to walk through the TensorFlow implementation of word2vec as you'll see it's almost exactly the same as the NumPy version except that we have some code in the middle to set up the TensorFlow model. And of course there's also automatic differentiation. The relevant file in the repo is word2vec_tf.py. So if we just scroll down to the relevant part it starts with where we define the variables and placeholders.
 
 So we have our positive input word our negative input word in our context. We'll treat these all like 1D arrays. Next we have the input embedding W and the output embedding we notice how I'm transposing V. This is because TensorFlow's embedding_lookup function looks up by row, not column. Next we have our DOT function which we discussed earlier. Next we do our embedding lookups multiply the results using the dot function and then we combine the positive loss and the negative loss to get the total loss.
@@ -991,6 +1188,18 @@ Also at this point we need to reset our collection of samples. So we set inputs 
 
 13. How to update only part of a Theano shared variable
 =======================================================
+
+![273.png](./images/273.png)
+![274.png](./images/274.png)
+![275.png](./images/275.png)
+![276.png](./images/276.png)
+![277.png](./images/277.png)
+![278.png](./images/278.png)
+![279.png](./images/279.png)
+![280.png](./images/280.png)
+![281.png](./images/281.png)
+![282.png](./images/282.png)
+
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6. One of the major obstacles we have in our Theano implementation is that we can't take advantage of negative sampling knowing only what we know so far. What would happen if you attempted to use the existing update functionality we would have two weights, the input-to-hidden and the hidden-to-output, let's call them W1 and W2. They would both be updated in the usual way in Theano get the gradient with respect to the cost and put the expression for gradient descent into the Theano train function.
 
@@ -1013,6 +1222,8 @@ But it works. The idea is you have to represent the two updates in a nested mann
 14. Word2Vec in Code with Theano
 ================================
 
+See the code [here](./machine_learning_examples/nlp_class2/word2vec_theano.py)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to continue to add to our word2vec script in particular. We're going to implement the fit function using Theano instead of NumPy. So let's call it fit_t, which stands for fit Theano. It takes in X, number of negative samples, learning rate, momentum, regularization and the number of epochs. Now a lot of this is going to be very similar to the other fit.
 
 So we get N which is the length of X vocabulary size embedding dimension we call get_pnw so that it finds the negative sample distribution . Now this will be a bit different. So we init the weights but then we also make Theano shared variables. The next step is to define our inputs and outputs. So th_input is a scalar and that's the input word. The context is a vector. Negative samples is also a vector . Now we define subsets of W1 and W2. So these are the subsets that we need to update and we're going to use to determine the cost.
@@ -1031,6 +1242,16 @@ We want to print how long it took . And so we have to make this work in the fram
 
 15. Alternative to Wikipedia Data Brown Corpus
 ==============================================
+
+See the code [here](./machine_learning_examples/rnn_class/brown.py)
+
+See the code [here](./machine_learning_examples/nlp_class2/word2vec.py)
+
+![283.png](./images/283.png)
+![284.png](./images/284.png)
+![285.png](./images/285.png)
+![286.png](./images/286.png)
+![287.png](./images/287.png)
 
 Hey everyone welcome back to this class recurrent neural networks deep learning in Python Part 5 in this lecture. You're going to look at an alternative data set to the Wikipedia data which is used by default in this course. So why would you want to do this with a Wikipedia dataset was 12 gigabytes the last time I checked. You can download it in parts but each part is still hundreds of megabytes. There are also problems with the format. Wikipedia. Data dumps are in XML format and that means we need to parse the files to extract the important parts.
 
@@ -1058,6 +1279,12 @@ Then there is an if statement that checks this variable. If use brown is true th
 
 1. GloVe Section Introduction
 =============================
+
+![288.png](./images/288.png)
+![289.png](./images/289.png)
+![290.png](./images/290.png)
+![291.png](./images/291.png)
+!
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. I'm going to outline this section which is going to look at a different algorithm for finding word vectors called GloVe. GloVe stands for Global vectors for word representation. It was invented by pretty famous NLP researchers at Stanford and you can read more about it in this paper which I've attached in extra_reading.txt.
 
