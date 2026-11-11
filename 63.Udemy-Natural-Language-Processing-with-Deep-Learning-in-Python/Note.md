@@ -1284,7 +1284,9 @@ Then there is an if statement that checks this variable. If use brown is true th
 ![289.png](./images/289.png)
 ![290.png](./images/290.png)
 ![291.png](./images/291.png)
-!
+![292.png](./images/292.png)
+![293.png](./images/293.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. I'm going to outline this section which is going to look at a different algorithm for finding word vectors called GloVe. GloVe stands for Global vectors for word representation. It was invented by pretty famous NLP researchers at Stanford and you can read more about it in this paper which I've attached in extra_reading.txt.
 
@@ -1296,6 +1298,39 @@ That's what gives us GloVe. Once you know how Matrix factorization works for rec
 
 2. Matrix Factorization for Recommender Systems - Basic Concepts
 ================================================================
+
+![294.png](./images/294.png)
+![295.png](./images/295.png)
+![296.png](./images/296.png)
+![297.png](./images/297.png)
+![298.png](./images/298.png)
+![299.png](./images/299.png)
+![300.png](./images/300.png)
+![301.png](./images/301.png)
+![302.png](./images/302.png)
+![303.png](./images/303.png)
+![304.png](./images/304.png)
+![305.png](./images/305.png)
+![306.png](./images/306.png)
+![307.png](./images/307.png)
+![308.png](./images/308.png)
+![309.png](./images/309.png)
+![310.png](./images/310.png)
+![311.png](./images/311.png)
+![312.png](./images/312.png)
+![313.png](./images/313.png)
+![314.png](./images/314.png)
+![315.png](./images/315.png)
+![316.png](./images/316.png)
+![317.png](./images/317.png)
+![318.png](./images/318.png)
+![319.png](./images/319.png)
+![320.png](./images/320.png)
+![321.png](./images/321.png)
+![322.png](./images/322.png)
+![323.png](./images/323.png)
+![324.png](./images/324.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6. The first thing we wanted to do in our discussion of Matrix factorization is to first just describe all the basic concepts we're going to introduce a bunch of new variables. So this lecture is all about just trying to understand what these variables mean in terms of real world measurements. Well also look at some basic intuition behind why Matrix factorization works.
 
@@ -1370,6 +1405,19 @@ Remember that's always the exercise we're going to do. First we look at the theo
 3. Matrix Factorization Training
 ================================
 
+![325.png](./images/325.png)
+![326.png](./images/326.png)
+![327.png](./images/327.png)
+![328.png](./images/328.png)
+![329.png](./images/329.png)
+![330.png](./images/330.png)
+![331.png](./images/331.png)
+![332.png](./images/332.png)
+![333.png](./images/333.png)
+![334.png](./images/334.png)
+![335.png](./images/335.png)
+
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We are going to talk about how to train the matrix factorization model. Previously we discussed that what we wanted to do is create two matrices that when multiplied together approximate our ratings matrix R. We call this R hat. Of course since R hat is our approximation of R we would like them to be close together. So how can we ensure this? Well since this is regression.
 
 You know that the way to do this is the sum of squares. Technically we could also look at the mean squared error as we have been. But that just divides the data set by the size which is a constant and has no effect on the answer. So for the purpose of this derivation we're going to ignore it as usual. Now that we have a loss function what we would like to do is set the gradient to zero and solve for W and U. So the process is the same as what we always do.
@@ -1398,6 +1446,29 @@ This is better also. If you want to use the old value of W you'd have to make a 
 
 4. Expanding the Matrix Factorization Model
 ===========================================
+
+![336.png](./images/336.png)
+![337.png](./images/337.png)
+![338.png](./images/338.png)
+![339.png](./images/339.png)
+![340.png](./images/340.png)
+![341.png](./images/341.png)
+![342.png](./images/342.png)
+![343.png](./images/343.png)
+![344.png](./images/344.png)
+![345.png](./images/345.png)
+![346.png](./images/346.png)
+![347.png](./images/347.png)
+![348.png](./images/348.png)
+![349.png](./images/349.png)
+![350.png](./images/350.png)
+![351.png](./images/351.png)
+![352.png](./images/352.png)
+![353.png](./images/353.png)
+![354.png](./images/354.png)
+![355.png](./images/355.png)
+![356.png](./images/356.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We are going to look at our first expansion of the basic matrix factorization algorithm that we just learned. Think about the linear regression model for a moment y equals mx plus b. What you can see with this is that there are two parameters of interest. The first is the slope and the second is the y intercept the y intercept controls how much the line is pushed upwards on the x y plane.
 
@@ -1432,6 +1503,25 @@ We don't need to update mu because it's just the global mean of the trainset whi
 5. Regularization for Matrix Factorization
 ==========================================
 
+![357.png](./images/357.png)
+![358.png](./images/358.png)
+![359.png](./images/359.png)
+![360.png](./images/360.png)
+![361.png](./images/361.png)
+![362.png](./images/362.png)
+![363.png](./images/363.png)
+![364.png](./images/364.png)
+![365.png](./images/365.png)
+![366.png](./images/366.png)
+![367.png](./images/367.png)
+![368.png](./images/368.png)
+![369.png](./images/369.png)
+![370.png](./images/370.png)
+![371.png](./images/371.png)
+![372.png](./images/372.png)
+![373.png](./images/373.png)
+
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. I'm going to introduce the final modification to our basic matrix factorization model and then we'll be ready for implementation. To recap so far our model is the sum of the user feature vector multiplied by the movie feature vector Plus the user bias plus the movie bias plus the global mean of the ratings in the training set this lecture is all about how to add regularization to the Matrix factorization model.
 
 As you may recall from your previous studies regularization is a technique that helps to prevent overfitting and with such a sparse ratings matrix you can imagine that this might be very useful. Let's start by looking at what regularization looks like. For linear regression. Recall that the model is just a hyperplane. y hat equals w transpose x. The cost function is just the sum of two terms. Number one the squared error which you're already familiar with and number two the squared magnitude of the weights themselves.
@@ -1455,6 +1545,15 @@ You don't necessarily have to understand this derivation in order to implement t
 6. GloVe - Global Vectors for Word Representation
 =================================================
 
+![374.png](./images/374.png)
+![375.png](./images/375.png)
+![376.png](./images/376.png)
+![377.png](./images/377.png)
+![378.png](./images/378.png)
+![379.png](./images/379.png)
+![380.png](./images/380.png)
+![381.png](./images/381.png)
+
 Hey guys, welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to discuss an alternative to word2vec for creating word embeddings called GloVe you'll see with GloVe that basically we're just going to do some work up front and then it just becomes the matrix factorization problem which we already know how to solve. Similar to word2vec what we want to do is incorporate context. Specifically we are not going to build a term-document matrix like we did for easy NLP.
 
 You're going to build a term-term matrix. In our term-term matrix, X_ij should be higher if word I appears in the context of word j often and lower if word i appears in the context of word j less often. With GloVe, it's the details about how we build this matrix X that are important. So let's discuss those. First thing is we want to incorporate context distance. If a word is right beside another word we'll count that as one. If a word is within the context of another word but has one word in between them.
@@ -1472,6 +1571,11 @@ One interesting aspect of GloVe is that the training time you spend on fitting t
 7. Recap of ways to train GloVe
 ===============================
 
+![382.png](./images/382.png)
+![383.png](./images/383.png)
+![384.png](./images/384.png)
+
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. I want to summarize all the different ways we've looked at for how to train GloVe since you're going to see several different implementations very shortly. Of course as always you should try to implement these algorithms yourself before looking at my implementation. So please remember to consider the following code examples as exercises.
 
 These are the answers you should look at only after you've attempted to write the code yourself. The method that we focused on in this course is called alternating least squares. This is different from what they discussed in the paper which just used gradient descent. Luckily deriving alternating least squares requires us to calculate the gradients anyway so implementing the gradient descent method won't take much more work. The gradient descent method will be implemented in several ways.
@@ -1484,6 +1588,8 @@ So while SVD won't work for recommender systems it can possibly work for GloVe. 
 
 8. GloVe in Code - Numpy Gradient Descent
 =========================================
+
+See the code [here](./machine_learning_examples/nlp_class2/glove.py)
 
 Hey guys. Welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we're going to code the GloVe algorithm using NumPy and gradient descent. So we'll start off by doing our imports. We'll import NumPy, we'll import json for the word2idx mapping, we'll import Theano now even though we won't need it yet, and we want matplotlib to plot the costs. Now we want datetime so that we can time how long things take we want shuffle to shuffle the data between each round and we've already implemented get Wikipedia data and find analogies so we'll just take that from word2vec.
 
@@ -1520,6 +1626,8 @@ Japan Japanese China Chinese Italy Italian Australia Australian. We also have mo
 9. GloVe in Code - Alternating Least Squares
 ============================================
 
+See the code [here](./machine_learning_examples/nlp_class2/glove.py)
+
 Hey guys. Welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture where are going to continue our GloVe coding example. We're going to implement alternating least squares. So let's scroll down to where alternating least squares goes. First thing we'll do is update each w_i one at a time. So we loop through from 0 to V we're using regularization. So the Matrix part of the solution is reg times I plus the usual U matrix .
 
 Remember we don't have to do the matrix inverse directly. We can use np.linalg.solve and remember that matrix and vector operations are much more efficient in NumPy. So you don't want to code the solution directly. You could do so at first to confirm that your solution is correct but eventually you want to vectorize your equations because it's going to go much faster if you want to check out the original code in which I did not vectorize the solution.
@@ -1531,6 +1639,8 @@ So the default for gradient descent is false, so this will automatically do ALS.
 10. GloVe in Code - Theano Gradient Descent
 ===========================================
 
+See the code [here](./machine_learning_examples/nlp_class2/glove_theano.py)
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we are going to continue our GloVe in code. We're going to do the Theano version using gradient descent so let's set use_theano to true. Let's scroll up to where the Theano code goes. So right at the point here where it says if gd and use_theano, we're going to want to define the Theano shared variables, so it's thW, thb, thU and thc, and then we want to define our cost and our train op.
 
 So we need log x and we need f of x. So we're going to make Theano matrices to store those. We're going to use a params list so we can get the gradients more easily so Delta is just the usual formula but defined in terms of Theano variables. Now notice we have to change B and C to the right shape so otherwise Theano is going to assume it's either a row or a column vector. But we know that b should be a column vector and c should be a row vector. So we have to make sure we're explicit about that otherwise it's not going to work.
@@ -1541,6 +1651,8 @@ So everything is done here let's run this file and watch it go.
 
 11. GloVe in Tensorflow with Gradient Descent
 =============================================
+
+See the code [here](./machine_learning_examples/nlp_class2/glove_tf.py)
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to look at how to implement GloVe in TensorFlow because TensorFlow has automatic differentiation we'll be using gradient descent rather than alternating least squares. Also note that because TensorFlow has its own built in optimizers we aren't limited to just plain gradient descent. We can try other optimizers quite easily just by switching their names.
 
@@ -1564,8 +1676,11 @@ Finally when we're done we save W and U and plot the cost per iteration. This al
 
 So let's run this and see what we get.
 
-12. Visualizing country analogies with t-SNE
+12.  Visualizing country analogies with t-SNE
 ============================================
+
+See the code [here](./machine_learning_examples/nlp_class2/visualize_countries.py)
+
 
 Hey guys welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to write some code to visualize the word embeddings we got from GloVe specifically we want to visualize some countries and some ethnicities to see if we can see an interesting pattern. So let's start by importing the usual things: json for word2idx, we need NumPy, we need matplotlib for a scatterplot. And of course we need TSNE.
 
@@ -1577,8 +1692,11 @@ Then let's write some code to run the main function. OK so let's fix our spellin
 
 When you're looking at different word related things or in other words analogies so analogies are similarly separated
 
-13. Hyperparameter Challenge
+13.  Hyperparameter Challenge
 ============================
+
+![385.png](./images/385.png)
+![386.png](./images/386.png)
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6 and this lecture I'm going to give you another explicit exercise I often implicitly want you to do this . But in this case it's important that you try this on your own. Now one thing you might have noticed was that our word analogies were not perfect. In particular we were seeing Berlin when we were looking for Rome with the country city analogies. One thing I want you guys to do is come up with more word analogies to test the effectiveness of your model.
 
@@ -1590,6 +1708,32 @@ You also have control over the word embedding dimensionality and vocabulary size
 
 14. Training GloVe with SVD (Singular Value Decomposition)
 ==========================================================
+
+![387.png](./images/387.png)
+![388.png](./images/388.png)
+![389.png](./images/389.png)
+![390.png](./images/390.png)
+![391.png](./images/391.png)
+![392.png](./images/392.png)
+![393.png](./images/393.png)
+![394.png](./images/394.png)
+![395.png](./images/395.png)
+![396.png](./images/396.png)
+![397.png](./images/397.png)
+![398.png](./images/398.png)
+![399.png](./images/399.png)
+![400.png](./images/400.png)
+![401.png](./images/401.png)
+![402.png](./images/402.png)
+![403.png](./images/403.png)
+![404.png](./images/404.png)
+![405.png](./images/405.png)
+![406.png](./images/406.png)
+![407.png](./images/407.png)
+![ 408.png](./images/408.png)
+![409.png](./images/409.png)
+
+See the code [here](./machine_learning_examples/nlp_class2/glove_svd.py)
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We are going to return to this idea of applying SVD to GloVe. If you recall SVD simply takes a matrix X and computes a low rank approximation of it. By decomposing it into three separate matrices W, S and U. As a side note. Note that I've renamed the variables here to make them closer to what we use for Matrix factorization. Typically for SVD we call the three matrices U, S and V.
 
@@ -1628,6 +1772,15 @@ the output from fit_transform. Now I haven't tried this myself but it would be n
 
 1. Pointwise Mutual Information - Word2Vec as Matrix Factorization
 ==================================================================
+
+![410.png](./images/410.png)
+![411.png](./images/411.png)
+![412.png](./images/412.png)
+![413.png](./images/413.png)
+![414.png](./images/414.png)
+![415.png](./images/415.png)
+![416.png](./images/416.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6. In this lecture we are going to wrap up our discussion of word embedding methods by looking at how we can unify the concepts from word2vec and GloVe. This discussion is motivated by a recent paper called neural word embedding as implicit matrix factorization. The link has been provided in extra_reading.txt. If you want to check it out now just from the title we can sort of try to guess what approach this paper is going to take.
 
@@ -1672,6 +1825,8 @@ So most of the work you have to do is really just the counting part. You have to
 2. PMI in Code
 ==============
 
+See the code [here](./machine_learning_examples/nlp_class2/pmi.py)
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture I'm going to walk you through the code to implement the PMI version of word2vec in Python and NumPy. The relevant file for this lecture is pmi.py. First we have all the usual imports. Additionally we have some sparse matrix functions from SciPy, which help us work with sparse matrices where most of the entries are zero. Now at some point in this script we have to convert from sparse to dense array.
 
 So as an exercise you might want to try to figure out how to keep the array as sparse over all the operations we do. So after that we have our data loading code which you've probably seen already. First we get the input files which are all the text files they start with enwiki. Next we have a function that removes punctuation. Next we set our vocab size V to 2000 and the number of context words to 10. Next we loop through all of our files to find the top V words.
@@ -1699,6 +1854,17 @@ After that we do some test analogies which I'm sure you know what that looks lik
 1. Parts-of-Speech (POS) Tagging
 ================================
 
+![417.png](./images/417.png)
+![418.png](./images/418.png)
+![419.png](./images/419.png)
+![420.png](./images/420.png)
+![421.png](./images/421.png)
+![422.png](./images/422.png)
+![423.png](./images/423.png)
+![424.png](./images/424.png)
+![425.png](./images/425.png)
+
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in these next few lectures we're going to cover some classical NLP problems and discuss how neural networks can be used to solve them. The first of these problems is determining parts of speech or parts of speech tag is a category that you can assign to a word according to its syntactic function in English. The main parts of speech are noun, pronoun, adjective, determiner, verb, adverb, preposition, conjunction and interjection.
 
 Now this is not an English course but if you learned English at some point which you must have in order to understand this course then you probably would have learned about these in grade school. In other words probably a very long time ago. If you aren't comfortable with how these work that shouldn't be too much of a problem. Remember that machine learning is about solving problems abstractly. If you can think of the models that we learn about in a general way rather than a specific way then your usefulness as a data scientist will be limited.
@@ -1720,6 +1886,14 @@ Second we're going to use recurrent neural networks to see if considering sequen
 2. How can neural networks be used to solve POS tagging
 =======================================================
 
+![426.png](./images/426.png)
+![427.png](./images/427.png)
+![428.png](./images/428.png)
+![429.png](./images/429.png)
+![430.png](./images/430.png)
+![431.png](./images/431.png)
+![432.png](./images/432.png)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to take a quick look at the models we'll be using to solve the parts of speech problem. As a reminder. The three models we'll be looking at are logistic regression. The Hidden Markov model and recurrent neural networks. This is going to be a high level lecture just to cover the basics for how these models work and how that allows them to be used for parts of speech tagging.
 
 First stop is logistic regression as you may recall logistic regression which we reviewed earlier in the course is not designed for sequences in particular. We have an input and we have a target. We map from input to target with a weight matrix and at the output we take the softmax to get a posterior probability distribution on the possible labels. So in the simplest case the input is just a single word. The output is its parts of speech tag. And just like before since the input is just a word index we don't actually have to do any matrix multiplication.
@@ -1736,6 +1910,8 @@ You can also plug and play with any recurrent unit since they all have the same 
 
 3. Parts-of-Speech Tagging Baseline
 ===================================
+
+See the code [here](./machine_learning_examples/nlp_class2/pos_baseline.py)
 
 Hey guys welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we're going to code our baseline solution to the parts of speech problem. So let's start by importing NumPy, importing Theano. Now we're going to create our own logistic regression using Theano because if you use scikit-learn's version it will try to do a batch solution. And there's too much data for that so it's going to go very slow. So we'll do Theano with stochastic gradient descent.
 
@@ -1768,6 +1944,8 @@ Right. So we got some fixes to make. And don't forget the N down at the bottom i
 4. Parts-of-Speech Tagging Recurrent Neural Network in Theano
 =============================================================
 
+See the code [here](./machine_learning_examples/nlp_class2/pos_rnn.py)
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we're going to use a recurrent neural network to solve the part-of-speech tagging problem. So let's begin by doing our imports. We've got numpy. We've got matplotlib to plot the costs. We import Theano of course. Because we already wrote the GRU recurrent unit in the recurrent neural networks class we don't need to write it again so we're going to import from the rnn_class folder.
 
 We also don't need to write get data again because we already wrote that in pos_baseline and we'll use init_weight from util too. And we again want to include the F1 score. So let's define our RNN class. It takes in the hidden layer sizes, so you're going to have multiple recurrent units, and the vocabulary size. So we're going to fit to X and Y. Default learning rate of 10 to the minus 5 0.99 momentum, we'll have 30 epochs, show_fig true, activation is ReLU by default, default recurrent unit will be GRU.
@@ -1790,6 +1968,8 @@ Now we have to set split sequences to true because we're using the RNN. The voca
 
 5. Parts-of-Speech Tagging Recurrent Neural Network in Tensorflow
 =================================================================
+
+See the code [here](./machine_learning_examples/nlp_class2/pos_tf.py)
 
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to look at how to do parts of speech tagging using an RNN in TensorFlow. If you don't want to try to code this yourself although I strongly recommend you do the relevant file is pos_rnn_tf.py. The important thing to remember about TensorFlow is that the main difference between it and Theano is that TensorFlow requires all your sequences to have the same length.
 
@@ -1836,6 +2016,17 @@ We print stuff out at the end of the epoch we calculate the test accuracy using 
 6. How does an HMM solve POS tagging
 ====================================
 
+![433.png](./images/433.png)
+![434.png](./images/434.png)
+![435.png](./images/435.png)
+![436.png](./images/436.png)
+![437.png](./images/437.png)
+![438.png](./images/438.png)
+![439.png](./images/439.png)
+![440.png](./images/440.png)
+![441.png](./images/441.png)
+
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6. The next model we'll look at is the HMM or hidden Markov model. Now for this course which is about deep learning, you don't have to know about HMMs if you don't want to. I'll teach you what you need to know in this lecture so you understand the basics and you understand the interface of the code. But you can safely ignore the implementation if you don't care about it.
 
 Just understanding what's going on at a high level is adequate. If you have studied HMM before which is quite possible because I have a course on it then you will of course get more out of these lectures. So the HMM is technically an unsupervised model which just aims to maximize the probability of observing whatever data you give it. On the surface that doesn't sound so exciting. We know that RBMs do the same thing. The idea behind the HMM is that it's a latent variable model.
@@ -1867,6 +2058,8 @@ So in our case the input is going to be a sentence and the output is going to be
 7. Parts-of-Speech Tagging Hidden Markov Model (HMM)
 ====================================================
 
+See the code [here](./machine_learning_examples/nlp_class2/pos_hmm.py)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we are going to implement parts of speech tagging problem using hidden Markov models. So let's start by importing NumPy, importing matplotlib, and now we're going to import os and sys because we're going to make use of code. We've already written in previous classes. So from hmm_class we're going to import HMM. So you don't have to worry too much about what's in it if you haven't taken that class.
 
 And of course we already wrote get data from pos_baseline. We'll import shuffle and datetime just in case. And of course we also need f1_score. So we need a function to compute the accuracy because there is no real way to check if the hidden states are correct. It's not really part of the HMM. So we write accuracy custom. And we also write F1 score just to calculate it over all the individual sequences. So we assume that at this point we've already made all the predictions.
@@ -1882,6 +2075,14 @@ So we have a function from HMM that already does this. It's called get_state_seq
 8. Named Entity Recognition (NER)
 =================================
 
+![442.png](./images/442.png)
+![443.png](./images/443.png)
+![444.png](./images/444.png)
+![445.png](./images/445.png)
+![446.png](./images/446.png)
+![447.png](./images/447.png)
+
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we're going to discuss another classical NLP problem named entity recognition . This is similar to parts of speech tagging where we want to tag each token in a sentence. However with named entity recognition we're interested in what kind of entity the token is. For example it could be a person a company or a location. These are all proper nouns and we want to be able to train models to identify these.
 
 One difference between this problem and parts of speech tagging is that NER data is very imbalanced. By that I mean most of the tokens in the data set are not entities at all they are just regular words as I'm speaking right now. You'll notice that almost 100 percent of the words I say are just words. They're not anyone's name or place or company. So that's something we may or may not have to correct for now what is one way to make NER really easy? In classical NER solutions.
@@ -1895,6 +2096,10 @@ Similarly the RNN is also going to have the same format. So for both of these We
 9. Comparing NER and POS tagging
 ================================
 
+![448.png](./images/448.png)
+![449.png](./images/449.png)
+![450.png](./images/450.png)
+
 Hey everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We are going to talk about how to frame the named entity recognition problem so that it is no different from the parts of speech tagging problem. As you'll often hear me say this is just a consequence of my rule that all data is the same. Now how might this be useful. Well actually it's very useful because it means we don't have to write any new code all the code we wrote already.
 
 Well, the only thing we need to change is how we load the data. But once the data is in the same format as the POS data then all the same code we wrote earlier can be applied. So let's remind ourselves what parts of speech tagging data looks like we have sentences and for each word in each sentence we have a tag. The tag is just a category which means we're doing classification. Now let's look at what a named entity recognition example looks like.
@@ -1903,6 +2108,8 @@ We have sentences for each word in each sentence. We have a tag. It's just that 
 
 10. Named Entity Recognition Baseline
 =====================================
+
+See the code [here](./machine_learning_examples/nlp_class2/ner_baseline.py)
 
 Hey guys. Welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we are going to code our named entity recognition baseline using logistic regression . So the first thing we do is import NumPy, we import shuffle from scikit-learn and we've already implemented our logistic regression model so we can import that from pos_baseline . All we really need to do here is write get data that's going to be pretty similar to pos baseline as well.
 
@@ -1917,12 +2124,16 @@ So let's run this and see how it goes. I think this went so fast that I let it r
 11. Named Entity Recognition RNN in Theano
 ==========================================
 
+See the code [here](./machine_learning_examples/nlp_class2/ner_rnn.py)
+
 Hey guys welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we're going to solve the problem using RNNs. So pretty much all of this code is already written. So it's going to be a very short example so we can import get data from any our baseline we can import the RNN from Pos r n n. And so really we just have to call those two things. So we get X train y train X test, Y test, word2idx, tag2idx from get_data. We pass in split_sequences is true we find v and we find k.
 
 So we're using a dimensionality of size 10. You can feel free to play around with them. And now we just need to print out the results . Next we call the main function. OK, and let's add some code to print the train accuracy and the test accuracy. Those will obviously be pretty good because the data set is very unbalanced. What we really care about is the F1. So let's run this and see what we get
 
-12. Named Entity Recognition RNN in Tensorflow
+12.  Named Entity Recognition RNN in Tensorflow
 ==============================================
+
+See the code [here](./machine_learning_examples/nlp_class2/ner_tf.py)
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we're going to look at how to do named entity recognition using an RNN in TensorFlow. If you don't want to try to code these yourself although I strongly recommend you do the relevant file in the course repo is ner_tf.py. The main thing I want you to get out of this lecture is that it's exactly the same code as the POS example.
 
@@ -1932,8 +2143,13 @@ So we're going to manually split out the data to make our own test. Next we have
 
 Next we get the cost and train op. And finally we have a training loop which is the same as before. So let's run this and see what we get.
 
-13. Hyperparameter Challenge II
+13.  Hyperparameter Challenge II
 ===============================
+
+![451.png](./images/451.png)
+![452.png](./images/452.png)
+![453.png](./images/453.png)
+![454.png](./images/454.png)
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6. So in the previous two examples we did parts of speech tagging and named entity recognition. You saw that we did extremely well with our baseline classifier within the realm of practical machine learning. This is often as far as you need to go. In fact you saw that when we use the more complicated model we didn't necessarily do better. Instead we had a very good chance of overfitting.
 
@@ -1947,6 +2163,19 @@ So this is hyper parameter challenge. Number two can you improve our RNN models 
 
 1. Recursive Neural Networks Section Introduction
 =================================================
+
+![455.png](./images/455.png)
+![456.png](./images/456.png)
+![457.png](./images/457.png)
+![458.png](./images/458.png)
+![459.png](./images/459.png)
+![460.png](./images/460.png)
+![461.png](./images/461.png)
+![462.png](./images/462.png)
+![463.png](./images/463.png)
+![464.png](./images/464.png)
+![465.png](./images/465.png)
+
 
 Hi everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. We're going to start a new section of the course which is on recursive neural networks to motivate this section. Let's look at how we've progressed in terms of how we've been able to represent sentences in machine learning models. The first and simplest way that we always learn about in machine learning is bag of words. That means there's no order associated with the feature vector that represents a sentence.
 
@@ -1975,6 +2204,13 @@ I want to note that this is one of the most challenging sections in all my deep 
 2. Sentences as Trees
 =====================
 
+![466.png](./images/466.png)
+![467.png](./images/467.png)
+![468.png](./images/468.png)
+![469.png](./images/469.png)
+![470.png](./images/470.png)
+![471.png](./images/471.png)
+
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture. I'm going to show you a very simple example of how and why we can represent a sentence as a tree sort of as a warm up to the next lecture which is going to be more compact and concise. So the first thing you need to know for this lecture is what a parts of speech tag is. Good thing we covered that earlier in this course. So not too complicated a noun is a person place or a thing a verb is an action word.
 
 For example walk run or jump a determiner has a more complicated definition but you can think of it as a word that describes a relationship with noun. Some examples are "the", "a" and "my". So for example if I say a dog that has a different meaning than my dog saying my dog means the dog belongs to me but saying a dog implies that the dog could belong to anyone. OK so why do we need to know parts of speech? It's because that's generally how sentences are split up into trees.
@@ -1995,6 +2231,15 @@ Also notice that when we're doing sentiment analysis we don't actually care what
 
 3. Data Description for Recursive Neural Networks
 =================================================
+
+![472.png](./images/472.png)
+![473.png](./images/473.png)
+![474.png](./images/474.png)
+![475.png](./images/475.png)
+![476.png](./images/476.png)
+![477.png](./images/477.png)
+![478.png](./images/478.png)
+
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we are going to take a closer look at the data we'll be working with for the next few lectures on recursive neural networks. So far we've seen two ways of representing sentences bag of words in a sequences but the third and most powerful way is to think of sentences as trees. Sentences have a dependency structure. For example think of a very simple sentence just a noun and a verb: Johnny walks Johnny is the noun and walks is the verb.
 
@@ -2023,6 +2268,16 @@ You will need to think in order to solve it. As a side note one pattern I've not
 4. What are Recursive Neural Networks  Tree Neural Networks (TNNs)
 ==================================================================
 
+![479.png](./images/479.png)
+![480.png](./images/480.png)
+![481.png](./images/481.png)
+![482.png](./images/482.png)
+![483.png](./images/483.png)
+![484.png](./images/484.png)
+![485.png](./images/485.png)
+![486.png](./images/486.png)
+
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to talk about the architecture of recursive neural networks. We are going to talk about how you can create a recursive neural network both for binary trees and for trees with any number of children. Sometimes people refer to recursive neural networks as RNTN but then it becomes too easy to confuse with recurrent neural networks.
 
 It's an unfortunate coincidence. However you'll see later why it might be appropriate. I'm going to sometimes refer to them as tree neural networks because that's what they are. As a bonus it'll give us a separate acronym to use TNN. The easiest way to understand them is to think about the parse tree of a sentence because we're using binary trees and our data will discuss binary trees for us. Your recursive neural network will essentially have the exact same structure as the parse tree.
@@ -2048,6 +2303,16 @@ We will code our TNN so that it can support an arbitrary number of children
 5. Building a TNN with Recursion
 ================================
 
+![487.png](./images/487.png)
+![488.png](./images/488.png)
+![489.png](./images/489.png)
+![490.png](./images/490.png)
+![491.png](./images/491.png)
+![492.png](./images/492.png)
+![493.png](./images/493.png)
+![494.png](./images/494.png)
+
+
 Hey guys welcome back to this class. Natural Language Processing deep learning in Python. Part 6. Before we go on to implement a recursive neural network it is important to discuss how we're actually going to build it rather than me just walking you through the solution. You really want to try building one yourself before watching me do it. Otherwise the aha moment you'll get when you see the solution is not going to happen. In fact you shouldn't even watch this video until you try building a recursive neural network yourself .
 
 So if you haven't tried yet stop this video now. I'll be right here when you get back. OK. So hopefully you try to build a recursive neural network yourself using the recursive properties of trees to make your implementation clean. I will actually demonstrate later how to build a recursive neural network using recursion. It will be TensorFlow since that's the original language I wrote it in, and it's not vital for this course and it's completely optional to watch but it will show you the downsides of implementing a TNN the obvious way.
@@ -2068,6 +2333,24 @@ it's not ideal
 
 6. Trees to Sequences
 =====================
+
+![495.png](./images/495.png)
+![496.png](./images/496.png)
+![497.png](./images/497.png)
+![498.png](./images/498.png)
+![499.png](./images/499.png)
+![500.png](./images/500.png)
+![501.png](./images/501.png)
+![502.png](./images/502.png)
+![503.png](./images/503.png)
+![504.png](./images/504.png)
+![505.png](./images/505.png)
+![506.png](./images/506.png)
+![507.png](./images/507.png)
+![508.png](./images/508.png)
+![509.png](./images/509.png)
+![510.png](./images/510.png)
+
 
 Hey everyone. Welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we're going to look at the solution to the problem we discovered in the previous lecture and that's how to avoid having to compile a different graph for every tree. The basic idea is that we want to transform our recursive neural networks into recurrent neural networks . Now you know why this is deep learning part 6 and why it comes after deep learning part 5 which focused on recurrent neural networks.
 
@@ -2091,6 +2374,8 @@ As an analogy we also use scan instead of for loops. So instead of an IF stateme
 
 7. Recursive Neural Network in Theano
 =====================================
+
+See the code [here](./machine_learning_examples/nlp_class2/recursive_theano.py)
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to implement a tree neural neural network in Theano and we're going to do the sentiment analysis task. So start by importing sys to print out our progress. Just import numpy, matplotlib, import theano of course, from sklearn.utils we import shuffle, and from our util we need init_weight, get_ptb_data, display_tree. So get_ptb_data was your homework.
 
@@ -2131,6 +2416,23 @@ Otherwise it's a 5. I initialize the recursive neural network I call it. So thes
 8. Recursive Neural Tensor Networks
 ===================================
 
+![511.png](./images/511.png)
+![512.png](./images/512.png)
+![513.png](./images/513.png)
+![514.png](./images/514.png)
+![515.png](./images/515.png)
+![516.png](./images/516.png)
+![517.png](./images/517.png)
+![518.png](./images/518.png)
+![519.png](./images/519.png)
+![520.png](./images/520.png)
+![521.png](./images/521.png)
+![522.png](./images/522.png)
+![523.png](./images/523.png)
+
+
+See the code [here](./machine_learning_examples/nlp_class2/rntn_theano.py)
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we're going to extend the recursive neural network to get an even more expressive recursive neural tensor network. It's a very fancy name but as you'll see it's a very simple concept. Note that everything in this lecture assumes we're working with binary trees. So you already know how a recursive neural network is built. Let's look at an alternative view of the TNN since this was how it was represented in the paper that first introduced this model. To get the inner node value we concatenate the values from the left and the right child.
 
 Call this X then the value at this node is just h equals f of W transpose times x plus B. Note that this requires W to be of size 2D by D because all the inner node values must be of size D and after concatenation X is of size 2D we still have the same number of parameters as before because before we had W left and W right which were both of size D by D. So what's a natural way to extend this model. Well we can add a quadratic term. So a is the quadratic parameter.
@@ -2153,6 +2455,32 @@ The recurrence will now be defined in terms of the formulation I described previ
 
 9. RNTN in Tensorflow (Tips)
 ============================
+
+![524.png](./images/524.png)
+![525.png](./images/525.png)
+![526.png](./images/526.png)
+![527.png](./images/527.png)
+![528.png](./images/528.png)
+![529.png](./images/529.png)
+![530.png](./images/530.png)
+![531.png](./images/531.png)
+![532.png](./images/532.png)
+![533.png](./images/533.png)
+![534.png](./images/534.png)
+![535.png](./images/535.png)
+![536.png](./images/536.png)
+![537.png](./images/537.png)
+![538.png](./images/538.png)
+![539.png](./images/539.png)
+![540.png](./images/540.png)
+![541.png](./images/541.png)
+![542.png](./images/542.png)
+![543.png](./images/543.png)
+![544.png](./images/544.png)
+![545.png](./images/545.png)
+![546.png](./images/546.png)
+![547.png](./images/547.png)
+
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we're going to go over some tips for how to implement an r and RNTN in TensorFlow. In the previous section of the course we looked at how RNNs could solve problems such as parts of speech tagging and name recognition. We were able to use built in classes such as the GRU cell and the LSTM cell. But in this section while we're still building what is essentially an r n n we cannot make use of these built in classes.
 
@@ -2194,8 +2522,10 @@ But rest assured the structure of the code remains as usual. We load in the data
 
 as of today of course if you want to try to prove me wrong you're certainly welcome to.
 
-10. RNTN in Tensorflow (Code)
+10.  RNTN in Tensorflow (Code)
 =============================
+
+See the code [here](./machine_learning_examples/nlp_class2/rntn_tensorflow_rnn.py)
 
 Everyone and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture we're going to look at the code to implement an RNTN in TensorFlow. The relevant file in the course repo is rntn_tf_rnn.py. This is to differentiate it from the naive recursive version, which is rntn_tf.py. So the basic outline of this is as usual load in the data train the model print the score.
 
@@ -2236,6 +2566,8 @@ Finally we create the model fit it and print the scores. So let's run this and s
 11. Recursive Neural Network in TensorFlow with Recursion
 =========================================================
 
+See the code [here](./machine_learning_examples/nlp_class2/recursive_tensorflow.py)
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python. Part 6 in this lecture I'm going to walk you through an actual recursive implementation of a recursive neural network. I'm going to show you this so that you can see for yourself what happens when you use recursion to create a recursive neural network. This lecture is optional since it won't prevent you from learning how to write a recursive neural network without using recursion but it might give you further insight as to why you do not want to code it this way.
 
 So the first thing you'll see is the function get_labels. As usual it's doing post order traversal. Next we have our RNTN constructor here we just initialize all the weights and turn them into TensorFlow variables that are updatable. Next we have the fit function. So here's where things get really different. We have lists to store our train ops, costs, predictions and labels. Why is that. Because remember these are going to be different for every tree. So we loop through all the trees and populate these lists.
@@ -2252,6 +2584,7 @@ Why is that because of the sentences that get passed in can be arbitrary and the
 
 1. (Review) Theano Basics
 =========================
+
 
 Hey guys welcome back to this class data science deep learning in Python part two. In this lecture we're going to look at Theano basics. We're going to cover enough parts of Theano that you can comfortably build your own neural network and then in the next lecture we're actually going to build a neural network in Theano and test it on our dataset. So if you want to get the code I'm using in this lecture it's github.com/lazyprogrammer/machine_learning_examples and go to the ann_class2 folder and look at the file theano1.py.
 
@@ -2276,6 +2609,8 @@ Notice that we've converged to the expected cost and we can print the optimal va
 2. (Review) Theano Neural Network in Code
 =========================================
 
+See the code [here](./machine_learning_examples/ann_class2/theano2.py)
+
 Hey guys. Welcome back to this class data science deep learning in Python. Part two in this lecture we're going to implement a neural network in Theano using the basics that we learned in the last lecture. If you don't want to write this code yourself and you just want to look at it go to github.com/lazyprogrammer/machine_learning_examples and look in the folder ann_class2. The relevant file is theano2.py. So the first thing I want to do is do all the imports that we usually need.
 
 And Theano this time. And we're going to import matplotlib so that we can plot the log likelihood we're going to use our util to get the data and our indicator matrix creator define an error rate function which is just the mean of not equal to T. And new versions of Theano have this function. But just in case yours does not. We're going to implement it ourselves. So both of these functions use true false values and turn them into numbers. So Step 1 as usual is just to get the data we're going to use all the same stuff from previous examples.
@@ -2288,6 +2623,8 @@ And now I'm just going to call Theano's train function. And so here I'm going to
 
 3. (Review) Tensorflow Basics
 =============================
+
+See the code [here](./machine_learning_examples/ann_class2/tensorflow1.py)
 
 Hey guys and welcome back to this class data science deep learning in Python part 2. So in this lecture we're going to look at TensorFlow and we're going to do TensorFlow basics which is going to be analogous to Theano basics. It's going to introduce basic variables and functions and expressions and shows you how you can optimize a simple function. I compare this to theano1.py multiple times so you might want to check that out first if you haven't.
 
@@ -2308,6 +2645,8 @@ So it gives us the expected answer.
 4. (Review) Tensorflow Neural Network in Code
 =============================================
 
+See the code [here](./machine_learning_examples/ann_class2/tensorflow2.py)
+
 Hey guys welcome back to this class data science deep learning in Python. Part two in this lecture we're going to take the basics of TensorFlow that we learn last time and we're going to apply them to build a neural network in TensorFlow. If you don't want to write this code yourself and you just want to check it out, go to github.com/lazyprogrammer/machine_learning_examples and it's in the folder ann_class2. And the relevant file is tensorflow2.py.
 
 So I'm going to first do our usual imports and we're going to use matplotlib to plot the cost and we're going to use the same error rate calculation from the Theano example. OK so to get our data as usual. And we're going to copy all this stuff from the Theano example. Up to that. So now for this example we are going to add another hidden layer to our neural network. We're going to make the second layer size 100. So now this dimensionality changes to D by M1, this will be M1 by M2, and then we're going to have another set of weights and biases.
@@ -2326,6 +2665,23 @@ And we're going to run our prediction as well so we can get the error rate and w
 
 1. (Legacy) What is a word embedding
 ====================================
+
+![548.png](./images/548.png)
+![549.png](./images/549.png)
+![550.png](./images/550.png)
+![551.png](./images/551.png)
+![552.png](./images/552.png)
+![553.png](./images/553.png)
+![554.png](./images/554.png)
+![555.png](./images/555.png)
+![556.png](./images/556.png)
+![557.png](./images/557.png)
+![558.png](./images/558.png)
+![559.png](./images/559.png)
+![560.png](./images/560.png)
+![561.png](./images/561.png)
+![562.png](./images/562.png)
+![563.png](./images/563.png)
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6. A lot of the time in deep learning we are concerned with dimensionality reduction. Another way to think of this task is that we are finding a higher level representation of some input data by representing it more compactly or in other words with a smaller number of dimensions. An easy way to remember why we want to do this is to think of principal components analysis or PCA.
 
@@ -2366,6 +2722,11 @@ And we'll use t-SNE to visualize the matrix to see if we can find any interestin
 2. (Legacy) Using pre-trained word embeddings
 =============================================
 
+![564.png](./images/564.png)
+![565.png](./images/565.png)
+![566.png](./images/566.png)
+
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6. A lot of my later courses will tie in things you learned about in earlier courses. Here is yet another example of that. So in unsupervised deep learning we talked about greedy pre-training this is useful because the cost functions for neural networks have local minima and sometimes you can get stuck in a bad spot when you're doing gradient descent or you might encounter the vanishing gradient where the changes in your weight updates drop down to zero.
 
 You learn that by doing pre-training you put weights that came earlier in the network in a good spot for us so that before you run a global back propagation on the whole network that first layer has already found a useful mapping from its input to its output. That makes it easier for back propagation to do its job later on. One way we can apply this principle is to use pre-trained word embeddings in our neural networks. Remember that we often put the word embedding matrix at the front of a recurrent network.
@@ -2376,6 +2737,13 @@ So instead of initializing the word embedding matrix randomly you could use word
 
 3. (Legacy) Word analogies using word embeddings
 ================================================
+
+![567.png](./images/567.png)
+![568.png](./images/568.png)
+![569.png](./images/569.png)
+![570.png](./images/570.png)
+![571.png](./images/571.png)
+![572.png](./images/572.png)
 
 Hey guys and welcome back to this class natural language processing deep learning in Python Part 6 in this lecture we are going to talk about how you can actually do calculations like show that King minus man plus woman equals queen. It's quite simple but worth going through anyway. I would describe it in two steps. Step number one is to convert all three words on the left to their word embeddings, or word vectors. Once they're in vector form you can subtract and add very easily.
 
@@ -2393,6 +2761,11 @@ We are more interested in things like nouns when we do word analogies. We want t
 
 4. (Legacy) TF-IDF and t-SNE experiment
 =======================================
+
+![573.png](./images/573.png)
+![574.png](./images/574.png)
+
+See the code [here](./machine_learning_examples/nlp_class2/tfidf_tsne.py)
 
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we're going to do an experiment and see what happens when we use TF-IDF on our term document matrix along with t-SNE for finding a low dimensionality representation of that matrix. Why are we doing this. Because it's interesting we don't want to only do things like word2vec without considering the more fundamental issues that we're dealing with just because word2vec happens to be popular at the moment .
 
@@ -2429,6 +2802,16 @@ He found some sports words teams teams season games League football and now he f
 5. (Legacy) Word2Vec introduction
 =================================
 
+![575.png](./images/575.png)
+![576.png](./images/576.png)
+![577.png](./images/577.png)
+![578.png](./images/578.png)
+![579.png](./images/579.png)
+![580.png](./images/580.png)
+![581.png](./images/581.png)
+![582.png](./images/582.png)
+![583.png](./images/583.png)
+
 Hey guys and welcome back to this class. Natural Language Processing deep learning in Python Part 6 in this lecture we are going to discuss the basics of the word2vec algorithm. Remember that word2vec is used for learning word embeddings. So somewhere in here we're going to have a V by D matrix. If you took my course on recurrent neural networks you should be familiar with the idea of next word prediction on the next word prediction task. You just take all the previous words in a sequence and try to predict the next word in the sequence you're going to start with something even simpler.
 
 Well just take one word at a time and try to predict the next word. Remember that these are called bigrams. It's essentially a Markov model because each word is only conditioned on one previous value. To solve this problem we need to draw on skills we learn in deep learning part 1. So what does the model look like. We have a V by D input-to-hidden matrix and only one hidden layer, and a D by V hidden-to-output matrix. What's interesting about all the word2vec models is that at the hidden layer we don't use any non linear function.
@@ -2462,7 +2845,7 @@ Also keep in mind that you are always able to select the lecture you want using 
 
 For example I come across students all the time who have no idea how to get started implementing machine learning algorithms in code or why we are doing so in the first place. Then I come to find that they have never watched how to code by yourself. So I think it goes without saying that if you don't know how to code by yourself you should probably watch the lecture how to code by yourself. Same thing goes for the other lectures in this section. All right let's get to the lectures.
 
-2. How to install wp2txt or WikiExtractor.py
+1. How to install wp2txt or WikiExtractor.py
 ============================================
 
 Hey guys and welcome back to this class. Natural Language Processing in Python, Deep Learning Part 6 in this lecture I'm going to further elaborate on how to install scripts to convert the Wikipedia data dumps from XML to plain text. Since some people were having trouble most of my courses are in Python so some of you have never used Ruby before and you don't know how the Ruby ecosystem works. Note that you don't actually need to know how to use Ruby. You're just running a command line program and copying and pasting some command line prompts from the Internet.
