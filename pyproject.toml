@@ -170,4 +170,10 @@ dependencies = [
     "sacrebleu",
     "bert-score",
     "PyPDF2",
+    "goose3",
+    "feedparser",
+    "sumy",
+    "pysummarization",
+    "bert-extractive-summarizer",
+    "sacremoses",
 ]
