@@ -3,6 +3,8 @@
   "private": true,
   "description": "Chromium print backend for tools/notes-to-pdf",
   "dependencies": {
+    "katex": "^0.16.11",
+    "mermaid": "^11.4.1",
     "playwright": "^1.45.0"
   }
 }

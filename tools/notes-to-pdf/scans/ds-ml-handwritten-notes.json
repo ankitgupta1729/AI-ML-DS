@@ -11,106 +11,416 @@
   "out_dir": "foundations/04.Theory/Notes/pdf",
   "source": "Phone photos of the notebook (353 pages), exported as one PDF on Google Drive; the same notebook is in foundations/04.Theory/Notes/Notes as compressed 10-page parts.",
   "quarter_turns": [
-    {"pages": [170, 175], "turns": 1},
-    {"pages": [176, 185], "turns": 3},
-    {"pages": [317, 318], "turns": 1},
-    {"pages": [319, 353], "turns": 3}
+    {
+      "pages": [
+        170,
+        175
+      ],
+      "turns": 1
+    },
+    {
+      "pages": [
+        176,
+        185
+      ],
+      "turns": 3
+    },
+    {
+      "pages": [
+        317,
+        318
+      ],
+      "turns": 1
+    },
+    {
+      "pages": [
+        319,
+        353
+      ],
+      "turns": 3
+    }
   ],
-  "volumes": [[1, 185], [186, 353]],
+  "volumes": [
+    [
+      1,
+      185
+    ],
+    [
+      186,
+      353
+    ]
+  ],
   "parts": [
-    {"title": "Machine Learning Foundations", "sections": [
-      [1, "Notebook Cover"],
-      [2, "Introduction to Machine Learning"],
-      [5, "Linear Algebra & Matrix Calculus"],
-      [8, "Optimisation & Support Vector Machines"],
-      [10, "Kernel SVMs, Multi-class Classification, KNN & Decision Trees"],
-      [13, "Entropy, Overfitting & the Bias–Variance Trade-off"],
-      [14, "Ensembles: Bagging, Random Forests, Boosting & Stacking"],
-      [16, "Dimensionality Reduction & PCA"],
-      [18, "Fisher Linear Discriminant (FLD)"],
-      [21, "Clustering: Distance Measures, Hierarchical & K-Means"],
-      [23, "Linear Regression, Feature Scaling & Probability"],
-      [24, "Gaussian Distribution, Covariance & Maximum Likelihood"],
-      [25, "Logistic Regression, Naïve Bayes & Neural Networks"],
-      [26, "Optimisers & Learning-Rate Schedules"],
-      [28, "Convolutional Neural Networks, ReLU & Dropout"],
-      [30, "Activation Functions, Normalisation & Batch Norm"],
-      [32, "Generative Adversarial Networks (GANs)"],
-      [34, "Data-Science Essentials: Divergence, Feature Selection & Bias"]
-    ]},
-    {"title": "Statistical Learning", "sections": [
-      [36, "Statistical Learning & Assessing Model Accuracy"],
-      [38, "Linear Regression: Estimates, Inference & R²"],
-      [40, "Multiple Regression & Potential Problems"],
-      [43, "Classification: Logistic Regression, LDA, QDA & ROC"],
-      [46, "Resampling Methods & Linear Model Selection"],
-      [47, "Shrinkage Methods: Ridge & Lasso"],
-      [48, "Dimension Reduction & Non-linear Models"],
-      [49, "Tree-Based Methods & Bagging"],
-      [50, "Random Forests, Boosting & Support Vector Machines"],
-      [52, "Hypothesis Testing"]
-    ]},
-    {"title": "Natural Language Processing", "sections": [
-      [53, "Text Normalisation, BPE & Minimum Edit Distance"],
-      [54, "N-gram Language Models"],
-      [55, "Smoothing, Naïve Bayes & Sentiment Classification"],
-      [57, "Statistical Significance & Logistic Regression for NLP"],
-      [59, "Vector Semantics: TF-IDF, PMI & Cosine Similarity"],
-      [63, "Word2Vec & Neural Language Models"],
-      [65, "Sequence Labelling, HMMs, RNNs & LSTMs"],
-      [68, "Transformers & Self-Attention"]
-    ]},
-    {"title": "LLM University: Transformers & Attention", "sections": [
-      [70, "Word & Sentence Embeddings"],
-      [77, "Similarity Between Words & Sentences"],
-      [80, "What Is Attention in Language Models?"],
-      [92, "Multi-Head Attention & Building Better Embeddings"],
-      [97, "The Maths Behind Attention: Similarity, Softmax, Keys, Queries & Values"],
-      [105, "What Are Transformer Models and How Do They Work?"],
-      [122, "The Illustrated Transformer: Encoders & Decoders"],
-      [130, "Self-Attention in Detail & in Matrix Form"],
-      [137, "Multi-Head Attention: The Beast with Many Heads"],
-      [145, "Positional Encoding & Residual Connections"],
-      [148, "The Decoder, Final Linear & Softmax Layer"],
-      [151, "Training: Loss Function & Decoding"],
-      [157, "How GPT-3 Works"],
-      [164, "Transformer Families: GPT-2, BERT & Output Projection"],
-      [170, "Transformers Explained: From N-grams to Attention"],
-      [181, "Fine-Tuning & Post-Training"]
-    ]},
-    {"title": "LLM University: Text Representation", "sections": [
-      [186, "Text Embeddings & Visualising Them"],
-      [191, "Semantic Search with Embeddings"],
-      [195, "Text Clustering"],
-      [197, "Text Classification & Evaluation Metrics"],
-      [204, "Few-Shot Classification"],
-      [209, "Fine-Tuning for Classification"],
-      [216, "Multilingual Sentiment Analysis App"]
-    ]},
-    {"title": "LLM University: Text Generation", "sections": [
-      [226, "Introduction to Text Generation & the Command Model"],
-      [229, "How an LLM Chatbot Works"],
-      [238, "Building a Chatbot: Chat Endpoint, Streaming & History"],
-      [248, "Parameters for Controlling Outputs: Model & Temperature"],
-      [255, "Prompt Engineering Basics"],
-      [261, "Fine-Tuning for Chat"],
-      [268, "Introduction to Retrieval-Augmented Generation (RAG)"]
-    ]},
-    {"title": "LLM University: Search & Retrieval", "sections": [
-      [276, "Semantic Search: Lexical Search vs Embeddings"],
-      [281, "Improving Search: Reranking & Positive/Negative Pairs"],
-      [285, "Similarity, Nearest Neighbours & Multilingual Search"],
-      [290, "Multilingual & Cross-Lingual Embeddings and Language Bias"],
-      [292, "Keyword Search with a Vector Database"],
-      [299, "Dense Retrieval & Chunking"],
-      [306, "Reranking"],
-      [310, "Generating Answers with Search"]
-    ]},
-    {"title": "Prompt Engineering & Applications", "sections": [
-      [317, "Constructing Prompts: Instructions, Specifics, Context & Format"],
-      [325, "Few-Shot Examples, Chain-of-Thought & Steps"],
-      [333, "Multilingual Semantic Search with Cohere & LangChain"],
-      [349, "Use-Case Patterns for the Command Model"]
-    ]}
-  ]
+    {
+      "title": "Machine Learning Foundations",
+      "sections": [
+        [
+          1,
+          "Notebook Cover"
+        ],
+        [
+          2,
+          "Introduction to Machine Learning"
+        ],
+        [
+          5,
+          "Linear Algebra & Matrix Calculus"
+        ],
+        [
+          8,
+          "Optimisation & Support Vector Machines"
+        ],
+        [
+          10,
+          "Kernel SVMs, Multi-class Classification, KNN & Decision Trees"
+        ],
+        [
+          13,
+          "Entropy, Overfitting & the Bias–Variance Trade-off"
+        ],
+        [
+          14,
+          "Ensembles: Bagging, Random Forests, Boosting & Stacking"
+        ],
+        [
+          16,
+          "Dimensionality Reduction & PCA"
+        ],
+        [
+          18,
+          "Fisher Linear Discriminant (FLD)"
+        ],
+        [
+          21,
+          "Clustering: Distance Measures, Hierarchical & K-Means"
+        ],
+        [
+          23,
+          "Linear Regression, Feature Scaling & Probability"
+        ],
+        [
+          24,
+          "Gaussian Distribution, Covariance & Maximum Likelihood"
+        ],
+        [
+          25,
+          "Logistic Regression, Naïve Bayes & Neural Networks"
+        ],
+        [
+          26,
+          "Optimisers & Learning-Rate Schedules"
+        ],
+        [
+          28,
+          "Convolutional Neural Networks, ReLU & Dropout"
+        ],
+        [
+          30,
+          "Activation Functions, Normalisation & Batch Norm"
+        ],
+        [
+          32,
+          "Generative Adversarial Networks (GANs)"
+        ],
+        [
+          34,
+          "Data-Science Essentials: Divergence, Feature Selection & Bias"
+        ]
+      ]
+    },
+    {
+      "title": "Statistical Learning",
+      "sections": [
+        [
+          36,
+          "Statistical Learning & Assessing Model Accuracy"
+        ],
+        [
+          38,
+          "Linear Regression: Estimates, Inference & R²"
+        ],
+        [
+          40,
+          "Multiple Regression & Potential Problems"
+        ],
+        [
+          43,
+          "Classification: Logistic Regression, LDA, QDA & ROC"
+        ],
+        [
+          46,
+          "Resampling Methods & Linear Model Selection"
+        ],
+        [
+          47,
+          "Shrinkage Methods: Ridge & Lasso"
+        ],
+        [
+          48,
+          "Dimension Reduction & Non-linear Models"
+        ],
+        [
+          49,
+          "Tree-Based Methods & Bagging"
+        ],
+        [
+          50,
+          "Random Forests, Boosting & Support Vector Machines"
+        ],
+        [
+          52,
+          "Hypothesis Testing"
+        ]
+      ]
+    },
+    {
+      "title": "Natural Language Processing",
+      "sections": [
+        [
+          53,
+          "Text Normalisation, BPE & Minimum Edit Distance"
+        ],
+        [
+          54,
+          "N-gram Language Models"
+        ],
+        [
+          55,
+          "Smoothing, Naïve Bayes & Sentiment Classification"
+        ],
+        [
+          57,
+          "Statistical Significance & Logistic Regression for NLP"
+        ],
+        [
+          59,
+          "Vector Semantics: TF-IDF, PMI & Cosine Similarity"
+        ],
+        [
+          63,
+          "Word2Vec & Neural Language Models"
+        ],
+        [
+          65,
+          "Sequence Labelling, HMMs, RNNs & LSTMs"
+        ],
+        [
+          68,
+          "Transformers & Self-Attention"
+        ]
+      ]
+    },
+    {
+      "title": "LLM University: Transformers & Attention",
+      "sections": [
+        [
+          70,
+          "Word & Sentence Embeddings"
+        ],
+        [
+          77,
+          "Similarity Between Words & Sentences"
+        ],
+        [
+          80,
+          "What Is Attention in Language Models?"
+        ],
+        [
+          92,
+          "Multi-Head Attention & Building Better Embeddings"
+        ],
+        [
+          97,
+          "The Maths Behind Attention: Similarity, Softmax, Keys, Queries & Values"
+        ],
+        [
+          105,
+          "What Are Transformer Models and How Do They Work?"
+        ],
+        [
+          122,
+          "The Illustrated Transformer: Encoders & Decoders"
+        ],
+        [
+          130,
+          "Self-Attention in Detail & in Matrix Form"
+        ],
+        [
+          137,
+          "Multi-Head Attention: The Beast with Many Heads"
+        ],
+        [
+          145,
+          "Positional Encoding & Residual Connections"
+        ],
+        [
+          148,
+          "The Decoder, Final Linear & Softmax Layer"
+        ],
+        [
+          151,
+          "Training: Loss Function & Decoding"
+        ],
+        [
+          157,
+          "How GPT-3 Works"
+        ],
+        [
+          164,
+          "Transformer Families: GPT-2, BERT & Output Projection"
+        ],
+        [
+          170,
+          "Transformers Explained: From N-grams to Attention"
+        ],
+        [
+          181,
+          "Fine-Tuning & Post-Training"
+        ]
+      ]
+    },
+    {
+      "title": "LLM University: Text Representation",
+      "sections": [
+        [
+          186,
+          "Text Embeddings & Visualising Them"
+        ],
+        [
+          191,
+          "Semantic Search with Embeddings"
+        ],
+        [
+          195,
+          "Text Clustering"
+        ],
+        [
+          197,
+          "Text Classification & Evaluation Metrics"
+        ],
+        [
+          204,
+          "Few-Shot Classification"
+        ],
+        [
+          209,
+          "Fine-Tuning for Classification"
+        ],
+        [
+          216,
+          "Multilingual Sentiment Analysis App"
+        ]
+      ]
+    },
+    {
+      "title": "LLM University: Text Generation",
+      "sections": [
+        [
+          226,
+          "Introduction to Text Generation & the Command Model"
+        ],
+        [
+          229,
+          "How an LLM Chatbot Works"
+        ],
+        [
+          238,
+          "Building a Chatbot: Chat Endpoint, Streaming & History"
+        ],
+        [
+          248,
+          "Parameters for Controlling Outputs: Model & Temperature"
+        ],
+        [
+          255,
+          "Prompt Engineering Basics"
+        ],
+        [
+          261,
+          "Fine-Tuning for Chat"
+        ],
+        [
+          268,
+          "Introduction to Retrieval-Augmented Generation (RAG)"
+        ]
+      ]
+    },
+    {
+      "title": "LLM University: Search & Retrieval",
+      "sections": [
+        [
+          276,
+          "Semantic Search: Lexical Search vs Embeddings"
+        ],
+        [
+          281,
+          "Improving Search: Reranking & Positive/Negative Pairs"
+        ],
+        [
+          285,
+          "Similarity, Nearest Neighbours & Multilingual Search"
+        ],
+        [
+          290,
+          "Multilingual & Cross-Lingual Embeddings and Language Bias"
+        ],
+        [
+          292,
+          "Keyword Search with a Vector Database"
+        ],
+        [
+          299,
+          "Dense Retrieval & Chunking"
+        ],
+        [
+          306,
+          "Reranking"
+        ],
+        [
+          310,
+          "Generating Answers with Search"
+        ]
+      ]
+    },
+    {
+      "title": "Prompt Engineering & Applications",
+      "sections": [
+        [
+          317,
+          "Constructing Prompts: Instructions, Specifics, Context & Format"
+        ],
+        [
+          325,
+          "Few-Shot Examples, Chain-of-Thought & Steps"
+        ],
+        [
+          333,
+          "Multilingual Semantic Search with Cohere & LangChain"
+        ],
+        [
+          349,
+          "Use-Case Patterns for the Command Model"
+        ]
+      ]
+    }
+  ],
+  "digital": {
+    "title": "Data Science & Machine Learning — Revision Notes",
+    "short": "DS & ML Revision Notes",
+    "provider": "Digital edition · handwritten notebook",
+    "subtitle": "The complete handwritten notebook, transcribed and typeset: machine learning, statistical learning, NLP, transformers and LLM applications, with equations, tables and redrawn diagrams.",
+    "file": "DS-ML-Revision-Notes",
+    "out_dir": "foundations/04.Theory/Notes/pdf",
+    "note": "<p>This is a faithful transcription of the handwritten notebook: the wording and the order of the notes are kept; note-taking shorthand (b/w, w/o, algo<sup>m</sup>, info<sup>n</sup>, …) is written out, equations are typeset and diagrams are redrawn. Each topic shows the notebook pages it comes from, so it can be checked against the clean-scan edition.</p>",
+    "sources": [
+      "foundations/04.Theory/Notes/digital/01-machine-learning-foundations.md",
+      "foundations/04.Theory/Notes/digital/02-statistical-learning.md",
+      "foundations/04.Theory/Notes/digital/03-natural-language-processing.md",
+      "foundations/04.Theory/Notes/digital/04-transformers-and-attention.md",
+      "foundations/04.Theory/Notes/digital/05-text-representation.md",
+      "foundations/04.Theory/Notes/digital/06-text-generation.md",
+      "foundations/04.Theory/Notes/digital/07-search-and-retrieval.md",
+      "foundations/04.Theory/Notes/digital/08-prompt-engineering-and-applications.md"
+    ]
+  }
 }

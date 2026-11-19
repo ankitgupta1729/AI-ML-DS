@@ -12,6 +12,7 @@ const fs = require('fs');
     await page.evaluate(async () => {
       await document.fonts.ready;
       await Promise.all([...document.images].map(i => i.decode().catch(() => null)));
+      if (window.__ready) await window.__ready;  // e.g. diagrams drawn in the page
     });
     await page.pdf({ path: job.pdf, preferCSSPageSize: true, printBackground: true,
                      outline: false, tagged: true, timeout: 0 });  // bookmarks are added by build.py
