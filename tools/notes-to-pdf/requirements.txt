@@ -3,3 +3,5 @@ mdit-py-plugins>=0.4
 pygments>=2.17
 pillow>=10.0
 pypdf>=4.0
+numpy>=1.24
+opencv-python-headless>=4.8  # scan_build.py only

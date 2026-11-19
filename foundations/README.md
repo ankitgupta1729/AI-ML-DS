@@ -10,4 +10,8 @@ Python, SQL and the theory behind ML, GenAI and data engineering.
 | [`13.Decorators`](13.Decorators) | [Notes.md](13.Decorators/Notes.md) | [PDF](13.Decorators/pdf/Python-Decorators-Notes.pdf) |
 | [`45.Python-for-Everybody-University-of-Michigan-Charles-Severance-PhD`](45.Python-for-Everybody-University-of-Michigan-Charles-Severance-PhD) | [Note.md](45.Python-for-Everybody-University-of-Michigan-Charles-Severance-PhD/Note.md) | [PDF](45.Python-for-Everybody-University-of-Michigan-Charles-Severance-PhD/pdf/Python-for-Everybody-Notes.pdf) |
 
+**Handwritten notebook.** [`04.Theory/Notes`](04.Theory/Notes) holds the photographed Data Science & Machine Learning
+notebook (353 pages) and its clean-scan edition with a topic index:
+[Vol. 1](04.Theory/Notes/pdf/DS-ML-Handwritten-Notes-Vol1.pdf) · [Vol. 2](04.Theory/Notes/pdf/DS-ML-Handwritten-Notes-Vol2.pdf).
+
 [← Back to the repository overview](../README.md)

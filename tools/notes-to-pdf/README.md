@@ -89,3 +89,25 @@ instead of `module`/`source` — that is how `docs/AGENTS.pdf` is built.
 | `notes_pdf/render.py`, `style.css` | HTML document and print stylesheet |
 | `render_pdf.js` | Playwright/Chromium print backend |
 | `fonts/` | Bundled fonts and their licences |
+| `scan_build.py`, `scans/` | Clean-scan editions of photographed handwritten notebooks (see below) |
+| `notes_pdf/scan.py` | Photo → clean page: level, blank the background, whiten the paper |
+
+## Handwritten notebooks (clean-scan editions)
+
+`scan_build.py` turns phone photos of a handwritten notebook into a designed PDF without touching
+the handwriting:
+
+```bash
+pdfimages -j notebook.pdf photos/pg          # one image per page, in notebook order
+python tools/notes-to-pdf/scan_build.py photos/ --manifest tools/notes-to-pdf/scans/<name>.json
+```
+
+Each photo is turned upright (the manifest lists the page ranges shot sideways), levelled by its
+small tilt and cropped to the paper — never *into* the paper, so a neighbouring page caught in the
+shot stays rather than risk cutting writing off. The bedsheet or table around the paper is blanked,
+and dividing by a blurred estimate of the paper evens out lighting so the page turns white while ink
+keeps its colour. The manifest also holds the topic index (parts → topics by starting page) and the
+volume split; the builder adds a cover, contents with page numbers, part dividers, running
+headers/footers, the notebook page number on every page and nested bookmarks. Cleaned pages are
+cached in `.cache/scan/`. The edition in this repository is
+[`foundations/04.Theory/Notes`](../../foundations/04.Theory/Notes).

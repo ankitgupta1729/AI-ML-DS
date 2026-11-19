@@ -342,6 +342,17 @@ screenshot placed **right next to the sentence it illustrates**.
 | Go Programming — Full Course | YouTube · Tech With Tim | [PDF](programming-languages/41.YouTube-Go-Programming-Full-Course-Tech-with-Tim/pdf/Go-Programming-Full-Course-Notes.pdf) | 5 |
 <!-- pdf-index:end -->
 
+#### Handwritten Notebook (clean-scan edition)
+
+| Notes | Source | PDF | Pages |
+| --- | --- | --- | ---: |
+| [Data Science & Machine Learning — Handwritten Revision Notes](foundations/04.Theory/Notes) | Handwritten notebook, 353 pages | [Vol. 1](foundations/04.Theory/Notes/pdf/DS-ML-Handwritten-Notes-Vol1.pdf) · [Vol. 2](foundations/04.Theory/Notes/pdf/DS-ML-Handwritten-Notes-Vol2.pdf) | 366 |
+
+The photographed notebook, cleaned up page by page (levelled, background removed, paper whitened,
+nothing on the paper cropped), with a topic index of 8 parts and 78 topics, contents with page
+numbers, part dividers and bookmarks. Built with
+[`tools/notes-to-pdf/scan_build.py`](tools/notes-to-pdf/scan_build.py).
+
 ---
 
 ## 🚀 Getting Started
