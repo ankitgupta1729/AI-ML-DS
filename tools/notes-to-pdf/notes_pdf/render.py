@@ -39,7 +39,8 @@ JUNK = [
     re.compile(r"-*\s*\[\s*FreeCourseWeb\.com\s*\]\s*-*", re.I),
     re.compile(r"GetFreeCourses\.Co[-\s]*", re.I),
     re.compile(r"\.en\s*$"),
-    re.compile(r"^\d{3}\s+"),  # "001 Introduction" (video file numbering)
+    re.compile(r"^\d{3}\.?\s+"),  # "001 Introduction", "001. Why TensorFlow" (video file numbering)
+    re.compile(r"\s+English\s*$"),  # Udemy subtitle-language suffix
     re.compile(r"^\[(?:slides|\d+)\]\s*-\s*", re.I),  # "[Slides] - …", "[1] - …"
 ]
 
@@ -47,6 +48,11 @@ JUNK = [
 def clean_heading(text: str) -> str:
     for rx in JUNK:
         text = rx.sub("", text)
+    # file-name style "01_02_welcome-to-the-nlp-specialization" -> "Welcome to the NLP Specialization"
+    if re.fullmatch(r"(\d+_)*[a-z0-9]+([-_][a-z0-9]+)+", text.strip()):
+        words = re.sub(r"^(\d+_)+", "", text.strip()).replace("_", " ").replace("-", " ")
+        text = title_case(" ".join(w.upper() if w in ("nlp", "ai", "ml", "lstm", "rnn", "gru", "nmt", "ner", "pca")
+                                   else w for w in words.split()))
     text = re.sub(r"[*_`]+", "", text)
     return text.strip(" -:#")
 
@@ -238,9 +244,13 @@ class Renderer:
     def toc_html(self, page_of: dict[str, int] | None) -> str:
         top = min((lv for lv, *_ in self.toc), default=1)
         many = sum(1 for lv, *_ in self.toc if lv == top) > 30
+        depth = 0 if many else 1
+        # a thin contents page (lectures nested one level deeper) shows that level too
+        if not many and sum(1 for lv, *_ in self.toc if lv <= top + 1) < 20:
+            depth = 2
         rows = []
         for lv, hid, label, title in self.toc:
-            if lv > top + (0 if many else 1):
+            if lv > top + depth:
                 continue
             pg = str(page_of.get(hid, "")) if page_of else "000"
             lab = f'<span class="toc-label">{html.escape(label)}</span>' if label else ""

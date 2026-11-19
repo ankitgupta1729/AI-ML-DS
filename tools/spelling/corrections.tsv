@@ -273,3 +273,16 @@
 04	softwares	software	grammar (uncountable)
 23	splitted	split	grammar
 54	splitted	split	grammar
+# ---- modules 61–67 (added Nov 2026) ----
+63	King minus Manticore's Queen Midas woman	King minus man equals Queen minus woman	ASR (word-analogy example)
+63	Corcoran's Matrix	co-occurrence matrix	ASR (GloVe)
+63	biograph neural network	bigram neural network	ASR
+63	the bike Reems	the bigrams	ASR
+63	biased Herm's	bias terms	ASR
+63	one hot uncoded	one hot encoded	ASR
+63	don't do the untiring	don't do the untarring	ASR
+64	Talkings equals	Tokens equals	ASR
+64	frequence dictionary	frequency dictionary	typo
+66	quantitive	quantitative	typo
+62	call Ishamel	call Ishmael	typo (Moby-Dick quote)
+61	word IDis	word ID is	typo

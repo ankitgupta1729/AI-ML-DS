@@ -49,3 +49,7 @@ deep-learning/55.Udemy-PyTorch-Deep-Learning-and-Artificial-Intelligence-by-The-
 
 # notes-to-pdf build caches (OCR text, resized screenshots, intermediate HTML)
 tools/notes-to-pdf/.cache/
+
+# Pretrained word vectors (GoogleNews ~1.6GB, GloVe ~862MB — over GitHub's 100MB limit; already compressed)
+nlp/63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python/data/GoogleNews-vectors-negative300.bin.gz
+nlp/63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python/data/glove.6B.zip

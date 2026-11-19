@@ -21,7 +21,7 @@ Course notes, revision PDFs, notebooks, hands-on projects, production-grade pipe
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/ankitgupta1729/AI-ML-DS?style=flat-square&color=f5c518"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/ankitgupta1729/AI-ML-DS?style=flat-square&color=blue"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS"><img alt="Repo size" src="https://img.shields.io/github/repo-size/ankitgupta1729/AI-ML-DS?style=flat-square&color=success"></a>
-  <a href="#-revision-pdfs"><img alt="Revision PDFs" src="https://img.shields.io/badge/revision%20PDFs-49%20courses-purple?style=flat-square"></a>
+  <a href="#-revision-pdfs"><img alt="Revision PDFs" src="https://img.shields.io/badge/revision%20PDFs-55%20courses-purple?style=flat-square"></a>
 </p>
 
 </div>
@@ -151,7 +151,13 @@ Convolutional architectures, transfer learning, GANs, and the TensorBoard workfl
 | Module | What's inside |
 | --- | --- |
 | [`60.Natural-Language-Processing-(NLP)-in-Python`](nlp/60.Natural-Language-Processing-%28NLP%29-in-Python) | Text preprocessing, vectorisation, classic and neural NLP |
-| [`61.…-Transformers-for-Natural-Language-Processing`](nlp/61.GetFreeCourses.Co-Udemy-Data-Science-Transformers-for-Natural-Language-Processing) | Attention, BERT, GPT and Hugging Face pipelines |
+| [`61.Udemy-Data-Science-Transformers-for-NLP`](nlp/61.Udemy-Data-Science-Transformers-for-Natural-Language-Processing) | Attention, BERT, GPT and Hugging Face pipelines |
+| [`62.Udemy-NLP-Natural-Language-Processing-with-Python`](nlp/62.Udemy-NLP-Natural-Language-Processing-with-Python) | spaCy and NLTK, text classification, sentiment analysis, topic modeling, deep learning for NLP |
+| [`63.Udemy-NLP-with-Deep-Learning-in-Python`](nlp/63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python) | Word embeddings (word2vec, GloVe), RNNs for NLP, recursive neural networks |
+| [`64.NLP-for-Text-Summarization`](nlp/64.Natural-Language-Processing-for-Text-Summarization) | Extractive text summarization in Python |
+| [`65.Ultimate-Beginners-Guide-to-NLP`](nlp/65.The-Ultimate-Beginners-Guide-to-Natural-Language-Processing) | POS tagging, lemmatization, stemming, NER, sentiment classification |
+| [`66.Coursera-NLP-Specialization`](nlp/66.Coursera-Natural-Language-Processing-Specialization) | DeepLearning.AI specialization — vector spaces, probabilistic, sequence and attention models |
+| [`67.Linkedin-TensorFlow-Working-with-NLP`](nlp/67.Linkedin-TensorFlow-Working-with-NLP) | Transformers and BERT for NLP with TensorFlow |
 
 </details>
 
@@ -283,7 +289,13 @@ screenshot placed **right next to the sentence it illustrates**.
 | Course | Source | PDF | Pages |
 | --- | --- | --- | ---: |
 | Natural Language Processing in Python | Udemy | [PDF](nlp/60.Natural-Language-Processing-%28NLP%29-in-Python/pdf/NLP-in-Python-Notes.pdf) | 302 |
-| Data Science: Transformers for Natural Language Processing | Udemy · The Lazy Programmer | [PDF](nlp/61.GetFreeCourses.Co-Udemy-Data-Science-Transformers-for-Natural-Language-Processing/pdf/Transformers-for-NLP-Notes.pdf) | 625 |
+| Data Science: Transformers for Natural Language Processing | Udemy · The Lazy Programmer | [Vol. 1](nlp/61.Udemy-Data-Science-Transformers-for-Natural-Language-Processing/pdf/Transformers-for-NLP-Notes-Vol1.pdf) · [Vol. 2](nlp/61.Udemy-Data-Science-Transformers-for-Natural-Language-Processing/pdf/Transformers-for-NLP-Notes-Vol2.pdf) | 917 |
+| NLP — Natural Language Processing with Python | Udemy | [PDF](nlp/62.Udemy-NLP-Natural-Language-Processing-with-Python/pdf/NLP-with-Python-Notes.pdf) | 523 |
+| Natural Language Processing with Deep Learning in Python | Udemy · The Lazy Programmer | [PDF](nlp/63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python/pdf/NLP-with-Deep-Learning-Notes.pdf) | 588 |
+| Natural Language Processing for Text Summarization | Udemy · Jones Granatyr | [PDF](nlp/64.Natural-Language-Processing-for-Text-Summarization/pdf/NLP-for-Text-Summarization-Notes.pdf) | 75 |
+| The Ultimate Beginner's Guide to Natural Language Processing | Udemy · Jones Granatyr | [PDF](nlp/65.The-Ultimate-Beginners-Guide-to-Natural-Language-Processing/pdf/Beginners-Guide-to-NLP-Notes.pdf) | 79 |
+| Natural Language Processing Specialization | Coursera · DeepLearning.AI | [PDF](nlp/66.Coursera-Natural-Language-Processing-Specialization/pdf/NLP-Specialization-Notes.pdf) | 263 |
+| TensorFlow: Working with NLP | LinkedIn Learning | [PDF](nlp/67.Linkedin-TensorFlow-Working-with-NLP/pdf/TensorFlow-Working-with-NLP-Notes.pdf) | 116 |
 
 #### Generative AI & Agents
 

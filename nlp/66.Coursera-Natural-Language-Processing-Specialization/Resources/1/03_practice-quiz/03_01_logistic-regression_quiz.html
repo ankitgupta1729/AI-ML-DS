@@ -1,0 +1,511 @@
+<meta charset="utf-8"/>
+<h3>
+ Question 1
+</h3>
+<co-content>
+ <p>
+  When performing logistic regression on sentiment analysis, you represented each tweet as a vector of ones and zeros. However your model did not work well. Your training cost was reasonable, but your testing cost was just not acceptable. What could be a possible reason?
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    The vector representations are sparse and therefore it is much harder for your model to learn anything that could generalize well to the test set.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    You probably need to increase your vocabulary size because it seems like you have very little features.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    Logistic regression does not work for sentiment analysis, and therefore you should be looking at other models.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="0" type="radio"/>
+  <co-content>
+   <span>
+    Sparse representations require a good amount of training time so you should train your model for longer
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 2
+</h3>
+<co-content>
+ <p>
+  Which of the following are examples of text preprocessing?
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="1" type="checkbox"/>
+  <co-content>
+   <span>
+    Stemming, or the process of reducing a word to its word stem.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="1" type="checkbox"/>
+  <co-content>
+   <span>
+    Lowercasing, which is the process of removing changing all capital letter to lower case.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="1" type="checkbox"/>
+  <co-content>
+   <span>
+    Removing stopwords, punctuation, handles and URLs
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="1" type="checkbox"/>
+  <co-content>
+   <span>
+    Adding new words to make sure all the sentences make sense
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 3
+</h3>
+<co-content>
+ <p hasmath="true">
+  The sigmoid function is defined as $$h( x^{(i)}, \theta) =
+\frac{1}{1 e^{-\theta^Tx^{(i)}}}$$. Which of the following is true.
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="2" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Large positive values of $$\theta^Tx^{(i)}$$ will make $$h( x^{(i)}, \theta)$$ closer to 1 and large negative values of $$\theta^Tx^{(i)}$$ will make $$h(
+x^{(i)},\theta)$$ close to -1.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="2" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Large positive values of $$\theta^Tx^{(i)}$$ will make $$h( x^{(i)}, \theta)$$ closer to 1 and large negative values of $$\theta^Tx^{(i)}$$ will make $$h(
+x^{(i)},\theta)$$ close to 0.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="2" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Small positive values of $$\theta^Tx^{(i)}$$ will make $$h( x^{(i)}, \theta)$$ closer to 1 and large positive values of $$\theta^Tx^{(i)}$$ will make $$h(
+x^{(i)},\theta)$$ close to 0.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="2" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Small positive values of $$\theta^Tx^{(i)}$$ will make $$h( x^{(i)}, \theta)$$ closer to 0 and large negative values of $$\theta^Tx^{(i)}$$ will make $$h(
+x^{(i)},\theta)$$ close to -1.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 4
+</h3>
+<co-content>
+ <p hasmath="true">
+  The cost function for logistic regression is defined as $$J(\theta)=-\frac{1}{m} \sum_{i=1}^{m}\left[y^{(i)} \log h\left(x^{(i)},
+\theta\right) \left(1-y^{(i)}\right) \log \left(1-h\left(x^{(i)},
+\theta\right)\right)\right]$$. Which of the following is true about the cost function above. Mark all the correct ones.
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="3" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    When $$y^{(i)} = 1$$, as $$h(x^{(i)},\theta)$$ goes close to 0, the cost function approaches $$\infty$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="3" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    When $$y^{(i)} = 1$$, as $$h(x^{(i)},\theta)$$ goes close to 0, the cost function approaches $$0$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="3" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    When $$y^{(i)} = 0$$, as $$h(x^{(i)},\theta)$$ goes close to 0, the cost function approaches $$0$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="3" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    When $$y^{(i)} = 0$$, as $$h(x^{(i)},\theta)$$ goes close to 0, the cost function approaches $$\infty$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 5
+</h3>
+<co-content>
+ <p hasmath="true">
+  For what value of $$\theta^Tx$$ in the sigmoid function does $$h(x^{(i)},\theta) = 0.5$$.
+ </p>
+</co-content>
+<form>
+ <label>
+  Enter answer here:
+  <input name="" type="text"/>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 6
+</h3>
+<co-content>
+ <p>
+  Select all that apply. When performing logistic regression for sentiment analysis using the method taught in this week's lecture, you have to:
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="5" type="checkbox"/>
+  <co-content>
+   <span>
+    Perform data processing.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="5" type="checkbox"/>
+  <co-content>
+   <span>
+    Create a dictionary that maps the word and the class that word is found in to the number of times that word is found in the class.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="5" type="checkbox"/>
+  <co-content>
+   <span>
+    Create a dictionary that maps the word and the class that word is found in to see if that word shows up in the class.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="5" type="checkbox"/>
+  <co-content>
+   <span>
+    For each tweet, you have to create a
+    <strong>
+     positive feature
+    </strong>
+    with the sum of positive counts of each word in that tweet. You also have to create a
+    <strong>
+     negative feature
+    </strong>
+    with the sum of negative counts of each word in that tweet.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 7
+</h3>
+<co-content>
+ <p>
+  When training logistic regression, you have to perform the following operations in the desired order.
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="6" type="radio"/>
+  <co-content>
+   <span>
+    Initialize parameters, get gradient, classify/predict, update, get loss, repeat
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="6" type="radio"/>
+  <co-content>
+   <span>
+    Initialize parameters, classify/predict, get gradient, update, get loss, repeat
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="6" type="radio"/>
+  <co-content>
+   <span>
+    Initialize parameters, get gradient, update, classify/predict, get loss, repeat
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="6" type="radio"/>
+  <co-content>
+   <span>
+    Initialize parameters, get gradient, update, get loss, classify/predict, repeat
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 8
+</h3>
+<co-content>
+ <p hasmath="true">
+  Assuming we got the classification correct, where $$y^{(i)} = 1$$ for some specific example i. This means that $$h(x^{(i)}, \theta) &gt; 0.5$$. Which of the following has to hold:
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="7" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Our prediction, $$h(x^{(i)}, \theta)$$ for this specific training example is exactly equal to its corresponding label $$y^{(i)}$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="7" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Our prediction, $$h(x^{(i)}, \theta)$$ for this specific training example is less than ($$1 - y^{(i)}$$).
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="7" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Our prediction, $$h(x^{(i)}, \theta)$$ for this specific training example is less than $$(1 - h(x^{(i)}, \theta))$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="7" type="radio"/>
+  <co-content>
+   <span hasmath="true">
+    Our prediction, $$h(x^{(i)}, \theta)$$ for this specific training example is greater than $$(1 - h(x^{(i)}, \theta))$$.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 9
+</h3>
+<co-content>
+ <p>
+  What is the purpose of gradient descent? Select all that apply.
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="8" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    Gradient descent allows us to learn the parameters $$\theta$$ in logistic regression as to minimize the loss function J.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="8" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    Gradient descent allows us to learn the parameters $$\theta$$ in logistic regression as to maximize the loss function J.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="8" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    Gradient descent,
+    <em>
+     grad_theta
+    </em>
+    allows us to update the parameters $$\theta$$ by computing $$\theta = \theta - \alpha * grad\_theta$$
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="8" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    Gradient descent,
+    <em>
+     grad_theta
+    </em>
+    allows us to update the parameters $$\theta$$ by computing $$\theta = \theta   \alpha * grad\_theta$$
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<h3>
+ Question 10
+</h3>
+<co-content>
+ <p>
+  What is a good metric that allows you to decide when to stop training/trying to get a good model? Select all that apply.
+ </p>
+</co-content>
+<form>
+ <label>
+  <input name="9" type="checkbox"/>
+  <co-content>
+   <span>
+    When your accuracy is good enough on the test set.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="9" type="checkbox"/>
+  <co-content>
+   <span>
+    When your accuracy is good enough on the train set.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="9" type="checkbox"/>
+  <co-content>
+   <span>
+    When you plot the cost versus (# of iterations) and you see that your the loss is converging (i.e. no longer changes as much).
+   </span>
+  </co-content>
+  <br/>
+ </label>
+ <label>
+  <input name="9" type="checkbox"/>
+  <co-content>
+   <span hasmath="true">
+    When $$\alpha$$, your step size is neither too small nor too large.
+   </span>
+  </co-content>
+  <br/>
+ </label>
+</form>
+<hr/>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>

@@ -45,6 +45,13 @@ LAYOUT='
 59.Modern-Deep-Convolutional-Neural-Networks-with-PyTorch|deep-learning
 60.Natural-Language-Processing-(NLP)-in-Python|nlp
 61.GetFreeCourses.Co-Udemy-Data-Science-Transformers-for-Natural-Language-Processing|nlp
+61.Udemy-Data-Science-Transformers-for-Natural-Language-Processing|nlp
+62.Udemy-NLP-Natural-Language-Processing-with-Python|nlp
+63.Udemy-Natural-Language-Processing-with-Deep-Learning-in-Python|nlp
+64.Natural-Language-Processing-for-Text-Summarization|nlp
+65.The-Ultimate-Beginners-Guide-to-Natural-Language-Processing|nlp
+66.Coursera-Natural-Language-Processing-Specialization|nlp
+67.Linkedin-TensorFlow-Working-with-NLP|nlp
 05.Code|generative-ai
 17.OpenCode|generative-ai
 20.LlamaIndex|generative-ai

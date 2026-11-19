@@ -17,7 +17,7 @@ The repository is organised by **domain**, then by **module**:
 | `data-engineering/` | PySpark, Databricks |
 | `machine-learning/` | Classical ML courses (Andrew Ng specialization, AI Nanodegree) |
 | `deep-learning/` | TensorFlow and PyTorch courses, CNNs, GANs, computer vision |
-| `nlp/` | NLP and transformers |
+| `nlp/` | NLP — spaCy/NLTK, embeddings, transformers, summarization |
 | `generative-ai/` | LLMs, RAG, LangChain, LangGraph, agents, Claude Code |
 | `mlops/` | ML in production, MLflow, CI/CD, cloud |
 | `dev-tools/` | Git, Docker, debugging, uv, pipenv, everyday tools |

@@ -105,6 +105,7 @@ body {
 .toc-l0 { font: 500 9.3pt/1.35 var(--sans); color: var(--ink); padding: 1.5mm 0; }
 .toc-l0 + .toc-l0 { border-top: 1px solid var(--hair); }
 .toc-l1 { font: 400 8.6pt/1.35 var(--sans); color: var(--muted); padding: .7mm 0 .7mm 6mm; }
+.toc-l2 { font: 400 8.2pt/1.35 var(--sans); color: var(--muted); padding: .4mm 0 .4mm 12mm; }
 .toc-label {
   flex: none; font: 700 7.2pt var(--sans); color: var(--accent); letter-spacing: .06em;
   text-transform: uppercase; min-width: 17mm;

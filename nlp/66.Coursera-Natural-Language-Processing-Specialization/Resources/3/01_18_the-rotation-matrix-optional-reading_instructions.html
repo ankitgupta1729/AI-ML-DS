@@ -1,0 +1,216 @@
+<meta charset="utf-8"/>
+<co-content>
+ <h2 level="2" variant="h2semibold">
+  Counterclockwise Rotation
+ </h2>
+ <p hasmath="true">
+  If you want to rotate a vector $$r$$ with coordinates ($$x$$, $$y$$) and angle $$\alpha$$ counterclockwise over an angle $$\beta$$ to get vector $$r’$$ with coordinates ($$x’$$, $$y’$$) then the following holds:
+ </p>
+ <p hasmath="true">
+  $$x = r*cos(\alpha)$$
+ </p>
+ <p hasmath="true">
+  $$y = r*sin(\alpha)$$
+ </p>
+ <p hasmath="true">
+  $$x’ = r’*cos(\alpha + \beta)$$
+ </p>
+ <p hasmath="true">
+  $$y’ = r’*sin(\alpha + \beta)$$
+ </p>
+ <p>
+ </p>
+ <p>
+  Trigonometric addition gives us:
+ </p>
+ <p hasmath="true">
+  $$cos(\alpha + \beta) = cos(\alpha)cos(\beta) - sin(\alpha)sin(\beta)$$
+ </p>
+ <p hasmath="true">
+  $$sin(\alpha + \beta) = cos(\alpha)sin(\beta) + sin(\alpha)cos(\beta)$$
+ </p>
+ <p>
+  For proof, see this
+  <a href="https://en.wikipedia.org/wiki/Proofs_of_trigonometric_identities#Angle_sum_identities" title="">
+   Wikipedia page section
+  </a>
+  .
+ </p>
+ <p>
+ </p>
+ <p>
+  As the length of the vector stays the same,
+ </p>
+ <p hasmath="true">
+  $$x’ = r*cos(\alpha)cos(\beta) - r*sin(\alpha)sin(\beta)$$
+ </p>
+ <p hasmath="true">
+  $$y’ = r*cos(\alpha)sin(\beta) + r*sin(\alpha)cos(\beta)$$
+ </p>
+ <p>
+  This equates to:
+ </p>
+ <p hasmath="true">
+  $$x’ = x*cos(\beta) - y*sin(\beta)$$
+ </p>
+ <p hasmath="true">
+  $$y’ = x*sin(\beta) + y*cos(\beta)$$
+ </p>
+ <p>
+ </p>
+ <p>
+  Written as matrix multiplication with
+  <u>
+   row vectors
+  </u>
+  , this becomes,
+ </p>
+ <p hasmath="true">
+  $$[x', y'] = [x, y] \cdot\begin{bmatrix}cos(\beta) &amp; sin(\beta)\\ -sin(\beta) &amp; cos(\beta)\end{bmatrix}$$
+ </p>
+ <p>
+  with the rotation matrix equal to,
+ </p>
+ <p hasmath="true">
+  $$R = \begin{bmatrix}cos(\beta) &amp; sin(\beta)\\ -sin(\beta) &amp; cos(\beta)\end{bmatrix}$$
+ </p>
+ <p>
+ </p>
+ <p>
+  Written as matrix multiplication with
+  <u>
+   column vectors
+  </u>
+  , this becomes,
+ </p>
+ <p hasmath="true">
+  $$\begin{bmatrix}x'\\y'\end{bmatrix} = \begin{bmatrix}cos(\beta) &amp; -sin(\beta)\\ sin(\beta) &amp; cos(\beta)\end{bmatrix}\cdot \begin{bmatrix}x\\y\end{bmatrix}$$
+ </p>
+ <p>
+  with the rotation matrix equal to,
+ </p>
+ <p hasmath="true">
+  $$R = \begin{bmatrix}cos(\beta) &amp; -sin(\beta)\\ sin(\beta) &amp; cos(\beta)\end{bmatrix}$$
+ </p>
+ <p>
+ </p>
+ <p hasmath="true">
+  Note that the position of $$-sin(\beta)$$ in the rotation matrix has changed.
+ </p>
+ <h2 level="2" variant="h2semibold">
+  Clockwise Rotation
+ </h2>
+ <p>
+  If rotation is clockwise, then the rotation matrix for multiplication with
+  <u>
+   row vectors
+  </u>
+  becomes,
+ </p>
+ <p hasmath="true">
+  $$R = \begin{bmatrix}cos(-\beta) &amp; sin(-\beta)\\ -sin(-\beta) &amp; cos(-\beta)\end{bmatrix}$$
+ </p>
+ <p hasmath="true">
+  As $$sin(-\beta) = -sin(\beta)$$ and $$cos(-\beta) = cos(\beta)$$
+ </p>
+ <p>
+  this equates to
+ </p>
+ <p hasmath="true">
+  $$R = \begin{bmatrix}cos(\beta) &amp; -sin(\beta)\\ sin(\beta) &amp; cos(\beta)\end{bmatrix}$$
+ </p>
+ <p>
+ </p>
+ <p hasmath="true">
+  So clockwise rotation of a vector $$[x, y]$$ can be expressed as,
+ </p>
+ <p hasmath="true">
+  $$[x', y'] = [x, y] \cdot\begin{bmatrix}cos(\beta) &amp; -sin(\beta)\\ sin(\beta) &amp; cos(\beta)\end{bmatrix}$$
+ </p>
+ <p>
+ </p>
+ <p>
+  The rotation matrix for multiplication with
+  <u>
+   column vectors
+  </u>
+  becomes,
+ </p>
+ <p hasmath="true">
+  $$R = \begin{bmatrix}cos(-\beta) &amp; -sin(-\beta)\\ sin(-\beta) &amp; cos(-\beta)\end{bmatrix}$$
+ </p>
+ <p>
+  which equates to,
+ </p>
+ <p hasmath="true">
+  $$R = \begin{bmatrix}cos(\beta) &amp; sin(\beta)\\ -sin(\beta) &amp; cos(\beta)\end{bmatrix}$$
+ </p>
+ <p>
+ </p>
+ <p hasmath="true">
+  So clockwise rotation of a vector $$\begin{bmatrix}x\\ y\end{bmatrix}$$ can be expressed as,
+ </p>
+ <p hasmath="true">
+  $$\begin{bmatrix}x'\\y'\end{bmatrix} = \begin{bmatrix}cos(\beta) &amp; sin(\beta)\\ -sin(\beta) &amp; cos(\beta)\end{bmatrix}\cdot \begin{bmatrix}x\\y\end{bmatrix}$$
+ </p>
+ <p>
+ </p>
+ <p>
+ </p>
+ <p>
+  <strong>
+   Author:
+  </strong>
+  Reinoud Bosch
+ </p>
+ <p>
+ </p>
+</co-content>
+<style>
+ body {
+    padding: 50px 85px 50px 85px;
+}
+
+table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 5px 20px;
+    text-align: left;
+}
+input {
+    margin: 10px;
+}
+}
+th {
+    font-weight: bold;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+pre {
+    display: block;
+    margin: 20px;
+    background: #424242;
+    color: #fff;
+    font-size: 13px;
+    white-space: pre-wrap;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    border: 1px solid #ccc;
+}
+</style>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ['$','$'] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    }
+  });
+</script>

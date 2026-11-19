@@ -90,6 +90,8 @@
           "editor.inlineSuggest.suppressSuggestions": true
      },
      "[markdown]": {
+          "editor.tabCompletion": "onlySnippets",
+          "editor.snippetSuggestions": "top",
           "editor.inlineSuggest.enabled": true,
           "editor.inlineSuggest.suppressSuggestions": true,
           "editor.quickSuggestions": {
@@ -97,7 +99,7 @@
                "comments": "on",
                "strings": "on"
           },
-          "editor.wordBasedSuggestions": "allDocuments",
+          "editor.wordBasedSuggestions": "currentDocument",
           "editor.suggest.showWords": true
      },
      "[plaintext]": {
@@ -117,26 +119,17 @@
      },
 
      // ================================================================
-     // ONE AI autocomplete provider: Supermaven.
+     // ONE AI autocomplete provider: Continue + local Ollama
+     // qwen2.5-coder:7b (models in ~/.continue/config.yaml).
      //
-     // 2026-09-21: settled on Supermaven as the sole inline-completion
-     // provider (purpose-built for autocomplete, generous free tier after
-     // its 14-day Pro trial auto-downgrades). Every competing provider's
-     // model/data was removed:
-     //   - Windsurf/Codeium: extension uninstalled, ~/.codeium deleted
-     //     (was dead anyway — Cognition folded it into Devin, no login).
-     //   - Continue + Ollama: qwen2.5-coder:3b removed from Ollama,
-     //     ~/.continue/config.yaml emptied. Extension left installed in
-     //     case a local fallback is needed later.
-     //   - Kilo Code's Codestral autocomplete: never actually set up
-     //     (needed paid Mistral credits) — config removed as unused.
-     //   - GitHub Copilot: left OFF; its free-plan completions quota is
-     //     exhausted until 2026-10-01 anyway. Chat still works elsewhere.
+     // 2026-10-29: every free cloud option failed: Supermaven (sunset),
+     // Gemini Code Assist for individuals (moved to Antigravity), Codestral
+     // free key (Mistral free API gone), Windsurf plugin (login redirects
+     // to Devin, out of credits), Copilot Free (2000/month, exhausted).
+     // The local model is permanently free and offline.
      // ================================================================
 
-     "supermaven.enable": true,
-
-     "continue.enableTabAutocomplete": false,
+     "continue.enableTabAutocomplete": true,
      "continue.enableNextEdit": false,
      "continue.showInlineTip": false,
 
@@ -147,6 +140,13 @@
           "scminput": false
      },
      "github.copilot.nextEditSuggestions.enabled": false,
+
+     // Typing lag fixes (2026-10-29). LTeX runs a Java LanguageTool server
+     // that re-checks whole Markdown files on every edit (Note.md is
+     // ~640 KB). Kilo Code's autocomplete trigger has no model configured,
+     // so it only adds overhead next to Continue.
+     "ltex.enabled": false,
+     "kilo-code.new.autocomplete.enableAutoTrigger": false,
 
      "git.ignoreLimitWarning": true
 }
