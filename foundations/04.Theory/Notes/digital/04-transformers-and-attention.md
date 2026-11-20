@@ -466,3 +466,511 @@ so $\text{apple} = 0.3\,\text{orange} + 0.4\,\text{apple} + 0.15\,\text{and} + 0
 | **an** | $v_{41}$ | $v_{42}$ | $v_{43}$ | $v_{44}$ |
 
 and so $\text{apple} \to v_{21}\cdot\text{orange} + v_{22}\cdot\text{apple} + v_{23}\cdot\text{and} + v_{24}\cdot\text{an}$.
+
+### Multi-Head Attention in Practice
+<!-- pages: 105 -->
+
+- In multi-head attention we use **many key, query and value matrices** — the more we use, the more likely we are to find better ones.
+- We don't know which transformation is good and which is bad, so we **concatenate** them first (e.g. a concatenation of two 2-column matrices gives a 4-column matrix — a high-dimensional embedding).
+- Then the **linear step** scales up the better embeddings and scales down the bad embeddings by some amount.
+- Finding the key (K), query (Q) and value (V) matrices is not easy: they are **trained with the transformer**, multiple times.
+
+## What Are Transformer Models and How Do They Work?
+<!-- pages: 105-107 -->
+
+- Transformer models are one of the most exciting new developments in machine learning. They were introduced in the paper **"Attention Is All You Need"**. Transformers can be used to write stories, essays and poems, answer questions, translate between languages and chat with humans, and they can even pass exams that are hard for humans.
+- But what are they? You'll be happy to know that the architecture of transformer models is not that complex: it simply is a **concatenation of some very useful components**, each of which has its own function.
+
+### In a Nutshell, What Does a Transformer Do?
+
+- Imagine that you're writing a text message on your phone. After each word, you may get 3 words suggested to you. For example, if you type "Hello, how are", the phone may suggest words such as "you" or "your" as the next word. Of course, if you continue selecting the suggested word in your phone, you'll quickly find that the message formed by these words makes no sense. If you look at each set of 3 or 4 consecutive words, it may make sense, but these words don't concatenate to anything with a meaning. This is because the model used in the phone does not carry the overall context of the message; it simply predicts which word is more likely to come up after the last few. **Transformers, on the other hand, keep track of the context of what is being written**, and this is why the text that they write makes sense.
+
+| Phone message box | Suggestions |
+| --- | --- |
+| "Hello, how are …" | you · your · things |
+| "Hello, how are you feeling this week and your kind wishes for a wonderful weekend with your kindness and happiness for your family love you & your kindness love …" | and · for |
+
+*The phone can suggest the next word to use in a text message, but does not have the power to generate coherent text.*
+
+- I have to be honest with you: the first time I found out that **transformers build text one word at a time**, I could not believe it. First of all, this is not how humans form sentences and thoughts — we first form a basic thought, and then start refining it and adding words to it. This is also not how ML models do other things; for example, images are not built this way. Most neural-network-based graphical models form a rough version of the image and slowly refine it or add detail until it is perfect. So why would a transformer model build text word by word? One answer is: because that works really well. A more satisfying one is that because transformers are so incredibly good at **keeping track of the context**, the next word they pick is exactly what it needs to keep going with an idea.
+
+<!-- pages: 108-110 -->
+
+- And how are transformers trained? With a lot of data — all the data on the internet, in fact. So, when you input the sentence "Hello, how are" into the transformer, it simply knows that, based on all the text on the internet, the best next word is "you". If you were to give it a more complicated command, say, "Write a story", it may figure out that a good next word to use is "Once". Then it adds this word to the command, and figures out that a good next word is "upon", and so on. And word by word, it will continue until it writes a story.
+
+| Command | Response |
+| --- | --- |
+| Write a story. | Once |
+| Write a story. Once | upon |
+| Write a story. Once upon | a |
+| Write a story. Once upon a | time |
+| Write a story. Once upon a time | there |
+| … | … |
+
+### The Architecture of a Transformer
+
+Now that we know what transformers do, let's get to their architecture. If you've seen the architecture of a transformer model, you may have jumped in awe like I did the first time I saw it — it looks quite complicated. However, when you break it down into its most important parts, it's not so bad. The transformer has 4 main parts (plus the final softmax):
+
+1. **Tokenisation**
+2. **Embedding**
+3. **Positional encoding**
+4. **Transformer block** (several of these)
+5. **Softmax**
+
+The 4th one, the transformer block, is the most complex of all. Many of these can be concatenated, and each one contains 2 main parts: the **attention** and the **feed-forward** components.
+
+```mermaid
+flowchart LR
+  IN["Input: Write a story"] --> TOK["Tokenisation"] --> EMB["Embedding"] --> PE["Positional encoding"]
+  subgraph BLOCKS["Series of transformer blocks"]
+    direction BT
+    A1["Attention"] --> F1["Feed-forward"] --> A2["Attention"] --> F2["Feed-forward"] --> A3["Attention"] --> F3["Feed-forward"]
+  end
+  PE --> A1
+  F3 --> SM["Softmax"] --> OUT["Output: Once"]
+```
+
+*The architecture of a transformer model.*
+
+### Tokenisation
+
+Tokenisation is the most basic step. It consists of a large dataset of tokens, including all the words, punctuation signs, etc. The tokenisation step takes every word, prefix, suffix and punctuation sign, and sends them to a known token from the library.
+
+<!-- pages: 112-113 -->
+
+*Tokenisation (turning words into tokens):* "Write a story." → `Write` · `a` · `story` · `.`
+
+### Embedding
+
+- Once the input has been tokenised, it's time to turn words into numbers. For this, we use an **embedding**. If two pieces of text are similar, then the numbers in their corresponding vectors are similar to each other (component-wise, meaning each pair of numbers in the same position is similar). Otherwise, if two pieces of text are different, then the numbers in their corresponding vectors are different.
+- For example, if the sentence we are considering is "Write a story." and the tokens are `<Write>`, `<a>`, `<story>` and `<.>`, then each one of these will be sent to a long vector, and we'll have 4 vectors:
+
+| Token | Embedding vector |
+| --- | --- |
+| Write | [2.13, −0.42, …, −1.03] |
+| a | [0.91, 0.56, …, 0.23] |
+| story | [−1.56, 1.34, …, 0.14] |
+| . | [1.42, −1.32, …, −2.41] |
+
+- In general, embeddings send every word (token) to a long list of numbers.
+
+### Positional Encoding
+
+- Once we have the vectors corresponding to each of the tokens in the sentence, the next step is to turn all these into one vector to process. The most common way to turn a bunch of vectors into one vector is to **add them, component-wise** — that means we add each coordinate separately. For example, if the vectors (of length 2) are [1, 2] and [3, 4], their corresponding sum is [1 + 3, 2 + 4] = [4, 6].
+- This can work, but there's a small caveat: **addition is commutative**. In that case, the sentence "I'm not sad, I'm happy" and the sentence "I'm not happy, I'm sad" will result in the same vector, given that they have the same words, except in a different order. This is not good. Therefore, we must come up with some method that will give us a different vector for the 2 sentences. Several methods work, and we'll go with one of them: **positional encoding**.
+- Positional encoding consists of **adding a sequence of predefined vectors to the embedding vectors of the words**. This ensures we get a unique vector for every sentence, and sentences with the same words in a different order will be assigned different vectors.
+
+<!-- pages: 114-117 -->
+
+- In the example below, the vectors corresponding to the words "Write", "a", "story" and "." become the modified vectors that carry information about their position, labelled "Write (1)", "a (2)", "story (3)" and ". (4)".
+
+| Token | Embedding | | Position vector | | Result |
+| --- | --- | :---: | --- | :---: | --- |
+| Write | [2.13, −0.42, …, −1.03] | + | position 1 | → | Write (1) |
+| a | [0.91, 0.56, …, 0.23] | + | position 2 | → | a (2) |
+| story | [−1.56, 1.34, …, 0.14] | + | position 3 | → | story (3) |
+| . | [1.42, −1.32, …, −2.41] | + | position 4 | → | . (4) |
+
+*Positional encoding adds a position vector to each word, in order to keep track of the positions of the words.*
+
+- Now that we know we have a unique vector corresponding to the sentence, and that this vector carries the information on all the words in the sentence and their order, we can move to the next step.
+
+### Transformer Block
+
+- Let's recap what we have so far. The words come in and get turned into tokens (tokenisation), the tokenised words are turned into numbers (embeddings), then order gets taken into account (positional encoding). This gives us a vector for every token that we input to the model. Now, the next step is to **predict the next word** in this sentence. This is done with a really, really large neural network, which is trained precisely with that goal: to predict the next word in a sentence.
+- We can train such a large network, but we can vastly improve it by adding a key step: the **attention component**. Introduced in the seminal paper "Attention Is All You Need", it is one of the key ingredients in transformer models, and one of the reasons they work so well. Imagine attention as a way to **add context to each word in the text**.
+- The attention component is added at every block of the feed-forward network. Therefore, if you imagine a large feed-forward neural network whose goal is to predict the next word, formed by several blocks of smaller neural networks, an attention component is added to each one of these blocks. Each component of the transformer, called a **transformer block**, is then formed by 2 main components:
+  - the **attention** component;
+  - the **feed-forward** component.
+
+```mermaid
+flowchart LR
+  IN(( )) --> B1
+  subgraph B1["Transformer block"]
+    direction BT
+    a1["Attention"] --> f1["Feed-forward"]
+  end
+  subgraph B2["Transformer block"]
+    direction BT
+    a2["Attention"] --> f2["Feed-forward"]
+  end
+  subgraph B3["Transformer block"]
+    direction BT
+    a3["Attention"] --> f3["Feed-forward"]
+  end
+  B1 --> B2 --> B3 --> OUT(( ))
+```
+
+*The transformer is a concatenation of many transformer blocks. Each one of these is composed of an attention component followed by a feed-forward component (a neural network).*
+
+### Attention
+
+- The next step is attention. It deals with a very important problem: **the problem of context**. Sometimes, as you know, the same word can be used with different meanings. This tends to confuse language models, since an embedding simply sends words to vectors, without knowing which definition of the word they are using.
+- Attention is a very powerful and useful technique that helps language models understand the context.
+
+<!-- pages: 118-120 -->
+
+- In order to understand how attention works, consider the following 2 sentences:
+  - Sentence 1: *The **bank** of the river.*
+  - Sentence 2: *Money in the **bank**.*
+- As you can see, the word "bank" appears in both, but with different definitions. In sentence 1, we are referring to the land at the side of the river, and in the 2nd one, to the institution that holds money. The computer has no idea of this, so we need to somehow inject that knowledge into it. What can help us? Well, it seems that the other words in the sentence can come to our rescue. For the 1st sentence, the words "the" and "of" do us no good. But the word "river" is the one that is letting us know that we're talking about the land at the side of the river. Similarly, in sentence 2, the word "money" is the one that is helping us understand that the word "bank" is now referring to the institution that holds money.
+- **In short, what attention does is move the words in a sentence (or piece of text) closer in the word embedding.** In that way, the word "bank" in the sentence "Money in the bank" will be moved closer to the word "money". Equivalently, in the sentence "The bank of the river", the word "bank" will be moved closer to the word "river". That way, the modified word "bank" in each of the 2 sentences will carry some of the information of the neighbouring words, adding context to it.
+- The attention step used in transformer models is actually much more powerful, and it's called **multi-head attention**. In multi-head attention, several different embeddings are used to modify the vectors and add context to them. Multi-head attention has helped language models reach much higher levels of efficacy when processing and generating text.
+
+### The Softmax Layer
+
+- Now that you know that a transformer is formed by many layers of transformer blocks, each containing attention and a feed-forward layer, you can think of it as a large neural network that predicts the next word in a sentence. The transformer outputs **scores for all the words**, where the highest scores are given to the words that are most likely to be next in the sentence.
+- The last step of a transformer is a **softmax layer**, which turns these scores into probabilities (that add to 1), where the highest scores correspond to the highest probabilities. Then we can **sample** out of these probabilities for the next word.
+- In the example below, the transformer gives the highest probability of 0.5 to "Once", and probabilities of 0.3 and 0.2 to "Somewhere" and "There". Once we sample, the word "Once" is selected, and that's the output of the transformer.
+
+```mermaid
+flowchart LR
+  I["Write a story"] --> T["Transformer"] --> S["Softmax"] --> P["Aardvark 0 · … · Once 0.5 · … · Somewhere 0.3 · … · There 0.2 · … · Zygote 0"]
+```
+
+| Word | Probability |
+| --- | ---: |
+| Aardvark | 0 |
+| … | … |
+| **Once** | **0.5** |
+| … | … |
+| Somewhere | 0.3 |
+| … | … |
+| There | 0.2 |
+| … | … |
+| Zygote | 0 |
+
+- Now what? Well, we repeat the step: we now input the text "Write a story. Once" into the model, and most likely the output will be "upon". Repeating this step again and again, the transformer will end up writing a story, such as "Once upon a time, there was a …".
+
+### Post-Training
+
+- Now that you know how transformers work, we still have a bit of work to do. Imagine the following: you ask the transformer "What is the capital of Algeria?" We would love for it to answer "Algiers" and move on. However, the transformer is trained on the entire internet.
+
+<!-- pages: 121-122 -->
+
+- The internet is a big place, and it's not necessarily the best question/answer repository. Many pages, for example, would have long lists of questions without answers. In this case, the next sentence after "What is the capital of Algeria?" could be another question, such as "What is the capital of Burkina Faso?" or "What is the population of Algeria?". The transformer is not a human who thinks about their responses; it simply mimics what it sees on the internet (or any dataset that has been provided). So, how do we get the transformer to answer questions?
+- The answer is **post-training**. In the same way that you would teach a person to do certain tasks, you can get a transformer to perform tasks. Once a transformer is trained on the entire internet, it is trained again on a large dataset which corresponds to lots of questions and their respective answers. **Transformers (like humans) have a bias towards the last things they have learned**, so post-training has proven a very useful step to help transformers succeed at the tasks they are asked to do.
+- Post-training also helps with many other tasks. For example, one can post-train a transformer with large datasets of conversations, in order to help it perform well as a chatbot, or to help us write stories, poems or even code.
+
+## The Illustrated Transformer: Encoders & Decoders
+<!-- pages: 122-123 -->
+
+- **Attention** is a concept that helped improve the performance of neural machine-translation applications.
+- The transformer outperforms the Google Neural Machine Translation model in specific tasks. The biggest benefit, however, comes from how the transformer **lends itself to parallelisation**. It is in fact Google Cloud's recommendation to use the Transformer as a reference model to use their **Cloud TPU** offering.
+- A TensorFlow implementation of the Transformer is available as a part of the **Tensor2Tensor** package.
+- Let's begin by looking at the model as a single black box. In a machine-translation application, it would take a sentence in one language and output its translation in another.
+
+```mermaid
+flowchart LR
+  I["Input: Je suis étudiant"] --> T["The Transformer"] --> O["Output: I am a student"]
+```
+
+Opening the box, we see an **encoding component**, a **decoding component** and connections between them:
+
+```mermaid
+flowchart LR
+  I["Je suis étudiant"] --> E["Encoders"] --> D["Decoders"] --> O["I am a student"]
+```
+
+- The encoding component is a **stack of encoders** (the paper stacks **6** of them on top of each other — there's nothing magical about the number 6; one can definitely experiment with other arrangements). The decoding component is a stack of decoders of the same number.
+
+```mermaid
+flowchart LR
+  IN["Input: Je suis étudiant"] --> E1
+  subgraph ENC["Encoders"]
+    direction BT
+    E1["Encoder"] --> E2["Encoder"] --> E3["Encoder"] --> E4["Encoder"] --> E5["Encoder"] --> E6["Encoder"]
+  end
+  subgraph DEC["Decoders"]
+    direction BT
+    D1["Decoder"] --> D2["Decoder"] --> D3["Decoder"] --> D4["Decoder"] --> D5["Decoder"] --> D6["Decoder"]
+  end
+  E6 --> D1
+  E6 --> D2
+  E6 --> D3
+  E6 --> D4
+  E6 --> D5
+  E6 --> D6
+  D6 --> OUT["Output: I am a student"]
+```
+
+*The output of the top encoder is fed to every decoder in the stack.*
+
+<!-- pages: 124-126 -->
+
+- The encoders are all **identical in structure** (yet they do not share weights). Each one is broken down into **2 sub-layers**:
+
+```mermaid
+flowchart BT
+  IN(( )) --> SA
+  subgraph ENC["Encoder"]
+    direction BT
+    SA["Self-Attention"] --> FF["Feed Forward Neural Network"]
+  end
+  FF --> OUT(( ))
+```
+
+- The encoder's inputs first flow through a **self-attention layer** — a layer that helps the encoder look at other words in the input sentence as it encodes a specific word.
+- The outputs of the self-attention layer are fed to a **feed-forward neural network**. The exact same feed-forward network is independently applied to each position.
+- The **decoder** has both those layers, but between them is an **attention layer** that helps the decoder focus on relevant parts of the input sentence (similar to what attention does in seq2seq models).
+
+```mermaid
+flowchart LR
+  subgraph ENC["Encoder"]
+    direction BT
+    ESA["Self-Attention"] --> EFF["Feed Forward"]
+  end
+  subgraph DEC["Decoder"]
+    direction BT
+    DSA["Self-Attention"] --> EDA["Encoder-Decoder Attention"] --> DFF["Feed Forward"]
+  end
+  EFF --> EDA
+```
+
+### Bringing the Tensors into the Picture
+
+- Now that we've seen the major components of the model, let's start to look at the various vectors/tensors and how they flow between these components to turn the input of a trained model into an output.
+- As is the case in NLP applications in general, we begin by turning each input word into a vector using an **embedding algorithm**: $x_1$ = *Je*, $x_2$ = *suis*, $x_3$ = *étudiant*. Each word is embedded into a **vector of size 512**. We'll represent those vectors with simple boxes.
+- The embedding only happens in the **bottom-most encoder**. The abstraction that is common to all the encoders is that they receive a list of vectors, each of size 512 — in the bottom encoder that would be the word embeddings, but in other encoders it would be the output of the encoder that's directly below. The size of this list is a hyperparameter we can set — basically it would be the length of the longest sentence in our training dataset.
+- After embedding the words in our input sequence, each of them flows through each of the 2 layers of the encoder.
+
+```mermaid
+flowchart BT
+  x1["x1 (Je)"] --> SA["Self-Attention"]
+  x2["x2 (suis)"] --> SA
+  x3["x3 (étudiant)"] --> SA
+  SA --> z1["z1"] --> FF1["Feed Forward"]
+  SA --> z2["z2"] --> FF2["Feed Forward"]
+  SA --> z3["z3"] --> FF3["Feed Forward"]
+```
+
+<!-- pages: 127-129 -->
+
+- Here we begin to see one key property of the Transformer, which is that **the word in each position flows through its own path in the encoder**. There are dependencies between these paths in the self-attention layer. The feed-forward layer does not have those dependencies, however, and thus the various paths can be **executed in parallel** while flowing through the feed-forward layer.
+- Next, we'll switch up the example to a shorter sentence, and we'll look at what happens in each sub-layer of the encoder.
+
+### Now We're Encoding!
+
+As we've mentioned already, an encoder receives a list of vectors as input. It processes this list by passing these vectors into a "self-attention" layer, then into a feed-forward neural network, then sends out the output upwards to the next encoder.
+
+```mermaid
+flowchart BT
+  E1["Encoder #1"] -- "r1" --> E2["Encoder #2"]
+  E1 -- "r2" --> E2
+```
+
+## Self-Attention in Detail & in Matrix Form
+<!-- pages: 128-129 -->
+
+### Self-Attention at a High Level
+
+- Let's see how self-attention works. Say the following sentence is an input sentence we want to translate:
+
+> "The animal didn't cross the street because **it** was too tired."
+
+- What does "it" in this sentence refer to? Is it referring to the street or to the animal? It's a simple question to a human, but not as simple to an algorithm.
+- When the model is processing the word "it", self-attention allows it to associate "it" with "animal".
+- As the model processes each word (each position in the input sequence), self-attention allows it to look at other positions in the input sequence for clues that can help lead to a better encoding for this word.
+- If you are familiar with RNNs, think of how maintaining a hidden state allows an RNN to incorporate its representation of previous words/vectors it has processed with the current one it's processing. **Self-attention is the method the Transformer uses to bake the "understanding" of other relevant words into the one we're currently processing.**
+
+![As we are encoding the word "it" in encoder #5 (the top encoder in the stack), part of the attention mechanism was focusing on "The animal" and baked a part of its representation into the encoding of "it"](figures/attention-it.svg)
+
+*[Check the Tensor2Tensor notebook for the visualisation.]*
+
+### Self-Attention in Detail
+<!-- pages: 130-132 -->
+
+Let's first look at how to calculate self-attention using vectors, then proceed to look at how it's actually implemented using matrices.
+
+**Step 1 — create query, key and value vectors.** The first step in calculating self-attention is to create 3 vectors from each of the encoder's input vectors (in this case, the embedding of each word). So for each word, we create a **Query vector**, a **Key vector** and a **Value vector**. These vectors are created by multiplying the embedding by 3 matrices ($W^Q$, $W^K$, $W^V$) that we trained during the training process.
+
+- Notice that these new vectors are **smaller in dimension** than the embedding vector. Their dimensionality is **64**, while the embedding and encoder input/output vectors have dimensionality of **512**. They don't *have* to be smaller; this is an architecture choice to make the computation of multi-headed attention (mostly) constant.
+
+| Input | Thinking | Machines | Weight matrix |
+| --- | --- | --- | --- |
+| Embedding | $x_1$ | $x_2$ | |
+| Queries | $q_1 = x_1 W^Q$ | $q_2 = x_2 W^Q$ | $W^Q$ |
+| Keys | $k_1 = x_1 W^K$ | $k_2 = x_2 W^K$ | $W^K$ |
+| Values | $v_1 = x_1 W^V$ | $v_2 = x_2 W^V$ | $W^V$ |
+
+**What are the "query", "key" and "value" vectors?** They are abstractions that are useful for calculating and thinking about attention. Once you proceed with reading how attention is calculated below, you'll know pretty much all you need to know about the role each of these vectors plays.
+
+**Step 2 — calculate a score.** Say we are calculating the self-attention for the first word in this example, "Thinking". We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.
+
+- The score is calculated by taking the **dot product of the query vector with the key vector** of the respective word we're scoring. So, if we're processing the self-attention for the word in position #1, the first score would be the dot product of $q_1$ and $k_1$. The second score would be the dot product of $q_1$ and $k_2$.
+
+| | Thinking | Machines |
+| --- | --- | --- |
+| Score | $q_1 \cdot k_1 = 112$ | $q_1 \cdot k_2 = 96$ |
+
+**Steps 3 and 4 — scale and softmax.** Divide the scores by **8** (the square root of the dimension of the key vectors used in the paper, $\sqrt{64}$). This leads to having more stable gradients. There could be other possible values here, but this is the default. Then pass the result through a **softmax** operation. Softmax normalises the scores so they are all positive and add up to 1.
+<!-- pages: 133-135 -->
+
+- This **softmax score** determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it's useful to attend to another word that is relevant to the current word.
+
+**Step 5 — weight the values.** Multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown out irrelevant words (by multiplying them by tiny numbers like 0.001, for example).
+
+**Step 6 — sum.** Sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).
+
+| Input | Thinking | Machines |
+| --- | --- | --- |
+| Embedding | $x_1$ | $x_2$ |
+| Queries | $q_1$ | $q_2$ |
+| Keys | $k_1$ | $k_2$ |
+| Values | $v_1$ | $v_2$ |
+| Score | $q_1 \cdot k_1 = 112$ | $q_1 \cdot k_2 = 96$ |
+| Divide by 8 ($\sqrt{d_k}$) | 14 | 12 |
+| Softmax | 0.88 | 0.12 |
+| Softmax × Value | $0.88\, v_1$ | $0.12\, v_2$ |
+| Sum | $z_1 = 0.88\, v_1 + 0.12\, v_2$ | |
+
+<!-- pages: 136-137 -->
+
+That concludes the self-attention calculation. The resulting vector is one we can send along to the feed-forward neural network. In the actual implementation, however, this calculation is done in **matrix form** for faster processing. So let's look at that, now that we've seen the intuition of the calculation on the word level.
+
+### Matrix Calculation of Self-Attention
+
+- **The first step** is to calculate the Query, Key and Value matrices. We do that by packing our embeddings into a matrix $X$, and multiplying it by the weight matrices we've trained ($W^Q$, $W^K$, $W^V$):
+$$Q = X W^Q, \qquad K = X W^K, \qquad V = X W^V.$$
+- Every row in the $X$ matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure) and the q/k/v vectors (64, or 3 boxes in the figure).
+- **Finally**, since we're dealing with matrices, we can condense steps two through six in one formula to calculate the outputs of the self-attention layer:
+$$Z = \operatorname{softmax}\!\left(\frac{Q K^T}{\sqrt{d_k}}\right) V \qquad \text{(the self-attention calculation in matrix form).}$$
+
+## Multi-Head Attention: The Beast with Many Heads
+<!-- pages: 137-139 -->
+
+The paper further refined the self-attention layer by adding a mechanism called **"multi-headed" attention**. This improves the performance of the attention layer in two ways:
+
+1. **It expands the model's ability to focus on different positions.** Yes, in the example above, $z_1$ contains a little bit of every other encoding, but it could be dominated by the actual word itself. If we're translating a sentence like "The animal didn't cross the street because it was too tired", it would be useful to know which word "it" refers to.
+2. **It gives the attention layer multiple "representation subspaces".** As we'll see next, with multi-headed attention we have not only one, but multiple sets of Query/Key/Value weight matrices (the Transformer uses **8 attention heads**, so we end up with 8 sets for each encoder/decoder). Each of these sets is randomly initialised. Then, after training, each set is used to project the input embeddings (or vectors from lower encoders/decoders) into a different representation subspace.
+
+| | Attention head #0 | Attention head #1 | … |
+| --- | --- | --- | --- |
+| Input $X$ ("Thinking Machines") | $X$ | $X$ | |
+| Queries | $Q_0 = X W_0^Q$ | $Q_1 = X W_1^Q$ | |
+| Keys | $K_0 = X W_0^K$ | $K_1 = X W_1^K$ | |
+| Values | $V_0 = X W_0^V$ | $V_1 = X W_1^V$ | |
+
+<!-- pages: 140-142 -->
+
+- If we do the same self-attention calculation we outlined above, just **8 different times with different weight matrices**, we end up with **8 different Z matrices**: calculating attention separately in 8 different attention heads gives $Z_0, Z_1, \dots, Z_7$.
+- This leaves us with a bit of a challenge. The feed-forward layer is not expecting 8 matrices — it's expecting a single matrix (a vector for each word). So we need a way to condense these 8 down into a single matrix.
+- How do we do that? We **concatenate the matrices, then multiply them by an additional weights matrix $W^O$**:
+  1. Concatenate all the attention heads: $[Z_0 \;|\; Z_1 \;|\; Z_2 \;|\; \dots \;|\; Z_7]$.
+  2. Multiply with a weight matrix $W^O$ that was trained jointly with the model.
+  3. The result would be the $Z$ matrix that captures information from all the attention heads. We can send this forward to the FFNN:
+$$Z = \operatorname{Concat}(Z_0, Z_1, \dots, Z_7)\, W^O.$$
+- That's pretty much all there is to multi-headed self-attention. It's quite a handful of matrices, I realise. Let me try to put them all in one visual so we can look at them in one place.
+
+### Multi-Head Self-Attention in One Picture
+<!-- pages: 143-144 -->
+
+```mermaid
+flowchart LR
+  X["1. Input sentence X (Thinking Machines)"] --> R["2. Embed each word → R *"]
+  R --> H["3. Split into 8 heads: multiply X or R by W_i^Q, W_i^K, W_i^V (i = 0 … 7)"]
+  H --> A["4. Calculate attention using the resulting Q_i / K_i / V_i matrices"]
+  A --> C["5. Concatenate Z_0 … Z_7, multiply by W^O → Z (output of the layer)"]
+```
+
+\* In all encoders other than #0, we don't need the embedding: we start directly with the output of the encoder right below this one.
+
+- With multiple attention heads, as we encode the word "it", **one attention head is focusing most on "the animal", while another is focusing on "tired"** — in a sense, the model's representation of the word "it" bakes in some of the representation of both "animal" and "tired".
+
+## Positional Encoding & Residual Connections
+<!-- pages: 145 -->
+
+### Representing the Order of the Sequence Using Positional Encoding
+
+- One thing that's missing from the model as we have described it so far is a way to account for the **order of words** in the input sequence. To address this, the transformer **adds a vector to each input embedding**. These vectors follow a specific pattern that the model learns, which helps it determine the position of each word, or the distance between different words in the sequence. The intuition here is that adding these values to the embeddings provides meaningful distances between the embedding vectors once they're projected into Q/K/V vectors and during dot-product attention.
+
+| Input | Je | suis | étudiant |
+| --- | --- | --- | --- |
+| Embeddings | $x_1$ | $x_2$ | $x_3$ |
+| Positional encoding | $+\; t_1$ | $+\; t_2$ | $+\; t_3$ |
+| Embedding with time signal | $= x_1 + t_1$ | $= x_2 + t_2$ | $= x_3 + t_3$ |
+
+*The embeddings with time signal flow into Encoder #0, then Encoder #1, …; each encoder also feeds the corresponding decoder.*
+
+<!-- pages: 146-147 -->
+
+If we assumed the embedding has a dimensionality of 4, the actual positional encodings would look like this:
+
+| Input | Je | suis | étudiant |
+| --- | --- | --- | --- |
+| Embedding | $x_1$ | $x_2$ | $x_3$ |
+| + Positional encoding | [0, 0, 1, 1] | [0.84, 0.0001, 0.54, 1] | [0.91, 0.0002, −0.42, 1] |
+
+*A real example of positional encoding with a toy embedding size of 4.*
+
+### The Residuals
+
+One detail in the architecture of the encoder that we need to mention before moving on is that **each sub-layer (self-attention, FFNN — feed-forward neural network) in each encoder has a residual connection around it, and is followed by a layer-normalisation step.**
+
+```mermaid
+flowchart BT
+  X1["x1 (Thinking) + positional encoding"] --> SA["Self-Attention"]
+  X2["x2 (Machines) + positional encoding"] --> SA
+  SA --> AN1["Add & Normalize: LayerNorm(X + Z)"]
+  X1 -. residual .-> AN1
+  X2 -. residual .-> AN1
+  AN1 -- z1 --> FF1["Feed Forward"]
+  AN1 -- z2 --> FF2["Feed Forward"]
+  FF1 --> AN2["Add & Normalize"]
+  FF2 --> AN2
+  AN1 -. residual .-> AN2
+  AN2 --> UP["to the next encoder"]
+```
+
+If we're to visualise the vectors and the layer-norm operation associated with the self-attention, it would look like the figure above: the self-attention outputs $z_1, z_2$ are added to the inputs $X$ and normalised, $\operatorname{LayerNorm}(X + Z)$, before the feed-forward layers; the same holds for the feed-forward sub-layer. This goes for the sub-layers of the decoder as well: a decoder has **Self-Attention → Add & Normalize → Encoder–Decoder Attention → Add & Normalize → Feed Forward → Add & Normalize**, and the top decoder is followed by a **Linear** layer and a **Softmax**.
+
+## The Decoder, Final Linear & Softmax Layer
+<!-- pages: 148 -->
+
+### The Decoder Side
+
+- The encoder starts by processing the input sequence. The output of the top encoder is then transformed into a set of attention vectors **K and V**. These are to be used by each decoder in its **"encoder–decoder attention" layer**, which helps the decoder focus on appropriate places in the input sequence.
+
+```mermaid
+flowchart LR
+  IN["Input: Je suis étudiant → embeddings with time signal"] --> E1["Encoder"] --> E2["Encoder"] --> KV["K_encdec, V_encdec"]
+  KV --> D1["Decoder"] --> D2["Decoder"] --> LS["Linear + Softmax"] --> O["Output: I"]
+```
+
+*Decoding time step 1.*
+
+- After finishing the encoding phase, we begin the decoding phase. Each step in the decoding phase outputs an element from the output sequence (the English translation sentence in this case).
+
+<!-- pages: 149-151 -->
+
+- The following steps repeat the process until a **special symbol** is reached, indicating the transformer decoder has completed its output. The output of each step is fed to the bottom decoder in the next time step, and the decoders bubble up their decoding results just like the encoders did. And just like we did with the encoder inputs, we embed and add positional encoding to those decoder inputs to indicate the position of each word.
+
+| Decoding time step | Previous outputs fed to the decoders | Output so far |
+| --- | --- | --- |
+| 1 | — | I |
+| 2 | I | I am |
+| 3 | I am | I am a |
+| 4 | I am a | I am a student |
+| 5 | I am a student | I am a student `<end of sequence>` |
+
+- The self-attention layers in the decoder operate in a slightly different way than the one in the encoder: **in the decoder, the self-attention layer is only allowed to attend to earlier positions in the output sequence.** This is done by **masking future positions** (setting them to $-\infty$) before the softmax step in the self-attention calculation.
+- The **"Encoder–Decoder Attention"** layer works just like multi-headed self-attention, except it creates its **Queries matrix from the layer below it**, and takes the **Keys and Values matrices from the output of the encoder stack**.
+
+### The Final Linear and Softmax Layer
+
+- The decoder stack outputs a vector of floats. How do we turn that into a word? That's the job of the **final Linear layer**, which is followed by a **Softmax layer**.
+- The Linear layer is a simple fully connected neural network that projects the vector produced by the stack of decoders into a much, much larger vector called a **logits vector**.
+- Let's assume that our model knows **10,000 unique English words** (our model's "output vocabulary") that it's learned from its training dataset. This would make the logits vector 10,000 cells wide — each cell corresponding to the score of a unique word. That is how we interpret the output of the model followed by the Linear layer.
+- The softmax layer then turns those scores into probabilities (all positive, all add up to 1.0). The cell with the highest probability is chosen, and the word associated with it is produced as the output for this time step.
+
+```mermaid
+flowchart BT
+  D["Decoder stack output"] --> L["Linear"] --> LG["logits (vocab_size)"] --> S["Softmax"] --> LP["log_probs (vocab_size)"] --> A["argmax: index of the cell with the highest value = 5"] --> W["word in our vocabulary at index 5: am"]
+```
+
+## Training: Loss Function & Decoding
+<!-- pages: 151-156 -->
+
+### Recap of Training
+
+Now that we've covered the entire forward-pass process through a trained Transformer, it would be useful to glance at the intuition of training the model. During training, an untrained model would go through the exact same forward pass. But since we are training it on a labelled training dataset, we can compare its output with the actual correct output.
