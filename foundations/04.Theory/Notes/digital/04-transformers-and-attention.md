@@ -974,3 +974,470 @@ flowchart BT
 ### Recap of Training
 
 Now that we've covered the entire forward-pass process through a trained Transformer, it would be useful to glance at the intuition of training the model. During training, an untrained model would go through the exact same forward pass. But since we are training it on a labelled training dataset, we can compare its output with the actual correct output.
+
+<!-- pages: 152-154 -->
+
+- To visualise this, let's assume our output vocabulary only contains **6 words** ("a", "am", "i", "thanks", "student", and "<eos>" — short for "end of sentence").
+
+| Word | a | am | I | thanks | student | `<eos>` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Index | 0 | 1 | 2 | 3 | 4 | 5 |
+
+*The output vocabulary of our model is created in the preprocessing phase, before we even begin training.*
+
+- Once we define our output vocabulary, we can use a vector of the same width to indicate each word in our vocabulary. This is also known as **one-hot encoding**. So, for example, we can indicate the word "am" using the following vector:
+
+| a | am | I | thanks | student | `<eos>` |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.0 | 1.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+- Following this recap, let's discuss the model's **loss function** — the metric we are optimising during the training phase to lead up to a trained and hopefully amazingly accurate model.
+
+### The Loss Function
+
+- Say we are training our model. Say it's our first step in the training phase, and we're training it on a simple example — translating "merci" into "thanks". What this means is that we want the output to be a probability distribution indicating the word "thanks". But since this model is not yet trained, that's unlikely to happen just yet.
+
+| | a | am | I | thanks | student | `<eos>` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Untrained model output | 0.2 | 0.2 | 0.1 | 0.2 | 0.2 | 0.1 |
+| Correct and desired output | 0.0 | 0.0 | 0.0 | 1.0 | 0.0 | 0.0 |
+
+- Since the model's parameters (weights) are all initialised randomly, the (untrained) model produces a probability distribution with arbitrary values for each cell/word. We can compare it with the actual output, then tweak all the model's weights using **backpropagation** to make the output closer to the desired output.
+- How do you compare two probability distributions? We simply subtract one from the other. For more details, look at **cross-entropy** and **Kullback–Leibler divergence**.
+- But note that this is an oversimplified example. More realistically, we'll use a sentence longer than one word. For example — input: "je suis étudiant" and expected output: "i am a student". What this really means is that we want our model to successively output probability distributions where:
+  - each probability distribution is represented by a vector of width `vocab_size` (6 in our toy example, but more realistically a number like 30,000 or 50,000);
+  - the first probability distribution has the highest probability at the cell associated with the word "i";
+  - the second probability distribution has the highest probability at the cell associated with the word "am";
+  - and so on, until the fifth output distribution indicates the "<end of sentence>" symbol, which also has a cell associated with it from the 10,000-element vocabulary.
+
+<!-- pages: 155-156 -->
+
+**Target model outputs** (one-hot):
+
+| Output vocabulary | a | am | I | thanks | student | `<eos>` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Position #1 | 0.0 | 0.0 | **1.0** | 0.0 | 0.0 | 0.0 |
+| Position #2 | 0.0 | **1.0** | 0.0 | 0.0 | 0.0 | 0.0 |
+| Position #3 | **1.0** | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| Position #4 | 0.0 | 0.0 | 0.0 | 0.0 | **1.0** | 0.0 |
+| Position #5 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | **1.0** |
+
+After training the model for enough time on a large enough dataset, we would hope the produced probability distributions would look like this — **trained model outputs:**
+
+| Output vocabulary | a | am | I | thanks | student | `<eos>` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Position #1 | 0.01 | 0.02 | **0.93** | 0.01 | 0.03 | 0.01 |
+| Position #2 | 0.01 | **0.8** | 0.1 | 0.05 | 0.01 | 0.03 |
+| Position #3 | **0.99** | 0.001 | 0.001 | 0.001 | 0.002 | 0.001 |
+| Position #4 | 0.001 | 0.002 | 0.001 | 0.02 | **0.94** | 0.01 |
+| Position #5 | 0.01 | 0.01 | 0.001 | 0.001 | 0.001 | **0.98** |
+
+### Decoding: Greedy Decoding and Beam Search
+
+- Now, because the model produces the outputs one at a time, we can assume that the model is selecting the word with the highest probability from that probability distribution and throwing away the rest. That's one way to do it (called **greedy decoding**).
+- Another way to do it would be to hold on to, say, the top 2 words (say, "I" and "a" for example); then in the next step, run the model twice: once assuming the first output position was the word "I", and another time assuming the first output position was the word "a", and whichever version produced less error considering both positions #1 and #2 is kept. We repeat this for positions #2 and #3, etc. This method is called **beam search**, where in our example `beam_size` was 2 (meaning that at all times, 2 partial hypotheses — unfinished translations — are kept in memory), and `top_beams` is also two (meaning we'll return 2 translations). These are both hyperparameters that you can experiment with.
+
+## How GPT-3 Works
+<!-- pages: 157-163 -->
+
+*Visualisations and animations.*
+
+- **GPT-3** is a massive language model.
+- A trained language model **generates text**.
+- We can optionally pass it some text as input, which influences its output. The output is generated from what the model "learned" during its training period, where it scanned vast amounts of text.
+
+```mermaid
+flowchart TB
+  P["Input prompt: Recite the first law of robotics"] --> G["GPT-3"] --> O["Output: A robot may not injure a human being or, through inaction, allow a human being to come to harm."]
+```
+
+- **Training** is the process of exposing the model to lots of text. That process has been completed: all the experiments you see now are from that one trained model. It was estimated to cost **355 GPU years and \$4.6 m**.
+
+<!-- pages: 158-160 -->
+
+```mermaid
+flowchart TB
+  U["Untrained GPT-3"] --> P["Unsupervised pre-training — expensive training on massive datasets. Dataset: 300 billion tokens of text. Objective: predict the next word (e.g. a robot must ?)"] --> G["GPT-3"]
+```
+
+- The dataset of **300 billion tokens** of text is used to generate training examples for the model. For example, these are 3 training examples generated from the one sentence at the top. You can see how you can **slide a window across all the text** and make lots of examples.
+
+*Text:* "Second Law of Robotics: A robot must obey the orders given it by human beings."
+
+| Example # | Input (features) | Correct output (label) |
+| ---: | --- | --- |
+| 1 | Second law of robotics : | a |
+| 2 | Second law of robotics : a | robot |
+| 3 | Second law of robotics : a robot | must |
+
+- The model is presented with an example. We only show it the features and ask it to predict the next word.
+- The model's prediction will be wrong. We calculate the error in its prediction and update the model, so next time it makes a better prediction.
+- **Repeat millions of times.**
+
+```mermaid
+flowchart LR
+  I["Input (features): a robot must"] --> G["GPT-3 (under training)"] --> O["Output (prediction): exterminate"]
+  O --> C{"No — should have been: obey (correct output / label)"} --> E["Calculate error"]
+  E -- "update: the model gets updated" --> G
+```
+
+*Unsupervised pre-training.*
+
+Now, let's look at these same steps with a bit more detail.
+
+- GPT-3 actually **generates output one token at a time** (let's assume a token is a word for now).
+
+```mermaid
+flowchart TB
+  P["Input prompt: Recite · the · first · law · of · robotics"] --> G["GPT-3"] --> O["Output: A robot may not injure a human being"]
+```
+
+- Each word — "Recite", "the", "first", "law", "of", "robotics" — goes into the GPT-3 model one by one, and then it produces the output "A", "robot", "may", "not", "injure", "a", "human", "being" one by one from the model.
+- Please note that this is a description of how GPT-3 works and not a discussion of what is novel about it.
+- **GPT-3 is MASSIVE.** It encodes what it learns from training in **175 billion numbers (called parameters)**. These numbers are used to calculate which token to generate at each run.
+- The untrained model starts with **random parameters**. Training finds values that lead to better predictions.
+
+<!-- pages: 161-163 -->
+
+```mermaid
+flowchart LR
+  U["Untrained GPT-3 — 175 B parameters (with random values)"] -- "unsupervised pre-training" --> T["GPT-3 — 175 B parameters (appropriate values)"]
+```
+
+- These numbers are part of **hundreds of matrices** inside the model. Prediction is mostly a lot of matrix multiplication.
+- To shed light on how these parameters are distributed and used, we'll need to open the model and look inside.
+- GPT-3 is **2048 tokens wide**. That is its **"context window"**. That means it has 2048 tracks along which tokens are processed.
+
+*Input tracks 1 … 2048: "Recite" (1), "the" (2), "first" (3), "law" (4), "of" (5), "robotics" (6), … — the output tokens "A", "robot", "may", "not", … are produced one after the other.*
+
+- **How does a system process the word "robotics" and produce "A"?** High-level steps:
+  1. Convert the word to a vector (list of numbers) representing the word (word2vec — check the blog on this topic).
+  2. Compute the prediction.
+  3. Convert the resulting vector to a word.
+
+```mermaid
+flowchart LR
+  W["robotics"] --> S1["1 — convert word into vector: embedding of 'robotics' + positional encoding for position #6 (a vector of size 12,288, I think)"]
+  S1 --> S2["2 — magic"] --> S3["3 — convert vector into word: prediction result (a vector of size 12,288, I think)"] --> A["A"]
+```
+
+- The important calculations of GPT-3 occur inside its **stack of 96 transformer decoder layers**.
+- See all these layers? This is the **"depth" in deep learning**.
+- Each of these layers has its own **1.8 B parameters** to make its calculations. This is where the "magic" happens. This is a high-level view of that process:
+
+```mermaid
+flowchart LR
+  W["robotics"] --> D1["Transformer decoder 1"] --> D2["Transformer decoder 2"] --> D3["Transformer decoder 3"] --> D4["Transformer decoder 4"] --> DN["… Transformer decoder 96"] --> A["A"]
+```
+
+- You can see a detailed explanation of everything inside the decoder in the blog post *The Illustrated GPT-2*.
+- **The difference with GPT-3 is the alternating dense and sparse self-attention layers.**
+- **Fine-tuning** actually updates the model's weights to make the model better at a certain task (additional training to become better at a certain task, e.g. English-to-French translation — the parameter values get updated).
+
+## Transformer Families: GPT-2, BERT & Output Projection
+<!-- pages: 164-169 -->
+
+- A **transformer** basically is a type of ML model, or its architecture, of a neural network. Various variants of transformers are there, like **BERT**, which builds on top of transformers.
+- **Vision Transformers** are the transformers applied to computer vision.
+- Deep learning in computer vision is dominated by CNNs, which produce the best deep-learning models in computer vision.
+- We can think of a transformer as a black box:
+
+```mermaid
+flowchart TB
+  I["Input: Je suis étudiant (French)"] --> T["The Transformer"] --> O["Output: I am a student"]
+```
+
+*This is from the original (initial) paper, because the paper talked about machine translation initially. It can be explored as:*
+
+```mermaid
+flowchart LR
+  I["Input: Je suis étudiant"] --> E["Encoder stack"] --> D["Decoder stack"] --> O["Output: I am a student"]
+```
+
+- The **encoder stack** contains **6 encoder blocks** and the **decoder stack** contains **6 decoder blocks** in the initial transformers. These are the building blocks of transformers.
+- The Transformer is an **encoder–decoder** based model, but a **Transformer language model is decoder-based** (e.g. GPT-2, GPT-3, etc.).
+- Transformer-based **encoder models** have examples like **BERT**.
+
+| GPT-2 Large | BERT Large |
+| --- | --- |
+| **36 blocks of decoders** (Decoder 1 … Decoder 36) | **24 blocks of encoders** (Encoder 1 … Encoder 24) |
+
+### Pre-training a Language Model
+
+- A model starts as untrained, and it goes through a **pre-training** process where we expose it to a lot of language, and from that emerges a trained language model. In this case we have a lot of data that we train the model on. For language models the data is text: we get lots of data from the internet, Wikipedia and various websites, and we create training examples (data points).
+
+| Features | Correct output (label) |
+| --- | --- |
+| Second law of robotics : | a |
+| Second law of robotics : a | robot |
+
+- The above training examples are generated from the text: *"Second Law of Robotics: A robot must obey the orders given it by human beings."*
+- Once we have our examples, we present them like this:
+
+```mermaid
+flowchart LR
+  I["Input (features): a robot must"] --> G["GPT-3 (under training — the model is not trained)"] --> O["Output (prediction): troll (it is random)"]
+  O --> C{"No — should have been: obey (correct output / label)"} --> E["Calculate error"]
+  E -- "model updated" --> G
+```
+
+- Now, next time the model sees "a robot must", it is more likely to give "obey". We do this millions of times and train the model. *[This is the pre-training phase of a language model.]*
+
+### Using a Trained Language Model
+
+```mermaid
+flowchart TB
+  I["Input: The (0) · Shawshank (1)"] --> T["Transformer (language model): decoder"] --> O["Redemption (2)"]
+```
+
+- The model has looked through text like Wikipedia and has been trained on lots of text, so it will be able to predict. *[Try the distilgpt2 model on Hugging Face.]*
+- The last layer in the decoder block is a **feed-forward neural network**.
+
+<!-- pages: 167-169 -->
+
+- The **2 main components of a decoder block** are ① **self-attention** and ② the **feed-forward neural network**.
+
+### Tokenisation
+
+| Step | | | | |
+| --- | --- | --- | --- | --- |
+| Input | The Shawshank | | | |
+| Tokenise | 'The' | 'Shaw' | 'sh' | 'ank' |
+| Position | 0 | 1 | 2 | 3 |
+| Convert to token ids | 464 | 18193 | 1477 | 962 |
+
+*These integers represent the index of that token in the vocabulary.*
+
+```mermaid
+flowchart TB
+  IDS["Token ids: 464 · 18193 · 1477 · 962 (this is presented to the model)"] --> T["Transformer (language model)"] --> OUT["34433 (token id)"] --> W["Redemption (the tokeniser translates this token id to a word)"]
+```
+
+### Breathing Meaning into Numbers
+
+- When we downloaded a pre-trained GPT-2 model, it came with this list — the **token embeddings (wte)**: a matrix with one row per entry of the model vocabulary (size **50,257**: aardvark, aarhus, aaron, …, zyzzva) and one column per embedding dimension (the embedding size).
+- **Part of training is to create this embedding matrix.**
+
+```mermaid
+flowchart TB
+  IDS["'The' 464 · 'Shaw' 18193 · 'sh' 1477 · 'ank' 962"] --> EMB["Embedding: each token id is converted to an embedding vector"]
+  EMB --> TB["Transformer block"]
+  TB --> HS["Hidden states (one vector per token)"]
+```
+
+- The transformer block processes **each token at the same time, in parallel**, outputs a vector, and then the next block starts.
+- Capturing the relationships in data is not something one block is able to do alone, so one block's output is fed into another block, and so on.
+- For language models, the hidden state that we're focused on the most is **the last one**.
+
+### Turning Computation into Language (Output Projection)
+
+```mermaid
+flowchart TB
+  H["Last hidden state of the last block"] -- "project hidden state to vocabulary" --> L["Logits: a score for each token in the vocabulary — e.g. −2 · … · −1 · … · 14 (highest score: 'Redemption') · … · −3"]
+  L -- softmax --> P["Probability distribution: aardvark 0.01 · … · zyzzva 0.0 · … · Redemption 0.9 (highest probability) · … · <eos> 0.0"]
+  P --> G["Greedy sampling = pick the highest-probability word → Redemption"]
+```
+
+## Transformers Explained: From N-grams to Attention
+<!-- pages: 170-180 -->
+
+- **Transformers can do anything.** They can chat with you, they can answer questions, they can follow commands, they can build stories/poems, or they can write code. [Write code to build chatbots — by searching YouTube.]
+- Transformers require huge datasets and a lot of computing power to be trained properly, but they have a **simple architecture**.
+- Transformers were introduced in the paper **"Attention Is All You Need"**.
+- **The architecture of a transformer model:**
+  - tokenisation;
+  - embeddings (word2vec);
+  - attention mechanisms;
+  - feed-forward neural networks.
+
+### What Is a Transformer?
+
+> *"I generate text … one word at a time."* — a Transformer (sketched as the robot from the movie *Transformers*)
+
+**Examples:**
+
+1. Prompt "Hello, how are you" → transformer output: **doing**.
+2. Prompt "Write a story." → output **Once**; prompt "Write a story. Once" → output **upon**; prompt "Write a story. Once upon" → output **a**; …
+
+If it does this many times, then it actually generates a story.
+
+### Transformer Architecture
+
+![The Transformer architecture: encoder (left) and decoder (right), each repeated N times](figures/transformer-architecture.svg)
+
+<!-- pages: 173-175 -->
+
+**See it like this:**
+
+```mermaid
+flowchart LR
+  subgraph PRE["Preprocessing"]
+    direction BT
+    IN["Input: Write a story"] --> TOK["Tokenisation"] --> EMB["Embedding"] --> PE["Positional encoding"]
+  end
+  subgraph BLK["Series of transformer blocks"]
+    direction BT
+    A1["Attention"] --> F1["Feed forward"] --> A2["Attention"] --> F2["Feed forward"] --> A3["Attention"] --> F3["Feed forward"]
+  end
+  PE --> A1
+  F3 --> SM["Softmax"] --> OUT["Output: Once"]
+```
+
+### Why Not N-grams?
+
+- *Example:* suppose we are texting a message to a friend and we have to predict the next (1) word for: "Hello, how are ___".
+- The simple solution, using a **1-gram model**: we have to find the most likely next word after "are" in the text we have seen, e.g. "… are you …", "… are sad …", "… are? …", "… are **happy** …", "… are ready …", "… are **happy** …", "… are free …". "Happy" appears 2 times, so we suggest the next word as "happy" — but that doesn't always work very well.
+- But it makes sense to use more context. Now, using a **trigram model**, we take the last 3 words, "Hello, how are". Now we can have:
+  - Hello, how are you?
+  - Hello, how are **things** going?
+  - Hello, how are **things** today?
+  - Hello, how are the kids?
+  - Hello, how are the others?
+  - Hello, how are they doing?
+  - Hello, how are **things** happening?
+
+  Here, the most common word is **"things"**.
+- Now, to make it more powerful, we can use **10-grams**. *Example:* "Hello, today I would like to inform you that the ___" (10 words).
+- But the problem is: the more words we pick, the more educated the guess is, but also the more words we pick, the less likely that the sentence could have appeared before (because it may be the sentence's first appearance).
+
+### We Need Something More Advanced
+
+We use a **neural network (NN)**:
+
+```mermaid
+flowchart LR
+  I["Hello, how are"] --> N["Neural Network"] --> O["your"]
+```
+
+- An NN is trained to remember a few words at a time and to build short sentences, not to build long text. To build long text, we need a **Transformer**.
+
+### Tokenisation
+
+- It breaks everything into **units**. A unit is a word.
+- *Example:* "Write a story." → `Write` · `a` · `story` · `.`; and "doesn't" → `does` · `n't`.
+- There is also a science of tokenisation [see Jay's blog].
+
+### Embeddings
+
+- How do we build embeddings? There are many ways. I am going to explain it with **neural networks**.
+
+<!-- pages: 176-178 -->
+
+Say we have:
+
+| Word | Numbers | |
+| --- | ---: | ---: |
+| Strawberry | 5 | 4 |
+| Apple | 5 | 5 |
+| Castle | 2 | 1 |
+
+*Strawberry and apple are very similar.*
+
+```mermaid
+flowchart LR
+  S["strawberry"] --> H1["hidden layer"] --> H2["hidden layer — gives 3 numbers [1, 3, 2] = embedding for strawberry"] --> O["next word after strawberry: is · ate · delicious"]
+```
+
+*(A similar process gives the embedding for apple.)* So we have:
+
+| Word | Numbers | | |
+| --- | ---: | ---: | ---: |
+| Strawberry | 1 | 3 | 2 |
+| Apple | 1.1 | 2.9 | 2.2 |
+
+*Very similar.*
+
+- An NN has layers, and each layer understands deeper and deeper properties of the word.
+- When we train an NN to guess the next word, it has to understand words pretty well — it means these layers must capture properties of the word.
+- This is a pretty common method to find embeddings, and it is called **word to vector (word2vec)**.
+
+### Positional Encoding
+
+- It is very important because it **takes care of order**: "Write a story ." is not the same as "Story . a write", because the output matters — so the order of the words matters. We would not want to feed the same thing into an NN for 2 sentences in two different orders. So what to do? Well, we have just learned embeddings.
+- **Perturb the words** in these directions: each position gets its own arrow (→, ↑, ↖, ←, …), and the word at that position is moved a little in that direction.
+
+![Each word is perturbed in the direction given by its position: in "Write a story ." write moves →, a ↑, story ↖, . ←; in "Story . a write" the same arrows apply to different words](figures/pe-perturb.svg)
+
+- Now when the words move, we get **different embeddings for these 2 different sentences**:
+
+![After positional encoding the two sentences have different embeddings](figures/pe-result.svg)
+
+- There are no semantics here. It's really adding different numbers to the 1st word, 2nd word, 3rd word, 4th word, etc., in such a way that now the embedding captures order in some way, and then the NN would take care of learning this order more. It works really well.
+- **What is the rule for these arrows?** They change a lot: I've seen them using sines and cosines; I've seen using exponential functions, but better and better positional encoding functions keep coming out. All you need to know is that these numbers normally follow a sequence. *For example:* → ↑ ↖ ← ↙ ↓ ↘ → → →. **This sequence of arrows that rotate slower and slower every time** is one that works as positional encoding, but if you want to remember one thing about positional encoding: you just find some kind of sequence that you add to each one of the words in the sentence in order to move them around and perturb the order.
+<!-- pages: 179-180 -->
+
+### Attention
+
+- Attention is **crucial in the transformer model**. It is the step that made them work really well, because it's the step that really captures the context. Attention can appear many times in the architecture, because it appears in each one of the transformer blocks, followed by some feed-forward layers.
+- Consider attention as a **gravitational pull between words** that appear in the same sentence or in the same context.
+  - *Example:* "Please buy an **apple** and an **orange**" — *apple* is pulled towards *orange*; "**apple** unveiled the new **phone**" — *apple* is influenced by *phone*.
+
+**Using context:** "The **bear** ate the **honey** because **it** was ___."
+
+- **Question:** does "it" refer to "honey" or "bear"? Well, we don't know, because it depends on the next word. If the blank word is **"hungry"**, then "it" refers to "bear", and if the blank word is **"delicious"**, then it refers to "honey".
+- Let's understand it using embeddings: words are similar if they appear in the same context many times. So 2 words are likely to be replaceable if they are similar.
+  - "it" has the same amount of gravitational pull towards both "bear" and "honey".
+  - Once we know the next word is "hungry", then both "hungry" and "bear" pull "it", so "it" gravitates to "bear". And if the next word is "delicious", then "it" is pulled by "honey" and "delicious" — so here, "it" describes "honey".
+- **In this way attention works.**
+- A series of transformer blocks (many feed-forward NNs with attention to capture context) is a big NN which predicts the next word in the form of +ve and −ve numbers (scores), so we need a **softmax layer**. Since scores can be −ve but probabilities can't be negative, we take $e^{\text{score}}$ and then normalise it (divide by their sum).
+
+## Fine-Tuning & Post-Training
+<!-- pages: 181-185 -->
+
+- The internet is **not a question/answer repository**, so a model may not work (as an assistant) if it is only trained on the internet.
+- *Example:* "What is the capital of Nigeria?" — on the internet the next word may not be "Abuja". It can be:
+
+| ① Quiz | ② Story | ③ Chat | ④ History |
+| --- | --- | --- | --- |
+| What is the capital of Nigeria? **What** is the capital of Chad? What is the capital of Lebanon? | What is the capital of Nigeria? **she** asked | What is the capital of Nigeria? **That** is a good question | What is the capital of Nigeria? **Since** 1991, it's Abuja. |
+
+*(Bold = the next word.)*
+
+- So the model is not very clear about what the next word should be. Remember, a transformer model is not trying to answer questions; it's trying to find the next word. So how do we get the model to know that it's not just the next word that we want, it's the answer?
+- What we have to do is to **train it on question–answer datasets**.
+
+<!-- pages: 182-184 -->
+
+- So we can use experts to curate a bunch of datasets that have particular questions and answers, so that the model starts learning that when it gets a question, it has to answer with the answer. That's called **fine-tuning a model**, and it's a very expensive part of training, because you actually require people to create custom datasets, and you need to be very careful and curate these datasets very well.
+
+| ① Q/A | ② Q/A | ③ Q/A | ④ Q/A |
+| --- | --- | --- | --- |
+| What is the capital of Nigeria? → **Abuja** | What is the capital of Colombia? → **Bogotá** | Who discovered algebra? → **Al-Khwarizmi** | Who discovered abstract algebra? → **Emmy Noether** |
+
+- This is not only for question–answers. If you want the model to actually **chat** — e.g. "Hello, how are you?" "Good, and you?" … — then you need to fine-tune the model by post-training with tons and tons of chats. In this way the model starts learning that if you are talking to it, it has to reply as a person who's chatting back at you, and it should remember the previous steps of the conversation.
+
+| ① Chat | ② Chat | ③ Chat | ④ Chat |
+| --- | --- | --- | --- |
+| Hello, how are you? — I'm good, and you? — Great, thank you | Good morning, how can I help you? — Thank you, can you connect me with … | Hi mom! — Hello dear | Hello, please connect me with customer support — Of course — Thank you |
+
+- Another thing you should fine-tune the model for is **commands**, like "Do this!" — "OK, boss!"
+
+| ① Command | ② Command | ③ Command | ④ Command |
+| --- | --- | --- | --- |
+| Write a poem about elephants — Oh mighty elephant, thou shalt … | Correct this code: `print(hello world)` — Yes! You need to add quotations: `print("hello world")` | Write an essay about the Middle Ages — OK! Back in the day … | Give me a list of fruits — Definitely: apple, banana, orange |
+
+### How to Generate Text?
+
+*Example:* "Hello, how are ___" — you? **your**? things?
+
+![A neural network takes the one-hot input words (Hello, How) and outputs a probability for every word in the vocabulary: things 0.2, You 0.3, Your 0.5](figures/nn-next-word.svg)
+
+- But a transformer is different from an NN: it **carries context**, and it also writes a story by making a loop of next words.
+- **So, the difference between an NN and a Transformer:**
+  - Transformers have a huge number (lots and lots) of parameters, and they are trained on lots of data, and they carry context.
+  - NNs have feed-forward layers, but transformers have a different architecture.
+
+### Key Points to Remember
+<!-- pages: 185 -->
+
+- "I'm not sad, I'm happy" and "I'm not happy, I'm sad" have the same (summed) embedding vectors, so we do **positional encodings**.
+- For **multi-headed attention**, we use several different embeddings.
+- **Post-training:**
+
+```mermaid
+flowchart LR
+  I(( )) --> T["Transformer model (chatbot)"] --> S["Specialised data"] --> O["Specialised chatbot"]
+```
+
+- A **high dot-product value means high similarity**.
+- Word and sentence embeddings can't be done by humans: they are done by a computer, by neural networks.
