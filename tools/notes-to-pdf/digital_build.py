@@ -65,6 +65,8 @@ td .katex, th .katex { font-size: 1em; }
 li > p { margin: 0 0 1.2mm; }
 ul ul, ol ol, ul ol, ol ul { margin-bottom: 1mm; }
 blockquote strong:first-child { color: var(--accent); }
+.two-figs { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; align-items: end; break-inside: avoid; }
+.two-figs .diagram { margin: 0; }
 figure.sketch { margin: 3mm 0 5mm; text-align: center; break-inside: avoid; }
 figure.sketch img { max-width: 92%; max-height: 95mm; border: .3mm solid var(--hair); border-radius: 1.5mm; }
 figure.sketch figcaption { margin-top: 1.5mm; }

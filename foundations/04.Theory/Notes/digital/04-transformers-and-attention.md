@@ -20,18 +20,7 @@
 - Word embeddings not only capture word similarity, but they also capture other properties of the language.
 - In language, words can be combined to get more complicated concepts. In mathematics, numbers can be added or subtracted to get other numbers. Could we build a word embedding that captures relations between words, as relations between numbers?
 
-```mermaid
-quadrantChart
-  title Word embedding with two features
-  x-axis "Younger" --> "Older (age)"
-  y-axis "Smaller" --> "Bigger (size)"
-  puppy: [0.17, 0.17]
-  dog: [0.5, 0.17]
-  calf: [0.17, 0.67]
-  cow: [0.5, 0.67]
-```
-
-*Coordinates in the notebook's sketch: puppy (1, 1), dog (3, 1), calf (1, 4), cow (3, 4).*
+![Word embedding with two features — age (horizontal) and size (vertical): puppy (1, 1), dog (3, 1), calf (1, 4), cow (3, 4)](figures/puppy-dog.svg)
 
 - Here *puppy*, *dog*, *calf* and *cow* make a **rectangle**: puppy : dog :: calf : cow.
   - The path from the word *puppy* to the word *dog* is the same as the path from the word *calf* to the word *cow*.
@@ -211,16 +200,7 @@ flowchart LR
   - Modified sentence 1: *The **bank1** of the river.*
   - Modified sentence 2: *Money in the **bank2**.*
 
-```mermaid
-flowchart TB
-  subgraph CB["Embedding (cork board)"]
-    direction TB
-    river["river"] --- bank1["bank1"]
-    bank1 -. "moved towards river" .- bank["bank"]
-    bank -. "moved towards money" .- bank2["bank2"]
-    bank2 --- money["money"]
-  end
-```
+![The cork board: "bank" is copied and moved slightly towards "river" (bank1) and towards "money" (bank2)](figures/cork-board.svg)
 
 - In these 2 sentences, the computer now knows a little more about the context of the word "bank", as the word has been split into 2 distinct ones: one whose definition is closer to "river", and another one whose definition is closer to "money". That, in short, is how **attention mechanisms** work. However, there may be many questions lingering in your head. For example:
   - What do you mean by "moving a word closer to another one"?
@@ -304,3 +284,185 @@ $$\text{money2} = 0.8 \times \text{"money"} + 0.2 \times \text{"bank"}.$$
 - LLMs make great use of attention mechanisms in order to understand text.
 - Attention helps the LLM understand the **whole context of the text**, as opposed to just a few words at a time.
 - So attention does a few mathematical operations that can be seen **geometrically**. Embeddings are a bridge between human and computer, because humans understand text and computers understand numbers. **The better the embedding, the better the models are**, because if you have really good numbers for each word or each piece of text, then the problem becomes much easier.
+
+## Multi-Head Attention & Building Better Embeddings
+<!-- pages: 92-95 -->
+
+**Attention** comes in two forms: **self-attention** and **multi-head attention**.
+
+- Attention uses the **context of the sentence** in order to help the embedding resolve this type of ambiguity.
+- Attention can be explained using the formulas below, with matrices such as **Query, Key and Values**:
+$$\operatorname{Attention}(Q, K, V) = \operatorname{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right) V,$$
+$$\operatorname{MultiHead}(Q, K, V) = \operatorname{Concat}(\text{head}_1, \dots, \text{head}_h)\, W^O, \qquad \text{where } \text{head}_i = \operatorname{Attention}(QW_i^Q,\; KW_i^K,\; VW_i^V).$$
+
+![Left: scaled dot-product attention. Right: multi-head attention — the linear projections and the attention block are repeated h times (one per head), then concatenated](figures/attention-blocks.svg)
+
+### Example: Attention Moves Words Toward Their Context
+
+1. *Please buy an **apple** (fruit) and an **orange**.* — "apple" is pulled towards "orange".
+2. ***Apple** (brand) unveiled the new **phone**.* — "apple" is pulled towards "phone".
+
+- Say initially *orange* has coordinates (11, 11), *phone* has (1, 2) and *apple* has (6, 7).
+- Now, for the modified sentences, *apple* has coordinates (8, 8.5) in the 1st sentence, and (4, 5) in the 2nd sentence.
+- If we use these new numbers (vectors) as the embeddings in the sentence, then the model is going to have an easier time. This process is done many times in ML, so the word ends up nearer to the relevant region.
+- At the end of the day, we don't use the sentence, we use the **context**.
+- Words pull each other, like **gravity**.
+
+### Multi-Head Attention
+
+- Attention works better, but multi-head attention works even better.
+- **Is one embedding good enough?** No, we can do much better. We can ideally have lots and lots of embeddings: we just use 10, 20 or 100 embeddings and combine those results. That is **multi-head attention**.
+- *Example:* an embedding that puts *orange* and *phone* far apart (on different axes) is a **good embedding**; one that puts *phone* and *orange* next to each other is the **worst embedding**.
+- We build embeddings by modifying existing embeddings with the use of **linear transformations** — rotation, stretching (horizontal / vertical) and shear — and we can combine these transformations.
+
+### Example: New Embeddings from Existing Ones
+<!-- pages: 96 -->
+
+Three embeddings of the words *phone*, *orange* and *apple*, produced by transforming the original one:
+
+![Three embeddings of phone, orange and apple](figures/embeddings-3.svg)
+
+| Embedding | Layout | Verdict | Score |
+| --- | --- | --- | ---: |
+| ① | phone, orange and apple spread over the plane | okay | 1 |
+| ② | squashed — phone and orange end up close together | worst: it doesn't separate phone and orange well | 0.1 |
+| ③ | stretched — phone and orange far apart | best: it separates phone and orange very well | 4 |
+
+*(The scores are illustrative numbers.)*
+
+- We get these scores when we train the neural network: we train these embeddings, and we train these scores. And so the **key, query and value** matrices come in.
+- The **K and Q matrices** are going to help us build a bunch of transformations (embeddings), and **V** is going to help us *visualise* (score and combine) them.
+
+## The Maths Behind Attention: Similarity, Softmax, Keys, Queries & Values
+<!-- pages: 97-98 -->
+
+Consider a 2-D embedding with axes **Tech** and **Fruitiness**:
+
+![Cherry, orange and phone in the Tech–Fruitiness plane](figures/cherry-orange-phone.svg)
+
+| Word | Tech | Fruitiness |
+| --- | ---: | ---: |
+| Cherry | 1 | 4 |
+| Orange | 0 | 3 |
+| Phone | 3 | 0 |
+
+### Measure 1: Dot Product (Can Be Negative)
+
+- $\text{similarity}(\text{cherry}, \text{orange}) = 1 \times 0 + 4 \times 3 = 12$.
+- $\text{similarity}(\text{cherry}, \text{phone}) = 1 \times 3 + 4 \times 0 = 3$.
+- $\text{similarity}(\text{orange}, \text{phone}) = 0 \times 3 + 3 \times 0 = 0$ — orange and phone are **perpendicular** with respect to the origin.
+
+### Measure 2: Cosine Similarity (Between −1 and 1)
+
+1 means very similar; −1 means very different.
+
+- $\text{similarity}(\text{cherry}, \text{orange}) = \cos 14° = 0.97$.
+- $\text{similarity}(\text{cherry}, \text{phone}) = \cos 76° = 0.24$.
+- $\text{similarity}(\text{orange}, \text{phone}) = \cos 90° = 0$.
+- If all vectors have norm 1, then **dot product = cosine similarity**.
+
+### Measure 3: Scaled Dot Product
+
+The dot product divided by the square root of the length of the vector (its number of coordinates). **It is used in attention.**
+
+$$\text{similarity}(\text{cherry}, \text{orange}) = \frac{1 \times 0 + 4 \times 3}{\sqrt{2}} = \frac{12}{\sqrt 2} = 8.49,$$
+where we divide by $\sqrt 2$ because the vector has 2 coordinates, so its length is 2.
+$$\text{similarity}(\text{cherry}, \text{phone}) = \frac{1 \times 3 + 4 \times 0}{\sqrt 2} = 2.12, \qquad \text{similarity}(\text{orange}, \text{phone}) = \frac{0}{\sqrt 2} = 0.$$
+
+- We divide by the square root of the length of the vector because if we have very long vectors (say 1000 coordinates), then we get a very, very large dot product, which we don't want — we want to manage it. So we divide by, say, $\sqrt{1000}$.
+
+### Example: Attention with Cosine Similarity
+<!-- pages: 99-101 -->
+
+- Sentence 1: *an **apple** and an **orange***.
+- Sentence 2: *an **apple** phone*.
+
+We have 3 coordinates for each word:
+
+| Word | Tech | Fruitiness | Other |
+| --- | ---: | ---: | ---: |
+| Orange | 0 | 3 | 0 |
+| Phone | 4 | 0 | 0 |
+| Apple | 2 | 2 | 0 |
+| And | 0 | 0 | 2 |
+| An | 0 | 0 | 3 |
+
+Now, the **cosine-similarity matrix**:
+
+| | Orange | Phone | Apple | And | An |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| **Orange** | 1 | 0 | 0.71 | 0 | 0 |
+| **Phone** | 0 | 1 | 0.71 | 0 | 0 |
+| **Apple** | 0.71 | 0.71 | 1 | 0 | 0 |
+| **And** | 0 | 0 | 0 | 1 | 1 |
+| **An** | 0 | 0 | 0 | 1 | 1 |
+
+Now see the same table for **sentence 1** — each row gives a **linear combination**:
+
+| | Orange | Apple | And | An | New word |
+| --- | ---: | ---: | ---: | ---: | --- |
+| **Orange** | 1 | 0.71 | 0 | 0 | 1 × orange + 0.71 × apple |
+| **Apple** | 0.71 | 1 | 0 | 0 | 0.71 × orange + 1 × apple |
+| **And** | 0 | 0 | 1 | 1 | 1 × and + 1 × an |
+| **An** | 0 | 0 | 1 | 1 | 1 × and + 1 × an |
+
+For **sentence 2**:
+
+| | Phone | Apple | An | New word |
+| --- | ---: | ---: | ---: | --- |
+| **Phone** | 1 | 0.71 | 0 | 1 × phone + 0.71 × apple |
+| **Apple** | 0.71 | 1 | 0 | 0.71 × phone + 1 × apple |
+| **An** | 0 | 0 | 1 | 1 × an |
+
+**Normalisation** (sentence 1):
+$$\text{orange} = \frac{1 \times \text{orange} + 0.71 \times \text{apple}}{1 + 0.71} = 0.58 \times \text{orange} + 0.42 \times \text{apple}.$$
+
+**But there is a problem.** If we have $\text{orange} = \dfrac{1 \times \text{orange} - 1 \times \text{motorcycle}}{1 - 1}$, the denominator is $0$! So we need the coefficients to be **positive**. *Solution:* replace each coefficient by $e^{\text{coefficient}}$:
+$$\text{orange (sentence 1)} = \frac{e^{1}\,\text{orange} + e^{0.71}\,\text{apple}}{e^{1} + e^{0.71}} = 0.57 \times \text{orange} + 0.43 \times \text{apple},$$
+$$\text{orange (new sentence)} = \frac{e^{1}\,\text{orange} + e^{-1}\,\text{motorcycle}}{e^{1} + e^{-1}} = 0.88 \times \text{orange} + 0.12 \times \text{motorcycle}.$$
+
+This step is called **softmax**. So for the 1st sentence, the row for *orange* (1, 0.71, 0, 0 over orange, apple, and, an) becomes $e^1, e^{0.71}, e^0, e^0$:
+$$\text{orange} = \frac{e^{1}\,\text{orange} + e^{0.71}\,\text{apple} + e^{0}\,\text{and} + e^{0}\,\text{an}}{e^{1} + e^{0.71} + e^{0} + e^{0}} = 0.4 \times \text{orange} + 0.3 \times \text{apple} + 0.15 \times \text{and} + 0.15 \times \text{an}.$$
+
+### The Key and Query Matrices
+<!-- pages: 102-103 -->
+
+- These matrices help us to find **really good embeddings**, where we can do attention and get good information (the *okay*, *good* and *bad* embeddings from the previous example).
+- **How to do it?** With the key matrix $M_1$ and the query matrix $M_2$, the similarity between *orange* (vector $v_1$) and *phone* (vector $v_2$) becomes
+$$\text{similarity}(\text{orange}, \text{phone}) = v_1\, M_1\, M_2^T\, v_2^T \qquad \text{instead of} \qquad v_1\, v_2^T.$$
+  $M_1 M_2^T$ is a **linear transformation**: it converts one embedding into another (the transformation from the *Transformer*).
+- So the keys and queries matrices work together to create a linear transformation that will improve our embedding to be able to do attention. We are modifying the similarity in one embedding into a similarity in a different embedding, and we make sure that this is the best one.
+
+![The Key and Query matrices transform the embedding so that phone and orange are better separated](figures/qk-transform.svg)
+
+### The Values Matrix
+
+- The keys and queries matrices actually turn the embedding into one that is **best for calculating similarities**. Using these similarities, the **values matrix** moves the words into an embedding that is **best for finding the next word**.
+
+![Left: the embedding used for similarities (keys and queries). Right: the embedding used for finding the next word (values) — apple1 moves towards phone, apple2 towards orange](figures/values-matrix.svg)
+<!-- pages: 104 -->
+
+**What does the value matrix do?** It takes the embedding on the left and multiplies every vector to get the embedding on the right — it acts as another transformation.
+
+- The **left embedding** knows the *features* of the words (both low- and high-level): colour, size, fruitiness, technology.
+- The **right embedding** knows when 2 words could appear in the **same context**: e.g. "I want to buy a ___" → car, apple, phone.
+
+*Example* — "an apple and an orange". After softmax, the attention weights are:
+
+| | orange | apple | and | an |
+| --- | ---: | ---: | ---: | ---: |
+| **orange** | 0.4 | 0.3 | 0.15 | 0.15 |
+| **apple** | 0.3 | 0.4 | 0.15 | 0.15 |
+| **and** | 0.15 | 0.15 | 0.5 | 0.5 |
+| **an** | 0.15 | 0.15 | 0.5 | 0.5 |
+
+so $\text{apple} = 0.3\,\text{orange} + 0.4\,\text{apple} + 0.15\,\text{and} + 0.15\,\text{an}$. The value matrix (which can be a square or a rectangular matrix) gives
+
+| | orange | apple | and | an |
+| --- | --- | --- | --- | --- |
+| **orange** | $v_{11}$ | $v_{12}$ | $v_{13}$ | $v_{14}$ |
+| **apple** | $v_{21}$ | $v_{22}$ | $v_{23}$ | $v_{24}$ |
+| **and** | $v_{31}$ | $v_{32}$ | $v_{33}$ | $v_{34}$ |
+| **an** | $v_{41}$ | $v_{42}$ | $v_{43}$ | $v_{44}$ |
+
+and so $\text{apple} \to v_{21}\cdot\text{orange} + v_{22}\cdot\text{apple} + v_{23}\cdot\text{and} + v_{24}\cdot\text{an}$.
