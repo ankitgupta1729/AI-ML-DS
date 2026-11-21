@@ -1230,7 +1230,7 @@ def transformer_architecture():
     ax.plot([bx + 0.85, 4.15, 4.15], [tops[2][1] - 0.3, tops[2][1] - 0.3, 1.0], color=INK, lw=1)
     _go(ax, (4.15, 1.0), (4.45, 1.0))
     _go(ax, (5.0, 1.225), (5.0, 1.775))
-    _finish(ax, f, "transformer-architecture", (-0.1, 5.7), (-0.25, 4.75))
+    _finish(ax, f, "transformer-pipeline", (-0.1, 5.7), (-0.25, 4.75))
 
 
 @fig
@@ -1539,6 +1539,63 @@ def residual_encoder():
         _blk(ax, dx, y, t, w=1.2, h=0.36, fc="#fde68a" if i else "#ede9fe", ec=INK if i else ACC, fs=7.5)
         _go(ax, (dx, y - 0.42), (dx, y - 0.18), lw=0.8)
     _finish(ax, f, "residual-encoder", (-0.75, 6.5), (-0.6, 5.9))
+
+
+@fig
+def context_window():
+    """p161: GPT-3 is 2048 tokens wide; the input tokens enter along tracks and the output comes one by one."""
+    f, ax = plt.subplots(figsize=(6.0, 2.3))
+    words = ["Recite", "the", "first", "law", "of", "robotics"]
+    xs = [0.5 + i * 0.72 for i in range(6)]
+    for i, (x, w) in enumerate(zip(xs, words, strict=True)):
+        ax.text(x, 2.05, str(i + 1), ha="center", fontsize=7.5, color=MUT)
+        _blk(ax, x, 1.75, w, w=0.66, h=0.3, fs=7.5)
+        _go(ax, (x, 1.6), (x, 1.25), lw=0.7)
+    ax.text(5.15, 1.75, "…", ha="center", va="center", fontsize=11)
+    ax.text(5.9, 2.05, "2048", ha="center", fontsize=7.5, color=MUT)
+    _blk(ax, 5.9, 1.75, "", w=0.5, h=0.3, fc="white", ls="--")
+    _go(ax, (5.9, 1.6), (5.9, 1.25), lw=0.7)
+    _blk(ax, 3.2, 0.95, "GPT-3  (2048 tracks = the context window)", w=6.2, h=0.55, fc="#fde68a", ec=INK)
+    for i, w in enumerate(["A", "robot", "may", "not"]):
+        x = xs[5] + 0.72 * i
+        _go(ax, (x, 0.67), (x, 0.4), lw=0.7)
+        _blk(ax, x, 0.22, w, w=0.62, h=0.28, fc="#dcfce7", ec="#16a34a", fs=7.5)
+    ax.text(-0.2, 1.75, "Input", ha="right", va="center", fontsize=8, color=MUT)
+    ax.text(xs[5] - 0.45, 0.22, "Output — the tokens are produced one after the other:", ha="right", va="center",
+            fontsize=7.5, color=MUT)
+    _finish(ax, f, "context-window", (-0.9, 6.85), (-0.05, 2.25))
+
+
+@fig
+def word2vec_net():
+    """p176: a network trained to guess the next word; a hidden layer's 3 numbers are the word's embedding."""
+    f, ax = plt.subplots(figsize=(5.2, 2.3))
+    layers = [(1.3, 4), (2.6, 3), (3.9, 3)]
+    pos = []
+    for x, n in layers:
+        ys = [1.0 + (i - (n - 1) / 2) * 0.5 for i in range(n)]
+        pos.append([(x, y) for y in ys])
+    _blk(ax, 0.2, 1.0, "strawberry", w=0.95, h=0.34, fc="white", fs=8)
+    for x, y in pos[0]:
+        _go(ax, (0.68, 1.0), (x - 0.11, y), color=MUT, lw=0.6)
+    for a, b in zip(pos[:-1], pos[1:], strict=True):
+        for p0 in a:
+            for p1 in b:
+                ax.plot([p0[0] + 0.11, p1[0] - 0.11], [p0[1], p1[1]], color=MUT, lw=0.5)
+    vals = ["1", "3", "2"]
+    for li, col in enumerate(pos):
+        for k, (x, y) in enumerate(col):
+            fc = "#fde68a" if li == 1 else ("#dcfce7" if li == 2 else "#ede9fe")
+            ax.add_patch(plt.Circle((x, y), 0.11, fc=fc, ec=INK if li == 1 else ACC, lw=0.9, zorder=3))
+            if li == 1:
+                ax.text(x, y, vals[2 - k], ha="center", va="center", fontsize=7, zorder=4)
+    for (x, y), w in zip(pos[2], ["delicious", "ate", "is"], strict=True):
+        ax.text(x + 0.2, y, w, va="center", fontsize=8.5)
+    ax.text(2.6, 0.05, "gives 3 numbers [1, 3, 2]\n= the embedding for strawberry", ha="center", va="top", fontsize=7.5,
+            color=INK)
+    ax.text(4.25, 1.75, "next word\nafter strawberry", ha="left", fontsize=7.5, color=MUT)
+    ax.text(1.95, 1.95, "hidden layers", ha="center", fontsize=7.5, color=MUT)
+    _finish(ax, f, "word2vec-net", (-0.35, 5.0), (-0.5, 2.15))
 
 
 def main() -> None:

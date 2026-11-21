@@ -503,7 +503,7 @@ Now that we know what transformers do, let's get to their architecture. If you'v
 
 The 4th one, the transformer block, is the most complex of all. Many of these can be concatenated, and each one contains 2 main parts: the **attention** and the **feed-forward** components.
 
-![The architecture of a transformer model](figures/transformer-architecture.svg)
+![The architecture of a transformer model](figures/transformer-pipeline.svg)
 
 
 ### Tokenisation
@@ -992,7 +992,7 @@ flowchart LR
 - To shed light on how these parameters are distributed and used, we'll need to open the model and look inside.
 - GPT-3 is **2048 tokens wide**. That is its **"context window"**. That means it has 2048 tracks along which tokens are processed.
 
-*Input tracks 1 … 2048: "Recite" (1), "the" (2), "first" (3), "law" (4), "of" (5), "robotics" (6), … — the output tokens "A", "robot", "may", "not", … are produced one after the other.*
+![GPT-3 is 2048 tokens wide: the input tokens enter along their tracks and the output tokens come out one after the other](figures/context-window.svg)
 
 - **How does a system process the word "robotics" and produce "A"?** High-level steps:
   1. Convert the word to a vector (list of numbers) representing the word (word2vec — check the blog on this topic).
@@ -1153,19 +1153,7 @@ If it does this many times, then it actually generates a story.
 
 **See it like this:**
 
-```mermaid
-flowchart LR
-  subgraph PRE["Preprocessing"]
-    direction BT
-    IN["Input: Write a story"] --> TOK["Tokenisation"] --> EMB["Embedding"] --> PE["Positional encoding"]
-  end
-  subgraph BLK["Series of transformer blocks"]
-    direction BT
-    A1["Attention"] --> F1["Feed forward"] --> A2["Attention"] --> F2["Feed forward"] --> A3["Attention"] --> F3["Feed forward"]
-  end
-  PE --> A1
-  F3 --> SM["Softmax"] --> OUT["Output: Once"]
-```
+![Input → tokenisation → embedding → positional encoding → a series of transformer blocks → softmax → output](figures/transformer-pipeline.svg)
 
 ### Why Not N-grams?
 
@@ -1217,10 +1205,7 @@ Say we have:
 
 *Strawberry and apple are very similar.*
 
-```mermaid
-flowchart LR
-  S["strawberry"] --> H1["hidden layer"] --> H2["hidden layer — gives 3 numbers [1, 3, 2] = embedding for strawberry"] --> O["next word after strawberry: is · ate · delicious"]
-```
+![A neural network trained to guess the next word after strawberry; a hidden layer gives 3 numbers, [1, 3, 2], which become the embedding for strawberry](figures/word2vec-net.svg)
 
 *(A similar process gives the embedding for apple.)* So we have:
 
