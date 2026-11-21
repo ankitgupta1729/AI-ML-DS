@@ -369,12 +369,7 @@ Before these likelihoods can be used to select the next token, they first need t
 
 <!-- pages: 253-255 -->
 
-```mermaid
-flowchart LR
-  L["Decrease temperature → less random output (probability mass concentrated on the top tokens)"] <--> H["Increase temperature → more random output (probabilities roughly similar across tokens)"]
-```
-
-*Adjusting the temperature setting.*
+![Adjusting the temperature setting: at low temperature the probability is concentrated on the most likely token; at high temperature the probabilities are roughly similar](figures/temperature.svg)
 
 Building off the example above:
 
@@ -678,12 +673,7 @@ Chatbot: I am happy to help you. …
 ## Introduction to Retrieval-Augmented Generation (RAG)
 <!-- pages: 268-275 -->
 
-```mermaid
-flowchart LR
-  U["👤 User"] -- message --> C["🤖 Chat"]
-  C -- query --> K[("External knowledge base")]
-  K -- retrieve --> C
-```
+![The user sends a message to the chatbot, which queries an external knowledge base and retrieves information from it](figures/rag-intro.svg)
 
 - Here you'll learn about **connecting LLMs to external knowledge sources**, enhancing the accuracy and relevance of chatbot responses.
 - We have so far explored LLM chatbots that only have access to the data they have been trained on, or their internal knowledge. In many applications, particularly for enterprise use, a chatbot needs to also be able to access external knowledge for it to be useful.
@@ -705,14 +695,7 @@ flowchart LR
 
 The first part of RAG is to **retrieve the right information** needed to respond to a user query. Given a user message (1), the Chat endpoint queries an external knowledge base with the relevant queries (2) and finally retrieves the query results (3).
 
-```mermaid
-flowchart LR
-  U["👤 User"] -- "① message" --> C["🤖 Chat"]
-  C -- "② query" --> K[("External knowledge base")]
-  K -- "③ retrieve" --> C
-```
-
-*The retrieval part of RAG: given a user message, the endpoint retrieves information from an external knowledge base.*
+![The retrieval part of RAG: given a user message (1), the endpoint queries an external knowledge base (2) and retrieves the results (3)](figures/rag-retrieval.svg)
 
 Retrieval applies to any system that can fetch relevant documents based on a user message. Cohere offers **2 ways to build RAG systems** with the Chat endpoint: **connectors mode** and **documents mode**.
 
@@ -722,44 +705,17 @@ Retrieval applies to any system that can fetch relevant documents based on a use
 - Developers can leverage pre-built connectors to various data sources, or even build their own. Also, there is a **web-search connector** managed by Cohere, which runs searches against a browser in safe mode. Developers can use it immediately without any additional configuration or deployment.
 - For example, suppose we are working with a RAG system that uses Cohere's managed web-search connector, and say you input this query: *"Who was the keynote speaker at the AI conference last week?"* Given that the response requires a fact from a recent event, the chatbot triggers a retrieval of this information using the web-search API. It gets back the information it requires, such as a few website snippets containing the details about the conference.
 
-```mermaid
-flowchart LR
-  U["👤 User"] -- "① message" --> C["🤖 Chat"]
-  C -- "② query" --> W["🌐 Web search"]
-  W -- "③ retrieve" --> C
-```
-
-*An example of retrieving information via web search.*
+![An example of retrieving information via web search](figures/rag-web.svg)
 
 - In an enterprise setting, data is distributed across multiple platforms and datastores. With connectors mode, you can use **multiple connectors** to retrieve at the same time, to get the system to synthesise information from various data sources.
 
-```mermaid
-flowchart LR
-  U["👤 User"] -- "① message" --> C["🤖 Chat"]
-  C -- "② query" --> CN{{"Connectors"}}
-  CN -- "③ retrieve" --> C
-  CN --- D1["🌐 Web"]
-  CN --- D2["🗄️ Database"]
-  CN --- D3["📄 Documents"]
-  CN --- D4["… other data sources"]
-```
-
-*Connectors mode allows you to use multiple connectors to connect to multiple datastores.*
+![Connectors mode lets you use multiple connectors to connect to multiple data stores](figures/rag-connectors.svg)
 
 ### Documents Mode
 
 With **documents mode**, a developer directly provides the model with source documents that it can use to ground its replies. In this case, these documents first need to be **ingested**. Typically, this involves chunking large documents into smaller chunks, turning these chunks into **text embeddings** (also called vectors) and storing these embeddings in a **vector store**.
 
-```mermaid
-flowchart LR
-  DOC["📄 Documents"] -- "⓪ embeddings" --> VS[("Vector store")]
-  U["👤 User"] -- "① message" --> C["🤖 Chat"]
-  C -- "② query" --> VS
-  VS -- "③ documents" --> C
-  C -- "④ response" --> U
-```
-
-*Documents are ingested before retrieval.*
+![Documents mode: the documents are ingested (as embeddings in a vector store) before retrieval](figures/rag-documents.svg)
 
 <!-- pages: 275-276 -->
 
@@ -770,15 +726,7 @@ flowchart LR
 - The second part of RAG is **augmented generation**. Here, the prompt is augmented with the information retrieved from the retrieval step. The prompt is now grounded with the best information to provide the user with an accurate and helpful response.
 - The chatbot responds to the user query, now having the augmented prompt as its context.
 
-```mermaid
-flowchart LR
-  U["👤 User"] -- "① message" --> C["🤖 Chat"]
-  C -- "② query" --> K[("External knowledge base")]
-  K -- "③ retrieve" --> C
-  C -- "④ response" --> U
-```
-
-*The augmented-generation part of RAG: the Chat endpoint uses the retrieved information to provide a grounded response.*
+![The augmented-generation part of RAG: the Chat endpoint uses the retrieved information to provide a grounded response](figures/rag-augmented.svg)
 
 - Cohere's Chat endpoint also provides **citations** to indicate the parts of the retrieved documents on which the response was grounded.
 

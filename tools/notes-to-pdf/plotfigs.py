@@ -1768,6 +1768,115 @@ def chat_preamble():
     _finish(ax, f, "chat-preamble", (-0.25, 2.4), (-0.02, 1.15))
 
 
+@fig
+def temperature():
+    """p253: adjusting the temperature: low = probability concentrated on the top tokens; high = more random."""
+    toks = ["cookies", "…", "…", "…", "chairs"]
+    logit = np.array([3.5, 2.6, 2.0, 1.2, -1.0])
+    f, axs = plt.subplots(1, 3, figsize=(6.0, 1.9), sharey=True)
+    for ax, t, lab in zip(axs, (0.4, 1.0, 3.0), ("Low temperature\n(less random)", "Medium",
+                                                  "High temperature\n(more random)"), strict=True):
+        p = np.exp(logit / t)
+        p /= p.sum()
+        ax.barh(range(5)[::-1], p, color=[ACC] + [ACC2] * 3 + [WARM], height=0.65)
+        ax.set_yticks(range(5)[::-1])
+        ax.set_yticklabels(toks, fontsize=7.5)
+        ax.set_xticks([])
+        ax.set_xlim(0, 1)
+        ax.set_title(lab, fontsize=8)
+        for sp in ("top", "right", "bottom"):
+            ax.spines[sp].set_visible(False)
+    note = "Decrease  ←  temperature  →  Increase     (probabilities of the next token after “I like to bake”)"
+    f.text(0.5, -0.04, note, ha="center", fontsize=7.5, color=MUT)
+    f.tight_layout()
+    save(f, "temperature")
+
+
+def _icon(ax, x, y, kind, label):
+    """A labelled RAG actor icon centred at (x, y)."""
+    from matplotlib.patches import Ellipse, FancyBboxPatch, Polygon
+    if kind in ("user", "chat"):
+        ax.add_patch(FancyBboxPatch((x - 0.28, y - 0.28), 0.56, 0.56, boxstyle="round,pad=0.02,rounding_size=0.08",
+                                    fc="white", ec=INK, lw=1))
+        (_person if kind == "user" else _bot)(ax, x, y, 0.16 if kind == "user" else 0.14)
+    elif kind == "db":
+        ax.add_patch(plt.Rectangle((x - 0.25, y - 0.25), 0.5, 0.45, fc="#ede9fe", ec=ACC, lw=1))
+        ax.add_patch(Ellipse((x, y + 0.2), 0.5, 0.14, fc="#ede9fe", ec=ACC, lw=1))
+        ax.add_patch(Ellipse((x, y - 0.25), 0.5, 0.14, fc="#ede9fe", ec=ACC, lw=1, zorder=0))
+    elif kind == "web":
+        ax.add_patch(plt.Circle((x, y), 0.26, fc="#e0f2fe", ec="#0284c7", lw=1))
+        ax.add_patch(Ellipse((x, y), 0.22, 0.52, fc="none", ec="#0284c7", lw=0.8))
+        ax.plot([x - 0.26, x + 0.26], [y, y], color="#0284c7", lw=0.8)
+    elif kind == "docs":
+        for dx in (0.0, 0.08):
+            corners = [(-0.2, -0.26), (0.12, -0.26), (0.2, -0.16), (0.2, 0.26), (-0.2, 0.26)]
+            ax.add_patch(Polygon([(x + cx + dx, y + cy + dx) for cx, cy in corners], fc="white", ec=INK, lw=0.9))
+    elif kind == "conn":
+        for dy in (0.2, 0.0, -0.2):
+            ax.plot([x - 0.25, x + 0.1], [y + dy, y + dy], color=INK, lw=0.9)
+            ax.add_patch(plt.Circle((x + 0.15, y + dy), 0.05, fc="white", ec=INK, lw=0.9))
+    ax.text(x, y - 0.42, label, ha="center", va="top", fontsize=8)
+
+
+def _flow(ax, a, b, label, up=True, dashed=False, color=INK):
+    """An arrow between two icon centres (offset above or below the centre line) with a step label."""
+    dy = 0.08 if up else -0.08
+    (x0, y0), (x1, y1) = a, b
+    sgn = 1 if x1 > x0 else -1
+    ax.annotate("", (x1 - sgn * 0.33, y1 + dy), (x0 + sgn * 0.33, y0 + dy),
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=1, ls="--" if dashed else "-"))
+    ax.text((x0 + x1) / 2, y0 + dy + (0.07 if up else -0.07), label, ha="center", va="bottom" if up else "top",
+            fontsize=7.5, color=color)
+
+
+def _rag(name, target, tlabel, numbered=True, response=False, extra=None, size=(4.6, 1.35)):
+    f, ax = plt.subplots(figsize=size)
+    u, c, t = (0.4, 0.5), (2.0, 0.5), (3.6, 0.5)
+    _icon(ax, *u, "user", "User")
+    _icon(ax, *c, "chat", "Chat")
+    _icon(ax, *t, target, tlabel)
+    n = (lambda k, s: f"{k} {s}") if numbered else (lambda k, s: s)
+    _flow(ax, u, c, n("①", "message"))
+    _flow(ax, c, t, n("②", "query"))
+    _flow(ax, t, c, n("③", "retrieve" if target != "db" or tlabel != "Vector store" else "documents"), up=False,
+          dashed=True)
+    if response:
+        _flow(ax, c, u, "④ response", up=False, dashed=True, color=ACC)
+    if extra:
+        extra(ax)
+    _finish(ax, f, name, (0.0, 4.6 if not extra else 5.6), (-0.15, 1.0))
+
+
+@fig
+def rag_figures():
+    """p268-275: retrieval-augmented generation drawn with the notebook's icons."""
+    _rag("rag-intro", "db", "External\nknowledge base", numbered=False)
+    _rag("rag-retrieval", "db", "External\nknowledge base")
+    _rag("rag-web", "web", "Web search")
+    _rag("rag-augmented", "db", "External\nknowledge base", response=True)
+
+    def sources(ax):
+        for lab, y in (("Web", 0.9), ("Database", 0.5), ("Documents", 0.1)):
+            ax.text(4.25, y, "●  " + lab, va="center", fontsize=7.5, color=INK)
+            ax.plot([3.8, 4.2], [0.5, y], color=MUT, lw=0.7)
+        ax.text(4.25, -0.2, "data sources", fontsize=7.5, color=MUT)
+
+    _rag("rag-connectors", "conn", "Connectors", extra=sources, size=(5.4, 1.35))
+
+    f, ax = plt.subplots(figsize=(5.6, 1.45))
+    u, c, t, d = (0.4, 0.5), (2.0, 0.5), (3.6, 0.5), (5.1, 0.5)
+    _icon(ax, *u, "user", "User")
+    _icon(ax, *c, "chat", "Chat")
+    _icon(ax, *t, "db", "Vector store")
+    _icon(ax, *d, "docs", "Documents")
+    _flow(ax, d, t, "⓪ embeddings")
+    _flow(ax, u, c, "① message")
+    _flow(ax, c, t, "② query")
+    _flow(ax, t, c, "③ documents", up=False, dashed=True)
+    _flow(ax, c, u, "④ response", up=False, dashed=True, color=ACC)
+    _finish(ax, f, "rag-documents", (0.0, 5.5), (-0.15, 1.0))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

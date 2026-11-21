@@ -559,8 +559,6 @@ Tokenisation is the most basic step. It consists of a large dataset of tokens, i
 
 ![The transformer is a concatenation of many transformer blocks; each has an attention component followed by a feed-forward component](figures/transformer-blocks.svg)
 
-*The transformer is a concatenation of many transformer blocks. Each one of these is composed of an attention component followed by a feed-forward component (a neural network).*
-
 ### Attention
 
 - The next step is attention. It deals with a very important problem: **the problem of context**. Sometimes, as you know, the same word can be used with different meanings. This tends to confuse language models, since an embedding simply sends words to vectors, without knowing which definition of the word they are using.
