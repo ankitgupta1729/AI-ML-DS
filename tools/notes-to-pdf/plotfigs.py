@@ -2002,6 +2002,117 @@ def generate_answers():
     _finish(ax, f, "answer-with-search", (0.0, 4.45), (0.1, 1.95))
 
 
+@fig
+def cohere_capabilities():
+    """p334: the two key language-processing capabilities: text generation and text embedding."""
+    f, ax = plt.subplots(figsize=(4.6, 2.6))
+    rows = [(1.85, "Text generation", "co.Generate", "Write me a haiku about software and magic",
+             "Magic is software / Hocus-pocus, make it go / Programmer's delight"),
+            (0.55, "Text embedding", "co.Embed", "Such a great place to work", "[0.4257, 1.43, 1.31, −0.43, …]")]
+    for y, title, ep, req, resp in rows:
+        _container(ax, 0.0, y - 0.52, 4.4, y + 0.45, fc="#f8fafc")
+        ax.text(2.2, y + 0.5, title, ha="center", fontsize=8.5, color=ACC)
+        _blk(ax, 0.55, y, ep, w=0.95, h=0.42, fc="#fde68a", ec=INK, fs=7.5)
+        _blk(ax, 3.85, y, "Your App", w=0.9, h=0.42, fc="white", fs=7.5)
+        _go(ax, (3.38, y + 0.1), (1.05, y + 0.1), lw=0.8)
+        _go(ax, (1.05, y - 0.1), (3.38, y - 0.1), lw=0.8, color=ACC)
+        ax.text(2.2, y + 0.2, req, ha="center", va="bottom", fontsize=6.3)
+        ax.text(2.2, y - 0.2, resp, ha="center", va="top", fontsize=6.3, color=ACC)
+    _finish(ax, f, "cohere-capabilities", (-0.1, 4.5), (0.0, 2.45))
+
+
+@fig
+def langchain_modules():
+    """p335: LangChain makes it easy to put together an end-to-end LLM-powered app from its modules."""
+    f, ax = plt.subplots(figsize=(5.6, 2.7))
+    _container(ax, 0.9, 1.8, 4.7, 2.5, fc="white", ec=INK)
+    ax.text(2.8, 2.56, "Your App", ha="center", fontsize=8.5)
+    steps = [(1.5, "Step 1"), (2.7, "Step 2"), (4.1, "Step N")]
+    for x, t in steps:
+        _blk(ax, x, 2.12, t, w=0.8, h=0.34, fc="white", ls="--", fs=7.5)
+    ax.plot([1.9, 2.3], [2.12, 2.12], color=MUT, lw=0.8)
+    ax.plot([3.1, 3.7], [2.12, 2.12], color=MUT, lw=0.8, ls="--")
+    _go(ax, (0.1, 2.12), (1.08, 2.12), lw=0.9)
+    ax.text(0.05, 2.25, "User input", fontsize=7.5)
+    _go(ax, (4.5, 2.12), (5.0, 2.12), lw=0.9)
+    ax.text(5.02, 2.12, "App\noutput", va="center", fontsize=7.5)
+    mods = [["Google\nDrive", "Cohere\nLLMs", "Cohere\nEmbeddings", "Character\nTextSplitter", "Google\nSearch",
+             "SerpAPI"],
+            ["PDF", "Agents", "Memory", "Indexes", "Question\nAnswering", "…"]]
+    pos = {}
+    for r, row in enumerate(mods):
+        for c, t in enumerate(row):
+            x, y = 0.65 + c * 0.85, 1.15 - r * 0.6
+            _blk(ax, x, y, t, w=0.78, h=0.46, fc="#ede9fe", fs=6.5)
+            pos[t] = (x, y)
+    for t, (sx, _) in (("PDF", steps[0]), ("Cohere\nEmbeddings", steps[1]), ("Character\nTextSplitter", steps[2]),
+                       ("Question\nAnswering", steps[2])):
+        x, y = pos[t]
+        _go(ax, (x, y + 0.23), (sx, 1.95), color=ACC, lw=0.8, cs="arc3,rad=-0.1")
+    ax.text(2.8, 0.1, "LangChain modules", ha="center", fontsize=8, color=MUT)
+    _finish(ax, f, "langchain-modules", (-0.05, 5.5), (0.0, 2.7))
+
+
+@fig
+def multilingual_crosslingual():
+    """p337: multilingual search (results in the query's language) vs cross-lingual search (results in any language)."""
+    f, axs = plt.subplots(1, 2, figsize=(6.2, 2.5))
+    qs = ["Places to eat", "Des endroits\npour manger", "Arabic query"]
+    ds = ["Bookstores\nRestaurants\nMusic stores", "Librairies\nRestaurants\nMagasins de musique",
+          "Arabic\ndocuments"]
+    ys = [1.6, 1.0, 0.4]
+    for ax, title, cross in ((axs[0], "Multilingual", False), (axs[1], "Cross-lingual", True)):
+        _blk(ax, 1.5, 1.0, "Same\nmodel", w=0.55, h=1.5, fc="#fde68a", ec=INK, fs=7.5)
+        for q, d, y in zip(qs, ds, ys, strict=True):
+            ax.text(0.65, y, q, ha="right", va="center", fontsize=6.8)
+            ax.text(2.35, y, d, va="center", fontsize=6.3)
+            _go(ax, (0.7, y), (1.22, y), lw=0.7, color=MUT)
+            if cross:
+                for y2 in ys:
+                    _go(ax, (1.78, y), (2.3, y2), lw=0.6, color=ACC)
+            else:
+                _go(ax, (1.78, y), (2.3, y), lw=0.7, color=ACC)
+        ax.text(1.5, 2.35, title, ha="center", fontsize=8.5, color=ACC)
+        ax.text(0.3, 1.95, "Query", ha="center", fontsize=7.5, color=MUT)
+        ax.text(2.75, 1.95, "Documents", ha="center", fontsize=7.5, color=MUT)
+        _finish_ax = (ax.set_xlim(-0.6, 3.6), ax.set_ylim(0.0, 2.5), ax.set_aspect("equal"), ax.axis("off"))
+        del _finish_ax
+    save(f, "multilingual-crosslingual")
+
+
+@fig
+def search_pipelines():
+    """p338 / p343: (1) return the most relevant document; (2) answer a question from a long-form document."""
+    f, ax = plt.subplots(figsize=(3.6, 1.45))
+    _container(ax, 0.0, 0.0, 1.5, 1.1, fc="#f8fafc")
+    ax.text(0.75, 1.17, "1 — Enter query", ha="center", fontsize=7.5)
+    for k in range(5):
+        ax.text(0.15, 0.9 - k * 0.17, f"{k + 1}", fontsize=6.5, va="center")
+        ax.plot([0.28, 0.75], [0.9 - k * 0.17] * 2, color=ACC2, lw=1.4)
+    ax.text(0.5, 0.06, "Documents", fontsize=6.5, color=MUT)
+    _query(ax, 1.15, 0.6, w=0.55)
+    _go(ax, (1.55, 0.55), (2.05, 0.55), lw=0.9)
+    _container(ax, 2.1, 0.2, 3.4, 0.9, fc="white")
+    ax.text(2.75, 0.97, "2 — Return document", ha="center", fontsize=7.5)
+    ax.text(2.25, 0.55, "5", fontsize=7.5, va="center")
+    ax.plot([2.4, 3.2], [0.55, 0.55], color=ACC2, lw=1.6)
+    _finish(ax, f, "search-return-document", (-0.05, 3.5), (-0.05, 1.3))
+
+    f, ax = plt.subplots(figsize=(4.0, 1.6))
+    _container(ax, 0.0, 0.0, 1.6, 1.15, fc="#f8fafc")
+    ax.text(0.8, 1.22, "1 — Enter question", ha="center", fontsize=7.5)
+    _doc_lines(ax, 0.1, 0.2, 0.6, 0.75, n=4)
+    ax.text(0.4, 0.06, "Document", ha="center", fontsize=6.5, color=MUT)
+    _query(ax, 1.2, 0.6, w=0.6)
+    _go(ax, (1.65, 0.55), (2.1, 0.55), lw=0.9)
+    _container(ax, 2.15, 0.0, 3.85, 1.15, fc="white")
+    ax.text(3.0, 1.22, "2 — Generate answer", ha="center", fontsize=7.5)
+    for k, (t, fc) in enumerate((("Context (from document)", "#ede9fe"), ("Question", "#fef3c7"),
+                                 ("Answer", "#dcfce7"))):
+        _blk(ax, 3.0, 0.92 - k * 0.36, t, w=1.5, h=0.27, fc=fc, fs=6.8)
+    _finish(ax, f, "search-answer-question", (-0.05, 3.95), (-0.05, 1.4))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

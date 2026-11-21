@@ -365,21 +365,7 @@ You have an idea for building a cool application on top of Cohere's LLMs. But as
 - With **text generation**, we enter a piece of text, or prompt, and get back a stream of text as a completion to the prompt. One example is asking the model to write a haiku (the prompt) and getting an originally written haiku in return (the completion).
 - With **text embedding**, we enter a piece of text and get back a list of numbers representing its semantic meaning. This is useful for use cases that involve "measuring" what a passage of text represents — for example, in analysing its sentiment.
 
-```mermaid
-flowchart LR
-  subgraph TG["Text generation"]
-    direction LR
-    A1["Your app"] -- "Write me a haiku about software and magic" --> G["co.Generate"]
-    G -- "Magic is software / Hocus-pocus, make it go / Programmer's delight" --> A1
-  end
-  subgraph TE["Text embedding"]
-    direction LR
-    A2["Your app"] -- "Such a great place to work" --> E["co.Embed"]
-    E -- "[0.4257, 1.43, 1.31, −0.43, …]" --> A2
-  end
-```
-
-*The two key types of language-processing capabilities that the Cohere Platform provides.*
+![The two key types of language-processing capabilities that the Cohere Platform provides](figures/cohere-capabilities.svg)
 <!-- pages: 335-337 -->
 
 ### Overview of LangChain
@@ -387,26 +373,7 @@ flowchart LR
 - To create true value for end users, these models in isolation are often not enough. A truly powerful application emerges when you combine them with other sources of computation or knowledge. This is where **LangChain** comes into the picture. It is an open-source library that provides abstractions for building LLM-based applications. LangChain makes it easy and fast to assemble an end-to-end application via its wide range of modules. **Think Lego blocks for LLM applications.**
 - In this article, we'll explain how to use LangChain's **Chains** and **Indexes** modules to build end-to-end pipelines with very few lines of code.
 
-```mermaid
-flowchart LR
-  UI["User input"] --> S1
-  subgraph APP["Your app"]
-    direction LR
-    S1["Step 1"] --> S2["Step 2"] --> SN["… Step N"]
-  end
-  SN --> OUT["App output"]
-  subgraph MOD["LangChain modules"]
-    direction TB
-    M1["Google Drive"] ~~~ M2["Cohere LLMs"] ~~~ M3["Cohere Embeddings"] ~~~ M4["Character Text Splitter"] ~~~ M5["Google Search"] ~~~ M6["SerpAPI"]
-    M7["PDF"] ~~~ M8["Agents"] ~~~ M9["Memory"] ~~~ M10["Indexes"] ~~~ M11["Question Answering"] ~~~ M12["…"]
-  end
-  M1 -.-> S1
-  M3 -.-> S2
-  M4 -.-> SN
-  M11 -.-> SN
-```
-
-*LangChain makes it easy to put together an end-to-end LLM-powered application.*
+![LangChain makes it easy to put together an end-to-end LLM-powered app from its modules](figures/langchain-modules.svg)
 
 ### Overview of Multilingual Semantic Search
 
@@ -417,26 +384,7 @@ flowchart LR
   - **Multilingual search** happens when the query and the result are of the same language. For example, an English query of "places to eat" returning an English result of "Bob's Burgers".
   - **Cross-lingual search** happens when the query and the result are of a different language. For example, a Hindi query of "खाने की जगह" ("places to eat") returning an English result of "Bob's Burgers".
 
-```mermaid
-flowchart LR
-  subgraph ML["Multilingual: each query matches documents in its own language"]
-    direction LR
-    q1["Places to eat"] --> M1(("Same model")) --> d1["Bookstores · Restaurants · Music stores"]
-    q2["Des endroits pour manger"] --> M1 --> d2["Librairies · Restaurants · Magasins de musique"]
-    q3["أماكن للأكل"] --> M1 --> d3["(Arabic documents)"]
-  end
-  subgraph CL["Cross-lingual: each query matches documents in every language"]
-    direction LR
-    p1["Places to eat"] --> M2(("Same model"))
-    p2["Des endroits pour manger"] --> M2
-    p3["أماكن للأكل"] --> M2
-    M2 --> e1["Bookstores · Restaurants · Music stores"]
-    M2 --> e2["Librairies · Restaurants · Magasins de musique"]
-    M2 --> e3["(Arabic documents)"]
-  end
-```
-
-*The difference between multilingual and cross-lingual search.*
+![The difference between multilingual and cross-lingual search](figures/multilingual-crosslingual.svg)
 
 With Cohere's multilingual embedding model, we can do **both multilingual and cross-lingual searches using one single model**.
 
@@ -461,17 +409,7 @@ os.environ["COHERE_API_KEY"] = "COHERE_API_KEY"
 
 ### Example 1 — Basic Multilingual Search
 
-```mermaid
-flowchart LR
-  subgraph IN["1 — Enter query"]
-    direction TB
-    D["Documents: 1 · 2 · 3 · 4 · 5"]
-    Q["Query"]
-  end
-  IN --> OUT["2 — Return document: 5"]
-```
-
-*Searching the most relevant document from a list of documents.*
+![Searching the most relevant document from a list of documents](figures/search-return-document.svg)
 
 - In the first example, we'll create a semantic-search pipeline for searching the most relevant document from a list of documents. An example application is a recommendation system for podcasts or articles.
 - We'll compare a query with a list of documents from a questions dataset, and then return the documents that are most similar to the query. While the documents are in English, we'll see how good the model is at cross-lingual search: we'll enter queries in 5 languages and see if the results match our expectations.
@@ -550,21 +488,7 @@ In this example, we saw how we can leverage LangChain to build a semantic-search
 
 ### Example 2 — Search-Based Question Answering
 
-```mermaid
-flowchart LR
-  subgraph IN["1 — Enter question"]
-    direction TB
-    D["Documents"]
-    Q["Question"]
-  end
-  subgraph OUT["2 — Generate answer"]
-    direction TB
-    C["Context (from documents)"] --> QQ["Question"] --> A["Answer"]
-  end
-  IN --> OUT
-```
-
-*Answering questions about a long-form document.*
+![Answering questions about a long-form document](figures/search-answer-question.svg)
 
 - In this second example, we'll use semantic search to answer questions about a **long-form document**, such as an article. Here, we take a question from the user, search for the most relevant passages in the document, and use these to generate an answer. An example application is the search bar for a documentation website.
 - This time, we'll add a **text-generation model** to the pipeline so we can perform the answer-generation part.

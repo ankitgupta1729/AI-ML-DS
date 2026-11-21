@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="268.2pt" height="150.884375pt" viewBox="0 0 268.2 150.884375" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 150.884375 
+L 268.2 150.884375 
+L 268.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 15.804 72.026375 
+L 252.396 72.026375 
+Q 257.976 72.026375 257.976 66.446375 
+L 257.976 21.248375 
+Q 257.976 15.668375 252.396 15.668375 
+L 15.804 15.668375 
+Q 10.224 15.668375 10.224 21.248375 
+L 10.224 66.446375 
+Q 10.224 72.026375 15.804 72.026375 
+z
+" clip-path="url(#p42cd17c5b1)" style="fill: #f8fafc; stroke: #64748b; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 17.757 54.728375 
+L 66.303 54.728375 
+Q 69.651 54.728375 69.651 51.380375 
+L 69.651 32.408375 
+Q 69.651 29.060375 66.303 29.060375 
+L 17.757 29.060375 
+Q 14.409 29.060375 14.409 32.408375 
+L 14.409 51.380375 
+Q 14.409 54.728375 17.757 54.728375 
+z
+" clip-path="url(#p42cd17c5b1)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 203.292 54.728375 
+L 249.048 54.728375 
+Q 252.396 54.728375 252.396 51.380375 
+L 252.396 32.408375 
+Q 252.396 29.060375 249.048 29.060375 
+L 203.292 29.060375 
+Q 199.944 29.060375 199.944 32.408375 
+L 199.944 51.380375 
+Q 199.944 54.728375 203.292 54.728375 
+z
+" clip-path="url(#p42cd17c5b1)" style="fill: #ffffff; stroke: #7c3aed; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 15.804 144.566375 
+L 252.396 144.566375 
+Q 257.976 144.566375 257.976 138.986375 
+L 257.976 93.788375 
+Q 257.976 88.208375 252.396 88.208375 
+L 15.804 88.208375 
+Q 10.224 88.208375 10.224 93.788375 
+L 10.224 138.986375 
+Q 10.224 144.566375 15.804 144.566375 
+z
+" clip-path="url(#p42cd17c5b1)" style="fill: #f8fafc; stroke: #64748b; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 17.757 127.268375 
+L 66.303 127.268375 
+Q 69.651 127.268375 69.651 123.920375 
+L 69.651 104.948375 
+Q 69.651 101.600375 66.303 101.600375 
+L 17.757 101.600375 
+Q 14.409 101.600375 14.409 104.948375 
+L 14.409 123.920375 
+Q 14.409 127.268375 17.757 127.268375 
+z
+" clip-path="url(#p42cd17c5b1)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 203.292 127.268375 
+L 249.048 127.268375 
+Q 252.396 127.268375 252.396 123.920375 
+L 252.396 104.948375 
+Q 252.396 101.600375 249.048 101.600375 
+L 203.292 101.600375 
+Q 199.944 101.600375 199.944 104.948375 
+L 199.944 123.920375 
+Q 199.944 127.268375 203.292 127.268375 
+z
+" clip-path="url(#p42cd17c5b1)" style="fill: #ffffff; stroke: #7c3aed; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="134.1" y="13.994375" transform="rotate(-0 134.1 13.994375)">Text generation</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="42.03" y="44.622646" transform="rotate(-0 42.03 44.622646)">co.Generate</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="226.17" y="44.622646" transform="rotate(-0 226.17 44.622646)">Your App</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 199.944 36.314375 
+Q 134.937 36.314375 70.824427 36.314375 
+" style="fill: none; stroke: #0f172a; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 74.824427 38.314375 
+L 70.824427 36.314375 
+L 74.824427 34.314375 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 69.93 47.474375 
+Q 134.937 47.474375 199.049573 47.474375 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 195.049573 45.474375 
+L 199.049573 47.474375 
+L 195.049573 49.474375 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle" x="134.1" y="29.214746" transform="rotate(-0 134.1 29.214746)">Write me a haiku about software and magic</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="134.1" y="59.1575" transform="rotate(-0 134.1 59.1575)">Magic is software / Hocus-pocus, make it go / Programmer's delight</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="134.1" y="86.534375" transform="rotate(-0 134.1 86.534375)">Text embedding</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="42.03" y="117.162646" transform="rotate(-0 42.03 117.162646)">co.Embed</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="226.17" y="117.162646" transform="rotate(-0 226.17 117.162646)">Your App</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 199.944 108.854375 
+Q 134.937 108.854375 70.824427 108.854375 
+" style="fill: none; stroke: #0f172a; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 74.824427 110.854375 
+L 70.824427 108.854375 
+L 74.824427 106.854375 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 69.93 120.014375 
+Q 134.937 120.014375 199.049573 120.014375 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 195.049573 118.014375 
+L 199.049573 120.014375 
+L 195.049573 122.014375 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle" x="134.1" y="101.754746" transform="rotate(-0 134.1 101.754746)">Such a great place to work</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="134.1" y="131.6975" transform="rotate(-0 134.1 131.6975)">[0.4257, 1.43, 1.31, −0.43, …]</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p42cd17c5b1">
+   <rect x="5.76" y="8.414375" width="256.68" height="136.71"/>
+  </clipPath>
+ </defs>
+</svg>

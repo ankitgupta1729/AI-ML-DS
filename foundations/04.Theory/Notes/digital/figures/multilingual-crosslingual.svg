@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="375.630068pt" height="107.742037pt" viewBox="0 0 375.630068 107.742037" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 107.742037 
+L 375.630068 107.742037 
+L 375.630068 -0 
+L 0 -0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 75.588506 93.370479 
+L 93.186039 93.370479 
+Q 95.432532 93.370479 95.432532 91.123985 
+L 95.432532 37.956972 
+Q 95.432532 35.710479 93.186039 35.710479 
+L 75.588506 35.710479 
+Q 73.342013 35.710479 73.342013 37.956972 
+L 73.342013 91.123985 
+Q 73.342013 93.370479 75.588506 93.370479 
+z
+" clip-path="url(#p876d3f8883)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; fill: #0f172a" transform="translate(74.404656 62.731397)">Same</text>
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; fill: #0f172a" transform="translate(73.463054 71.806104)">model</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: end" x="52.561948" y="44.549177" transform="rotate(-0 52.561948 44.549177)">Places to eat</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 36.744538)">Bookstores</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 44.367292)">Restaurants</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 51.990046)">Music stores</text>
+   </g>
+   <g id="patch_3">
+    <path d="M 54.434026 42.075544 
+Q 64.168831 42.075544 73.121013 42.075544 
+" style="fill: none; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 69.121013 40.075544 
+L 73.121013 42.075544 
+L 69.121013 44.075544 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 94.870909 42.075544 
+Q 104.605714 42.075544 113.557896 42.075544 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 109.557896 40.075544 
+L 113.557896 42.075544 
+L 109.557896 44.075544 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(12.123198 62.900245)">Des endroits</text>
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(11.341198 71.127979)">pour manger</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 59.209473)">Librairies</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 66.832227)">Restaurants</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 74.454981)">Magasins de musique</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 54.434026 64.540479 
+Q 64.168831 64.540479 73.121013 64.540479 
+" style="fill: none; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 69.121013 62.540479 
+L 73.121013 64.540479 
+L 69.121013 66.540479 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 94.870909 64.540479 
+Q 104.605714 64.540479 113.557896 64.540479 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 109.557896 62.540479 
+L 113.557896 64.540479 
+L 109.557896 66.540479 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: end" x="52.561948" y="89.479047" transform="rotate(-0 52.561948 89.479047)">Arabic query</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 85.485785)">Arabic</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(116.212597 93.108539)">documents</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 54.434026 87.005414 
+Q 64.168831 87.005414 73.121013 87.005414 
+" style="fill: none; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 69.121013 85.005414 
+L 73.121013 87.005414 
+L 69.121013 89.005414 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 94.870909 87.005414 
+Q 104.605714 87.005414 113.557896 87.005414 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 109.557896 85.005414 
+L 113.557896 87.005414 
+L 109.557896 89.005414 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="84.387273" y="13.994375" transform="rotate(-0 84.387273 13.994375)">Multilingual</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="39.457403" y="28.970998" transform="rotate(-0 39.457403 28.970998)">Query</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="131.189221" y="28.970998" transform="rotate(-0 131.189221 28.970998)">Documents</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_9">
+    <path d="M 264.293961 93.370479 
+L 281.891494 93.370479 
+Q 284.137987 93.370479 284.137987 91.123985 
+L 284.137987 37.956972 
+Q 284.137987 35.710479 281.891494 35.710479 
+L 264.293961 35.710479 
+Q 262.047468 35.710479 262.047468 37.956972 
+L 262.047468 91.123985 
+Q 262.047468 93.370479 264.293961 93.370479 
+z
+" clip-path="url(#p2092bfdd53)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; fill: #0f172a" transform="translate(263.11011 62.731397)">Same</text>
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; fill: #0f172a" transform="translate(262.168509 71.806104)">model</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: end" x="241.267403" y="44.549177" transform="rotate(-0 241.267403 44.549177)">Places to eat</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 36.744538)">Bookstores</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 44.367292)">Restaurants</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 51.990046)">Music stores</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 243.139481 42.075544 
+Q 252.874286 42.075544 261.826467 42.075544 
+" style="fill: none; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 257.826467 40.075544 
+L 261.826467 42.075544 
+L 257.826467 44.075544 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 283.576364 42.075544 
+Q 293.311169 42.075544 302.375154 42.075544 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 298.375154 40.075544 
+L 302.375154 42.075544 
+L 298.375154 44.075544 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 283.576364 42.075544 
+Q 293.311169 53.308011 302.606633 64.033547 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 301.498289 59.70093 
+L 302.606633 64.033547 
+L 298.475533 62.320652 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 283.576364 42.075544 
+Q 293.311169 64.540479 302.779251 86.389899 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 303.023932 81.924462 
+L 302.779251 86.389899 
+L 299.35371 83.514891 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(200.828653 62.900245)">Des endroits</text>
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(200.046653 71.127979)">pour manger</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 59.209473)">Librairies</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 66.832227)">Restaurants</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 74.454981)">Magasins de musique</text>
+   </g>
+   <g id="patch_14">
+    <path d="M 243.139481 64.540479 
+Q 252.874286 64.540479 261.826467 64.540479 
+" style="fill: none; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 257.826467 62.540479 
+L 261.826467 64.540479 
+L 257.826467 66.540479 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 283.576364 64.540479 
+Q 293.311169 53.308011 302.606633 42.582475 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 298.475533 44.295371 
+L 302.606633 42.582475 
+L 301.498289 46.915093 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 283.576364 64.540479 
+Q 293.311169 64.540479 302.375154 64.540479 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 298.375154 62.540479 
+L 302.375154 64.540479 
+L 298.375154 66.540479 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 283.576364 64.540479 
+Q 293.311169 75.772946 302.606633 86.498482 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 301.498289 82.165865 
+L 302.606633 86.498482 
+L 298.475533 84.785587 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 6.8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: end" x="241.267403" y="89.479047" transform="rotate(-0 241.267403 89.479047)">Arabic query</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 85.485785)">Arabic</text>
+    <text style="font-size: 6.3px; font-family: 'Inter', 'DejaVu Sans'" transform="translate(304.918052 93.108539)">documents</text>
+   </g>
+   <g id="patch_18">
+    <path d="M 243.139481 87.005414 
+Q 252.874286 87.005414 261.826467 87.005414 
+" style="fill: none; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+    <path d="M 257.826467 85.005414 
+L 261.826467 87.005414 
+L 257.826467 89.005414 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 283.576364 87.005414 
+Q 293.311169 64.540479 302.779251 42.691059 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 299.35371 45.566066 
+L 302.779251 42.691059 
+L 303.023932 47.156496 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 283.576364 87.005414 
+Q 293.311169 75.772946 302.606633 65.047411 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 298.475533 66.760306 
+L 302.606633 65.047411 
+L 301.498289 69.380028 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 283.576364 87.005414 
+Q 293.311169 87.005414 302.375154 87.005414 
+" style="fill: none; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 298.375154 85.005414 
+L 302.375154 87.005414 
+L 298.375154 89.005414 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #7c3aed" x="273.092727" y="13.994375" transform="rotate(-0 273.092727 13.994375)">Cross-lingual</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="228.162857" y="28.970998" transform="rotate(-0 228.162857 28.970998)">Query</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 7.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="319.894675" y="28.970998" transform="rotate(-0 319.894675 28.970998)">Documents</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p876d3f8883">
+   <rect x="5.76" y="8.378141" width="157.254545" height="93.603896"/>
+  </clipPath>
+  <clipPath id="p2092bfdd53">
+   <rect x="194.465455" y="8.378141" width="157.254545" height="93.603896"/>
+  </clipPath>
+ </defs>
+</svg>
