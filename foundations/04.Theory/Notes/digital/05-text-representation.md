@@ -155,6 +155,8 @@ df_clust['cluster'] = (list(map(str, classes)))
 | show me airlines that fly between x and y | show me a list of ground transportation … |
 | which airlines fly from boston to … | show me boston ground transportation |
 
+![The two clusters found by K-means in the 2-D plot of the embeddings](figures/text-clusters.svg)
+
 ## Text Classification & Evaluation Metrics
 <!-- pages: 197-203 -->
 
@@ -201,7 +203,7 @@ $$\text{Accuracy} = \frac{\text{number of correct predictions}}{\text{total numb
 | **Actual negative** | TN = 14 | FP = 3 |
 | **Actual positive** | FN = 2 | TP = 1 |
 
-*The true negatives dominate the accuracy calculation.*
+![The true negatives dominate the accuracy calculation](figures/tn-dominates.svg)
 
 - **Precision, recall and F1** can provide a more balanced view of a classifier's performance, because they don't focus on true negatives (TN) in the calculation.
 - Between precision and recall, though, there is a **trade-off**. It is hard to optimise for both simultaneously, as optimising for the FP (thereby improving precision) comes at the expense of the FN (false negatives — thereby deteriorating recall), and vice versa.

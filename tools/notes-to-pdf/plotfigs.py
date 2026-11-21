@@ -1617,6 +1617,42 @@ def it_pull():
     _finish(ax, f, "it-pull", (-0.1, 3.6), (-0.05, 0.95))
 
 
+@fig
+def text_clusters():
+    """p196: K-means with 2 clusters on the 2-D embeddings: airline information vs ground transportation."""
+    from matplotlib.patches import Ellipse
+    rng = np.random.default_rng(7)
+    f, ax = plt.subplots(figsize=(4.6, 2.4))
+    groups = [((1.2, 1.2), "#ede9fe", ACC, "cluster 0 — airline information",
+               ["show me airlines that fly between x and y", "which airlines fly from boston to …"]),
+              ((3.6, 1.0), "#fef3c7", WARM, "cluster 1 — ground transportation",
+               ["show me a list of ground transportation", "show me boston ground transportation"])]
+    for (cx, cy), fc, ec, title, items in groups:
+        ax.add_patch(Ellipse((cx, cy), 2.1, 1.3, fc=fc, ec=ec, lw=1))
+        pts = rng.normal(0, [0.32, 0.2], (6, 2)) + (cx, cy)
+        ax.scatter(pts[:, 0], pts[:, 1], s=14, color=ec, zorder=3)
+        ax.text(cx, cy + 0.78, title, ha="center", fontsize=8, color=ec)
+        for k, t in enumerate(items):
+            ax.text(cx, cy - 0.85 - k * 0.2, "• " + t, ha="center", fontsize=6.5, color=INK)
+    _finish(ax, f, "text-clusters", (-0.05, 4.85), (-0.35, 2.05))
+
+
+@fig
+def tn_dominates():
+    """p200: in an imbalanced data set the true negatives dominate the accuracy calculation."""
+    f, ax = plt.subplots(figsize=(2.4, 1.9))
+    ax.add_patch(plt.Rectangle((0, 0.5), 1.4, 1.4, fc="#e2e8f0", ec=INK, lw=0.9))
+    ax.text(0.7, 1.2, "TN\n(14)", ha="center", va="center", fontsize=9)
+    for x, t, fc in ((1.4, "FN\n(2)", "#fecaca"), (1.9, "TP\n(1)", "#dcfce7")):
+        ax.add_patch(plt.Rectangle((x, 0.5), 0.5, 0.5, fc=fc, ec=INK, lw=0.9))
+        ax.text(x + 0.25, 0.75, t, ha="center", va="center", fontsize=7)
+    ax.add_patch(plt.Rectangle((1.4, 1.0), 0.5, 0.5, fc="#fef3c7", ec=INK, lw=0.9))
+    ax.text(1.65, 1.25, "FP\n(3)", ha="center", va="center", fontsize=7)
+    ax.text(1.2, 0.2, "the true negatives dominate\nthe accuracy calculation", ha="center", va="center", fontsize=7.5,
+            color=MUT)
+    _finish(ax, f, "tn-dominates", (-0.1, 2.5), (-0.05, 2.0))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:
