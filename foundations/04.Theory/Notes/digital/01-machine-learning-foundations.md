@@ -589,6 +589,8 @@ $$b = \frac{\sum (x - \bar x)(y - \bar y)}{\sum (x - \bar x)^2}, \qquad a = \bar
 ### Improving Learning: Feature Scaling
 
 - **Feature scaling** gives features the same scale, so the cost contours become round and gradient descent converges faster. It matters for PCA, regularisation and gradient descent.
+
+![Feature scaling turns elongated cost contours into round ones](figures/feature-scaling.svg)
 - **Feature standardisation** rescales features to zero mean and unit variance — the z-score $z = \dfrac{x - \mu}{\sigma}$.
 - **Feature normalisation:** $x' = \dfrac{x - x_{\min}}{x_{\max} - x_{\min}}$.
 
@@ -614,9 +616,13 @@ $$b = \frac{\sum (x - \bar x)(y - \bar y)}{\sum (x - \bar x)^2}, \qquad a = \bar
 - **Correlation** is a dimensionless measure of linear dependence, from −1 to +1: $\rho_{ij} = \dfrac{\sigma_{ij}}{\sigma_i \sigma_j}$.
 - In the contour picture of a 2-D Gaussian: circular contours → $\operatorname{Cov} = 0$; ellipses tilted up to the right → $\operatorname{Cov} > 0$; ellipses tilted down → $\operatorname{Cov} < 0$.
 
+![Contours of a 2-D Gaussian for Cov = 0, Cov > 0 and Cov < 0](figures/covariance-contours.svg)
+
 ### The Gaussian Distribution
 
 - Univariate: $\mathcal{N}(x \mid \mu, \sigma^2) = \dfrac{1}{\sqrt{2\pi}\,\sigma}\, e^{-(x - \mu)^2 / 2\sigma^2}$ (a bell curve centred at $\mu$).
+
+![The Gaussian bell curve](figures/gaussian.svg)
 - Gaussian distributions are widely used in ML due to:
   - the **Central Limit Theorem**;
   - being computationally convenient;
@@ -691,6 +697,8 @@ $$\underbrace{P(C \mid A)}_{\text{posterior}} = \frac{\overbrace{P(A \mid C)}^{\
 - After each weight update the decision boundary gets changed.
 - **Forward pass:** inputs $x_1, x_2, \dots, x_N$ with weights $w_1, w_2, \dots, w_N$ feed a unit with activation $f$ that produces the output $y$.
 - **MLP (multi-layer perceptron)** — a fully connected network. *Example:* 3 inputs → 4 hidden → 3 outputs has $4 + 3 = 7$ units (perceptrons / neurons) and $(3 \times 4 + 4 \times 3)$ weights $+ (4 + 3)$ biases $= 31$ learnable parameters.
+
+  ![A fully connected MLP with 3 inputs, 4 hidden units and 3 outputs](figures/mlp.svg)
 - Performance usually tops out at 2–3 layers for deep networks, except CNNs.
 - The **loss function** defines what is meant to be *close* to the true solution.
 
@@ -716,15 +724,21 @@ $$\frac{\partial L}{\partial w_2} = \frac{\partial L}{\partial f_3}\,\frac{\part
 A layer computes $\sigma(Wx + b)$. *Example:* inputs $x = (1, -1)$ with weights $\begin{bmatrix} 1 & -2 \\ -1 & 1 \end{bmatrix}$ and biases $b = (1, 0)$:
 $$\begin{bmatrix} 1 & -2 \\ -1 & 1 \end{bmatrix}\begin{bmatrix} 1 \\ -1 \end{bmatrix} + \begin{bmatrix} 1 \\ 0 \end{bmatrix} = Wx + b \;\to\; \sigma(Wx + b) \to \cdots$$
 
+![A layer of two sigmoid units as the matrix operation σ(Wx + b)](figures/matrix-layer.svg)
+
 ### Softmax
 
 For multi-class outputs, each score $z_i$ is exponentiated and normalised into a probability:
 $$y_i = \frac{e^{z_i}}{\sum_j e^{z_j}}.$$
 
+![The softmax layer exponentiates each score and normalises by the sum](figures/softmax.svg)
+
 ### Momentum
 
 - **SGD** is a special case of mini-batch gradient descent with batch size 1 (generally sampling without replacement).
 - A ball rolling down the loss surface can get stuck at a saddle point or local minimum, where $\nabla C(\theta) = 0$ — momentum carries it through.
+
+  ![A ball rolling on the loss surface can stop at a local minimum or a saddle point; momentum carries it onwards](figures/momentum.svg)
 - **Movement = negative of gradient + momentum:**
 $$v^0 = 0, \qquad v^1 = \lambda v^0 - \mu \nabla C(\theta^0), \qquad v^2 = \lambda v^1 - \mu \nabla C(\theta^1), \;\dots$$
   where $\mu$ is the learning rate.
@@ -767,6 +781,8 @@ $$f * g(x) = \int_{\alpha = -\infty}^{\infty} f(\alpha)\, g(x - \alpha)\, d\alph
 $$f * g(x, y) = \int_{\alpha=-\infty}^{\infty}\int_{\beta=-\infty}^{\infty} f(\alpha, \beta)\, g(x - \alpha, y - \beta)\, d\alpha\, d\beta \qquad \text{[2-D feature map]}$$
 
 - A $3 \times 3$ **mask** (filter) slides over a $6 \times 6$ image. Its convolutional mask coefficients are network parameters to be learned. It detects high-level and abstract features.
+
+  ![A 3 × 3 mask convolved over a 6 × 6 image gives a 4 × 4 feature map](figures/convolution.svg)
 - If an image has 3 channels (R, G, B), each filter has 3 kernels.
 - **Stride** means shift: with stride 2 the filter shifts 2 units at a time.
 - After convolving the image with a filter (mask) we get a **feature map**, which contains high-level information.
@@ -803,22 +819,7 @@ flowchart LR
 - In deep learning, convolution is element-wise multiplication and addition: the filter slides through the input channels and feature maps in the same way.
 - **"Channels"** usually describes the structure of a *layer*. Similarly, a **"kernel"** refers to a 2-D array of weights, while the term **"filter"** is for the 3-D structure of multiple kernels stacked together.
 
-```mermaid
-flowchart LR
-  subgraph IN["Input layer 5×5×3 (3 channels)"]
-    R["channel 1 (5×5)"]
-    G["channel 2 (5×5)"]
-    B["channel 3 (5×5)"]
-  end
-  R -- "kernel 1 (3×3)" --> O1["3×3"]
-  G -- "kernel 2 (3×3)" --> O2["3×3"]
-  B -- "kernel 3 (3×3)" --> O3["3×3"]
-  O1 --> SUM(("+"))
-  O2 --> SUM
-  O3 --> SUM
-  BIAS["bias"] --> SUM
-  SUM --> OUT["one output channel (3×3)"]
-```
+![A 3 × 3 × 3 filter on a 5 × 5 × 3 input: each kernel convolves one channel, and the three results are summed with the bias into one output channel](figures/multichannel-conv.svg)
 
 - Here the input layer is a $5 \times 5 \times 3$ tensor with 3 channels, and the filter is a $3 \times 3 \times 3$ matrix. First, each of the kernels in the filter is applied to the 3 channels of the input layer separately: 3 convolutions are performed, which result in 3 channels of size $3 \times 3$.
 - Each of the per-channel processed versions is then **summed together** to form one channel, producing the final output channel.

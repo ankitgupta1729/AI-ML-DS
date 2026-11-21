@@ -223,9 +223,9 @@ def pca_components():
         d = d if d[1] > 0 else -d
         ax.annotate("", d, (0, 0), annotation_clip=False,
                     arrowprops=dict(arrowstyle="-|>", color=INK if k else WARM, lw=2))
-        ax.text(d[0] * 1.08, d[1] * 1.08 + 0.2, lab, fontsize=8.5, color=INK if k else "#b45309",
-                ha="center", bbox=dict(fc="white", ec="none", alpha=0.85, pad=1))
-    ax.set_xlim(-5, 5)
+        ax.text(d[0] + (0.15 if k else -0.15), d[1] + 0.1, lab, fontsize=8.5, color=INK if k else "#b45309",
+                ha="left" if k else "right", zorder=5, bbox=dict(fc="white", ec="none", alpha=0.9, pad=1))
+    ax.set_xlim(-6, 7)
     ax.set_ylim(-3.2, 3.6)
     ax.set_aspect("equal")
     ax.axis("off")
@@ -333,6 +333,223 @@ def dendrogram():
     ax.spines["bottom"].set_visible(False)
     ax.set_ylim(-0.6, 4.4)
     save(f, "dendrogram")
+
+
+def _contours(ax, sx, sy, rot, n=4, color=ACC):
+    t = np.linspace(0, 2 * np.pi, 120)
+    c, s_ = np.cos(rot), np.sin(rot)
+    for k in range(1, n + 1):
+        x, y = k * sx * np.cos(t) / n, k * sy * np.sin(t) / n
+        ax.plot(c * x - s_ * y, s_ * x + c * y, color=color, lw=1.1, alpha=0.4 + 0.6 * k / n)
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+
+@fig
+def feature_scaling():
+    """p23: features on different scales (elongated contours) vs scaled features (round contours)."""
+    f, (a, b) = plt.subplots(1, 2, figsize=(4.6, 1.9))
+    _contours(a, 2.2, 0.6, 0)
+    a.set_title("before scaling", fontsize=9, color=INK)
+    _contours(b, 1.0, 1.0, 0)
+    b.set_title("after scaling", fontsize=9, color=INK)
+    for ax in (a, b):
+        ax.set_xlim(-2.4, 2.4)
+        ax.set_ylim(-1.2, 1.2)
+    f.text(0.5, 0.45, "→", fontsize=18, ha="center", color=INK)
+    save(f, "feature-scaling")
+
+
+@fig
+def covariance_contours():
+    """p24: contours of a 2-D Gaussian for Cov = 0, Cov > 0 and Cov < 0."""
+    f, axs = plt.subplots(1, 3, figsize=(5.2, 1.9))
+    for ax, (sx, sy, rot, lab) in zip(axs, ((1, 1, 0, "Cov = 0"), (1.4, 0.55, 0.78, "Cov > 0"),
+                                            (1.4, 0.55, -0.78, "Cov < 0")), strict=True):
+        _contours(ax, sx, sy, rot)
+        ax.set_xlim(-1.5, 1.5)
+        ax.set_ylim(-1.5, 1.5)
+        ax.set_title(lab, fontsize=9, color=INK)
+    save(f, "covariance-contours")
+
+
+@fig
+def gaussian():
+    """p24: the univariate Gaussian (bell curve)."""
+    f, ax = plt.subplots(figsize=(3.4, 1.9))
+    x = np.linspace(-4, 4, 300)
+    ax.plot(x, np.exp(-x ** 2 / 2) / np.sqrt(2 * np.pi), color=ACC, lw=2)
+    ax.fill_between(x, np.exp(-x ** 2 / 2) / np.sqrt(2 * np.pi), color=ACC, alpha=0.1)
+    ax.axvline(0, color=MUT, lw=0.8, ls=":")
+    ax.text(0.1, 0.02, r"$\mu$", color=INK)
+    ax.annotate("", (1, 0.242), (0, 0.242), arrowprops=dict(arrowstyle="<->", color=WARM))
+    ax.text(0.5, 0.26, r"$\sigma$", color="#b45309", ha="center")
+    bare(ax)
+    ax.set_ylim(0, 0.45)
+    save(f, "gaussian")
+
+
+def _network(ax, layers, labels=None, colors=(ACC2, "#ede9fe", "#fde68a")):
+    xs = np.linspace(0, 1, len(layers))
+    pos = []
+    for i, n in enumerate(layers):
+        ys = np.linspace(0.5 - 0.12 * (n - 1), 0.5 + 0.12 * (n - 1), n)
+        pos.append([(xs[i], y) for y in ys])
+    for a, b in zip(pos, pos[1:], strict=False):
+        for p in a:
+            for q in b:
+                ax.plot([p[0], q[0]], [p[1], q[1]], color=MUT, lw=0.6, alpha=0.7)
+    for i, layer in enumerate(pos):
+        col = colors[0] if i == 0 else (colors[2] if i == len(pos) - 1 else colors[1])
+        for p in layer:
+            ax.add_patch(plt.Circle(p, 0.035, fc=col, ec=ACC, lw=1.1, zorder=3))
+    if labels:
+        for x, lab in zip(xs, labels, strict=True):
+            ax.text(x, 0.5 - 0.12 * (max(layers) - 1) - 0.1, lab, ha="center", fontsize=8.5, color=MUT)
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+
+@fig
+def mlp():
+    """p25: a fully connected MLP with 3 inputs, 4 hidden units and 3 outputs."""
+    f, ax = plt.subplots(figsize=(3.6, 2.4))
+    _network(ax, [3, 4, 3], ["input (3)", "hidden (4)", "output (3)"])
+    ax.set_xlim(-0.15, 1.15)
+    ax.set_ylim(-0.05, 1.0)
+    save(f, "mlp")
+
+
+@fig
+def momentum():
+    """p26: a ball rolling on the loss surface can stop at a saddle point or local minimum."""
+    f, ax = plt.subplots(figsize=(4.4, 2.2))
+    cx = [0, 1.5, 3.5, 5.0, 6.3, 7.2, 8.6, 10]
+    cy = [3.0, 2.2, 0.6, 1.8, 1.3, 1.3, -0.4, 1.0]
+    x = np.linspace(0, 10, 400)
+    i = np.clip(np.searchsorted(cx, x) - 1, 0, len(cx) - 2)
+    t = (x - np.take(cx, i)) / (np.take(cx, i + 1) - np.take(cx, i))
+    w = (1 - np.cos(np.pi * t)) / 2  # flat at every control point
+    y = np.take(cy, i) * (1 - w) + np.take(cy, i + 1) * w
+    ax.plot(x, y, color=ACC, lw=2)
+    for xb, lab, dy in ((0.9, "ball", 0.75), (3.5, "local minimum\n∇C(θ) = 0", -0.85),
+                        (6.75, "saddle point\n∇C(θ) = 0", 0.95), (8.6, "global minimum", -0.7)):
+        yb = float(np.interp(xb, x, y))
+        if lab != "global minimum":
+            ax.add_patch(plt.Circle((xb, yb + 0.25), 0.22, fc=WARM, ec=INK, lw=0.8, zorder=3))
+        ax.text(xb, yb + dy, lab, ha="center", fontsize=8, color=INK)
+    ax.text(10, 3.2, "momentum carries\nthe ball onwards →", ha="right", fontsize=8, color="#b45309")
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "momentum")
+
+
+def _grid(ax, x, y, n, cell=0.3, fc="white", ec=ACC, hl=None, vals=None, lw=0.8):
+    from matplotlib.patches import Rectangle
+    for i in range(n):
+        for j in range(n):
+            col = fc
+            if hl and hl[0] <= i < hl[0] + hl[2] and hl[1] <= j < hl[1] + hl[2]:
+                col = "#fde68a"
+            ax.add_patch(Rectangle((x + j * cell, y + (n - 1 - i) * cell), cell, cell, fc=col, ec=ec, lw=lw))
+            if vals is not None:
+                ax.text(x + (j + 0.5) * cell, y + (n - 1 - i + 0.5) * cell, str(vals[i][j]), ha="center",
+                        va="center", fontsize=7.5, color=INK)
+
+
+@fig
+def matrix_layer():
+    """p26: a layer as a matrix operation, sigma(Wx + b) with x = (1, -1)."""
+    f, ax = plt.subplots(figsize=(4.4, 2.0))
+    ins = [(0, 1.4), (0, 0.2)]
+    outs = [(2.2, 1.4), (2.2, 0.2)]
+    w = [[1, -2], [-1, 1]]
+    for i, (xi, yi) in enumerate(ins):
+        for j, (xo, yo) in enumerate(outs):
+            ax.annotate("", (xo - 0.22, yo), (xi + 0.22, yi), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.9))
+            ax.text(xi + 0.6 + 0.55 * (j - i) * 0.4, (yi * 0.7 + yo * 0.3) + (0.12 if j == i else -0.05),
+                    str(w[j][i]), fontsize=8.5, color=ACC)
+    for (x, y), v in zip(ins, ("1", "−1"), strict=True):
+        ax.add_patch(plt.Rectangle((x - 0.2, y - 0.17), 0.4, 0.34, fc="#ede9fe", ec=ACC))
+        ax.text(x, y, v, ha="center", va="center", fontsize=9)
+    for (x, y), b in zip(outs, ("1", "0"), strict=True):
+        ax.add_patch(plt.Circle((x, y), 0.22, fc="#fde68a", ec=INK))
+        ax.text(x, y, "σ", ha="center", va="center", fontsize=10)
+        ax.text(x + 0.05, y - 0.5, f"bias {b}", ha="center", fontsize=8, color=MUT)
+    ax.text(3.0, 0.8, "W = [[1, −2], [−1, 1]]\nx = (1, −1),  b = (1, 0)\n→ σ(Wx + b)",
+            fontsize=8.5, color=INK, va="center")
+    ax.set_xlim(-0.4, 5.2)
+    ax.set_ylim(-0.5, 1.8)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "matrix-layer")
+
+
+@fig
+def convolution():
+    """p28: a 3x3 mask slides over a 6x6 image (stride 1, no padding) giving a 4x4 feature map."""
+    f, ax = plt.subplots(figsize=(5.0, 2.2))
+    _grid(ax, 0, 0, 6, hl=(0, 0, 3))
+    ax.text(0.9, -0.3, "6 × 6 image", ha="center", fontsize=8.5, color=INK)
+    ax.text(2.2, 0.9, "∗", fontsize=18, ha="center", va="center")
+    _grid(ax, 2.55, 0.45, 3, fc="#fde68a")
+    ax.text(3.0, 0.15, "3 × 3 mask\n(learned)", ha="center", fontsize=8, color=INK, va="top")
+    ax.text(3.75, 0.9, "=", fontsize=16, ha="center", va="center")
+    _grid(ax, 4.1, 0.3, 4, fc="#ede9fe", hl=(0, 0, 1))
+    ax.text(4.7, -0.3, "4 × 4 feature map", ha="center", fontsize=8.5, color=INK)
+    ax.set_xlim(-0.1, 5.4)
+    ax.set_ylim(-0.6, 1.9)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "convolution")
+
+
+@fig
+def softmax():
+    """p26: softmax layer: z_i -> e^{z_i} -> y_i = e^{z_i} / sum_j e^{z_j}."""
+    f, ax = plt.subplots(figsize=(4.6, 1.9))
+    for k, y in enumerate((1.5, 0.85, 0.2)):
+        i = k + 1
+        ax.text(0, y, f"$z_{i}$", ha="center", va="center", fontsize=10)
+        ax.annotate("", (0.75, y), (0.2, y), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.9))
+        ax.text(1.0, y, f"$e^{{z_{i}}}$", ha="center", va="center", fontsize=10,
+                bbox=dict(boxstyle="round,pad=0.25", fc="#ede9fe", ec=ACC))
+        ax.annotate("", (2.6, y), (1.3, y), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.9))
+        ax.text(3.35, y, f"$y_{i} = e^{{z_{i}}} / \\sum_j e^{{z_j}}$", ha="center", va="center", fontsize=9.5)
+    ax.add_patch(plt.Rectangle((0.55, -0.15), 1.6, 2.0, fc="none", ec=WARM, lw=1, ls="--"))
+    ax.text(1.35, 1.95, "softmax layer", ha="center", fontsize=8.5, color=WARM)
+    ax.set_xlim(-0.3, 4.4)
+    ax.set_ylim(-0.25, 2.15)
+    ax.axis("off")
+    save(f, "softmax")
+
+
+@fig
+def multichannel_conv():
+    """p29: a 3x3x3 filter on a 5x5x3 input: per-channel convolutions are summed, plus a bias."""
+    f, ax = plt.subplots(figsize=(5.4, 2.6))
+    chans = ["#fecaca", "#bbf7d0", "#bfdbfe"]
+    for k, col in enumerate(chans):
+        x0 = k * 1.25
+        _grid(ax, x0, 1.2, 5, cell=0.17, fc=col, hl=None)
+        _grid(ax, x0 + 0.22, 0.4, 3, cell=0.17, fc="#fde68a")
+        ax.annotate("", (x0 + 0.47, 0.95), (x0 + 0.47, 1.17), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+        ax.text(x0 + 0.42, 2.15, f"channel {k + 1} (5×5)", ha="center", fontsize=7.5, color=INK)
+        ax.annotate("", (4.0, 0.65), (x0 + 0.75, 0.65),
+                    arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.7, connectionstyle="arc3,rad=-0.25"))
+    ax.text(0.47, 0.2, "3×3 results", ha="center", fontsize=7.5, color=MUT)
+    ax.add_patch(plt.Circle((4.15, 0.65), 0.13, fc="white", ec=INK))
+    ax.text(4.15, 0.65, "+", ha="center", va="center", fontsize=10)
+    ax.text(4.15, 1.05, "bias", ha="center", fontsize=8, color=MUT)
+    ax.annotate("", (4.15, 0.8), (4.15, 0.98), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+    ax.annotate("", (4.5, 0.65), (4.3, 0.65), arrowprops=dict(arrowstyle="-|>", color=INK, lw=1))
+    _grid(ax, 4.55, 0.4, 3, cell=0.17, fc="#ede9fe")
+    ax.text(4.8, 0.2, "output channel", ha="center", fontsize=7.5, color=INK)
+    ax.set_xlim(-0.1, 5.2)
+    ax.set_ylim(0.1, 2.3)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "multichannel-conv")
 
 
 def main() -> None:
