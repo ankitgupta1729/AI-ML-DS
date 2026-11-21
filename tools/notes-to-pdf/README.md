@@ -90,6 +90,8 @@ instead of `module`/`source` — that is how `docs/AGENTS.pdf` is built.
 | `render_pdf.js` | Playwright/Chromium print backend |
 | `fonts/` | Bundled fonts and their licences |
 | `scan_build.py`, `scans/` | Clean-scan editions of photographed handwritten notebooks (see below) |
+| `digital_build.py`, `katex_render.js` | Typeset Markdown with maths (KaTeX) and diagrams (Mermaid) — the digital edition of the notebook |
+| `vecfig.py`, `promptfig.py` | Small SVG figure generators used for redrawn notebook sketches |
 | `notes_pdf/scan.py` | Photo → clean page: level, blank the background, whiten the paper |
 
 ## Handwritten notebooks (clean-scan editions)

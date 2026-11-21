@@ -164,10 +164,8 @@ Bank Invoice: INVOICE #0521 …
 generate_text(prompt, temp=0)
 ```
 
-This returns the following response:
+This returns the following response — *"Certainly, here is the JSON format of the 3 bank invoices:"*
 
-````text
-Certainly, here is the JSON format of the 3 bank invoices:
 ```json
 [
   {
@@ -179,7 +177,6 @@ Certainly, here is the JSON format of the 3 bank invoices:
   { … }
 ]
 ```
-````
 
 ## Few-Shot Examples, Chain-of-Thought & Steps
 <!-- pages: 325-332 -->

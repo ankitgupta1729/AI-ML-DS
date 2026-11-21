@@ -6,9 +6,22 @@ chatbots and prompt engineering).
 
 | File | What it is |
 | --- | --- |
+| [`pdf/DS-ML-Revision-Notes.pdf`](pdf/DS-ML-Revision-Notes.pdf) | **Digital edition (recommended for revision)** — the whole notebook transcribed and typeset: 8 parts, 77 topics, typeset equations, tables and redrawn diagrams, 264 pages |
+| [`digital/`](digital) | Source of the digital edition: one Markdown file per part, plus `figures/` |
 | [`pdf/DS-ML-Handwritten-Notes-Vol1.pdf`](pdf/DS-ML-Handwritten-Notes-Vol1.pdf) | **Clean-scan edition, Vol. 1** — Parts I–IV, notebook pages 1–185 |
 | [`pdf/DS-ML-Handwritten-Notes-Vol2.pdf`](pdf/DS-ML-Handwritten-Notes-Vol2.pdf) | **Clean-scan edition, Vol. 2** — Parts V–VIII, notebook pages 186–353 |
 | [`Notes/`](Notes) | The original photos as compressed 10-page PDFs (`part_0001` … `part_0035`) |
+
+## The digital edition
+
+The digital edition is a faithful transcription of every page of the notebook. The wording and the
+order of the notes are kept; note-taking shorthand is written out, equations are typeset (KaTeX),
+tables are rebuilt and every sketch — Venn and block diagrams, flowcharts, plots, attention
+pictures — is redrawn (Mermaid or SVG). Each topic carries a small *Notebook pages* tag so it can be
+checked against the clean-scan edition; the few places where the notebook contains a slip are kept
+and marked with a short *Note*. Duplicate photos of the same page are transcribed once.
+
+Rebuild with `python tools/notes-to-pdf/digital_build.py` (sources in [`digital/`](digital)).
 
 ## The clean-scan edition
 

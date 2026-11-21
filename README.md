@@ -342,10 +342,11 @@ screenshot placed **right next to the sentence it illustrates**.
 | Go Programming — Full Course | YouTube · Tech With Tim | [PDF](programming-languages/41.YouTube-Go-Programming-Full-Course-Tech-with-Tim/pdf/Go-Programming-Full-Course-Notes.pdf) | 5 |
 <!-- pdf-index:end -->
 
-#### Handwritten Notebook (clean-scan edition)
+#### Handwritten Notebook (digital and clean-scan editions)
 
 | Notes | Source | PDF | Pages |
 | --- | --- | --- | ---: |
+| [Data Science & Machine Learning — Revision Notes (digital edition)](foundations/04.Theory/Notes) | Handwritten notebook, transcribed and typeset | [PDF](foundations/04.Theory/Notes/pdf/DS-ML-Revision-Notes.pdf) | 264 |
 | [Data Science & Machine Learning — Handwritten Revision Notes](foundations/04.Theory/Notes) | Handwritten notebook, 353 pages | [Vol. 1](foundations/04.Theory/Notes/pdf/DS-ML-Handwritten-Notes-Vol1.pdf) · [Vol. 2](foundations/04.Theory/Notes/pdf/DS-ML-Handwritten-Notes-Vol2.pdf) | 366 |
 
 The photographed notebook, cleaned up page by page (levelled, background removed, paper whitened,

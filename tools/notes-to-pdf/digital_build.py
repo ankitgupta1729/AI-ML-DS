@@ -47,6 +47,9 @@ h1.part-title { display: none; }
 h2.topic { break-before: auto; margin: 11mm 0 4mm; padding: 0 0 3mm; border-bottom: 1px solid var(--hair);
   font: 700 17pt/1.2 var(--display); color: var(--ink); letter-spacing: -.015em; }
 h2.topic.first { margin-top: 0; }
+h2.topic:not(.first) { break-before: page; margin-top: 0; }
+.src { break-after: avoid; }
+h3, h4 { break-after: avoid; }
 h2.topic .no { display: block; font: 700 7.6pt var(--sans); letter-spacing: .16em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 1.6mm; }
 h3 { font: 700 12.4pt/1.3 var(--display); color: var(--ink); margin: 7mm 0 2.5mm; padding-left: 3mm;
@@ -59,7 +62,7 @@ h4 { font: 600 10.8pt/1.35 var(--display); color: var(--ink); margin: 5mm 0 1.8m
 p .katex, li .katex { white-space: nowrap; }
 .diagram { margin: 3mm 0 5mm; padding: 4mm; border: 1px solid var(--hair); border-radius: 2mm; background: #fcfcff;
   break-inside: avoid; text-align: center; }
-.diagram svg { max-width: 100% !important; height: auto; max-height: 120mm; }
+.diagram svg { max-width: 100% !important; width: auto !important; height: auto; max-height: 85mm; }
 table { font-size: 8.6pt; }
 td .katex, th .katex { font-size: 1em; }
 li > p { margin: 0 0 1.2mm; }
@@ -173,7 +176,7 @@ class Doc:
             self.parts.append({"id": hid, "title": plain, "topics": []})
             self.toc.append((1, hid, f"Part {ROMAN[pi]}", plain))
             env["topic"] = 0
-            return f'<h1 id="{hid}" class="part-title">'
+            return '<h1 class="part-title">'  # the divider page carries the anchor
         if level == 2:
             env["topic"] = env.get("topic", 0) + 1
             pi = len(self.parts) - 1
@@ -216,7 +219,7 @@ class Doc:
         p = self.parts[pi]
         items = "".join(f'<li><span class="n">{ROMAN[pi]}.{k}</span><span class="t">{html.escape(t)}</span></li>'
                         for k, (_, t) in enumerate(p["topics"], 1))
-        return (f'<section class="divider"><div class="kicker">{html.escape(self.m["short"])}</div>'
+        return (f'<section class="divider" id="{p["id"]}"><div class="kicker">{html.escape(self.m["short"])}</div>'
                 f'<div class="num">{ROMAN[pi]}</div><div class="ptitle">{html.escape(p["title"])}</div>'
                 f'<ol>{items}</ol></section>')
 

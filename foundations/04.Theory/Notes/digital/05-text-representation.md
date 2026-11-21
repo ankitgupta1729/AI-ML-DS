@@ -39,9 +39,6 @@ Next, we embed each inquiry by calling Cohere's **Embed endpoint** with `co.embe
 
 - `texts` — the list of texts you want to embed;
 - `model` — the model to use to generate the embedding;
-
-<!-- pages: 189-191 -->
-
   Until now, there are 4 models available:
   - `embed-english-v3.0` (English);
   - `embed-english-light-v3.0` (English);
@@ -173,9 +170,6 @@ A classification task falls under one of these 2 categories:
   - a **spam classifier** could assign emails one of the two classes: "Spam" or "Not spam";
   - an online forum could use a **toxicity classifier** to assist with **content moderation** by classifying posts as "Neutral" or "Toxic".
 - **Multi-class classification** → number of classes > 2.
-
-<!-- pages: 198-200 -->
-
   *Examples:*
   - a restaurant could use a **sentiment classifier** to categorise customer reviews as "Positive", "Neutral" or "Negative";
   - for businesses that deal with a large volume of inbound communication, a **topic classifier** could assign the message to the relevant department (one of "Customer service", "Returns" or "Shipping") for resolution. We could assign just one label to each message, or permit multiple labels: a classifier that allows multiple labels is a **multi-label classifier**;
@@ -293,7 +287,6 @@ Our sentiment-analysis classifier has **3 classes with 5 examples each**: "Posit
 examples = [ClassifyExample(text="I'm so proud of you", label="positive"),
             ClassifyExample(text="What a great time to be alive", label="positive"),
             ClassifyExample(text="That's awesome work", label="positive"),
-```
             ClassifyExample(text="The service was amazing", label="positive"),
             ClassifyExample(text="They don't care about me", label="negative"),
             # … (5 examples per class: positive, negative and neutral)

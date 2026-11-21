@@ -26,8 +26,10 @@ LINK = re.compile(r"\]\(\s*<?([^)\s>]+(?:\\\)[^)\s>]*)*)>?(?:\s+\"[^\"]*\")?\s*\
 def docs() -> list[str]:
     files = ["README.md", "CONTRIBUTING.md", "AGENTS.md"]
     files += [f"{c}/README.md" for c in CATEGORIES]
+    files += ["foundations/04.Theory/Notes/README.md"]
     for base in ("docs", "tools"):
-        for dirpath, _, names in os.walk(os.path.join(ROOT, base)):
+        for dirpath, dirs, names in os.walk(os.path.join(ROOT, base)):
+            dirs[:] = [d for d in dirs if d not in ("node_modules", ".cache")]  # git-ignored
             files += [os.path.relpath(os.path.join(dirpath, n), ROOT) for n in names if n.endswith(".md")]
     return [f for f in files if os.path.exists(os.path.join(ROOT, f))]
 
