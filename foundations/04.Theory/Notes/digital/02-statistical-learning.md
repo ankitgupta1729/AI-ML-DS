@@ -37,11 +37,7 @@ There are 2 reasons for estimating $f$: **prediction** and **inference** (which 
 
 If we are mainly interested in inference, restrictive models are much more interpretable.
 
-| | Low flexibility ← | | → High flexibility |
-| --- | --- | --- | --- |
-| **High interpretability** | Subset selection, lasso | Least squares | |
-| | | Generalised additive models (GAM), trees | |
-| **Low interpretability** | | | Bagging, boosting, SVM, deep learning |
+![Interpretability against flexibility: restrictive methods are easier to interpret](figures/flexibility-interpretability.svg)
 
 - The **lasso** relies on a linear model but uses an alternative fitting procedure that makes a number of coefficients exactly zero. So the lasso is less flexible than linear regression, and more interpretable than it.
 - Trees, bagging, boosting, SVMs and neural networks are fully non-linear models.
@@ -54,15 +50,7 @@ $$\text{MSE} = \frac{1}{n}\sum_{i=1}^{n} \big(y_i - \hat f(x_i)\big)^2$$
 - The **degrees of freedom** is a quantity that summarises the flexibility of a curve. A more restricted and hence smoother curve has fewer degrees of freedom than a wiggly curve.
 - **Training MSE declines monotonically as flexibility increases.** Test MSE initially declines as the level of flexibility increases; however, at some point the test MSE levels off and then starts to increase again.
 
-```mermaid
-xychart-beta
-  title "Training and test MSE vs flexibility"
-  x-axis "Flexibility: low → high" [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  y-axis "Error" 0 --> 10
-  line "Test MSE" [8.5, 6.6, 5.1, 4.2, 3.9, 4.2, 5.0, 6.2, 7.8]
-  line "Training MSE" [8.3, 6.2, 4.6, 3.4, 2.6, 2.0, 1.5, 1.1, 0.8]
-  line "Var(ε) (irreducible)" [3, 3, 3, 3, 3, 3, 3, 3, 3]
-```
+![Training MSE falls as flexibility grows; test MSE is U-shaped and never drops below Var(ε)](figures/mse-flexibility.svg)
 
 - The **U-shaped test MSE** is a fundamental property of statistical learning that holds regardless of the particular data set or method.
 - **Overfitting** happens because the statistical-learning procedure is working too hard to find patterns in the training data that may be caused by random chance rather than by true properties of the unknown function $f$. When we overfit the training data, the test MSE will be very large because the supposed patterns that the method found in the training data simply don't exist in the test data.
@@ -184,6 +172,9 @@ $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \varepsilon.$$
    *Example:* if we double the data (a $2n$ sample size by duplicating it), the estimated parameters would be the same but the CIs would be narrower by a factor of $\sqrt{2}$.
    Correlation among error terms occurs in time-series data (plot the residuals as a function of time and check for a pattern).
 3. **Non-constant variance of the error terms** ($\operatorname{Var}(\varepsilon_i) = \sigma^2$ is assumed). The SEs, CIs and hypothesis tests rely upon this assumption. We can check **heteroscedasticity** (non-constant variance of the errors) using a **funnel shape** in the residual plot; transforming $Y$ to $\log Y$ or $\sqrt{Y}$ (a concave transformation) gives residuals with roughly constant spread.
+
+   ![Residual plots before and after a concave transformation of the response](figures/funnel.svg)
+
 4. **Outliers** — a point for which $y_i$ is far from the predicted value $\hat y_i$. They can occur from incorrect recording of an observation. Identify them using residual plots and **studentised residuals** (residual ÷ its standard error); values greater than 3 indicate outliers.
 5. **High-leverage points** have an unusual value for $x_i$ (not in the normal range). The **leverage statistic**
 $$h_i = \frac{1}{n} + \frac{(x_i - \bar x)^2}{\sum_{i'} (x_{i'} - \bar x)^2}, \qquad \frac{1}{n} \le h_i \le 1, \qquad \operatorname{avg}(h_i) = \frac{p + 1}{n};$$
@@ -266,6 +257,8 @@ $$\text{Precision} = \frac{TP}{TP + FP} = \frac{TP}{P^*}, \qquad \text{Recall} =
 
 - The ROC curve plots **TPR** (sensitivity, recall, power, $1 -$ Type-II error) against **FPR** ($1 -$ specificity, the Type-I error).
 
+![The ROC curve; an ideal curve hugs the top-left corner, and the diagonal is a classifier no better than chance](figures/roc.svg)
+
 ### QDA, Naïve Bayes and Other Notes
 
 - **QDA** assumes each class has its own covariance matrix → high variance, because there are $Kp(p+1)/2$ parameters.
@@ -314,6 +307,8 @@ $$CV_{(k)} = \frac{1}{k}\sum_{i=1}^{k} MSE_i.$$
 The bootstrap is used to quantify uncertainty; it can also be used to estimate the standard errors of the coefficients from linear regression. *Example:* draw $B$ data sets $Z^{*1}, Z^{*2}, \dots$ by sampling the observations **with replacement**, compute the estimate $\hat\alpha^{*r}$ on each, and then
 $$SE_B(\hat\alpha) = \sqrt{\frac{1}{B - 1}\sum_{r=1}^{B}\left(\hat\alpha^{*r} - \frac{1}{B}\sum_{r'=1}^{B}\hat\alpha^{*r'}\right)^2}.$$
 
+![The bootstrap: B data sets are drawn from the observations with replacement, and each gives an estimate of α](figures/bootstrap.svg)
+
 ### Linear Model Selection and Regularisation
 
 - If $n \gg p$, the least-squares estimates have low variance. Otherwise there can be a lot of variability in the least-squares fit, resulting in overfitting; and (when $p > n$) there is no longer a unique least-squares coefficient estimate — there are infinitely many solutions.
@@ -359,6 +354,8 @@ $$RSS + \underbrace{\lambda \sum_{j=1}^{p} \beta_j^2}_{\text{shrinkage penalty (
 $$RSS + \lambda \sum_{j=1}^{p} |\beta_j| \qquad \text{(L1 norm)}.$$
   The L1 penalty has the effect of forcing some of the coefficient estimates to be exactly zero when $\lambda$ is large, so the lasso **performs variable selection**.
 - Geometrically, the lasso constraint region is a diamond ($|\beta_1| + |\beta_2| \le s$), whose corners lie on the axes, while the ridge constraint region is a circle ($\beta_1^2 + \beta_2^2 \le s$). The RSS contours therefore often touch the lasso region at a corner, giving a coefficient of exactly zero.
+
+  ![The RSS contours first meet the lasso diamond at a corner (β₁ = 0) but meet the ridge circle away from the axes](figures/lasso-ridge.svg)
 
 - **Cross-validation** is used to find $\lambda$ from a grid of values.
 
@@ -449,6 +446,9 @@ $$\sum_{m=1}^{|T|}\;\sum_{i:\, x_i \in R_m} (y_i - \hat y_{R_m})^2 + \alpha |T|,
 <!-- pages: 52 -->
 
 - In 2-D, a hyperplane is defined by $\beta_0 + \beta_1 X_1 + \beta_2 X_2 = 0$.
+
+  ![The hyperplane 1 + 2X₁ + 3X₂ = 0 divides the plane into two halves](figures/hyperplane.svg)
+
 - The **maximum-margin hyperplane** is the separating hyperplane that is farthest from the training observations. We can compute the (perpendicular) distance from each training observation to a given separating hyperplane; the smallest such distance is the minimal distance from the observations to the hyperplane, and is known as the **margin**. The maximal-margin hyperplane has the farthest minimum distance to the training observations.
 - When $p$ is large, the maximal-margin classifier can lead to **overfitting**.
 - **Support vectors** "support" the maximal-margin hyperplane in the sense that if these points were moved slightly, the maximal-margin hyperplane would move as well.
@@ -481,6 +481,9 @@ $$L(X, y, \beta) = \sum_{i=1}^{n} \max\big[0,\, 1 - y_i(\beta_0 + \beta_1 x_{i1}
 $$T = \frac{\hat\mu_1 - \hat\mu_2}{s\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}.$$
 - The **p-value** is defined as the probability of observing a test statistic equal to or more extreme than the observed statistic, under the assumption that $H_0$ is true. A small p-value provides evidence against $H_0$.
 - The distribution of the test statistic under $H_0$ is the **null distribution**. Generally we use the $\chi^2$-distribution, F-distribution, t-distribution, etc.; a **2-sided p-value** is recommended.
+
+  ![A two-sided p-value: the area in both tails of the null distribution beyond the observed statistic](figures/two-sided-p.svg)
+
 
 | Decision ↓ / Truth → | $H_0$ true | $H_a$ true |
 | --- | --- | --- |

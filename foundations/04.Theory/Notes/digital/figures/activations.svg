@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="508.32pt" height="101.52pt" viewBox="0 0 508.32 101.52" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 101.52 
+L 508.32 101.52 
+L 508.32 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 5.76 95.76 
+L 96.48 95.76 
+L 96.48 19.994375 
+L 5.76 19.994375 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="line2d_1">
+    <path d="M 5.76 89.446198 
+L 96.48 89.446198 
+" clip-path="url(#p5c5a723acd)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 51.12 95.76 
+L 51.12 19.994375 
+" clip-path="url(#p5c5a723acd)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 9.883636 86.451822 
+L 13.613559 85.575572 
+L 17.343481 84.464145 
+L 20.658968 83.238737 
+L 23.560018 81.95321 
+L 26.461069 80.443556 
+L 29.36212 78.688546 
+L 32.26317 76.672138 
+L 35.164221 74.38644 
+L 38.065272 71.834772 
+L 41.380758 68.615644 
+L 45.110681 64.670099 
+L 50.498346 58.590938 
+L 57.958191 50.18264 
+L 61.688113 46.30583 
+L 65.0036 43.164136 
+L 67.904651 40.687353 
+L 70.805701 38.478803 
+L 73.706752 36.5383 
+L 76.607803 34.855308 
+L 79.508853 33.412016 
+L 82.82434 32.027432 
+L 86.139826 30.890643 
+L 89.869749 29.862909 
+L 92.356364 29.302553 
+L 92.356364 29.302553 
+" clip-path="url(#p5c5a723acd)" style="fill: none; stroke: #7c3aed; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="51.12" y="13.994375" transform="rotate(-0 51.12 13.994375)">Sigmoid</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_3">
+    <path d="M 107.28 95.76 
+L 198 95.76 
+L 198 19.994375 
+L 107.28 19.994375 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3"/>
+   <g id="matplotlib.axis_4"/>
+   <g id="line2d_4">
+    <path d="M 107.28 57.877187 
+L 198 57.877187 
+" clip-path="url(#pfc3b62a96e)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 152.64 95.76 
+L 152.64 19.994375 
+" clip-path="url(#pfc3b62a96e)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 111.403636 90.655859 
+L 118.034609 90.39296 
+L 122.593403 89.997183 
+L 125.90889 89.498033 
+L 128.809941 88.825401 
+L 131.296556 87.993706 
+L 133.368735 87.056353 
+L 135.440914 85.83258 
+L 137.098657 84.600801 
+L 138.7564 83.10328 
+L 140.414143 81.302621 
+L 142.071887 79.165908 
+L 143.72963 76.669855 
+L 145.387373 73.806865 
+L 147.459552 69.736112 
+L 149.946167 64.251672 
+L 158.649319 44.328016 
+L 160.721498 40.470457 
+L 162.379242 37.79066 
+L 164.036985 35.476355 
+L 165.694728 33.511316 
+L 167.352471 31.866726 
+L 169.010215 30.506864 
+L 170.667958 29.393626 
+L 172.740137 28.292338 
+L 174.812316 27.451961 
+L 177.298931 26.708594 
+L 180.199982 26.108961 
+L 183.515468 25.664882 
+L 187.659826 25.336649 
+L 193.461928 25.108615 
+L 193.876364 25.098516 
+L 193.876364 25.098516 
+" clip-path="url(#pfc3b62a96e)" style="fill: none; stroke: #7c3aed; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="152.64" y="13.994375" transform="rotate(-0 152.64 13.994375)">tanh</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_4">
+    <path d="M 208.8 95.76 
+L 299.52 95.76 
+L 299.52 19.994375 
+L 208.8 19.994375 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_5"/>
+   <g id="matplotlib.axis_6"/>
+   <g id="line2d_7">
+    <path d="M 208.8 83.132396 
+L 299.52 83.132396 
+" clip-path="url(#p5e7f4b8df1)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 254.16 95.76 
+L 254.16 19.994375 
+" clip-path="url(#p5e7f4b8df1)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 212.923636 83.132396 
+L 253.952782 83.132396 
+L 254.367218 82.815119 
+L 295.396364 19.994375 
+L 295.396364 19.994375 
+" clip-path="url(#p5e7f4b8df1)" style="fill: none; stroke: #7c3aed; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="254.16" y="13.994375" transform="rotate(-0 254.16 13.994375)">ReLU</text>
+   </g>
+  </g>
+  <g id="axes_4">
+   <g id="patch_5">
+    <path d="M 310.32 95.76 
+L 401.04 95.76 
+L 401.04 19.994375 
+L 310.32 19.994375 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_7"/>
+   <g id="matplotlib.axis_8"/>
+   <g id="line2d_10">
+    <path d="M 310.32 83.132396 
+L 401.04 83.132396 
+" clip-path="url(#p45a1e61d12)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 355.68 95.76 
+L 355.68 19.994375 
+" clip-path="url(#p45a1e61d12)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_12">
+    <path d="M 314.443636 89.446198 
+L 355.472782 83.164123 
+L 355.887218 82.815119 
+L 396.916364 19.994375 
+L 396.916364 19.994375 
+" clip-path="url(#p45a1e61d12)" style="fill: none; stroke: #7c3aed; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="355.68" y="13.994375" transform="rotate(-0 355.68 13.994375)">Leaky ReLU</text>
+   </g>
+  </g>
+  <g id="axes_5">
+   <g id="patch_6">
+    <path d="M 411.84 95.76 
+L 502.56 95.76 
+L 502.56 19.994375 
+L 411.84 19.994375 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_9"/>
+   <g id="matplotlib.axis_10"/>
+   <g id="line2d_13">
+    <path d="M 411.84 74.112679 
+L 502.56 74.112679 
+" clip-path="url(#p84366a5704)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_14">
+    <path d="M 457.2 95.76 
+L 457.2 19.994375 
+" clip-path="url(#p84366a5704)" style="fill: none; stroke: #64748b; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_15">
+    <path d="M 415.963636 91.253983 
+L 422.180174 90.740375 
+L 427.153403 90.124964 
+L 431.297762 89.411619 
+L 435.027684 88.55729 
+L 438.34317 87.576682 
+L 441.244221 86.501545 
+L 444.145272 85.173771 
+L 446.631887 83.78996 
+L 449.118502 82.131739 
+L 451.190681 80.50132 
+L 453.26286 78.605616 
+L 455.335039 76.401461 
+L 457.407218 73.840727 
+L 498.436364 19.994375 
+L 498.436364 19.994375 
+" clip-path="url(#p84366a5704)" style="fill: none; stroke: #7c3aed; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="457.2" y="13.994375" transform="rotate(-0 457.2 13.994375)">ELU</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p5c5a723acd">
+   <rect x="5.76" y="19.994375" width="90.72" height="75.765625"/>
+  </clipPath>
+  <clipPath id="pfc3b62a96e">
+   <rect x="107.28" y="19.994375" width="90.72" height="75.765625"/>
+  </clipPath>
+  <clipPath id="p5e7f4b8df1">
+   <rect x="208.8" y="19.994375" width="90.72" height="75.765625"/>
+  </clipPath>
+  <clipPath id="p45a1e61d12">
+   <rect x="310.32" y="19.994375" width="90.72" height="75.765625"/>
+  </clipPath>
+  <clipPath id="p84366a5704">
+   <rect x="411.84" y="19.994375" width="90.72" height="75.765625"/>
+  </clipPath>
+ </defs>
+</svg>

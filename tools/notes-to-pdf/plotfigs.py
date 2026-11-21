@@ -552,6 +552,269 @@ def multichannel_conv():
     save(f, "multichannel-conv")
 
 
+@fig
+def neuron():
+    """p30: a neuron: inputs via synapses (w_i x_i), cell body sums them, activation f gives the output axon."""
+    f, ax = plt.subplots(figsize=(5.0, 2.1))
+    ins = [(0.0, 1.6, "$x_0$", "$w_0 x_0$"), (0.0, 0.85, "$x_1$", "$w_1 x_1$"), (0.0, 0.1, "$x_2$", "$w_2 x_2$")]
+    for x, y, lab, wl in ins:
+        ax.text(x, y, lab, ha="center", va="center", fontsize=10)
+        ax.annotate("", (1.83, 0.85), (x + 0.2, y), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.9))
+        ax.text(0.85, y * 0.62 + 0.85 * 0.38 + 0.12, wl, fontsize=8.5, color=ACC, ha="center")
+    ax.plot([0.45], [1.45], "o", color=INK, ms=4)
+    ax.text(0.45, 1.7, "synapse", fontsize=7.5, color=MUT, ha="center")
+    ax.text(-0.15, -0.3, "axon from a neuron", fontsize=7.5, color=MUT)
+    ax.text(1.45, 0.3, "dendrite", fontsize=7.5, color=MUT)
+    ax.add_patch(plt.Circle((2.35, 0.85), 0.5, fc="#ede9fe", ec=ACC, lw=1.2))
+    ax.text(2.35, 1.03, "cell body", fontsize=7.5, ha="center", color=MUT)
+    ax.text(2.35, 0.78, "Σ wᵢxᵢ + b", fontsize=8.5, ha="center")
+    ax.annotate("", (3.95, 0.85), (2.88, 0.85), arrowprops=dict(arrowstyle="-|>", color=INK, lw=1.1))
+    ax.text(3.42, 1.0, "f(Σ wᵢxᵢ + b)", fontsize=8.5, ha="center")
+    ax.text(3.42, 0.6, "activation function", fontsize=7.5, ha="center", color=MUT)
+    ax.text(4.02, 0.85, "output axon", fontsize=8.5, va="center", color=INK)
+    ax.set_xlim(-0.2, 5.0)
+    ax.set_ylim(-0.45, 1.95)
+    ax.axis("off")
+    save(f, "neuron")
+
+
+@fig
+def activations():
+    """p30: sketches of the common activation functions."""
+    x = np.linspace(-3, 3, 200)
+    curves = [
+        ("Sigmoid", 1 / (1 + np.exp(-x)), (-0.1, 1.1)),
+        ("tanh", np.tanh(x), (-1.15, 1.15)),
+        ("ReLU", np.maximum(0, x), (-0.6, 3)),
+        ("Leaky ReLU", np.maximum(0.1 * x, x), (-0.6, 3)),
+        ("ELU", np.where(x >= 0, x, np.exp(x) - 1), (-1.2, 3)),
+    ]
+    f, axs = plt.subplots(1, 5, figsize=(7.2, 1.55))
+    for ax, (name, y, lim) in zip(axs, curves, strict=True):
+        ax.axhline(0, color=MUT, lw=0.6)
+        ax.axvline(0, color=MUT, lw=0.6)
+        ax.plot(x, y, color=ACC, lw=1.8)
+        ax.set_ylim(*lim)
+        ax.set_title(name, fontsize=8.5, color=INK)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_visible(False)
+    f.tight_layout()
+    save(f, "activations")
+
+
+@fig
+def elbow():
+    """p34: the elbow method: WSS against the number of clusters k."""
+    f, ax = plt.subplots(figsize=(3.4, 2.1))
+    k = np.arange(1, 10)
+    wss = 100 / k ** 1.6 + 6
+    ax.plot(k, wss, "-o", color=ACC, ms=4, lw=1.6)
+    ax.annotate("elbow", (3, wss[2]), (4.6, wss[2] + 25), fontsize=8.5, color=WARM,
+                arrowprops=dict(arrowstyle="-|>", color=WARM, lw=1))
+    ax.set_xlabel("k (number of clusters)", fontsize=8.5)
+    ax.set_ylabel("WSS", fontsize=8.5)
+    ax.set_xticks(k)
+    ax.set_yticks([])
+    ax.tick_params(labelsize=7.5)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    f.tight_layout()
+    save(f, "elbow")
+
+
+def _axes_only(ax, xl, yl):
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_xlabel(xl, fontsize=8.5)
+    ax.set_ylabel(yl, fontsize=8.5)
+
+
+@fig
+def flex_interp():
+    """p37: interpretability against flexibility for common methods (ISLR)."""
+    f, ax = plt.subplots(figsize=(4.6, 2.7))
+    pts = [(0.8, 9.0, "Subset selection\nLasso"), (2.6, 7.6, "Least squares"),
+           (4.6, 5.6, "Generalized additive models\nTrees"), (8.2, 1.6, "Bagging, Boosting\nSVM, Deep learning")]
+    for x, y, t in pts:
+        ax.text(x, y, t, fontsize=8, ha="center", va="center", color=INK,
+                bbox=dict(boxstyle="round,pad=0.3", fc="#ede9fe", ec=ACC, lw=0.8))
+    ax.set_xlim(-0.5, 10)
+    ax.set_ylim(0, 10.3)
+    ax.text(-0.3, 9.9, "High", fontsize=7.5, color=MUT)
+    ax.text(-0.3, 0.2, "Low", fontsize=7.5, color=MUT)
+    ax.text(9.3, -0.8, "High", fontsize=7.5, color=MUT)
+    _axes_only(ax, "Flexibility", "Interpretability")
+    f.tight_layout()
+    save(f, "flexibility-interpretability")
+
+
+@fig
+def mse_flexibility():
+    """p37: training MSE falls monotonically; test MSE is U-shaped; Var(eps) is the floor."""
+    f, ax = plt.subplots(figsize=(4.0, 2.5))
+    x = np.linspace(0.05, 1, 200)
+    train = 0.6 + 7.4 * np.exp(-3.2 * x)
+    test = train + 0.4 + 7 * x ** 2
+    ax.plot(x, test, color=ACC, lw=2, label="Test MSE")
+    ax.plot(x, train, color=MUT, lw=2, label="Training MSE")
+    ax.axhline(1.0, color=WARM, lw=1.2, ls="--", label="Var(ε)")
+    ax.legend(fontsize=7.5, frameon=False, loc="upper right")
+    ax.set_ylim(0, 9)
+    _axes_only(ax, "Flexibility", "MSE")
+    f.tight_layout()
+    save(f, "mse-flexibility")
+
+
+@fig
+def funnel():
+    """p41: residuals fan out (funnel shape); after transforming Y to log Y their spread is constant."""
+    rng = np.random.default_rng(4)
+    xf = rng.uniform(0.5, 10, 120)
+    f, (a1, a2) = plt.subplots(1, 2, figsize=(5.6, 2.0))
+    a1.scatter(xf, rng.normal(0, 0.28 * xf), s=6, color=ACC, alpha=0.8)
+    a1.set_title("Funnel shape (heteroscedasticity)", fontsize=8.5)
+    a2.scatter(xf, rng.normal(0, 0.9, xf.size), s=6, color=ACC, alpha=0.8)
+    a2.set_title("After Y → log Y or √Y: constant spread", fontsize=8.5)
+    for a in (a1, a2):
+        a.axhline(0, color=MUT, lw=0.6)
+        a.set_ylim(-5.5, 5.5)
+        _axes_only(a, "Fitted values", "Residuals")
+    f.tight_layout()
+    save(f, "funnel")
+
+
+@fig
+def roc():
+    """p44: ROC curve: TPR against FPR; a good classifier hugs the top-left corner; chance gives AUC = 0.5."""
+    f, ax = plt.subplots(figsize=(2.8, 2.6))
+    x = np.linspace(0, 1, 200)
+    ax.fill_between(x, x ** 0.25, color=ACC2, alpha=0.35, lw=0)
+    ax.plot(x, x ** 0.25, color=ACC, lw=2, label="ROC curve (area = AUC)")
+    ax.plot([0, 1], [0, 1], color=MUT, lw=1, ls="--", label="no better than chance (AUC = 0.5)")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1.02)
+    ax.set_xlabel("FPR (1 − specificity)", fontsize=8)
+    ax.set_ylabel("TPR (sensitivity, recall)", fontsize=8)
+    ax.tick_params(labelsize=7)
+    ax.legend(fontsize=6.5, frameon=False, loc="lower right")
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    f.tight_layout()
+    save(f, "roc")
+
+
+@fig
+def lasso_ridge():
+    """p47: the lasso (diamond) and ridge (circle) constraint regions with the RSS contours around beta-hat."""
+    from matplotlib.patches import Ellipse, Polygon
+    f, axs = plt.subplots(1, 2, figsize=(5.4, 2.5))
+    for ax, name in zip(axs, ("Lasso", "Ridge"), strict=True):
+        bh = (0.75, 2.0) if name == "Lasso" else (1.6, 1.25)
+        ax.axhline(0, color=MUT, lw=0.7)
+        ax.axvline(0, color=MUT, lw=0.7)
+        t = np.linspace(0, 2 * np.pi, 2000)
+        if name == "Lasso":
+            ax.add_patch(Polygon([(1, 0), (0, 1), (-1, 0), (0, -1)], fc=ACC2, ec=ACC, alpha=0.8))
+            norm1 = np.abs(np.cos(t)) + np.abs(np.sin(t))
+            bx, by = np.cos(t) / norm1, np.sin(t) / norm1
+        else:
+            ax.add_patch(plt.Circle((0, 0), 1, fc=ACC2, ec=ACC, alpha=0.8))
+            bx, by = np.cos(t), np.sin(t)
+        c, s_ = np.cos(np.radians(35)), np.sin(np.radians(35))
+        u = (bx - bh[0]) * c - (by - bh[1]) * s_
+        v = (bx - bh[0]) * s_ + (by - bh[1]) * c
+        rad = np.sqrt((u / 1.1) ** 2 + (v / 0.55) ** 2)
+        k = int(rad.argmin())
+        touch, rmin = (bx[k], by[k]), rad[k]
+        for r in (rmin / 3, 2 * rmin / 3, rmin):
+            ax.add_patch(Ellipse(bh, 2.2 * r, 1.1 * r, angle=-35, fc="none", ec=WARM, lw=1))
+        ax.plot(*bh, "o", color=INK, ms=3.5)
+        ax.text(bh[0] + 0.1, bh[1] + 0.1, r"$\hat\beta$", fontsize=9)
+        ax.plot(*touch, "o", color=ACC, ms=4.5, mec="white")
+        ax.text(2.45, -0.25, r"$\beta_1$", fontsize=9)
+        ax.text(0.08, 2.35, r"$\beta_2$", fontsize=9)
+        ax.set_title(name, fontsize=9)
+        ax.set_xlim(-1.4, 2.8)
+        ax.set_ylim(-1.3, 3.0)
+        ax.set_aspect("equal")
+        ax.axis("off")
+    f.tight_layout()
+    save(f, "lasso-ridge")
+
+
+@fig
+def bootstrap():
+    """p46: bootstrap: resample the observations with replacement B times; each sample gives an estimate."""
+    from matplotlib.patches import Rectangle
+    f, ax = plt.subplots(figsize=(5.0, 2.8))
+
+    def table(x, y, rows, fc):
+        for i, r in enumerate(rows):
+            ax.add_patch(Rectangle((x, y - i * 0.28), 0.45, 0.28, fc=fc, ec=ACC, lw=0.8))
+            ax.text(x + 0.225, y - i * 0.28 + 0.14, str(r), ha="center", va="center", fontsize=8)
+    table(0, 1.4, [1, 2, 3], "#ede9fe")
+    ax.text(0.22, 1.8, "Data Z", ha="center", fontsize=8.5)
+    samples = [([3, 1, 3], 2.6, "*1"), ([2, 3, 1], 1.45, "*2"), ([2, 2, 1], -0.3, "*B")]
+    for rows, y, tag in samples:
+        ax.annotate("", (1.45, y - 0.25), (0.5, 1.0), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+        table(1.5, y, rows, "#fde68a")
+        ax.text(1.72, y + 0.33, f"$Z^{{{tag}}}$", ha="center", fontsize=8.5)
+        ax.annotate("", (2.55, y - 0.28), (2.0, y - 0.28), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+        ax.text(2.62, y - 0.28, f"$\\hat\\alpha^{{{tag}}}$", va="center", fontsize=9)
+    ax.text(1.72, 0.62, "⋮", ha="center", fontsize=12)
+    note = "$SE_B(\\hat\\alpha)$ = standard\ndeviation of the $\\hat\\alpha^{*r}$\n(sampling with replacement)"
+    ax.text(3.3, 0.85, note, fontsize=8, va="center")
+    ax.set_xlim(-0.1, 5.2)
+    ax.set_ylim(-1.0, 3.05)
+    ax.axis("off")
+    save(f, "bootstrap")
+
+
+@fig
+def hyperplane():
+    """p52: the hyperplane 1 + 2 X1 + 3 X2 = 0 splits the plane into the regions > 0 and < 0."""
+    f, ax = plt.subplots(figsize=(3.0, 2.5))
+    x = np.linspace(-1.5, 1.5, 50)
+    y = -(1 + 2 * x) / 3
+    ax.fill_between(x, y, 1.5, color=ACC2, alpha=0.35, lw=0)
+    ax.fill_between(x, -1.5, y, color="#fde68a", alpha=0.45, lw=0)
+    ax.plot(x, y, color=ACC, lw=2)
+    ax.axhline(0, color=MUT, lw=0.6)
+    ax.axvline(0, color=MUT, lw=0.6)
+    ax.text(0.15, 0.9, "$1 + 2X_1 + 3X_2 > 0$", fontsize=8.5)
+    ax.text(-1.4, -1.25, "$1 + 2X_1 + 3X_2 < 0$", fontsize=8.5)
+    ax.text(1.32, -0.18, "$X_1$", fontsize=8.5)
+    ax.text(0.05, 1.32, "$X_2$", fontsize=8.5)
+    ax.set_xlim(-1.5, 1.5)
+    ax.set_ylim(-1.5, 1.5)
+    ax.axis("off")
+    save(f, "hyperplane")
+
+
+@fig
+def two_sided_p():
+    """p52: a two-sided p-value is the area in both tails of the null distribution beyond |T|."""
+    f, ax = plt.subplots(figsize=(3.6, 1.7))
+    x = np.linspace(-4, 4, 400)
+    y = np.exp(-x ** 2 / 2)
+    ax.plot(x, y, color=ACC, lw=1.8)
+    t = 2.0
+    ax.fill_between(x, y, where=x >= t, color=WARM, alpha=0.7, lw=0)
+    ax.fill_between(x, y, where=x <= -t, color=WARM, alpha=0.7, lw=0)
+    ax.axhline(0, color=MUT, lw=0.7)
+    ax.text(t, -0.14, "$|T|$", ha="center", fontsize=8.5)
+    ax.text(-t, -0.14, "$-|T|$", ha="center", fontsize=8.5)
+    ax.text(-2.9, 0.6, "null distribution", ha="center", fontsize=8, color=MUT)
+    ax.text(3.0, 0.25, "p-value =\nboth tails", ha="center", fontsize=8, color=WARM)
+    ax.set_ylim(-0.22, 1.1)
+    ax.axis("off")
+    save(f, "two-sided-p")
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

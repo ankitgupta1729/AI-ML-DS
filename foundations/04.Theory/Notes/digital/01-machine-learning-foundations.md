@@ -836,6 +836,8 @@ In neural networks, pooling layers provide **invariance to small translations** 
 
 A neuron receives inputs $x_i$ through synapses with weights $w_i$ (axon from a neuron → synapse $w_0 x_0$ → dendrite), sums them in the cell body ($\sum w x + b$) and applies an activation function $f(wx + b)$ to produce the output on its axon.
 
+![A neuron: weighted inputs arrive through synapses, the cell body sums them and the activation function produces the output](figures/neuron.svg)
+
 | Activation | Formula | Notes |
 | --- | --- | --- |
 | Sigmoid | $\sigma(x) = \dfrac{1}{1 + e^{-x}}$ | squashes numbers into $[0, 1]$ |
@@ -845,6 +847,8 @@ A neuron receives inputs $x_i$ through synapses with weights $w_i$ (axon from a 
 | Maxout | $\max(w_1^T x + b_1,\; w_2^T x + b_2)$ | |
 | ELU (exponential linear unit) | $x$ if $x \ge 0$; $\;\alpha(e^x - 1)$ if $x < 0$ | |
 | Parametric ReLU (PReLU) | $\max(\alpha x, x)$ | |
+
+![Shapes of the common activation functions](figures/activations.svg)
 
 - **Sigmoid problems:** saturated neurons "kill" the gradients (also with tanh); it is not zero-centred; and $e^{-x}$ is expensive to compute.
 - **tanh** is zero-centred, but still has the vanishing-gradient problem.
@@ -923,6 +927,8 @@ Overfitting can be avoided by taking a simpler model with fewer variables, remov
 
 - **Recommender systems:** ① collaborative filtering, ② content-based filtering.
 - The **elbow method** is used to select $k$ in K-means: plot the **within sum of squares (WSS)** — the sum of squared distances between each member of a cluster and its centroid — against $k$ (the number of clusters) and pick the "elbow".
+
+  ![The elbow method: WSS against the number of clusters k](figures/elbow.svg)
 - **p-values:**
   - $p \le 0.05$ indicates strong evidence against the null hypothesis, so reject the null hypothesis;
   - $p > 0.05$ indicates weak evidence against the null hypothesis, so fail to reject it;
