@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="311.8816pt" height="139.032pt" viewBox="0 0 311.8816 139.032" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 139.032 
+L 311.8816 139.032 
+L 311.8816 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 16.52768 45.99712 
+L 91.33472 45.99712 
+Q 94.73504 45.99712 94.73504 42.5968 
+L 94.73504 25.5952 
+Q 94.73504 22.19488 91.33472 22.19488 
+L 16.52768 22.19488 
+Q 13.12736 22.19488 13.12736 25.5952 
+L 13.12736 42.5968 
+Q 13.12736 45.99712 16.52768 45.99712 
+z
+" clip-path="url(#pab438f13e0)" style="fill: #ffffff; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #7c3aed; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 118.53728 49.39744 
+L 193.34432 49.39744 
+Q 196.74464 49.39744 196.74464 45.99712 
+L 196.74464 22.19488 
+Q 196.74464 18.79456 193.34432 18.79456 
+L 118.53728 18.79456 
+Q 115.13696 18.79456 115.13696 22.19488 
+L 115.13696 45.99712 
+Q 115.13696 49.39744 118.53728 49.39744 
+z
+" clip-path="url(#pab438f13e0)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 220.54688 45.99712 
+L 295.35392 45.99712 
+Q 298.75424 45.99712 298.75424 42.5968 
+L 298.75424 25.5952 
+Q 298.75424 22.19488 295.35392 22.19488 
+L 220.54688 22.19488 
+Q 217.14656 22.19488 217.14656 25.5952 
+L 217.14656 42.5968 
+Q 217.14656 45.99712 220.54688 45.99712 
+z
+" clip-path="url(#pab438f13e0)" style="fill: #ffffff; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #7c3aed; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 109.46976 128.73824 
+L 202.41184 128.73824 
+Q 208.07904 128.73824 208.07904 123.07104 
+L 208.07904 75.46656 
+Q 208.07904 69.79936 202.41184 69.79936 
+L 109.46976 69.79936 
+Q 103.80256 69.79936 103.80256 75.46656 
+L 103.80256 123.07104 
+Q 103.80256 128.73824 109.46976 128.73824 
+z
+" clip-path="url(#pab438f13e0)" style="fill: #fffbeb; stroke: #f59e0b; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 111.45328 114.57024 
+L 149.42352 114.57024 
+Q 152.82384 114.57024 152.82384 111.16992 
+L 152.82384 87.36768 
+Q 152.82384 83.96736 149.42352 83.96736 
+L 111.45328 83.96736 
+Q 108.05296 83.96736 108.05296 87.36768 
+L 108.05296 111.16992 
+Q 108.05296 114.57024 111.45328 114.57024 
+z
+" clip-path="url(#pab438f13e0)" style="fill: #ede9fe; stroke: #7c3aed; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 162.45808 114.57024 
+L 200.42832 114.57024 
+Q 203.82864 114.57024 203.82864 111.16992 
+L 203.82864 87.36768 
+Q 203.82864 83.96736 200.42832 83.96736 
+L 162.45808 83.96736 
+Q 159.05776 83.96736 159.05776 87.36768 
+L 159.05776 111.16992 
+Q 159.05776 114.57024 162.45808 114.57024 
+z
+" clip-path="url(#pab438f13e0)" style="fill: #ede9fe; stroke: #7c3aed; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="53.9312" y="37.188041" transform="rotate(-0 53.9312 37.188041)">Je suis étudiant</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 93.6016 34.096 
+Q 104.936 34.096 115.152366 34.096 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 111.152366 32.096 
+L 115.152366 34.096 
+L 111.152366 36.096 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="155.9408" y="37.188041" transform="rotate(-0 155.9408 37.188041)">The Transformer</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 195.6112 34.096 
+Q 206.9456 34.096 217.161966 34.096 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 213.161966 32.096 
+L 217.161966 34.096 
+L 213.161966 36.096 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="257.9504" y="37.188041" transform="rotate(-0 257.9504 37.188041)">I am a student</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="53.9312" y="17.0944" transform="rotate(-0 53.9312 17.0944)">Input</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="257.9504" y="17.0944" transform="rotate(-0 257.9504 17.0944)">Output</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="130.4384" y="102.360841" transform="rotate(-0 130.4384 102.360841)">Encoders</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="181.4432" y="102.360841" transform="rotate(-0 181.4432 102.360841)">Decoders</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 151.6904 99.2688 
+Q 155.9408 99.2688 159.073166 99.2688 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 155.073166 97.2688 
+L 159.073166 99.2688 
+L 155.073166 101.2688 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 73.7664 99.2688 
+Q 91.33472 99.2688 107.785006 99.2688 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 103.785006 97.2688 
+L 107.785006 99.2688 
+L 103.785006 101.2688 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: end" x="70.9328" y="102.178956" transform="rotate(-0 70.9328 102.178956)">Je suis étudiant</text>
+   </g>
+   <g id="patch_12">
+    <path d="M 202.97856 99.2688 
+Q 217.71328 99.2688 231.329966 99.2688 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 227.329966 97.2688 
+L 231.329966 99.2688 
+L 227.329966 101.2688 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="235.2816" y="102.178956" transform="rotate(-0 235.2816 102.178956)">I am a student</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 155.9408 48.264 
+Q 155.9408 58.1816 155.9408 66.981166 
+" style="fill: none; stroke: #64748b; stroke-linecap: round"/>
+    <path d="M 157.9408 62.981166 
+L 155.9408 66.981166 
+L 153.9408 62.981166 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start; fill: #64748b" x="159.90784" y="61.011347" transform="rotate(-0 159.90784 61.011347)">opening the box</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pab438f13e0">
+   <rect x="5.76" y="5.76" width="300.3616" height="127.512"/>
+  </clipPath>
+ </defs>
+</svg>

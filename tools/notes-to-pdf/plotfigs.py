@@ -1160,6 +1160,277 @@ def good_worst_embedding():
     save(f, "good-worst-embedding")
 
 
+def _blk(ax, cx, cy, text, w=1.4, h=0.4, fc="#ede9fe", ec=ACC, fs=8.5, ls="-", lw=1.0):
+    """A rounded block centred on (cx, cy); returns its (left, right, bottom, top) edges."""
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((cx - w / 2, cy - h / 2), w, h, boxstyle="round,pad=0.02,rounding_size=0.06",
+                                fc=fc, ec=ec, lw=lw, ls=ls))
+    if text:
+        ax.text(cx, cy, text, ha="center", va="center", fontsize=fs, color=INK)
+    return cx - w / 2, cx + w / 2, cy - h / 2, cy + h / 2
+
+
+def _container(ax, x0, y0, x1, y1, label=None, fc="#f8fafc", ec=MUT, fs=8):
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x0, y0), x1 - x0, y1 - y0, boxstyle="round,pad=0.02,rounding_size=0.1",
+                                fc=fc, ec=ec, lw=0.9))
+    if label:
+        ax.text(x0 + 0.08, y1 + 0.06, label, fontsize=fs, color=MUT, va="bottom")
+
+
+def _go(ax, a, b, color=INK, lw=1.0, style="-|>", cs=None):
+    props = dict(arrowstyle=style, color=color, lw=lw, shrinkA=0, shrinkB=0)
+    if cs:
+        props["connectionstyle"] = cs
+    ax.annotate("", b, a, arrowprops=props)
+
+
+def _finish(ax, f, name, xlim, ylim):
+    ax.set_xlim(*xlim)
+    ax.set_ylim(*ylim)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, name)
+
+
+def _ffn_attention_block(ax, cx, y0, w=1.5):
+    """A transformer block: Attention below Feed-forward inside a container; returns (bottom, top)."""
+    _container(ax, cx - w / 2 - 0.1, y0, cx + w / 2 + 0.1, y0 + 1.25, fc="white")
+    _blk(ax, cx, y0 + 0.32, "Attention", w=w - 0.2, h=0.34)
+    _blk(ax, cx, y0 + 0.93, "Feed-forward", w=w - 0.2, h=0.34, fc="#fde68a", ec=INK)
+    _go(ax, (cx, y0 + 0.49), (cx, y0 + 0.76))
+    return y0, y0 + 1.25
+
+
+@fig
+def transformer_architecture():
+    """p110: input -> tokenisation -> embedding -> positional encoding -> transformer blocks -> softmax -> output."""
+    f, ax = plt.subplots(figsize=(5.6, 3.9))
+    xs = 0.9
+    steps = [("Write a story", 0.4, "#ffffff"), ("Tokenisation", 1.25, "#ede9fe"),
+             ("Embedding", 2.1, "#ede9fe"), ("Positional\nencoding", 2.95, "#ede9fe")]
+    for i, (t, y, fc) in enumerate(steps):
+        _blk(ax, xs, y, t, w=1.5, h=0.5, fc=fc, ls="--" if i == 0 else "-")
+        if i:
+            _go(ax, (xs, steps[i - 1][1] + 0.25), (xs, y - 0.25))
+    ax.text(xs, -0.05, "Input", ha="center", fontsize=8.5, color=MUT)
+    bx = 3.0
+    tops = []
+    for k in range(3):
+        b, t = _ffn_attention_block(ax, bx, 0.15 + k * 1.45)
+        tops.append((b, t))
+        if k:
+            _go(ax, (bx, tops[k - 1][1]), (bx, b))
+    ax.text(bx, 4.55, "Series of transformer blocks", ha="center", fontsize=8.5, color=MUT)
+    ax.plot([xs + 0.75, 1.95, 1.95], [2.95, 2.95, 0.47], color=INK, lw=1)
+    _go(ax, (1.95, 0.47), (bx - 0.85, 0.47))
+    _blk(ax, 5.0, 1.0, "Softmax", w=1.1, h=0.45, fc="#fde68a", ec=INK)
+    _blk(ax, 5.0, 2.0, "Once", w=1.1, h=0.45, fc="white", ls="--")
+    ax.text(5.0, 2.4, "Output", ha="center", fontsize=8.5, color=MUT)
+    ax.plot([bx + 0.85, 4.15, 4.15], [tops[2][1] - 0.3, tops[2][1] - 0.3, 1.0], color=INK, lw=1)
+    _go(ax, (4.15, 1.0), (4.45, 1.0))
+    _go(ax, (5.0, 1.225), (5.0, 1.775))
+    _finish(ax, f, "transformer-architecture", (-0.1, 5.7), (-0.25, 4.75))
+
+
+@fig
+def transformer_blocks():
+    """p117: a transformer is a concatenation of many transformer blocks (attention + feed-forward)."""
+    f, ax = plt.subplots(figsize=(5.6, 1.7))
+    xs = [0.9, 2.9, 4.9]
+    for i, x in enumerate(xs):
+        _ffn_attention_block(ax, x, 0.0)
+        ax.text(x, 1.32, "Transformer block", ha="center", fontsize=8, color=MUT)
+        if i:
+            _go(ax, (xs[i - 1] + 0.85, 0.62), (x - 0.85, 0.62))
+    _go(ax, (-0.4, 0.62), (xs[0] - 0.85, 0.62))
+    _go(ax, (xs[-1] + 0.85, 0.62), (6.2, 0.62))
+    _finish(ax, f, "transformer-blocks", (-0.5, 6.3), (-0.1, 1.55))
+
+
+@fig
+def softmax_output():
+    """p120: the transformer gives scores; softmax turns them into next-word probabilities."""
+    f, ax = plt.subplots(figsize=(5.6, 2.6))
+    for k in range(4):
+        _blk(ax, 0.2 + k * 0.32, 1.2, "", w=0.3, h=0.3, fc="#ede9fe")
+    ax.text(0.68, 0.8, "Write a story", ha="center", fontsize=8, color=MUT)
+    _go(ax, (1.4, 1.2), (1.8, 1.2))
+    _blk(ax, 2.45, 1.2, "Transformer", w=1.2, h=0.45, fc="#fde68a", ec=INK)
+    _go(ax, (3.05, 1.2), (3.4, 1.2))
+    _blk(ax, 3.95, 1.2, "Softmax", w=1.0, h=0.45, fc="#fde68a", ec=INK)
+    _go(ax, (4.45, 1.2), (4.75, 1.2))
+    rows = [("Aardvark", "0"), ("…", ""), ("Once", "0.5"), ("…", ""), ("Somewhere", "0.3"), ("…", ""),
+            ("There", "0.2"), ("…", ""), ("Zygote", "0")]
+    for i, (w, pr) in enumerate(rows):
+        y = 2.3 - i * 0.27
+        _blk(ax, 5.45, y, w, w=1.25, h=0.25, fc="#dcfce7" if w == "Once" else "white", ec=MUT, fs=7.5)
+        ax.text(6.2, y, pr, va="center", fontsize=7.5, color=ACC)
+    _finish(ax, f, "softmax-output", (-0.1, 6.6), (-0.1, 2.5))
+
+
+def _cells(ax, x, y, n=4, cw=0.16, h=0.2, fc="#ede9fe"):
+    for i in range(n):
+        ax.add_patch(plt.Rectangle((x + i * cw, y - h / 2), cw, h, fc=fc, ec=ACC, lw=0.8))
+
+
+@fig
+def transformer_blackbox():
+    """p123: the transformer as a black box, then opened into encoders and decoders."""
+    f, ax = plt.subplots(figsize=(5.6, 2.3))
+    _blk(ax, 0.75, 1.7, "Je suis étudiant", w=1.4, h=0.38, fc="white", ls="--")
+    _go(ax, (1.45, 1.7), (1.85, 1.7))
+    _blk(ax, 2.55, 1.7, "The Transformer", w=1.4, h=0.5, fc="#fde68a", ec=INK)
+    _go(ax, (3.25, 1.7), (3.65, 1.7))
+    _blk(ax, 4.35, 1.7, "I am a student", w=1.4, h=0.38, fc="white", ls="--")
+    ax.text(0.75, 2.0, "Input", ha="center", fontsize=8, color=MUT)
+    ax.text(4.35, 2.0, "Output", ha="center", fontsize=8, color=MUT)
+    _container(ax, 1.65, 0.05, 3.45, 1.05, fc="#fffbeb", ec=WARM)
+    _blk(ax, 2.1, 0.55, "Encoders", w=0.75, h=0.5)
+    _blk(ax, 3.0, 0.55, "Decoders", w=0.75, h=0.5)
+    _go(ax, (2.475, 0.55), (2.625, 0.55))
+    _go(ax, (1.1, 0.55), (1.72, 0.55))
+    ax.text(1.05, 0.55, "Je suis étudiant", ha="right", va="center", fontsize=8)
+    _go(ax, (3.38, 0.55), (3.9, 0.55))
+    ax.text(3.95, 0.55, "I am a student", va="center", fontsize=8)
+    _go(ax, (2.55, 1.45), (2.55, 1.1), color=MUT, style="-|>")
+    ax.text(2.62, 1.27, "opening the box", fontsize=7, color=MUT, va="center")
+    _finish(ax, f, "transformer-blackbox", (-0.1, 5.2), (-0.05, 2.2))
+
+
+@fig
+def encoder_decoder_stack():
+    """p123: a stack of 6 encoders and 6 decoders; the top encoder's output goes to every decoder."""
+    f, ax = plt.subplots(figsize=(4.4, 3.4))
+    for i in range(6):
+        y = 0.4 + i * 0.42
+        _blk(ax, 0.8, y, "Encoder", w=1.1, h=0.3)
+        _blk(ax, 3.0, y, "Decoder", w=1.1, h=0.3, fc="#fde68a", ec=INK)
+        if i:
+            _go(ax, (0.8, y - 0.27), (0.8, y - 0.15), lw=0.8)
+            _go(ax, (3.0, y - 0.27), (3.0, y - 0.15), lw=0.8)
+        _go(ax, (1.35, 0.4 + 5 * 0.42), (2.45, y), color=ACC, lw=0.8)
+    _container(ax, 0.1, 0.12, 3.7, 2.75, fc="none")
+    _blk(ax, 0.8, -0.2, "Je suis étudiant", w=1.4, h=0.3, fc="white", ls="--")
+    _go(ax, (0.8, -0.05), (0.8, 0.25))
+    ax.text(0.8, -0.6, "Input", ha="center", fontsize=8, color=MUT)
+    _blk(ax, 3.0, 3.1, "I am a student", w=1.4, h=0.3, fc="white", ls="--")
+    _go(ax, (3.0, 0.4 + 5 * 0.42 + 0.15), (3.0, 2.95))
+    ax.text(3.0, 3.35, "Output", ha="center", fontsize=8, color=MUT)
+    _finish(ax, f, "encoder-decoder-stack", (-0.1, 3.9), (-0.75, 3.5))
+
+
+@fig
+def encoder_layers():
+    """p124-125: an encoder (self-attention, feed-forward) and a decoder (adds encoder-decoder attention)."""
+    f, ax = plt.subplots(figsize=(5.0, 2.3))
+    _container(ax, 0.1, 0.1, 2.0, 1.4, label="Encoder")
+    _blk(ax, 1.05, 0.45, "Self-Attention", w=1.6, h=0.35)
+    _blk(ax, 1.05, 1.05, "Feed Forward", w=1.6, h=0.35, fc="#fde68a", ec=INK)
+    _go(ax, (1.05, 0.625), (1.05, 0.875))
+    _container(ax, 2.8, 0.1, 4.7, 2.0, label="Decoder")
+    _blk(ax, 3.75, 0.45, "Self-Attention", w=1.6, h=0.35)
+    _blk(ax, 3.75, 1.05, "Encoder-Decoder\nAttention", w=1.6, h=0.42)
+    _blk(ax, 3.75, 1.65, "Feed Forward", w=1.6, h=0.35, fc="#fde68a", ec=INK)
+    _go(ax, (3.75, 0.625), (3.75, 0.84))
+    _go(ax, (3.75, 1.26), (3.75, 1.475))
+    _go(ax, (1.85, 1.05), (2.95, 1.05), color=ACC, cs="arc3,rad=-0.2")
+    for x in (1.05, 3.75):
+        _go(ax, (x, -0.25), (x, 0.275), lw=0.8)
+    _finish(ax, f, "encoder-layers", (-0.05, 4.85), (-0.3, 2.25))
+
+
+@fig
+def encoder_flow():
+    """p125-126: each word vector flows through its own path: self-attention gives z_i, then the feed-forward."""
+    f, ax = plt.subplots(figsize=(4.6, 3.0))
+    words = [("$x_1$", "Je", 0.9), ("$x_2$", "suis", 2.2), ("$x_3$", "étudiant", 3.5)]
+    _container(ax, 0.2, 0.65, 4.4, 2.75)
+    ax.text(4.35, 2.62, "Encoder", ha="right", fontsize=8, color=MUT)
+    _blk(ax, 2.3, 1.0, "Self-Attention", w=3.8, h=0.4)
+    _blk(ax, 2.3, 2.2, "Feed Forward Neural Network", w=3.8, h=0.4, fc="#fde68a", ec=INK)
+    for xl, w, x in words:
+        _cells(ax, x - 0.32, 0.15)
+        ax.text(x - 0.42, 0.15, xl, ha="right", va="center", fontsize=9)
+        ax.text(x, -0.15, w, ha="center", fontsize=8)
+        _go(ax, (x, 0.27), (x, 0.8), lw=0.8)
+        _cells(ax, x - 0.32, 1.65, fc="#fef3c7")
+        ax.text(x - 0.42, 1.65, xl.replace("x", "z"), ha="right", va="center", fontsize=9)
+        _go(ax, (x, 1.2), (x, 1.55), lw=0.8)
+        _go(ax, (x, 1.75), (x, 2.0), lw=0.8)
+        _go(ax, (x, 2.4), (x, 3.0), lw=0.8)
+    _finish(ax, f, "encoder-flow", (0.0, 4.6), (-0.3, 3.1))
+
+
+def _mat(ax, x, y, rows, cols, cell=0.16, fc="#ede9fe", ec=ACC, label=None, lfs=8.5):
+    """A rows x cols grid whose bottom-left corner is (x, y); returns its (width, height)."""
+    for i in range(rows):
+        for j in range(cols):
+            ax.add_patch(plt.Rectangle((x + j * cell, y + i * cell), cell, cell, fc=fc, ec=ec, lw=0.7))
+    if label:
+        ax.text(x + cols * cell / 2, y + rows * cell + 0.06, label, ha="center", va="bottom", fontsize=lfs)
+    return cols * cell, rows * cell
+
+
+@fig
+def qkv_matrices():
+    """p136: Q, K and V are the embeddings matrix X times the trained weight matrices W^Q, W^K, W^V."""
+    f, ax = plt.subplots(figsize=(3.0, 3.1))
+    cols = [("#ede9fe", "Q"), ("#fde68a", "K"), ("#dcfce7", "V")]
+    for k, (fc, nm) in enumerate(cols):
+        y0 = (2 - k) * 1.15
+        _mat(ax, 0, y0 + 0.25, 2, 4, label="$X$" if k == 0 else None)
+        ax.text(0.8, y0 + 0.41, "×", ha="center", va="center", fontsize=11)
+        _mat(ax, 0.95, y0, 4, 3, fc=fc, ec=INK if nm == "K" else ACC)
+        ax.text(1.19, y0 - 0.14, f"$W^{nm}$", ha="center", va="center", fontsize=9)
+        ax.text(1.65, y0 + 0.41, "=", ha="center", va="center", fontsize=11)
+        _mat(ax, 1.85, y0 + 0.25, 2, 3, fc=fc)
+        ax.text(2.4, y0 + 0.41, f"${nm}$", va="center", fontsize=10)
+    _finish(ax, f, "qkv-matrices", (-0.1, 2.7), (-0.3, 3.2))
+
+
+@fig
+def attention_matrix_form():
+    """p137: the self-attention calculation in matrix form: softmax(Q K^T / sqrt(d_k)) V = Z."""
+    f, ax = plt.subplots(figsize=(4.6, 1.55))
+    ax.text(0.0, 0.55, "softmax", va="center", fontsize=10)
+    ax.text(0.95, 0.55, "(", va="center", fontsize=26, color=MUT)
+    _mat(ax, 1.15, 0.72, 2, 3, label="$Q$")
+    ax.text(1.75, 0.88, "×", ha="center", va="center", fontsize=10)
+    _mat(ax, 1.95, 0.64, 3, 2, fc="#fde68a", ec=INK, label="$K^T$")
+    ax.plot([1.1, 2.35], [0.55, 0.55], color=INK, lw=1)
+    ax.text(1.72, 0.32, "√dₖ", ha="center", va="center", fontsize=10)
+    ax.text(2.4, 0.55, ")", va="center", fontsize=26, color=MUT)
+    _mat(ax, 2.7, 0.39, 2, 3, fc="#dcfce7", label="$V$")
+    ax.text(3.35, 0.55, "=", ha="center", va="center", fontsize=12)
+    _mat(ax, 3.6, 0.39, 2, 3, fc="#fecaca", ec="#dc2626", label="$Z$")
+    _finish(ax, f, "attention-matrix-form", (-0.1, 4.3), (0.05, 1.35))
+
+
+@fig
+def multihead_concat():
+    """p140-142: 8 heads give 8 Z matrices; they are concatenated and multiplied by W^O into one Z."""
+    f, ax = plt.subplots(figsize=(5.6, 2.7))
+    _mat(ax, 2.4, 2.25, 2, 4, label="Thinking Machines  $X$", lfs=8)
+    xs = [0.2, 0.95, 1.7, 2.45, 3.2, 3.95, 4.7]
+    labels = ["$Z_0$", "$Z_1$", "$Z_2$", "$Z_3$", "$Z_4$", "$Z_5$", "$Z_6$"]
+    for x, lab in zip(xs[:3], labels[:3], strict=True):
+        _go(ax, (2.72, 2.2), (x + 0.24, 1.98), color=MUT, lw=0.7)
+        _mat(ax, x, 1.38, 2, 3, fc="#fecaca", ec="#dc2626", label=lab)
+    ax.text(3.35, 1.55, "…", ha="center", va="center", fontsize=12)
+    _go(ax, (2.72, 2.2), (4.95, 1.98), color=MUT, lw=0.7)
+    _mat(ax, 4.7, 1.38, 2, 3, fc="#fecaca", ec="#dc2626", label="$Z_7$")
+    ax.text(0.2, 2.35, "8 attention heads", fontsize=8, color=MUT)
+    for k in range(8):
+        _mat(ax, 0.2 + k * 0.42, 0.25, 2, 3, cell=0.14, fc="#fecaca", ec="#dc2626")
+    ax.text(0.2, 0.75, "1) concatenate all the attention heads", fontsize=8, color=MUT)
+    ax.text(3.75, 0.39, "×", ha="center", va="center", fontsize=11)
+    _mat(ax, 3.95, 0.0, 4, 3, cell=0.14, fc="#fde68a", ec=INK, label="$W^O$")
+    ax.text(4.55, 0.39, "=", ha="center", va="center", fontsize=11)
+    _mat(ax, 4.75, 0.25, 2, 3, cell=0.14, fc="#ede9fe", label="$Z$")
+    _finish(ax, f, "multihead-concat", (0.0, 5.4), (-0.1, 2.85))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

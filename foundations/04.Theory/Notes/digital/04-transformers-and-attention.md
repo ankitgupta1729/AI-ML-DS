@@ -503,18 +503,8 @@ Now that we know what transformers do, let's get to their architecture. If you'v
 
 The 4th one, the transformer block, is the most complex of all. Many of these can be concatenated, and each one contains 2 main parts: the **attention** and the **feed-forward** components.
 
-```mermaid
-flowchart LR
-  IN["Input: Write a story"] --> TOK["Tokenisation"] --> EMB["Embedding"] --> PE["Positional encoding"]
-  subgraph BLOCKS["Series of transformer blocks"]
-    direction BT
-    A1["Attention"] --> F1["Feed-forward"] --> A2["Attention"] --> F2["Feed-forward"] --> A3["Attention"] --> F3["Feed-forward"]
-  end
-  PE --> A1
-  F3 --> SM["Softmax"] --> OUT["Output: Once"]
-```
+![The architecture of a transformer model](figures/transformer-architecture.svg)
 
-*The architecture of a transformer model.*
 
 ### Tokenisation
 
@@ -567,23 +557,7 @@ Tokenisation is the most basic step. It consists of a large dataset of tokens, i
   - the **attention** component;
   - the **feed-forward** component.
 
-```mermaid
-flowchart LR
-  IN(( )) --> B1
-  subgraph B1["Transformer block"]
-    direction BT
-    a1["Attention"] --> f1["Feed-forward"]
-  end
-  subgraph B2["Transformer block"]
-    direction BT
-    a2["Attention"] --> f2["Feed-forward"]
-  end
-  subgraph B3["Transformer block"]
-    direction BT
-    a3["Attention"] --> f3["Feed-forward"]
-  end
-  B1 --> B2 --> B3 --> OUT(( ))
-```
+![The transformer is a concatenation of many transformer blocks; each has an attention component followed by a feed-forward component](figures/transformer-blocks.svg)
 
 *The transformer is a concatenation of many transformer blocks. Each one of these is composed of an attention component followed by a feed-forward component (a neural network).*
 
@@ -607,10 +581,7 @@ flowchart LR
 - The last step of a transformer is a **softmax layer**, which turns these scores into probabilities (that add to 1), where the highest scores correspond to the highest probabilities. Then we can **sample** out of these probabilities for the next word.
 - In the example below, the transformer gives the highest probability of 0.5 to "Once", and probabilities of 0.3 and 0.2 to "Somewhere" and "There". Once we sample, the word "Once" is selected, and that's the output of the transformer.
 
-```mermaid
-flowchart LR
-  I["Write a story"] --> T["Transformer"] --> S["Softmax"] --> P["Aardvark 0 · … · Once 0.5 · … · Somewhere 0.3 · … · There 0.2 · … · Zygote 0"]
-```
+![The transformer scores every word; softmax turns the scores into probabilities for the next word](figures/softmax-output.svg)
 
 | Word | Probability |
 | --- | ---: |
@@ -644,72 +615,24 @@ flowchart LR
 - A TensorFlow implementation of the Transformer is available as a part of the **Tensor2Tensor** package.
 - Let's begin by looking at the model as a single black box. In a machine-translation application, it would take a sentence in one language and output its translation in another.
 
-```mermaid
-flowchart LR
-  I["Input: Je suis étudiant"] --> T["The Transformer"] --> O["Output: I am a student"]
-```
-
 Opening the box, we see an **encoding component**, a **decoding component** and connections between them:
 
-```mermaid
-flowchart LR
-  I["Je suis étudiant"] --> E["Encoders"] --> D["Decoders"] --> O["I am a student"]
-```
+![The transformer as a black box for machine translation, and opened up into encoders and decoders](figures/transformer-blackbox.svg)
 
 - The encoding component is a **stack of encoders** (the paper stacks **6** of them on top of each other — there's nothing magical about the number 6; one can definitely experiment with other arrangements). The decoding component is a stack of decoders of the same number.
 
-```mermaid
-flowchart LR
-  IN["Input: Je suis étudiant"] --> E1
-  subgraph ENC["Encoders"]
-    direction BT
-    E1["Encoder"] --> E2["Encoder"] --> E3["Encoder"] --> E4["Encoder"] --> E5["Encoder"] --> E6["Encoder"]
-  end
-  subgraph DEC["Decoders"]
-    direction BT
-    D1["Decoder"] --> D2["Decoder"] --> D3["Decoder"] --> D4["Decoder"] --> D5["Decoder"] --> D6["Decoder"]
-  end
-  E6 --> D1
-  E6 --> D2
-  E6 --> D3
-  E6 --> D4
-  E6 --> D5
-  E6 --> D6
-  D6 --> OUT["Output: I am a student"]
-```
+![A stack of 6 encoders and 6 decoders; the output of the top encoder is fed to every decoder](figures/encoder-decoder-stack.svg)
 
-*The output of the top encoder is fed to every decoder in the stack.*
 
 <!-- pages: 124-126 -->
 
 - The encoders are all **identical in structure** (yet they do not share weights). Each one is broken down into **2 sub-layers**:
 
-```mermaid
-flowchart BT
-  IN(( )) --> SA
-  subgraph ENC["Encoder"]
-    direction BT
-    SA["Self-Attention"] --> FF["Feed Forward Neural Network"]
-  end
-  FF --> OUT(( ))
-```
-
 - The encoder's inputs first flow through a **self-attention layer** — a layer that helps the encoder look at other words in the input sentence as it encodes a specific word.
 - The outputs of the self-attention layer are fed to a **feed-forward neural network**. The exact same feed-forward network is independently applied to each position.
 - The **decoder** has both those layers, but between them is an **attention layer** that helps the decoder focus on relevant parts of the input sentence (similar to what attention does in seq2seq models).
 
-```mermaid
-flowchart LR
-  subgraph ENC["Encoder"]
-    direction BT
-    ESA["Self-Attention"] --> EFF["Feed Forward"]
-  end
-  subgraph DEC["Decoder"]
-    direction BT
-    DSA["Self-Attention"] --> EDA["Encoder-Decoder Attention"] --> DFF["Feed Forward"]
-  end
-  EFF --> EDA
-```
+![An encoder (self-attention, then feed-forward) and a decoder, which has an encoder–decoder attention layer between the two](figures/encoder-layers.svg)
 
 ### Bringing the Tensors into the Picture
 
@@ -718,15 +641,7 @@ flowchart LR
 - The embedding only happens in the **bottom-most encoder**. The abstraction that is common to all the encoders is that they receive a list of vectors, each of size 512 — in the bottom encoder that would be the word embeddings, but in other encoders it would be the output of the encoder that's directly below. The size of this list is a hyperparameter we can set — basically it would be the length of the longest sentence in our training dataset.
 - After embedding the words in our input sequence, each of them flows through each of the 2 layers of the encoder.
 
-```mermaid
-flowchart BT
-  x1["x1 (Je)"] --> SA["Self-Attention"]
-  x2["x2 (suis)"] --> SA
-  x3["x3 (étudiant)"] --> SA
-  SA --> z1["z1"] --> FF1["Feed Forward"]
-  SA --> z2["z2"] --> FF2["Feed Forward"]
-  SA --> z3["z3"] --> FF3["Feed Forward"]
-```
+![Each word vector flows through self-attention (giving zᵢ) and then through the feed-forward network](figures/encoder-flow.svg)
 
 <!-- pages: 127-129 -->
 
@@ -816,9 +731,15 @@ That concludes the self-attention calculation. The resulting vector is one we ca
 
 - **The first step** is to calculate the Query, Key and Value matrices. We do that by packing our embeddings into a matrix $X$, and multiplying it by the weight matrices we've trained ($W^Q$, $W^K$, $W^V$):
 $$Q = X W^Q, \qquad K = X W^K, \qquad V = X W^V.$$
+
+  ![Every row of X is one word; multiplying by the trained weight matrices gives Q, K and V](figures/qkv-matrices.svg)
+
 - Every row in the $X$ matrix corresponds to a word in the input sentence. We again see the difference in size of the embedding vector (512, or 4 boxes in the figure) and the q/k/v vectors (64, or 3 boxes in the figure).
 - **Finally**, since we're dealing with matrices, we can condense steps two through six in one formula to calculate the outputs of the self-attention layer:
 $$Z = \operatorname{softmax}\!\left(\frac{Q K^T}{\sqrt{d_k}}\right) V \qquad \text{(the self-attention calculation in matrix form).}$$
+
+  ![The self-attention calculation in matrix form](figures/attention-matrix-form.svg)
+
 
 ## Multi-Head Attention: The Beast with Many Heads
 <!-- pages: 137-139 -->
@@ -844,6 +765,9 @@ The paper further refined the self-attention layer by adding a mechanism called 
   2. Multiply with a weight matrix $W^O$ that was trained jointly with the model.
   3. The result would be the $Z$ matrix that captures information from all the attention heads. We can send this forward to the FFNN:
 $$Z = \operatorname{Concat}(Z_0, Z_1, \dots, Z_7)\, W^O.$$
+
+  ![8 attention heads give 8 Z matrices; they are concatenated and multiplied by Wᴼ](figures/multihead-concat.svg)
+
 - That's pretty much all there is to multi-headed self-attention. It's quite a handful of matrices, I realise. Let me try to put them all in one visual so we can look at them in one place.
 
 ### Multi-Head Self-Attention in One Picture
