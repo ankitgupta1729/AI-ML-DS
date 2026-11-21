@@ -804,20 +804,7 @@ If we assumed the embedding has a dimensionality of 4, the actual positional enc
 
 One detail in the architecture of the encoder that we need to mention before moving on is that **each sub-layer (self-attention, FFNN — feed-forward neural network) in each encoder has a residual connection around it, and is followed by a layer-normalisation step.**
 
-```mermaid
-flowchart BT
-  X1["x1 (Thinking) + positional encoding"] --> SA["Self-Attention"]
-  X2["x2 (Machines) + positional encoding"] --> SA
-  SA --> AN1["Add & Normalize: LayerNorm(X + Z)"]
-  X1 -. residual .-> AN1
-  X2 -. residual .-> AN1
-  AN1 -- z1 --> FF1["Feed Forward"]
-  AN1 -- z2 --> FF2["Feed Forward"]
-  FF1 --> AN2["Add & Normalize"]
-  FF2 --> AN2
-  AN1 -. residual .-> AN2
-  AN2 --> UP["to the next encoder"]
-```
+![Each sub-layer of the encoder has a residual connection (dashed) around it and is followed by Add & Normalize; on the right, the decoder stack with its Linear and Softmax layers](figures/residual-encoder.svg)
 
 If we're to visualise the vectors and the layer-norm operation associated with the self-attention, it would look like the figure above: the self-attention outputs $z_1, z_2$ are added to the inputs $X$ and normalised, $\operatorname{LayerNorm}(X + Z)$, before the feed-forward layers; the same holds for the feed-forward sub-layer. This goes for the sub-layers of the decoder as well: a decoder has **Self-Attention → Add & Normalize → Encoder–Decoder Attention → Add & Normalize → Feed Forward → Add & Normalize**, and the top decoder is followed by a **Linear** layer and a **Softmax**.
 

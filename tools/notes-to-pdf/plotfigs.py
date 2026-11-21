@@ -1484,6 +1484,63 @@ def multihead_one_picture():
     _finish(ax, f, "multihead-one-picture", (-0.1, 5.3), (-0.3, 7.6))
 
 
+@fig
+def residual_encoder():
+    """p147: an encoder with residual connections and layer normalisation, next to the decoder stack."""
+    f, ax = plt.subplots(figsize=(6.2, 4.6))
+    xs = (1.3, 3.1)
+    _container(ax, 0.2, 0.55, 4.2, 5.3)
+    ax.text(0.15, 3.2, "Encoder #2\n(same for\nencoder #1\nbelow it)", ha="right", va="center", fontsize=7.5, color=MUT)
+    for x, k in zip(xs, (1, 2), strict=True):
+        ax.add_patch(plt.Circle((x, 0.15), 0.1, fc="white", ec=INK, lw=0.8))
+        ax.text(x, 0.15, "+", ha="center", va="center", fontsize=8)
+        ax.text(x - 0.2, -0.15, f"$x_{k}$", ha="right", va="center", fontsize=9)
+        _cells(ax, x - 0.12, -0.15, n=3, cw=0.12, h=0.16)
+        _go(ax, (x, 0.25), (x, 0.75), lw=0.8)
+        _cells(ax, x - 0.32, 0.85)
+        _go(ax, (x, 0.95), (x, 1.15), lw=0.8)
+        _cells(ax, x - 0.32, 1.85, fc="#fef3c7")
+        ax.text(x - 0.42, 1.85, f"$z_{k}$", ha="right", va="center", fontsize=9)
+        _go(ax, (x, 1.55), (x, 1.75), lw=0.8)
+        _go(ax, (x, 1.95), (x, 2.27), lw=0.8)
+        _go(ax, (x, 2.93), (x, 3.25), lw=0.8)
+        _cells(ax, x - 0.32, 3.35, fc="#fef3c7")
+        ax.text(x - 0.42, 3.35, f"$z_{k}$", ha="right", va="center", fontsize=9)
+        _go(ax, (x, 3.45), (x, 3.75), lw=0.8)
+        _blk(ax, x, 3.95, "Feed Forward", w=1.45, h=0.38, fc="#fde68a", ec=INK, fs=7.5)
+        _go(ax, (x, 4.14), (x, 4.55), lw=0.8)
+        _go(ax, (x, 5.0), (x, 5.75), lw=0.8)
+    ax.text(0.6, 0.15, "positional\nencoding", ha="right", va="center", fontsize=7, color=MUT)
+    ax.text(xs[0], -0.42, "Thinking", ha="center", fontsize=8)
+    ax.text(xs[1], -0.42, "Machines", ha="center", fontsize=8)
+    _blk(ax, 2.2, 1.35, "Self-Attention", w=3.2, h=0.4)
+    _blk(ax, 2.2, 2.6, "Add & Normalize\nLayerNorm( X + Z )", w=3.2, h=0.66, fc="#dcfce7", ec="#16a34a")
+    _blk(ax, 2.2, 4.78, "Add & Normalize", w=3.2, h=0.45, fc="#dcfce7", ec="#16a34a")
+    for y0, y1 in ((0.7, 2.6), (3.6, 4.78)):
+        ax.plot([0.42, 0.42], [y0, y1], color=ACC, lw=1, ls="--")
+        _go(ax, (0.42, y1), (0.6, y1), color=ACC, lw=1)
+    ax.plot([0.25, 4.15], [3.6, 3.6], color=MUT, lw=0.6, ls=":")
+    # decoder column
+    dx = 5.55
+    layers = ["Self-Attention", "Add & Normalize", "Encoder-Decoder\nAttention", "Add & Normalize", "Feed Forward",
+              "Add & Normalize"]
+    _container(ax, dx - 0.85, 0.55, dx + 0.85, 3.75)
+    ax.text(dx, 0.35, "Decoder #1", ha="center", fontsize=7.5, color=MUT)
+    for i, t in enumerate(layers):
+        y = 0.85 + i * 0.5
+        fc = "#dcfce7" if "Normalize" in t else ("#fde68a" if "Feed" in t else "#ede9fe")
+        _blk(ax, dx, y, t, w=1.55, h=0.36 if "\n" not in t else 0.42, fc=fc, ec=INK if "Feed" in t else ACC, fs=6.5)
+        if i:
+            _go(ax, (dx, y - 0.32), (dx, y - 0.2), lw=0.7)
+    ax.plot([3.8, 4.45, 4.45], [4.78, 4.78, 1.85], color=ACC, lw=0.9)
+    _go(ax, (4.45, 1.85), (dx - 0.78, 1.85), color=ACC, lw=0.9)
+    for i, t in enumerate(("Decoder #2", "Linear", "Softmax")):
+        y = 4.2 + i * 0.6
+        _blk(ax, dx, y, t, w=1.2, h=0.36, fc="#fde68a" if i else "#ede9fe", ec=INK if i else ACC, fs=7.5)
+        _go(ax, (dx, y - 0.42), (dx, y - 0.18), lw=0.8)
+    _finish(ax, f, "residual-encoder", (-0.75, 6.5), (-0.6, 5.9))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:
