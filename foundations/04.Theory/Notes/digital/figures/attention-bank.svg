@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="216.912937pt" height="100.224pt" viewBox="0 0 216.912937 100.224" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 100.224 
+L 216.912937 100.224 
+L 216.912937 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 186.552 41.708463 
+L 217.912937 41.708463 
+M 217.912937 25.835116 
+L 186.552 25.835116 
+L 186.552 41.708463 
+" clip-path="url(#ped3a4e96b6)" style="fill: none; stroke: #7c3aed; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 28.44 88.394779 
+L 73.8 88.394779 
+L 73.8 72.521432 
+L 28.44 72.521432 
+L 28.44 88.394779 
+z
+" clip-path="url(#ped3a4e96b6)" style="fill: none; stroke: #7c3aed; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="31.68" y="37.409485" transform="rotate(-0 31.68 37.409485)">The</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="71.208" y="37.409485" transform="rotate(-0 71.208 37.409485)">bank</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="118.512" y="37.409485" transform="rotate(-0 118.512 37.409485)">of</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="150.264" y="37.409485" transform="rotate(-0 150.264 37.409485)">the</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="189.792" y="37.409485" transform="rotate(-0 189.792 37.409485)">river</text>
+   </g>
+   <g id="patch_4">
+    <path d="M 209.232 22.435984 
+L 209.232 9.737886 
+L 86.76 9.737886 
+L 86.76 21.206147 
+" style="fill: none; stroke: #7c3aed; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 88.76 17.206147 
+L 86.76 21.206147 
+L 84.76 17.206147 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="31.68" y="84.095801" transform="rotate(-0 31.68 84.095801)">Money</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="86.76" y="84.095801" transform="rotate(-0 86.76 84.095801)">in</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="118.512" y="84.095801" transform="rotate(-0 118.512 84.095801)">the</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="158.04" y="84.095801" transform="rotate(-0 158.04 84.095801)">bank</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 51.12 69.1223 
+L 51.12 56.424202 
+L 173.592 56.424202 
+L 173.592 67.892463 
+" style="fill: none; stroke: #7c3aed; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 175.592 63.892463 
+L 173.592 67.892463 
+L 171.592 63.892463 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; fill: #64748b" transform="translate(18.390156 74.012447) rotate(-90)">Attention</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="ped3a4e96b6">
+   <rect x="5.76" y="5.76" width="200.88" height="88.704"/>
+  </clipPath>
+ </defs>
+</svg>

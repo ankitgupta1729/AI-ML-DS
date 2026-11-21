@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="243.785739pt" height="120.002375pt" viewBox="0 0 243.785739 120.002375" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 120.002375 
+L 243.785739 120.002375 
+L 243.785739 -0 
+L 0 -0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <defs>
+     <path id="mb608b05b93" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #7c3aed"/>
+    </defs>
+    <g clip-path="url(#pbf888d1427)">
+     <use xlink:href="#mb608b05b93" x="30.346435" y="40.483071" style="fill: #7c3aed; stroke: #7c3aed"/>
+    </g>
+   </g>
+   <g id="line2d_2">
+    <g clip-path="url(#pbf888d1427)">
+     <use xlink:href="#mb608b05b93" x="79.519304" y="97.851418" style="fill: #7c3aed; stroke: #7c3aed"/>
+    </g>
+   </g>
+   <g id="patch_2">
+    <path d="M 11.856212 110.144636 
+Q 52.88412 110.144636 93.017601 110.144636 
+" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 89.017601 108.144636 
+L 93.017601 110.144636 
+L 89.017601 112.144636 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 9.857739 108.146163 
+Q 9.857739 67.118255 9.857739 26.984774 
+" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 7.857739 30.984774 
+L 9.857739 26.984774 
+L 11.857739 30.984774 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="33.624626" y="50.317645" transform="rotate(-0 33.624626 50.317645)">orange</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="82.797496" y="92.934132" transform="rotate(-0 82.797496 92.934132)">phone</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle" x="54.93287" y="13.994375" transform="rotate(-0 54.93287 13.994375)">Good embedding</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="line2d_3">
+    <g clip-path="url(#pd3defad889)">
+     <use xlink:href="#mb608b05b93" x="188.85287" y="48.678549" style="fill: #7c3aed; stroke: #7c3aed"/>
+    </g>
+   </g>
+   <g id="line2d_4">
+    <g clip-path="url(#pd3defad889)">
+     <use xlink:href="#mb608b05b93" x="194.589704" y="54.415384" style="fill: #7c3aed; stroke: #7c3aed"/>
+    </g>
+   </g>
+   <g id="patch_4">
+    <path d="M 145.776212 110.144636 
+Q 186.80412 110.144636 226.937601 110.144636 
+" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 222.937601 108.144636 
+L 226.937601 110.144636 
+L 222.937601 112.144636 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 143.777739 108.146163 
+Q 143.777739 67.118255 143.777739 26.984774 
+" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 141.777739 30.984774 
+L 143.777739 26.984774 
+L 145.777739 30.984774 
+z
+" style="fill: #64748b; stroke: #64748b; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="192.131061" y="43.761262" transform="rotate(-0 192.131061 43.761262)">phone</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="197.867896" y="64.249958" transform="rotate(-0 197.867896 64.249958)">orange</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle" x="188.85287" y="13.994375" transform="rotate(-0 188.85287 13.994375)">Worst embedding</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pbf888d1427">
+   <rect x="5.76" y="19.994375" width="98.345739" height="94.248"/>
+  </clipPath>
+  <clipPath id="pd3defad889">
+   <rect x="139.68" y="19.994375" width="98.345739" height="94.248"/>
+  </clipPath>
+ </defs>
+</svg>

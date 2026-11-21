@@ -1030,6 +1030,136 @@ def causal_attention():
     save(f, "causal-attention")
 
 
+@fig
+def semantic_space():
+    """p60: words with similar meanings are nearby in the embedding space."""
+    from matplotlib.patches import Ellipse
+    f, ax = plt.subplots(figsize=(3.8, 2.0))
+    groups = [((0.9, 1.3), ["not good", "bad", "worst"], "#fee2e2", "#dc2626"),
+              ((2.8, 0.6), ["good", "wonderful", "great"], "#dcfce7", "#16a34a")]
+    for (cx, cy), words, fc, ec in groups:
+        ax.add_patch(Ellipse((cx, cy), 1.6, 0.95, fc=fc, ec=ec, lw=1))
+        for k, w in enumerate(words):
+            ax.text(cx + (k - 1) * 0.42, cy + (0.2 if k % 2 else -0.15), w, ha="center", fontsize=8.5)
+    ax.annotate("", (4.0, 0), (0, 0), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+    ax.annotate("", (0, 2.0), (0, 0), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+    ax.set_xlim(-0.1, 4.1)
+    ax.set_ylim(-0.1, 2.1)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "semantic-space")
+
+
+@fig
+def sentence_embeddings():
+    """p75: sentence embeddings projected to 2-D form 3 clusters: greetings, dogs and soccer."""
+    from matplotlib.patches import FancyBboxPatch
+    f, ax = plt.subplots(figsize=(5.0, 2.9))
+    pts = [(0.75, 2.55, "Hey, what's up?", "left"), (1.5, 2.15, "Hi, how's it going?", "left"),
+           (0.4, 1.95, "Hello, how are you?", "left"),
+           (1.0, 1.0, "I adore my dog", "left"), (0.5, 0.62, "I love my dog", "left"),
+           (1.15, 0.3, "I like my dog", "left"),
+           (2.7, 1.4, "I enjoyed watching the World Cup", "left"), (2.55, 0.85, "I love watching soccer", "left"),
+           (2.65, 0.35, "I like watching soccer matches", "left")]
+    for x, y, t, ha in pts:
+        ax.plot(x, y, "o", color=ACC, ms=5)
+        ax.text(x + (0.08 if ha == "left" else -0.08), y, t, ha=ha, va="center", fontsize=8)
+    ax.add_patch(FancyBboxPatch((0.05, 0.05), 4.75, 2.75, boxstyle="round,pad=0.05", fc="none", ec=MUT, lw=0.9))
+    ax.set_xlim(0, 5.75)
+    ax.set_ylim(0, 2.9)
+    ax.axis("off")
+    save(f, "sentence-embeddings")
+
+
+@fig
+def cosine_angles():
+    """p77: rays at a right angle have cosine 0 (similarity 0); rays at a small angle, cosine 0.98."""
+    f, axs = plt.subplots(1, 2, figsize=(4.4, 1.9))
+    panels = ((axs[0], 90, "cos α = 0  →  similarity = 0"), (axs[1], 11.5, "cos α = 0.98  →  similarity = 0.98"))
+    for ax, ang, lab in panels:
+        base = 25 if ang < 45 else 0
+        for a in (base, base + ang):
+            ax.annotate("", (np.cos(np.radians(a)), np.sin(np.radians(a))), (0, 0),
+                        arrowprops=dict(arrowstyle="-|>", color=ACC, lw=1.3))
+            ax.plot(np.cos(np.radians(a)), np.sin(np.radians(a)), "o", color=INK, ms=4)
+        t = np.radians(np.linspace(base, base + ang, 30))
+        ax.plot(0.3 * np.cos(t), 0.3 * np.sin(t), color=WARM, lw=1)
+        ax.text(0.38 * np.cos(np.radians(base + ang / 2)) + 0.03, 0.38 * np.sin(np.radians(base + ang / 2)), "α",
+                fontsize=9, color=WARM)
+        ax.plot(0, 0, "o", color=MUT, ms=3)
+        ax.set_title(lab, fontsize=8, y=-0.22)
+        ax.set_xlim(-0.2, 1.2)
+        ax.set_ylim(-0.15, 1.15)
+        ax.set_aspect("equal")
+        ax.axis("off")
+    save(f, "cosine-angles")
+
+
+@fig
+def attention_bank():
+    """p82: in each sentence attention links "bank" to the word that gives its context."""
+    f, ax = plt.subplots(figsize=(3.6, 1.6))
+    rows = [(1.0, ["The", "bank", "of", "the", "river"], 4, 1), (0.0, ["Money", "in", "the", "bank"], 0, 3)]
+    for y, words, src, dst in rows:
+        xs = np.cumsum([0] + [0.12 * len(w) + 0.25 for w in words[:-1]])
+        cx = [x + 0.06 * len(w) for x, w in zip(xs, words, strict=True)]
+        for x, w in zip(xs, words, strict=True):
+            ax.text(x, y, w, fontsize=10, va="center")
+        w = words[src]
+        ax.add_patch(plt.Rectangle((xs[src] - 0.05, y - 0.17), 0.12 * len(w) + 0.1, 0.34, fc="none", ec=ACC, lw=1.1))
+        ax.annotate("", (cx[dst], y + 0.2), (cx[src], y + 0.2),
+                    arrowprops=dict(arrowstyle="-|>", color=ACC, lw=1.1,
+                                    connectionstyle="bar,fraction=0.12" if src > dst else "bar,fraction=-0.12"))
+    ax.text(-0.25, 0.5, "Attention", rotation=90, va="center", ha="center", fontsize=8, color=MUT)
+    ax.set_xlim(-0.4, 2.7)
+    ax.set_ylim(-0.3, 1.6)
+    ax.axis("off")
+    save(f, "attention-bank")
+
+
+@fig
+def apple_moves():
+    """p93: attention moves "apple" towards "orange" (sentence 1) or towards "phone" (sentence 2)."""
+    f, ax = plt.subplots(figsize=(3.4, 3.0))
+    pts = {"orange": (11, 11), "phone": (1, 2), "apple": (6, 7)}
+    for k, (x, y) in pts.items():
+        ax.plot(x, y, "o", color=ACC if k != "apple" else INK, ms=6)
+        dx, dy = (0.4, -0.6) if k == "apple" else (0.3, 0.3)
+        ax.text(x + dx, y + dy, f"{k} ({x}, {y})", fontsize=8)
+    for (x, y), lab in (((8, 8.5), "apple (8, 8.5)\nsentence 1"), ((4, 5), "apple (4, 5)\nsentence 2")):
+        ax.annotate("", (x, y), (6, 7), arrowprops=dict(arrowstyle="-|>", color=WARM, lw=1.4))
+        ax.plot(x, y, "o", color=WARM, ms=5)
+        ax.text(x + 0.4, y + (0.2 if x > 6 else -1.3), lab, fontsize=7.5, color=WARM)
+    ax.set_xlim(0, 13.5)
+    ax.set_ylim(0, 12.5)
+    ax.set_aspect("equal")
+    ax.tick_params(labelsize=7)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    f.tight_layout()
+    save(f, "apple-moves")
+
+
+@fig
+def good_worst_embedding():
+    """p94: a good embedding separates orange and phone; the worst one puts them together."""
+    f, axs = plt.subplots(1, 2, figsize=(4.4, 1.7))
+    layouts = [("Good embedding", {"orange": (0.25, 0.85), "phone": (0.85, 0.15)}),
+               ("Worst embedding", {"phone": (0.55, 0.75), "orange": (0.62, 0.68)})]
+    for ax, (title, pts) in zip(axs, layouts, strict=True):
+        ax.annotate("", (1.05, 0), (0, 0), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+        ax.annotate("", (0, 1.05), (0, 0), arrowprops=dict(arrowstyle="-|>", color=MUT, lw=0.8))
+        for k, (x, y) in pts.items():
+            ax.plot(x, y, "o", color=ACC, ms=5)
+            ax.text(x + 0.04, y + (0.06 if k == "phone" else -0.12), k, fontsize=8)
+        ax.set_title(title, fontsize=8.5)
+        ax.set_xlim(-0.05, 1.15)
+        ax.set_ylim(-0.05, 1.1)
+        ax.set_aspect("equal")
+        ax.axis("off")
+    save(f, "good-worst-embedding")
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

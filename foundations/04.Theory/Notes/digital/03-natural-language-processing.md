@@ -247,6 +247,9 @@ $$L_{CE}(\hat y, y) = -\log p(y \mid x) = -\big[y \log \hat y + (1 - y)\log(1 - 
 
 - **Vector semantics** is the standard way to represent word meaning in NLP. The idea is that two words that occur in very similar distributions (whose neighbouring words are similar) have similar meanings.
 - Represent a word as a point in a multidimensional semantic space. Vectors for representing words are called **embeddings** (a mapping from one space or structure to another). Words with similar meanings are nearby in space — e.g. *good*, *wonderful* cluster together, away from *not good*, *bad*, *worst*.
+
+  ![Words with similar meanings are nearby in the semantic space](figures/semantic-space.svg)
+
 - **TF-IDF (baseline):** the meaning of a word is defined by a simple function of the counts of nearby words.
 - Vectors, or distributional models of meaning, are generally based on a **co-occurrence matrix** — a way of representing how often words co-occur.
 - **Term–document matrix:** each row is a vocabulary word and each column a document. 2 documents that are similar will tend to have similar words, and so their column vectors will tend to be similar. The same principle applies to words: similar words have similar vectors because they tend to occur in similar documents.

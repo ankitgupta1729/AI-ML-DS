@@ -63,21 +63,7 @@
 - Use the **Cohere dashboard** → the *Embed* tab, and type sentences.
 - The results come out as vectors with 4096 entries for each sentence. These are obviously hard to visualise, but there is a way to bring them down to 2 entries per sentence in order to be easily visualised.
 
-```mermaid
-quadrantChart
-  title Sentence embeddings projected to 2-D
-  x-axis "dimension 1" --> " "
-  y-axis "dimension 2" --> " "
-  "Hey, what's up?": [0.2, 0.9]
-  "Hi, how's it going?": [0.35, 0.8]
-  "Hello, how are you?": [0.12, 0.75]
-  "I adore my dog": [0.3, 0.3]
-  "I love my dog": [0.22, 0.15]
-  "I like my dog": [0.4, 0.12]
-  "I enjoyed watching the World Cup": [0.8, 0.45]
-  "I love watching soccer": [0.88, 0.3]
-  "I like watching soccer matches": [0.82, 0.15]
-```
+![Sentence embeddings brought down to 2 dimensions: greetings, dogs and soccer form 3 clusters](figures/sentence-embeddings.svg)
 
 - Notice that the embedding seems to capture the essence of the sentences, and there are **3 clear clusters** of sentences (greetings, dogs, soccer).
 
@@ -101,6 +87,8 @@ quadrantChart
 | --- | --- | --- |
 | Right angle ($\alpha = 90°$) | $\cos\alpha = 0$ | 0 |
 | Small angle | $\cos\alpha = 0.98$ | 0.98 |
+
+![Cosine similarity: rays at a right angle score 0; rays at a small angle score 0.98](figures/cosine-angles.svg)
 
 ### Real-Life Example
 
@@ -179,17 +167,7 @@ In order to understand attention, let's look at 2 sentences:
 - Sentence 1: *The **bank** of the river.*
 - Sentence 2: *Money in the **bank**.*
 
-```mermaid
-flowchart LR
-  subgraph S1["Sentence 1"]
-    direction LR
-    river1["river"] -. attention .-> bank1["bank"]
-  end
-  subgraph S2["Sentence 2"]
-    direction LR
-    money2["money"] -. attention .-> bank2["bank"]
-  end
-```
+![Attention: "river" gives "bank" its meaning in sentence 1, and "money" in sentence 2](figures/attention-bank.svg)
 
 - How would a computer know that the word "bank" in the 1st sentence refers to a setting in nature, and in the 2nd sentence to a financial setting?
 - Well, let's ask a simpler question: how would a human know this? How did you figure out these 2 settings? The way you and I did it was probably to look at the **neighbouring words**. In the 1st sentence, the word "river" was the one that hinted at the nature setting, and in the 2nd sentence, the word "money" was key to the financial setting. So, in short, **we need a way to use the other words in the sentence to understand what context of the word "bank" we want to use.**
@@ -305,6 +283,9 @@ $$\operatorname{MultiHead}(Q, K, V) = \operatorname{Concat}(\text{head}_1, \dots
 - Say initially *orange* has coordinates (11, 11), *phone* has (1, 2) and *apple* has (6, 7).
 - Now, for the modified sentences, *apple* has coordinates (8, 8.5) in the 1st sentence, and (4, 5) in the 2nd sentence.
 - If we use these new numbers (vectors) as the embeddings in the sentence, then the model is going to have an easier time. This process is done many times in ML, so the word ends up nearer to the relevant region.
+
+  ![Attention moves apple towards orange in sentence 1 and towards phone in sentence 2](figures/apple-moves.svg)
+
 - At the end of the day, we don't use the sentence, we use the **context**.
 - Words pull each other, like **gravity**.
 
@@ -313,6 +294,9 @@ $$\operatorname{MultiHead}(Q, K, V) = \operatorname{Concat}(\text{head}_1, \dots
 - Attention works better, but multi-head attention works even better.
 - **Is one embedding good enough?** No, we can do much better. We can ideally have lots and lots of embeddings: we just use 10, 20 or 100 embeddings and combine those results. That is **multi-head attention**.
 - *Example:* an embedding that puts *orange* and *phone* far apart (on different axes) is a **good embedding**; one that puts *phone* and *orange* next to each other is the **worst embedding**.
+
+  ![A good embedding separates orange and phone; the worst one puts them together](figures/good-worst-embedding.svg)
+
 - We build embeddings by modifying existing embeddings with the use of **linear transformations** — rotation, stretching (horizontal / vertical) and shear — and we can combine these transformations.
 
 ### Example: New Embeddings from Existing Ones
