@@ -1952,6 +1952,56 @@ def rerank_documents():
     _finish(ax, f, "rerank-documents", (-0.1, 4.0), (0.15, 2.2))
 
 
+def _query(ax, x, y, w=1.1):
+    """A search bar with a magnifier, centred at (x, y)."""
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x - w / 2, y - 0.14), w, 0.28, boxstyle="round,pad=0.01,rounding_size=0.12",
+                                fc="white", ec=INK, lw=0.9))
+    ax.add_patch(plt.Circle((x - w / 2 + 0.16, y + 0.02), 0.06, fc="none", ec=INK, lw=0.9))
+    ax.plot([x - w / 2 + 0.2, x - w / 2 + 0.25], [y - 0.02, y - 0.07], color=INK, lw=0.9)
+    ax.plot([x - w / 2 + 0.33, x + w / 2 - 0.12], [y, y], color=ACC2, lw=1.4, solid_capstyle="round")
+    ax.text(x, y + 0.2, "Query", ha="center", fontsize=7.5)
+
+
+def _model(ax, x, y, label):
+    _blk(ax, x, y, "", w=0.75, h=0.6, fc="white", ec=INK)
+    _bot(ax, x, y + 0.08, 0.12)
+    ax.text(x, y - 0.18, label, ha="center", va="center", fontsize=6.5)
+
+
+def _answer(ax, x, y, label, ok=True):
+    _doc_lines(ax, x - 0.5, y - 0.17, 1.0, 0.34, fc="#dcfce7" if ok else "#fee2e2", ec="#16a34a" if ok else "#dc2626")
+    ax.text(x, y + 0.24, label, ha="center", fontsize=7.5)
+
+
+@fig
+def generate_answers():
+    """p310-312: answering with a generative model alone vs. with documents from a search system."""
+    f, ax = plt.subplots(figsize=(4.4, 0.95))
+    _query(ax, 0.6, 0.35)
+    _model(ax, 2.05, 0.35, "Generative\nmodel")
+    _answer(ax, 3.55, 0.35, "Inaccurate response", ok=False)
+    _go(ax, (1.18, 0.35), (1.65, 0.35), lw=0.9)
+    _go(ax, (2.45, 0.35), (3.02, 0.35), lw=0.9)
+    _finish(ax, f, "answer-without-search", (0.0, 4.2), (-0.02, 0.72))
+
+    f, ax = plt.subplots(figsize=(4.6, 2.0))
+    _query(ax, 0.6, 1.55)
+    _model(ax, 2.3, 1.55, "Generative\nmodel")
+    _answer(ax, 3.85, 1.55, "More accurate response")
+    _blk(ax, 0.6, 0.45, "Search\nsystem", w=0.8, h=0.5, fc="#e0f2fe", ec="#0284c7", fs=7.5)
+    _blk(ax, 2.3, 0.45, "", w=1.2, h=0.5, fc="#f8fafc", ec=MUT)
+    ax.text(2.3, 0.76, "Context (documents)", ha="center", fontsize=7, color=MUT)
+    for k in range(3):
+        _doc_lines(ax, 1.85 + k * 0.32, 0.25, 0.25, 0.28, n=1)
+    _go(ax, (0.6, 1.4), (0.6, 0.72), lw=0.9)
+    _go(ax, (1.02, 0.45), (1.68, 0.45), lw=0.9)
+    _go(ax, (2.3, 0.86), (2.3, 1.23), lw=0.9)
+    _go(ax, (1.18, 1.55), (1.9, 1.55), lw=0.9)
+    _go(ax, (2.7, 1.55), (3.32, 1.55), lw=0.9)
+    _finish(ax, f, "answer-with-search", (0.0, 4.45), (0.1, 1.95))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

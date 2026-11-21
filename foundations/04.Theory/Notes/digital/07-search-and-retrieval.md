@@ -514,12 +514,7 @@ Well, that certainly improved the keyword-search results! Even though the third 
 ## Generating Answers with Search
 <!-- pages: 310-316 -->
 
-```mermaid
-flowchart LR
-  Q["🔍 Query"] --> CM["🤖 Command model"]
-  DOCS["📄 Retrieved documents"] --> CM
-  CM --> R["Response"]
-```
+![Given a query, the search mechanism retrieves documents, and the Command model generates an answer based on them](figures/answer-with-search.svg)
 
 - In this module, you've learned how to search and retrieve information from large databases in very effective ways. In this chapter, you'll learn how to **combine this with a generative model**, in order to get an answer in sentence format, instead of a list of search results.
 - Large language models are very good at answering questions, but they are prone to some limitations, such as incorrect information or even **hallucinations**. A good way to fix this is to enhance an LLM with a search mechanism.
@@ -530,23 +525,11 @@ flowchart LR
 - But if I go and search a few chapters in books about thermodynamics, I give them to my friend, and then I ask them to answer the question based on that, they are much more likely to answer the question correctly.
 - In this chapter, we'll compare 2 ways a large language model can answer a question. The first one is by feeding the question to the generative model and obtaining the answer. This will generate an answer that could be correct, but it may not. This is equivalent to asking your friend a thermodynamics question.
 
-```mermaid
-flowchart LR
-  Q["🔍 Query"] --> G["Generative model"] --> R["Inaccurate response"]
-```
-
-*A generative model receives a query and outputs a response. This response may be inaccurate.*
+![A generative model receives a query and outputs a response; this response may be inaccurate](figures/answer-without-search.svg)
 
 - The second one starts by using a search system to retrieve documents where the answer to the query is likely to appear. Then we feed the question and the documents to a generative model, and prompt it to answer the question using these documents. This yields a more accurate response.
 
-```mermaid
-flowchart LR
-  Q["🔍 Query"] --> G["Generative model"]
-  Q --> SS["Search system"] --> C["Context: query + 📄📄📄 Wikipedia documents"] --> G
-  G --> R["More accurate response"]
-```
-
-*The query is first given to a search system, which retrieves documents which are likely to contain the answer. Then the query and the documents (context) are fed to the generative model, for a more accurate response.*
+![The query is first given to a search system, which retrieves documents likely to contain the answer; the query and these documents (the context) are fed to the generative model for a more accurate response](figures/answer-with-search.svg)
 
 ### Generating Answers (Without Search)
 
