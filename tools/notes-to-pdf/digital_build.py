@@ -63,6 +63,7 @@ p .katex, li .katex { white-space: nowrap; }
 .diagram { margin: 3mm 0 5mm; padding: 4mm; border: 1px solid var(--hair); border-radius: 2mm; background: #fcfcff;
   break-inside: avoid; text-align: center; }
 .diagram svg { max-width: 100% !important; width: auto !important; height: auto; max-height: 85mm; }
+.diagram pre.mermaid svg { max-height: 150mm; }
 table { font-size: 8.6pt; }
 td .katex, th .katex { font-size: 1em; }
 li > p { margin: 0 0 1.2mm; }
@@ -286,11 +287,31 @@ class Doc:
 <script>
 window.__ready = (async () => {{
   mermaid.initialize({{ startOnLoad: false, theme: 'base', securityLevel: 'loose', fontFamily: 'NP Sans',
-    flowchart: {{ htmlLabels: true, curve: 'basis', useMaxWidth: true }},
+    flowchart: {{ htmlLabels: true, curve: 'basis', useMaxWidth: true, nodeSpacing: 32, rankSpacing: 38 }},
     themeVariables: {{ primaryColor: '#f1ecff', primaryBorderColor: '{accent}', primaryTextColor: '#0f172a',
       lineColor: '#64748b', fontSize: '13px', secondaryColor: '#eef6ff', tertiaryColor: '#fff7ed' }} }});
   await document.fonts.ready;
+  const pres = [...document.querySelectorAll('pre.mermaid')];
+  pres.forEach(p => {{ p.dataset.src = p.textContent; }});
   await mermaid.run({{ querySelector: 'pre.mermaid' }});
+  // The printed text column is about 610 CSS px wide. A left-to-right flowchart wider than
+  // that would be shrunk until its text is unreadably small, so draw it top-to-bottom instead;
+  // and never enlarge a diagram much beyond its natural size.
+  const PRINT_W = 610;
+  let n = 0;
+  for (const p of pres) {{
+    let svg = p.querySelector('svg');
+    const src = p.dataset.src || '';
+    let vb = svg && svg.viewBox && svg.viewBox.baseVal;
+    if (!vb || !vb.width) continue;
+    if (/^\\s*flowchart LR/.test(src) && PRINT_W / vb.width < 0.9) {{
+      const {{ svg: tb }} = await mermaid.render('tb' + (n++), src.replace(/^(\\s*)flowchart LR/, '$1flowchart TB'));
+      p.innerHTML = tb;
+      svg = p.querySelector('svg');
+      vb = svg.viewBox.baseVal;
+    }}
+    svg.style.setProperty('width', Math.round(vb.width * 1.1) + 'px', 'important');
+  }}
 }})();
 </script>
 </body></html>"""
