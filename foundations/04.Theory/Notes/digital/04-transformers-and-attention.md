@@ -1246,6 +1246,9 @@ Say we have:
 - **Question:** does "it" refer to "honey" or "bear"? Well, we don't know, because it depends on the next word. If the blank word is **"hungry"**, then "it" refers to "bear", and if the blank word is **"delicious"**, then it refers to "honey".
 - Let's understand it using embeddings: words are similar if they appear in the same context many times. So 2 words are likely to be replaceable if they are similar.
   - "it" has the same amount of gravitational pull towards both "bear" and "honey".
+
+    ![Before the next word is known, “it” is pulled equally towards “honey” and “bear”](figures/it-pull.svg)
+
   - Once we know the next word is "hungry", then both "hungry" and "bear" pull "it", so "it" gravitates to "bear". And if the next word is "delicious", then "it" is pulled by "honey" and "delicious" — so here, "it" describes "honey".
 - **In this way attention works.**
 - A series of transformer blocks (many feed-forward NNs with attention to capture context) is a big NN which predicts the next word in the form of +ve and −ve numbers (scores), so we need a **softmax layer**. Since scores can be −ve but probabilities can't be negative, we take $e^{\text{score}}$ and then normalise it (divide by their sum).

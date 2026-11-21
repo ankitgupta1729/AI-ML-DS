@@ -34,7 +34,13 @@ def fig(fn):
 
 
 def save(f, name):
-    f.savefig(os.path.join(OUT, name + ".svg"), bbox_inches="tight", pad_inches=0.08, metadata={"Date": None})
+    path = os.path.join(OUT, name + ".svg")
+    # Other figures in this folder are drawn by hand or by vecfig.py / promptfig.py: never overwrite them.
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            if "matplotlib" not in fh.read():
+                raise SystemExit(f"refusing to overwrite {name}.svg: it was not made by plotfigs.py")
+    f.savefig(path, bbox_inches="tight", pad_inches=0.08, metadata={"Date": None})
     plt.close(f)
 
 
@@ -1596,6 +1602,19 @@ def word2vec_net():
     ax.text(4.25, 1.75, "next word\nafter strawberry", ha="left", fontsize=7.5, color=MUT)
     ax.text(1.95, 1.95, "hidden layers", ha="center", fontsize=7.5, color=MUT)
     _finish(ax, f, "word2vec-net", (-0.35, 5.0), (-0.5, 2.15))
+
+
+@fig
+def it_pull():
+    """p180: before the next word is known, "it" is pulled equally towards "honey" and "bear"."""
+    f, ax = plt.subplots(figsize=(3.6, 1.1))
+    _blk(ax, 0.4, 0.4, "honey", w=0.8, h=0.32)
+    _blk(ax, 1.75, 0.55, "it", w=0.45, h=0.32, fc="#fde68a", ec=INK)
+    _blk(ax, 3.1, 0.7, "bear", w=0.8, h=0.32)
+    _go(ax, (1.52, 0.52), (0.82, 0.42), color=ACC, lw=1.1)
+    _go(ax, (1.98, 0.58), (2.68, 0.68), color=ACC, lw=1.1)
+    ax.text(1.75, 0.08, "the same gravitational pull to both", ha="center", fontsize=7.5, color=MUT)
+    _finish(ax, f, "it-pull", (-0.1, 3.6), (-0.05, 0.95))
 
 
 def main() -> None:
