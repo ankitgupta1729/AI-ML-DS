@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="359.635161pt" height="164.149412pt" viewBox="0 0 359.635161 164.149412" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 164.149412 
+L 359.635161 164.149412 
+L 359.635161 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 8.303824 20.514176 
+L 107.512941 20.514176 
+L 107.512941 8.303824 
+L 8.303824 8.303824 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #dcfce7; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 107.512941 20.514176 
+L 216.897353 20.514176 
+L 216.897353 8.303824 
+L 107.512941 8.303824 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #dcfce7; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 8.303824 32.724529 
+L 107.512941 32.724529 
+L 107.512941 20.514176 
+L 8.303824 20.514176 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 107.512941 32.724529 
+L 216.897353 32.724529 
+L 216.897353 20.514176 
+L 107.512941 20.514176 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 8.303824 44.934882 
+L 107.512941 44.934882 
+L 107.512941 32.724529 
+L 8.303824 32.724529 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 107.512941 44.934882 
+L 216.897353 44.934882 
+L 216.897353 32.724529 
+L 107.512941 32.724529 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 8.303824 57.145235 
+L 107.512941 57.145235 
+L 107.512941 44.934882 
+L 8.303824 44.934882 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 107.512941 57.145235 
+L 216.897353 57.145235 
+L 216.897353 44.934882 
+L 107.512941 44.934882 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 8.303824 69.355588 
+L 107.512941 69.355588 
+L 107.512941 57.145235 
+L 8.303824 57.145235 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 107.512941 69.355588 
+L 216.897353 69.355588 
+L 216.897353 57.145235 
+L 107.512941 57.145235 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 241.826824 50.022529 
+L 283.545529 50.022529 
+Q 286.598118 50.022529 286.598118 46.969941 
+L 286.598118 30.689471 
+Q 286.598118 27.636882 283.545529 27.636882 
+L 241.826824 27.636882 
+Q 238.774235 27.636882 238.774235 30.689471 
+L 238.774235 46.969941 
+Q 238.774235 50.022529 241.826824 50.022529 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 8.303824 104.460353 
+L 107.512941 104.460353 
+L 107.512941 92.25 
+L 8.303824 92.25 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #fee2e2; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 107.512941 104.460353 
+L 216.897353 104.460353 
+L 216.897353 92.25 
+L 107.512941 92.25 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #fee2e2; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 8.303824 116.670706 
+L 107.512941 116.670706 
+L 107.512941 104.460353 
+L 8.303824 104.460353 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 107.512941 116.670706 
+L 216.897353 116.670706 
+L 216.897353 104.460353 
+L 107.512941 104.460353 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 8.303824 128.881059 
+L 107.512941 128.881059 
+L 107.512941 116.670706 
+L 8.303824 116.670706 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 107.512941 128.881059 
+L 216.897353 128.881059 
+L 216.897353 116.670706 
+L 107.512941 116.670706 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 8.303824 141.091412 
+L 107.512941 141.091412 
+L 107.512941 128.881059 
+L 8.303824 128.881059 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 107.512941 141.091412 
+L 216.897353 141.091412 
+L 216.897353 128.881059 
+L 107.512941 128.881059 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 8.303824 153.301765 
+L 107.512941 153.301765 
+L 107.512941 141.091412 
+L 8.303824 141.091412 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 107.512941 153.301765 
+L 216.897353 153.301765 
+L 216.897353 141.091412 
+L 107.512941 141.091412 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #ffffff; stroke: #64748b; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 241.826824 133.968706 
+L 283.545529 133.968706 
+Q 286.598118 133.968706 286.598118 130.916118 
+L 286.598118 114.635647 
+Q 286.598118 111.583059 283.545529 111.583059 
+L 241.826824 111.583059 
+Q 238.774235 111.583059 238.774235 114.635647 
+L 238.774235 130.916118 
+Q 238.774235 133.968706 241.826824 133.968706 
+z
+" clip-path="url(#pacf052ed10)" style="fill: #fde68a; stroke: #0f172a; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 7.2px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="17.028141" transform="rotate(-0 11.356412 17.028141)">Questions</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 7.2px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="17.028141" transform="rotate(-0 110.565529 17.028141)">Answers</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="28.947478" transform="rotate(-0 11.356412 28.947478)">Where was the last world cup?</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="28.947478" transform="rotate(-0 110.565529 28.947478)">The last world cup was in Qatar</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="41.157831" transform="rotate(-0 11.356412 41.157831)">What colour is the sky?</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="41.157831" transform="rotate(-0 110.565529 41.157831)">The sky is blue</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="53.368184" transform="rotate(-0 11.356412 53.368184)">Where does the bear live?</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="53.368184" transform="rotate(-0 110.565529 53.368184)">The bear lives in the woods</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="65.578537" transform="rotate(-0 11.356412 65.578537)">What is an apple?</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="65.578537" transform="rotate(-0 110.565529 65.578537)">An apple is a fruit</text>
+   </g>
+   <g id="patch_24">
+    <path d="M 219.441176 38.829706 
+Q 228.344559 38.829706 236.129907 38.829706 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 232.129907 36.829706 
+L 236.129907 38.829706 
+L 232.129907 40.829706 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="262.686176" y="41.921747" transform="rotate(-0 262.686176 41.921747)">Model</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="262.686176" y="57.145235" transform="rotate(-0 262.686176 57.145235)">(training)</text>
+   </g>
+   <g id="patch_25">
+    <path d="M 285.580588 38.829706 
+Q 294.483971 38.829706 302.269319 38.829706 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 298.269319 36.829706 
+L 302.269319 38.829706 
+L 298.269319 40.829706 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="305.931176" y="41.921747" transform="rotate(-0 305.931176 41.921747)">High scores</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 7.2px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="100.974317" transform="rotate(-0 11.356412 100.974317)">Questions</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 7.2px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="100.974317" transform="rotate(-0 110.565529 100.974317)">Bad answers</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="112.893654" transform="rotate(-0 11.356412 112.893654)">Where was the last world cup?</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="112.893654" transform="rotate(-0 110.565529 112.893654)">The last world cup was last year</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="125.104007" transform="rotate(-0 11.356412 125.104007)">What colour is the sky?</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="125.104007" transform="rotate(-0 110.565529 125.104007)">The sky is red</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="137.31436" transform="rotate(-0 11.356412 137.31436)">Where does the bear live?</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="137.31436" transform="rotate(-0 110.565529 137.31436)">The bear lives in NYC</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="11.356412" y="149.524713" transform="rotate(-0 11.356412 149.524713)">What is an apple?</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 6.4px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="110.565529" y="149.524713" transform="rotate(-0 110.565529 149.524713)">An apple is a vegetable</text>
+   </g>
+   <g id="patch_26">
+    <path d="M 219.441176 122.775882 
+Q 228.344559 122.775882 236.129907 122.775882 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 232.129907 120.775882 
+L 236.129907 122.775882 
+L 232.129907 124.775882 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="262.686176" y="125.867923" transform="rotate(-0 262.686176 125.867923)">Model</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 7px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="262.686176" y="141.091412" transform="rotate(-0 262.686176 141.091412)">(training)</text>
+   </g>
+   <g id="patch_27">
+    <path d="M 285.580588 122.775882 
+Q 294.483971 122.775882 302.269319 122.775882 
+" style="fill: none; stroke: #0f172a; stroke-linecap: round"/>
+    <path d="M 298.269319 120.775882 
+L 302.269319 122.775882 
+L 298.269319 124.775882 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-linecap: round"/>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: start" x="305.931176" y="125.867923" transform="rotate(-0 305.931176 125.867923)">Low scores</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pacf052ed10">
+   <rect x="5.76" y="5.76" width="345.96" height="152.629412"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1877,6 +1877,81 @@ def rag_figures():
     _finish(ax, f, "rag-documents", (0.0, 5.5), (-0.15, 1.0))
 
 
+def _qa_table(ax, x, y, rows, head=("Questions", "Answers"), w=(1.95, 2.15), rh=0.24, fc="#ede9fe"):
+    """A two-column table with its top-left corner at (x, y); returns its height."""
+    cols = [x, x + w[0], x + w[0] + w[1]]
+    for j, t in enumerate(head):
+        ax.add_patch(plt.Rectangle((cols[j], y - rh), w[j], rh, fc=fc, ec=MUT, lw=0.7))
+        ax.text(cols[j] + 0.06, y - rh / 2, t, va="center", fontsize=7.2, fontweight="bold")
+    for i, (q, a) in enumerate(rows):
+        yy = y - (i + 2) * rh
+        for j, t in enumerate((q, a)):
+            ax.add_patch(plt.Rectangle((cols[j], yy), w[j], rh, fc="white", ec=MUT, lw=0.7))
+            ax.text(cols[j] + 0.06, yy + rh / 2, t, va="center", fontsize=6.4)
+    return (len(rows) + 1) * rh
+
+
+@fig
+def rerank_training():
+    """p282: the reranker is trained to give good question-answer pairs high scores and bad pairs low scores."""
+    f, ax = plt.subplots(figsize=(6.2, 3.0))
+    qs = ["Where was the last world cup?", "What colour is the sky?", "Where does the bear live?", "What is an apple?"]
+    good = ["The last world cup was in Qatar", "The sky is blue", "The bear lives in the woods", "An apple is a fruit"]
+    bad = ["The last world cup was last year", "The sky is red", "The bear lives in NYC", "An apple is a vegetable"]
+    for y0, ans, head, score, fc in ((3.0, good, "Answers", "High scores", "#dcfce7"),
+                                     (1.35, bad, "Bad answers", "Low scores", "#fee2e2")):
+        h = _qa_table(ax, 0.0, y0, list(zip(qs, ans, strict=True)), head=("Questions", head), fc=fc)
+        mid = y0 - h / 2
+        _go(ax, (4.15, mid), (4.5, mid))
+        _blk(ax, 5.0, mid, "Model", w=0.9, h=0.4, fc="#fde68a", ec=INK)
+        ax.text(5.0, mid - 0.36, "(training)", ha="center", fontsize=7, color=MUT)
+        _go(ax, (5.45, mid), (5.8, mid))
+        ax.text(5.85, mid, score, va="center", fontsize=8.5)
+    _finish(ax, f, "rerank-training", (-0.05, 6.75), (0.05, 3.05))
+
+
+def _doc_lines(ax, x, y, w, h, fc="white", ec=MUT, n=2):
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.01,rounding_size=0.04", fc=fc, ec=ec, lw=0.8))
+    for k in range(n):
+        yy = y + h * (k + 1) / (n + 1)
+        x1 = x + w - (0.25 if k == n - 1 else 0.08)
+        ax.plot([x + 0.08, x1], [yy, yy], color=ACC2, lw=1.4, solid_capstyle="round")
+
+
+@fig
+def wiki_chunks():
+    """p302: Wikipedia articles get chunked by paragraph, and each chunk gets an embedding vector."""
+    f, ax = plt.subplots(figsize=(5.0, 2.6))
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((0.0, 0.0), 2.6, 2.4, boxstyle="round,pad=0.02,rounding_size=0.08", fc="#f8fafc",
+                                ec=MUT, lw=0.9))
+    ax.text(0.12, 2.22, "Marie Curie", fontsize=9, fontweight="bold", va="center")
+    ax.text(0.12, 1.98, "Article · Talk — From Wikipedia, the free encyclopedia", fontsize=6.2, color=MUT, va="center")
+    ax.text(0.0, 2.55, "Wikipedia page", fontsize=7.5, color=MUT)
+    for k, y in enumerate((1.4, 0.8, 0.2)):
+        _doc_lines(ax, 0.15, y, 2.1, 0.42, n=2 if k else 1)
+        _go(ax, (2.3, y + 0.21), (3.55, y + 0.21), color=ACC, lw=0.9)
+        _cells(ax, 3.6, y + 0.21, n=4, cw=0.18, h=0.24)
+    ax.text(3.96, 2.0, "Embedding\nvectors", ha="center", fontsize=7.5, color=MUT)
+    _finish(ax, f, "wiki-chunks", (-0.1, 4.5), (-0.1, 2.7))
+
+
+@fig
+def rerank_documents():
+    """p307: the results from any search system get reranked by their relevance to the query."""
+    f, ax = plt.subplots(figsize=(4.2, 2.2))
+    ys = [1.5, 0.9, 0.3]
+    for y in ys:
+        _doc_lines(ax, 0.0, y, 1.3, 0.38)
+        _doc_lines(ax, 2.6, y, 1.3, 0.38, fc="#f5f3ff", ec=ACC)
+    for a, b in ((0, 2), (1, 0), (2, 1)):
+        _go(ax, (1.35, ys[a] + 0.19), (2.55, ys[b] + 0.19), color=ACC, lw=0.9)
+    ax.text(0.65, 2.0, "Documents", ha="center", fontsize=8)
+    ax.text(3.25, 2.0, "Reranked documents", ha="center", fontsize=8)
+    _finish(ax, f, "rerank-documents", (-0.1, 4.0), (0.15, 2.2))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

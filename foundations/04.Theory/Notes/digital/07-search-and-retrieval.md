@@ -116,11 +116,7 @@ So we have a **different model that ranks them** — a model that is actually tr
 
 **So how does this work?** The reranking model is trained on good and bad question–answer pairs:
 
-```mermaid
-flowchart LR
-  G["Questions + correct answers:<br/>Where was the last world cup? → The last world cup was in Qatar<br/>What colour is the sky? → The sky is blue<br/>Where does the bear live? → The bear lives in the woods<br/>What is an apple? → An apple is a fruit"] --> M1["Model (training)"] --> H["High scores"]
-  B["Questions + bad answers:<br/>Where was the last world cup? → The last world cup was last year<br/>What colour is the sky? → The sky is red<br/>Where does the bear live? → The bear lives in NYC<br/>What is an apple? → An apple is a vegetable"] --> M2["Model (training)"] --> L["Low scores"]
-```
+![The reranking model is trained to give good question–answer pairs high scores and bad pairs low scores](figures/rerank-training.svg)
 
 So we're going to use an **embedding + re-ranking** to be able to search better.
 
@@ -387,20 +383,7 @@ def dense_retrieval(query, results_lang='en', num_results=10):
 
 This process of finding the closest documents to a query in an embedding will yield good results. However, articles may be very long, and this could make things complicated. In order to have more granularity, we'll **split the articles by paragraph**. This means that we'll find the embedding vector corresponding to each paragraph of each article in the Wikipedia dataset. In that way, when the model retrieves the answer, it will actually output the paragraph that it found the most similar to the query, as well as the article to which this paragraph belongs.
 
-```mermaid
-flowchart LR
-  subgraph W["Wikipedia page: Marie Curie (Article · Talk — From Wikipedia, the free encyclopedia)"]
-    direction TB
-    P1["Paragraph 1: Maria …"]
-    P2["Paragraph 2"]
-    P3["Paragraph 3"]
-  end
-  P1 --> V1["embedding vector"]
-  P2 --> V2["embedding vector"]
-  P3 --> V3["embedding vector"]
-```
-
-*Wikipedia articles get chunked by paragraph, and each chunk gets assigned an embedding vector.*
+![Wikipedia articles get chunked by paragraph, and each chunk gets assigned an embedding vector](figures/wiki-chunks.svg)
 
 ### Back to Querying the Dataset
 
@@ -474,26 +457,7 @@ The results are the following:
 
 Reranking is a very powerful method which can significantly boost any existing search system. In short, reranking takes a query and a response, and outputs a relevance score between them. In that way, one can use any search system to surface a number of documents that can potentially contain the answer to a query, and then sort them using the Rerank endpoint.
 
-```mermaid
-flowchart LR
-  subgraph DOCS["Documents"]
-    direction TB
-    d1["Document A"]
-    d2["Document B"]
-    d3["Document C"]
-  end
-  subgraph RR["Reranked documents"]
-    direction TB
-    r1["Document B"]
-    r2["Document C"]
-    r3["Document A"]
-  end
-  d1 -. rerank .-> r3
-  d2 -. rerank .-> r1
-  d3 -. rerank .-> r2
-```
-
-*The results from any search system get reranked based on their relevance to the query.*
+![The results from any search system get reranked based on their relevance to the query](figures/rerank-documents.svg)
 
 Remember that the results we obtained for the query "Who was the first person to win two Nobel prizes?" using the `keyword_search` function were the following — **query:** "Who was the first person to win two Nobel prizes?" **Responses:** *Neutrino*, *Western culture*, *Reality television*.
 <!-- pages: 308-309 -->
