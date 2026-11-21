@@ -652,11 +652,7 @@ Opening the box, we see an **encoding component**, a **decoding component** and 
 
 As we've mentioned already, an encoder receives a list of vectors as input. It processes this list by passing these vectors into a "self-attention" layer, then into a feed-forward neural network, then sends out the output upwards to the next encoder.
 
-```mermaid
-flowchart BT
-  E1["Encoder #1"] -- "r1" --> E2["Encoder #2"]
-  E1 -- "r2" --> E2
-```
+![Encoder #1 sends its output vectors r₁, r₂ upwards to encoder #2](figures/encoder-to-encoder.svg)
 
 ## Self-Attention in Detail & in Matrix Form
 <!-- pages: 128-129 -->
@@ -773,15 +769,8 @@ $$Z = \operatorname{Concat}(Z_0, Z_1, \dots, Z_7)\, W^O.$$
 ### Multi-Head Self-Attention in One Picture
 <!-- pages: 143-144 -->
 
-```mermaid
-flowchart LR
-  X["1. Input sentence X (Thinking Machines)"] --> R["2. Embed each word → R *"]
-  R --> H["3. Split into 8 heads: multiply X or R by W_i^Q, W_i^K, W_i^V (i = 0 … 7)"]
-  H --> A["4. Calculate attention using the resulting Q_i / K_i / V_i matrices"]
-  A --> C["5. Concatenate Z_0 … Z_7, multiply by W^O → Z (output of the layer)"]
-```
+![Multi-head self-attention in one picture](figures/multihead-one-picture.svg)
 
-\* In all encoders other than #0, we don't need the embedding: we start directly with the output of the encoder right below this one.
 
 - With multiple attention heads, as we encode the word "it", **one attention head is focusing most on "the animal", while another is focusing on "tired"** — in a sense, the model's representation of the word "it" bakes in some of the representation of both "animal" and "tired".
 

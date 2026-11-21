@@ -1431,6 +1431,59 @@ def multihead_concat():
     _finish(ax, f, "multihead-concat", (0.0, 5.4), (-0.1, 2.85))
 
 
+@fig
+def encoder_to_encoder():
+    """p127: encoder #1 sends its output vectors r1, r2 upwards to encoder #2."""
+    f, ax = plt.subplots(figsize=(3.4, 2.0))
+    _blk(ax, 1.6, 0.3, "Encoder #1", w=2.6, h=0.6)
+    _blk(ax, 1.6, 2.0, "Encoder #2", w=2.6, h=0.6, fc="#fde68a", ec=INK)
+    for x, lab in ((1.0, "$r_1$"), (2.2, "$r_2$")):
+        _cells(ax, x - 0.32, 1.15, fc="#fef3c7")
+        ax.text(x - 0.42, 1.15, lab, ha="right", va="center", fontsize=9)
+        _go(ax, (x, 0.6), (x, 1.03), lw=0.9)
+        _go(ax, (x, 1.27), (x, 1.7), lw=0.9)
+    _finish(ax, f, "encoder-to-encoder", (0.1, 3.1), (-0.05, 2.35))
+
+
+def _stack(ax, x, y, rows, cols, label, cell=0.11, fcs=("#ede9fe", "#fde68a", "#dcfce7")):
+    """Three offset grids (e.g. W^Q, W^K, W^V) drawn as a small stack with one label to the right."""
+    for k in range(3):
+        _mat(ax, x + k * 0.09, y - k * 0.09, rows, cols, cell=cell, fc=fcs[k], ec=INK if k == 1 else ACC)
+    ax.text(x + cols * cell + 0.28, y + rows * cell / 2 - 0.08, label, fontsize=8, va="center")
+
+
+@fig
+def multihead_one_picture():
+    """p143-144: multi-head self-attention in one picture (steps 1-5)."""
+    f, ax = plt.subplots(figsize=(5.2, 6.0))
+    hdr = dict(fontsize=8.5, color=ACC, va="bottom")
+    ax.text(0.0, 7.15, "1) This is our input sentence*", **hdr)
+    _mat(ax, 1.0, 6.35, 2, 4, cell=0.2, label="$X$")
+    ax.text(0.9, 6.55, "Thinking\nMachines", fontsize=7.5, ha="right", va="center")
+    ax.text(3.2, 7.15, "2) We embed each word*", **hdr)
+    _mat(ax, 3.6, 6.35, 2, 4, cell=0.2, fc="#f1f5f9", ec=INK, label="$R$")
+    ax.text(0.0, 5.85, "* In all encoders other than #0, we don't need the embedding: "
+            "we start directly with\n  the output of the encoder right below this one.", fontsize=7, color=MUT)
+    ax.text(0.0, 5.25, "3) Split into 8 heads: multiply\n    X or R with weight matrices", **hdr)
+    ax.text(3.2, 5.25, "4) Calculate attention using\n    the resulting Q / K / V", **hdr)
+    for h, y in ((0, 4.45), (1, 3.55), (7, 2.35)):
+        _stack(ax, 0.5, y, 4, 3, f"$W_{h}^{{Q}},\\ W_{h}^{{K}},\\ W_{h}^{{V}}$")
+        _stack(ax, 3.5, y + 0.15, 2, 3, f"$Q_{h},\\ K_{h},\\ V_{h}$")
+    for x in (0.7, 3.7):
+        ax.text(x, 3.05, "⋮", fontsize=12, ha="center", va="center")
+    ax.text(0.0, 1.6, "5) Concatenate the resulting Z matrices, then multiply with\n"
+            "    weight matrix $W^O$ to produce the output of the layer", **hdr)
+    for k, (h, y) in enumerate(((0, 1.05), (1, 0.6), (7, -0.15))):
+        _mat(ax, 0.5, y, 2, 3, cell=0.12, fc="#fecaca", ec="#dc2626")
+        ax.text(0.95, y + 0.12, f"$Z_{h}$", fontsize=8, va="center")
+        if k == 1:
+            ax.text(0.68, 0.32, "⋮", fontsize=11, ha="center", va="center")
+    _mat(ax, 2.0, -0.2, 10, 4, cell=0.13, fc="#fde68a", ec=INK, label="$W^O$")
+    _go(ax, (2.75, 0.45), (3.25, 0.45))
+    _mat(ax, 3.4, 0.25, 2, 4, cell=0.2, fc="#ede9fe", label="$Z$")
+    _finish(ax, f, "multihead-one-picture", (-0.1, 5.3), (-0.3, 7.6))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:
