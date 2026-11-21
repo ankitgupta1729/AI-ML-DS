@@ -6,17 +6,7 @@
 > **Definition.** "Learning is any process by which a system improves its performance from experience (data)."
 > — Herbert A. Simon (Nobel Prize in Economics & Turing Award winner)
 
-```mermaid
-flowchart LR
-  subgraph STAT["Statistics"]
-    PR["Pattern Recognition"]
-  end
-  subgraph AI["Artificial Intelligence"]
-    ML(("Machine Learning"))
-  end
-  PR -. overlaps .- ML
-  STAT -. overlaps .- AI
-```
+![Machine learning sits inside artificial intelligence and overlaps with statistics and pattern recognition](figures/venn-ml.svg)
 
 - **Machine learning (ML)** is a field of computer science that uses statistical techniques to give computer systems the ability to "learn" (i.e. progressively improve performance on a specific task) with data, without being explicitly programmed.
 - The name "Machine Learning" was coined by **Arthur Samuel**.
@@ -41,11 +31,16 @@ flowchart LR
 
 ### Types of Machine Learning
 
-| Type | Driven by | Typical tasks |
-| --- | --- | --- |
-| Supervised learning | Task driven | Classification, regression |
-| Unsupervised learning | Data driven | Clustering, dimensionality reduction |
-| Reinforcement learning | Learning from mistakes | Actions that maximise reward |
+```mermaid
+flowchart LR
+  ML(("ML")) --> S["Supervised learning<br/><i>task driven</i>"]
+  ML --> U["Unsupervised learning<br/><i>data driven</i>"]
+  ML --> R["Reinforcement learning<br/><i>learn from mistakes</i>"]
+  S --> S1["Classification"]
+  S --> S2["Regression"]
+  U --> U1["Clustering"]
+  U --> U2["Dimensionality reduction"]
+```
 
 - **Terminology.** Data records = examples / instances / cases / samples / observations. Their attributes = variables / features / measurements / dimensions.
 - **Goal.** Learn a classification / regression model $f$ from the data $\{(x_1, y_1), (x_2, y_2), \dots\}$, where each $x_i = (x_{i1}, x_{i2}, x_{i3}, \dots)$, by minimising the prediction error / loss function on the training set; then apply $f$ to a never-seen example $x$ and output the predicted value $y = f(x)$.
@@ -55,6 +50,8 @@ flowchart LR
 ### K-Nearest Neighbours (KNN)
 
 KNN labels a test point $x$ with the class that has the majority of representatives among the neighbours of $x$.
+
+![KNN: the query x and its 6 nearest neighbours — 4 ○ and 2 ●](figures/knn.svg)
 
 *Example:* of the 6 neighbours of the query point, 4 are ○ and 2 are ●, so
 $$P(\circ \mid x) = \tfrac{4}{6}, \qquad P(\bullet \mid x) = \tfrac{2}{6} \;\Rightarrow\; x \text{ is labelled } \circ.$$
@@ -67,9 +64,13 @@ A decision tree is not unique. We want a smaller and accurate tree. Finding the 
 
 Regression fits a **line of regression** through the data points: the dependent variable $Y$ is predicted from the independent variable(s) $X$.
 
+![Data points and the line of regression](figures/regression-line.svg)
+
 **Types of regression:** linear, polynomial, SVM (support vector regression), decision tree, random forest, ridge, lasso and logistic regression.
 
 **Logistic regression** fits an S-curve: the predicted $y$ lies within the range 0 to 1 (between the asymptotes $y = 0$ and $y = 1$).
+
+![The logistic S-curve: the predicted y lies within 0 and 1](figures/sigmoid.svg)
 
 ### Reinforcement Learning
 
@@ -140,6 +141,8 @@ $$\|A\|_F = \sqrt{\sum_{i=1}^{m}\sum_{j=1}^{n} A_{ij}^2} = \sqrt{\operatorname{t
 - There are certain vectors that a matrix cannot rotate — it can only stretch them. These are the **eigenvectors**; eigenvectors are *rotationally invariant*:
 $$A x_e = y = \lambda x_e.$$
 
+![The matrix A rotates a vector x that is not in its column space into the plane spanned by its columns a₁, a₂](figures/column-space.svg)
+
 ### The Regression Problem as Least Squares
 
 We need $m$ and $c$ to find the best-fit line $y = mx + c$. Suppose 3 points lie on this line; then
@@ -171,6 +174,8 @@ $$\boxed{P = A(A^T A)^{-1} A^T}, \qquad P^2 = P.$$
 - $\operatorname{rank}(M)$ = dimensionality of the row / column spaces.
 - **Rank factorisation:** if $\operatorname{rank}(M) = k$ for $M \in \mathbb{R}^{m \times n}$, then $M = \underbrace{C}_{m \times k}\,\underbrace{R}_{k \times n}$ — used in recommender systems.
 
+![Rank factorisation: an m × n matrix of rank k is the product of an m × k and a k × n matrix](figures/rank-factorisation.svg)
+
 ### Inverses, Eigen-Decomposition and SVD
 
 - $M^{-1}M = MM^{-1} = I$; $\;(M^{-1})^{-1} = M$; $\;(M^T)^{-1} = (M^{-1})^T$; $\;(MA)^{-1} = A^{-1}M^{-1}$.
@@ -186,6 +191,8 @@ For $f : \mathbb{R}^n \to \mathbb{R}$, e.g. $f(x) = x_1^2 + x_2^2$, the **gradie
 $$\nabla f = \begin{bmatrix} \partial f / \partial x_1 \\ \partial f / \partial x_2 \\ \vdots \end{bmatrix}.$$
 
 - **Level curves** are curves for which $f(x)$ is constant, e.g. $x_1^2 + x_2^2 = k$ (concentric circles). Contour maps are constant-function curves.
+
+![Level curves of f = x₁² + x₂² and the gradient, normal to the curve](figures/level-curves.svg)
 - The gradient is always **normal to the level curve**, and it points in the direction in which the function is increasing fastest.
 - Useful identities: $\nabla(x^T a) = a$ and $\nabla(x^T A x) = Ax + A^T x$.
 - **First-order optimality condition:** $f'(x^*) = 0$. In a multidimensional system the gradient should vanish, $\nabla f(x^*) = 0$, where $x^*$ is a critical point (local minimum, local maximum or saddle point).
@@ -205,6 +212,8 @@ $$\nabla^2 f(x_1, x_2) = \begin{bmatrix} \dfrac{\partial^2 f}{\partial x_1^2} & 
 - **Convex function.** For $x_3 = \theta x_1 + (1-\theta)x_2$ with $0 \le \theta \le 1$, $f$ is convex if
 $$\theta f(x_1) + (1-\theta) f(x_2) \ge f\big(\theta x_1 + (1-\theta)x_2\big) \qquad \forall \theta \in [0,1],\; \forall x_1, x_2 \in \operatorname{dom} f.$$
   In deep learning, most objective functions are non-convex.
+
+![A convex function lies below the chord joining any two of its points](figures/convex-function.svg)
 - A **convex set** contains the line segment between any 2 points in the set: $x_1, x_2 \in C,\; 0 \le \theta \le 1 \Rightarrow \theta x_1 + (1-\theta)x_2 \in C$.
   - The intersection of convex sets is convex.
   - If $f$ is convex then $-f$ is concave, and vice versa.
@@ -346,14 +355,7 @@ The ensemble makes a wrong prediction only if the majority of the classifiers ma
 
 ### Prediction Error vs Model Complexity
 
-```mermaid
-xychart-beta
-  title "Prediction error vs model complexity (e.g. tree size)"
-  x-axis "Model complexity: low → high" [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  y-axis "Prediction error" 0 --> 10
-  line "Training sample" [9, 7, 5.5, 4.3, 3.4, 2.7, 2.1, 1.6, 1.2]
-  line "Test sample" [9.3, 7.6, 6.2, 5.3, 5.0, 5.3, 6.1, 7.3, 8.8]
-```
+![Prediction error vs model complexity for the training and the test sample; the test error is lowest at m*](figures/bias-variance.svg)
 
 Left of the optimum $m^*$: **high bias, low variance**. Right of it: **low bias, high variance** — the test error rises again.
 
@@ -424,6 +426,8 @@ Learn a function that combines the predictions of the individual classifiers: th
 - The reduced set of features should keep as much information as possible from the original set of features.
 - If the features are correlated, we should extract a set of **uncorrelated features**. The 1st principal component points along the direction of greatest spread of the data; the 2nd principal component is orthogonal to it.
 
+![Correlated data with its 1st and 2nd principal components](figures/pca-components.svg)
+
 ### Derivation of PCA
 
 Let the centre of mass be $m = \frac{1}{n}\sum_{k=1}^{n} x_k$, and define a squared loss function $J_0(x_0) = \sum_{k=1}^{n} \|x_0 - x_k\|^2$.
@@ -431,6 +435,8 @@ Let the centre of mass be $m = \frac{1}{n}\sum_{k=1}^{n} x_k$, and define a squa
 Represent each point by its projection on a line through $m$ with unit direction $e$: $\hat{x}_k = m + \alpha_k e$. The **projection error** for a single point $x_k$,
 $$d = \|x_k - \hat{x}_k\|_2^2 = \|(m + \alpha_k e) - x_k\|_2^2,$$
 should be minimised.
+
+![Projecting xₖ onto the line through m with unit direction e: x̂ₖ = m + αₖe, with projection error d](figures/pca-projection.svg)
 
 For a set of multivariate points:
 $$\begin{aligned}
@@ -468,6 +474,8 @@ $$e^T S e = e^T \lambda e = \lambda\, e^T e = \lambda \quad (\text{so maximising
 - **PCA preserves maximum variance** and **FLD preserves discrimination**.
 - FLD finds the projection that **maximises the scatter between classes** and **minimises the scatter within classes**.
 - PCA finds the most accurate *data representation* in a lower-dimensional space and projects the data in the directions of maximum variance. However, the directions of maximum variance may be useless for classification: two classes that are separable in 2-D can overlap completely after the PCA projection (non-separable).
+
+![Two classes that are separable in 2-D overlap after projection onto the PCA direction, but stay separable on the FLD direction](figures/pca-vs-fld.svg)
 - FLD projects the data to a line which preserves the direction useful for data classification.
 
 ### Projection onto a Line
@@ -510,6 +518,8 @@ $$\boxed{S_W^{-1} S_B v = \lambda v} \quad (S_W^{-1} \text{ must exist, i.e. } S
 - Clustering is a big unsolved problem.
 - The objective is to detect meaningful groups (insights) in data: **intra-cluster distances should be minimised** and **inter-cluster distances maximised**.
 
+![Intra-cluster distances are minimised, inter-cluster distances maximised](figures/clusters.svg)
+
 ### Distance Measures
 
 | Measure | Definition |
@@ -523,6 +533,8 @@ $$\boxed{S_W^{-1} S_B v = \lambda v} \quad (S_W^{-1} \text{ must exist, i.e. } S
 
 1. **Partitional algorithms.**
 2. **Hierarchical algorithms** — e.g. the **dendrogram** (a tree-like structure). There is no need to specify the number of clusters, and it can also be used for outlier detection (a single isolated branch). The similarity between 2 objects in a dendrogram is represented as the height of the lowest internal node they share.
+
+   ![A dendrogram](figures/dendrogram.svg)
    - **Top-down (divisive):** start with all data in a single cluster, consider every possible way to divide the cluster into two, choose the best division and recurse.
    - **Bottom-up (agglomerative):** start with each item in its own cluster, find the best pair to merge into a new cluster, and repeat until all clusters are fused together.
 

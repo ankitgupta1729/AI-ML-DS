@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="247.392pt" height="111.312pt" viewBox="0 0 247.392 111.312" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 111.312 
+L 247.392 111.312 
+L 247.392 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 13.0176 71.0784 
+L 85.5936 71.0784 
+L 85.5936 13.0176 
+L 13.0176 13.0176 
+z
+" clip-path="url(#p41d741dea8)" style="fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 121.8816 71.0784 
+L 147.2832 71.0784 
+L 147.2832 13.0176 
+L 121.8816 13.0176 
+z
+" clip-path="url(#p41d741dea8)" style="fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 161.7984 38.4192 
+L 234.3744 38.4192 
+L 234.3744 13.0176 
+L 161.7984 13.0176 
+z
+" clip-path="url(#p41d741dea8)" style="fill: #ede9fe; stroke: #7c3aed; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="49.3056" y="46.777004" transform="rotate(-0 49.3056 46.777004)">M</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="49.3056" y="80.1504" transform="rotate(-0 49.3056 80.1504)">m × n</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="134.5824" y="46.777004" transform="rotate(-0 134.5824 46.777004)">C</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="134.5824" y="80.1504" transform="rotate(-0 134.5824 80.1504)">m × k</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="198.0864" y="30.447404" transform="rotate(-0 198.0864 30.447404)">R</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="198.0864" y="47.4912" transform="rotate(-0 198.0864 47.4912)">k × n</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 16px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="103.7376" y="47.868313" transform="rotate(-0 103.7376 47.868313)">=</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 18px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #0f172a" x="154.5408" y="32.266252" transform="rotate(-0 154.5408 32.266252)">·</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'Inter', 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="125.5104" y="98.2944" transform="rotate(-0 125.5104 98.2944)">rank factorisation (used in recommender systems)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p41d741dea8">
+   <rect x="5.76" y="5.76" width="235.872" height="99.792"/>
+  </clipPath>
+ </defs>
+</svg>

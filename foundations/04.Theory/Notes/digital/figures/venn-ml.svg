@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 330" font-family="Inter, Arial, sans-serif">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <ellipse cx="210" cy="105" rx="150" ry="85" fill="#fef3c7" fill-opacity=".75" stroke="#d97706" stroke-width="2"/>
+  <ellipse cx="215" cy="135" rx="120" ry="42" fill="#fde68a" fill-opacity=".55" stroke="#b45309" stroke-width="1.6"/>
+  <ellipse cx="210" cy="225" rx="130" ry="92" fill="#ede9fe" fill-opacity=".7" stroke="#7c3aed" stroke-width="2"/>
+  <circle cx="200" cy="200" r="48" fill="#c4b5fd" fill-opacity=".75" stroke="#6d28d9" stroke-width="2"/>
+  <text x="210" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#92400e">Statistics</text>
+  <text x="250" y="122" text-anchor="middle" font-size="13" font-weight="600" fill="#78350f">Pattern Recognition</text>
+  <text x="200" y="210" text-anchor="middle" font-size="15" font-weight="700" fill="#3b0764">ML</text>
+  <text x="300" y="285" text-anchor="middle" font-size="15" font-weight="700" fill="#5b21b6">AI</text>
+</svg>

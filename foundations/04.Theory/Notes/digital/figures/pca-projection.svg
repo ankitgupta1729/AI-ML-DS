@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="275.282113pt" height="128.043434pt" viewBox="0 0 275.282113 128.043434" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 128.043434 
+L 275.282113 128.043434 
+L 275.282113 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 16.412727 110.585096 
+L 229.467273 56.183339 
+" clip-path="url(#p546b4e216f)" style="fill: none; stroke: #64748b; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 177.127818 18.66003 
+L 189.326265 66.433021 
+" clip-path="url(#p546b4e216f)" style="fill: none; stroke-dasharray: 5.18,2.24; stroke-dashoffset: 0; stroke: #f59e0b; stroke-width: 1.4"/>
+   </g>
+   <g id="patch_2">
+    <path d="M 44.440996 103.428304 
+Q 64.241474 98.372412 81.875397 93.869732 
+" style="fill: none; stroke: #7c3aed; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 77.504939 92.921523 
+L 81.875397 93.869732 
+L 78.494555 96.797173 
+z
+" style="fill: #7c3aed; stroke: #7c3aed; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <!-- $e$ -->
+    <g style="fill: #7c3aed" transform="translate(85.981558 107.181447)">
+     <text>
+      <tspan x="0" y="-0.84375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #7c3aed">e</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 44.189626 102.854218 
+Q 109.812847 61.292844 174.302625 20.449318 
+" style="fill: none; stroke: #0f172a; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 169.853245 20.899888 
+L 174.302625 20.449318 
+L 171.993453 24.279165 
+z
+" style="fill: #0f172a; stroke: #0f172a; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="C0_0_19a1b7e119" d="M 0 2.345208 
+C 0.621956 2.345208 1.218523 2.098102 1.658312 1.658312 
+C 2.098102 1.218523 2.345208 0.621956 2.345208 -0 
+C 2.345208 -0.621956 2.098102 -1.218523 1.658312 -1.658312 
+C 1.218523 -2.098102 0.621956 -2.345208 0 -2.345208 
+C -0.621956 -2.345208 -1.218523 -2.098102 -1.658312 -1.658312 
+C -2.098102 -1.218523 -2.345208 -0.621956 -2.345208 0 
+C -2.345208 0.621956 -2.098102 1.218523 -1.658312 1.658312 
+C -1.218523 2.098102 -0.621956 2.345208 0 2.345208 
+z
+"/>
+    </defs>
+    <g clip-path="url(#p546b4e216f)">
+     <use xlink:href="#C0_0_19a1b7e119" x="42.501039" y="103.923656" style="fill: #0f172a; stroke: #0f172a"/>
+    </g>
+    <g clip-path="url(#p546b4e216f)">
+     <use xlink:href="#C0_0_19a1b7e119" x="177.127818" y="18.66003" style="fill: #0f172a; stroke: #0f172a"/>
+    </g>
+    <g clip-path="url(#p546b4e216f)">
+     <use xlink:href="#C0_0_19a1b7e119" x="189.326265" y="66.433021" style="fill: #7c3aed; stroke: #7c3aed"/>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- $m$ -->
+    <g transform="translate(35.7697 119.630114)">
+     <text>
+      <tspan x="0" y="-0.84375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'">m</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_3">
+    <!-- $x_k$ -->
+    <g transform="translate(181.615377 16.41625)">
+     <text>
+      <tspan x="0" y="-0.984375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'">x</tspan>
+      <tspan x="6.509766" y="0.66562" style="font-style: oblique; font-size: 7.7px; font-family: 'DejaVu Sans'">k</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <!-- $\hat{x}_k = m + \alpha_k e$ -->
+    <g style="fill: #7c3aed" transform="translate(191.570045 83.485746)">
+     <text>
+      <tspan x="6.541992" y="-2" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">̂</tspan>
+      <tspan x="12.289062" y="-0.875" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">=</tspan>
+      <tspan x="34.305664" y="-0.875" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">+</tspan>
+      <tspan x="0" y="-0.875" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">x</tspan>
+      <tspan x="22.616211" y="-0.875" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">m</tspan>
+      <tspan x="44.632812" y="-0.875" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">α</tspan>
+      <tspan x="55.551758" y="-0.875" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #7c3aed">e</tspan>
+      <tspan x="6.013672" y="0.624995" style="font-style: oblique; font-size: 7px; font-family: 'DejaVu Sans'; fill: #7c3aed">k</tspan>
+      <tspan x="51.224609" y="0.624995" style="font-style: oblique; font-size: 7px; font-family: 'DejaVu Sans'; fill: #7c3aed">k</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_5">
+    <!-- $d$ (projection error) -->
+    <g style="fill: #b45309" transform="translate(188.612113 42.546525)">
+     <text>
+      <tspan x="0" y="-0.046875" style="font-style: oblique; font-size: 9px; font-family: 'DejaVu Sans'; fill: #b45309">d</tspan>
+      <tspan x="5.712891" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309"> </tspan>
+      <tspan x="8.244141" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">(</tspan>
+      <tspan x="11.526855" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">p</tspan>
+      <tspan x="17.037598" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">r</tspan>
+      <tspan x="20.425781" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">o</tspan>
+      <tspan x="25.822266" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">j</tspan>
+      <tspan x="28.001953" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">e</tspan>
+      <tspan x="33.249023" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">c</tspan>
+      <tspan x="38.390625" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">t</tspan>
+      <tspan x="41.334961" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">i</tspan>
+      <tspan x="43.514648" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">o</tspan>
+      <tspan x="48.911133" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">n</tspan>
+      <tspan x="54.228516" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309"> </tspan>
+      <tspan x="56.759766" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">e</tspan>
+      <tspan x="62.006836" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">r</tspan>
+      <tspan x="65.39502" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">r</tspan>
+      <tspan x="68.783203" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">o</tspan>
+      <tspan x="74.179688" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">r</tspan>
+      <tspan x="77.567871" y="-0.046875" style="font-size: 9px; font-family: 'Inter'; fill: #b45309">)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_6">
+    <!-- $\alpha_k$ -->
+    <g style="fill: #0f172a" transform="translate(106.938534 78.447)">
+     <text>
+      <tspan x="0" y="-0.390625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #0f172a">α</tspan>
+      <tspan x="6.591797" y="1.10937" style="font-style: oblique; font-size: 7px; font-family: 'DejaVu Sans'; fill: #0f172a">k</tspan>
+     </text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p546b4e216f">
+   <rect x="5.76" y="14.063776" width="234.36" height="101.117573"/>
+  </clipPath>
+ </defs>
+</svg>
