@@ -815,6 +815,221 @@ def two_sided_p():
     save(f, "two-sided-p")
 
 
+@fig
+def perfect_fit():
+    """p48: with as many parameters as observations, least squares fits the points exactly."""
+    f, ax = plt.subplots(figsize=(2.2, 1.6))
+    ax.plot([0.25, 0.75], [0.35, 0.7], "o", color=ACC, ms=5)
+    ax.plot([0.0, 1.0], [0.175, 0.875], color=INK, lw=1.4)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    _axes_only(ax, "X", "Y")
+    f.tight_layout()
+    save(f, "perfect-fit")
+
+
+def _vec(ax, x, y, n=3, w=0.22, h=0.18, fc="#ede9fe"):
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x - w / 2, y - n * h / 2), w, n * h, boxstyle="round,pad=0.02", fc=fc, ec=ACC, lw=0.9))
+    for i in range(n):
+        ax.add_patch(plt.Circle((x, y - n * h / 2 + (i + 0.5) * h), h * 0.3, fc="white", ec=ACC, lw=0.6))
+
+
+def _arrow(ax, a, b, color=MUT, lw=0.8, rad=0.0):
+    ax.annotate("", b, a, arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=2, shrinkB=2,
+                                           connectionstyle=f"arc3,rad={rad}"))
+
+
+@fig
+def sentiment_ffn():
+    """p64: feed-forward sentiment classifier: word embeddings -> pooling -> hidden layer -> softmax outputs."""
+    f, ax = plt.subplots(figsize=(6.0, 2.5))
+    words = [("dessert", 1.9), ("was", 1.1), ("great", 0.3)]
+    for w, y in words:
+        ax.text(0.45, y, w, ha="right", va="center", fontsize=9)
+        _arrow(ax, (0.5, y), (0.82, y))
+        _vec(ax, 0.95, y)
+        _arrow(ax, (1.08, y), (1.62, 1.1))
+    ax.text(1.05, -0.35, "embeddings", ha="center", fontsize=8, color=MUT)
+    ax.text(0.4, -0.35, "input words", ha="right", fontsize=8, color=MUT)
+    ax.add_patch(plt.Polygon([(1.65, 1.1), (1.85, 1.3), (2.05, 1.1), (1.85, 0.9)], fc="#fde68a", ec=INK, lw=0.9))
+    ax.text(1.85, 1.1, "+", ha="center", va="center", fontsize=10)
+    ax.text(1.85, 0.62, "pooling\n(max / mean)", ha="center", va="top", fontsize=8, color=MUT)
+    _arrow(ax, (2.06, 1.1), (2.38, 1.1))
+    _vec(ax, 2.5, 1.1)
+    hs = [(3.3, 1.9, "$h_1$"), (3.3, 1.1, "$h_2$"), (3.3, 0.3, "$h_d$")]
+    os_ = [(4.3, 1.9, "$\\hat y_1$", "P(+)"), (4.3, 1.1, "$\\hat y_2$", "P(−)"),
+           (4.3, 0.3, "$\\hat y_3$", "P(neutral)")]
+    for hx, hy, hl in hs:
+        _arrow(ax, (2.63, 1.1), (hx - 0.2, hy))
+        ax.add_patch(plt.Circle((hx, hy), 0.2, fc="#ede9fe", ec=ACC))
+        ax.text(hx, hy, hl, ha="center", va="center", fontsize=9)
+        for ox, oy, _, _ in os_:
+            _arrow(ax, (hx + 0.2, hy), (ox - 0.2, oy), lw=0.6)
+    ax.text(3.3, 0.72, "⋮", ha="center", va="center", fontsize=10)
+    for ox, oy, ol, lab in os_:
+        ax.add_patch(plt.Circle((ox, oy), 0.2, fc="#fde68a", ec=INK))
+        ax.text(ox, oy, ol, ha="center", va="center", fontsize=9)
+        _arrow(ax, (ox + 0.2, oy), (4.75, oy))
+        ax.text(4.8, oy, lab, va="center", fontsize=9)
+    ax.text(3.3, -0.35, "hidden layer", ha="center", fontsize=8, color=MUT)
+    ax.text(4.3, -0.35, "softmax", ha="center", fontsize=8, color=MUT)
+    ax.set_xlim(-0.4, 5.6)
+    ax.set_ylim(-0.5, 2.25)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "sentiment-ffn")
+
+
+@fig
+def markov_chain():
+    """p65: a weather Markov chain over HOT, COLD and WARM with its transition probabilities."""
+    f, ax = plt.subplots(figsize=(4.4, 2.6))
+    pos = {"HOT": (0.0, 0.0), "COLD": (1.6, 1.3), "WARM": (3.2, 0.0)}
+    for k, (x, y) in pos.items():
+        ax.add_patch(plt.Circle((x, y), 0.34, fc="#ede9fe", ec=ACC, lw=1.2, zorder=3))
+        ax.text(x, y, k, ha="center", va="center", fontsize=9, zorder=4)
+    edges = [("HOT", "COLD", "0.1", (0.55, 0.95)), ("COLD", "HOT", "0.1", (1.0, 0.45)),
+             ("HOT", "WARM", "0.3", (1.6, 0.32)), ("WARM", "HOT", "0.3", (1.6, -0.42)),
+             ("COLD", "WARM", "0.1", (2.2, 0.45)), ("WARM", "COLD", "0.1", (2.65, 0.95))]
+    for a, b, lab, (lx, ly) in edges:
+        (x1, y1), (x2, y2) = pos[a], pos[b]
+        d = np.hypot(x2 - x1, y2 - y1)
+        ux, uy = (x2 - x1) / d, (y2 - y1) / d
+        ax.annotate("", (x2 - 0.36 * ux, y2 - 0.36 * uy), (x1 + 0.36 * ux, y1 + 0.36 * uy),
+                    arrowprops=dict(arrowstyle="-|>", color=MUT, lw=1, connectionstyle="arc3,rad=-0.25"))
+        ax.text(lx, ly, lab, ha="center", va="center", fontsize=8.5, color=ACC)
+    for k, lab in (("HOT", "0.6"), ("COLD", "0.8"), ("WARM", "0.6")):
+        x, y = pos[k]
+        ang = {"HOT": 200, "COLD": 90, "WARM": -20}[k]
+        a1, a2 = np.radians(ang - 28), np.radians(ang + 28)
+        start, end = (x + 0.34 * np.cos(a1), y + 0.34 * np.sin(a1)), (x + 0.34 * np.cos(a2), y + 0.34 * np.sin(a2))
+        ax.annotate("", end, start, arrowprops=dict(arrowstyle="-|>", color=MUT, lw=1, connectionstyle="arc3,rad=1.9"))
+        ax.text(x + 0.85 * np.cos(np.radians(ang)), y + 0.85 * np.sin(np.radians(ang)), lab,
+                ha="center", va="center", fontsize=8.5, color=ACC)
+    ax.set_xlim(-1.0, 4.2)
+    ax.set_ylim(-0.75, 2.2)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "markov-chain")
+
+
+def _box(ax, x, y, text, w=0.5, h=0.32, fc="#ede9fe", ec=ACC, fs=9):
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x - w / 2, y - h / 2), w, h, boxstyle="round,pad=0.03", fc=fc, ec=ec, lw=1))
+    ax.text(x, y, text, ha="center", va="center", fontsize=fs)
+
+
+@fig
+def rnn_cell():
+    """p67: a simple RNN (left) and one time step drawn as a feed-forward network (right)."""
+    f, ax = plt.subplots(figsize=(5.6, 2.2))
+    _box(ax, 0, 0, "$x_t$")
+    _box(ax, 0, 1.0, "$h_t$", fc="#fde68a", ec=INK)
+    _box(ax, 0, 2.0, "$y_t$")
+    _arrow(ax, (0, 0.17), (0, 0.83), color=INK, lw=1)
+    _arrow(ax, (0, 1.17), (0, 1.83), color=INK, lw=1)
+    ax.plot([0.27, 0.62, 0.62], [0.92, 0.92, 1.25], color=ACC, lw=1.1)
+    ax.annotate("", (0.15, 1.17), (0.62, 1.25), arrowprops=dict(arrowstyle="-|>", color=ACC, lw=1.1,
+                                                                connectionstyle="arc3,rad=0.3"))
+    ax.text(0.72, 1.0, "U\n(recurrent)", fontsize=7.5, color=ACC, va="center")
+    # unrolled step
+    x0 = 2.6
+    _box(ax, x0, 0, "$h_{t-1}$", w=0.6)
+    _box(ax, x0 + 1.5, 0, "$x_t$")
+    _box(ax, x0 + 1.5, 1.0, "$h_t$", fc="#fde68a", ec=INK)
+    _box(ax, x0 + 1.5, 2.0, "$y_t$")
+    _arrow(ax, (x0 + 0.3, 0.12), (x0 + 1.25, 0.9), color=INK, lw=1)
+    _arrow(ax, (x0 + 1.5, 0.17), (x0 + 1.5, 0.83), color=INK, lw=1)
+    _arrow(ax, (x0 + 1.5, 1.17), (x0 + 1.5, 1.83), color=INK, lw=1)
+    ax.text(x0 + 0.65, 0.6, "U", fontsize=9, color=ACC)
+    ax.text(x0 + 1.6, 0.45, "W", fontsize=9, color=ACC)
+    ax.text(x0 + 1.6, 1.45, "V", fontsize=9, color=ACC)
+    ax.text(x0 + 2.1, 1.0, "$h_t = g(Uh_{t-1} + Wx_t)$\n$y_t = f(Vh_t)$", fontsize=8.5, va="center")
+    ax.set_xlim(-0.5, 6.3)
+    ax.set_ylim(-0.3, 2.3)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "rnn-cell")
+
+
+@fig
+def teacher_forcing():
+    """p67: training an RNN language model with teacher forcing: the correct word is fed at every step."""
+    f, ax = plt.subplots(figsize=(4.6, 2.6))
+    xs = [0, 1.2, 2.4]
+    ins = ["<s>", "So", "long"]
+    tgt = ["So", "long", "and"]
+    ax.add_patch(plt.Rectangle((-0.45, 0.75), 3.3, 0.55, fc="none", ec=MUT, lw=0.8, ls="--"))
+    ax.text(2.95, 1.02, "RNN", fontsize=8, color=MUT, va="center")
+    for i, x in enumerate(xs):
+        _box(ax, x, 0, ins[i], w=0.6)
+        _vec(ax, x, 0.5, n=2, h=0.14)
+        _box(ax, x, 1.02, f"$h_{i + 1}$", w=0.45, fc="#fde68a", ec=INK)
+        _arrow(ax, (x, 0.17), (x, 0.36))
+        _arrow(ax, (x, 0.64), (x, 0.86))
+        _arrow(ax, (x, 1.18), (x, 1.52))
+        _box(ax, x, 1.7, "softmax", w=0.75, fs=8)
+        _arrow(ax, (x, 1.86), (x, 2.12))
+        ax.text(x, 2.25, f"$-\\log\\, y_{{\\mathrm{{{tgt[i]}}}}}$", ha="center", fontsize=8.5)
+        if i:
+            _arrow(ax, (xs[i - 1] + 0.23, 1.02), (x - 0.23, 1.02), color=INK, lw=1)
+    ax.text(-0.75, 0.0, "input", fontsize=7.5, color=MUT, ha="right", va="center")
+    ax.text(-0.75, 2.25, "loss", fontsize=7.5, color=MUT, ha="right", va="center")
+    ax.set_xlim(-1.4, 3.4)
+    ax.set_ylim(-0.3, 2.5)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "teacher-forcing")
+
+
+@fig
+def autoregressive():
+    """p67: autoregressive generation: each sampled word is fed back as the next input."""
+    f, ax = plt.subplots(figsize=(4.6, 2.2))
+    xs = [0, 1.2, 2.4]
+    ins = ["<s>", "So", "long"]
+    outs = ["So", "long", "ago"]
+    for i, x in enumerate(xs):
+        _box(ax, x, 0, ins[i], w=0.6)
+        _box(ax, x, 0.8, "RNN", w=0.6, fc="#fde68a", ec=INK, fs=8)
+        _box(ax, x, 1.6, outs[i], w=0.6, fc="#dcfce7", ec="#16a34a")
+        _arrow(ax, (x, 0.17), (x, 0.63))
+        _arrow(ax, (x, 0.97), (x, 1.43))
+        if i:
+            _arrow(ax, (xs[i - 1] + 0.3, 0.8), (x - 0.3, 0.8), color=INK, lw=1)
+        if i < 2:
+            ax.annotate("", (xs[i + 1] - 0.2, 0.17), (x + 0.3, 1.5),
+                        arrowprops=dict(arrowstyle="-|>", color=ACC, lw=0.9, ls="--", connectionstyle="arc3,rad=-0.2"))
+    ax.text(3.0, 1.6, "sampled word", fontsize=7.5, color=MUT, va="center")
+    ax.set_xlim(-0.5, 3.8)
+    ax.set_ylim(-0.3, 1.9)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "autoregressive")
+
+
+@fig
+def causal_attention():
+    """p68: a causal self-attention layer: each output y_i attends to the inputs x_1..x_i."""
+    f, ax = plt.subplots(figsize=(4.2, 2.3))
+    xs = [0, 1, 2, 3]
+    ax.add_patch(plt.Rectangle((-0.5, 0.75), 4.0, 0.6, fc="#f5f3ff", ec=MUT, lw=0.8, ls="--"))
+    ax.text(-0.6, 1.05, "self-attention\nlayer", ha="right", va="center", fontsize=7.5, color=MUT)
+    for i, x in enumerate(xs):
+        _box(ax, x, 1.05, "", w=0.45, h=0.26, fc="#fde68a", ec=INK)
+        ax.text(x, 0.0, f"$x_{i + 1}$", ha="center", va="center", fontsize=10)
+        ax.text(x, 2.05, f"$y_{i + 1}$", ha="center", va="center", fontsize=10)
+        _arrow(ax, (x, 1.2), (x, 1.9), color=INK, lw=1)
+        for j in range(i + 1):
+            _arrow(ax, (xs[j], 0.15), (x - 0.05 * (i - j), 0.9), color=ACC if j == i else MUT, lw=0.8)
+    ax.set_xlim(-1.6, 3.7)
+    ax.set_ylim(-0.25, 2.25)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    save(f, "causal-attention")
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

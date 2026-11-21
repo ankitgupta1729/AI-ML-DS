@@ -378,6 +378,9 @@ Transform the predictors into $M < p$ linear combinations $Z_m = \sum_{j=1}^{p} 
 ### High-Dimensional Data
 
 - When $p \gg n$ the data is **high-dimensional**, and approaches such as least-squares linear regression are not appropriate in this setting because of high variance (overfitting) — with as many parameters as points, the line passes through every point exactly.
+
+  ![With n = 2 observations and two parameters, the least-squares line fits the data perfectly](figures/perfect-fit.svg)
+
 - Ridge regression, the lasso and PCR are useful in high-dimensional settings.
 - In general, adding additional signal features that are truly associated with the response will improve the fitted model, while adding noise features will not.
 - In the high-dimensional setting, the multicollinearity problem is extreme.

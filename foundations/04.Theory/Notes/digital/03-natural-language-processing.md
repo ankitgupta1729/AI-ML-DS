@@ -342,19 +342,7 @@ $$z^{[1]} = W^{[1]}x + b^{[1]}, \quad z^{[2]} = W^{[2]}z^{[1]} + b^{[2]} = W^{[2
 
 *Example — sentiment classification with pooled embeddings:*
 
-```mermaid
-flowchart LR
-  w1["dessert"] --> e1["embedding"]
-  w2["was"] --> e2["embedding"]
-  w3["great"] --> e3["embedding"]
-  e1 --> P(("pooling (max / mean)"))
-  e2 --> P
-  e3 --> P
-  P --> H["hidden layer h1 … hd"]
-  H --> O1["ŷ1 = P(+)"]
-  H --> O2["ŷ2 = P(−)"]
-  H --> O3["ŷ3 = P(neutral)"]
-```
+![A feed-forward sentiment classifier: word embeddings are pooled, passed through a hidden layer, and a softmax gives P(+), P(−) and P(neutral)](figures/sentiment-ffn.svg)
 
 - Using already-learned weights (an embedding representation from word2vec / GloVe) for the input words is called **pretraining**.
 - Using pretrained embedding representations, whether simple static word embeddings or powerful contextual embeddings, is one of the central ideas of deep learning.
@@ -383,19 +371,7 @@ flowchart LR
 - The HMM is based on augmenting the **Markov chain**. A Markov chain is a model that tells us something about the probabilities of sequences of random variables — *states* — each of which can take on values from some set. These sets can be words, or tags, or symbols representing anything, for example the weather.
 - A Markov chain makes a very strong assumption: if we want to predict the future in the sequence, all that matters is the current state. All the states before the current state have no impact on the future except via the current state. *Example:* to predict tomorrow's weather, only today's weather matters, not yesterday's.
 
-```mermaid
-stateDiagram-v2
-  direction LR
-  HOT --> HOT: 0.6
-  HOT --> COLD: 0.1
-  HOT --> WARM: 0.3
-  COLD --> COLD: 0.8
-  COLD --> HOT: 0.1
-  COLD --> WARM: 0.1
-  WARM --> WARM: 0.6
-  WARM --> HOT: 0.3
-  WARM --> COLD: 0.1
-```
+![A Markov chain for the weather, with the transition probabilities between HOT, COLD and WARM](figures/markov-chain.svg)
 
 - **Start distribution** $\pi = [0.1, 0.7, 0.2]$ — e.g. we most likely start with state 2.
 - **Markov assumption:** the past does not matter, only the present matters:
@@ -439,12 +415,7 @@ Language is a **temporal phenomenon**: we comprehend and produce both spoken and
 - An **RNN** is any network that contains a cycle within its network connections, meaning that the value of some unit is directly or indirectly dependent on its own earlier outputs as inputs.
 - The hidden layer from the previous time step provides a form of memory, or context, that encodes earlier processing and informs the decisions to be made at later points in time.
 
-```mermaid
-flowchart LR
-  X["x_t"] -- W --> H["h_t"]
-  H -- U (recurrent, from h_t−1) --> H
-  H -- V --> Y["y_t"]
-```
+![A simple RNN (left), and one time step drawn as a feed-forward network (right)](figures/rnn-cell.svg)
 
 - Adding the temporal dimension makes RNNs appear to be more complex than non-recurrent architectures, but in reality they are not all that different: we are still performing the standard feed-forward calculation:
 $$h_t = g(U h_{t-1} + W x_t), \qquad y_t = f(V h_t), \quad \text{and so on for } x_1 \dots x_n.$$
@@ -452,9 +423,15 @@ $$h_t = g(U h_{t-1} + W x_t), \qquad y_t = f(V h_t), \quad \text{and so on for }
 $$e_t = E x_t, \qquad h_t = g(U h_{t-1} + W e_t), \qquad y_t = \operatorname{softmax}(V h_t).$$
   Replacing $V$ with $E^T$ is called **weight tying**.
 - Always giving the model the correct history sequence to predict the next word (rather than its own prediction) is called **teacher forcing**. During training, the loss at each step is $-\log y_{\text{correct word}}$ (e.g. $-\log y_{\text{long}}$, then $-\log y_{\text{and}}$, …).
+
+  ![Teacher forcing: at every step the correct previous word is the input, and the loss is −log of the probability of the correct next word](figures/teacher-forcing.svg)
+
 - Today, the approach of using a language model to incrementally generate words by repeatedly sampling the next word, conditioned on the previous choices, is called **autoregressive generation** or **causal LM generation**.
 - An **autoregressive model** is a model that predicts a value at time $t$ based on a linear function of the previous values at times $t-1$, $t-2$, and so on. Although language models are not linear (because they have many layers of non-linearities), we refer to this as autoregressive generation.
 - Autoregressive generation with RNNs (starting from `<s>`, each sampled word is fed back as the next input) is useful in machine translation, summarisation, question answering, etc.
+
+  ![Autoregressive generation: each sampled word is fed back as the next input](figures/autoregressive.svg)
+
 - **Stacked RNN** = the output from one RNN is the input sequence to another RNN. Stacked RNNs generally outperform single-layer networks; the optimal number of stacked RNNs depends on the application and the training set.
 - **Bidirectional RNN** = both a left-to-right and a right-to-left RNN, with their outputs concatenated.
 
@@ -483,21 +460,8 @@ flowchart LR
 
 - A transformer maps sequences of input vectors to sequences of output vectors of the same length. It is a **self-attention model** (causal, or masked, self-attention), and the processing happens **in parallel**.
 
-```mermaid
-flowchart BT
-  x1["x1"] --> y1["y1"]
-  x1 --> y2["y2"]
-  x2["x2"] --> y2
-  x1 --> y3["y3"]
-  x2 --> y3
-  x3["x3"] --> y3
-  x1 --> y4["y4"]
-  x2 --> y4
-  x3 --> y4
-  x4["x4"] --> y4
-```
+![A causal self-attention layer: each output yᵢ attends only to the inputs x₁ … xᵢ, and all positions are processed in parallel](figures/causal-attention.svg)
 
-*Causal self-attention layer: each output $y_i$ attends only to the inputs $x_1 \dots x_i$.*
 
 - **Comparison:** $\operatorname{score}(x_i, x_j) = x_i \cdot x_j$.
 - $\alpha_{ij} = \operatorname{softmax}\big(\operatorname{score}(x_i, x_j)\big) \quad \forall j \le i$.
