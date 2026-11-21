@@ -1653,6 +1653,121 @@ def tn_dominates():
     _finish(ax, f, "tn-dominates", (-0.1, 2.5), (-0.05, 2.0))
 
 
+@fig
+def few_shot_examples():
+    """p206: few-shot classification: labelled example texts (one class marked each) plus unlabelled inputs."""
+    f, ax = plt.subplots(figsize=(4.2, 3.3))
+    rng = np.random.default_rng(3)
+    ax.text(1.6, 4.35, "Text", ha="center", fontsize=8.5, color=MUT)
+    ax.text(3.35, 4.35, "Classes", ha="center", fontsize=8.5, color=MUT)
+    labels = [0] * 5 + [1] * 5 + [2] * 5
+    for i, c in enumerate(labels):
+        y = 4.05 - i * 0.2
+        ax.add_patch(plt.Rectangle((0.7, y - 0.06), rng.uniform(1.2, 1.9), 0.12, fc="#ede9fe", ec=ACC, lw=0.6))
+        for k in range(3):
+            ax.add_patch(plt.Circle((3.1 + k * 0.25, y), 0.07, fc=INK if k == c else "white", ec=INK, lw=0.7))
+    ax.text(0.55, 3.25, "Examples", ha="right", va="center", fontsize=8.5)
+    for i in range(3):
+        y = 0.75 - i * 0.2
+        ax.add_patch(plt.Rectangle((0.7, y - 0.06), rng.uniform(1.2, 1.9), 0.12, fc="#fef3c7", ec=WARM, lw=0.6))
+    ax.text(0.55, 0.55, "Inputs", ha="right", va="center", fontsize=8.5)
+    ax.text(1.6, 0.05, "…", ha="center", fontsize=10)
+    _finish(ax, f, "few-shot-examples", (-0.4, 4.0), (-0.1, 4.55))
+
+
+def _person(ax, x, y, r=0.07, c=INK):
+    ax.add_patch(plt.Circle((x, y + r * 0.9), r * 0.55, fc="white", ec=c, lw=0.8))
+    from matplotlib.patches import Arc
+    ax.add_patch(Arc((x, y - r * 0.55), r * 1.8, r * 1.5, theta1=0, theta2=180, color=c, lw=0.8))
+
+
+def _bot(ax, x, y, r=0.08, c=ACC):
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x - r, y - r * 0.75), 2 * r, 1.5 * r, boxstyle="round,pad=0.01,rounding_size=0.03",
+                                fc="#ede9fe", ec=c, lw=0.8))
+    for dx in (-0.4, 0.4):
+        ax.plot(x + dx * r, y + 0.1 * r, "o", ms=1.4, color=c)
+
+
+def _turn(ax, x, y, w, who, lines=2, fc="white"):
+    """One chat turn inside a card: an icon on the left (person) or right (bot) and a few text lines."""
+    from matplotlib.patches import FancyBboxPatch
+    h = 0.12 + lines * 0.07
+    ax.add_patch(FancyBboxPatch((x, y - h / 2), w, h, boxstyle="round,pad=0.01,rounding_size=0.04", fc=fc,
+                                ec=MUT, lw=0.7))
+    if who == "user":
+        _person(ax, x + 0.13, y)
+        x0, x1 = x + 0.28, x + w - 0.1
+    else:
+        _bot(ax, x + w - 0.14, y)
+        x0, x1 = x + 0.1, x + w - 0.3
+    for k in range(lines):
+        yy = y + (k - (lines - 1) / 2) * 0.07
+        ax.plot([x0, x1 - (0.15 if k == lines - 1 else 0)], [yy, yy], color=ACC2, lw=1.6, solid_capstyle="round")
+    return h
+
+
+@fig
+def chat_message_response():
+    """p230 / p239: a message (prompt) returning a model response."""
+    f, ax = plt.subplots(figsize=(2.6, 1.0))
+    _turn(ax, 0.6, 0.62, 1.7, "user", lines=1)
+    _turn(ax, 0.6, 0.22, 1.7, "bot", lines=2)
+    ax.text(0.5, 0.62, "Message", ha="right", va="center", fontsize=7.5)
+    ax.text(0.5, 0.22, "Response", ha="right", va="center", fontsize=7.5)
+    _finish(ax, f, "chat-message-response", (-0.15, 2.4), (-0.02, 0.8))
+
+
+@fig
+def chat_no_memory():
+    """p230-231: a baseline LLM's context is limited to the last message: each interaction stands alone."""
+    f, ax = plt.subplots(figsize=(2.6, 2.2))
+    for i in range(3):
+        y = 2.0 - i * 0.75
+        from matplotlib.patches import FancyBboxPatch
+        ax.add_patch(FancyBboxPatch((0.35, y - 0.55), 1.9, 0.6, boxstyle="round,pad=0.02,rounding_size=0.06",
+                                    fc="#f8fafc", ec=MUT, lw=0.8))
+        _turn(ax, 0.45, y - 0.08, 1.7, "user", lines=1)
+        _turn(ax, 0.45, y - 0.38, 1.7, "bot", lines=1)
+        ax.text(0.28, y - 0.25, f"{i + 1}", ha="right", va="center", fontsize=8, color=MUT)
+    ax.text(2.35, 1.05, "no memory\nbetween\ninteractions", fontsize=7, color="#dc2626", va="center")
+    _finish(ax, f, "chat-no-memory", (0.0, 3.0), (-0.12, 2.1))
+
+
+@fig
+def chat_endpoint():
+    """p237: the Chat endpoint: preamble management, multi-turn conversation and state management."""
+    from matplotlib.patches import FancyBboxPatch
+    f, ax = plt.subplots(figsize=(3.8, 2.6))
+    ax.add_patch(FancyBboxPatch((1.0, 0.1), 1.8, 2.3, boxstyle="round,pad=0.03,rounding_size=0.1", fc="#f8fafc",
+                                ec=ACC, lw=1.0))
+    _blk(ax, 1.9, 2.2, "Preamble", w=1.5, h=0.22, fc="#fef3c7", ec=WARM, fs=7.5)
+    y = 1.9
+    for who, ln in (("user", 1), ("bot", 2), ("user", 1), ("bot", 2), ("user", 1), ("bot", 2)):
+        h = _turn(ax, 1.15, y, 1.5, who, lines=ln)
+        y -= h + 0.08
+    ax.text(0.9, 1.2, "Multi-turn\nconversation", ha="right", va="center", fontsize=8)
+    ax.text(2.95, 1.6, "State\nmanagement", ha="left", va="center", fontsize=8)
+    ax.text(0.9, 2.2, "Preamble\nmanagement", ha="right", va="center", fontsize=8)
+    _go(ax, (0.92, 1.2), (1.1, 1.2), color=MUT, lw=0.8)
+    _go(ax, (2.93, 1.6), (2.75, 1.6), color=MUT, lw=0.8)
+    _go(ax, (0.92, 2.2), (1.12, 2.2), color=MUT, lw=0.8)
+    _finish(ax, f, "chat-endpoint", (-0.3, 3.9), (0.0, 2.5))
+
+
+@fig
+def chat_preamble():
+    """p240: the preamble and the current user message form the prompt to the chatbot."""
+    f, ax = plt.subplots(figsize=(2.8, 1.35))
+    _blk(ax, 1.45, 0.98, "Preamble", w=1.7, h=0.24, fc="#fef3c7", ec=WARM, fs=7.5)
+    _turn(ax, 0.6, 0.67, 1.7, "user", lines=1)
+    _turn(ax, 0.6, 0.22, 1.7, "bot", lines=2)
+    ax.plot([0.5, 0.45, 0.45, 0.5], [1.1, 1.1, 0.57, 0.57], color=INK, lw=0.8)
+    ax.text(0.4, 0.84, "Prompt", ha="right", va="center", fontsize=7.5)
+    ax.text(0.4, 0.22, "Response", ha="right", va="center", fontsize=7.5)
+    _finish(ax, f, "chat-preamble", (-0.25, 2.4), (-0.02, 1.15))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for fn in FIGS:

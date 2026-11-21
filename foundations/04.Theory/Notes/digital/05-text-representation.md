@@ -276,12 +276,7 @@ co = cohere.Client("COHERE_API_KEY")
 - **Inputs**
   - These are the list of text pieces you'd like to classify.
 
-```mermaid
-flowchart LR
-  E["Examples: text + class (● = the labelled class)"] --> C["Classify endpoint"]
-  I["Inputs: texts to classify"] --> C
-  C --> P["Predicted class for each input"]
-```
+![Few-shot classification: a handful of labelled examples per class (● marks the class) and the input texts to classify](figures/few-shot-examples.svg)
 
 Our sentiment-analysis classifier has **3 classes with 5 examples each**: "Positive" for a positive sentiment, "Negative" for a negative sentiment and "Neutral" for a neutral sentiment. The code looks as follows:
 

@@ -36,32 +36,12 @@
 
 - This type of model is tuned to follow instructions and questions, such as "Write a headline for my homemade jewellery product" or "What is the capital of Canada?".
 
-```mermaid
-flowchart TB
-  M["👤 Message (prompt)"] --> R["🤖 Response"]
-```
-
-*A message or prompt returning a model response.*
+![A message, or prompt, returning a model response](figures/chat-message-response.svg)
 
 - However, **the LLM's context is limited to only the last message it receives**, and it does not consider any previous messages and responses.
 - Yet chatbots are characterised by their ability to maintain a conversation with a user, which takes place over multiple interactions.
 
-```mermaid
-flowchart TB
-  subgraph I1["Interaction 1"]
-    m1["👤 message"] --> r1["🤖 response"]
-  end
-  subgraph I2["Interaction 2"]
-    m2["👤 message"] --> r2["🤖 response"]
-  end
-  subgraph I3["Interaction 3"]
-    m3["👤 message"] --> r3["🤖 response"]
-  end
-  I1 -. "✗ no memory" .- I2
-  I2 -. "✗ no memory" .- I3
-```
-
-*A baseline LLM's context is limited to only the last message it receives.*
+![A baseline LLM's context is limited to only the last message it receives](figures/chat-no-memory.svg)
 
 - The goal of a chatbot is to solve this problem by **linking a sequence of interactions into a single instance**, allowing the chatbot to hold an ongoing conversation. In doing so, the model's response can keep a memory of all the previous interactions instead of having to start from scratch every time.
 
@@ -95,17 +75,7 @@ flowchart TB
 - **State management:** state management preserves the conversation memory. Developers can either leverage the endpoint's conversation-history persistence feature or manage the conversation history themselves.
 - **Fully-managed conversation:** the abstraction layer of the Chat endpoint means there's only one item to send to the API: the user message. Everything else is managed automatically. At the same time, developers who want greater control over a chatbot's configuration can still do so.
 
-```mermaid
-flowchart LR
-  subgraph CE["Chat endpoint"]
-    direction TB
-    P["Preamble"] --> T1["👤 message → 🤖 response"] --> T2["👤 message → 🤖 response"] --> T3["👤 message → 🤖 response …"]
-  end
-  MT["Multi-turn conversation"] -.- CE
-  SM["State management"] -.- CE
-```
-
-*The Chat endpoint takes care of the underlying logic, exposing a simple interface for developers.*
+![The Chat endpoint takes care of the underlying logic — preamble management, multi-turn conversation and state management — exposing a simple interface for developers](figures/chat-endpoint.svg)
 
 - Cohere's Command model and Chat endpoint offer powerful tools for developers looking to harness the potential of LLMs in their applications. Command's capabilities, coupled with the Chat endpoint's developer-friendly interface, allow developers to build text-generation applications across diverse business applications.
 
@@ -126,12 +96,7 @@ co = cohere.Client("COHERE_API_KEY")
 
 - At its most basic, we only need to pass to the Chat endpoint the user message using the `message` parameter — the only required parameter for the endpoint.
 
-```mermaid
-flowchart TB
-  M["👤 Message"] --> R["🤖 Response"]
-```
-
-*At its most basic, the endpoint takes a user message and generates a response.*
+![At its most basic, the endpoint takes a user message and generates a response](figures/chat-message-response.svg)
 
 - Here's an example. We call the endpoint with "Hello" as the user message. In our case, we also use the `model` parameter to specify the underlying chat model we want to use. For this, we pick **Command R+**, Cohere's newest LLM.
 - Right now, we're interested in the main content of the response, which is stored in the `text` value of the response:
@@ -152,16 +117,7 @@ Hello! How can I help you today?
 
 **Step 2 — Defining a preamble.** A conversation starts with a system message, or a **preamble**, to help steer a chatbot's response toward certain characteristics. For example, if we want the chatbot to adopt a formal style, the preamble can be used to encourage the generation of more business-like and professional responses.
 
-```mermaid
-flowchart TB
-  subgraph PR["Prompt"]
-    direction TB
-    P["Preamble"] --> M["👤 Current user message"]
-  end
-  PR --> R["🤖 Response"]
-```
-
-*The preamble and the current user message form the prompt to the chatbot.*
+![The preamble and the current user message form the prompt to the chatbot](figures/chat-preamble.svg)
 
 - In the quickstart example, we didn't have to define a preamble because a default one was used. We can, however, define our own preamble using the `preamble` parameter.
 - Here's an example. We added a preamble telling the chatbot to assume the persona of an expert public-speaking coach. As a result, we get a response that adopts that persona:
