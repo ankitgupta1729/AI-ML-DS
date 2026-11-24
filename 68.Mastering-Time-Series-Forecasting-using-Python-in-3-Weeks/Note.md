@@ -1012,9 +1012,6 @@ See the code [here](./3.ipynb)
 
 ![74.png](./images/74.png)
 ![75.png](./images/75.png)
-![76.png](./images/76.png)
-![77.png](./images/77.png)
-![78.png](./images/78.png)
 
 Hello, guys. Hope you are doing well in this lecture. We will talk about Time series visualisations means we will see how to visualize. the time series data. Generally, there are four kinds of data visualization techniques for time series data. One is the line plot, second one is the area plot, then the bar plot, and finally, the heat maps. So these are the four kinds of data visualization charts that are commonly used for time series analysis. So let's look into one by one and how to visualize the times it is data and python.
 
@@ -1046,6 +1043,8 @@ Yes, I'm having the sales and the notebook files and data with me. Correct. So t
 4. Load the Data
 ================
 
+See the code [here](./3.ipynb)
+
 All right, guys. Welcome back again. Let's see how to load our data in order to load the data. First and foremost thing, what we need to do here is that we need to import few libraries. So before that, what I'll do here, I'll insert the text and I will write down here saying that let's add three hashes and let's say this is the loading the time series data or let's load the data. So now let's see how to load the data. So in order to load the data, let me do one thing.
 
 Let me minimize all this things so that I can see a nice view of my Colab notebook. So let's import all the libraries. So basically we need to import the three four libraries. One is numerical Python, second one is pandas as pd, and third one is matplotlib. Apart from that, I need to import one more important library, that is seaborn. So import seaborn as sns. Just execute all these commands and you have now imported all the libraries successfully.
@@ -1060,6 +1059,8 @@ You need to change that data type into datetime64. If it is not in datetime64, y
 
 5. Line Chart
 =============
+
+See the code [here](./3.ipynb)
 
 All right, so what we will do is that we will start by plotting our data. All right, so let's see. The first kind of plot is a line plot; the line plot is basically used for any kind of time series data. So the x axis for the line plot is years and the y axis is the sales. I'll explain to you two methods of doing the line plot. First I will use seaborn here. So let's use seaborn and do the line plot in seaborn: sns.
 
@@ -1081,6 +1082,8 @@ So this is how you can visualize the line plot using seaborn as well as using th
 
 6. Hue the Line Chart
 =====================
+
+See the code [here](./3.ipynb)
 
 All right, let's do some kind of things and make our line plot much more beautiful. So what we will do is that now I will try to pre-process my data. So let's go back to my data. So this is the data I have with me. I have not used it here for now; I'm going to use what is in the data. So I'm having the years and the sales with me. So what I'll do: I'll create two more columns. One is with the year, and second one is with the quarter.
 
@@ -1105,6 +1108,8 @@ So we are going to see all those things in these upcoming videos.
 7. Area Chart
 =============
 
+See the code [here](./3.ipynb)
+
 Hey, guys, welcome back. Now let's look into one more kind of plot, that is the area plot. So I'll create one text cell now and just mention it as area plot. Now, let's look into the area plot, and we will eventually see a different way of doing the area plot when we are doing the stacked plot. At the moment, I will just show you how to do the area plot. So let me take the same data, whatever I'm having with me.
 
 So in order to do the area plot, what you need to do is set the index. And remember one thing: we don't have the area plot in seaborn, so we make use of the functionality in pandas to do these things. I'm already having df1 with me, which already has the index set. So I will do the plotting here with kind of plot; we already saw the line plot with kind equal to line, and this is what we already did here. Instead, if in the place of line you specify area, what you'll get is the area plot. It is a powerful way of visualizing.
@@ -1117,6 +1122,8 @@ So we are going to see all those things in these upcoming videos.
 
 8. Bar Plot
 ===========
+
+See the code [here](./3.ipynb)
 
 OK, let's do one thing: let's put one text cell with four hashes, and let me name it as bar plot. So in order to do the bar plot, we need to do some kind of pre-processing or some kind of transformation in our data. So let's look at df here. What we have here is sales and also the year values and the quarters. So in order to do the bar plot, in order to visualize the bar plot, let's do one thing, the basic way of visualizing the bar plot. And remember, the bar plot will be used only for categorical data, for example the year, or the quarter.
 
@@ -1140,6 +1147,8 @@ So we are going to see all those things in these upcoming videos.
 
 9. Proposition and Stacked Bar, Area Chart
 ==========================================
+
+See the code [here](./3.ipynb)
 
 Hello, guys, welcome back. Let's see how to do the stacked bar plot. In the previous lecture, we saw how to draw the bar plot for time series data. So now let's see the stacked bar plots. Let's look into our data. This is the data which is there with me, and what I need to do here is add a text cell with four hashes, mention stacked bar plot here, and let's see how to do the stacked bar plot.
 
@@ -1178,6 +1187,8 @@ So that's it, guys. This is about the bar plot, and in the next lecture we will 
 10. Heatmaps
 ============
 
+See the code [here](./3.ipynb)
+
 Hello, guys, welcome back. In the last lecture we saw how to do the bar plot. Now let's look into heat maps. We already have the data for the heat map, which is already prepared. So we will put a hash and heat map. We have the data, df_sales. The data is already available with me, and we will make use of the data and do the heat maps. So sns.heatmap: use heatmap and specify the data df_sales. And what you can see here is a nice heat map has been drawn: the lower the value, the darker, and the higher the value, the lighter here.
 
 And you can also increase the size. Let's say plt.figure with figsize; let's increase to ten comma eight. So this makes it a bigger one. And also let's put some values here by putting annot is equal to True. If I specify annot is equal to True, I'm getting those values in the scientific notation. So let's change the format: fmt is equal to .0f. So I'm getting the float values without the decimal point. This is perfect, and let me change the color map to what I want.
@@ -1192,6 +1203,27 @@ data, like line, area, bar plots, stacked bar plots, and finally the heat maps. 
 
 2. Intuition of Linear Regression
 =================================
+
+![76.png](./images/76.png)
+![77.png](./images/77.png)
+![78.png](./images/78.png)
+![79.png](./images/79.png)
+![80.png](./images/80.png)
+![81.png](./images/81.png)
+![82.png](./images/82.png)
+![83.png](./images/83.png)
+![84.png](./images/84.png)
+![85.png](./images/85.png)
+![86.png](./images/86.png)
+![87.png](./images/87.png)
+![88.png](./images/88.png)
+![89.png](./images/89.png)
+![90.png](./images/90.png)
+![91.png](./images/91.png)
+![92.png](./images/92.png)
+![93.png](./images/93.png)
+![94.png](./images/94.png)
+
 
 Hello, everyone, welcome to this module on simple linear regression and in this lecture, we will talk about the intuition behind the linear regression. Linear regression is one of linear regression is one of the machine learning model that is used to predict the continuous values. OK, what is the significance of a machine learning model? Why do we need to build the model? In any given scenario, there are easy-to-measure parameters and hard-to-measure parameters, that is, difficult-to-measure parameters. The examples of easy to measure parameters are age, gender, income, education level, etc.
 
@@ -1224,6 +1256,12 @@ So in the next lecture, what we will see is that we will code the linear regress
 3. Exploratory Data Analysis
 ============================
 
+![95.png](./images/95.png)
+![96.png](./images/96.png)
+![97.png](./images/97.png)
+![98.png](./images/98.png)
+![99.png](./images/99.png)
+
 Hello, everyone, welcome back. And this lecture, we will talk about exploratory data analysis. Exploratory data analysis is a very important technique before building any regression model or any machine learning model. And we will try to analyze the data in two ways. One is the quantitative technique, and second one is the graphical technique. And quantitative technique we use in quantitative technique. The goal is to measure the central tendency and the measure of spread of the data and central tendencies, we will calculate mean, median, mode, or the averages.
 
 And in the measure of spread, we will use variance, standard deviation and interquartile range to analyze the data. And graphical method, the goal is to visualize the data. There are many kinds of visualizations we will use. The main goal of the visualization is to identify the pattern in the data. So there are many kinds of visualizations like histograms, scatter plot, box plot, pie chart, heat map, line plots, and there are many more kinds of visualizations or being there.
@@ -1232,6 +1270,8 @@ The primary goal of the visualization is to identify the pattern and the behavio
 
 4. EDA - Quantitative Technique
 ===============================
+
+See the code [here](./4.ipynb) 
 
 Hey, guys, now let's see how to do the exploratory data analysis, that is quantitative technique and python. OK, now I'm in the Google Drive and let's create the Colab, and in the Colab, we will see how to do the exploratory data analysis in Python. So in order to do that, let's right-click, More, and click on Google Colaboratory. OK, I'm in this folder, so the first step, what I need to do here is set the path. So my path is My Drive and complete time series.
 
@@ -1268,6 +1308,8 @@ So the interquartile range means, say, the middle 50 percent of the data, and it
 5. EDA - Graphical Technique
 ============================
 
+See the code [here](./4.ipynb) 
+
 Hey, guys, welcome back. In this lecture, we will see how to do the exploratory data analysis using the graphical technique in Python. In the previous lecture, we saw how to do the quantitative technique in Python. Now let's see the graphical technique in Python. It depends on the data: for different data, different kinds of graphs or different kinds of plotting will be used. OK, let's see the graphical method. The data we have is only numerical in nature.
 
 So the most widely used plot for numerical data is the scatter plot; you can also use the box plot and the histogram to analyze the distribution of X and the distribution of Y. Since we have already seen the measure of spread and the central tendencies, I think it is good to start with a distribution plot. So in order to plot the distribution, we can use sns.distplot, which will give you the distribution of X and Y. To get the distribution of X, we need to pass df.X; if I call df.X, what I'll get is the X column.
@@ -1292,6 +1334,8 @@ So this is the graphical technique in EDA. In the next video, we will see how to
 
 6. Simple Linear Regression - Python
 ====================================
+
+See the code [here](./4.ipynb)
 
 Hello, everyone, welcome back. In the previous lecture, we talked about exploratory data analysis: the quantitative approach, and also we looked into the graphical approach. Now, in this lecture, we will talk about the manual computation of linear regression. So we will build a linear regression manually. All right, in the previous lecture, we talked about the graphical approach and also the quantitative approach. We looked into the variance of the data, and we saw the variance of X is small compared to the variance of Y.
 
@@ -1334,6 +1378,8 @@ This is how you can build a simple linear regression manually without using any 
 7. Simple Linear Regression - Sklearn (Python)
 ==============================================
 
+See the code [here](./4.ipynb) 
+
 Hey, guys, now let's see linear regression with sklearn. sklearn is one of the most popular machine learning frameworks in Python. It's widely used for almost all the machine learning algorithms, and every functionality is there. So now let's see how to use it to build a simple linear regression. All right, so in the previous lecture, what we have seen is that we calculated manually the intercept and also the coefficient of the line.
 
 So it's a simple analogy: we have the equation y_hat = A + BX. So now let's see, with the help of a library, how to build the simple linear regression. So what I'll do here is take the simple linear regression now using sklearn: linear regression with sklearn. scikit-learn is the most popular framework for machine learning. OK, so from sklearn.linear_model, I need to import LinearRegression. All right. So LinearRegression is object-oriented programming, where all the functionality is inside the LinearRegression class.
@@ -1364,6 +1410,8 @@ Thank you very much.
 
 8. Simple Linear Regression - Statsmodels (Python)
 ==================================================
+
+See the code [here](./4.ipynb) 
 
 Hey, guys, now let's see how to build a linear regression with statsmodels. statsmodels is also one of the most popular machine learning frameworks, especially to build statistical models. So let's see now how to build a model in statsmodels. OK, so I'll create a text cell now: linear regression with statsmodels. OK, so in order to do the linear regression in statsmodels, it is defined as the ordinary least squares regression, also popularly known as OLS.
 
@@ -1398,6 +1446,17 @@ And also, we talk about the distribution and analysis of variance for the model 
 9. Model Evaluation - R^2, ANOVA
 ================================
 
+![100.png](./images/100.png)
+![101.png](./images/101.png)
+![102.png](./images/102.png)
+![103.png](./images/103.png)
+![104.png](./images/104.png)
+![105.png](./images/105.png)
+![106.png](./images/106.png)
+![107.png](./images/107.png)
+![108.png](./images/108.png)
+![109.png](./images/109.png)
+
 Hey, guys, welcome back. In this lecture, we'll see how to evaluate your linear regression. So let's see, step by step, what we have done. We have the data, and this is the scatter plot for my data: X is the independent variable and Y is the dependent variable, and this is the scatter plot we have, with respect to X how my Y keeps on varying. Now, the samples we have are all the true samples, represented with the circles, and the variance of the true samples is represented by the sum of squared total.
 
 SST indicates the total variance in the true samples. So how to calculate that? SST is the sum of Y minus Y bar, the whole square, which represents the total. And if you really want to calculate the variance, you divide it by the number of samples; that internally talks about the variance of the data. And next, what we did is we built the model, and by building the model we calculated the predicted values. So these are all the predicted values; these red samples are the predicted samples.
@@ -1416,6 +1475,8 @@ Thank you very much.
 
 10. Model Evaluation - Python
 =============================
+
+See the code [here](./4.ipynb) 
 
 Hey, guys, now let's see how to evaluate a linear regression in Python. All right, now let's see how to evaluate this model. As you can see, you can take whichever model you want, because the results are more or less the same. So what I want to see here is how good my model is and how good my results are. What I can do here is test my model with parameters like mean squared error and R-squared. So, model evaluation: what I'm looking at here is SST, sum of squared total; SSR, sum of squared regression; and SSE, sum of squared error.
 
@@ -1450,6 +1511,17 @@ So that's it. This is how you can build a simple linear regression. In the next 
 1. Regression with Time
 =======================
 
+![110.png](./images/110.png)
+![111.png](./images/111.png)
+![112.png](./images/112.png)
+![113.png](./images/113.png)
+![114.png](./images/114.png)
+![115.png](./images/115.png)
+![116.png](./images/116.png)
+![117.png](./images/117.png)
+![118.png](./images/118.png)
+
+
 Hey, guys, welcome to this module on forecasting time series data with a regression model. In the previous module, we have seen how to train a regression model with the data that was provided. In order to train on time series data, the regression model is actually a function of time. So in this case, we take the time, and with the time we are going to predict the future. So on the x axis, the independent variable, what we have is time. And the dependent variable is the thing you want to predict, like the sales or whatever you want to predict.
 
 So we can predict that value. Let us consider the data here. In this case, you can see I'm having data for years, and also the respective sales. OK, the years are actually the independent variable, and based upon the year, we are going to predict the future sales. If I draw the scatter plot for that, this is how the scatter plot looks, and what I did here is that I joined each and every data point and got a line plot. On the x axis,
@@ -1466,6 +1538,8 @@ So this represents the margin of error and the confidence interval, and the conf
 
 3. Data Preprocessing in Python
 ===============================
+
+See the code [here](./5.ipynb)
 
 Hey, guys, welcome back. In this lecture, we will see how to do the forecasting with regression. I am in the Google Drive now, and this is the data I'm having: some sales data with me. This is the sales data; let me open it. Yes. So I'm having the years with me and also the sales with me. So everything is there. What I want to do here is fit a line, the linear regression, for the years and the sales.
 
@@ -1504,6 +1578,8 @@ this is February, March, April, May and so on. You can see the months keep on re
 4. Splitting Data into Training and Testing Sets in Python
 ==========================================================
 
+See the code [here](./5.ipynb)
+
 Hey, guys, welcome back. And now let's see how to build the linear regression. What we have here is that I'm having the time with me and I'm having the sales data with me. So this time is my independent variable and the sales is my dependent variable. We will use the month later on in these modules; at the moment, we will build a simple linear regression, where X is my time and the sales is my Y. So let's do that. What I'll do here is split the data into independent and dependent.
 
 OK, there is a small thing I need to add here before splitting the data into independent and dependent. Step number one is basically that I will split the data into train and test, because ultimately I want to test my model, how good my model is. In order to test that, I need to split the data into training and testing, because I want to predict the future values, and predicting the future values is always difficult.
@@ -1525,6 +1601,8 @@ So that's it. So similarly, let's do it for y: y is df_train, and what I want to
 5. Train Regression Model with Time in Python
 =============================================
 
+See the code [here](./5.ipynb)
+
 So what I'll do here is the linear regression with respect to time. So what is linear regression with time? Basically, linear regression will actually give you a straight line, and this straight line you can represent as the trend in the data. So we are actually calculating the trend in the data. So to do that, let's quickly do: from sklearn.linear_model import LinearRegression.
 
 Now execute. model_trend, this trend model, is equal to LinearRegression(). And let me fit the model: model_trend.fit, and what do you want to fit? It is X_train comma y_train; that is what you actually want to fit here. Execute. The model has been trained successfully. So what we do here is take the fitted values. Let me do the fitted values: it is model_trend, which is my predictor:
@@ -1535,6 +1613,8 @@ So instead of X_train, I'll take it as X_test, and y_test. So this is my X_test 
 
 6. Forecasting with Confidence Interval and Visualizations in Python
 ====================================================================
+
+See the code [here](./5.ipynb)
 
 Now, what we will do is visualize our data. Of course, we should have done it at first, but since we already saw the data in the previous lecture, in the previous slides, I'm not going into that. So now let's visualize the data here, because I'll put everything into one place for visualization. Basically, we need to do this immediately after step one, splitting the data into train and test.
 
@@ -1599,6 +1679,19 @@ All right. This is how you are able to predict using simple linear regression. T
 1. Additive Model
 =================
 
+![119.png](./images/119.png)
+![120.png](./images/120.png)
+![121.png](./images/121.png)
+![122.png](./images/122.png)
+![123.png](./images/123.png)
+![124.png](./images/124.png)
+![125.png](./images/125.png)
+![126.png](./images/126.png)
+![127.png](./images/127.png)
+![128.png](./images/128.png)
+![129.png](./images/129.png)
+
+
 Hey, guys, welcome back to time series forecasting with regression. In this lecture, we will talk about the additive model for forecasting, which is simple: we are adding up the seasonalities. So let's look at the observations we made in the previous lecture. In the previous lecture, we simply built a linear regression to forecast the future, and we also built that in Python. And one thing we observed in building the linear regression is that it only draws the trend line, but did not capture any seasonality effect.
 
 OK, let's take a closer look into the seasonality part. If you look into the data, whatever data you have, if you observe the data, it has some kind of seasonality. Seasonality in the sense that the pattern is repeated. This pattern is repeated: you can see here, from here the pattern is repeated, and again, the pattern is repeated. It may not be an exact match, but at least you can see something like an 80 percent match in the pattern, and it is repeated from 2001 to 2002.
@@ -1630,6 +1723,8 @@ So this is all about additive modeling and forecasting with additive modeling. I
 3. Data Analysis in Python
 ==========================
 
+See the code[here](./5.ipynb)
+
 Hey, guys, now let's see how to do the forecasting with the additive model in Python. All right. In the previous lecture, we talked about the simple linear regression, and this is the output we got. You can see this is the output, and the fit is just simple linear. And also the forecast is just an extension of this line. And whatever filled part you can see, this part is basically the confidence interval, or margin of error.
 
 Now, let's see how to build the additive model. This is the data we're interested in. So we will take the train data and the test data; we already used them. We will take this train data and the test data, and for this train data and test data, we will do the regression, the additive modeling. All right. So let's get ready. Click on this text and type additive model. The additive model is basically adding up the seasonalities.
@@ -1659,6 +1754,8 @@ So in this case, my seasonality is 12. OK, so from these observations, my season
 4. Creating Seasonal Features
 =============================
 
+See the code[here](./5.ipynb)
+
 All right, so what do we do now? Let's take this data, df_train; this is my train data. Yes, df_train, this is my train data, and let me take this month name. OK, let me take this month name and create dummies: pd.get_dummies. If you use this and just look at the top lines, you can see this is how the dummies look. This is how the dummies work. All right.
 
 And you can see April, August, December and so on. Just be careful: there should be 11 dummies, so we need to drop any one. There is an option, drop_first, which drops the first one. But you can also drop on your own: you can drop by dropping any column; you can just drop it. So I just do drop_first equal to True. And what you get is that April is gone. So you have, starting from August, December, February and so on.
@@ -1671,6 +1768,8 @@ So we do this on the test, and this is my test1, df_test1, and copy, and so on. 
 
 5. Splitting Data into Training and Testing Sets
 ================================================
+
+See the code[here](./5.ipynb)
 
 All right, we got the train as well as the test data. So what we will do is split the data into two parts, training and testing; we split the data of train and test into independent and dependent. All right. The first thing: what are the columns for the independent? The columns for the independent are time, and August, December and so on; all of these. So what I'll do is just take all the values.
 
@@ -1689,12 +1788,16 @@ All right, so execute it: we have 48 entries in train and twenty four entries in
 6. Training Additive Model in Statsmodels
 =========================================
 
+See the code[here](./5.ipynb)
+
 So now what we have to do is build the additive model; we will build the additive model using linear regression. I use linear regression again to build the model right now. So just import: from sklearn.linear_model import LinearRegression, since we are using linear regression for this model. So model_additive is again LinearRegression(). And let's build the model: model_additive.fit, with X_train_additive
 
 and y_train_additive. So that's it. If you do this, you can train your model successfully. Perfect. So we have trained our model successfully.
 
 7. Additive Model Forecasting and Visualizations
 ================================================
+
+See the code[here](./5.ipynb)
 
 So perfect. So what we will do now is test the model; let's get the fitted values. OK, let's get the fitted values: y_fitted_values_additive. How to do this? Basically, model_additive.predict, and here I have to give X_train_additive. So what I get here is the fitted values. Similarly, let's get the forecasted values. The forecasted values are y_forecast_additive, and that will be equal to model_additive.predict, and what do I give here?
 
@@ -1720,6 +1823,20 @@ It's at least somewhat better than this. And of course, predicting anything in t
 
 1. Multiplicative Model
 =======================
+
+![130.png](./images/130.png)
+![131.png](./images/131.png)
+![132.png](./images/132.png)
+![133.png](./images/133.png)
+![134.png](./images/134.png)
+![135.png](./images/135.png)
+![136.png](./images/136.png)
+![137.png](./images/137.png)
+![138.png](./images/138.png)
+![139.png](./images/139.png)
+![140.png](./images/140.png)
+![141.png](./images/141.png)
+![142.png](./images/142.png)
 
 Hey, guys, welcome back. In this lecture, we will talk about the multiplicative modeling for forecasting. In the previous lectures, we talked about the additive model for doing time series forecasting. In the additive model, we added up the seasonality part. But in the multiplicative model, we multiply the mean of the seasonality with the trend of the data. So let's see how to do this multiplicative model. These are the steps in order to build a multiplicative model. Step number
 
@@ -1758,6 +1875,8 @@ So we will see in a later lecture how to understand and know when to go for addi
 3. Step-1 Trend Model
 =====================
 
+See the code [here](./5.ipynb)
+
 Hey, guys, welcome back. Now let's see how to build a multiplicative model for forecasting in Python. All right, now we are in Google Colab. So this is what we have to do in multiplicative modeling: step one, we will build a linear regression with respect to time. Step number two, we will take T and TSI. In step number three, we will calculate the deviation value, SI. And step number four, we will calculate the average value of the seasonal deviation. So this is the first step we will do now.
 
 Let's go back and see our training data. We have two data frames: we have df_train, and this one is called df_test. So let me consider these two values. What is in df_train.head? We have the four years of data, and similarly df_test, where we have two years of data. Let me do tail on this one, and head on this one, so that we can see 2004 January to 2004 December.
@@ -1787,6 +1906,8 @@ number two: just take the predicted trend, and take the TSI. The TSI is basicall
 4. Step-2 Calculate Seasonal Deviation
 ======================================
 
+See the code [here](./5.ipynb)
+
 All right, so the next step is to calculate the deviation from the seasonal component. That's step number three. Step number three is basically the seasonal deviation: how much is the deviation? The deviation values are what I need to compute here. So basically SI is TSI divided by T; that's the formula. So I will use this formula and calculate those values. OK, this is my data.
 
 And here, this is my SI, TSI by T. So now let's look at df_train2. What I actually need to do here is calculate SI, and that is basically df_train2: the first one is sales, divided by df_train2's second one, which is what I predicted with respect to time, T. And what I'll get here is SI. So let me check df_train2 and display the top five rows.
@@ -1795,6 +1916,8 @@ And this is what we got. Perfect. So let me display 20 values, the top 20 values
 
 5. Step-3 Seasonal Corrector Factor
 ===================================
+
+See the code [here](./5.ipynb)
 
 And now the next step is step number four. Step number four is to take the average seasonal deviation. That's what we need to compute here. Basically, the average seasonal deviation means: this is the SI, and we need to take this one for January, and one more January here, so this one and this one, and similarly take all of them for the season and combine them, and you'll get one value. And similarly for February, and similarly for March and April: you add all those things and divide by the total number of years; basically, calculating the mean of that.
 
@@ -1806,6 +1929,8 @@ and for December that's the mean, and so on, which we can simply get from this. 
 
 6. Fitted values and Forecasting with Multiplicative Model
 ==========================================================
+
+See the code [here](./5.ipynb)
 
 The fifth one, which is the last step: step five is computing the fitted values. That's my last step. So we have the month deviation_season, and let me take this df_train2.head. And what we have is January, we have SI, and this is the average deviation. We already have this average deviation. So what I'll do is change the name here with rename.
 
@@ -1834,6 +1959,8 @@ All right, now let's calculate the margin of error.
 7. Margin of Error and Confidence Interval
 ==========================================
 
+See the code [here](./5.ipynb)
+
 All right, now let's calculate the margin of error here, just to calculate the error component here. Always remember, the margin of error we calculate only from the train data. So let's take the train data, df_train2.head. Let's display this. And the margin of error: your margin of error is equal to two times the standard deviation, or for a 95 percent confidence interval, 1.96 into the standard error.
 
 And the standard error is basically the standard deviation of the errors. All right. So let's calculate the error first. The error is basically between my fitted values and the true values, so I can take it from df_train2: these are the sales, the true values, and df_train2's fitted values. And what I get here is the error. Now SE is basically equal to error.std(),
@@ -1842,6 +1969,8 @@ the standard deviation of the errors. So finally, the margin of error is equal t
 
 8. Visualizing Forecasted Data
 ==============================
+
+See the code [here](./5.ipynb)
 
 All right, so we got the margin of error now. So the next step is the visualizations: just go back and copy the entire code here; we'll do the visualizations, copy and paste it here. So now let's make some small changes. It is df_train2.Years, and my fitted values are basically df_train2's fitted values; that is what I want to consider: df_train2's fitted values.
 
@@ -1863,6 +1992,8 @@ In this case, it is a much better fit compared to the other model. All right, so
 
 1. Auto Regressive Methods
 ==========================
+
+![143.png](./images/143.png)
 
 Hey, guys, welcome back. In this lecture, we will talk about auto regressive methods. Let's start by understanding the limitations of regression. One of the limitations, or disadvantages, of linear regression or multiple linear regression is that it is very difficult to predict if there is no seasonality or trend and the fluctuations are completely random; then it is really, really very difficult. And more or less, if you want to build regression models, it is very difficult to fit all the values in the data.
 
