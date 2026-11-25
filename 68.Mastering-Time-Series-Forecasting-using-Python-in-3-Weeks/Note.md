@@ -1994,6 +1994,12 @@ In this case, it is a much better fit compared to the other model. All right, so
 ==========================
 
 ![143.png](./images/143.png)
+![144.png](./images/144.png)
+![145.png](./images/145.png)
+![146.png](./images/146.png)
+![147.png](./images/147.png)
+![148.png](./images/148.png)
+![149.png](./images/149.png)
 
 Hey, guys, welcome back. In this lecture, we will talk about auto regressive methods. Let's start by understanding the limitations of regression. One of the limitations, or disadvantages, of linear regression or multiple linear regression is that it is very difficult to predict if there is no seasonality or trend and the fluctuations are completely random; then it is really, really very difficult. And more or less, if you want to build regression models, it is very difficult to fit all the values in the data.
 
@@ -2013,6 +2019,8 @@ In the next lecture, we will see how to build the auto regression model in Pytho
 
 3. Setting Up for Model Building
 ================================
+
+See the code [here](./6.ipynb)
 
 Hey, guys, welcome back. In this lecture, we will talk about how to build the auto regressive method in Python. Before that, I'm in the Google Drive, and the data that I'm working on is the airline carrier passengers data. I hope you have already downloaded the data from the resources; make sure you download the data and put it in the folder that you are working on. OK, so in the data, what I'm having is the month and the passengers. And what I want to forecast: this is the month, and this is the number of passengers who boarded the airline.
 
@@ -2034,6 +2042,8 @@ Let me check where my path is. I was in the drive, so let me set the path: os.ch
 
 4. Data Preprocessing
 =====================
+
+See the code [here](./6.ipynb)
 
 So the first thing is let's look into the data with df.info, and you can look into the data types. What you can see here is that month is an object and passengers is an int. As I already told you in the previous lecture, whatever date you have, it is required to convert that into the datetime format. That is very, very important to follow. All right. So in order to do that, the first step is to import datetime, and we can import it here.
 
@@ -2072,6 +2082,8 @@ If you want, you can add plt.grid so that we can get nice grid lines here. It's 
 5. ACF & PACF
 =============
 
+See the code [here](./6.ipynb)
+
 Hey, guys, welcome back. In the previous lecture, we did some kind of preprocessing that was basically required to build the auto regressive models. So now we will try to analyze this plot first. We will use techniques like the ACF and PACF plots in order to analyze the data. The major agenda here, particularly for the AR model, is the order of AR(p):
 
 we need to identify the number of lags that are really required. That can be found with the PACF. OK, so we can study those kinds of behavior in the ACF and PACF plots. All right, so this is the data that is there with me. So I can plot this; I'll use statsmodels: from statsmodels.graphics.tsaplots, the time series analysis plots, I will import
@@ -2097,6 +2109,8 @@ we take the number of lags that are really required, which means you need to cou
 6. Making Data Stationary
 =========================
 
+See the code [here](./6.ipynb)
+
 Hey, guys, welcome back. Now let's see how to make our data set stationary. So this is what we will do: making the data stationary. We can also use this data for building the model too, but in this case, I will use it only to calculate the exact seasonality, or the exact number of lags that I need to consider here. So basically, I need to take the partial autocorrelation plot and decide based upon the partial autocorrelation and the number of non-zero lags.
 
 That indicates the number of lags I can consider for building the model. OK, let's see how to make the data stationary. Basically, I was working on df_train, on the passengers data, and this is the passengers data: diff, and the number of periods is equal to one. So basically, calculate for one period; this is how we difference the data. So this is my differenced data, and I can make the data stationary; you can see I can clearly make the data stationary with this.
@@ -2118,6 +2132,8 @@ So for every 12-month period, the cycle is repeated. That is one of the observat
 7. Training AR Model
 ====================
 
+See the code [here](./6.ipynb)
+
 Hello, guys, welcome back. In the previous lecture, we calculated the number of lags that I need to take here, and we converted the data into stationary so that we can understand much more clearly. So now let's build the auto regressive model, also known as the AR model, AR(p). AR stands for auto regressive, of order p.
 
 p indicates the number of lags. So basically we can find p using the PACF plot: count the number of lags which are not zero, basically find the number of lags which are not zero. OK, so we can treat it as an approximation: after 12 lags, you can see approximately all are zero; even though some are positive, I can take them as zero, because they are very, very small.
@@ -2138,6 +2154,8 @@ This is basically used for the model, plus or minus; this is basically the margi
 
 8. Fitted and Forecasting values with AR Model
 ==============================================
+
+See the code [here](./6.ipynb)
 
 All right, so we got our model ready, so we can get the fitted values here. Let's calculate the fitted values. All right. So fitted_values is equal to model_ar.fittedvalues, right? So let's take a look at the fitted values; they're already calculated by the model. So that's it. These are my values. So what I can do here is copy this code, because the plot is very important for me, so let's copy and paste it here. Now, if you look into the fitted values,
 
@@ -2164,6 +2182,8 @@ Let me put it here: my confidence interval. And this is my confidence interval. 
 9. AR Model Evaluation
 ======================
 
+See the code [here](./6.ipynb)
+
 All right, we can also test our model, how good our model is, with the Q-Q plot, and also we can test the error: is the error that is left out random, or is any pattern left out in the data? We can also understand this particular thing. So basically, if the distribution of the error is random, or the distribution of the error is normal, perfectly normal, that indicates that there is no pattern left out in the data.
 
 So those things we can understand here. So model evaluation: statsmodels automatically gives you a nice plot. I can use this, because we already built the model: model.plot_diagnostics, which will actually give you a nice kind of plot. By default the lags is 10, so I'll take it as 12. And now what I can do here is give the figure size: plt.figure with figsize,
@@ -2183,12 +2203,20 @@ All right, so this is the modeling, how we build the auto regression models, and
 1. Smoothing Techniques
 =======================
 
+![150.png](./images/150.png)
+![151.png](./images/151.png)
+![152.png](./images/152.png)
+
 Hey, guys, welcome back. In this lecture, we will talk about the smoothing techniques. In the previous lectures, we talked about the auto regressive techniques, where we used the previous lags to predict the future. But smoothing techniques are very easy, and they are also most widely used when the data is stationary. If there is no trend or seasonality, and only randomness is there, then these techniques are very, very useful: when the data consists mostly of randomness in nature,
 
 these smoothing techniques are really, really useful to produce the forecast. There are three kinds of smoothing techniques. One is naive forecasting, second one is the MA models, and the third one is the exponential smoothing technique. All right, we'll see all these three techniques in the next lectures. In the next lecture, we will talk about naive forecasting and how to do that in Python. Thank you very much.
 
 3. Naive Forecasting Model
 ==========================
+
+![153.png](./images/153.png)
+![154.png](./images/154.png)
+![155.png](./images/155.png)
 
 Hey, guys, welcome back. In this lecture, we will talk about naive forecasting. The naive forecasting model is one of the simplest models. It assumes that the most recent time period of data represents the best predictor, or the forecast, for the future. That is the meaning of the naive model: if you want to forecast the value for tomorrow, it is nothing but the value of today. So that's naive forecasting. It's a very, very simple model.
 
@@ -2204,6 +2232,8 @@ So whatever the data was on the next day, the forecasted values can even be for 
 
 4. Naive Forecasting Model in Python - part 1
 =============================================
+
+See the code [here](./7.ipynb)
 
 Hey, guys, welcome back. In this lecture, we will see how to build naive forecasting models in Python. All right, now I'm in the Google Drive. What I need to do here is create the Colab, and the data I'm currently working on is the US airline carrier passengers data, already uploaded. This is the same data we will work on in this example too. OK, so first let me open Google Colaboratory and do all the necessary installations and setup, if required, all the necessary steps.
 
@@ -2237,6 +2267,8 @@ So, true data, and this is the future data, the future true data. OK, that's wha
 
 5. Naive Forecasting Model in Python - part 2
 =============================================
+
+See the code [here](./7.ipynb)
 
 Hey, guys, welcome back. Now let's see how to build the naive forecasting model. The naive forecasting model is one of the simplest models. What it is trying to say is: if you want to predict the future, that is Y t plus one, the future value is going to be equal to your previous value, Y t. That means you can forecast tomorrow's value as equal to today's value.
 
@@ -2275,6 +2307,11 @@ We can only forecast with the previous value we got; that will be the forecast f
 6. Simple Moving Average
 ========================
 
+![156.png](./images/156.png)
+![157.png](./images/157.png)
+![158.png](./images/158.png)
+![159.png](./images/159.png)
+
 Hey, guys, welcome back. In this lecture, we will talk about the simple moving average. The simple moving average is also known as MA(q). This is one of the simplest and most elementary averaging methods. In this method, in order to forecast the time t, we will take the past q values and average them, and that will become the forecasted value. So this is actually one of the simplest things in the smoothing techniques.
 
 So what we are trying to do here is take the past q values, also known as the past q lags, previous lags, and take an average of all the lags, and that will be the fitted value. How you select the order is based upon the ACF, the autocorrelation function: the number of non-zero lags will be the order q. And we applied it to this data and calculated for q equals three. This is what the average model will get for three, and for q equal to 12, it is much smoother and it's almost able to capture the trend in the data.
@@ -2283,6 +2320,8 @@ And that's what we are able to do in this case. And the forecasted values, again
 
 7. Simple Moving Average in Python
 ==================================
+
+See the code [here](./7.ipynb)
 
 Hey, guys, welcome back. In this lecture, we will talk about how to build a simple moving average model, also known as the MA model, in Python. OK, so we've already done all the basic preprocessing, and everything has been done for the naive based model, the naive forecasting model. What we will do now here is take the same data, df_train; let's take the same data, and from this data, let's see how to build the simple moving average models. All right. So the simple moving average model.
 
@@ -2313,6 +2352,8 @@ Thank you very much.
 8. Simple Moving Average order (q) in Python
 ============================================
 
+See the code [here](./7.ipynb)
+
 Hey, guys, welcome back. In this lecture, we will talk about how to build a simple moving average model, also known as the MA model, in Python. OK, so we've already done all the basic preprocessing, and everything has been done for the naive based model, the naive forecasting model. What we will do now here is take the same data, df_train; let's take the same data, and from this data, let's see how to build the simple moving average models. All right. So the simple moving average model.
 
 So this is already there; actually, I don't require these fitted values. Let me do one thing: let me copy; this is my train_sma, simple moving average, and in that I'm only interested in the month and the passengers. These two pieces of information are required for me. Similarly for the test, test_sma: let me consider only these two values. All right, so now in order to forecast this, let me build a simple model like SMA.
@@ -2342,6 +2383,11 @@ Thank you very much.
 9. Weighted Moving Average
 ==========================
 
+![160.png](./images/160.png)
+![161.png](./images/161.png)
+![162.png](./images/162.png)
+![163.png](./images/163.png)
+
 Hello, everyone. Welcome back. In this lecture, we will talk about the weighted moving average. The weighted moving average is similar to the simple moving average, but in the weighted moving average we give preference to the most recent value over the previous values. For example, if you want to forecast Y t, we use the past few lags like Y t minus one, Y t minus two and so on.
 
 And we give more preference to Y t minus one, less preference to Y t minus two, and comparatively even less to Y t minus three. So what we are trying to do here is multiply with weights: we multiply the highest weight with the previous value, and less weight with the values before that, t minus two and so on. So for example, if you have a weighted moving average of three, the weights are three, two, one.
@@ -2352,6 +2398,8 @@ And the outputs for the weighted moving average look like this: this is for q eq
 
 10. Weighted Moving Average in Python
 =====================================
+
+See the code [here](./7.ipynb)
 
 All right, welcome back. Now let's see how to build the weighted moving average model in Python. OK, this is the formula for the weighted moving average model; now in Python. So let's see how to build a weighted moving average model in Python. Let me do one thing: let me copy the data from df_train. This is train_wma, and what I want here from the train is just the month and the passengers information. That's it. Take the month here and let me take the passengers.
 
@@ -2398,6 +2446,13 @@ In the next lecture, we will talk about the exponential moving average, which is
 11. Exponential Moving Average
 ==============================
 
+![164.png](./images/164.png)
+![165.png](./images/165.png)
+![166.png](./images/166.png)
+![167.png](./images/167.png)
+![168.png](./images/168.png)
+![169.png](./images/169.png)
+
 Hey, guys, welcome back. In this video, we will talk about the exponential smoothing models. The exponential smoothing model is also known as the exponential moving average. In this smoothing technique, we weight the data from previous time periods with exponentially decreasing importance in the forecasting. Exponential forecasting is accomplished by multiplying the actual value for the present time period by a value between zero and one.
 
 So what we are trying to do in the exponential smoothing technique is actually simple. To take the exponential moving average, we can take a simple moving average for the first forecasted value, the simple moving average of the first values. And after that, we will use the forecasted value and add the error on top of it. That's basically what we're trying to do in this case. For example, the forecasted value F t plus one is equal to alpha, which is the exponential smoothing constant, into Y t, which is the previous historical value, plus one minus alpha into F t. So F t plus one is the forecasted value for the next time period, t plus one,
@@ -2416,6 +2471,8 @@ In the next lecture, we will see how to develop the exponential moving average m
 
 12. Exponential Moving Average in Python
 ========================================
+
+See the code [here](./7.ipynb)
 
 Hello, guys, welcome back. In this lecture, we will see how to build the exponential moving average model in Python. Just try to remember one thing: when you're trying to build an exponential moving average, we don't need to select a larger number of lags, like in the weighted moving average and also the simple moving average. Generally we select lesser values, because it automatically takes care of that particular lag part.
 
@@ -2448,6 +2505,10 @@ in the upcoming lectures. So thank you very much, and happy learning.
 1. ARMA
 =======
 
+![170.png](./images/170.png)
+![171.png](./images/171.png)
+![172.png](./images/172.png)
+
 Hello, everyone, welcome back. In this lecture, we'll talk about the auto regressive moving average model, a.k.a. the ARMA model. It is also known as ARMA(p, q). The ARMA model has played a very vital role in time series modeling. The ARMA model consists of two parts: auto regression and the moving average model. So what we are trying to do in the ARMA model is combine the two models, auto regressive and moving average; both models play a very efficient role in predicting the future.
 
 So with the help of the ARMA model, by combining the two models, we can get a much more efficient way of building the time series model, and we can get much better predictions compared to the individual auto regression or moving average model. It is also capable of modeling the ongoing process with a small number of parameters. This model is also referred to as ARMA(p, q), where p stands for the order of the auto regressive model and q stands for the order of the moving average model.
@@ -2456,6 +2517,12 @@ And together, we call it the ARMA model of p, q. In the next lecture, we'll talk
 
 2. Non Seasonal ARIMA
 =====================
+
+![173.png](./images/173.png)
+![174.png](./images/174.png)
+![175.png](./images/175.png)
+![176.png](./images/176.png)
+![177.png](./images/177.png)
 
 Hello, everyone, welcome back. In this lecture, we will talk about the non-seasonal ARIMA model, a.k.a. ARIMA(p, d, q). The acronym ARIMA is auto regressive integrated moving average. This model is considered to be a development of the simpler auto regressive moving average, ARMA. Here we introduce a concept called differencing, or integration. Basically, ARIMA and ARMA share similar characteristics, like leveraging the auto regressive and the moving average models.
 
@@ -2467,6 +2534,8 @@ Hence the ARIMA model is basically a modified version of ARMA; here it introduce
 
 4. ARMA - Load Data
 ===================
+
+See the code [here](./8.ipynb)
 
 Hello, everyone, welcome back. In this lecture, we will talk about how to build the non-seasonal ARIMA models in Python: the non-seasonal models ARMA and ARIMA. We are using the same data which we used in the moving average studies, the smoothing methods. So step one, we will open our Google Colaboratory and do the necessary settings, which we did for the previous lectures, like importing all the necessary libraries and also upgrading statsmodels.
 
@@ -2484,6 +2553,8 @@ OK, now we have successfully imported all the libraries. The next step is to imp
 
 5. ARMA - Split the Data into train and test sets
 =================================================
+
+See the code [here](./8.ipynb)
 
 All right, so now we have successfully imported our data. Let's also do some quick things: split the data into training and testing, set the month as my index, and also do some quick visualizations. So first let's split the data into two parts, training and testing. For a quick overview: in the previous section, the data we have is from 2000 to 2020, with all the monthly passengers displayed.
 
@@ -2504,6 +2575,8 @@ and the second one is my test. So this is my train data and this is my test data
 6. ARMA - Steps to Build the Models
 ===================================
 
+See the code [here](./8.ipynb)
+
 Hello, everyone. Welcome back. In the previous lecture, we have seen how to do the settings for the non-seasonal models. So now let's build the model. These are the following steps that we need to follow for our model. We can train it only on stationary data. So these are the following steps that we need to do while building the ARMA model or ARIMA models; the same procedure we will also do for the ARIMA model too. Step one: we need to test our data for stationarity, to make sure our data is stationary.
 
 We can only build a model for stationary data. And if you look into this data, this data looks like non-stationary data: there is some trend in the data, and the mean is changing with respect to time. So what we can say is that this is not stationary data, so we need to do some kind of steps in order to convert it into stationary data. One of the methods of converting non-stationary data into stationary is differencing.
@@ -2514,6 +2587,8 @@ And finally, what we can do is get the results and convert them back. The result
 
 7. ARMA - Augmented Dickey Fuller test for stationary
 =====================================================
+
+See the code [here](./8.ipynb)
 
 Step one is that we have to test the data: we need to check whether the data is stationary or non-stationary. For that, we will do the augmented Dickey-Fuller test for stationarity. So let's do this test. This is my step number one: step one for the model is to do the augmented Dickey-Fuller test. Let's copy this and paste it. So we have it in statsmodels, and with the help of that, we can test whether the data is stationary or not.
 
@@ -2532,6 +2607,8 @@ If the data is not stationary, then we need to convert it into stationary data b
 8. ARMA - Converting Data into Stationary
 =========================================
 
+See the code [here](./8.ipynb)
+
 We are converting the non-stationary data to stationary, and then we are dropping the NaN values; that's what we are trying to do now. So that's it; execute. So what we will do now is visualize our stationary data. For that, I can simply go for df.plot, a simple plot with kind equal to line, and fig comma ax equal to plt.subplots with figsize 15 comma eight. So that's it; this is how I can get a big figure. Oh, I need to set ax equal to ax.
 
 Now here you can see we have converted the non-stationary data into stationary data. So let's test whether the data is stationary or non-stationary with the augmented Dickey-Fuller test. Let's copy it. Now we are doing the test for stationarity again, and this time I'm going to pass the stationary train data; execute it. And here we go: the p-value is 0.00325. And for five percent significance, obviously, if we consider five percent significance, the test statistic
@@ -2544,6 +2621,8 @@ Thank you very much.
 
 9. ARMA - ACF & PACF , Train ARMA(p,q)
 ======================================
+
+See the code [here](./8.ipynb)
 
 Hello, everyone, welcome back. In the previous lecture, we checked whether the data is stationary, and we did the test and found out the data is stationary. So now what we have to do is find out the p and q values for the ARMA model. p is basically the auto regressive model order, which we can find from the PACF plot. And similarly, q is the moving average order, which can be found from the ACF. So let's plot the ACF and PACF; we already imported them.
 
@@ -2566,6 +2645,8 @@ Done. We have trained the model successfully. Let's continue in the next lecture
 10. ARMA - Evaluation
 =====================
 
+See the code [here](./8.ipynb)
+
 All right. We have trained our model successfully; now let's evaluate our model a bit. We can evaluate our model, or find the goodness of fit, with errors like the AIC, which is nothing but the Akaike information criterion, and we can also find the goodness of fit of the model with the mean squared error. So let's quickly calculate those values. Coming to the AIC value, the information criterion: this value is automatically calculated by the model, and the AIC is basically like an error:
 
 the lower the value, the better. You can look into the AIC value for the model: three seven eight two [unclear]. That's really not that bad. And also, let's look into our mean squared error. If we want to calculate the mean squared error, we need to import the library: from sklearn.metrics import mean_squared_error. And we got our mean_squared_error. In order to calculate the mean squared error, we can calculate it for the train data, which is nothing but the fitted values.
@@ -2576,6 +2657,8 @@ In the next lecture, we will visualize the output of the model so that we can un
 
 11. ARMA - Visualizing Prediction Results
 =========================================
+
+See the code [here](./8.ipynb)
 
 Hello, everyone, welcome back. So let's visualize the output of the model; let's see some visualizations. All right, as we know, this is my train data. So let's copy and paste it here; this is the train data, and let's also visualize our fitted values: fitted_values.plot, and the kind of plot is equal to line, and ax is equal to ax. So that's it. So this is what we have, and it clearly shows that we have a really good fit.
 
@@ -2596,6 +2679,8 @@ So in the next lecture we will see how to convert the data from stationary to no
 12. ARMA - Convert Stationary to Non - Stationary Data
 ======================================================
 
+See the code [here](./8.ipynb)
+
 Hey, guys, welcome back. Now let's see how to convert the data from stationary to non-stationary. This is the prediction we got, and the output here is stationary in nature; how do we put that into non-stationary? For that, we can simply do the reverse of the differencing. We did the differencing, and I just want to do the reverse operation of the differencing, that is, the integration, or cumulative sum. What I need to do here is the cumulative sum.
 
 In order to do the cumulative sum, I need the initial value, and the initial value is nothing but the last data point in my training data. You can see train_df.tail: the initial value is the last one. So this is the last data, and the last value is iloc of minus one, the last value I'm having here. This last value is my initial value. So I can take this, or I can simply call it my initial value.
@@ -2610,6 +2695,8 @@ So this is now basically 0.5. Now I can clearly see my output. So this is really
 
 13. ARIMA
 =========
+
+See the code [here](./8.ipynb)
 
 Hello, everyone, welcome back. In the previous lecture, we talked about how to develop the ARMA model. Now we will try to build the ARIMA model. The main difference between ARIMA and the ARMA model comes from the integration part, that is d. d is basically the number of non-seasonal differences that are really required to make the data stationary. In our case, we already made our data stationary, so we don't require that parameter here. And the other orders, p and q: the value of p and the value of q are almost the same as for the ARMA model.
 
@@ -2633,6 +2720,8 @@ which is nothing but my confidence interval. All right. So now we have the confi
 
 14. ARIMA  Visualize the output
 ===============================
+
+See the code [here](./8.ipynb)
 
 Hello, everyone, welcome back. In the previous lecture, we have seen how to train our ARIMA model and calculate the forecast and the confidence interval. So now let's visualize that. OK, so here, let's copy the code we have, paste it here, and do the same thing, because there's no need to type it again; the code is all the same. And here what I need to do is replace this with my forecasted values for ARIMA.
 
