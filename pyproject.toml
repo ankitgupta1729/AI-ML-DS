@@ -175,4 +175,5 @@ dependencies = [
     "bert-extractive-summarizer==0.10.1",
     "sacremoses==0.2.0",
     "wordcloud",
+    "openpyxl",
 ]
