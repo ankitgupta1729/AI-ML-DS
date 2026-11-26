@@ -21,7 +21,7 @@ Course notes, revision PDFs, notebooks, hands-on projects, production-grade pipe
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/ankitgupta1729/AI-ML-DS?style=flat-square&color=f5c518"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/ankitgupta1729/AI-ML-DS?style=flat-square&color=blue"></a>
   <a href="https://github.com/ankitgupta1729/AI-ML-DS"><img alt="Repo size" src="https://img.shields.io/github/repo-size/ankitgupta1729/AI-ML-DS?style=flat-square&color=success"></a>
-  <a href="#-revision-pdfs"><img alt="Revision PDFs" src="https://img.shields.io/badge/revision%20PDFs-55%20courses-purple?style=flat-square"></a>
+  <a href="#-revision-pdfs"><img alt="Revision PDFs" src="https://img.shields.io/badge/revision%20PDFs-56%20courses-purple?style=flat-square"></a>
 </p>
 
 </div>
@@ -54,7 +54,7 @@ It is organised into **domain folders**, each holding self-contained, numbered m
 AI-ML-DS/
 ├── foundations/            Python, SQL, theory notes
 ├── data-engineering/       PySpark, Databricks
-├── machine-learning/       Andrew Ng ML Specialization, AI Nanodegree
+├── machine-learning/       Andrew Ng ML Specialization, AI Nanodegree, time series forecasting
 ├── deep-learning/          TensorFlow & PyTorch courses, CNNs, GANs, computer vision
 ├── nlp/                    NLP and transformers
 ├── generative-ai/          LLMs, RAG, LangChain, LangGraph, agents, Claude Code
@@ -106,7 +106,7 @@ Every course module follows the same shape:
 <details open>
 <summary><b>🎓 Machine Learning</b> — <code>machine-learning/</code></summary>
 
-Full lecture notes with figures for all three courses of the DeepLearning.AI / Stanford specialization.
+Full lecture notes with figures for all three courses of the DeepLearning.AI / Stanford specialization, plus time series forecasting.
 
 | Module | What's inside |
 | --- | --- |
@@ -115,6 +115,7 @@ Full lecture notes with figures for all three courses of the DeepLearning.AI / S
 | [`49.Coursera-Andrew-Ng-unsupervised-…`](machine-learning/49.Coursera-Andrew-Ng-unsupervised-learning-recommenders-reinforcement-learning) | Course 3 — Clustering, anomaly detection, recommenders, reinforcement learning |
 | [`50.Andrew-Ng-Course-Material`](machine-learning/50.Andrew-Ng-Course-Material) | 17 community repos of labs, solutions and notes for the Andrew Ng courses (third-party, kept for study) |
 | [`33.AI-Nano-Degree`](machine-learning/33.AI-Nano-Degree) | Nanodegree notes — search, heuristics, classical AI |
+| [`68.Mastering-Time-Series-Forecasting-using-Python-in-3-Weeks`](machine-learning/68.Mastering-Time-Series-Forecasting-using-Python-in-3-Weeks) | Time series forecasting — components, regression, decomposition, autoregression, smoothing, ARIMA/SARIMA |
 
 </details>
 
@@ -269,6 +270,7 @@ screenshot placed **right next to the sentence it illustrates**.
 | Supervised Machine Learning: Regression and Classification | Coursera · DeepLearning.AI & Stanford Online · Andrew Ng | [PDF](machine-learning/47.Coursera-Andrew-Ng-Machine-Learning/pdf/Supervised-Machine-Learning-Andrew-Ng-Notes.pdf) | 414 |
 | Advanced Learning Algorithms | Coursera · DeepLearning.AI & Stanford Online · Andrew Ng | [Vol. 1](machine-learning/48.Coursera-Andrew-Ng-Advanced-Machine-Learning/pdf/Advanced-Learning-Algorithms-Andrew-Ng-Notes-Vol1.pdf) · [Vol. 2](machine-learning/48.Coursera-Andrew-Ng-Advanced-Machine-Learning/pdf/Advanced-Learning-Algorithms-Andrew-Ng-Notes-Vol2.pdf) | 558 |
 | Unsupervised Learning, Recommenders, Reinforcement Learning | Coursera · DeepLearning.AI & Stanford Online · Andrew Ng | [PDF](machine-learning/49.Coursera-Andrew-Ng-unsupervised-learning-recommenders-reinforcement-learning/pdf/Unsupervised-Learning-Recommenders-RL-Andrew-Ng-Notes.pdf) | 443 |
+| Mastering Time Series Forecasting using Python | Udemy · Data Science Anywhere | [PDF](machine-learning/68.Mastering-Time-Series-Forecasting-using-Python-in-3-Weeks/pdf/Time-Series-Forecasting-Notes.pdf) | 263 |
 
 #### Deep Learning
 

@@ -7,7 +7,7 @@ This repository is a comprehensive collection of course notes, tutorials, practi
 Material is grouped into domain folders; each holds numbered, self-contained modules (`<category>/<NN>.<Module-Name>/`):
 - **`foundations/`**: `01.Python`, `03.SQL`, `04.Theory`, `13.Decorators`, `45.Python-for-Everybody-…`
 - **`data-engineering/`**: `02.PySpark`, `14.Databricks`
-- **`machine-learning/`**: `33.AI-Nano-Degree`, `47`–`49` (Andrew Ng ML Specialization), `50.Andrew-Ng-Course-Material` (third-party repos)
+- **`machine-learning/`**: `33.AI-Nano-Degree`, `47`–`49` (Andrew Ng ML Specialization), `50.Andrew-Ng-Course-Material` (third-party repos), `68.Mastering-Time-Series-Forecasting-…`
 - **`deep-learning/`**: `51`–`59` (TensorFlow, PyTorch, CNNs, GANs, computer vision)
 - **`nlp/`**: `60`–`67` (classic NLP, deep learning for NLP, transformers, summarization, the NLP Specialization)
 - **`generative-ai/`**: `05.Code`, `17.OpenCode`, `20.LlamaIndex`, `22`–`30`, `32`, `40`, `46` (LLMs, RAG, LangChain, LangGraph, agents, `25.Claude-Code-Deep-Dive`)
