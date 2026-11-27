@@ -196,74 +196,32 @@ git clone https://github.com/greyhatguy007/Machine-Learning-Specialization-Cours
 
 The same applies to `52.Packt-.../kerasvideo-server`, which is the upstream course repo for that module.
 
-### Set up the base environment
+### Set up the environment
 
-<table>
-<tr><th>Using <code>pip</code></th><th>Using <code>pipenv</code></th><th>Using <code>uv</code> (recommended)</th></tr>
-<tr valign="top">
-<td>
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-# Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-</td>
-<td>
-
-```bash
-pip install pipenv
-pipenv install
-pipenv shell
-```
-
-</td>
-<td>
+The whole repository uses **one** virtual environment, defined by [`pyproject.toml`](pyproject.toml)
+and pinned by [`uv.lock`](uv.lock) (Python version in [`.python-version`](.python-version)):
 
 ```bash
 brew install uv
-uv sync
+uv sync                                   # creates/updates .venv/ from pyproject.toml + uv.lock
+uv run python -m ipykernel install --user --name ai-ml-ds --display-name ai-ml-ds
 ```
 
-</td>
-</tr>
-</table>
+- `.venv/` is git-ignored. Only `pyproject.toml`, `uv.lock` and `.python-version` are tracked.
+- The Jupyter kernel is **`ai-ml-ds`**, and every notebook in the repo names it in its metadata.
+  `.vscode/settings.json` makes `.venv` the default interpreter in VS Code.
+- To add a package, run `uv add <package>` at the repo root. Don't create per-folder venvs.
 
-All base dependencies are pinned in [`pyproject.toml`](pyproject.toml) (and mirrored in `requirements.txt` for the `pip`/`pipenv` paths). `uv sync` reads `pyproject.toml`, creates a project-local virtual environment named **`AI-ML-DS/`**, and installs everything into it — that folder is git-ignored and never pushed; only `pyproject.toml`, `uv.lock` and `.python-version` (which pins Python `3.12`) are tracked so anyone can reproduce the exact same environment.
-
-#### Optional: auto-activate the environment with `direnv`
-
-By default you still need `source AI-ML-DS/bin/activate` (or `uv run <cmd>`) to use the venv in a shell. To have it activate automatically the moment you `cd` into the repo (or any subfolder), install [direnv](https://direnv.net/) once:
-
-```bash
-brew install direnv
-```
-
-Hook it into your shell (add to `~/.zshrc` or `~/.bashrc`, then open a new terminal):
-
-```bash
-eval "$(direnv hook zsh)"   # or: eval "$(direnv hook bash)"
-```
-
-The repo already ships a tracked [`.envrc`](.envrc) that points `uv` and your shell at the `AI-ML-DS/` venv. The first time you enter the repo, approve it once:
-
-```bash
-cd AI-ML-DS
-direnv allow .
-```
-
-From then on, every `cd` into the repo (or a subfolder) auto-activates the `AI-ML-DS` venv — no manual `source` or `uv run` needed — and `uv sync` will always target that same folder instead of creating a stray `.venv`.
+> [!NOTE]
+> Some course folders include their own `Pipfile` / `requirements.txt` / `pyproject.toml`
+> (e.g. `15.uv_demo`, `21.pipenv-course`, `24.LangChain2`). They are part of the course material,
+> not separate environments. Run everything with the root `.venv`.
 
 ### Launch the notebooks
 
 ```bash
-jupyter lab      # or: jupyter notebook
+uv run jupyter lab      # or open any .ipynb in VS Code and pick the "ai-ml-ds" kernel
 ```
-
-> [!TIP]
-> Several modules ship their **own** `Pipfile`, `requirements.txt`, or `pyproject.toml` (e.g. `20.LlamaIndex`, `23.LangChain`, `15.uv_demo`). Prefer the module-local environment when working inside one — it keeps dependency versions isolated and reproducible.
 
 ### Configure secrets
 

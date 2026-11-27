@@ -1,20 +1,37 @@
 {
-     "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+     // ONE environment for the whole repo: the root .venv built from
+     // pyproject.toml / uv.lock (`uv sync`). Its Jupyter kernel is "ai-ml-ds",
+     // and every notebook's metadata points at it.
+     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
      "code-runner.executorMap": {
-          "python": "/opt/homebrew/bin/python3 -u"
+          "python": "\"$workspaceRoot/.venv/bin/python\" -u"
      },
+     // Hide every other interpreter from the notebook kernel picker here.
+     // (Global Jupyter kernelspecs from other projects, e.g. Anaconda
+     // "python3" and Madrigal's, are machine-wide and stay listed under
+     // "Jupyter Kernel...". This setting can't hide them.)
+     "jupyter.kernels.excludePythonEnvironments": [
+          "/opt/anaconda3",
+          "/opt/anaconda3/bin/python",
+          "/opt/homebrew/bin/python3",
+          "/opt/homebrew/bin/python3.11",
+          "/opt/homebrew/bin/python3.12",
+          "/opt/homebrew/bin/python3.13",
+          "/opt/homebrew/bin/python3.14",
+          "/usr/bin/python3",
+          "/usr/local/bin/python3",
+          "/usr/local/bin/python3.10",
+          "/Users/ankit/Desktop/Madrigal/notebooks/local/.venv"
+     ],
      "code-runner.runInTerminal": true,
      "code-runner.fileDirectoryAsCwd": true,
      "python.terminal.activateEnvironment": false,
      "python.terminal.activateEnvInCurrentTerminal": false,
      "codescene.enableAutoRefactor": false,
      "codescene.enableReviewCodeLenses": false,
-     // Per-project .venv folders in SUBFOLDERS of this repo are not discoverable
-     // by the Python extension (it only scans workspace-folder roots, and
-     // python.venvPath expects a folder whose immediate children are venvs).
-     // Register them as global Jupyter kernelspecs instead: run `uvkernel`
-     // inside the project folder once, then pick it from
-     // "Select Another Kernel... -> Jupyter Kernel...".
+     // Don't create per-folder venvs in this repo. New dependencies go into
+     // the root pyproject.toml (`uv add <pkg>`), so the "ai-ml-ds" kernel
+     // picks them up.
 
      // --- Keep the editor's indexer off generated trees. ---
      // This workspace has ~160k files but only ~14k are source. Watching and

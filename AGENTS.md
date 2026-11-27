@@ -12,15 +12,17 @@ The repository is organized into numbered directories, each dedicated to a speci
 - **Tutorials**: `25.Claude-Code-Deep-Dive` contains specific agent-related learning materials.
 
 ## Build, Test, and Development Commands
-The repository uses multiple dependency management systems depending on the module.
 
-### Main Python Environment
-- **Install dependencies**: `pipenv install` or `pip install -r requirements.txt`
-- **Python version**: 3.11 (as specified in `Pipfile`)
+### Python Environment (one for the whole repo)
 
-### Sub-module Environments
-- **uv (15.uv_demo)**: Uses `uv` for fast environment management.
-- **Pipenv**: Several directories (e.g., `20.LlamaIndex`, `23.LangChain`) have their own `Pipfile`.
+- **Single venv**: the root `.venv/`, defined by `pyproject.toml` and pinned by `uv.lock`. Python version is in `.python-version` (3.12).
+- **Install / update**: `uv sync` at the repo root. **Add a package**: `uv add <pkg>` at the root.
+- **Jupyter kernel**: `ai-ml-ds` (→ `.venv/bin/python`). Every notebook's `metadata.kernelspec.name` must be `ai-ml-ds`, including new ones.
+- **Do not** create per-folder venvs, Pipfiles or requirements files for running code. The `Pipfile` / `requirements.txt` / `pyproject.toml` files inside course folders (e.g. `15.uv_demo`, `21.pipenv-course`, `24.LangChain2`) are course material only.
+- Some course notebooks use CRLF line endings, so keep them unchanged when editing notebook JSON.
+
+### Other languages
+
 - **Go (19.Go)**: Standard Go commands like `go run <file>.go`.
 
 ## Coding Style & Naming Conventions
